@@ -1,0 +1,190 @@
+<!-- ##### SECTION Title ##### -->
+GskStreamFd
+
+<!-- ##### SECTION Short_Description ##### -->
+a file-descriptor based GskStream
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+a GskStream that can be used for files and sockets.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_STREAM_FD_GET_FD ##### -->
+<para>
+Get underlying file-descriptor from a #GskStreamFd.
+</para>
+
+@stream: the stream.
+
+
+<!-- ##### STRUCT GskStreamFd ##### -->
+<para>
+An instance of a file-descriptor based stream.
+</para>
+
+
+<!-- ##### ARG GskStreamFd:file-descriptor ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamFd:is-pollable ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamFd:is-readable ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamFd:is-writable ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GskStreamFdFlags ##### -->
+<para>
+
+</para>
+
+@GSK_STREAM_FD_IS_READABLE: 
+@GSK_STREAM_FD_IS_WRITABLE: 
+@GSK_STREAM_FD_IS_READWRITE: 
+@GSK_STREAM_FD_IS_POLLABLE: 
+@GSK_STREAM_FD_IS_SHUTDOWNABLE: 
+@GSK_STREAM_FD_FOR_NEW_SOCKET: 
+
+<!-- ##### FUNCTION gsk_stream_fd_new ##### -->
+<para>
+
+</para>
+
+@fd: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_new_auto ##### -->
+<para>
+
+</para>
+
+@fd: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_flags_guess ##### -->
+<para>
+
+</para>
+
+@fd: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_pipe ##### -->
+<para>
+
+</para>
+
+@read_side_out: 
+@write_side_out: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_new_connecting ##### -->
+<para>
+
+</para>
+
+@fd: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_new_read_file ##### -->
+<para>
+
+</para>
+
+@filename: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_new_write_file ##### -->
+<para>
+
+</para>
+
+@filename: 
+@may_create: 
+@should_truncate: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_new_create_file ##### -->
+<para>
+
+</para>
+
+@filename: 
+@may_exist: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_new_open ##### -->
+<para>
+
+</para>
+
+@filename: 
+@open_flags: 
+@permission: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_duplex_pipe ##### -->
+<para>
+
+</para>
+
+@side_a_out: 
+@side_b_out: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_duplex_pipe_fd ##### -->
+<para>
+
+</para>
+
+@side_a_out: 
+@side_b_fd_out: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_fd_new_from_symbolic_address ##### -->
+<para>
+
+</para>
+
+@symbolic: 
+@error: 
+@Returns: 
+
+

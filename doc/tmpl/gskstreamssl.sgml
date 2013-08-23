@@ -1,0 +1,80 @@
+<!-- ##### SECTION Title ##### -->
+GskStreamSsl
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskStreamSsl ##### -->
+<para>
+A SSL client or server.
+</para>
+
+
+<!-- ##### ARG GskStreamSsl:cert-file ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamSsl:is-client ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamSsl:key-file ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamSsl:password ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gsk_stream_ssl_new_client ##### -->
+<para>
+
+</para>
+
+@cert_file: 
+@key_file: 
+@password: 
+@transport: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_ssl_new_server ##### -->
+<para>
+
+</para>
+
+@cert_file: 
+@key_file: 
+@password: 
+@transport: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_ssl_peek_backend ##### -->
+<para>
+
+</para>
+
+@ssl: 
+@Returns: 
+
+

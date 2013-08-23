@@ -1,0 +1,284 @@
+<!-- ##### SECTION Title ##### -->
+GskHttpContent
+
+<!-- ##### SECTION Short_Description ##### -->
+content database often useful for implementing http servers.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This class provides a convenient way to provide handlers
+that carve of the HTTP-server namespace.
+</para>
+<para>
+You may register handlers specifically for 
+any subset user-agent-prefix, path, path-prefix, path-suffix,
+and host.
+</para>
+<para>
+It also provides mime-type registration.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_HTTP_CONTENT_ID_INIT ##### -->
+<para>
+Initialize a blank #GskHttpContentId.
+(Alternately, use memset)
+</para>
+
+
+
+<!-- ##### STRUCT GskHttpContent ##### -->
+<para>
+An opaque type that keeps all the content hooks for the database.
+</para>
+
+
+<!-- ##### ENUM GskHttpContentAction ##### -->
+<para>
+How to affect existing handlers, if your content-id
+exactly matches their content-id.
+</para>
+
+@GSK_HTTP_CONTENT_PREPEND: 
+Replace all the given handlers.
+@GSK_HTTP_CONTENT_APPEND: 
+Try this handler after the others have passed.
+@GSK_HTTP_CONTENT_REPLACE: 
+Try this handler first, before the others have tried.
+
+<!-- ##### USER_FUNCTION GskHttpContentCGIFunc ##### -->
+<para>
+Function that decides how to process a CGI request.
+</para>
+
+@content: the content database that had this handler.
+@handler: the content handler.
+@server: the GskHttpServer that got the request.
+@request: the request we parsed.
+@n_vars: the number of CGI variables.
+@vars: the CGI variables.
+@data: instance-specific data that was registered
+when the handler was created.
+
+
+<!-- ##### ENUM GskHttpContentFileType ##### -->
+<para>
+What type of file structure is being mapped.
+</para>
+
+@GSK_HTTP_CONTENT_FILE_EXACT: 
+A specific file is mapped.
+@GSK_HTTP_CONTENT_FILE_DIR: 
+A shallow directory is mapped.
+@GSK_HTTP_CONTENT_FILE_DIR_TREE: 
+A deep directory is mapped.
+
+<!-- ##### USER_FUNCTION GskHttpContentFunc ##### -->
+<para>
+Function that decides how to process a generic request.
+</para>
+
+@content: the content database that had this handler.
+@handler: the content handler.
+@server: the GskHttpServer that got the request.
+@request: the request we parsed.
+@post_data: raw binary data that came with this request.
+@data: instance-specific data that was registered
+when the handler was created.
+@Returns: whether to succeed, continue to the next handler,
+or fail.
+
+
+<!-- ##### STRUCT GskHttpContentHandler ##### -->
+<para>
+An opaque type that houses either a generic HTTP handler,
+or a CGI handler.
+</para>
+
+
+<!-- ##### STRUCT GskHttpContentId ##### -->
+<para>
+Match information:  describes which requests will try this handler.
+</para>
+
+@host: only try requests that match this host, if non-NULL.
+@user_agent_prefix: only try requests that begin with this user-agent string, if non-NULL.
+@path: only try requests that match this uri, if non-NULL.
+@path_prefix: only try requests that begin with this uri, if non-NULL.
+@path_suffix: only try requests that end with this uri, if non-NULL.
+
+<!-- ##### ENUM GskHttpContentResult ##### -->
+<para>
+Possible results from trying an http handler.
+</para>
+
+@GSK_HTTP_CONTENT_OK: the handler processed (or will process) the request.
+@GSK_HTTP_CONTENT_CHAIN: the handler passed on the request.
+@GSK_HTTP_CONTENT_ERROR: the handler had a problem.
+
+<!-- ##### FUNCTION gsk_http_content_add_data ##### -->
+<para>
+
+</para>
+
+@content: 
+@id: 
+@data: 
+@data_len: 
+@destroy_data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_http_content_add_data_by_path ##### -->
+<para>
+
+</para>
+
+@content: 
+@path: 
+@data: 
+@data_len: 
+@destroy_data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_http_content_add_file ##### -->
+<para>
+
+</para>
+
+@content: 
+@path: 
+@fs_path: 
+@type: 
+
+
+<!-- ##### FUNCTION gsk_http_content_add_handler ##### -->
+<para>
+
+</para>
+
+@content: 
+@id: 
+@handler: 
+@action: 
+
+
+<!-- ##### FUNCTION gsk_http_content_get_mime_type ##### -->
+<para>
+
+</para>
+
+@content: 
+@path: 
+@type_out: 
+@subtype_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_content_handler_new ##### -->
+<para>
+
+</para>
+
+@func: 
+@data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_content_handler_new_cgi ##### -->
+<para>
+
+</para>
+
+@func: 
+@data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_content_handler_ref ##### -->
+<para>
+
+</para>
+
+@handler: 
+
+
+<!-- ##### FUNCTION gsk_http_content_handler_unref ##### -->
+<para>
+
+</para>
+
+@handler: 
+
+
+<!-- ##### FUNCTION gsk_http_content_listen ##### -->
+<para>
+
+</para>
+
+@content: 
+@address: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_content_manage_server ##### -->
+<para>
+
+</para>
+
+@content: 
+@server: 
+
+
+<!-- ##### FUNCTION gsk_http_content_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_content_respond ##### -->
+<para>
+
+</para>
+
+@content: 
+@server: 
+@request: 
+@post_data: 
+
+
+<!-- ##### FUNCTION gsk_http_content_set_default_mime_type ##### -->
+<para>
+
+</para>
+
+@content: 
+@type: 
+@subtype: 
+
+
+<!-- ##### FUNCTION gsk_http_content_set_mime_type ##### -->
+<para>
+
+</para>
+
+@content: 
+@prefix: 
+@suffix: 
+@type: 
+@subtype: 
+
+

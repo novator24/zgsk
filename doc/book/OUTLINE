@@ -1,0 +1,33 @@
+1. what gsk is all about.
+
+- writing servers that use callbacks instead of threading
+- each stream is like a lightweight unix process
+
+2. the GskStream class
+- most important class, modeled after unix process
+- inputs and outputs raw binary data
+a. how to use a GskStream
+  - attachment
+  - gsk_stream_trap_{read,writ}able directly
+b. how to implement a GskStream
+  - generically:  provide ready-to-read/write notification
+    along with read/write methods
+  - sometimes you don't have to: see secion the "Tours of Available Streams".
+  (i).  example: algorithmic source
+  (ii). example: algorithmic sink
+  (iii). example: algorithmic filter
+
+3. A Brief Tours of Available Streams
+  - GskStreamExternal, GskBufferStream, GskStreamFd,
+    gskmemory, ... use via gsk_stream_attach, gsk_stream_attach_pair
+
+3. Generalizations:  GskIO and GskHook
+
+
+4. Gsk Utilities
+- provided as portable implementations of commonly used
+  things that were not well abstracted as streams.
+a. GskBuffer
+
+
+5. 

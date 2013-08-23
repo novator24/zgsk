@@ -1,0 +1,708 @@
+<!-- ##### SECTION Title ##### -->
+Base Input/Output Object
+
+<!-- ##### SECTION Short_Description ##### -->
+
+A base class with input and output triggers,
+but no actual read or write methods.
+Those are left for derived classes to support.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+The primary feature of this class is that it has two hooks;
+a read hook and a write hook, and a ton of convenience methods
+to access them.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskHook, GskStream
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskIOClass ##### -->
+<para>
+Methods which derived classes should overload to
+implement their polling and shutdown strategies.
+</para>
+
+@object_class: 
+The base class (private).
+@on_connect: 
+This is a signal which is emitted after a connection
+has been completed.
+@on_error: 
+@open: 
+Open resources.  This is called when the #GskIO is constructed.
+@set_poll_read: 
+This function should turn on/off whether the implementation
+will call gsk_io_notify_ready_to_read().
+@set_poll_write: 
+This function should turn on/off whether the implementation
+will call gsk_io_notify_ready_to_write().
+@shutdown_read: 
+This function should stop the object from being readable
+ever again.  If applicable, a user's read-trap's shutdown callback
+will be run.
+@shutdown_write: 
+This function should stop the object from being writable
+ever again.  If applicable, a user's write-trap's shutdown callback
+will be run.
+@close: 
+Deallocate system resources associated with instance.
+
+<!-- ##### STRUCT GskIO ##### -->
+<para>
+The base class for all input/output objects.
+It has no public members.
+</para>
+
+
+<!-- ##### SIGNAL GskIO::on-connect ##### -->
+<para>
+Signal to indicate that the gsk-io has become connected
+(to a remote server).
+</para>
+
+@gskio: the object which received the signal.
+
+<!-- ##### SIGNAL GskIO::on-error ##### -->
+<para>
+Signal to indicate that the gsk-io has had an error.
+Use the 'error' and 'error_cause' members of #GskIO
+to find out what went wrong.
+</para>
+
+@gskio: the object which received the signal.
+
+<!-- ##### USER_FUNCTION GskIOHookFunc ##### -->
+<para>
+A callback which will be run when either the object
+is ready to read or write, or shutdown in either direction.
+</para>
+
+@io: an object which is ready to read or write
+@data: the data passed to gsk_io_trap_readable()
+or gsk_io_trap_writable().
+@Returns: whether the trap should be kept, otherwise it will
+be deleted.
+
+
+<!-- ##### ENUM GskIOErrorCause ##### -->
+<para>
+Every #GskIO has an GError and a GskIOErrorCause
+which tells the last error observed on the stream,
+and what type of action triggered it.
+</para>
+<para>
+Implementations can use gsk_io_set_error()
+to register an error.
+</para>
+
+@GSK_IO_ERROR_NONE: 
+No error has been observed.
+@GSK_IO_ERROR_INIT: 
+@GSK_IO_ERROR_CONNECT: 
+@GSK_IO_ERROR_OPEN: 
+An error occurred opening the file.
+@GSK_IO_ERROR_READ: 
+An error occurred reading from the file.
+@GSK_IO_ERROR_WRITE: 
+@GSK_IO_ERROR_POLL_READ: 
+An error occurred polling for readability.
+@GSK_IO_ERROR_POLL_WRITE: 
+An error occurred polling for writability.
+@GSK_IO_ERROR_SHUTDOWN_READ: 
+An error occurred shutting down the read end.
+@GSK_IO_ERROR_SHUTDOWN_WRITE: 
+An error occurred shutting down the write end.
+@GSK_IO_ERROR_CLOSE: 
+An error occurred closing.
+@GSK_IO_ERROR_SYNC: 
+@GSK_IO_ERROR_POLL: 
+
+<!-- ##### MACRO GSK_IO_READ_HOOK ##### -->
+<para>
+Get a pointer to the #GskHook
+corresponding to the read end of the #GskIO.
+</para>
+
+@io: the GskIO which contains the read-hook.
+
+
+<!-- ##### MACRO GSK_IO_WRITE_HOOK ##### -->
+<para>
+Get a pointer to the #GskHook
+corresponding to the write end of the #GskIO.
+</para>
+
+@io: the GskIO which contains the write-hook.
+
+
+<!-- ##### MACRO gsk_io_block_read ##### -->
+<para>
+Block the read hook from being triggered.
+</para>
+
+@io: the GskIO whose read hook should be blocked.
+
+
+<!-- ##### MACRO gsk_io_block_write ##### -->
+<para>
+Block the write hook from being triggered.
+</para>
+
+@io: the GskIO whose write hook should be blocked.
+
+
+<!-- ##### MACRO gsk_io_unblock_read ##### -->
+<para>
+Unblock the read hook from being triggered.
+</para>
+
+@io: the GskIO whose read hook should be unblocked.
+
+
+<!-- ##### MACRO gsk_io_unblock_write ##### -->
+<para>
+Unblock the write hook from being triggered.
+</para>
+
+@io: the GskIO whose write hook should be unblocked.
+
+
+<!-- ##### MACRO gsk_io_has_read_hook ##### -->
+<para>
+Return whether the read hook is trapped.
+</para>
+
+@io: the GskIO whose read hook should be tested.
+
+
+<!-- ##### MACRO gsk_io_has_write_hook ##### -->
+<para>
+Return whether the write hook is trapped.
+</para>
+
+@io: the GskIO whose write hook should be tested.
+
+
+<!-- ##### MACRO gsk_io_trap_readable ##### -->
+<para>
+Trap the read end of the #GskIO.
+</para>
+<para>
+Note that only one trap of a #GskIO's read-end is allowed at a time.
+</para>
+
+@io: the #GskIO whose read end should be trapped.
+@func: the function to call (a #GskIOHookFunc) when it's readable.
+@shutdown_func: the function to call (a #GskIOHookFunc) when it's read end is shut down.
+@data: data passed along to @func and @shutdown_func
+@destroy: optional function called when the hook is untrapped.
+
+
+<!-- ##### MACRO gsk_io_trap_writable ##### -->
+<para>
+Trap the write end of the #GskIO.
+</para>
+<para>
+Note that only one trap of a #GskIO's write-end is allowed at a time.
+</para>
+
+@io: the #GskIO whose write end should be trapped.
+@func: the function to call (a #GskIOHookFunc) when it's writable.
+@shutdown_func: the function to call (a #GskIOHookFunc) when it's write end is shut down.
+@data: data passed along to @func and @shutdown_func
+@destroy: optional function called when the hook is untrapped.
+
+
+<!-- ##### MACRO gsk_io_untrap_readable ##### -->
+<para>
+Untrap the read end of the #GskIO.
+</para>
+
+@io: the #GskIO whose read end should be untrapped.
+
+
+<!-- ##### MACRO gsk_io_untrap_writable ##### -->
+<para>
+Untrap the write end of the #GskIO.
+</para>
+
+@io: the #GskIO whose write end should be untrapped.
+
+
+<!-- ##### FUNCTION gsk_io_shutdown ##### -->
+<para>
+</para>
+
+@io: 
+@error: 
+
+
+<!-- ##### MACRO gsk_io_read_shutdown ##### -->
+<para>
+Shutdown both the read ends of the #GskIO.
+</para>
+<para>
+Returns TRUE if the shutdown succeeded immediately.
+</para>
+<para>
+Returns FALSE if the shutdown has been initiated but not finished,
+or if an error occurred.  These cases can be distinguished by looking
+at the @error return.
+</para>
+
+@io: the #GskIO to affect.
+@error: error return if things go wrong.
+
+
+<!-- ##### MACRO gsk_io_write_shutdown ##### -->
+<para>
+Shutdown both the write ends of the #GskIO.
+</para>
+<para>
+Returns FALSE if the shutdown has been initiated but not finished,
+or if an error occurred.  These cases can be distinguished by looking
+at the @error return.
+</para>
+
+@io: the #GskIO to affect.
+@error: optional error return if things go wrong.
+
+
+<!-- ##### FUNCTION gsk_io_close ##### -->
+<para>
+
+</para>
+
+@io: 
+
+
+<!-- ##### MACRO gsk_io_notify_ready_to_read ##### -->
+<para>
+Trigger an is-readable event.  This should only be
+called by derived implementations.
+</para>
+
+@io: the #GskIO whose read-end is ready.
+
+
+<!-- ##### MACRO gsk_io_notify_ready_to_write ##### -->
+<para>
+Trigger an is-writable event.  This should only be
+called by derived implementations.
+</para>
+
+@io: the #GskIO whose write-end is ready.
+
+
+<!-- ##### MACRO gsk_io_notify_read_shutdown ##### -->
+<para>
+Trigger a read-end-shutdown event.  This should only be
+called by derived implementations.
+</para>
+
+@io: the #GskIO whose read-end is shutdown.
+
+
+<!-- ##### MACRO gsk_io_notify_write_shutdown ##### -->
+<para>
+Trigger a write-end-shutdown event.  This should only be
+called by derived implementations.
+</para>
+
+@io: the #GskIO whose write-end is shutdown.
+
+
+<!-- ##### FUNCTION gsk_io_notify_shutdown ##### -->
+<para>
+
+</para>
+
+@io: 
+
+
+<!-- ##### FUNCTION gsk_io_notify_connected ##### -->
+<para>
+</para>
+
+@io: 
+
+
+<!-- ##### MACRO gsk_io_is_polling_for_read ##### -->
+<para>
+Check whether the last invocation of set_poll_read()
+indicated that polling for readability was desired.
+</para>
+
+@io: the IO to query.
+
+
+<!-- ##### MACRO gsk_io_is_polling_for_write ##### -->
+<para>
+Check whether the last invocation of set_poll_write()
+indicated that polling for writability was desired.
+</para>
+
+@io: the IO to query.
+
+
+<!-- ##### MACRO gsk_io_get_is_connecting ##### -->
+<para>
+Return whether the #GskIO is still connecting.
+Will be FALSE if the #GskIO is never connecting.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_is_readable ##### -->
+<para>
+Return whether the #GskIO is readable.
+(It means that the read-end is available--
+it does not that there is any data which can be read.)
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_is_writable ##### -->
+<para>
+Return whether the #GskIO is writable.
+(It means that the write-end is available--
+it does not mean that you can necessarily write data.)
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_never_partial_reads ##### -->
+<para>
+Return whether the #GskIO ever reads a partial buffer.
+</para>
+<para>
+An example of a source which never returns partial data
+is a virtual source like /dev/zero.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_never_partial_writes ##### -->
+<para>
+Return whether the #GskIO ever writes a partial buffer.
+</para>
+<para>
+An example of a source which never writes partial data
+is a infinite memory buffer, or a sink which merely
+discards data written to it.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_never_blocks_write ##### -->
+<para>
+Return if the #GskIO will never block to write data.  It will always allow
+some data to be written, until it is full and will allow no more ever.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_never_blocks_read ##### -->
+<para>
+Return if the #GskIO will never block to read data.  It will always return
+some data, until it is empty and will never return any more.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_idle_notify_write ##### -->
+<para>
+Return whether the write-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_idle_notify_read ##### -->
+<para>
+Return whether the read-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_is_open ##### -->
+<para>
+Return whether the #GskIO is open.  A #GskIO should be open if
+you want to use it.
+</para>
+
+@io: the #GskIO to test.
+
+
+<!-- ##### MACRO gsk_io_get_is_read_shutting_down ##### -->
+<para>
+Get whether the read end of the IO is in the process of shutting down.
+</para>
+
+@io: the IO to query.
+
+
+<!-- ##### MACRO gsk_io_get_is_write_shutting_down ##### -->
+<para>
+Get whether the write end of the IO is in the process of shutting down.
+</para>
+
+@io: the IO to query.
+
+
+<!-- ##### MACRO gsk_io_get_shutdown_on_error ##### -->
+<para>
+
+</para>
+
+@io: 
+
+
+<!-- ##### MACRO gsk_io_mark_is_connecting ##### -->
+<para>
+Set the #GskIO's is_connecting flag.  This should only be called
+by the implementations of derived classes.  By default,
+GskIO is not in the connecting state.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_is_readable ##### -->
+<para>
+Set whether the #GskIO is_readable.  This should only be called by
+the implementations of derived classes.  In general,
+you should not change is_readable more than once in the lifetime
+of an object; however some types of streams
+can be made readable again once they are shutdown.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_is_writable ##### -->
+<para>
+Set whether the #GskIO is_writable.  This should only be called by
+the implementations of derived classes.  In general,
+you should not change is_writable more than once in the lifetime
+of an object; however some types of streams
+can be made writable again once they are shutdown.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_never_partial_reads ##### -->
+<para>
+Mark the never_partial_reads flag.  This means that the read method
+should never have a partial success.
+This should therefore only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_never_partial_writes ##### -->
+<para>
+Mark the never_partial_writes flag.  This means that the write method
+should never have a partial success.
+This should therefore only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_never_blocks_write ##### -->
+<para>
+Indicate that writing to the #GskIO never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_never_blocks_read ##### -->
+<para>
+Indicate that reading from the #GskIO never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_idle_notify_write ##### -->
+<para>
+Tell the GskIO system to continually trigger a user's write hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_idle_notify_read ##### -->
+<para>
+Tell the GskIO system to continually trigger a user's read hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_is_open ##### -->
+<para>
+Indicate that a #GskIO is open.
+This should only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_mark_shutdown_on_error ##### -->
+<para>
+Cause the #GskIO object to be shutdown if it fails.
+</para>
+
+@io: the #GskIO object to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_is_readable ##### -->
+<para>
+Indicate that a #GskIO is no longer readable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_is_writable ##### -->
+<para>
+Indicate that a #GskIO is no longer writable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_never_partial_reads ##### -->
+<para>
+Indicate that the GskIO may exhibit partial reads.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_never_partial_writes ##### -->
+<para>
+Indicate that the GskIO may exhibit partial writes.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_idle_notify_write ##### -->
+<para>
+Stop continually triggering the user's write hook.
+(This undoes gsk_io_mark_idle_notify_write())
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_idle_notify_read ##### -->
+<para>
+Stop continually triggering the user's read hook.
+(This undoes gsk_io_mark_idle_notify_read())
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_is_open ##### -->
+<para>
+Indicate that the GskIO is closed.
+</para>
+
+@io: the #GskIO to affect.
+
+
+<!-- ##### MACRO gsk_io_clear_shutdown_on_error ##### -->
+<para>
+Suppress automatic-shutdown when the stream fails.
+</para>
+
+@io: the stream to affect.
+
+
+<!-- ##### MACRO gsk_io_set_idle_notify_write ##### -->
+<para>
+Set whether to perform idle-notification on the writable end of this GskIO.
+</para>
+
+@io: the IO object to affect.
+@v: whether to notify.
+
+
+<!-- ##### MACRO gsk_io_set_idle_notify_read ##### -->
+<para>
+Set whether to perform idle-notification on the readable end of this GskIO.
+</para>
+
+@io: the IO object to affect.
+@v: whether to notify.
+
+
+<!-- ##### FUNCTION gsk_io_set_error ##### -->
+<para>
+
+</para>
+
+@io: 
+@cause: 
+@error_code: 
+@format: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION gsk_io_set_gerror ##### -->
+<para>
+
+</para>
+
+@io: 
+@cause: 
+@error: 
+
+
+<!-- ##### FUNCTION gsk_io_error_cause_to_string ##### -->
+<para>
+
+</para>
+
+@cause: 
+@Returns: 
+
+

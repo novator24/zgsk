@@ -1,0 +1,368 @@
+<!-- ##### SECTION Title ##### -->
+GskBuffer
+
+<!-- ##### SECTION Short_Description ##### -->
+a fast, flexible in-memory data buffer
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This code manages a binary data buffer.
+Data is maintained first-in first-out; so
+gsk_buffer_append() writes to the end of the buffer,
+and gsk_buffer_read() reads from the beginning.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskBuffer ##### -->
+<para>
+A buffer is just a list of fragments and a size counter.
+</para>
+
+@size: the number of bytes in the buffer total.
+@first_frag: the first fragment in the buffer (read end)
+@last_frag: the last fragment in the buffer (write end)
+
+<!-- ##### STRUCT GskBufferFragment ##### -->
+<para>
+This structure should rarely be accessed directly,
+instead you should use the GskBuffer methods.
+They are exposed for optimization and debugging convenience.
+</para>
+<para>
+A single contiguous chunk of memory in the buffer.
+Each #GskBufferFragment is managed by a single buffer,
+but internally fragments are sometimes transferred whole between buffers.
+</para>
+<para>
+A foreign fragment is one which created with
+gsk_buffer_append_foreign().  It means that gsk
+will use the destroy method rather than the normal
+buffer pool, where data and the GskBufferFragment
+are allocated continguously.
+The headers of foreign fragments are pooled in a separate pool.
+</para>
+
+@next: next fragment in the buffer.
+@buf: raw data in the buffer
+@buf_max_size: maximum size of buffer, assuming buf_start==0.
+@buf_start: offset in @buf of first readable data.
+@buf_length: number of bytes currently in the buffer.
+@is_foreign: is this fragment foreign?
+@destroy: function to free foreign data.
+@destroy_data: data to destroy to free buf, if foreign.
+
+<!-- ##### FUNCTION gsk_buffer_construct ##### -->
+<para>
+
+</para>
+
+@buffer: 
+
+
+<!-- ##### FUNCTION gsk_buffer_read ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@data: 
+@max_length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_peek ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@data: 
+@max_length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_discard ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@max_discard: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_read_line ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_parse_string0 ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_peek_char ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_read_char ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_append ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@data: 
+@length: 
+
+
+<!-- ##### FUNCTION gsk_buffer_append_string ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@string: 
+
+
+<!-- ##### FUNCTION gsk_buffer_append_char ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@character: 
+
+
+<!-- ##### FUNCTION gsk_buffer_append_string0 ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@string: 
+
+
+<!-- ##### FUNCTION gsk_buffer_append_foreign ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@data: 
+@length: 
+@destroy: 
+@destroy_data: 
+
+
+<!-- ##### FUNCTION gsk_buffer_printf ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@format: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION gsk_buffer_vprintf ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@format: 
+@args: 
+
+
+<!-- ##### FUNCTION gsk_buffer_drain ##### -->
+<para>
+
+</para>
+
+@dst: 
+@src: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_transfer ##### -->
+<para>
+
+</para>
+
+@dst: 
+@src: 
+@max_transfer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_writev ##### -->
+<para>
+
+</para>
+
+@read_from: 
+@fd: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_read_in_fd ##### -->
+<para>
+
+</para>
+
+@write_to: 
+@read_from: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_index_of ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@char_to_find: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_polystr_index_of ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@strings: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_destruct ##### -->
+<para>
+
+</para>
+
+@to_destroy: 
+
+
+<!-- ##### FUNCTION gsk_buffer_cleanup_recycling_bin ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### STRUCT GskBufferIterator ##### -->
+<para>
+An iterator which can be used to walk through a buffer.
+</para>
+<para>
+You MUST not modify the buffer that you are editing in any way.
+</para>
+<para>
+TODO: exceptions to the above may be feasible,
+but we have to see what the demands are...
+</para>
+
+@fragment: which fragment we are currently in.
+@in_cur: the offset in bytes into @fragment.
+@cur_length: the length of fragment.
+@cur_data: the data of fragment.
+@offset: the offset in bytes into the whole buffer.
+
+<!-- ##### MACRO gsk_buffer_iterator_offset ##### -->
+<para>
+Get the offset in bytes into #GskBuffer that we
+are into the whole buffer.
+</para>
+
+@iterator: the iterator to examine.
+
+
+<!-- ##### FUNCTION gsk_buffer_iterator_construct ##### -->
+<para>
+
+</para>
+
+@iterator: 
+@to_iterate: 
+
+
+<!-- ##### FUNCTION gsk_buffer_iterator_peek ##### -->
+<para>
+
+</para>
+
+@iterator: 
+@out: 
+@max_length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_iterator_read ##### -->
+<para>
+
+</para>
+
+@iterator: 
+@out: 
+@max_length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_iterator_skip ##### -->
+<para>
+
+</para>
+
+@iterator: 
+@max_length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_buffer_iterator_find_char ##### -->
+<para>
+
+</para>
+
+@iterator: 
+@c: 
+@Returns: 
+
+
+<!-- ##### MACRO GSK_BUFFER_STATIC_INIT ##### -->
+<para>
+Macro which can be used to initialize an empty buffer.
+One can write:
+  GskBuffer buf = GSK_BUFFER_STATIC_INIT;
+</para>
+
+
+

@@ -1,0 +1,30 @@
+<!-- ##### SECTION Title ##### -->
+Client Stream
+
+<!-- ##### SECTION Short_Description ##### -->
+Create a GskStream which is connecting to a remote address.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A simple method to create a GskStream which is connecting
+to a remote address, without any of the low-level hassles.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_stream_new_connecting ##### -->
+<para>
+
+</para>
+
+@address: 
+@error: 
+@Returns: 
+
+

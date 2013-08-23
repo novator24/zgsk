@@ -1,0 +1,65 @@
+<!-- ##### SECTION Title ##### -->
+gskfork
+
+<!-- ##### SECTION Short_Description ##### -->
+Functions to call to clean up after forking.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This provides a way to register file descriptors that
+should be closed by the background thread.
+It also contains a gsk-like wrapper to fork.. that is,
+a callback oriented fork interface.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION GskForkFunc ##### -->
+<para>
+Function to call from the background process.
+</para>
+
+@data: data passed through gsk_fork().
+@Returns: the exit status of this process.
+
+
+<!-- ##### FUNCTION gsk_fork ##### -->
+<para>
+
+</para>
+
+@action: 
+@data: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_fork_add_cleanup_fd ##### -->
+<para>
+
+</para>
+
+@fd: 
+
+
+<!-- ##### FUNCTION gsk_fork_remove_cleanup_fd ##### -->
+<para>
+
+</para>
+
+@fd: 
+
+
+<!-- ##### FUNCTION gsk_fork_child_cleanup ##### -->
+<para>
+
+</para>
+
+
+

@@ -1,0 +1,101 @@
+<!-- ##### SECTION Title ##### -->
+Listening for Connections
+
+<!-- ##### SECTION Short_Description ##### -->
+Base class for server-type objects.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Derived classes of GskStreamListener provide new GskStreams
+as connections are accepted.  Users can receive notification
+of this, and usually attach the stream to a new protocol object
+to handle the connection.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION GskStreamListenerAcceptFunc ##### -->
+<para>
+A method for handling a new connection.
+</para>
+<para>
+Because gsk_stream_attach() automatically adds a reference to
+the stream, the usual pattern is to do a few gsk_stream_attach()s
+and then g_object_unref() from within this callback.
+</para>
+<para>
+TODO: One can interpret this as meaning that the ownership of the
+stream is passed through this callback,
+which is irregular.
+We will probably fix this by
+implementing listener attachment with a GskHook
+and deprecating this API.
+</para>
+
+@stream: the new connection.
+This should be g_object_unref()d eventually be the called code.
+@data: the data provided to gsk_stream_listener_handle_accept()
+@error: optional error return value.
+@Returns: whether everything is ok.
+
+
+<!-- ##### USER_FUNCTION GskStreamListenerErrorFunc ##### -->
+<para>
+A method for handling a low-level server error.
+</para>
+
+@err: the error which transpired.
+@data: the data provided to gsk_stream_listener_handle_accept()
+
+
+<!-- ##### STRUCT GskStreamListenerClass ##### -->
+<para>
+The base class of an object which accepts
+new incoming #GskStream's.
+</para>
+
+@object_class: parent class of this class.
+
+<!-- ##### STRUCT GskStreamListener ##### -->
+<para>
+The base instance of an object which accepts
+new incoming #GskStream's.
+</para>
+
+
+<!-- ##### FUNCTION gsk_stream_listener_handle_accept ##### -->
+<para>
+
+</para>
+
+@listener: 
+@func: 
+@err_func: 
+@data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_stream_listener_notify_accepted ##### -->
+<para>
+
+</para>
+
+@stream_listener: 
+@new_stream: 
+
+
+<!-- ##### FUNCTION gsk_stream_listener_notify_error ##### -->
+<para>
+
+</para>
+
+@stream_listener: 
+@error: 
+
+

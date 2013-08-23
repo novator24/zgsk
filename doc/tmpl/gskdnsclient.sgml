@@ -1,0 +1,111 @@
+<!-- ##### SECTION Title ##### -->
+gskdnsclient
+
+<!-- ##### SECTION Short_Description ##### -->
+This is a DNS client.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This is a flexible DNS client.  It has (1) a transport for packets and
+(2) a cache of resource records.
+</para>
+<para>
+This code is almost always used indirectly, from gsk_name_resolve(),
+since the default name resolver uses DNS.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskDnsClient ##### -->
+<para>
+An instance of the DNS client.
+</para>
+
+
+<!-- ##### STRUCT GskDnsClientClass ##### -->
+<para>
+The class of the DNS client.
+</para>
+
+
+<!-- ##### ENUM GskDnsClientFlags ##### -->
+<para>
+Flags which affect how the DNS client operates.
+</para>
+
+@GSK_DNS_CLIENT_STUB_RESOLVER: 
+Whether this DNS client is a stub resolver.
+A stub resolver relies on its name-server to do all
+recursion and caching for it.
+
+<!-- ##### FUNCTION gsk_dns_client_new ##### -->
+<para>
+
+</para>
+
+@packet_queue: 
+@rr_cache: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_client_add_searchpath ##### -->
+<para>
+
+</para>
+
+@client: 
+@searchpath: 
+
+
+<!-- ##### FUNCTION gsk_dns_client_add_ns ##### -->
+<para>
+
+</para>
+
+@client: 
+@address: 
+
+
+<!-- ##### FUNCTION gsk_dns_client_set_cache ##### -->
+<para>
+
+</para>
+
+@client: 
+@rr_cache: 
+
+
+<!-- ##### FUNCTION gsk_dns_client_set_flags ##### -->
+<para>
+
+</para>
+
+@client: 
+@flags: 
+
+
+<!-- ##### FUNCTION gsk_dns_client_get_flags ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_client_parse_system_files ##### -->
+<para>
+
+</para>
+
+@client: 
+@Returns: 
+
+

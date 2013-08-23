@@ -1,0 +1,98 @@
+<!-- ##### SECTION Title ##### -->
+GskXmlrpcStream
+
+<!-- ##### SECTION Short_Description ##### -->
+a stream of XMLRPC method calls and responses.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This class provides an easy way to handle XMLRPC;
+you may wish to attach this to an HTTP post_data
+or content_stream.
+</para>
+<para>
+Or, you may use XMLRPC with the raw TCP/IP transport layer
+if you please.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskXmlrpcStreamClass ##### -->
+<para>
+
+</para>
+
+@stream_class: 
+@set_poll_requestable: 
+@shutdown_requestable: 
+
+<!-- ##### STRUCT GskXmlrpcStream ##### -->
+<para>
+
+</para>
+
+@stream: 
+@parser: 
+@first_unhandled_request: 
+@next_to_dequeue: 
+@last_request: 
+@incoming_request_hook: 
+@first_unresponded_request: 
+@last_unresponded_request: 
+@outgoing: 
+
+<!-- ##### MACRO GSK_XMLRPC_STREAM_REQUEST_HOOK ##### -->
+<para>
+Get the #GskHook for the request-available end of the stream.
+</para>
+
+@stream: #GskXmlrpcStream from which to obtain the hook.
+
+
+<!-- ##### FUNCTION gsk_xmlrpc_stream_get_request ##### -->
+<para>
+
+</para>
+
+@stream: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xmlrpc_stream_respond ##### -->
+<para>
+
+</para>
+
+@stream: 
+@request: 
+@response: 
+
+
+<!-- ##### USER_FUNCTION GskXmlrpcResponseNotify ##### -->
+<para>
+
+</para>
+
+@request: 
+@response: 
+@data: 
+
+
+<!-- ##### FUNCTION gsk_xmlrpc_stream_make_request ##### -->
+<para>
+
+</para>
+
+@stream: 
+@request: 
+@notify: 
+@data: 
+@destroy: 
+
+

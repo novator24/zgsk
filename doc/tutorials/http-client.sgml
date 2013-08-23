@@ -1,0 +1,287 @@
+<refentry id="tutorial-httpclient">
+<refmeta>
+<refentrytitle>Writing a HTTP Client</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Tutorial: Writing a HTTP client</refname><refpurpose>How to write a web client</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Writing a HTTP Client</title>
+<para>
+This section of the tutorial describes how to write an HTTP client.
+An HTTP client is an object that gets webpages (and other content) by talking to
+an HTTP server.
+</para>
+<para>
+There are really two ways to do this:
+<itemizedlist>
+ <listitem><para>
+  Using GskUrlTransfer.
+  A simple, all-encompassing mechanism for transferring data with a resource at a given URL.
+ </para></listitem>
+ <listitem><para>
+  The lowlevel way.  This way requires you to do DNS lookup, create the TCP connection,
+  and attach it to a transport-independent HTTP-client object.  This is a lot more flexible
+  in some ways: for example, you can use HTTP over non-TCP transports in this way.
+  But it requires more steps.
+ </para></listitem>
+</itemizedlist>
+</para>
+<para>
+ You should use GskUrlTransfer unless you have a really good reason not to.
+ There are several reasons.
+ First, it's easier.
+ Also, it's not limited to HTTP: if your program uses GskUrlTransfer it
+ will be able to handle FTP and HTTPS.
+</para>
+
+<refsect2><title>Using <structname>GskUrlTransfer</structname></title>
+<para>
+This is the high-level way to download content from a URL.
+</para>
+<para>
+Here is a very simple program that prints the contents of a URL to
+standard-output.
+<programlisting><![CDATA[
+int main(int argc, char **argv)
+{
+  gsk_init (&argc, &argv, NULL);
+  if (argc != 2)
+    g_error ("usage: %s URL", argv[0]);
+  url = gsk_url_new (argv[1], &error);
+  if (url == NULL)
+    g_error ("error parsing URL: %s", error->message);
+  if (!gsk_url_transfer (url,
+                         NULL, NULL, NULL,	/* no upload data */
+			 handle_transfer,
+			 NULL, NULL, &error))
+    g_error ("error opening URL: %s", error->message);
+  return gsk_main_run ();
+}
+]]></programlisting>
+And we also have to implement <function>handle_transfer</function>
+which will get invoked when the transfer is started:
+<programlisting><![CDATA[
+static void
+handle_transfer (GskUrlTransfer *info,
+	         gpointer        user_data)
+{
+  GError *error = NULL;
+  GskStream *stdout_stream;
+
+  /* Error handling */
+  if (info->result != GSK_URL_TRANSFER_SUCCESS)
+    {
+      g_printerr ("Download failed: result: %s\n", gsk_url_transfer_result_name (info->result));
+      gsk_main_exit (1);
+      return;
+    }
+  if (info->content == NULL)
+    {
+      g_printerr ("No content.\n");
+      gsk_main_exit (0);
+      return;
+    }
+
+  write_stream_to_stdout_and_exit (info->content);
+}
+]]></programlisting>
+We will use this helper function (which is like <program>cat</program> for <structname>GskStream</structname>s):
+<programlisting><![CDATA[
+static void 
+write_stream_to_stdout_and_exit (GskStream *content)
+{
+  /* Create a stream mapped to standard-output. */
+  stdout_stream = gsk_stream_fd_new_auto (STDOUT_FILENO);
+  if (stdout_stream == NULL)
+    g_error ("error opening STDOUT");
+
+  /* Attach content to stdout. */
+  if (!gsk_stream_attach (content, stdout_stream, &error))
+    g_error ("error attaching streams: %s", error->message);
+
+  /* quit when done */
+  g_object_weak_ref (stdout_stream, (GWeakNotify) gsk_main_quit, NULL);
+  g_object_unref (stdout_stream);
+}
+]]></programlisting>
+</para>
+<para>If you want to process binary-data from the URL's content as it comes,
+rather than attaching a stream to it, you should use
+consider using <function>gsk_stream_hook_readable</function> on the content
+instead.  You'll have to <function>g_object_ref</function> manually.
+Here's an implementation of handle_transfer that computes the MD5
+of the content instead of printing it:
+<programlisting><![CDATA[
+static void
+handle_transfer_2 (GskUrlTransfer *info,
+	           gpointer        user_data)
+{
+  /* for real version, copy error handling from above */
+  g_assert (info->result == GSK_URL_TRANSFER_SUCCESS
+        &&  info->content != NULL);
+  gsk_stream_trap_readable (g_object_ref (info->content),
+                            handle_content_stream_is_readable,
+                            handle_content_stream_read_shutdown,
+			    gsk_hash_new_md5 (),
+			    (GDestroyNotify) gsk_hash_destroy);
+}
+static gboolean
+handle_content_stream_is_readable (GskStream *stream,
+                                   gpointer   data)
+{
+  GskHash *hash = data;
+  char buf[4096];
+  GError *error = NULL;
+  guint n_read = gsk_stream_read (stream, buf, sizeof (buf), &error);
+  gsk_hash_feed (hash, buf, n_read);
+  if (error)
+    {
+      g_warning ("error reading %s: %s", G_OBJECT_TYPE_NAME (stream), error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+  return TRUE;
+}
+static gboolean
+handle_content_stream_read_shutdown (GskStream *stream,
+                                     gpointer   data)
+{
+  GskHash *hash = data;
+  char *hex;
+  gsk_hash_done (hash);
+  hex = g_alloca (gsk_hash_get_size (hash) * 2 + 1);
+  gsk_hash_get_hex (hash, hex);
+  g_print ("%s\n", hex);
+  return FALSE;
+}
+]]></programlisting></para>
+<refsect3><title>POSTing data using <structname>GskUrlTransfer</structname></title>
+<para>
+... [TODO: remember to describe gsk-memory; content-length]
+</para>
+</refsect3>
+<refsect3><title>Other HTTP-Specific Configuration</title>
+<para>
+...
+</para>
+</refsect3>
+</refsect2>
+<refsect2><title>Using <structname>GskHttpClient</structname></title>
+<para>
+This is the low-level way to be an HTTP client.
+</para>
+<para>
+The <structname>GskHttpClient</structname> class manages just the binary protocol
+that is used by HTTP.  It does not include the transport layer in any way!
+Instead, the <function>read</function> method outputs data that will be sent
+across the transport to the server, whereas the <function>write</function> method
+accepts data from the remote end.
+</para>
+<para>To use a <structname>GskHttpClient</structname> you
+<function>gsk_stream_attach_pair</function> it to a transport layer,
+then call <function>gsk_http_client_request</function> any number
+of times, followed by <function>gsk_http_client_shutdown_when_done</function>.
+</para>
+<para>Here is an example usage of <structname>GskHttpClient</structname>,
+that connects to a unix-domain socket (for variety)
+and makes an HTTP request on it.<footnote><para>You can use this code to talk to a GskControlServer,
+if you find the GskControlClient code too limited.</para></footnote>
+<programlisting><![CDATA[
+int main(int argc, char **argv)
+{
+  const char *socket_fname, *uri_path;
+  GskSocketAddress *socket_address;
+  GskStream *client;
+  GskHttpClient *http_client;
+  GskHttpRequest *http_request;
+  gsk_init (&argc, &argv, NULL);
+  if (argc != 3)
+    g_error ("usage: %s SOCKET_PATH URI_PATH", argv[0]);
+  socket_fname = argv[1];
+  uri_path = argv[2];
+  socket_address = gsk_socket_address_new_local (socket_fname);
+  client = gsk_stream_new_connecting (socket_address, &error);
+  if (client == NULL)
+    g_error ("error connecting to %s: %s", socket_fname, error->message);
+  http_client = gsk_http_client_new ();
+
+  /* Make our request */
+  gsk_http_client_request (http_client,
+                           http_request,
+			   NULL,	/* no POST data */
+			   handle_http_response, NULL,
+			   handle_http_response_destroyed);
+  g_object_unref (http_request);
+  http_request = NULL;
+
+  /* Attach the HttpClient to the transport */
+  if (!gsk_stream_attach_pair (client, GSK_STREAM (http_client), &error))
+    g_error ("error attaching http client to transport: %s", error->message);
+
+  /* Run */
+  g_object_unref (http_client);
+  g_object_unref (client);
+  return gsk_main_run ();
+}
+]]></programlisting>
+</para>
+<para>
+We have to write two more callbacks: <function>handle_http_response</function> must handle the remote server's response.
+And <function>handle_http_response_destroyed</function> will be invoked when the HTTP Client is destroyed:
+hopefully by then <function>handle_http_response</function> will have been invoked, but if not, we must exit with an error.
+</para>
+<para>The implementation of <function>handle_http_response</function> ...
+<programlisting><![CDATA[
+static gboolean got_http_response = FALSE;
+static void
+handle_http_response (GskHttpRequest  *request,
+		      GskHttpResponse *response,
+		      GskStream       *input,
+		      gpointer         hook_data)
+{
+  g_assert (hook_data == NULL);  /* matches call to gsk_http_client_request */
+  got_http_response = TRUE;
+
+  if (response->status_code != GSK_HTTP_STATUS_OK)	/* == 200: the usual success code for HTTP */
+    {
+      g_warning ("Error: got %u from server", response->status_code);
+      gsk_main_exit (1);
+      return;
+    }
+  if (input == NULL)
+    {
+      g_warning ("No content from server");
+      gsk_main_exit (1);
+      return;
+    }
+
+  /* handle the input */
+  write_stream_to_stdout_and_exit (input);
+}
+]]></programlisting>
+</para>
+<para>
+Finally we implement <function>handle_http_response_destroyed</function>,
+whose only real point is to catch situations where the server gave
+no response whatsoever, although one common reason is that we failed to connect.
+<programlisting><![CDATA[
+static void
+handle_http_response_destroyed (gpointer hook_data)
+{
+  if (!got_http_response)
+    {
+      g_warning ("no response from HTTP server");
+      gsk_main_exit (1);
+    }
+}
+]]></programlisting>
+</para>
+</refsect2>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,83 @@
+<!-- ##### SECTION Title ##### -->
+GskControlServer
+
+<!-- ##### SECTION Short_Description ##### -->
+a simple mechanism for handling control connections
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This provides a simple server that can be used
+from the gsk-control-client for runtime manipulation.
+</para>
+<para>
+You can register data and commands that the client
+will be able to invoke.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskControlClient, gsk-control-client.
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskControlServer ##### -->
+<para>
+Opaque class which acts as a database of virtual files and commands.
+</para>
+
+
+<!-- ##### FUNCTION gsk_control_server_add_command ##### -->
+<para>
+Add a command to the server.
+</para>
+
+@server: the server which should understand the command.
+@command_name: the name of the command.
+@func: the function to invoke to handle the command.
+@data: the data to pass to the function invocation.
+
+
+<!-- ##### FUNCTION gsk_control_server_delete_file ##### -->
+<para>
+</para>
+
+@server: 
+@path: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_control_server_listen ##### -->
+<para>
+
+</para>
+
+@server: 
+@address: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_control_server_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_control_server_set_file ##### -->
+<para>
+
+</para>
+
+@server: 
+@path: 
+@content: 
+@content_length: 
+@error: 
+@Returns: 
+
+

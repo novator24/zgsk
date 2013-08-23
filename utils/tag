@@ -1,0 +1,12 @@
+#! /bin/sh
+
+tag="$1"
+test -z "$tag" && {
+  echo "usage: tag TAG
+
+Tag the trunk." 1>&2
+  exit 1
+}
+
+root=https://gsk.svn.sourceforge.net/svnroot/gsk
+svn cp $root/trunk $root/$tag

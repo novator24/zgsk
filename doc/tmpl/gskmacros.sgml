@@ -1,0 +1,84 @@
+<!-- ##### SECTION Title ##### -->
+Helpful Macros
+
+<!-- ##### SECTION Short_Description ##### -->
+Various macros to eliminate tedious typing,
+beyond those provided by glib.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_DECLARE_POOL_ALLOCATORS ##### -->
+<para>
+Declare static inline functions type_free and type_alloc,
+(where type is the second parameter to this macro)
+which use GMemChunks to implement fast allocation.
+@Type is the name of the name of structure to allocate;
+and @pool_count is the number to allocate at once.
+</para>
+
+@Type: Real type of the things to allocate.
+@type: Lowercased type name, for mangling into the function name.
+@pool_count: Number of things to allocate at once.
+
+
+<!-- ##### MACRO GSK_STRUCT_MEMBER_SIZE ##### -->
+<para>
+Find size in bytes of a structure member.
+</para>
+
+@type: 
+@member: 
+
+
+<!-- ##### MACRO GSK_STRUCT_MEMBER_END_OFFSET ##### -->
+<para>
+Find offset of a member's end in bytes.
+</para>
+
+@struct: 
+@member: 
+
+
+<!-- ##### MACRO _ ##### -->
+<para>
+
+</para>
+
+@s: 
+
+
+<!-- ##### MACRO GSK_SKIP_CHAR_TYPE ##### -->
+<para>
+Skip @ptr along until it fails the @condition.
+</para>
+
+@ptr: pointer to a NUL-terminated string.
+@condition: function predicate to test characters with.
+
+
+<!-- ##### MACRO GSK_SKIP_WHITESPACE ##### -->
+<para>
+Skip @char_ptr along until it gets to a non-whitespace character, or the end of the string.
+</para>
+
+@char_ptr: the pointer to advance.
+
+
+<!-- ##### MACRO GSK_SKIP_NONWHITESPACE ##### -->
+<para>
+Skip @char_ptr along until it gets to a whitespace character, or the end of the string.
+</para>
+
+@char_ptr: the pointer to advance.
+
+

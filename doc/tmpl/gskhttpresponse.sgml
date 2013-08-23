@@ -1,0 +1,445 @@
+<!-- ##### SECTION Title ##### -->
+GskHttpResponse
+
+<!-- ##### SECTION Short_Description ##### -->
+An HTTP header that is sent from server to client.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A response is the last of two messages in an HTTP transaction.
+It indicates whether the request succeeded, or what went wrong.
+It may also include often information about the content.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskHttpHeader, GskHttpRequest
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskHttpResponse ##### -->
+<para>
+An instance of a HTTP response header.
+</para>
+
+
+<!-- ##### ARG GskHttpResponse:age ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpResponse:e-tag ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpResponse:expires ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpResponse:last-modified ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpResponse:location ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpResponse:server ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpResponse:status-code ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gsk_http_response_new_blank ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_response_new_redirect ##### -->
+<para>
+
+</para>
+
+@location: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_response_from_request ##### -->
+<para>
+
+</para>
+
+@request: 
+@status_code: 
+@length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_response_process_first_line ##### -->
+<para>
+
+</para>
+
+@response: 
+@line: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_http_response_set_status_code ##### -->
+<para>
+Set what kind of response is going to be given.
+See #GskHttpStatus for a description of all the status codes
+defined in HTTP/1.1 (RFC 2616).
+</para>
+
+@response: the response to affect.
+@status: the new status code.
+
+
+<!-- ##### MACRO gsk_http_response_get_status_code ##### -->
+<para>
+Query the status code from a response.
+</para>
+
+@response: the response to query.
+
+
+<!-- ##### FUNCTION gsk_http_response_set_allowed_verbs ##### -->
+<para>
+
+</para>
+
+@response: 
+@allowed: 
+
+
+<!-- ##### MACRO gsk_http_response_get_allowed_verbs ##### -->
+<para>
+Get the bitmask of verbs allowed by the server, according
+to the Allow: header line.
+</para>
+<para>
+XXX: what should happen in the absence of an Allow header????
+</para>
+
+@header: 
+<!-- # Unused Parameters # -->
+@response: the response to query.
+
+
+<!-- ##### MACRO gsk_http_response_set_age ##### -->
+<para>
+Set the age of a response.  This is only used for cached responses.
+It tells the length of time that the data has been
+sitting in the cache.  [See RFC 2616, Section 14.6]
+</para>
+
+@response: the response to indicate the age of.
+@age: the indicated age, or -1 to unset the age indication.
+
+
+<!-- ##### MACRO gsk_http_response_get_age ##### -->
+<para>
+Get the age of a response.  This is only used for cached responses.
+It tells the length of time that the data has been
+sitting in the cache.  [See RFC 2616, Section 14.6]
+</para>
+<para>
+If there is no Age field, -1 is returned.
+</para>
+
+@response: the response to query.
+
+
+<!-- ##### MACRO gsk_http_response_set_location ##### -->
+<para>
+   [RFC 2616, 14.30]
+   The Location response-header field is used to redirect the recipient
+   to a location other than the Request-URI for completion of the
+   request or identification of a new resource. For 201 (Created)
+   responses, the Location is that of the new resource which was created
+   by the request. For 3xx responses, the location SHOULD indicate the
+   server's preferred URI for automatic redirection to the resource. The
+   field value consists of a single absolute URI.
+</para>
+
+@response: the response to affect.
+@location: the absolute URI for the content the user is probably really interested in.
+
+
+<!-- ##### MACRO gsk_http_response_peek_location ##### -->
+<para>
+  Peek at the destination for a redirect.
+  May return NULL if there is no redirect planned.
+</para>
+
+@response: the response to query.
+
+
+<!-- ##### MACRO gsk_http_response_set_etag ##### -->
+<para>
+   Provide a unique tag for the content- this may be used
+   by caches and proxy servers.
+</para>
+<para>
+   [RFC 2616, 14.19]
+   The ETag response-header field provides the current value of the
+   entity tag for the requested variant. The headers used with entity
+</para>
+
+<para>
+   This is typically used in conjunction with the If-Match,
+   If-None-Match, and Vary.
+   14.24, 14.26 and 14.44, 13.3.3.
+</para>
+
+@response: the response to affect.
+@etag: the entity-tag for the associated conetnt.
+
+
+<!-- ##### MACRO gsk_http_response_peek_etag ##### -->
+<para>
+Get the entity-tag for this content from the header.
+This is NULL by default, to indicate that there is no
+ETag field.
+</para>
+
+@response: the response to query.
+
+
+<!-- ##### FUNCTION gsk_http_response_set_cache_control ##### -->
+<para>
+</para>
+
+@response: 
+@directive: 
+
+
+<!-- ##### MACRO gsk_http_response_peek_cache_control ##### -->
+<para>
+Obtain the #GskHttpCacheDirective associated with the
+response.
+</para>
+
+@response: the HTTP response whose cache-directive should be returned.
+
+
+<!-- ##### MACRO gsk_http_response_set_last_modified ##### -->
+<para>
+   [RFC 2616, Section 14.29]
+   The Last-Modified entity-header field indicates the date and time at
+   which the origin server believes the variant was last modified.
+</para>
+<para>
+   If the time is -1, then there will be no Last-Modified header printed.
+</para>
+
+@response: the response to affect.
+@last_modified: the unix time the content was last modified.
+
+
+<!-- ##### MACRO gsk_http_response_get_last_modified ##### -->
+<para>
+Get the time that the response advertises that the content
+was last modified.  It returns -1 if there will be no
+such indication.
+</para>
+
+@response: the response to query.
+
+
+<!-- ##### MACRO gsk_http_response_set_expires ##### -->
+<para>
+   [From RFC 2616, Section 14.21]
+   The Expires entity-header field gives the date/time after which the
+   response is considered stale. A stale cache entry may not normally be
+   returned by a cache (either a proxy cache or a user agent cache)
+   unless it is first validated with the origin server (or with an
+   intermediate cache that has a fresh copy of the entity). See section
+   13.2 for further discussion of the expiration model.
+</para>
+<para>
+   The presence of an Expires field does not imply that the original
+   resource will change or cease to exist at, before, or after that
+   time.
+</para>
+
+@response: the header to affect.
+@expires: the expiration time in standard unix notation, ie. seconds from 1Jan1970 GMT.
+Or -1 may be used to indicate that there is no Expires header.
+
+
+<!-- ##### MACRO gsk_http_response_get_expires ##### -->
+<para>
+Get the expiration time for this content, or -1 if no expiration time given.
+</para>
+
+@response: the header to query.
+
+
+<!-- ##### FUNCTION gsk_http_response_set_md5 ##### -->
+<para>
+
+</para>
+
+@response: 
+@md5sum: 
+
+
+<!-- ##### FUNCTION gsk_http_response_peek_md5 ##### -->
+<para>
+
+</para>
+
+@response: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_http_response_set_server ##### -->
+<para>
+Set the server name of this HTTP header.
+This may be any ASCII string.
+</para>
+<para>
+See RFC 2616, Section 14.38.
+</para>
+
+@response: the response to affect.
+@server: the name of the server, which will be copied.
+
+
+<!-- ##### MACRO gsk_http_response_peek_server ##### -->
+<para>
+Obtain a reference to the type of server from which this response
+came, as a C string.
+This field is optional, but is helpful for debugging, etc.
+</para>
+
+@response: the response to look for a server in
+
+
+<!-- ##### FUNCTION gsk_http_response_set_retry_after ##### -->
+<para>
+
+</para>
+
+@response: 
+@is_relative: 
+@time: 
+
+
+<!-- ##### FUNCTION gsk_http_response_set_no_retry_after ##### -->
+<para>
+
+</para>
+
+@response: 
+
+
+<!-- ##### FUNCTION gsk_http_response_set_authenticate ##### -->
+<para>
+
+</para>
+
+@response: 
+@is_proxy_auth: 
+@auth: 
+
+
+<!-- ##### FUNCTION gsk_http_response_peek_authenticate ##### -->
+<para>
+
+</para>
+
+@response: 
+@is_proxy_auth: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_response_has_content_body ##### -->
+<para>
+
+</para>
+
+@response: 
+@request: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_response_cache_directive_free ##### -->
+<para>
+
+</para>
+
+@directive: 
+
+
+<!-- ##### FUNCTION gsk_http_response_cache_directive_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_response_cache_directive_set_no_cache_name ##### -->
+<para>
+
+</para>
+
+@directive: 
+@name: 
+@name_len: 
+
+
+<!-- ##### FUNCTION gsk_http_response_cache_directive_set_private_name ##### -->
+<para>
+
+</para>
+
+@directive: 
+@name: 
+@name_len: 
+
+
+<!-- ##### MACRO gsk_http_response_get_content_subtype ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gsk_http_response_get_content_type ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gsk_http_response_set_content_subtype ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gsk_http_response_set_content_type ##### -->
+<para>
+
+</para>
+
+
+

@@ -1,0 +1,308 @@
+
+
+From http://xmlrpc-epi.sourceforge.net/specs/rfc.system.describeMethods.php
+
+
+<h1>RFC: system.describeMethods, version 20010516</h1>
+
+
+<h2>The Issue(s)</h2>
+
+XMLRPC supports arbitrarily nested parameters and return values. The existing 
+<a href="http://xmlrpc.usefulinc.com/doc/reserved.html">proposed xmlrpc introspection methods</a>
+describe only the top level of these values, thus hiding a great deal of complexity and
+requiring the documentation writer to describe all sub-values textually. They also do 
+not explicitly address such things as: optional and default parameter values, method 
+versioning, authorship, or relationships between methods.
+
+<p>
+Without a way to programatically describe this information, it is impossible for
+xmlrpc implementations to correctly validate that incoming parameters conform to the
+method's signature.  Instead the application developer must perform this task herself.  
+Additionally, without version information for each method, the method on the server 
+may change and the client will have no way of knowing it.  
+
+<h2>Introducing system.describeMethods</h2>
+<p>
+<h3>Signature</h3>
+struct system.describeMethods( [array] )
+
+<p>
+This method accepts an optional array argument which is a list of strings representing method
+names.  It returns a struct containing method and type descriptions.  Each method description is a complex
+nested struct. If no argument is given, it will return descriptions for all methods which have
+a description registered. (Note that this may not be a comprehensive list of all available methods.
+system.listMethods should be used for that.) Each type description is a complex nested struct. All types referenced by
+the returned methods should be in the type list. Additional types may also be present.
+
+<p>
+Before we proceed further, it may be useful to see an example of how this might be useful.
+<a href='/xmlrpc_php/introspection.php?show_xml=yes&show_php=yes&show_xmlrpc=yes'>This link</a> demonstrates the 
+results of system.describeMethods (queried live) after having been nicely formatted with some php magic.
+At the bottom are the php and xmlrpc representations of the return data.  Although seemingly quite long
+and complex, they are quite easily iterated over with a scripting language such as php, and indeed, I've
+created a simple, re-useable function for doing so.
+
+<h2>In Greater Detail</h2>
+
+<a name='params'></a>
+<h3>Parameters</h3>
+
+<dl>
+<dt>array <i>methodList</i> (optional) -- a list of methods to be described. if omitted, all are described.
+<dl>
+<dt>string <i></i> -- a valid method name</dt>
+</dl>
+</dl>
+
+<h3>Return value</h3>
+
+<dl>
+<dt>struct <i></i> -- contains methods list and types list
+<dl>
+<dt>array <i>methodList</i> -- a list of methods
+<dl>
+<dt>struct <i></i> -- representation of a single method
+<dl>
+<dt>string <i>name</i> -- method name</dt>
+<dt>string <i>version</i> (optional) -- method version</dt>
+<dt>string <i>author</i> (optional) -- method author</dt>
+<dt>string <i>purpose</i> (optional) -- method purpose</dt>
+<dt>array <i>signatures</i> -- list of method signatures
+<dl>
+<dt>struct <i></i> -- representation of a single signature
+<dl>
+<dt><dt>array <i>params</i> (optional) -- parameter list
+<dl>
+<dt><dt>struct <i></i> -- description of a value
+<dl>
+<dt>string <i>name</i> (optional) -- value identifier</dt>
+<dt>string <i>type</i> -- value's xmlrpc or user-defined type</dt>
+<dt>string <i>description</i> -- value's textual description</dt>
+<dt>boolean <i>optional</i> -- true if value is optional, else it is required</dt>
+<dt>any <i>member</i> (optional) -- a child of this element. n/a for scalar types</dt>
+</dl>
+</dt>
+</dl>
+</dt>
+<dt><dt>array <i>returns</i> (optional) -- return value list
+<dl>
+<dt><dt>struct <i></i> -- description of a value
+<dl>
+<dt>string <i>name</i> (optional) -- value identifier</dt>
+<dt>string <i>type</i> -- value's xmlrpc or user-defined type</dt>
+<dt>string <i>description</i> -- value's textual description</dt>
+<dt>boolean <i>optional</i> -- true if value is optional, else it is required</dt>
+<dt>any <i>member</i> (optional) -- a child of this element. n/a for scalar types</dt>
+</dl>
+</dt>
+</dl>
+</dt>
+</dl>
+</dt>
+</dl>
+</dt>
+<dt><dt>array <i>bugs</i> (optional) -- list of known bugs
+<dl>
+<dt>string <i></i></dt>
+</dl>
+</dt>
+<dt><dt>array <i>errors</i> (optional) -- list of possible errors and error codes
+<dl>
+<dt>string <i></i></dt>
+</dl>
+</dt>
+<dt><dt>array <i>examples</i> (optional) -- list of examples
+<dl>
+<dt>string <i></i></dt>
+</dl>
+</dt>
+<dt><dt>array <i>history</i> (optional) -- list of modifications
+<dl>
+<dt>string <i></i></dt>
+</dl>
+</dt>
+<dt><dt>array <i>notes</i> (optional) -- list of notes
+<dl>
+<dt>string <i></i></dt>
+</dl>
+</dt>
+<dt><dt>array <i>see</i> (optional) -- see also.  list of related methods
+<dl>
+<dt>string <i></i></dt>
+</dl>
+</dt>
+<dt><dt>array <i>todo</i> (optional) -- list of unimplemented features
+<dl>
+<dt>string <i></i></dt>
+</dl>
+</dt>
+</dl>
+</dt>
+</dl>
+</dt>
+</dl>
+
+
+<h2>Describing the Method(s)</h2>
+
+Implementing this spec in C proved challenging. Or rather, it was simple enough to create an API to do it, but
+the API was cumbersome, and I had difficulty picturing many developers actually taking the time to
+use it correctly.  This led to the idea of a standard, textual way of describing the method, ala javadoc, doc++,
+robodoc, etc.  The difficulty is that we are documenting complex nested data types and none of those formats
+handle nested types well.  The obvious choice was XML.  Thus, I have created a simple XML vocabulary that is for
+the specific purpose of describing methods and types for introspection.  It is intended to be simple to 
+use and (mostly) simple to implement.  It is not required that a server which implements 
+system.describeMethods() also implement this xml vocabulary. It is strictly an aid for compiling the
+introspection data that system.describeMethods() is expected to return.
+<p>
+I've not yet created a DTD or XML-Schema for this vocabulary, but the examples below should be sufficient
+for the time being.  Should anyone wish more detail, please email me.
+<p>
+We'll start with a simple example. Below is the XML used to generate the method description for 
+system.listMethods(), which takes no parameters and returns an array of strings.
+
+<xmp>
+
+<?xml version='1.0' ?>
+
+<introspection version='1.0'>
+
+ <methodList>
+
+  <!-- system.listMethods -->
+  <methodDescription name='system.listMethods'>
+   <purpose>enumerates the methods implemented by this XML-RPC server.</purpose>
+   <signatures>
+    <signature>
+     <returns>
+      <value type='array' desc='an array of strings'>
+       <value type='string'>name of a method implemented by the server.</value>
+      </value>
+     </returns>
+    </signature>
+    
+    <!-- we could have more signatures here if we wanted -->
+
+   </signatures>
+   <see>
+    <item name='system.describeMethods' />
+    <item name='system.methodSignature' />
+    <item name='system.methodHelp' />
+   </see>
+  </methodDescription>
+  
+  <!-- we could have more method descriptions here if we wanted -->
+ 
+ </methodList>
+
+</introspection> 
+
+</xmp>
+
+<p>
+Let's move on to something more complex.  system.describeMethods() has the most complex return structure of
+any xml-rpc method I've written to date.  Below is the XML used to generate the method description 
+for system.describeMethods(), which is shown above.  It should be largely self explanatory. Note the
+inclusion of a typeList which is separate from the method list -- thus a type define may be referenced from
+multiple methods. Also observe how the method description maps to the <a href="#params">documentation above</a>. You may notice
+that above, the parameter types (system.value, system.valueList, system.stringList) have been fully enumerated, 
+while below they are simply references to types defined in the typeList.  That is merely some
+magic in the php script which generates html from the output of system.describeMethods.
+
+<xmp>
+
+<?xml version='1.0' ?>
+
+<introspection version='1.0'>
+ <typeList>
+
+ <!-- a type to define a value, which may have sub-values -->
+ <typeDescription name='system.value' basetype='struct' desc='description of a value'>
+   <value type='string' name='name' optional='yes'>value identifier</value>
+   <value type='string' name='type'>value&apos;s xmlrpc or user-defined type</value>
+   <value type='string' name='description'>value&apos;s textual description</value> 
+   <value type='boolean' name='optional'>true if value is optional, else it is required</value> 
+   <value type='any' name='member' optional='yes'>a child of this element. n/a for scalar types</value> 
+ </typeDescription>
+
+ <!-- a list of values -->
+ <typeDescription name='system.valueList' basetype='array' desc='list of value descriptions'>
+   <value type='system.value'/>
+ </typeDescription>
+
+ !-- a list of strings -->
+ <typeDescription name='system.stringList' basetype='array' desc='list of strings'>
+   <value type='string'/>
+ </typeDescription>
+
+ </typeList>
+
+ <methodList>
+
+ <!-- system.describeMethods -->
+ <methodDescription name='system.describeMethods'>
+  <author>Dan Libby</author>
+  <purpose>fully describes the methods and types implemented by this XML-RPC server.</purpose>
+  <version>1.1</version>
+  <signatures>
+   <signature>
+    <params>
+     <value type='array' name='methodList' optional='yes' desc='a list of methods to be described. if omitted, all are described.'>
+      <value type='string'>a valid method name</value>
+     </value>
+    </params>
+    <returns>
+     <value type='struct' desc='contains methods list and types list'>
+      <value type='array' name='methodList' desc='a list of methods'>
+       <value type='struct' desc='representation of a single method'>
+        <value type='string' name='name'>method name</value>
+        <value type='string' name='version' optional='yes'>method version</value>
+        <value type='string' name='author' optional='yes'>method author</value>
+        <value type='string' name='purpose' optional='yes'>method purpose</value>
+        <value type='array' name='signatures' desc='list of method signatures'>
+         <value type='struct' desc='representation of a single signature'>
+          <value type='system.valueList' name='params' optional='yes'>parameter list</value>
+          <value type='system.valueList' name='returns' optional='yes'>return value list</value>
+         </value>
+        </value>
+        <value type='system.stringList' name='bugs' optional='yes'>list of known bugs</value>
+        <value type='system.stringList' name='errors' optional='yes'>list of possible errors and error codes</value>
+        <value type='system.stringList' name='examples' optional='yes'>list of examples</value>
+        <value type='system.stringList' name='history' optional='yes'>list of modifications</value>
+        <value type='system.stringList' name='notes' optional='yes'>list of notes</value>
+        <value type='system.stringList' name='see' optional='yes'>see also.  list of related methods</value>
+        <value type='system.stringList' name='todo' optional='yes'>list of unimplemented features</value>
+       </value>
+      </value>
+      <value type='array' name='typeList' desc='a list of type descriptions. Typically used for referencing complex types'>
+       <value type='system.value'>a type description</value>
+      </value>
+     </value>
+    </returns>
+   </signature>
+  </signatures>
+  <see>
+   <item name='system.listMethods' />
+   <item name='system.methodSignature' />
+   <item name='system.methodHelp' />
+  </see>
+  <examples/>
+  <errors/>
+  <notes/>
+  <bugs/>
+  <todos/>
+  <history/>
+ </methodDescription>
+
+
+ </methodList>
+</introspection>;
+
+
+</xmp>
+
+
+<hr>
+Please direct comments to 
+<a href="mailto:xmlrpc-epi-devel@lists.sourceforge.net">xmlrpc-epi-devel@lists.sourceforge.net</a>.

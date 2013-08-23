@@ -1,0 +1,25 @@
+<GskMainLoopPoll>
+  <add-actor>
+    <param>
+     <MicroHttpListener>
+       <listener>
+         <GskSocketListener>
+          <reuse_address>yes</reuse_address>
+          <local_port>5000</local_port>
+         </GskSocketListener>
+       </listener>
+       <add-servlet>
+        <param>
+	 <GskHttpUrlSlice>
+	  <path>/test</path>
+	 </GskHttpUrlSlice>
+	</param>
+        <param>
+	 <GskHttpUriMapping>
+	  <path>/test</path>
+	 </GskHttpUriMapping>
+	</param>
+     </MicroHttpListener>
+    </param>
+  </add-actor>
+</GskMainLoopPoll>

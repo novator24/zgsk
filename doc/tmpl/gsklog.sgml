@@ -1,0 +1,82 @@
+<!-- ##### SECTION Title ##### -->
+gsklog
+
+<!-- ##### SECTION Short_Description ##### -->
+convenient logging methods around the glib mechanism
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This file provide macros to allow logging to go to selected
+domains from a single compilation unit.
+</para>
+<para>
+Also, it contains methods to conveniently trap the logs to
+given files.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_log_init ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gsk_log_trap_domain_to_file ##### -->
+<para>
+
+</para>
+
+@domain: 
+@level_mask: 
+@filename: 
+@output_format: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_debug ##### -->
+<para>
+
+</para>
+
+@domain: 
+@...: 
+
+
+<!-- ##### MACRO gsk_warning ##### -->
+<para>
+Log a message at the WARNING priority level.
+Messages logged at this level can be fatal in debugging mode.
+</para>
+
+@domain: the log-domain to use to categorize the message.
+@...: 
+
+
+<!-- ##### MACRO gsk_error ##### -->
+<para>
+Log a message at the WARNING priority level.
+Messages logged at this level are always fatal.
+</para>
+
+@domain:  the log-domain to use to categorize the message.
+@...: printf-style format and arguments.
+
+
+<!-- ##### MACRO gsk_critical ##### -->
+<para>
+Log a message at the CRITICAL priority level.
+Messages logged at this level can be fatal in debugging mode.
+</para>
+
+@domain:  the log-domain to use to categorize the message.
+@...: printf-style format and arguments.
+
+

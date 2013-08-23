@@ -1,0 +1,50 @@
+<refentry id="tutorial-debugging-hints">
+<refmeta>
+<refentrytitle>Debugging Hints</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Tutorial: Debugging</refname><refpurpose>How to debug your program</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Debugging Hints</title>
+<para>
+This section of the tutorial provides standard suggestions and
+reminders of things you can do to debug your program.
+More suggestions are appreciated!
+</para>
+<para>
+In no real order, here are suggestions.  Some are provided by the GSK,
+but most are available to non-GSK applications as well.
+<itemizedlist>
+<listitem><para>
+--gsk-debug
+</para></listitem>
+<listitem><para>
+-Wall -W -Wno-unused-parameters
+</para></listitem>
+<listitem><para>
+gdb
+</para></listitem>
+<listitem><para>
+valgrind
+</para></listitem>
+<listitem><para>
+electric-fence
+</para></listitem>
+</itemizedlist>
+</para>
+  
+</refsect1>
+
+<refsect1>
+<title>Example</title>
+<para>
+TODO: write this!
+</para>
+</refsect1>
+
+</refentry>

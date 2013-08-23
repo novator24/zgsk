@@ -1,0 +1,73 @@
+<!-- ##### SECTION Title ##### -->
+gskdnsserver
+
+<!-- ##### SECTION Short_Description ##### -->
+base class for a DNS server.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A generic DNS server.
+This can be made to answer questions through
+a sensible resolver, or it can be used to implement wacky DNS hacks.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskDnsServerClass ##### -->
+<para>
+Base class for DNS servers.
+</para>
+
+
+<!-- ##### STRUCT GskDnsServer ##### -->
+<para>
+Base instance for DNS servers.
+A DNS server is packet-based and must handle an arbitrary
+number of requests.
+</para>
+
+
+<!-- ##### ARG GskDnsServer:packet-queue ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskDnsServer:resolver ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gsk_dns_server_new ##### -->
+<para>
+
+</para>
+
+@resolver: 
+@packet_queue: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_server_peek_resolver ##### -->
+<para>
+
+</para>
+
+@server: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_server_set_resolver ##### -->
+<para>
+
+</para>
+
+@server: 
+@resolver: 
+
+

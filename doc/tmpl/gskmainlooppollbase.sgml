@@ -1,0 +1,51 @@
+<!-- ##### SECTION Title ##### -->
+GskMainLoopPollBase
+
+<!-- ##### SECTION Short_Description ##### -->
+a base class for file-descriptor-only polling mechanisms.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This class converts signals and child-process-termination notification
+events into I/O events so that derived class
+need only implement I/O.  The remaining event types
+are implemented in terms of pipes.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMainLoopPollBaseClass ##### -->
+<para>
+Base-class for I/O-only main-loops.
+The @config_fd and @do_polling functions are to be implemented
+by specific polling mechanisms.
+</para>
+
+@main_loop_class: the base-class from which this is derived.
+@config_fd: method to change our preferences with regard to a file-descriptor.
+These should not be cached, since the parent-class automatically coagulates
+multiple configurations into a single event.  (Furthermore,
+caching would break on some OS's where the file-descriptor
+is auto-unpolled when it is closed.)
+@do_polling: 
+
+<!-- ##### STRUCT GskMainLoopPollBase ##### -->
+<para>
+Base data for I/O-only main loop mechanisms.
+</para>
+
+
+<!-- ##### FUNCTION gsk_main_loop_poll_base_wakeup ##### -->
+<para>
+
+</para>
+
+@poll_base: 
+
+

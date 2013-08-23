@@ -1,0 +1,39 @@
+\documentclass{article}
+\begin{document}
+\title{GSK 1.0 Manual}
+\author{Dave Benson}
+\date{April 11, 2002}
+\maketitle
+
+\section{Introduction}
+GSK began by trying to think of how to write C programs that
+provide services; eventually I realized that that generalized
+to offering a convenient way to trap event notification.
+
+It might have been possible to directly use the GLib signal system
+for this notification, but I chose to write my own method
+in GskHook.  It provides a few things:
+
+\begin{itemize}
+\item The hook can be trapped.  But it can only 
+be trapped by one user - that's because the events triggered by
+GskHooks {\em require} the user to call some sort of method
+to fetch data.  For example, a GskStream has {\tt read} and {\tt write}
+methods that retrieve data from the stream.  If two users connected
+and both tried to use those methods the results would be chaos.
+If they both connected for writing, then their writes would
+be arbitrarily intermingled.  If they were both connected for reading
+then each user would collect half the blocks of data.
+
+\item The hook can be blocked.  The hook internally keeps a block-count.
+
+\item It provides ``idle-notification''.    That means it provides functions
+to start and stop continuous notification.  For example to implement the
+GskStream that outputs data from a buffer we use this to provide continuous notification
+until the buffer is empty.  See {\tt gsk\_stream\_mark\_idle\_notify\_write},
+for example.
+\end{itemize}
+
+\section{I/O and Stream Classes}
+
+\end{document}

@@ -1,0 +1,195 @@
+<refentry id="tutorial-httpserver">
+<refmeta>
+<refentrytitle>Writing an HTTP Server</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Tutorial: Writing a webserver</refname><refpurpose>How to write a webserver</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Writing a Webserver</title>
+<para>
+This section of the tutorial describes how to write a webserver.
+There are actual TWO convenient ways to write a webserver in GSK,
+using <structname>GskHttpContent</structname> or
+<structname>GskHttpServer</structname>.
+<itemizedlist>
+ <listitem><para><structname>GskHttpContent</structname> is the high-level interface.
+ It is designed to be called in blocks that feel roughly like Apache's configuration blocks.
+ You can only use this if you are planning on following fairly standard namespacing conventions.
+ For example, it expects that the path maps to a file-system-like node,
+ and that the query is for that node's interpretation.
+ Nonetheless, almost all cases can be handled with GskHttpContent.
+ </para></listitem>
+ <listitem><para><structname>GskHttpServer</structname> is the low-level interface.
+ It does nothing but speak the protocol: the transport is handled elsewhere.
+ Furthermore the act of listening for new connections must be handled outside this class.
+ For these reasons, direct use of this class is discouraged.
+ But for some specialized cases, the lowlevel interface is more convenient.
+ Normally this is because you want an interface that treats the whole URI space uniformly;
+ in such a case the request partitioning of GskHttpContent is more annoying than helpful.
+ For example, redirection servers, caches and proxies may actually find the lowlevel interface
+ more convenient.
+ </para></listitem>
+</itemizedlist>
+Of course, although we describe them as independent subsystems, <structname>GskHttpContent</structname>
+uses <structname>GskHttpServer</structname>.
+</para>
+<refsect2><title>Using GskHttpContent</title>
+<para>
+<structname>GskHttpContent</structname> revolves around a common usage pattern in
+HTTP servers: that of the virtual file-system.  Actually its mapping is more complicated
+and weird than that of a file-system.  Here are the fields that you can key off of:
+<itemizedlist>
+ <listitem><para>host: the Host header's contents.  This is useful for "virtual-hosting", the
+   practice of running multiple domains on one server.</para></listitem>
+ <listitem><para>user_agent_prefix: ...  </para></listitem>
+ <listitem><para>path: ...  </para></listitem>
+ <listitem><para>path_prefix: ...  </para></listitem>
+ <listitem><para>path_suffix: ...  </para></listitem>
+</itemizedlist>
+</para>
+<para>
+There are two kinds of handlers registered with GskHttpContent:
+generic handlers and CGI handlers.  Generic handlers operate on the raw request and post-data.
+CGI handlers operate on parsed key-value pairs.
+</para>
+<para>
+There are also helper functions (which are implemented in terms of "generic handlers")
+that define allow you to make standard entries in the URI space:  you may attach
+random data to the URI, or a file, or a function which returns data.
+</para>
+<refsect3><title>Example: Standard Usage</title>
+<para>
+Here we implement a server that shows off a bunch of GskHttpContent features:
+<itemizedlist>
+ <listitem><para><filename>/images</filename> is mapped into the filesystem.</para></listitem>
+ <listitem><para><filename>/hello.txt</filename> is mapped content in memory.</para></listitem>
+ <listitem><para><filename>/generic</filename> is mapped to a generic callback that can do anything.</para></listitem>
+ <listitem><para><filename>/cgi</filename> is mapped to a CGI callback.  CGI is the Common Gateway Interface
+ that describes how forms' key-value pairs get relayed via HTTP.</para></listitem>
+</itemizedlist>
+Here is the main program:  we'll present the generic and CGI callbacks afterward.
+<programlisting><![CDATA[
+int main (int argc, char **argv)
+{
+  GskHttpContent *content;
+  int port;
+  gsk_init (&argc, &argv, NULL);
+  if (argc != 2) 
+    g_error ("usage: %s PORT", argv[0]);
+  port = atoi (argv[1]);
+  if (port <= 0)
+    g_error ("error parsing port from '%s'", argv[1]);
+  content = gsk_http_content_new ();
+
+  /* Map some directory into URI space (not recommended for a real server) */
+  gsk_http_content_add_file (content, "/images", IMAGE_DIRECTORY,
+                             GSK_HTTP_CONTENT_FILE_DIR_TREE);
+
+  /* Register mime types */
+  gsk_http_content_set_mime_type (content, "", ".html", "text", "html");
+  gsk_http_content_set_mime_type (content, "", ".txt", "text", "plain");
+  gsk_http_content_set_mime_type (content, "", ".jpg", "image", "jpeg");
+  gsk_http_content_set_default_mime_type (content, "text", "plain");
+
+  /* Map some content:  you can call this multiple times to update the contents */
+  data = g_strdup ("hi mom");
+  data_len = strlen (data);
+  gsk_http_content_add_data_by_path (content, "/hello.txt",
+                                     data, data_len, data, g_free);
+
+  /* A generic handler: its content is computed in a callback */
+  {
+    GskHttpContentHandler *handler = gsk_http_content_handler_new (handle_generic, NULL, NULL);
+    GskHttpContentId id = GSK_HTTP_CONTENT_ID_INIT;
+    id.path_prefix = "/generic";
+    gsk_http_content_add_handler (content, handler);
+    gsk_http_content_handler_unref (handler);
+  }
+
+  /* A CGI handler: its content is computed in a callback */
+  {
+    GskHttpContentHandler *handler = gsk_http_content_handler_new_cgi (handle_cgi, NULL, NULL);
+    GskHttpContentId id = GSK_HTTP_CONTENT_ID_INIT;
+    id.path_prefix = "/cgi";
+    gsk_http_content_add_handler (content, handler);
+    gsk_http_content_handler_unref (handler);
+  }
+
+  address = gsk_socket_address_ipv4_new (gsk_ipv4_ip_address_any, port);
+  if (!gsk_http_content_listen (content, address, &error))
+    g_error ("error listening on port %u: %s", port, error->message);
+  return gsk_main_run ();
+}
+]]></programlisting>
+</para>
+<para>
+ Both callbacks have a similar character:  you are given
+ a bunch of information about the request,
+ and you must decide what to do about it.
+</para>
+<para>
+ For a generic handler, you have the option of returning an error,
+ or passing the request onto the next handler,
+ otherwise you must call <function>gsk_http_server_respond</function>.
+ CGI handlers must ALWAYS call <function>gsk_http_server_respond</function>.
+</para>
+<para>
+ Here is a very simple implementation of a generic handler:
+<programlisting><![CDATA[
+static GskHttpContentResult
+handle_generic  (GskHttpContent        *content,
+		 GskHttpContentHandler *handler,
+		 GskHttpServer         *server,
+		 GskHttpRequest        *request,
+		 GskStream             *post_data,
+		 gpointer               data)
+{
+  static guint64 response_id = 0;
+  char *str = g_strdup_printf ("%llu\n", response_id++);
+  guint str_len = strlen (str);
+  GskHttpResponse *response = gsk_http_response_from_request (request, GSK_HTTP_STATUS_OK, str_len);
+  GskStream *stream = gsk_memory_slab_source_new (str, str_len, g_free, str);
+  gsk_http_header_set_content_type (GSK_HTTP_HEADER (response), "text");
+  gsk_http_header_set_content_subtype (GSK_HTTP_HEADER (response), "plain");
+  gsk_http_server_respond (server, request, response, stream);
+  g_object_unref (response);
+  g_object_unref (stream);
+  return GSK_HTTP_CONTENT_OK;
+}
+]]></programlisting>
+Although you must call gsk_http_server_respond eventually, it does not
+need to happen within the handler callback.  For example, it may happen
+only after you query a remote server.
+</para>
+<para>
+ Next we implement the CGI callback:
+<programlisting><![CDATA[
+static void
+handle_cgi  (GskHttpContent         *content,
+	     GskHttpContentHandler  *handler,
+	     GskHttpServer          *server,
+	     GskHttpRequest         *request,
+	     guint                   n_vars,
+	     GskMimeMultipartPiece **vars,
+	     gpointer                data)
+{
+  ...
+}
+]]></programlisting>
+</para>
+
+</refsect3>
+</refsect2>
+<refsect2><title>Using GskHttpServer</title>
+<para>
+...
+</para>
+</refsect2>
+</refsect1>
+
+</refentry>

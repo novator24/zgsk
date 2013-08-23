@@ -1,0 +1,557 @@
+\documentclass{article}
+\newenvironment{tightitemize}%
+{\begin{itemize}%
+\setlength{\itemsep}{0pt}%
+\setlength{\parskip}{0pt}}%
+{\end{itemize}}
+\title{GskTable}
+\author{Dave Benson}
+\frenchspacing
+\usepackage{amsfonts,amsmath,amssymb,epsfig,eucal,synttree}
+\pagestyle{headings}
+\begin{document}
+\maketitle
+
+\section{Overview}
+A {\tt GskTable} is key-value database which has user-configurable
+behavior when a collision occurs.
+
+\section{Implementation}
+The table consists of a sequence of searchable files, each
+organized like a btree.
+
+There is a small in-memory tree of the last few entries.
+
+\subsection{Overview - Querying}
+
+\subsection{Overview - Adding}
+A few records in the Table are stored in an in-memory tree.
+Once that gets full, they are flushed to a searchable file.
+
+
+\subsection{The Searchable File Abstraction}
+In order to try out new indexed-file implementations,
+we have abstracted the idea of a searchable file.
+
+The lifetime of a searchable file looks like this:
+\begin{tightitemize}
+\item[1] the file is created
+\item[2] records in sorted order are added to the file by the user
+\item[3] the user tells the searchable file that no more records will be added.
+\item[4] the user tells the searchable file to finish building,
+which can be done in little pieces.  the file will return a code
+to tell the user that it is done building
+\item[5] once the searchable file is built,
+it can be queried for single records, or read in bulk in sorted-order.
+\end{tightitemize}
+
+During phases [2] and [4], the state of the searchable file can be 
+serialized so that it can be started again if the process terminates.
+
+\subsubsection{The Methods of the Searchable File}
+
+\subsection{The Format of a BTree File}
+The btree is organized with the lowest level
+at the beginning of the disk, and the higher levels following.
+Each node of the btree contains just keys and references to values.
+Each node of the btree assumes that the key immediately before it is known.
+It also assumes that it knows whether it is a leaf node (which therefore
+has no child data).
+
+There is a separate value heap file (with the {\tt .value} extension).
+
+(But we still consider the {\tt .btree} and {\tt .value} files to be
+a single searchable file according to the {\tt GskTableFile} abstraction.)
+
+\subsubsection{The format of the btree file.}
+The btree file begins with a bit of metadata,
+whose length is known before any data is received.
+
+\begin{verbatim}
+packed_structure BtreeFile
+{
+  byte[4] magic_header
+  byte height
+  byte flags    # bit 0   this file has constant key length
+                # bit 1   this file has constant value length
+  byte reserved1,reserved2  # must be 0
+  uint32le key_length     # if bit0 set in flags, or 0
+  uint32le value_length   # if bit1 set in flags, or 0
+  BtreeHeaderLevel[height] level_info;
+  byte[4] end_magic;
+  BtreeLeafNode[(length implied)] leaves;		// very large
+  BtreeBranchNode[(length implied)] branches;		// very large
+}
+\end{verbatim}
+
+Hopefully this ad-hoc representation of the format of the btree file
+is self-explanatory; see the appendix for more information.
+I will describe the substructures and members.
+
+\begin{tightitemize}
+\item \verb|magic_header|.  the bytes \verb|0x99 0xd9 0x10 0x01|
+\item \verb|height|. the height of the tree
+\item \verb|flags|:  here are the current bits.  all others must be 0.
+  \begin{tightitemize}
+  \item 1: this file has constant key length
+  \item 2: this file has constant value length
+  %\item 4: reserved
+  %\item 8: reserved
+  %\item 16: reserved
+  %\item 32: reserved
+  %\item 64: reserved
+  %\item 128: reserved
+  \end{tightitemize}
+\item \verb|reserved1|, \verb|reserved2|: reserved for future expansion, must be 0
+\item \verb|key_length|. the key length if constant, or 0
+\item \verb|value_length|. the value length if constant, or 0
+\item the remainder of the members are described below.
+\item \verb|level_info|.  Described below.
+\item \verb|end_magic|.  The bytes \verb|0xf0 0x33 0xee 0x9a|.
+\item \verb|leaves| and \verb|branches|. Described below.
+\end{tightitemize}
+
+
+% This metadata is followed by the levels, starting at the lowest (largest) level of the tree
+% and ending at the toplevel level.  It is just a long sequence of btree nodes with no padding.
+
+\subsubsection{{\tt BtreeFile::level\_info}}
+
+\begin{verbatim}
+packed_structure BtreeHeaderLevel
+{
+  uint64le length;		// length of level in .btree file
+  uint64le value_length;	// length of level in .value file
+}
+\end{verbatim}
+
+\begin{tightitemize}
+\item \verb|length|.  total size of the data in the {\tt .btree} file for that level.
+\item \verb|value_length|. total size of the data in the {\tt .value} file for that level.
+\end{tightitemize}
+
+The offsets can be computed by accumulating the lengths.
+The start offset for the {\tt .btree} file is the length of metadata (ending right before \verb|leaves|);
+the start offset for the {\tt .value} file starts at 0.
+
+
+\subsubsection{{\tt BtreeFile::leaves} and {\tt BtreeFile::branches}}
+After the metadata above, the btree consists of a lot of btree nodes, packed together.
+Here's the format of a single btree node.
+
+The leaf data is the $\text{\tt height} - 1$ level of the tree;
+all other levels are branch levels.  A single leaf node
+has the structure:
+\begin{verbatim}
+packed_structure BtreeLeafNode
+{
+  uint16le n_values;
+  vli64 first_value_offset;
+  BtreeKeyDataValueRef values[n_values];
+}
+\end{verbatim}
+
+\begin{tightitemize}
+\item \verb|n_values|. the number of values in this node.
+\item \verb|first_child_offset|. the offset of the value information in the value heap (stored as a VLI64)
+\item \verb|values|.  the actual key-data, prefix-compressed, and references to the values stored in the {\tt .values} file.
+\end{tightitemize}
+
+Here is the format of a single key-data and value-ref pair:
+\begin{verbatim}
+packed_structure BtreeKeyDataValueRef
+{
+  vli32 prefix_length;
+  optional vli32 remainder_key_length;  # if not constant key length
+  optional vli32 value_length;          # if not constant value length
+};
+\end{verbatim}
+
+\begin{tightitemize}
+\item \verb|prefix_length|.  Number of bytes in common 
+between this entry and the last key in this tree-node (or
+the initial key, if this is the first entry in the node).
+
+Each key-data is prefixed-compressed:
+we compute the length of the common prefix between the current key
+and the last-key.  For the first key in the node,
+we set last-key to the preceding key in the level above this one.
+(For the top level, we set the first last-key to the empty string.)
+
+\item \verb|remainder_key_length|.  If the key-size is not constant,
+this is the amount of key-data we actually store.  Otherwise, this
+number can be computed by subtracting \verb|prefix_length| from the 
+constant key-size.
+\item \verb|value_length|.  Length of the value.  Omitted
+if the value-size is constant.
+
+Because the values for this node are all packed together, the
+offset for a given value can be determined by
+adding the offset for the first value in this level ($\text{\tt height}-1$ for leaf nodes),
+\verb|first_value_offset| and the sizes of the preceding values.
+\end{tightitemize}
+
+The structure is similar for branch nodes, but a little more complicated:
+\begin{verbatim}
+packed_structure BtreeBranchNode
+{
+  uint16le n_values;
+  vli64 first_child_offset;
+  vli64 first_value_offset;
+  pair<BtreeKeyDataValueRef,
+       BtreeChildSize> kv_children[n_values-1];
+  BtreeKeyDataValueRef last_kv;
+}
+\end{verbatim}
+\begin{tightitemize}
+\item \verb|n_values|.  Number of key/value pairs in this node
+(does not include values references by children).
+\item \verb|first_child_offset|.  Offset of the first child node referenced
+by this branch, relative to the start of that level (which is one greater than the
+current level).
+\item \verb|first_value_offset|.  Same as for leaf nodes.
+\item \verb|kv_children|, \verb|last_kv|.  We interleave write the key-data and value-refs
+with the branch data.  The key-value data is always the ``bread'' in the data sandwich,
+because there is always one more key-value pair than children.
+(If ``K'' represents a key-value pair and ``C'' represents a subchild node reference,
+then ``K'', ``KCK'', ``KCKCK'' etc are the allowed ordering)
+(There is exactly one less branch than value.)
+
+The offset for a given child node in the {\tt .btree} file
+can be found by adding the offset of that level (one greater than the current level),
+\verb|first_child_offset|, and the preceding children's sizes.
+\end{tightitemize}
+
+\begin{verbatim}
+packed_structure BtreeChildSize
+{
+  vli32 size;
+};
+\end{verbatim}
+The size of the child node is \verb|size|.
+If $0$, it is treated as an empty subtree.
+
+
+\subsection{Querying a BTree File}
+
+\subsection{Building a BTree File}
+
+\subsubsection{General Structure of the BTree}
+
+We always know the size of the output file to a rough order of magnitude
+(well, up to deletions, which may significantly shrink the file).
+
+We use that to select a height large enough to accomodate the largest
+possible tree, then fill it out ``in-order''.
+Call $N$ the number of nodes in the tree,
+$H$ the height, $B$ the number of branches in a branch,
+and $L$ the number of leaf nodes at the largest level of the tree.
+
+Here is a standard tree:
+
+\begin{minipage}{5.5in}
+Tree with 2 branches
+per branch, 2 values at each leaf node, and height 3
+($H=3, B=2, L=3, N=22$)
+\begin{small}
+\begin{tightitemize}
+\item 0
+\item branch
+ \begin{tightitemize}
+ \item 1
+ \item leaf node: 2 3 4
+ \item 5
+ \item leaf node: 6 7 8
+ \item 9
+ \end{tightitemize}
+\item 10
+\item branch
+ \begin{tightitemize}
+ \item 11
+ \item leaf node: 12 13 14
+ \item 15
+ \item leaf node: 16 17 18
+ \item 19
+ \end{tightitemize}
+\item 20
+\end{tightitemize}
+\end{small}
+\end{minipage}
+
+\subsubsection{Estimating the BTree Height}
+For a tree of height $H$, the number of branch nodes is
+$$1 + B + B^2 + \dots + B^{H-2} = \frac{B^{H-1} - 1}{B-1},$$
+so the number of value nodes in the branches in
+a full btree is
+$$\frac{(B+1)(B^{H-1} - 1)}{B-1}$$
+and the number of leaf nodes is $B^{H-1}$
+so there are $LB^{H-1}$ values in leaf nodes.
+Thus the total size of a tree given $L,B,H$ is
+$$\frac{(B+1)(B^{H-1} - 1)}{B-1} + LB^{H-1}$$
+Example: if $B=2, L=H=3$, then
+$$N = \frac{(2+1)(2^2 - 1)}{2-1} + 3\cdot 2^{3-1}
+= \frac{3\cdot(4-1)}{1} + 3\cdot 4
+= 9 + 12 = 21.$$
+
+So, let us describe the algorithm for 
+building a tree.  First, we must buffer
+some elements, because we want to have some warning 
+when the end-of-file approaches, so that we can finish
+up all our pending branch nodes.  This requires knowing $H$ elements
+in advance of the end-of-file.  We will discuss end-of-file
+cleanup after the main discussion.
+
+Only the leaf nodes are dumped out on the initial pass,
+but hopefully they comprise the bulk of the data.
+(For a full tree with $B=16, L=32, H=6$ 
+about 96.8\% of the 34.6 million values are in the leaf segment)
+% print 16*(16**5-1)/15 + 32*16**5
+
+\subsubsection{Building the Leaf Level}
+So, suppose we are passing through the data, one entry
+at a time, knowing that we have at least $H$ entries til
+the end-of-file.
+
+We maintain state as a sequence of counters, one for each level of the 
+tree.  Each counter gives the index for the next write for each level.
+Note that even indices in branch nodes are values,
+whereas odd indices in branch nodes are subbranches.
+
+For each values input:
+\begin{itemize}
+\item determine if it enters a branch node (and which level) or a leaf node.
+Do this by iterating through the state array.  If you encounter an
+even element before the last level, stop: write to this branch node.
+Otherwise, write to the leaf level.
+\item increment the state.
+\begin{tightitemize}
+\item if a leaf node rolls over, compress and emit the
+leaf.  write leaf info to pipe.
+\item if a branch node rolls, over, write that info to the pipe.
+\end{tightitemize}
+\end{itemize}
+
+\subsubsection{Build Message Types}
+So here are the instructions that can be written to the pipe,
+which serves as a large buffer/queue:
+\begin{itemize}
+\item \verb|child_node|.  A leaf or a branch node has been written
+that must be inserted into the next level up.
+Parameters: length of child-node.
+It is assumed that the child-nodes are all packed together in a level,
+so that their offsets can be computed.
+\item \verb|branch_value|.  A value that must be inserted into the tree
+at some level.  Parameters: level of branch node and key/value itself.
+\item \verb|branch_ended|.  A branch ended for a level or more up the tree.
+Parameters: level of branch that ended.
+\item \verb|level_ended|.  the end of level.
+\end{itemize}
+
+Now, the first pass (described above) is for level $\ell = H-1$.
+For subsequent passes $H-2 \leq \ell \leq 0$, starting at $H-2$,
+we read from the pipe and write to it.  The user is done giving
+us values.
+
+\subsubsection{Handling the Last Few Entries}
+
+This assumes we have $H$ entries that we haven't written.
+If the file has less than $H$ entries total, see
+the next section about handling short files.
+
+When we get the EOF and we have $H$ entries, we must figure out what
+to do with them.
+First figure out the current level for output using the same algo
+as for adding an entry.
+\begin{tightitemize}
+\item if we are adding to the leaf level,
+Then finish off level after level: there's exactly
+the right number of elements.
+For the leaf-level, we must output a leaf-node
+using a \verb|child_node| message.  For each subsequent level,
+add a \verb|branch_value| and \verb|branch_ended| message.
+\item otherwise, add \verb|branch_value| and \verb|branch_ended|
+messages up the tree, with the extra values piled into level $0$.
+\end{tightitemize}
+
+Then emit a \verb|level_ended| message.
+
+Write the start and length of the $H-1$ level of the tree
+into the initial header.
+
+\subsubsection{Building a very Short File}
+
+If there are less than $H$ elements, we never do anything initially
+but fill the buffer.  Then we emit a simple one-level tree.
+
+\subsubsection{Building the Non-Leaf Tree Levels}
+
+After the end-of-file is received, we either flush the buffer of elements
+(described two sections ago), or handle a short file (last section).
+After that, if we do not have a short-file,
+we begin handling the non-leaf levels.
+
+State: $\ell$, the level of the tree being constructed.
+\verb|last_key|, the last key output.
+\verb|cur_child_node_offset|, offset of the last child for this level.
+
+Initialization:  $\ell = H-2$.  \verb|last_key| is the empty string.
+Write the value-offset for the current branch into the branch buffer.
+
+Repeat until done:  read a message from the
+pipe.
+
+Each message begins with a single byte that gives the message type:
+
+\begin{tabular}{ll}
+{\bf name} & {\bf value} (decimal) \\
+\verb|child_node| & 42 \\
+\verb|branch_value| & 43 \\
+\verb|branch_ended| & 44 \\
+\verb|level_ended| & 45 \\
+\verb|dummy_branch| & 46
+\end{tabular}
+
+Here's information on the format of each type of message (after the initial identifier byte):
+\begin{tightitemize}
+\item \verb|child_node|.
+\begin{verbatim}
+packed_structure MessageChildNode
+{
+  uint32le child_node_length;	# length in .btree file
+};
+\end{verbatim}
+
+\item \verb|branch_value|.
+\begin{verbatim}
+packed_structure MessageBranchValue
+{
+  byte level;
+  uint32le key_len;
+  uint32le value_len;
+};
+\end{verbatim}
+\item \verb|branch_ended|.  
+\item \verb|level_ended|.  If $\ell=0$, we are done.
+\end{tightitemize}
+
+Here's how to handle each type of message:
+\begin{itemize}
+\item \verb|child_node|.
+Add a \verb|BtreeChildSize| object into the
+current child node buffer.
+
+\item \verb|branch_value|.
+\begin{tightitemize}
+\item
+If the level in the message matches the current level,
+then write the value into the value heap,
+emit the key (using prefix-compression) and value-reference;
+the format of the data to write in the {\tt .btree}
+file is \verb|BtreeKeyDataValueRef| (given above).
+Set \verb|last_key|.  Increment the \verb|child_n_values| counter.
+
+\item
+If the level is the message is not current level (it must be less than the current level),
+then just copy the \verb|branch_value| message into to the pipe.
+\end{tightitemize}
+
+\item \verb|branch_ended|.  
+\begin{tightitemize}
+\item
+if the current level's branch ended, then
+prepend the number of elements as a VLI to the branch buffer,
+and write it to disk.
+
+Restart the branch-buffer with the current value offset.
+
+Emit a \verb|child_node| entry to the buffer.
+\item
+otherwise, copy the \verb|branch_ended| message back into the pipe.
+\end{tightitemize}
+
+\item \verb|level_ended|.  If $\ell=0$, we are done.
+
+Otherwise, emit a level-ended event, decrement $\ell$ and
+continue, reset \verb|last_key| to the empty key.
+\end{itemize}
+
+\subsection{BTree File Build State}
+
+We must be able to store btree file state between
+process invocations.  See the \verb|open_building_file|
+and \verb|get_build_state| functions: their implementation is
+governed by the format described here.
+
+Things that have to be included in the state data:
+\begin{tightitemize}
+\item The queue of pending messages.
+\item The state of the pipe.
+\item Which pass (aka level) we are building.
+(Note: if we are building the bottom level, then
+we are still ready for more input)
+\item The ``state-array'' (only for leaf-level)
+\end{tightitemize}
+
+\section{Tuning Notes}
+Tunable parameters:
+\begin{itemize}
+\item \verb|max_in_memory_entries|, \verb|max_in_memory_bytes|.
+The maximum size of the in-memory searchable tree.
+It is nice to make this large, to reduce the number of small
+files we will need.  On the other hand, memory used for the tree
+cannot be used for cacheing.
+\end{itemize}
+
+\section{Appendix}
+
+\subsection{Data Representation Conventions}
+I have taken to defining things are \verb|packed_structure|s.
+A packed structure is an array of types and member
+names; the data will be encoded as just the values,
+the member names are purely for facilitating discussion.
+
+Here are the types you will often see:
+\begin{itemize}
+\item \verb|uint16le|, \verb|uint32le|.  Little-endian fixed-size integers; ``16''
+and ``32'' refer to the number of bits in the integer.
+\item \verb|vli32|, \verb|vli64|.  These are variable-length integers;
+the number gives their maximum value size; a \verb|vli32| may actually require
+5 bytes and a \verb|vli64| may require 9.  The smaller the value,
+the fewer the bytes needed to store.  See the next section of this Appendix.
+\item \verb|byte|.
+\item {\tt {\sl type}[{\sl size}]}.  An array of fixed-length-- the data are just packed
+together.  Size may be a constant number, or it may reference earlier variables in the structure.
+\end{itemize}
+
+\subsection{Variable-length integers}
+Inspired somewhat by UTF-8, these are a nice way to encode length data
+which is often small, but may be larger.
+
+For a uint32, we call then encoding a VLI:
+
+\begin{tabular}{lll}
+{\bf min} & {\bf max} & {\bf bit-pattern} \\
+0 & $3\cdot 2^6 - 1$      & {\small xxxxxxxx (never begins with ``11'')} \\
+$3\cdot 2^6$ & $2^{12}-1$ & {\small 1100xxxx xxxxxxxx} \\
+$2^{12}$ & $2^{20}-1$     & {\small 1101xxxx xxxxxxxx xxxxxxxx} \\
+$2^{20}$ & $2^{28}-1$     & {\small 1110xxxx xxxxxxxx xxxxxxxx xxxxxxxxx} \\
+$2^{28}$ & $2^{32}-1$     & {\small 11110000 xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx}
+\end{tabular}
+
+For a uint64, we use a similar scheme, but we have to use 3 bits in the first
+byte to give the length, so 
+
+\begin{tabular}{lll}
+{\bf min} & {\bf max} & {\bf bit-pattern} \\
+0 & $3\cdot 2^6 - 1$ & {\small xxxxxxxx (never begins with ``11'')} \\
+$3\cdot 2^6$ & $2^{11}-1$ & {\small 11000xxx xxxxxxxx} \\
+$2^{11}$ & $2^{19}-1$     & {\small 11001xxx xxxxxxxx xxxxxxxx} \\
+$2^{19}$ & $2^{27}-1$     & {\small 11010xxx xxxxxxxx xxxxxxxx xxxxxxxx} \\
+$2^{27}$ & $2^{35}-1$     & {\small 11011xxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx} \\
+$2^{35}$ & $2^{43}-1$     & {\small 11100xxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx} \\
+$2^{43}$ & $2^{51}-1$     & {\small 11101xxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx} \\
+$2^{51}$ & $2^{59}-1$     & {\small 11110xxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx ...} \\
+$2^{59}$ & $2^{64}-1$     & {\small 11111000 xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx ...} \\
+\end{tabular}
+
+\end{document}

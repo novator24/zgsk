@@ -1,0 +1,13 @@
+GSK is a portable framework for writing flexible servers
+and clients in C.  It includes builtin support for HTTP
+and DNS as well as base 64, hashing functions, lowlevel
+network information (like ifconfig), efficient buffering,
+abstract socket i/o, and abstract datagram sockets.
+
+It also can use several different polling mechanisms:
+BSD's kqueue() and Solaris's /dev/poll, for efficiency,
+as well as select() and poll() for portability.
+
+It uses the glib 2.0.  You must have the development
+packages, either -dev on debian or -devel on redhat, or a
+"from source" install.

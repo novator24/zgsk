@@ -1,0 +1,26 @@
+- uses HTTP
+- /commands.txt gives a list of commands
+- /dir.txt?path=PATH gives a directory listing
+- /run.txt?command=COMMAND&arg1=ARG1&... executes a command
+
+/* --- API NOTES --- */
+-- server --
+typedef gboolean (*Command) (String args[],
+                             Stream *input, /* optional */
+			     Stream **output_out, /* optional */
+			     GError **error /* if returns FALSE, *error is set */
+			     );
+cs_add_command(string name, command: list of args, optional takes input string, gives output stream)
+cs_set_file(stirng path, data contents)
+cs_serve_pages(socketaddress addr)
+
+-- client --
+flags: trap Ctrl-C, interactive, add-newlines
+cc_set_flag
+cc_get_flag
+cc_set_prompt
+cc_get_prompt_string
+cc_parse_command_line_args
+
+// these invoke the mainloop
+cc_run_command

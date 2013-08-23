@@ -1,0 +1,26 @@
+<!-- ##### SECTION Title ##### -->
+GskMainLoopKqueue
+
+<!-- ##### SECTION Short_Description ##### -->
+a kqueue-based event loop.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A main-loop implemented in terms of kqueue(2), which is
+a generic event filter for BSD.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMainLoopKqueue ##### -->
+<para>
+The kqueue(2)-based main-loop.
+</para>
+
+

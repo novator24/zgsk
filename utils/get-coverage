@@ -1,0 +1,118 @@
+#! /bin/sh
+
+rm -rf autom4te.cache
+
+top_srcdir=`pwd`
+logfile="$top_srcdir/log-$$"
+output="$top_srcdir/coverage"
+
+echo "Logs being written to $logfile."
+
+echo -n "Configuring... " 1>&2
+CFLAGS="-Wall -W -O0 -g -Wno-unused-parameter -fprofile-arcs -ftest-coverage" \
+./configure --enable-gsk-debug --enable-maintainer-mode --disable-shared >> $logfile 2>&1 || { echo "error configuring." ; exit 1 ; }
+echo "done." 1>&2
+
+cd $top_srcdir/src
+echo -n "Cleaning... " 1>&2
+make clean >> $logfile 2>&1 || { echo "error cleaning." ; exit 1 ; }
+rm -f *.bb *.bbg *.da *.c.gcov 
+rm -f */*.bb */*.bbg */*.da */*.c.gcov 
+echo "done." 1>&2
+
+echo -n "Building... " 1>&2
+make >> $logfile 2>&1 || { echo "error building." ; exit 1 ; }
+echo "done." 1>&2
+
+cd $top_srcdir/src/tests
+echo -n "Running \`make check'... " 1>&2
+do_test () {
+  e="GSK_DEBUG=$1 GSK_MAIN_LOOP_TYPE=$2"
+  make check TESTS_ENVIRONMENT="$e" >> $logfile 2>&1 || {
+    echo "error running make check ($e)" 1>&2
+    exit 1
+  }
+  echo -n . 1>&2
+}
+do_test "" ""
+do_test "all" ""
+do_test "all" "select"
+do_test "all" "poll"
+echo " done." 1>&2
+
+
+echo -n "Computing coverage... " 1>&2
+cd $top_srcdir/src
+(
+  for a in ./*.c */*.c ; do 
+    dir=`dirname $a`
+    base=`basename $a`
+    pm=""
+    case "$a" in
+      tests/* | test-*)
+        pm=-
+	;;
+      *)
+        pm=+
+	;;
+    esac
+    cd $top_srcdir/src/$dir
+    cov="`gcov $base 2>> $logfile | grep -v '^Creating'`"
+
+    # HACK: add preceding spaces to 1.33% so that it lines up the decimal point.
+    case "$cov" in
+      # 1.33% needs 2 spaces.
+      [0-9].[0-9][0-9]%*)
+        cov="  $cov"
+	;;
+      # 11.33% needs 2 spaces.
+      [0-9][0-9].[0-9][0-9]%*)
+        cov=" $cov"
+	;;
+      # 100.00% is fine...
+      100.00%*)
+        ;;
+    esac
+
+    echo "[$pm] $cov" | grep executed
+  done
+)  > $output
+
+perl -e 'my $total_lines = 0;
+         my $total_clines = 0;
+	 while (<STDIN>) { 
+          /\[([+-])\] *(\d+\.\d+)\% of (\d+) lines executed in file (.*)/ or next;
+          my ($pm, $percent, $lines, $file) = ($1,$2,$3,$4);
+	  next if $pm eq "-";
+          my $clines = $percent * $lines / 100;
+	  $total_lines += $lines;
+	  $total_clines += $clines;
+         };
+	 $total_clines = int($total_clines);
+	 $percent = sprintf("%.2f", $total_clines / $total_lines * 100);
+	 print "TOTAL: $percent% of $total_lines lines executed in all files.\n"' < $output > $output.tmp
+cat $output.tmp >> $output
+
+perl -e 'my $total_lines = 0;
+         my $total_clines = 0;
+	 while (<STDIN>) { 
+          /\[([+-])\] *(\d+\.\d+)\% of (\d+) lines executed in file (.*)/ or next;
+          my ($pm, $percent, $lines, $file) = ($1,$2,$3,$4);
+	  next if $pm eq "-";
+          my $ulines = int ((100-$percent) * $lines / 100);
+	  print "$ulines $file\n";
+	 }
+	 ' < $output | sort -rn > $output.un
+
+echo "done."
+
+echo
+cat $output.tmp
+rm $output.tmp
+echo "Overall report in $output."
+echo "Individual file data written to *.c.gcov."
+test "x$NO_CLEANUP" = x1 || { 
+  echo "(Deleting" `basename $logfile`"; use \$NO_CLEANUP=1 to suppress next time)" 1>&2
+  rm -f $logfile
+}
+

@@ -1,0 +1,105 @@
+<!-- ##### SECTION Title ##### -->
+Binary Packet
+
+<!-- ##### SECTION Short_Description ##### -->
+A binary data packet.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A reference-counted binary piece of data with a destroy-notify
+to allow arbitrary memory management.
+</para>
+<para>
+It may optionally have two #GskSocketAddress to denote the source
+and destination of the packet.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskPacket ##### -->
+<para>
+A packet of binary data, optionally associated with
+a particular host.
+</para>
+
+@data: the raw binary data.
+@len: length of the raw data.
+@src_address: 
+@dst_address: 
+@destroy: destroy notification.
+@destroy_data: data to invoke destroy on.
+
+<!-- ##### USER_FUNCTION GskPacketDestroyFunc ##### -->
+<para>
+The actual function prototype of destroy.
+This is only useful if you want to examine the whole
+GskPacket from your destroy function.
+</para>
+
+@destroy_data: as passed to gsk_packet_new()
+@packet: the whole packet.
+
+
+<!-- ##### FUNCTION gsk_packet_new ##### -->
+<para>
+
+</para>
+
+@data: 
+@length: 
+@destroy: 
+@destroy_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_packet_new_copy ##### -->
+<para>
+
+</para>
+
+@data: 
+@length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_packet_set_src_address ##### -->
+<para>
+
+</para>
+
+@packet: 
+@address: 
+
+
+<!-- ##### FUNCTION gsk_packet_set_dst_address ##### -->
+<para>
+
+</para>
+
+@packet: 
+@address: 
+
+
+<!-- ##### FUNCTION gsk_packet_unref ##### -->
+<para>
+
+</para>
+
+@packet: 
+
+
+<!-- ##### FUNCTION gsk_packet_ref ##### -->
+<para>
+
+</para>
+
+@packet: 
+@Returns: 
+
+

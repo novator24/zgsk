@@ -1,0 +1,368 @@
+<!-- ##### SECTION Title ##### -->
+gskxdr
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### TYPEDEF gsk_xdr_unsigned_int ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_int ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_unsigned_hyperint ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_hyperint ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_single_float ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_double_float ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_quadruple_float ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GskXdrFundamental ##### -->
+<para>
+
+</para>
+
+@GSK_XDR_FUNDAMENTAL_INT: 
+@GSK_XDR_FUNDAMENTAL_UNSIGNED_INT: 
+@GSK_XDR_FUNDAMENTAL_HYPERINT: 
+@GSK_XDR_FUNDAMENTAL_UNSIGNED_HYPERINT: 
+@GSK_XDR_FUNDAMENTAL_SINGLE_FLOAT: 
+@GSK_XDR_FUNDAMENTAL_DOUBLE_FLOAT: 
+@GSK_XDR_FUNDAMENTAL_QUADRUPLE_FLOAT: 
+
+<!-- ##### MACRO GSK_XDR_NO_MAX_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### STRUCT GskXdrContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskXdrType ##### -->
+<para>
+
+</para>
+
+@context: 
+@category: 
+@is_optional: 
+
+<!-- ##### ENUM GskXdrTypeCategory ##### -->
+<para>
+
+</para>
+
+@GSK_XDR_TYPE_CATEGORY_FUNDAMENTAL: 
+@GSK_XDR_TYPE_CATEGORY_ENUM: 
+@GSK_XDR_TYPE_CATEGORY_UNION: 
+@GSK_XDR_TYPE_CATEGORY_STRUCT: 
+@GSK_XDR_TYPE_CATEGORY_TYPEDEF: 
+@GSK_XDR_TYPE_CATEGORY_OPAQUE_FIXED: 
+@GSK_XDR_TYPE_CATEGORY_OPAQUE_VARIABLE: 
+@GSK_XDR_TYPE_CATEGORY_ARRAY_FIXED: 
+@GSK_XDR_TYPE_CATEGORY_ARRAY_VARIABLE: 
+@GSK_XDR_TYPE_CATEGORY_STRING: 
+
+<!-- ##### FUNCTION gsk_xdr_context_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_context_destroy ##### -->
+<para>
+
+</para>
+
+@context: 
+
+
+<!-- ##### FUNCTION gsk_xdr_context_lookup ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_test_parse ##### -->
+<para>
+
+</para>
+
+@type: 
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_parse ##### -->
+<para>
+
+</para>
+
+@type: 
+@buffer: 
+@struct_ptr: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_find_sizeof ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_find_wire_size ##### -->
+<para>
+
+</para>
+
+@type: 
+@struct_ptr: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_write ##### -->
+<para>
+
+</para>
+
+@type: 
+@struct_ptr: 
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_print_as_text ##### -->
+<para>
+
+</para>
+
+@type: 
+@struct_ptr: 
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_parser_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_parser_parse ##### -->
+<para>
+
+</para>
+
+@parser: 
+@type_to_parse: 
+@struct_ptr: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_parser_continue ##### -->
+<para>
+
+</para>
+
+@parser: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_parser_abandon ##### -->
+<para>
+
+</para>
+
+@parser: 
+@error: 
+
+
+<!-- ##### FUNCTION gsk_xdr_parser_destroy ##### -->
+<para>
+
+</para>
+
+@parser: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_fundamental ##### -->
+<para>
+
+</para>
+
+@context: 
+@fundamental: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_enum ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_union ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Param3: 
+@member_names: 
+@member_types: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_struct ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Param3: 
+@member_names: 
+@member_types: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_typedef ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_opaque ##### -->
+<para>
+
+</para>
+
+@context: 
+@is_variable_len: 
+@Param3: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_array ##### -->
+<para>
+
+</para>
+
+@context: 
+@is_variable_len: 
+@element_type: 
+@Param4: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_type_new_string ##### -->
+<para>
+
+</para>
+
+@context: 
+@Param2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_context_add_struct_mapping ##### -->
+<para>
+
+</para>
+
+@struct_type: 
+@Param2: 
+@offsets: 
+
+
+<!-- ##### FUNCTION gsk_xdr_context_parse_xdr_buf ##### -->
+<para>
+
+</para>
+
+@context: 
+@to_parse: 
+@list_to_prepend_to: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xdr_context_write_gsk_code ##### -->
+<para>
+
+</para>
+
+@context: 
+@to_parse: 
+@error: 
+@Returns: 
+
+

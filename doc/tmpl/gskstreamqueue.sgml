@@ -1,0 +1,144 @@
+<!-- ##### SECTION Title ##### -->
+GskStreamQueue
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_stream_queue_new ##### -->
+<para>
+
+</para>
+
+@is_readable: 
+@is_writable: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_queue_append_read_stream ##### -->
+<para>
+
+</para>
+
+@queue: 
+@substream: 
+
+
+<!-- ##### FUNCTION gsk_stream_queue_append_write_stream ##### -->
+<para>
+
+</para>
+
+@queue: 
+@substream: 
+
+
+<!-- ##### FUNCTION gsk_stream_queue_no_more_read_streams ##### -->
+<para>
+
+</para>
+
+@queue: 
+
+
+<!-- ##### FUNCTION gsk_stream_queue_no_more_write_streams ##### -->
+<para>
+
+</para>
+
+@queue: 
+
+
+<!-- ##### MACRO GSK_STREAM_QUEUE_READ_EMPTY_HOOK ##### -->
+<para>
+GskHook which notifies as long as the queue's supply of readable streams is empty.
+</para>
+
+@queue: queue whose hook should be returned.
+
+
+<!-- ##### MACRO gsk_stream_queue_trap_read_empty ##### -->
+<para>
+Provide a function that will be call as long as there are no
+streams to read from.
+</para>
+
+@queue: the queue to get notification about.
+@func: function to invoke when the queue is empty,
+and which should return whether it wishes to continue
+trapping the event.
+@shutdown: called when the queue is no longer readable,
+should return FALSE.
+@data: data to pass to @func, @shutdown and @destroy.
+@destroy: called when the func and shutdown can no longer be invoked.
+
+
+<!-- ##### MACRO gsk_stream_queue_untrap_read_empty ##### -->
+<para>
+Remove the trap set by gsk_stream_queue_trap_read_empty().
+</para>
+<para>
+The destroy function, if any, will be called (possibly not immediately)
+</para>
+
+@queue: the queue to stop getting notification about.
+
+
+<!-- ##### MACRO GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK ##### -->
+<para>
+GskHook which notifies as long as the queue's supply of writable streams is empty.
+</para>
+
+@queue: queue whose hook should be returned.
+
+
+<para>
+Provide a function that will be call as long as there are no
+streams to write to.
+</para>
+<!-- # Unused Parameters # -->
+@queue: the queue to get notification about.
+@func: function to invoke when the queue is empty,
+and which should return whether it wishes to continue
+trapping the event.
+@shutdown: called when the queue is no longer writable,
+should return FALSE.
+@data: data to pass to @func, @shutdown and @destroy.
+@destroy: called when the func and shutdown can no longer be invoked.
+
+
+<!-- ##### MACRO gsk_stream_queue_trap_write_empty ##### -->
+<para>
+
+</para>
+
+@queue: 
+@func: 
+@shutdown: 
+@data: 
+@destroy: 
+
+
+<!-- ##### MACRO gsk_stream_queue_untrap_write_empty ##### -->
+<para>
+Remove the trap set by gsk_stream_queue_trap_write_empty().
+</para>
+<para>
+The destroy function, if any, will be called (possibly not immediately)
+</para>
+
+@queue: the queue to stop getting notification about.
+
+

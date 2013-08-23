@@ -1,0 +1,26 @@
+<!-- ##### SECTION Title ##### -->
+GskMainLoopDevPoll
+
+<!-- ##### SECTION Short_Description ##### -->
+/dev/poll based event loop.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This is an event loop which is implemented in terms
+of the /dev/poll mechanism, which can be found on Solaris.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMainLoopDevPoll ##### -->
+<para>
+A /dev/poll-based main-loop.
+</para>
+
+

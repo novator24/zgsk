@@ -1,0 +1,120 @@
+<!-- ##### SECTION Title ##### -->
+GskHttpServer
+
+<!-- ##### SECTION Short_Description ##### -->
+The server end of an HTTP connection.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This class manages incoming requests (including post-data),
+and outgoing responses (by passing a supplied #GskStream
+as HTTP content).
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskHttpClient
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION GskHttpServerTrap ##### -->
+<para>
+Function which will be called when the server has a request ready.
+</para>
+
+@server: the server which has the request available.
+@data: as passed in to gsk_http_server_trap().
+@Returns: whether to keep the trap active.
+
+
+<!-- ##### STRUCT GskHttpServerClass ##### -->
+<para>
+Virtual functions which are implemented by an
+HTTP server.
+</para>
+
+@stream_class: the base server class.
+@set_poll_request: function to indicate whether to
+notify on the HTTP trap.
+@shutdown_request: function to call to stop
+accepting requests.
+
+<!-- ##### STRUCT GskHttpServer ##### -->
+<para>
+Stream which is the server end of an HTTP connection.
+</para>
+<para>
+This has a trap which is triggered when new requests are
+available.  This HTTP server does not define any behavior--
+the user is responsible for calling gsk_http_server_respond()
+to handle the request.
+</para>
+
+
+<!-- ##### MACRO GSK_HTTP_SERVER_HOOK ##### -->
+<para>
+Get the hook which is triggered on HTTP request availability.
+</para>
+
+@client: the client to get the hook from.
+
+
+<!-- ##### MACRO gsk_http_server_trap ##### -->
+<para>
+Register a function which will get called as long as a request is
+available.
+The request should be dequeued with gsk_http_server_get_request().
+</para>
+
+@server: the server to watch.
+@func: the function to call if a request is available.
+@shutdown: the function to call if no further requests are going to be available.
+@data: data to pass to @func and @shutdown.
+@destroy: the function to call when the trap is removed or destroyed.
+
+
+<!-- ##### MACRO gsk_http_server_untrap ##### -->
+<para>
+Unregister the function which was to be called
+whenever a request was available.
+</para>
+<para>
+This has the same effect as returning FALSE from the function
+registered with gsk_http_server_trap().
+</para>
+
+@server: the server to stop watching.
+
+
+<!-- ##### FUNCTION gsk_http_server_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_server_get_request ##### -->
+<para>
+
+</para>
+
+@server: 
+@request_out: 
+@post_data_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_server_respond ##### -->
+<para>
+
+</para>
+
+@server: 
+@request: 
+@response: 
+@content: 
+
+

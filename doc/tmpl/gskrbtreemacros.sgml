@@ -1,0 +1,529 @@
+<!-- ##### SECTION Title ##### -->
+gskrbtreemacros
+
+<!-- ##### SECTION Short_Description ##### -->
+Flexible Red-Black Trees implemented as macros
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+The macros defined here allow you to implement
+efficient red-black trees which put their data
+in existing node structures.
+Besides efficiency, this can be much more convenient
+because the same node may be a member of multiple trees.
+It shares these characteristics in
+common with the gsklistmacros,
+so that a member of a rbtree may be a member of a gsk-list,
+etc etc. all simultanteously.
+</para>
+<para>
+ TODO: Description of what an rbtree is.
+</para>
+<para>
+ The actual rbtree consists of a macro with eight arguments:
+ <variablelist>
+  <varlistentry>
+   <term>top</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>type*</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>set_is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>parent</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>left</term>
+   <term>right</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>comparator</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</para>
+<para>
+ TODO: Description of what an rbctree is.
+</para>
+<para>
+ The actual rbctree consists of a macro with ten arguments:
+ <variablelist>
+  <varlistentry>
+   <term>top</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>type*</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>set_is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>get_count</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>set_count</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>parent</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>left</term>
+   <term>right</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>comparator</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</para>
+<para>
+ TODO: example use cases.
+</para>
+<para>
+ TODO: Some example programs.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+gskqsortmacro
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_RBTREE_INSERT ##### -->
+<para>
+Add a new node into the rbtree, potentially removing another node of the same
+key, which will be returned in @collision_node.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to affect.
+@node: The node to insert.  It should not be in the tree initially.
+Its parent, left and right pointers will be initialized.
+@collision_node: A variable that will be set to NULL
+if there was no collision, or the node that was replaced
+if there was a collision.
+
+
+<!-- ##### MACRO GSK_RBTREE_REMOVE ##### -->
+<para>
+Remove a new from the tree.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to affect.
+@node: The node to remove from the tree.
+
+
+<!-- ##### MACRO GSK_RBTREE_LOOKUP ##### -->
+<para>
+Lookup a node in the tree.
+</para>
+<para>
+This will use the same comparator as the normal tree lookup,
+so the @key should probably be something that looks like a node.
+See #GSK_RBTREE_LOOKUP_COMPARATOR for a method to do the lookup
+using a key that is in a different format.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@key: A node whose equivalent we are trying to find.
+@out: The node that was found, or NULL if no node was found.
+
+
+<!-- ##### MACRO GSK_RBTREE_LOOKUP_COMPARATOR ##### -->
+<para>
+Lookup a node in the tree.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@key: A key to lookup.
+@key_comparator: A macro that takes three arguments: 
+the @key, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+@out: The node that was found, or NULL if no node was found.
+
+
+<!-- ##### MACRO GSK_RBTREE_FIRST ##### -->
+<para>
+Get the first element of the tree.
+(The first element is the least element,
+as determined by the comparator)
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@out: A variable which will be set to the first element in the tree,
+or NULL if the tree is empty.
+
+
+<!-- ##### MACRO GSK_RBTREE_LAST ##### -->
+<para>
+Get the last element of the tree.
+(The last element is the greatest element,
+as determined by the comparator)
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@out: A variable which will be set to the last element in the tree,
+or NULL if the tree is empty.
+
+
+<!-- ##### MACRO GSK_RBTREE_NEXT ##### -->
+<para>
+Get the next element in the tree,
+after a given element.
+</para>
+<para>@in and @out may be the same variable.</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to traverse.
+@in: The starting element (must be non-NULL)
+@out: A variable which will be set to the next element in the tree,
+or NULL if @in was the last element.
+
+
+<!-- ##### MACRO GSK_RBTREE_PREV ##### -->
+<para>
+Get the previous element in the tree,
+after a given element.
+</para>
+<para>@in and @out may be the same variable.</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to traverse.
+@in: The starting element (must be non-NULL)
+@out: A variable which will be set to the previous element in the tree,
+or NULL if @in was the first element.
+
+
+<!-- ##### MACRO GSK_RBTREE_SUPREMUM ##### -->
+<para>
+Find the first node in the tree which is after or equal to @key.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@key: The key to lookup.
+@out: Set the the first node in the tree which is after or equal to
+@key, according to the usual tree comparator, or NULL if no
+element is greater than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBTREE_SUPREMUM_COMPARATOR ##### -->
+<para>
+Find the first node in the tree which is after or equal to @key.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@key: The key to lookup.
+@key_comparator: A macro that takes three arguments: 
+the @key, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+@out: Set the the first node in the tree which is after or equal to
+@key, according to @key_comparator, or NULL if no
+element is greater than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBTREE_INFIMUM ##### -->
+<para>
+Find the last node in the tree which is before or equal to @key.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@key: The key to lookup.
+@out: Set the the last node in the tree which is before or equal to
+@key, according to the usual tree comparator, or NULL if no
+element is less than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBTREE_INFIMUM_COMPARATOR ##### -->
+<para>
+Find the last node in the tree which is before or equal to @key.
+</para>
+
+@tree: The RBTree (a macro that expands to eight arguments) to query.
+@key: The key to lookup.
+@key_comparator: A macro that takes three arguments: 
+the @key, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+@out: Set the the last node in the tree which is before or equal to
+@key, according to @key_comparator, or NULL if no
+element is less than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBCTREE_INSERT ##### -->
+<para>
+Add a new node into the rbtree, potentially removing another node of the same
+key, which will be returned in @collision_node.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to affect.
+@node: The node to insert.  It should not be in the tree initially.
+Its parent, left and right pointers will be initialized.
+@collision_node: A variable that will be set to NULL
+if there was no collision, or the node that was replaced
+if there was a collision.
+
+
+<!-- ##### MACRO GSK_RBCTREE_REMOVE ##### -->
+<para>
+Remove a new from the tree.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to affect.
+@node: The node to remove from the tree.
+
+
+<!-- ##### MACRO GSK_RBCTREE_LOOKUP ##### -->
+<para>
+Lookup a node in the tree.
+</para>
+<para>
+This will use the same comparator as the normal tree lookup,
+so the @key should probably be something that looks like a node.
+See #GSK_RBCTREE_LOOKUP_COMPARATOR for a method to do the lookup
+using a key that is in a different format.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@key: A node whose equivalent we are trying to find.
+@out: The node that was found, or NULL if no node was found.
+
+
+<!-- ##### MACRO GSK_RBCTREE_LOOKUP_COMPARATOR ##### -->
+<para>
+Lookup a node in the tree.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@key: A key to lookup.
+@key_comparator: A macro that takes three arguments: 
+the @key, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+@out: The node that was found, or NULL if no node was found.
+
+
+<!-- ##### MACRO GSK_RBCTREE_FIRST ##### -->
+<para>
+Get the first element of the tree.
+(The first element is the least element,
+as determined by the comparator)
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@out: A variable which will be set to the first element in the tree,
+or NULL if the tree is empty.
+
+
+<!-- ##### MACRO GSK_RBCTREE_LAST ##### -->
+<para>
+Get the last element of the tree.
+(The last element is the greatest element,
+as determined by the comparator)
+</para>
+
+@tree: The RBCTree (a macro that expands to eight arguments) to query.
+@out: A variable which will be set to the last element in the tree,
+or NULL if the tree is empty.
+
+
+<!-- ##### MACRO GSK_RBCTREE_NEXT ##### -->
+<para>
+Get the next element in the tree,
+after a given element.
+</para>
+<para>@in and @out may be the same variable.</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to traverse.
+@in: The starting element (must be non-NULL)
+@out: A variable which will be set to the next element in the tree,
+or NULL if @in was the last element.
+
+
+<!-- ##### MACRO GSK_RBCTREE_PREV ##### -->
+<para>
+Get the previous element in the tree,
+after a given element.
+</para>
+<para>@in and @out may be the same variable.</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to traverse.
+@in: The starting element (must be non-NULL)
+@out: A variable which will be set to the previous element in the tree,
+or NULL if @in was the first element.
+
+
+<!-- ##### MACRO GSK_RBCTREE_SUPREMUM ##### -->
+<para>
+Find the first node in the tree which is after or equal to @key.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@key: The key to lookup.
+@out: Set the the first node in the tree which is after or equal to
+@key, according to the usual tree comparator, or NULL if no
+element is greater than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBCTREE_SUPREMUM_COMPARATOR ##### -->
+<para>
+Find the first node in the tree which is after or equal to @key.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@key: The key to lookup.
+@key_comparator: A macro that takes three arguments: 
+the @key, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+@out: Set the the first node in the tree which is after or equal to
+@key, according to @key_comparator, or NULL if no
+element is greater than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBCTREE_INFIMUM ##### -->
+<para>
+Find the last node in the tree which is before or equal to @key.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@key: The key to lookup.
+@out: Set the the last node in the tree which is before or equal to
+@key, according to the usual tree comparator, or NULL if no
+element is less than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBCTREE_INFIMUM_COMPARATOR ##### -->
+<para>
+Find the last node in the tree which is before or equal to @key.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@key: The key to lookup.
+@key_comparator: A macro that takes three arguments: 
+the @key, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+@out: Set the the last node in the tree which is before or equal to
+@key, according to @key_comparator, or NULL if no
+element is less than or equal to @key.
+
+
+<!-- ##### MACRO GSK_RBCTREE_GET_BY_INDEX ##### -->
+<para>
+Find the N-th node in the tree.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@index: The index of the node which you want to find.
+@out: variable to store the @index-th node in,
+or NULL if @index is out-of-range.
+
+
+<!-- ##### MACRO GSK_RBCTREE_GET_BY_INDEX_UNCHECKED ##### -->
+<para>
+Find the N-th node in the tree, assuming that @index is valid.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@index: The index of the node which you want to find.
+@out: variable to store the @index-th node in.
+This routine will crash if @index is out-of-range.
+
+
+<!-- ##### MACRO GSK_RBCTREE_GET_NODE_INDEX ##### -->
+<para>
+Get the index of an arbitrary node.
+</para>
+
+@tree: The RBCTree (a macro that expands to ten arguments) to query.
+@node: The node to obtain the index of.
+@index_out: variable to store the index of @node in.
+
+

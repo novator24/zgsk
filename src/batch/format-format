@@ -1,0 +1,70 @@
+/*
+    GSKB - a batch processing framework
+
+    Copyright (C) 2008 Dave Benson
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+
+    Contact:
+        daveb@ffem.org <Dave Benson>
+*/
+
+enum FormatIntType : uint8
+{
+  int8,
+  int16,
+  int32,
+  int64,
+  uint8,
+  uint16,
+  uint32,
+  uint64,
+  varlen_int32,
+  varlen_int64,
+  varlen_uint32,
+  varlen_uint64
+};
+
+union Format : uint8
+{
+  FormatIntType v_int;
+  FormatFloatType v_float;
+  v_string;
+  struct {
+    varlen_uint32 length;
+    varlen_int32 format;
+  } v_fixed_array;
+  struct {
+    FormatIntType prefix_type;
+    varlen_int32 format;
+  } v_length_prefixed_array;
+  struct {
+    FormatStructMember[~] members;
+  } v_struct;
+  struct {
+    FormatIntType prefix_type;
+    FormatUnionCase[~] cases;
+  } v_union;
+  struct {
+    struct name;
+    varlen_int32 format;
+  } v_alias;
+};
+
+
+
+
+
+

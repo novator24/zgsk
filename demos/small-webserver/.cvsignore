@@ -1,0 +1,7 @@
+*.lo
+*.la
+gsksmallhttpserver
+.deps
+.libs
+Makefile
+Makefile.in

@@ -1,0 +1,112 @@
+<!-- ##### SECTION Title ##### -->
+GskSocketAddressSymbolicIpv4
+
+<!-- ##### SECTION Short_Description ##### -->
+A symbolic IPv4 socket-address description.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This is a TCP or UDP socket-address in IPv4 space, as represented
+by a hostname and port.
+</para>
+<para>
+Since this uses a hostname,
+it is not possible to convert this to a native socket-address,
+(we will have to go through DNS to do that)
+However, most interfaces will handle this for you.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GskSocketAddressSymbolic, which has generic instructions
+about making a symbolic socket-address into a native one.
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION GskSocketAddressSymbolicResolveFunc ##### -->
+<para>
+A callback which will be invoked when 
+the symbolic socket-address is resolved into a 
+native socket-address.
+</para>
+
+@orig: the symbolic socket address
+on which gsk_socket_address_symbolic_create_name_resolver()
+was invoked.
+@resolved: the socket-address which has a native representation
+(that is, gsk_socket_address_to_native() will work on it)
+@user_data: opaque data passed in to gsk_socket_address_symbolic_create_name_resolver().
+
+
+<!-- ##### USER_FUNCTION GskSocketAddressSymbolicErrorFunc ##### -->
+<para>
+Invoked when symbolic socket-address name-resolution
+fails.
+</para>
+
+@orig: the symbolic socket address
+on which gsk_socket_address_symbolic_create_name_resolver()
+was invoked.
+@error: error, including message and code.
+@user_data: opaque data passed in to gsk_socket_address_symbolic_create_name_resolver().
+
+
+<!-- ##### STRUCT GskSocketAddressSymbolic ##### -->
+<para>
+A symbolic socket-addresss.
+</para>
+
+@socket_address: 
+@name: hostname.
+
+<!-- ##### STRUCT GskSocketAddressSymbolicIpv4 ##### -->
+<para>
+A symbolic socket-addresss in ipv4 space.
+</para>
+
+@base_instance: 
+@port: the ipv4 port.
+
+<!-- ##### FUNCTION gsk_socket_address_symbolic_ipv4_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@port: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_symbolic_create_name_resolver ##### -->
+<para>
+
+</para>
+
+@symbolic: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_symbolic_start_resolution ##### -->
+<para>
+
+</para>
+
+@symbolic: 
+@name_resolver: 
+@r: 
+@e: 
+@user_data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_symbolic_cancel_resolution ##### -->
+<para>
+
+</para>
+
+@symbolic: 
+@name_resolver: 
+
+

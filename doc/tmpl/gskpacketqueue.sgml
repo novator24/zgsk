@@ -1,0 +1,238 @@
+<!-- ##### SECTION Title ##### -->
+Datagram I/O
+
+<!-- ##### SECTION Short_Description ##### -->
+base class for datagram I/O classes
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Datagram I/O means binary packets of data are the transmission unit.
+You can bind to an address in the right family,
+and read and write packets.
+Unless the packet_queue is bound, it is unlikely to ever be readable.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskIO
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskPacketQueueClass ##### -->
+<para>
+Base class for an object which can input and output packets.
+</para>
+
+@io_class: parent class.
+@bind: bind to a particular socket-address.
+@read: read an incoming packet.
+@write: write an outgoing packet.
+
+<!-- ##### STRUCT GskPacketQueue ##### -->
+<para>
+Abstract instance which can read and write packets.
+</para>
+
+
+<!-- ##### FUNCTION gsk_packet_queue_bind ##### -->
+<para>
+
+</para>
+
+@queue: 
+@address: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_packet_queue_read ##### -->
+<para>
+
+</para>
+
+@queue: 
+@save_address: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_packet_queue_write ##### -->
+<para>
+
+</para>
+
+@queue: 
+@out: 
+@error: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_packet_queue_get_allow_address ##### -->
+<para>
+Determine whether packets with remote addresses may be written to this packet queue.
+</para>
+
+@queue: the packet-queue to query.
+
+
+<!-- ##### MACRO gsk_packet_queue_get_allow_no_address ##### -->
+<para>
+Determine whether packets without a remote address may be written to this packet queue.
+</para>
+
+@queue: the packet-queue to query.
+
+
+<!-- ##### MACRO gsk_packet_queue_get_misses_packets ##### -->
+<para>
+Determine whether the packet-queue drops incoming packets.
+</para>
+
+@queue: the packet-queue to query.
+
+
+<!-- ##### MACRO gsk_packet_queue_get_is_readable ##### -->
+<para>
+Determine whether the packet-queue may have incoming packets.
+</para>
+
+@queue: the packet-queue to query.
+
+
+<!-- ##### MACRO gsk_packet_queue_get_is_writable ##### -->
+<para>
+Determine whether the packet-queue may have packets written to it.
+</para>
+
+@queue: the packet-queue to query.
+
+
+<!-- ##### MACRO gsk_packet_queue_peek_bound_address ##### -->
+<para>
+Get the address this queue is bound to, or NULL.
+</para>
+
+@queue: the packet-queue to query.
+
+
+<!-- ##### MACRO gsk_packet_queue_mark_allow_address ##### -->
+<para>
+Indicate that this packet-queue can accept outgoing packets which have an address.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_mark_allow_no_address ##### -->
+<para>
+Indicate that this packet-queue can accept outgoing packets which have an no address.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_mark_misses_packets ##### -->
+<para>
+Indicate that this packet-queue may drop incoming packets.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_mark_is_readable ##### -->
+<para>
+Indicate that this packet-queue may be read from.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_mark_is_writable ##### -->
+<para>
+Indicate that this packet-queue may be written to.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_clear_allow_address ##### -->
+<para>
+Indicate that this packet-queue cannot accept outgoing packets which have an address.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_clear_allow_no_address ##### -->
+<para>
+Indicate that this packet-queue cannot accept outgoing packets which have no address.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_clear_misses_packets ##### -->
+<para>
+Indicate that this packet-queue will not drop incoming packets.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_clear_is_readable ##### -->
+<para>
+Indicate that this packet-queue may not be read from.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### MACRO gsk_packet_queue_clear_is_writable ##### -->
+<para>
+Indicate that this packet-queue may not be written to.
+</para>
+<para>
+This should only be used by derived classes.
+</para>
+
+@queue: the packet-queue to affect.
+
+
+<!-- ##### FUNCTION gsk_packet_queue_set_bound_addresss ##### -->
+<para>
+
+</para>
+
+@queue: the packet-queue to affect.
+@address: the new bound address, or NULL.
+
+

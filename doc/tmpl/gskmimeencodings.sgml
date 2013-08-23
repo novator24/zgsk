@@ -1,0 +1,84 @@
+<!-- ##### SECTION Title ##### -->
+gskmimeencodings
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_mime_make_transfer_encoding_decoders ##### -->
+<para>
+
+</para>
+
+@encoding: 
+@write_end_out: 
+@read_end_out: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_make_transfer_encoding_encoders ##### -->
+<para>
+
+</para>
+
+@encoding: 
+@write_end_out: 
+@read_end_out: 
+@bdy_string_out: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_base64_decoder_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_base64_encoder_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_quoted_printable_decoder_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_quoted_printable_encoder_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_identity_filter_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

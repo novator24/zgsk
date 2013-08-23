@@ -1,0 +1,118 @@
+#! /usr/bin/perl -w 
+
+sub process($$$)
+{
+  my ($is_iface, $type, $sig) = @_;
+  if ($sig !~ s/^([^()]+)\(\*\s?([\w_]+)\)\s*//)
+    {
+      print STDERR "couldn't lex apart $sig";
+      return;
+    }
+  my ($rv, $id) = ($1, $2);
+  $rv =~ s/\s+$//;
+  $rv =~ s/^\s+//;
+  $sig =~ s/\n\s+/\n /gs;
+  $sig =~ s/\;$//s;
+  print "Iface-" if $is_iface;
+  print "Method: $id\n";
+  print "Type: $type\n" unless $is_iface;
+  print "Return-Value: $rv\n",
+	"Signature:\\\n$sig\n";
+}
+
+$in_comment = 0;
+
+sub read_one_skipping_comments ()
+{
+  while (<>)
+    {
+      if ($in_comment)
+	{
+	  if (s/^.*\*\///)
+	    {
+	      $in_comment = 0;
+	    }
+	  else
+	    {
+	      next;
+	    }
+	}
+      # kill one line comments
+      s/\/\*.*?\*\///g;
+
+      # does the line end in a comment...
+      if (s/\/\*.*//)
+	{
+	  $in_comment = 1;
+	}
+      next if (/^\s*$/);
+      return $_;
+    }
+  return undef;
+}
+
+while (defined ($_ = read_one_skipping_comments ()))
+  {
+    if (/^struct\s+_([\w_]+)(Class|Iface)\b/)
+      {
+        my $type = $1;
+	my $paren_bias = 0;
+	my $is_iface = ($2 eq 'Iface');
+	if ($is_iface)
+	  {
+	    print "Interface: $type\n";
+	  }
+	my $got_base = 0;
+	while (defined ($_ = read_one_skipping_comments ()))
+	  {
+	    my $line = $_;
+	    if (!$is_iface && !$got_base && /\s+([\w]+)Class\s+[\w\d_]+;\s*$/)
+	      {
+	        print "Base-Class: $1 $type\n";
+		$got_base = 1;
+	      }
+	    last if /^\}\;/;
+	    my $nleft = tr/(/(/;
+	    my $nright = tr/)/)/;
+	    $accum .= $_ if ($nleft || $nright || $paren_bias);
+	    chomp;
+	    $paren_bias += ($nleft - $nright);
+	    die if $paren_bias < 0;
+	    if (($nleft != 0 || $nright != 0) && $paren_bias == 0)
+	      {
+		process ($is_iface, $type, $accum);
+	      }
+	    if ($paren_bias == 0)
+	      {
+	        $accum = '';
+	      }
+	  }
+      }
+  }
+
+=pod
+
+=head1 NAME
+
+gsk-skeleton-data-scan - Guess information that gsk-skeleton can use.
+
+=head1 SYNOPSIS
+
+  gsk-skeleton-data-scan *.h > skeleton-data
+
+=head1 DESCRIPTION
+
+C<gsk-skeleton-data-scan> scans a number of header files
+looking for C<Class> and C<Iface> structures in the GSK
+style.
+
+This data is written to standard output.  Then the
+C<gsk-skeleton> can use this information to 
+stub function implementations for 
+the C<--method> and C<--implement> options.
+
+=head1 AUTHOR
+
+Written by Dave Benson <daveb@ffem.org>.
+
+=cut

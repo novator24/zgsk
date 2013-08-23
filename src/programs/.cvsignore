@@ -1,0 +1,10 @@
+*.lo
+*.o
+*.la
+*.a
+Makefile
+Makefile.in
+.libs
+.deps
+example-server
+gsk-control-client

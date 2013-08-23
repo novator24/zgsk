@@ -1,0 +1,99 @@
+<!-- ##### SECTION Title ##### -->
+GskStreamExternal
+
+<!-- ##### SECTION Short_Description ##### -->
+streams which connect to another process.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+These are streams where the input and output 
+map to standard output and standard input for
+another process which is exec(2)'d from this one.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION GskStreamExternalTerminated ##### -->
+<para>
+Function to run when the process underlying the stream is terminated.
+</para>
+
+@external: the stream corresponding to the process.
+@wait_info: information about why the process exited.
+@user_data: passed in from gsk_stream_external_new().
+
+
+<!-- ##### USER_FUNCTION GskStreamExternalStderr ##### -->
+<para>
+Function to be run with single lines taken from standard-error
+of the subprocess.  The line has had the newline chopped from it.
+</para>
+
+@external: the stream corresponding to the process.
+@error_text: the NUL-terminated text from the subprocess.
+@user_data: passed in from gsk_stream_external_new().
+
+
+<!-- ##### STRUCT GskStreamExternal ##### -->
+<para>
+Instance of an object whose input and output come
+from another process.
+</para>
+
+@stream: parent instance.
+@write_fd: file-descriptor to write to (received as
+standard-input of the child process).
+@write_source: notification that it's ready to write.
+@write_buffer: data pending to be written.
+@max_write_buffer: max data pending to be written.
+@read_fd: file-descriptor to read from (sent as 
+standard-output of the child process).
+@read_source: notification that it's ready to read.
+@read_buffer: data pending read from child.
+@max_read_buffer: max bytes data pending read from child.
+@read_err_fd: file-descriptor to read from (sent as 
+standard-error of the child process).
+@read_err_source: notification that the error stream is ready-to-read.
+@read_err_buffer: data pending from error stream.
+@max_err_line_length: maximum length of line for an error string.
+@process_source: process-termination notification.
+@pid: process id.
+@term_func: function to call when the child process dies.
+@err_func: function to call with standard error data.
+@user_data: parameter to pass to @term_func and @err_func.
+
+<!-- ##### ENUM GskStreamExternalFlags ##### -->
+<para>
+Flags which affect the construction of the stream.
+</para>
+
+@GSK_STREAM_EXTERNAL_ALLOCATE_PSEUDOTTY: 
+Allocate a pseudo tty for the input and output of the
+child process.
+@GSK_STREAM_EXTERNAL_SEARCH_PATH: 
+Search along $PATH for the binary.
+
+<!-- ##### FUNCTION gsk_stream_external_new ##### -->
+<para>
+
+</para>
+
+@flags: 
+@stdin_filename: 
+@stdout_filename: 
+@term_func: 
+@err_func: 
+@user_data: 
+@path: 
+@argv: 
+@env: 
+@error: 
+@Returns: 
+
+

@@ -1,0 +1,62 @@
+<!-- ##### SECTION Title ##### -->
+Useful GTypes
+
+<!-- ##### SECTION Short_Description ##### -->
+some types useful to servers
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+The only types available so far is a file-descriptor,
+and its corresponding GParamSpec.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_fd_get_type ##### -->
+<para>
+GType of a file-descriptor. (private)
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_param_fd_get_type ##### -->
+<para>
+GType of a GParamSpec which indicates a file-descriptor. (private)
+</para>
+
+@Returns: 
+
+
+<!-- ##### MACRO GSK_TYPE_FD ##### -->
+<para>
+GType of a file-descriptor.
+</para>
+
+
+
+<!-- ##### MACRO GSK_TYPE_PARAM_FD ##### -->
+<para>
+GType of a GParamSpec which indicates a file-descriptor.
+</para>
+
+
+
+<!-- ##### FUNCTION gsk_param_spec_fd ##### -->
+<para>
+Make a GParamSpec to indicate a file-descriptor.
+</para>
+
+@name: name of parameter.
+@nick: nickname of parameter.
+@blurb: description of parameter.
+@flags: GParamFlags.
+@Returns: a parameter specification.
+
+

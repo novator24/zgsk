@@ -1,0 +1,28 @@
+#! /usr/bin/perl -w
+
+my $type = $ARGV[0];
+die "usage: $0 TYPE" unless defined $type;
+
+$lctype = $type;
+$lctype =~ s/([A-Z])/_$1/g;
+$lctype = lc($lctype);
+$lctype =~ s/^_//;
+
+die "bad type" unless $lctype =~ /^([^_]+)_(.*)$/;
+$prefix_lc = $1;
+$suffix_lc = $2;
+$prefix_uc = uc($prefix_lc);
+$suffix_uc = uc($suffix_lc);
+$uctype = uc($lctype);
+$typemacro = $prefix_uc . "_TYPE_" . $suffix_uc;
+
+
+print <<"EOF";
+GType ${lctype}_get_type(void) G_GNUC_CONST;
+#define $typemacro              (${lctype}_get_type ())
+#define ${uctype}(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), $typemacro, $type))
+#define ${uctype}_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), $typemacro, ${type}Class))
+#define ${uctype}_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), $typemacro, ${type}Class))
+#define ${prefix_uc}_IS_${suffix_uc}(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), $typemacro))
+#define ${prefix_uc}_IS_${suffix_uc}_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), $typemacro))
+EOF

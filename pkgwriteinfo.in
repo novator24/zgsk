@@ -1,0 +1,52 @@
+Package: gsk
+Output-Package: gsk1.0
+Section: libs
+Group: Development/Libraries
+Priority: low
+Home-Page: http://gsk.sourceforge.net/
+Source-Url: http://download.sourceforge.net/gsk/gsk-@VERSION@.tar.gz
+Author: David Benson <daveb@ffem.org>
+Packager: Dave Benson
+Packager-Email: daveb@ffem.org
+Version: @VERSION@
+Release: 1
+License: LGPL
+Synopsis: a library for developing servers.
+Description: gsk is a library which provides portable,
+ object-oriented, C interfaces to network facilities.
+
+Build: normal
+Configure-Flags: --enable-gsk-debug
+
+Target: {MAIN}
+Files: /usr/lib/libgsk*.so*
+Depends: libglib2.0-0, libssl0.9.7
+Which-Build: normal
+Synopsis: runtime files for gsk.
+Description: Standard runtime libraries for endusers of GSK.
+
+Target: dev
+Synopsis: Development support for gsk.
+Description: Install this package if you want to compile 
+ programs that use GSK.
+Depends: libglib2.0-dev, libssl-dev
+Files: /usr/include/gsk-1.0/gsk/*.h
+Files: /usr/include/gsk-1.0/gsk/common/*.h
+Files: /usr/include/gsk-1.0/gsk/hash/*.h
+Files: /usr/include/gsk-1.0/gsk/http/*.h
+Files: /usr/include/gsk-1.0/gsk/dns/*.h
+Files: /usr/include/gsk-1.0/gsk/url/*.h
+Files: /usr/include/gsk-1.0/gsk/xmlrpc/*.h
+Files: /usr/include/gsk-1.0/gsk/ssl/*.h
+Files: /usr/include/gsk-1.0/gsk/zlib/*.h
+Files: /usr/lib/libgsk*.a
+Files: /usr/lib/pkgconfig/gsk-1.0.pc
+Synopsis: files for developing with gsk.
+Which-Build: normal
+Description: Libraries and headers required for developing with the GSK.
+
+Target: doc-html
+Synopsis: Documentation for gsk.
+Description: This is HTML documentation for GSK.
+Doc: /usr/share/doc/gsk-1.0/html/
+Which-Build: normal

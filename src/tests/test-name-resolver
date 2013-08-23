@@ -1,0 +1,28 @@
+#! /bin/sh
+
+test_name_ip () {
+  name="$1"
+  ip="$2"
+  got_ip=`./name-resolver ipv4 $name`
+  if test $? != 0 ; then
+    echo "name-resolution failed on $name" 1>&2
+    exit 1
+  fi
+  test $got_ip = "$ip:0" ||
+  test $got_ip = "$ip" || {
+    echo "name lookup on $name gave $got_ip not $ip" 1>&2
+    exit 1
+  }
+}
+
+test_name_fail () {
+  name="$1"
+  if ./name-resolver ipv4 "$name" > /dev/null 2>&1  ; then
+    echo "name $name did not fail" 1>&2
+    exit 1
+  fi
+}
+
+test_name_ip icann.net 208.77.188.103
+# test_name_ip lira.ugcs.caltech.edu 131.215.43.202
+test_name_fail fubar.whatever.asdfasdfas

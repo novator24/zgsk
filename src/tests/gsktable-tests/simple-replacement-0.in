@@ -1,0 +1,9 @@
+# For replacement mode, i/o mode cmd-prefixed-hex
+!- 0000
+A 0000 0001
+A ffff 0002
+!+ 0000 0001
+!+ ffff 0002
+!- fffe
+A 0000 0005
+!+ 0000 0005

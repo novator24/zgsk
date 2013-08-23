@@ -1,0 +1,449 @@
+<!-- ##### SECTION Title ##### -->
+Lightweight Hookable Events
+
+<!-- ##### SECTION Short_Description ##### -->
+
+a blockable, optionally shutdown-able, trap-able 
+structure inside a GObject.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+GskHook is to be used as a member of a GObject.
+Its class must have at least a #GskHookSetPollFunc member,
+and for hooks which have a corresponding shutdown method,
+that should be in the class as well.
+</para>
+
+<para>
+The point of this class is to encapsulate i/o event handling.
+This means that it must be possible to trap the event,
+and it also must not waste cpu notifying us if the event is not trapped.
+</para>
+
+<para>
+Therefore, #GskHook has two components:
+(1) methods to make it easy to write classes which have GskHooks in them.
+(2) methods to be exposed to an end user of such a class:
+meaning, ways to trap, untrap, block, unblock the events.
+</para>
+
+<para>
+To implement a class which contains a #GskHook,
+traditionally, you should have a set_poll method of the class
+which should just turn on or off whether the class
+tries to call gsk_hook_notify().
+Furthermore, you might want a shutdown method.  It's optional.
+</para>
+
+<para>
+Sometimes a hook is always ready to trigger.
+You can call gsk_hook_mark_idle_notify() to cause
+the hook to trigger constantly, if it's trapped and unblocked.
+Also, gsk_hook_clear_idle_notify() stops that.
+In this case, you may not need a set_poll function even.
+</para>
+
+<para>
+When a hook is shut down, it is marked as unavailable.
+When you wish to shut down a hook, you should call
+gsk_hook_shutdown().  Typically, the shutdown happens immediately.
+However, the implementation of a class that contains a hook
+may need to leave the object in a transitional state, SHUTTING_DOWN.
+Even if this happens, the hook is still marked as unavailable.
+The implementation should eventually call gsk_hook_notify_shutdown()
+to indicate that the shutdown finally finished.
+The shutdown hook registered with gsk_hook_trap()
+will only be run after gsk_hook_notify_shutdown() is called in that case.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GskIO, #GskStream
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskHook ##### -->
+<para>
+A structure which you can embed in a GObject.
+All of its members are private.
+</para>
+
+
+<!-- ##### USER_FUNCTION GskHookFunc ##### -->
+<para>
+To be called when the hook is triggered.
+</para>
+
+@object: the object which contains this hook.
+@data: user-data passed in to #gsk_hook_trap
+@Returns: whether the hook should stay trapped.
+
+
+<!-- ##### USER_FUNCTION GskHookSetPollFunc ##### -->
+<para>
+To be called when the class should start or stop
+calling #gsk_hook_notify.
+</para>
+
+@object: the object which contains this hook.
+@do_polling: whether to trigger the hook.
+
+
+<!-- ##### USER_FUNCTION GskHookShutdownFunc ##### -->
+<para>
+This function is how the "shutdown" method in a class will
+be invoked (if the hook WAS NOT created
+with #GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR; see #GskHookShutdownErrorFunc).
+</para>
+<para>
+GSK automatically untraps after this is over,
+since there is no more potential for this hook to trigger.
+</para>
+
+@object: the object whose hook should shut down.
+
+
+<!-- ##### USER_FUNCTION GskHookShutdownErrorFunc ##### -->
+<para>
+This function is how the "shutdown" method in a class will
+be invoked (if the hook WAS NOT created
+without #GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR; see #GskHookShutdownErrorFunc).
+</para>
+<para>
+This function returns with whether the shutdown completed successfully.
+</para>
+<para>
+If this function return FALSE but sets no error, then
+this hook is not shutdown, but it is working on shutting down.
+(The shutdown notify hook should be called by the
+object itself later.)
+</para>
+
+@object: the object whose hook should shut down.
+@error: place for an error to be placed if shutdown fails.
+@Returns: whether shutdown succeeds.
+
+
+<!-- ##### ENUM GskHookFlags ##### -->
+<para>
+Flags which can be read about any hook.
+See GSK_HOOK_TEST_FLAG(), GSK_HOOK_SET_FLAG()
+and GSK_HOOK_CLEAR_FLAG().
+</para>
+
+@GSK_HOOK_IS_AVAILABLE: whether the hook is available
+to be trapped.  (It is not available either because it
+was never available, or because it was shut down.)
+@GSK_HOOK_NEVER_AUTO_SHUTS_DOWN: 
+whether the hook will auto-shutdown in some circumstances,
+ie due to end-of-file or error.
+@GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR: 
+whether this hook can have an error on shutdown.
+@GSK_HOOK_private_IDLE_NOTIFY: 
+private. (used by macros so it has to be exposed)
+@GSK_HOOK_private_JUST_NEVER_BLOCKS: 
+private. (used by macros so it has to be exposed)
+@GSK_HOOK_private_NEVER_BLOCKS: 
+private. (used by macros so it has to be exposed)
+@GSK_HOOK_private_CAN_DEFER_SHUTDOWN: 
+@GSK_HOOK_private_SHUTTING_DOWN: 
+private. (used by macros so it has to be exposed)
+@_GSK_HOOK_FLAGS_RESERVED: 
+bits used internally.  private.
+
+<!-- ##### MACRO GSK_HOOK_GET_OBJECT ##### -->
+<para>
+Get a pointer to the GObject which owns this hook.
+</para>
+
+@hook: the hook whose GObject should be found.
+
+
+<!-- ##### MACRO GSK_HOOK_TEST_FLAG ##### -->
+<para>
+Test if a particular flag in the GskHook is set.
+</para>
+
+@hook: the hook to test.
+@flag_shortname: the name of the flag, without
+its GSK_HOOK prefix.
+
+
+<!-- ##### MACRO GSK_HOOK_SET_FLAG ##### -->
+<para>
+Set the bit of the hook to TRUE.  This should
+only be used by implementors of 
+GskHook-containing objects.
+</para>
+
+<!-- # Unused Parameters # -->
+@hook: the hook to affect.
+@flag_shortname: the name of the flag, without
+its GSK_HOOK prefix.
+
+
+<!-- ##### MACRO GSK_HOOK_CLEAR_FLAG ##### -->
+<para>
+Set the bit of the hook to FALSE.  This should
+only be used by implementors of 
+GskHook-containing objects.
+</para>
+
+@hook: the hook to affect.
+@flag_shortname: the name of the flag, without
+its GSK_HOOK prefix.
+
+
+<!-- ##### MACRO GSK_HOOK_TEST_USER_FLAG ##### -->
+<para>
+Test if a class-usable bit of the hook is TRUE.
+</para>
+
+@hook: the hook whose class-usable bit should be tested.
+@bit: the bit.  (a guint16)
+
+
+<!-- ##### MACRO GSK_HOOK_MARK_USER_FLAG ##### -->
+<para>
+Set a class-usable bit of the hook to TRUE.
+</para>
+
+@hook: the hook whose class-usable bit should be marked (set to 1).
+@bit: the bit.  (a guint16)
+
+
+<!-- ##### MACRO GSK_HOOK_CLEAR_USER_FLAG ##### -->
+<para>
+Set a class-usable bit of the hook to FALSE.
+</para>
+
+@hook: the hook whose class-usable bit should be cleared (set to 0).
+@bit: the bit.  (a guint16)
+
+
+<!-- ##### MACRO GSK_HOOK_TEST_SHUTTING_DOWN ##### -->
+<para>
+Test if a hook is in the process of shutting down.
+</para>
+
+@hook: the hook to query.
+
+
+<!-- ##### MACRO GSK_HOOK_TEST_NEVER_BLOCKS ##### -->
+<para>
+Test if a hook is permanently non-blocking.
+</para>
+
+@hook: the hook to query.
+
+
+<!-- ##### MACRO GSK_HOOK_TEST_IS_AVAILABLE ##### -->
+<para>
+Test if a hook is available for trapping.
+</para>
+
+@hook: the hook to query.
+
+
+<!-- ##### MACRO GSK_HOOK_TEST_IDLE_NOTIFY ##### -->
+<para>
+Test whether this hook is in the idle-notify state,
+meaning that it will trigger an active trap constantly.
+</para>
+
+@hook: the hook to query.
+
+
+<!-- ##### FUNCTION gsk_hook_trap ##### -->
+<para>
+
+</para>
+
+@hook: 
+@func: 
+@shutdown: 
+@data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_hook_untrap ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### MACRO gsk_hook_is_trapped ##### -->
+<para>
+Return whether the hook is trapped (has a callback).
+</para>
+<para>
+Note that the hook may be blocked.
+</para>
+
+@hook: the hook to test.
+
+
+<!-- ##### FUNCTION gsk_hook_block ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_unblock ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_shutdown ##### -->
+<para>
+
+</para>
+
+@hook: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_hook_init ##### -->
+<para>
+
+</para>
+
+@hook: 
+@flags: 
+@inset: 
+@class_set_poll_offset: 
+@class_shutdown_offset: 
+
+
+<!-- ##### FUNCTION gsk_hook_class_init ##### -->
+<para>
+
+</para>
+
+@object_class: 
+@name: 
+@hook_offset: 
+
+
+<!-- ##### FUNCTION gsk_hook_notify ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_notify_shutdown ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_destruct ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_set_idle_notify ##### -->
+<para>
+
+</para>
+
+@hook: 
+@should_idle_notify: 
+
+
+<!-- ##### FUNCTION gsk_hook_mark_idle_notify ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_clear_idle_notify ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_mark_never_blocks ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+
+<!-- ##### FUNCTION gsk_hook_get_last_poll_state ##### -->
+<para>
+
+</para>
+
+@hook: 
+@Returns: 
+
+
+<!-- ##### MACRO GSK_HOOK_INIT ##### -->
+<para>
+Initialize a hook which is contained in a GObject.
+This should only be used for GObject instance init functions.
+</para>
+
+@object: a pointer to an instance of a GObject.
+@struct: name of type for this init function.
+@member: member name of hook inside of type @struct.
+@flags: @GskHookFlags which apply to this hook.
+@set_poll: member function of type gboolean(*)(GObject*, gpointer)
+in the class whose name is @struct with Class appended.
+to call to specify whether or not the hook should be triggered.
+@shutdown: member function to perform shutdown
+in the class whose name is @struct with Class appended.
+
+
+<!-- ##### MACRO GSK_HOOK_INIT_NO_SHUTDOWN ##### -->
+<para>
+Initialize a hook which is contained in a GObject.
+This should only be used for GObject instance init functions.
+This hook is for when have no shutdown virtual is wanted
+in the base class.
+</para>
+
+@object: a pointer to an instance of a GObject.
+@struct: name of type for this init function.
+@member: member name of hook inside of type @struct.
+@flags: @GskHookFlags which apply to this hook.
+@set_poll: member function of type gboolean(*)(GObject*, gpointer)
+in the class whose name is @struct with Class appended.
+to call to specify whether or not the hook should be triggered.
+
+
+<!-- ##### MACRO GSK_HOOK_CLASS_INIT ##### -->
+<para>
+For assigning a hook a name.
+This is mostly used by debugging printout code.
+</para>
+
+@object_class: a class whose instances will always have hooks.
+@hook_name: name of the hook.
+@Type: type name of the instance.
+@member: member name of this hook in @Type.
+
+

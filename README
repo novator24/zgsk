@@ -1,0 +1,19 @@
+GSK -- a library for writing servers.
+
+It facilitates writing very efficient single-threaded
+servers in C.  It has facilities which directly support
+some standard protocols, as well as some simple main-loop and
+parser abstractions.
+
+It is licensed under the LGPL, to give you the maximum freedom
+in writing your application.
+
+--
+
+In order to compile or use GSK, you must have Glib 2.0 installed.
+If you are using a standard linux distribution, a package is
+probably available.  Otherwise, the source is available at
+ftp://ftp.gtk.org/.
+
+If you have received a distributed .tar.gz file, please
+read INSTALL for generic installation instructions.

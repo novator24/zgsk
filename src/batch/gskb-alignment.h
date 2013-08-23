@@ -1,0 +1,67 @@
+#ifndef __GSKB_ALIGNMENT_H_
+#define __GSKB_ALIGNMENT_H_
+
+#include <glib.h>
+
+/* align an offset to 'alignment';
+   note that 'alignment' is evaluated twice!
+   only works if alignment is a power-of-two. */
+#define GSKB_ALIGN(unaligned_offset, alignment)          \
+     ( ((unaligned_offset)+((alignment)-1))              \
+                & ~((alignment)-1)          )
+
+
+/* portable description of object alignment requirements */
+typedef struct {
+  guint8 log2_n_bytes_int_storage : 2;    /* 0 if object aligned to int8,
+                                             1 if object aligned to int16,
+                                             2 if object aligned to int32,
+                                             3 if object aligned to int64,
+                                             (ie log2(nbits/8)=log2(nbytes) ) */
+  guint8 contains_float : 1;
+  guint8 contains_double : 1;
+  guint8 contains_pointer : 1;
+} GskbAlignmentRequirements;
+
+char *gskb_alignment_requirements_to_macro (const GskbAlignmentRequirements *);
+
+
+/* compile-time macros that encode
+ * the requirements in GskbAlignmentRequirements portably */
+#define GSKB_ALIGNMENT_REQUIREMENTS_0       1
+#define GSKB_ALIGNMENT_REQUIREMENTS_0_LOG2  0
+#define GSKB_ALIGNMENT_REQUIREMENTS_1       2
+#define GSKB_ALIGNMENT_REQUIREMENTS_1_LOG2  1
+#define GSKB_ALIGNMENT_REQUIREMENTS_2       4
+#define GSKB_ALIGNMENT_REQUIREMENTS_2_LOG2  2
+#define GSKB_ALIGNMENT_REQUIREMENTS_3       GSKB_ALIGNOF_UINT64
+#define GSKB_ALIGNMENT_REQUIREMENTS_3_LOG2  GSKB_ALIGNOF_UINT64_LOG2
+
+#define GSKB_ALIGNMENT_REQUIREMENTS_0P       GSKB_ALIGNOF_POINTER
+#define GSKB_ALIGNMENT_REQUIREMENTS_0P_LOG2  GSKB_ALIGNOF_POINTER_LOG2
+#define GSKB_ALIGNMENT_REQUIREMENTS_1P       GSKB_ALIGNOF_POINTER
+#define GSKB_ALIGNMENT_REQUIREMENTS_1P_LOG2  GSKB_ALIGNOF_POINTER_LOG2
+#define GSKB_ALIGNMENT_REQUIREMENTS_2P       GSKB_ALIGNOF_POINTER
+#define GSKB_ALIGNMENT_REQUIREMENTS_2P_LOG2  GSKB_ALIGNOF_POINTER_LOG2
+#define GSKB_ALIGNMENT_REQUIREMENTS_3P       MAX(GSKB_ALIGNOF_POINTER,GSKB_ALIGNOF_UINT64)
+#define GSKB_ALIGNMENT_REQUIREMENTS_3P_LOG2  MAX(GSKB_ALIGNOF_POINTER_LOG2,GSKB_ALIGNOF_UINT64_LOG2)
+
+#define GSKB_ALIGNMENT_REQUIREMENTS_0D       GSKB_ALIGNOF_DOUBLE
+#define GSKB_ALIGNMENT_REQUIREMENTS_0D_LOG2  GSKB_ALIGNOF_DOUBLE_LOG2
+#define GSKB_ALIGNMENT_REQUIREMENTS_1D       GSKB_ALIGNOF_DOUBLE
+#define GSKB_ALIGNMENT_REQUIREMENTS_1D_LOG2  GSKB_ALIGNOF_DOUBLE_LOG2
+#define GSKB_ALIGNMENT_REQUIREMENTS_2D       GSKB_ALIGNOF_DOUBLE
+#define GSKB_ALIGNMENT_REQUIREMENTS_2D_LOG2  GSKB_ALIGNOF_DOUBLE_LOG2
+#define GSKB_ALIGNMENT_REQUIREMENTS_3D       MAX(GSKB_ALIGNOF_UINT64,GSKB_ALIGNOF_DOUBLE)
+#define GSKB_ALIGNMENT_REQUIREMENTS_3D_LOG2  MAX(GSKB_ALIGNOF_UINT64_LOG2,GSKB_ALIGNOF_DOUBLE_LOG2)
+
+#define GSKB_ALIGNMENT_REQUIREMENTS_0PD       MAX(GSKB_ALIGNOF_POINTER,GSKB_ALIGNOF_DOUBLE)
+#define GSKB_ALIGNMENT_REQUIREMENTS_0PD_LOG2  MAX(GSKB_ALIGNOF_POINTER_LOG2,GSKB_ALIGNOF_DOUBLE_LOG2)
+#define GSKB_ALIGNMENT_REQUIREMENTS_1PD       MAX(GSKB_ALIGNOF_POINTER,GSKB_ALIGNOF_DOUBLE)
+#define GSKB_ALIGNMENT_REQUIREMENTS_1PD_LOG2  MAX(GSKB_ALIGNOF_POINTER_LOG2,GSKB_ALIGNOF_DOUBLE_LOG2)
+#define GSKB_ALIGNMENT_REQUIREMENTS_2PD       MAX(GSKB_ALIGNOF_POINTER,GSKB_ALIGNOF_DOUBLE)
+#define GSKB_ALIGNMENT_REQUIREMENTS_2PD_LOG2  MAX(GSKB_ALIGNOF_POINTER_LOG2,GSKB_ALIGNOF_DOUBLE_LOG2)
+#define GSKB_ALIGNMENT_REQUIREMENTS_3PD       MAX(MAX(GSKB_ALIGNOF_POINTER,GSKB_ALIGNOF_UINT64),GSKB_ALIGNOF_DOUBLE)
+#define GSKB_ALIGNMENT_REQUIREMENTS_3PD_LOG2   MAX(MAX(GSKB_ALIGNOF_POINTER_LOG2,GSKB_ALIGNOF_UINT64_LOG2),GSKB_ALIGNOF_DOUBLE_LOG2)
+
+#endif

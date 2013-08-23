@@ -1,0 +1,39 @@
+<!-- ##### SECTION Title ##### -->
+GskZlibInflator
+
+<!-- ##### SECTION Short_Description ##### -->
+a zlib decompressor
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A stream which decompresses data on its input to decompressed data on its output.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskZlibDeflator
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskZlibInflator ##### -->
+<para>
+The instance of a zlib inflator stream (a decompressor).
+One writes deflated input to it, and then
+raw (decompressed) data can be read from it.
+</para>
+
+@stream: parent instance.
+@private_stream: private zlib object.
+@decompressed: buffer of decompressed data.
+@use_gzip: 
+
+<!-- ##### FUNCTION gsk_zlib_inflator_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

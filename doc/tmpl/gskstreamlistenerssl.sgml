@@ -1,0 +1,42 @@
+<!-- ##### SECTION Title ##### -->
+gskstreamlistenerssl
+
+<!-- ##### SECTION Short_Description ##### -->
+SSL stream listener.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Accept SSL encrypted connections on top of a raw transport layer
+#GskStreamListener.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskStreamListenerSsl ##### -->
+<para>
+The SSL listener.
+</para>
+
+@stream_listener: the parent instance.
+@cert_file: the x509 certificate file.
+@key_file: the x509 key file.
+@password: 
+@underlying: the raw underlying stream-listener.
+
+<!-- ##### FUNCTION gsk_stream_listener_ssl_new ##### -->
+<para>
+
+</para>
+
+@underlying: 
+@cert_file: 
+@key_file: 
+@Returns: 
+
+

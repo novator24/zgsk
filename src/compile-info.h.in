@@ -1,0 +1,9 @@
+
+#define GSK_PKGCONFIG            "@PKG_CONFIG@"
+#define GSK_CC	                 "@GSK_CC@"
+#define GSK_COMPILE_ONLY_FLAG    "@GSK_COMPILE_ONLY_FLAG@"
+#define GSK_CFLAGS               "@GSK_CFLAGS@"
+#define GSK_LD_SHLIB             "@GSK_LD_SHLIB@"
+#define GSK_LD_SHLIB_FLAGS       "@GSK_LD_SHLIB_FLAGS@"
+#define GSK_LD_PROGRAM           "@GSK_LD_PROGRAM@"
+#define GSK_LD_PROGRAM_FLAGS     "@GSK_LD_PROGRAM_FLAGS@"

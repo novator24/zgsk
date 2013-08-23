@@ -1,0 +1,170 @@
+<!doctype refentry PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
+
+<refentry>
+
+<refmeta>
+ <refentrytitle>gsk (tutorial)</refentrytitle>
+ <manvolnum>3</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname>gsk-tuturial</refname>
+<refpurpose>a library for writing servers (tuturial) </refpurpose>
+</refnamediv>
+
+<refsect1><title>A Time-of-Day Server</title>
+<para>
+  Here we will describe how to write a very small "time-of-day" server.
+</para>
+<para>
+  For this task, we will derive from <structname>GskActorListener</structname>
+  to handle the <function>on_accept</function> method.
+  First, run <command>gsk-skeleton</command> (included in the gsk distribution)
+  to produce skeletal .c and .h files:
+  <programlisting><userinput>
+gsk-skeleton TimeListener GskActorListener
+  </userinput></programlisting>
+  Now, for completeness, we will use the date printing
+  mechanism from <filename>gskdate.h</filename>, it supports several types
+  of formatting: <simplelist><member>rfc 1123</member>
+  <member>rfc 1036</member>
+  <member>ansi-c</member></simplelist>
+</para>
+<para>
+  So we edit the <filename>timelistener.h</filename> that
+  <command>skeleton</command> created, and add a
+  GskDateFormatMask member; the complete structure now looks like:
+<programlisting> <![CDATA[
+struct _TimeListener
+{
+  GskActorListener actor_listener;
+  GskDateFormatMask date_format;
+};
+]]></programlisting>
+  (And you'll need to add some includes:
+<programlisting><![CDATA[
+#include <gsk/protocols/gskdate.h>
+#include <gsk/gskactorlistener.h>
+]]></programlisting> 
+   to the top)
+</para>
+<para>
+  And add an initializer to the "constructor" time_listener_init;
+  the function was created with an empty body by <command>skeleton</command>:
+<programlisting><![CDATA[
+static void
+time_listener_init (TimeListener *listener)
+{
+  listener->date_format = GSK_DATE_FORMAT_ANSI_C;
+}
+]]></programlisting>
+</para>
+<para>
+  Now we must write the <function>on_accept</function>
+  method.  In our case, we know exactly what we want to output
+  already and we don't care about client input.
+  More complicated services often have to derive their
+  own type of worker actor to handle the connection.
+  So in our case:
+<programlisting><![CDATA[
+static gboolean
+time_listener_on_accept (GskActorListener    *actor_listener,
+			 GskSocket           *accepted,
+			 GskMainLoop         *main_loop)
+{
+  GskActorBuffered *worker;
+  char date_str[256];
+
+  /* Construct the client worker */
+  object = gsk_gtk_object_new (gsk_actor_buffered_get_type ());
+  worker = GSK_ACTOR_BUFFERED (object);
+  gsk_actor_buffered_set_socket (worker, accepted);
+  gsk_actor_set_main_loop (GSK_ACTOR (object), main_loop);
+
+  /* Print the date to its buffer. */
+  gsk_date_print_timet (time (NULL), date_str, sizeof (date_str) - 3,
+			TIME_LISTENER (actor_listener)->date_format);
+  strcat (date_str, "\n");
+  gsk_actor_buffered_write (worker, date_str, strlen (date_str));
+  gsk_actor_buffered_stop (worker);
+
+  /* We no longer need to refer to the worker. */
+  gtk_object_unref (object);
+
+  /* Continue listening. */
+  return TRUE;
+}
+]]></programlisting>
+</para>
+
+<para>
+ (We could have saved ourselves a little bit of effort
+ by specifying the flag <literal>--method=on_accept</literal>
+ to <command>gsk-skeleton</command> above.  It determines
+ the signature from the <filename>gsk-skeleton-data</filename> file.)
+</para>
+
+<para>
+  Now we need to register this type so that the user can specify
+  it from the XML;  create a file <filename>timeserver-register.c</filename>:
+<programlisting><![CDATA[
+#include <gsk/gskserver.h>
+#include "timelistener.h"
+
+static void register_builtin_types ()
+{
+  (void) time_listener_get_type ();
+}
+
+GskServerRegisterFunc gsk_server_register_funcs[] =
+{
+  register_builtin_types,
+  NULL
+};
+]]></programlisting>
+</para>
+<para>
+Now you should be able to compile this all using:
+<programlisting><userinput>
+gcc -o timeserver timelistener.c testserver-register.c \
+    `gsk-config --cflags --libs gskprotocol gskserver`
+</userinput></programlisting>
+</para>
+<para>And it will take an xml file like this one:
+<programlisting><![CDATA[
+<GskMainLoop>
+  <add_actor>
+    <TestListener>
+      <listener>
+        <GskSocketListener>
+          <reuse_address>yes</reuse_address>
+          <local_port>5000</local_port>
+        </GskSocketListener>
+      </listener>
+    </TestListener>
+  </add_actor>
+</GskMainLoop>
+]]></programlisting>
+</para>
+</refsect1>
+
+<refsect1><title>TODO</title>
+<para>
+ Things this documentation should also cover:
+ <itemizedlist>
+  <listitem><para>
+    Writing a mainloop without gsk-server.
+  </para></listitem>
+  <listitem><para>
+    Arguments.
+  </para></listitem>
+  <listitem><para>
+    Debugging (<literal>GSK_DEBUG</literal> and <option>--enable-gsk-debug</option>).
+  </para></listitem>
+  <listitem><para>
+    Optimized (with all checks compiled away (via <option>--disable-gsk-checks</option>).
+  </para></listitem>
+ </itemizedlist>
+</para>
+
+</refentry>

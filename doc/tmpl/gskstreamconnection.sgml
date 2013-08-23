@@ -1,0 +1,101 @@
+<!-- ##### SECTION Title ##### -->
+gskstreamconnection
+
+<!-- ##### SECTION Short_Description ##### -->
+Connection between the input of one stream
+and the output of another.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This object allows you to configure the connection
+between two streams more precisely than
+gsk_stream_attach().
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+gsk_stream_attach().
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskStreamConnection ##### -->
+<para>
+An opaque object representing the connection between
+the input of one stream and the output of another.
+</para>
+
+@object: 
+@read_side: 
+@write_side: 
+@blocking_write_side: 
+@blocking_read_side: 
+@use_read_buffer: 
+@buffer: 
+@max_buffered: 
+@atomic_read_size: 
+
+<!-- ##### FUNCTION gsk_stream_connection_new ##### -->
+<para>
+
+</para>
+
+@input_stream: 
+@output_stream: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_connection_get_atomic_read_size ##### -->
+<para>
+
+</para>
+
+@connection: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_connection_set_atomic_read_size ##### -->
+<para>
+
+</para>
+
+@connection: 
+@atomic_read_size: 
+
+
+<!-- ##### FUNCTION gsk_stream_connection_get_max_buffered ##### -->
+<para>
+
+</para>
+
+@connection: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_connection_set_max_buffered ##### -->
+<para>
+
+</para>
+
+@connection: 
+@max_buffered: 
+
+
+<!-- ##### FUNCTION gsk_stream_connection_shutdown ##### -->
+<para>
+
+</para>
+
+@connection: 
+
+
+<!-- ##### FUNCTION gsk_stream_connection_detach ##### -->
+<para>
+
+</para>
+
+@connection: 
+
+

@@ -1,0 +1,70 @@
+<!-- ##### SECTION Title ##### -->
+gsklogringbuffer
+
+<!-- ##### SECTION Short_Description ##### -->
+a line-oriented fixed-length ring buffer
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+GskLogRingBuffer provides a very efficient way
+to keep track of the last N bytes of text data.
+Typically, this is used for logs that change too fast
+to justify keeping them in a file,
+but which are useful for getting status and debugging.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskLogRingBuffer ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_log_ring_buffer_new ##### -->
+<para>
+Create a new ring buffer.  It will never contain
+more that @size bytes of data.
+</para>
+
+@size: the maximum number of bytes of data to buffer.
+@Returns: the newly allocated ring-buffer.
+
+
+<!-- ##### FUNCTION gsk_log_ring_buffer_add ##### -->
+<para>
+Append text to the ring-buffer.
+</para>
+<para>It the text is too long, earlier lines may be erased.
+The text should NOT end with a newline--
+one will be added by this function.
+
+@buffer: the buffer to affect.
+@line: the line to append.
+
+
+<!-- ##### FUNCTION gsk_log_ring_buffer_get ##### -->
+<para>
+Get the entire ring-buffer as a newly allocated string.
+</para>
+
+@buffer: the buffer to query.
+@Returns: the newly allocated NUL-terminated string
+of the last text added to the buffer,
+as whole lines.
+
+
+<!-- ##### FUNCTION gsk_log_ring_buffer_free ##### -->
+<para>
+Free the ring-buffer.
+</para>
+
+@buffer: the buffer to free.
+
+

@@ -1,0 +1,119 @@
+<!-- ##### SECTION Title ##### -->
+gskhash
+
+<!-- ##### SECTION Short_Description ##### -->
+hash computing objects
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+These small objects can compute a hash-function
+of a stream of data incrementally.
+Just pass pieces of data to gsk_hash_feed()
+and it will keep track of the hash-objects state.
+Call gsk_hash_done() to finish the hash off,
+then use gsk_hash_get() or gsk_hash_get_hex() to
+get the value of the hash.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskHash ##### -->
+<para>
+An abstract hashing object.
+</para>
+
+@size: number of bytes in the hash.
+
+<!-- ##### FUNCTION gsk_hash_new_md5 ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_hash_new_sha1 ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_hash_new_crc32 ##### -->
+<para>
+
+</para>
+
+@big_endian: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_hash_feed ##### -->
+<para>
+
+</para>
+
+@hash: 
+@data: 
+@length: 
+
+
+<!-- ##### FUNCTION gsk_hash_feed_str ##### -->
+<para>
+
+</para>
+
+@hash: 
+@str: 
+
+
+<!-- ##### FUNCTION gsk_hash_done ##### -->
+<para>
+
+</para>
+
+@hash: 
+
+
+<!-- ##### FUNCTION gsk_hash_get_size ##### -->
+<para>
+
+</para>
+
+@hash: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_hash_get ##### -->
+<para>
+
+</para>
+
+@hash: 
+@data_out: 
+
+
+<!-- ##### FUNCTION gsk_hash_get_hex ##### -->
+<para>
+
+</para>
+
+@hash: 
+@hex_out: 
+
+
+<!-- ##### FUNCTION gsk_hash_destroy ##### -->
+<para>
+
+</para>
+
+@hash: 
+
+

@@ -1,0 +1,164 @@
+Documentation:  Description of GskTask
+
+Section 1.  Overview
+====================
+
+GskTask is a collection of actions which can be thought
+of as roughly equivalent to unix processes or a job in a thread pool.
+
+This is the lifetime of a task:  it is created.  then hooks are added.
+Hooks may be _synchronous_, meaning they are completed after function
+runs.  Or they may be _asynchronous_, meaning they are passed
+a function-pointer/user-data combination to call once they are
+done running.
+
+Asynchronous tasks may also provide _cancellation handlers_ which
+are optional functions that are called if the task must be
+prematurely cancelled.  We wait for functions that do not provide
+cancellation handlers to complete.
+
+The task goes through a state transition diagram like this:
+
+                     UNSTARTED
+                         |
+                         | gsk_task_start_run()
+                         v
+                      WAITING
+                         |
+                         | once all dependencies are done
+                         v
+                      STARTED
+               (then run all the tasks in order)
+                    /    |                      \
+                   /     |                       \ gsk_task_cancel()
+                  /      |                        \
+gsk_task_destroy /       |                         \|
+                /        |                         -+
+               |         v                      CANCELLING
+               |       DONE                     (run the running subtask's
+               |    (remove from                 cancel hook if any)
+               |     dependents lists)          (run the cancellation hooks)
+               |    (run done_hooks)                |
+               |         |                          |
+               |         |                          |
+               |         |    gsk_task_destroy()    |
+               |         |    or last unreference   |
+               \         v                          |
+                \-->  DESTROYED  <------------------/
+                         |  (any existing dependents
+                         |   are destroyed)
+                         v
+                      memory is released
+
+
+Section 2:  An Individual Hook
+==============================
+
+The task is principally made of a collection of sequenced hooks.
+(Parallelization must be done on a task level;  see gsk_task_parallelize())
+
+Type 1:  A synchronous hook
+---------------------------
+
+A synchronous hook can never be cancelled:
+
+           CREATED
+	      |
+       +----- v ----+
+       |   RUNNING  |  hook_func ()
+       |      |     |  
+       +----- v ----+
+            DONE
+	      |
+	      v
+	   DESTROYED
+
+Type 2:  A simple asynchronous hook
+-----------------------------------
+
+A simple asynchronous hook is one which is cancelled synchronously:
+
+           CREATED
+	      |
+              v        start_func ()
+           RUNNING -----------------+
+              |                      \
+              | hook calls the        \
+	      v provided done_func()   \|
+            DONE                       -+------------+
+	      |                         | CANCELLING |  cancel_func ()
+	      |                         |      |     |
+	      |                         +------v-----+
+	      |                            CANCELLED
+              v  destroy_func ()               |
+           DESTROYED <-------------------------+
+
+Type 3:  An asynchronously-cancellable hook
+-------------------------------------------
+
+A asynchronously-cancellable hook is an asynchronous hook with an
+asynchronous cancellation function as well.  It's state diagram
+is identical to the simple asynchronous diagram,
+except the CANCELLING state is held until the callback
+provided to cancel_func() is invoked.
+
+           CREATED
+	      |
+              v        start_func ()
+           RUNNING -----------------+
+              |                      \
+              | hook calls the        \
+	      v provided done_func()   \|
+            DONE                       -+               We invoke cancel_func ()
+	      |                           CANCELLING    and the cancellation
+	      |                                |        hooks.
+	      |                                v
+	      |                            CANCELLED
+              v  destroy_func ()               |
+           DESTROYED <-------------------------+
+
+Section 3:  Intra-task dependencies
+===================================
+
+The run hooks are run one at a time.  But there is no guaranteed
+order for the destroy hooks.  The task may be destroyed meanwhile
+but task running gets a special status being the "last-running" task.
+(It may be mid-cancellation or it may be running actually)
+
+Section 4:  Inter-task dependencies
+===================================
+
+You may require that a certain task is done before another
+using gsk_task_add_dependency ().
+
+Assume task-a depends on task-b.  (That is, task-a should not be started
+until task-b is done.)  We describe what happens to task-a in various
+circumstances:
+
+   - task-b is done.
+
+     Then task-b is removed from task-a's required list.
+     If task-a's required-list is empty 
+     and task-a has had gsk_task_start_run run
+     then task-a is started.
+
+   - task-b is cancelled
+
+     Then task-a is cancelled (with gsk_task_cancel).
+
+   - task-b is destroyed
+
+     Then task-a is destroyed (with gsk_task_destroy).
+
+Section 5:  Common errors
+=========================
+
+- Assuming destroy handlers are run "in order".
+
+  Destroy handlers are run before/after the run/cancel handlers in question
+  (but not during).  However, the destroy handlers are not
+  ordered with regard to eachother.  (In particular
+  the last-running task's destroy handler is not run
+  until it is done -- even though all the remaining hooks are destroyed)
+
+

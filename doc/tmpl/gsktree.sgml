@@ -1,0 +1,240 @@
+<!-- ##### SECTION Title ##### -->
+gsktree
+
+<!-- ##### SECTION Short_Description ##### -->
+A robustly iterateable tree.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This tree provides an efficient map from any
+type of data which can be totally ordered to
+any type of data.
+</para>
+<para>
+The primary interesting feature is
+that one can iterate the trees in a robust manner
+using the #GskTreeNode, which takes the place of an iterator.
+In particular, when walking around the tree,
+any nodes which are being visited cannot be destroyed
+until their are no more visitors.  Even though the nodes
+are destroyed, they will not be returned by
+gsk_tree_lookup() or gsk_tree_node_find().
+But the node is in the tree, in the sense that
+gsk_tree_node_next() and gsk_tree_node_prev() still work correctly.
+</para>
+<para>
+XXX: if walking a removed node, and a new node with the same key is added,
+should gsk_tree_node_next() or gsk_tree_node_prev() or both or neither
+return the new node???
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskTreeNode ##### -->
+<para>
+An opaque type representing a node of the tree.
+You should not hold on to a #GskTreeNode unless you
+"own" a visit count on the node.
+</para>
+
+
+<!-- ##### STRUCT GskTree ##### -->
+<para>
+A map from keys to values implemented as a Red-Black tree.
+</para>
+
+
+<!-- ##### FUNCTION gsk_tree_new ##### -->
+<para>
+
+</para>
+
+@compare: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_ref ##### -->
+<para>
+
+</para>
+
+@tree: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_unref ##### -->
+<para>
+
+</para>
+
+@tree: 
+
+
+<!-- ##### FUNCTION gsk_tree_new_full ##### -->
+<para>
+
+</para>
+
+@compare: 
+@compare_data: 
+@key_destroy_func: 
+@value_destroy_func: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_insert ##### -->
+<para>
+
+</para>
+
+@tree: 
+@key: 
+@value: 
+
+
+<!-- ##### FUNCTION gsk_tree_replace ##### -->
+<para>
+
+</para>
+
+@tree: 
+@key: 
+@value: 
+
+
+<!-- ##### FUNCTION gsk_tree_lookup ##### -->
+<para>
+
+</para>
+
+@tree: 
+@key: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_remove ##### -->
+<para>
+
+</para>
+
+@tree: 
+@key: 
+
+
+<!-- ##### FUNCTION gsk_tree_n_nodes ##### -->
+<para>
+
+</para>
+
+@tree: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_first ##### -->
+<para>
+
+</para>
+
+@tree: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_last ##### -->
+<para>
+
+</para>
+
+@tree: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_find ##### -->
+<para>
+
+</para>
+
+@tree: 
+@search_key: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_next ##### -->
+<para>
+
+</para>
+
+@tree: 
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_prev ##### -->
+<para>
+
+</para>
+
+@tree: 
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_peek_key ##### -->
+<para>
+
+</para>
+
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_peek_value ##### -->
+<para>
+
+</para>
+
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_is_removed ##### -->
+<para>
+
+</para>
+
+@node: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_visit ##### -->
+<para>
+
+</para>
+
+@tree: 
+@node: 
+
+
+<!-- ##### FUNCTION gsk_tree_node_unvisit ##### -->
+<para>
+
+</para>
+
+@tree: 
+@node: 
+
+
+<!-- ##### FUNCTION gsk_tree_validate ##### -->
+<para>
+
+</para>
+
+@tree: 
+@Returns: 
+
+

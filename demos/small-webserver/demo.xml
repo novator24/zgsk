@@ -1,0 +1,42 @@
+<GskMainLoopPoll>
+ <add-actor>
+ <actor>
+ <MicroHttpListener>
+  <listener>
+   <GskSocketListener>
+    <local_port>9192</local_port>
+    <reuse_address>yes</reuse_address>
+   </GskSocketListener>
+  </listener>
+  <add-servlet>
+   <param>
+    <GskHttpUriSlice>
+     <path>/gsk</path>
+    </GskHttpUriSlice>
+   </param>
+   <param>
+    <GskHttpUrlMap>
+     <url>file:///home/daveb/progs/sf/gsk</url>
+     <path-prefix>/gsk</path-prefix>
+    </GskHttpUrlMap>
+   </param>
+  </add-servlet>
+  <add-servlet>
+   <param>
+    <GskHttpUriSlice>
+     <path>/yahoo</path>
+    </GskHttpUriSlice>
+   </param>
+   <param>
+    <GskHttpUrlMap>
+     <url>http://www.yahoo.com</url>
+     <path-prefix>/yahoo</path-prefix>
+    </GskHttpUrlMap>
+   </param>
+  </add-servlet>
+ </MicroHttpListener>
+ </actor>
+ </add-actor>
+</GskMainLoopPoll>
+     
+

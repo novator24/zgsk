@@ -1,0 +1,37 @@
+<!-- ##### SECTION Title ##### -->
+gskipv4
+
+<!-- ##### SECTION Short_Description ##### -->
+functions for handling IPv4 addresses
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This file contains IPv4-specific raw constants
+and functions.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GskSocketAddress, gsk_socket_address_ipv4_new()
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_ipv4_parse ##### -->
+<para>
+</para>
+
+@str: 
+@ip_addr_out: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_ipv4_ip_address_localhost ##### -->
+<para>
+The IP address of localhost: always <tt>127.0.0.1</tt>.
+For full generality, see #GskNetworkInterfaceSet.
+</para>
+
+
+

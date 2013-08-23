@@ -1,0 +1,176 @@
+<!-- ##### SECTION Title ##### -->
+gskxmltoken
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO GSK_XML_TOKEN_OPEN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GSK_XML_TOKEN_CLOSE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GSK_XML_TOKEN_TEXT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GSK_XML_TOKEN_COMMENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### STRUCT GskXmlTokenOpen ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@tag_name: 
+@num_param: 
+@params: 
+
+<!-- ##### STRUCT GskXmlTokenClose ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@tag_name: 
+
+<!-- ##### STRUCT GskXmlTokenText ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@text: 
+
+<!-- ##### STRUCT GskXmlTokenComment ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@comment: 
+
+<!-- ##### STRUCT GskXmlTokenAny ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+
+<!-- ##### UNION GskXmlToken ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_xml_token_type_name ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_token_open_new ##### -->
+<para>
+
+</para>
+
+@tag_name: 
+@tag_name_len: 
+@tag: 
+@num_params: 
+@param_start: 
+@param_name_len: 
+@param_value_len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_token_comment_new ##### -->
+<para>
+
+</para>
+
+@comment: 
+@comment_len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_token_close_new ##### -->
+<para>
+
+</para>
+
+@tag_name: 
+@tag_name_len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_token_text_new ##### -->
+<para>
+
+</para>
+
+@text: 
+@text_len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_token_unref ##### -->
+<para>
+
+</para>
+
+@token: 
+
+
+<!-- ##### FUNCTION gsk_xml_token_ref ##### -->
+<para>
+
+</para>
+
+@token: 
+
+

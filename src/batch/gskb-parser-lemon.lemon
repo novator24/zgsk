@@ -1,0 +1,440 @@
+/*
+    GSKB - a batch processing framework
+
+    Copyright (C) 2008 Dave Benson
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+
+    Contact:
+        daveb@ffem.org <Dave Benson>
+*/
+
+
+%include {
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "gskb-format.h"
+#include "gskb-parse-context.h"
+
+#define ADD_G_ERROR(error) g_ptr_array_add (parse_context->errors, (error))
+#if G_HAVE_ISO_VARARGS
+#define ADD_ERROR(...) \
+    ADD_G_ERROR (g_error_new (GSK_G_ERROR_DOMAIN, GSK_ERROR_PARSE, __VA_ARGS__))
+#elif defined(G_HAVE_GNUC_VARARGS)
+#define ADD_ERROR(format...) \
+    ADD_G_ERROR (g_error_new (GSK_G_ERROR_DOMAIN, GSK_ERROR_PARSE, format))
+#else
+#error "no vararg macros"
+#endif
+
+static inline void free_bitfield_list (GArray *list)
+{
+  guint i;
+  for (i = 0; i < list->len; i++)
+    g_free ((char*) g_array_index (list, GskbFormatBitField, i).name);
+  g_array_free (list, TRUE);
+}
+static inline void free_case_list (GArray *list)
+{
+  guint i;
+  for (i = 0; i < list->len; i++)
+    {
+      GskbFormatUnionCase c = g_array_index (list, GskbFormatUnionCase, i);
+      if (c.format)
+	gskb_format_unref (c.format);
+      g_free ((char*) c.name);
+    }
+  g_array_free (list, TRUE);
+}
+static inline void free_value_list (GArray *list)
+{
+  guint i;
+  for (i = 0; i < list->len; i++)
+    {
+      GskbFormatEnumValue ev = g_array_index (list, GskbFormatEnumValue, i);
+      g_free ((char*) ev.name);
+    }
+  g_array_free (list, TRUE);
+}
+
+typedef struct
+{
+  gboolean has_value;
+  guint32 value;
+} ParserOptIntValue;
+
+typedef struct
+{
+  char *name;
+  GskbFormat *format;
+} ParserNamedFormat;
+
+}
+
+%token_type {GskbParseToken *}
+%token_prefix {GSKB_TOKEN_TYPE_}
+%extra_argument {GskbParseContext *parse_context}
+
+%type opt_name {char *}
+
+%type format {GskbFormat *}
+%type member {GskbFormatStructMember}
+%type member_list {GArray *}
+%type case {GskbFormatUnionCase}
+%type case_list {GArray *}
+%type bitfield {GskbFormatBitField}
+%type bitfield_list {GArray *}
+%type enum_value {GskbFormatEnumValue}
+%type value_list {GArray *}
+%type opt_extensible {gboolean}
+%type opt_value {ParserOptIntValue}
+%type opt_format {GskbFormat *}
+%type opt_int_type {GskbFormatIntType}
+%type named_format {ParserNamedFormat}
+%type namespace_decl {char *}
+%start_symbol toplevel
+%name gskb_lemon_parser_
+
+%parse_failure {
+   ADD_ERROR("parse failed");
+}
+%syntax_error {
+   ADD_ERROR("syntax error at file %s, line %u: %s",
+             TOKEN->filename, TOKEN->line_no, TOKEN->str);
+}
+
+format(RV) ::= INT8.
+	{ RV = gskb_format_ref (gskb_int8_format); }
+format(RV) ::= INT16.
+	{ RV = gskb_format_ref (gskb_int16_format); }
+format(RV) ::= INT32.
+	{ RV = gskb_format_ref (gskb_int32_format); }
+format(RV) ::= INT64.
+	{ RV = gskb_format_ref (gskb_int64_format); }
+format(RV) ::= UINT8.
+	{ RV = gskb_format_ref (gskb_uint8_format); }
+format(RV) ::= UINT16.
+	{ RV = gskb_format_ref (gskb_uint16_format); }
+format(RV) ::= UINT32.
+	{ RV = gskb_format_ref (gskb_uint32_format); }
+format(RV) ::= UINT64.
+	{ RV = gskb_format_ref (gskb_uint64_format); }
+format(RV) ::= INT.
+	{ RV = gskb_format_ref (gskb_int_format); }
+format(RV) ::= LONG.
+	{ RV = gskb_format_ref (gskb_long_format); }
+format(RV) ::= UINT.
+	{ RV = gskb_format_ref (gskb_uint_format); }
+format(RV) ::= ULONG.
+	{ RV = gskb_format_ref (gskb_ulong_format); }
+format(RV) ::= BIT.
+	{ RV = gskb_format_ref (gskb_bit_format); }
+format(RV) ::= FLOAT32.
+	{ RV = gskb_format_ref (gskb_float32_format); }
+format(RV) ::= FLOAT64.
+	{ RV = gskb_format_ref (gskb_float64_format); }
+format(RV) ::= STRING.
+	{ RV = gskb_format_ref (gskb_string_format); }
+
+opt_extensible(RV) ::= .
+	{ RV = FALSE; }
+opt_extensible(RV) ::= EXTENSIBLE.
+	{ RV = TRUE; }
+
+opt_value(RV) ::= .
+	{ RV.has_value = FALSE; }
+opt_value(RV) ::= EQUALS INTEGER(I).
+	{ RV.has_value = TRUE; RV.value = I->i; }
+
+opt_format(RV) ::= format(A).
+	{ RV = A; }
+opt_format(RV) ::= VOID.
+	{ RV = NULL; }
+
+
+/* Fixed-length array */
+format(RV) ::= format(ELT) LBRACKET INTEGER(len) RBRACKET.
+	{ if (ELT->any.name != NULL)
+	    {
+	      char *arr_name = g_strdup_printf ("%s_Array%u",
+						ELT->any.name,
+						len->i);
+	      RV = gskb_namespace_lookup_format (parse_context->cur_namespace,
+						 arr_name);
+	      if (RV != NULL)
+		{
+		  g_assert (RV->type == GSKB_FORMAT_TYPE_FIXED_ARRAY);
+		  g_assert (gskb_formats_equal (RV->v_fixed_array.element_format,
+						ELT, 0, NULL));
+                  g_assert (RV->v_fixed_array.length == len->i);
+		  gskb_format_ref (RV);
+		}
+	      else
+		{
+		  RV = gskb_format_fixed_array_new (len->i, ELT);
+		  if (parse_context->cur_namespace != NULL)
+		    {
+		      if (parse_context->cur_namespace != ELT->any.ns)
+			{
+			  g_free (arr_name);
+			  arr_name = g_strdup_printf ("From_%s%s_Array%u",
+						      ELT->any.ns->c_type_prefix,
+						      ELT->any.name,
+						      len->i);
+			}
+		      gskb_format_set_name (RV,
+					    parse_context->cur_namespace,
+					    arr_name);
+		      g_free (arr_name);
+		    }
+		}
+	    }
+	  else
+	    RV = gskb_format_fixed_array_new (len->i, ELT);
+	  gskb_format_unref (ELT);
+	}
+
+/* Length-prefixed array */
+format(RV) ::= format(ELT) LBRACKET RBRACKET.
+	{ if (ELT->any.name != NULL)
+	    {
+	      char *arr_name = g_strdup_printf ("%s_Array",
+						ELT->any.name);
+	      RV = gskb_namespace_lookup_format (parse_context->cur_namespace,
+						 arr_name);
+	      if (RV != NULL)
+		{
+		  g_assert (RV->type == GSKB_FORMAT_TYPE_LENGTH_PREFIXED_ARRAY);
+		  g_assert (gskb_formats_equal (RV->v_length_prefixed_array.element_format,
+						ELT, 0, NULL));
+		  gskb_format_ref (RV);
+		}
+	      else
+		{
+		  RV = gskb_format_length_prefixed_array_new (ELT);
+		  if (parse_context->cur_namespace != NULL)
+		    {
+		      if (parse_context->cur_namespace != ELT->any.ns)
+			{
+			  g_free (arr_name);
+			  arr_name = g_strdup_printf ("From_%s%s_Array",
+						      ELT->any.ns->c_type_prefix,
+						      ELT->any.name);
+			}
+		      gskb_format_set_name (RV,
+					    parse_context->cur_namespace,
+					    arr_name);
+		      g_free (arr_name);
+		    }
+		}
+	    }
+	  else
+	    RV = gskb_format_length_prefixed_array_new (ELT);
+	  gskb_format_unref (ELT);
+	}
+
+/* Structures */
+member(RV) ::= format(TYPE) BAREWORD(NAME) opt_value(OV) SEMICOLON.
+	{ RV.format = TYPE;
+	  RV.name = g_strdup (NAME->str);
+	  RV.code = OV.has_value ? OV.value : 0; }
+member_list(RV) ::= member(A).
+	{ RV = g_array_new (FALSE, FALSE, sizeof (GskbFormatStructMember));
+	  g_array_append_val (RV, A); }
+member_list(RV) ::= member_list(A) member(B).
+	{ RV = A;
+	  g_array_append_val (RV, B); }
+format(RV) ::= opt_extensible(EXT) STRUCT LBRACE member_list(MEMBERS) RBRACE.
+	{ GError *error = NULL;
+	  RV = gskb_format_struct_new (EXT, MEMBERS->len, (GskbFormatStructMember *) MEMBERS->data, &error);
+	  if (RV == NULL)
+	    ADD_G_ERROR (error);
+	  g_array_free (MEMBERS, TRUE); }
+named_format(RV) ::= opt_extensible(EXT) STRUCT BAREWORD(NAME) LBRACE member_list(MEMBERS) RBRACE.
+	{ GError *error = NULL;
+	  RV.format = gskb_format_struct_new (EXT, MEMBERS->len, (GskbFormatStructMember *) MEMBERS->data, &error);
+	  if (RV.format == NULL)
+	    {
+	      gsk_g_error_add_prefix (&error, "in struct named '%s'", NAME->str);
+	      ADD_G_ERROR (error);
+	    }
+	  else
+	    RV.name = g_strdup (NAME->str);
+	  g_array_free (MEMBERS, TRUE); }
+
+/* Unions */
+case_list(RV) ::= .
+	{ RV = g_array_new (FALSE, FALSE, sizeof (GskbFormatUnionCase)); }
+case_list(RV) ::= case_list(A) opt_format(TYPE) BAREWORD(NAME) opt_value(V) SEMICOLON.
+	{ GskbFormatUnionCase uc;
+	  RV = A;
+	  uc.format = TYPE;
+	  uc.name = g_strdup (NAME->str);
+	  if (V.has_value)
+	    uc.code = V.value;
+	  else if (RV->len == 0)
+	    uc.code = 0;
+	  else
+	    uc.code = g_array_index (RV, GskbFormatUnionCase, RV->len - 1).code + 1;
+	  g_array_append_val (RV, uc); }
+format(RV) ::= opt_extensible(EXT) UNION opt_int_type(IT) LBRACE case_list(CASES) RBRACE.
+  	{ GError *error = NULL;
+	  RV = gskb_format_union_new (EXT, IT, CASES->len, (GskbFormatUnionCase*)(CASES->data), &error);
+	  if (RV == NULL)
+	    ADD_G_ERROR (error);
+	  free_case_list (CASES); }
+named_format(RV) ::= opt_extensible(EXT) UNION opt_int_type(IT) BAREWORD(NAME) LBRACE case_list(CASES) RBRACE.
+  	{ GError *error = NULL;
+	  RV.format = gskb_format_union_new (EXT, IT, CASES->len, (GskbFormatUnionCase*)(CASES->data), &error);
+	  free_case_list (CASES);
+	  if (RV.format == NULL)
+	    {
+	      gsk_g_error_add_prefix (&error, "in union named '%s'", NAME->str);
+	      ADD_G_ERROR (error);
+	    }
+	  else
+	    RV.name = g_strdup (NAME->str);
+	}
+
+/* Bitfields */
+bitfield(RV) ::= BAREWORD(NAME) COLON INTEGER(I) SEMICOLON.
+	{ RV.name = g_strdup (NAME->str);
+	  RV.length = I->i; }
+bitfield_list(RV) ::= .
+  	{ RV = g_array_new (FALSE, FALSE, sizeof (GskbFormatBitField)); }
+bitfield_list(RV) ::= bitfield_list(A) bitfield(B).
+  	{ RV = A;
+	  g_array_append_val (RV, B); }
+format(RV) ::= BITFIELDS LBRACE bitfield_list(LIST) RBRACE.
+	{ GError *error = NULL;
+	  RV = gskb_format_bit_fields_new (LIST->len,
+					  (GskbFormatBitField *) LIST->data, &error);
+	  if (RV == NULL)
+	    ADD_G_ERROR (error);
+	  free_bitfield_list (LIST); }
+named_format(RV) ::= BITFIELDS BAREWORD(NAME) LBRACE bitfield_list(LIST) RBRACE.
+        { GError *error = NULL;
+	  RV.format = gskb_format_bit_fields_new (LIST->len,
+					  (GskbFormatBitField *) LIST->data,
+					  &error);
+	  if (RV.format == NULL)
+	    {
+	      gsk_g_error_add_prefix (&error, "in bitfields named '%s'", NAME->str);
+	      ADD_G_ERROR (error);
+	    }
+	  else
+	    RV.name = g_strdup (NAME->str);
+	  free_bitfield_list (LIST); }
+
+/* Enums */
+opt_comma ::= COMMA.
+	{ }
+opt_comma ::= .
+	{ }
+value_list(RV) ::= .
+	{ RV = g_array_new (FALSE, FALSE, sizeof (GskbFormatEnumValue)); }
+value_list(RV) ::= value_list(IN) BAREWORD(id) opt_value(OV) opt_comma.
+	{ GskbFormatEnumValue ev;
+	  ev.name = g_strdup (id->str);
+	  if (OV.has_value)
+	    ev.code = OV.value;
+	  else if (IN->len == 0)
+	    ev.code = 0;
+	  else
+	    ev.code = g_array_index(IN, GskbFormatEnumValue, IN->len-1).code + 1;
+	  RV = IN;
+	  g_array_append_val (RV, ev); }
+
+opt_int_type(RV) ::= .
+	{ RV = GSKB_FORMAT_INT_UINT; }
+opt_int_type(RV) ::= LBRACKET INTEGER(I) RBRACKET.
+	{ if (I->i == 1)
+	    RV = GSKB_FORMAT_INT_UINT8;
+	  else if (I->i == 2)
+	    RV = GSKB_FORMAT_INT_UINT16;
+	  else if (I->i == 4)
+	    RV = GSKB_FORMAT_INT_UINT32;
+	  else
+	    {
+	      ADD_ERROR("unexpected integer for enum length: %u (must be 1,2,4)", I->i);
+	      RV = GSKB_FORMAT_INT_UINT;
+	    }
+	}
+format(RV) ::= opt_extensible(EXT) ENUM opt_int_type(IT) LBRACE value_list(IN) RBRACE.
+        { GError *error = NULL;
+	  RV = gskb_format_enum_new (EXT, IT, IN->len, (GskbFormatEnumValue*)(IN->data), &error);
+	  if (RV == NULL)
+	    ADD_G_ERROR (error);
+	  free_value_list (IN); }
+named_format(RV) ::= opt_extensible(EXT) ENUM opt_int_type(IT) BAREWORD(NAME) LBRACE value_list(IN) RBRACE.
+        { GError *error = NULL;
+	  RV.format = gskb_format_enum_new (EXT, IT, IN->len, (GskbFormatEnumValue*)(IN->data), &error);
+	  if (RV.format == NULL)
+	    {
+	      gsk_g_error_add_prefix (&error, "in enum named '%s'", NAME->str);
+	      ADD_G_ERROR (error);
+	    }
+	  else
+	   RV.name = g_strdup (NAME->str);
+	  free_value_list (IN); }
+	  
+/* Alias */
+named_format(RV) ::= ALIAS format(IN) BAREWORD(NAME).
+	{ RV.format = gskb_format_alias_new (IN);
+	  RV.name = g_strdup (NAME->str); }
+
+/* a format, referenced by name */
+format(RV) ::= BAREWORD(NAME).
+	{ RV = gskb_namespace_lookup_format (parse_context->cur_namespace, NAME->str);
+	  if (RV == NULL)
+	    ADD_G_ERROR (g_error_new (GSK_G_ERROR_DOMAIN, GSK_ERROR_BAD_FORMAT,
+				      "unknown format '%s' in namespace",
+				      NAME->str)); }
+
+/* Toplevel parsing */
+toplevel_directives ::= .
+toplevel_directives ::= toplevel_directives named_format(NF) SEMICOLON.
+	{ if (parse_context->cur_namespace == NULL)
+	    {
+	      ADD_ERROR ("no 'namespace' directive before format");
+	    }
+	  else
+	    {
+	      gskb_format_set_name (NF.format, parse_context->cur_namespace, NF.name);
+	    }
+	  g_free (NF.name);
+	  gskb_format_unref (NF.format);
+	}
+
+namespace_decl(NS) ::= NAMESPACE BAREWORD(ns) SEMICOLON.
+	{ NS = g_strdup (ns->str); }
+
+toplevel_directives ::= toplevel_directives namespace_decl(NS).
+	{ 
+	  GskbNamespace *ns = gskb_context_find_namespace (parse_context->context, NS);
+	  if (ns == NULL)
+	    {
+	      ns = gskb_namespace_new (NS);
+	      gskb_context_add_namespace (parse_context->context, parse_context->is_implementing, ns);
+	    }
+	  else
+	    gskb_namespace_ref (ns);
+	  if (parse_context->cur_namespace != NULL)
+	    gskb_namespace_unref (parse_context->cur_namespace);
+	  parse_context->cur_namespace = ns;
+	}
+
+toplevel ::= toplevel_directives.

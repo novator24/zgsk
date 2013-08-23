@@ -1,0 +1,74 @@
+namespace test;
+
+struct Foo           // note: tests depend on this having fixed-length (1+2+4+8)*2+1 == 31
+{
+  int8 a;
+  int16 b;
+  int32 c;
+  int64 d;
+  uint8 e;
+  uint16 f;
+  uint32 g;
+  uint64 h;
+  bit i;
+};
+
+struct Boo
+{
+  int a;
+  uint b;
+  long c;
+  ulong d;
+  string e;
+};
+
+enum Goo
+{
+  a
+  b
+  c
+  d
+  e
+};
+
+union Hoo
+{
+  string a;
+  struct { int8 a; int8 b; } b;
+  void c;
+};
+
+extensible struct Ioo
+{
+  string a = 1;
+  int b = 2;
+  long c = 3;
+};
+
+extensible struct IooExt1
+{
+  string a = 1;
+  int b = 2;
+  long c = 3;
+  long q = 100;
+};
+
+extensible struct IooExt2
+{
+  string a = 1;
+  long c = 3;
+  long r = 101;
+};
+
+extensible union Joo
+{
+  string a = 1;
+  int b = 2;
+  long c = 3;
+  void d = 4;
+};
+bitfields Zoo
+{
+  a : 1;
+  b : 2;
+};

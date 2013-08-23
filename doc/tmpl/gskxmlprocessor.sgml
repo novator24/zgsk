@@ -1,0 +1,332 @@
+<!-- ##### SECTION Title ##### -->
+gskxmlprocessor
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GskXmlProcessor ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskXmlConfig ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskXmlNamespace ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskXmlErrorFunc ##### -->
+<para>
+
+</para>
+
+@filename: 
+@line_no: 
+@message: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GskXmlValueCallback ##### -->
+<para>
+
+</para>
+
+@value: 
+@user_data: 
+
+
+<!-- ##### USER_FUNCTION GskXmlGetType ##### -->
+<para>
+
+</para>
+
+@name: 
+@user_data: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GskXmlTypeTestFunc ##### -->
+<para>
+
+</para>
+
+@type: 
+@user_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_new ##### -->
+<para>
+
+</para>
+
+@ns: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_add_type ##### -->
+<para>
+
+</para>
+
+@config: 
+@type: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_add_type_test ##### -->
+<para>
+
+</para>
+
+@config: 
+@type_func: 
+@test_data: 
+@test_destroy: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_test_type ##### -->
+<para>
+
+</para>
+
+@config: 
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_set_loader ##### -->
+<para>
+
+</para>
+
+@config: 
+@get_type_func: 
+@get_type_data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_load_type ##### -->
+<para>
+
+</para>
+
+@config: 
+@type_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_loader_introspective ##### -->
+<para>
+
+</para>
+
+@type_name: 
+@unused: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_peek_globals ##### -->
+<para>
+
+</para>
+
+@config: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_ref ##### -->
+<para>
+
+</para>
+
+@config: 
+
+
+<!-- ##### FUNCTION gsk_xml_config_unref ##### -->
+<para>
+
+</para>
+
+@config: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@output_type: 
+@value_cb: 
+@value_cb_data: 
+@value_cb_destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_input ##### -->
+<para>
+
+</para>
+
+@processor: 
+@input: 
+@num_read: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_set_pos ##### -->
+<para>
+
+</para>
+
+@processor: 
+@filename: 
+@lineno: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_peek_ns ##### -->
+<para>
+
+</para>
+
+@processor: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_destroy ##### -->
+<para>
+
+</para>
+
+@processor: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_error ##### -->
+<para>
+
+</para>
+
+@processor: 
+@format: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_errorv ##### -->
+<para>
+
+</para>
+
+@processor: 
+@format: 
+@args: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_trap_err ##### -->
+<para>
+
+</para>
+
+@processor: 
+@error_handler: 
+@error_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_untrap_err ##### -->
+<para>
+
+</para>
+
+@processor: 
+@trap_id: 
+
+
+<!-- ##### FUNCTION gsk_xml_processor_had_error ##### -->
+<para>
+
+</para>
+
+@processor: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_namespace_new ##### -->
+<para>
+
+</para>
+
+@parent: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_namespace_assign ##### -->
+<para>
+
+</para>
+
+@ns: 
+@name: 
+@value: 
+
+
+<!-- ##### FUNCTION gsk_xml_namespace_lookup ##### -->
+<para>
+
+</para>
+
+@ns: 
+@name: 
+@value_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_xml_namespace_ref ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+
+<!-- ##### FUNCTION gsk_xml_namespace_unref ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+
+<!-- ##### FUNCTION gsk_xml_namespace_push ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+
+<!-- ##### FUNCTION gsk_xml_namespace_pop ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+

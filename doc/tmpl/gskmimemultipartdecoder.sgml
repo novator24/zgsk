@@ -1,0 +1,144 @@
+<!-- ##### SECTION Title ##### -->
+GskMimeMultipartDecoder
+
+<!-- ##### SECTION Short_Description ##### -->
+read Content-Type multipart/*.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This code implements the MIME multipart encapsulation
+format, which is defined
+in "RFC 2046, Section 5: MIME MultipartDecoder Media Types".
+This format is often encountered parsing form data from webpages.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION GskMimeMultipartDecoderHook ##### -->
+<para>
+Function to invoke when a new piece is available.
+</para>
+
+@multipart_decoder: the decoder which can be read from.
+@Returns: whether to continue being notified of the availability
+of un-retrieved pieces.
+
+
+<!-- ##### ENUM GskMimeMultipartDecoderMode ##### -->
+<para>
+Multipart pieces may be streaming or a memory buffer.
+This gives the user control over which format to use.
+</para>
+<para>
+(Note: currently #GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT
+acts like #GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM.)
+</para>
+
+@GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT: 
+The pieces may be either streaming, or pure memory,
+whichever is easier.
+@GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_MEMORY: 
+The pieces must be memory slabs.  They will
+not be available until all there data has been
+received and parsed.
+@GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM: 
+The pieces must be streams, even if that means allocating
+a stream for just a few bytes.  This is can be slightly inconvenient.
+
+<!-- ##### STRUCT GskMimeMultipartDecoderClass ##### -->
+<para>
+
+</para>
+
+@base_class: 
+@set_poll_new_part: 
+@shutdown_new_part: 
+
+<!-- ##### STRUCT GskMimeMultipartDecoder ##### -->
+<para>
+
+</para>
+
+@base_instance: 
+@type: 
+@start: 
+@start_info: 
+
+<!-- ##### FUNCTION gsk_mime_multipart_decoder_new ##### -->
+<para>
+
+</para>
+
+@kv_pairs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_decoder_set_mode ##### -->
+<para>
+
+</para>
+
+@decoder: 
+@mode: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_decoder_get_piece ##### -->
+<para>
+
+</para>
+
+@decoder: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_mime_multipart_decoder_trap ##### -->
+<para>
+Get notification when a MIME piece is available.
+</para>
+
+@multipart_decoder: the decoder to watch.
+@func: function to invoke when a piece is available.
+(It will be invoked repeatedly until all the pieces have
+been dequeued)
+@shutdown: function to invoke when no more pieces will ever
+be available.
+@data: data to pass to @func, @shutdown and @destroy.
+@destroy: data to call when the trap is destroyed.
+
+
+<!-- ##### MACRO gsk_mime_multipart_decoder_untrap ##### -->
+<para>
+Untrap the new-piece-available hook.
+Its destroy method will be run.
+</para>
+
+@multipart_decoder: the decoder to stop watching.
+
+
+<!-- ##### MACRO gsk_mime_multipart_decoder_block ##### -->
+<para>
+Stop notifying about new MIME piece availability,
+if we are currently notifying.
+Invocations to this function may be stacked;
+it is undone with gsk_mime_multipart_decoder_unblock().
+</para>
+
+@multipart_decoder: the #GskMimeMultipartDecoder to watch.
+
+
+<!-- ##### MACRO gsk_mime_multipart_decoder_unblock ##### -->
+<para>
+Resume notifying about new MIME piece availability,
+if we are currently notifying and if this is the last blocker.
+It undones one invocation of gsk_mime_multipart_decoder_block().
+</para>
+
+@multipart_decoder: the #GskMimeMultipartDecoder to stop watching.
+
+

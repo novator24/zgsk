@@ -1,0 +1,131 @@
+<!-- ##### SECTION Title ##### -->
+gskmimemultipartpiece
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMimeMultipartPiece ##### -->
+<para>
+
+</para>
+
+@type: 
+@subtype: 
+@id: 
+@description: 
+@charset: 
+@location: 
+@transfer_encoding: 
+@disposition: 
+@other_fields: 
+@content_length: 
+@content_data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_ref ##### -->
+<para>
+
+</para>
+
+@piece: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_unref ##### -->
+<para>
+
+</para>
+
+@piece: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_alloc ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_set_description ##### -->
+<para>
+
+</para>
+
+@piece: 
+@description: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_set_stream ##### -->
+<para>
+
+</para>
+
+@piece: 
+@stream: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_set_type ##### -->
+<para>
+
+</para>
+
+@piece: 
+@type: 
+@subtype: 
+@charset: 
+@kv_pairs: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_set_data ##### -->
+<para>
+
+</para>
+
+@piece: 
+@data: 
+@len: 
+@destroy: 
+@destroy_data: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_set_transfer_encoding ##### -->
+<para>
+
+</para>
+
+@piece: 
+@encoding: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_set_location ##### -->
+<para>
+
+</para>
+
+@piece: 
+@location: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_piece_set_id ##### -->
+<para>
+
+</para>
+
+@piece: 
+@id: 
+
+

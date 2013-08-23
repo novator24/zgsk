@@ -1,0 +1,225 @@
+<!-- ##### SECTION Title ##### -->
+gskdnsrrcache
+
+<!-- ##### SECTION Short_Description ##### -->
+A cache of Resource Record data.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This in a database of #GskDnsResourceRecord's, as well as caching certain
+negative information.  Furthermore, the #GskDnsRRCache knows how to expire
+obsolete resource records automatically.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskDnsRRCache ##### -->
+<para>
+A cache of resource records and related information.
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_DNS_RR_CACHE ##### -->
+<para>
+Return the GType of a #GskDnsRRCache.
+(It is a boxed type.)
+</para>
+
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_new ##### -->
+<para>
+
+</para>
+
+@max_bytes: 
+@max_records: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_insert ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@record: 
+@is_authoritative: 
+@cur_time: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_lookup_list ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@owner: 
+@query_type: 
+@query_class: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_lookup_one ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@owner: 
+@query_type: 
+@query_class: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_is_negative ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@owner: 
+@query_type: 
+@query_class: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_unlock ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@record: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_lock ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@record: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_mark_user ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@record: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_unmark_user ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@record: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_add_negative ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@owner: 
+@query_type: 
+@query_class: 
+@expire_time: 
+@is_authoritative: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_load_zone ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@filename: 
+@default_origin: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_get_ns_addr ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@host: 
+@ns_name_out: 
+@address_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_get_addr ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@host: 
+@address: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_ref ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_unref ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_flush ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@cur_time: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_parse_etc_hosts_line ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@text: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_parse_etc_hosts ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@filename: 
+@may_be_missing: 
+@Returns: 
+
+

@@ -1,0 +1,55 @@
+<!-- ##### SECTION Title ##### -->
+GskFtpClient
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### USER_FUNCTION GskFtpClientHandleResponse ##### -->
+<para>
+
+</para>
+
+@client: 
+@response: 
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_client_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_client_issue_request ##### -->
+<para>
+
+</para>
+
+@client: 
+@request: 
+
+
+<!-- ##### FUNCTION gsk_ftp_client_trap_response ##### -->
+<para>
+
+</para>
+
+@client: 
+@handler: 
+@data: 
+@destroy: 
+
+

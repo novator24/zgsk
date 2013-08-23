@@ -1,0 +1,409 @@
+<!-- ##### SECTION Title ##### -->
+gsklistmacros
+
+<!-- ##### SECTION Short_Description ##### -->
+macro-based list macros
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+These macros define several kinds of "invasive" list
+structures.  We call them invasive because their
+members must be placed in structures which
+you are in charge of allocating: for example, if you are
+using a doubly-linked list, you must place two link pointers in
+your structures.
+</para>
+<para>
+Perhaps an example will help to illustrate:
+<programlisting><![CDATA[
+typedef struct _IntNode IntNode;
+struct _IntNode
+{
+  int value;
+  IntNode *prev, *next;
+};
+IntNode *first_int = NULL, *last_int = NULL;
+]]>&hash;<![CDATA[define GET_INT_LIST]]><![CDATA[() IntNode *, first_int, last_int, prev, next
+
+  IntNode *add = g_new (IntNode, 1);
+  add->a = 42;
+  GSK_LIST_APPEND (GET_INT_LIST]]><![CDATA[(), add);
+]]></programlisting>
+In other words, your "list" is just the presence of the members
+"prev", "next", "first_int", "last_int" and the macro
+definition "GET_INT_LIST()".
+</para>
+<para>You might see why this is useful immediately,
+but here's a few neat implications of
+a macro-based system:
+<itemizedlist>
+ <listitem><para>they are as fast as writing the list code yourself.</para>
+ </listitem>
+ <listitem><para>they allow you to manage memory as you want.</para>
+ </listitem>
+ <listitem><para>it is easy to have the nodes be members of several
+ lists, or other invasive data structures</para>
+ </listitem>
+</itemizedlist>
+</para>
+<para>
+ Here are the types of lists, along with some examples:
+ <variablelist>
+  <varlistentry>
+   <term>stack</term>
+   <listitem><para>
+   A stack is a singly-linked list where we only keep
+   track of one end.
+   </para>
+   <para>
+   To define a stack, you should make a macro
+   defining the type of node, the end-pointer, and the member-name.
+   </para>
+   <para>Here is a stack:
+    <programlisting><![CDATA[
+typedef struct _StackNode StackNode;
+struct _StackNode
+{
+  int value;
+  StackNode *next;
+};
+StackNode *stack_top = NULL;
+]]>&hash;<![CDATA[define GET_STACK]]><![CDATA[()  StackNode *, stack_top, next
+    ]]></programlisting>
+   </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>queue</term>
+   <listitem><para>
+   A queue is a singly-linked list where we keep
+   track of both ends.
+   </para>
+   <para>
+   To define a queue, you should make a macro
+   defining the type of node, the first and last pointers,
+   and the member-name.
+   </para>
+   <para>Here is a queue:
+    <programlisting><![CDATA[
+typedef struct _QueueNode QueueNode;
+struct _QueueNode
+{
+  int value;
+  QueueNode *next;
+};
+QueueNode *head = NULL, *tail = NULL;
+]]>&hash;<![CDATA[define GET_QUEUE]]><![CDATA[()  QueueNode *, head, tail, next
+    ]]></programlisting>
+   </para>
+   <para>This defines a queue such that "prepending" to the queue
+   means inserting an element at its "head" end.
+   To put an element at the tail end, use "enqueue",
+   and to remove from the head end, use "dequeue".
+   It is not possible to remove from the tail end.
+   </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>list</term>
+   <listitem><para>
+   A list is a doubly-linked list where we keep
+   track of both ends.
+   </para>
+   <para>
+   To define a list, you should make a macro
+   defining the type of node, the first and last pointers,
+   and the names of the members corresponding to
+   the previous and next pointers.
+   </para>
+   <para>Here is a list:
+    <programlisting><![CDATA[
+typedef struct _ListNode ListNode;
+struct _ListNode
+{
+  int value;
+  ListNode *prev, *next;
+};
+ListNode *head = NULL, *tail = NULL;
+]]>&hash;<![CDATA[define GET_LIST]]><![CDATA[()  ListNode *, head, tail, prev, next
+    ]]></programlisting>
+   </para>
+   <para>This defines a list such that "prepending"
+   means inserting an element at its "head" end,
+   and "appending" means inserting an element at its "tail" end.
+   Similarly "remove_first" will remove the head element
+   and "remove_last" will remove the tail element.
+   And, since this is a doubly-linked list, you can also
+   remove an arbitrary element.
+   </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</para>
+
+<para>
+The sorting routines
+all take "comparator macros".
+These take three arguments: two nodes and a variable
+which should be set to -1, 0, or +1 if the first
+node is less than, equal to, or greater than
+the second node.
+</para>
+<para>
+For the list example, here's a comparator macro:
+<programlisting>&hash;define COMPARATOR<![CDATA[]]>(a,b,rv) \
+<![CDATA[
+  rv = (a->value < b->value) ? -1 : (a->value > b->value) ? 1 : 0
+]]></programlisting>
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+gskrbtreemacros, gskqsortmacro
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_LOG2_MAX_LIST_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GSK_STACK_PUSH ##### -->
+<para>
+Push an entry onto the stack.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro) to affect.
+@node: the node to add to the stack.
+
+
+<!-- ##### MACRO GSK_STACK_POP ##### -->
+<para>
+Pop an entry off the stack.  This will segfault
+if the stack is empty.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro) to affect.
+@rv_node: this variable is set to the node that was removed from the stack.
+
+
+<!-- ##### MACRO GSK_STACK_INSERT_AFTER ##### -->
+<para>
+Put an element onto the stack after another element.
+After doing this, @above_node's next pointer will be set to
+@new_node.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro) to affect.
+@above_node: a node in the stack whose next pointer will be set to @new_node.
+@new_node: the node to insert into the stack.
+
+
+<!-- ##### MACRO GSK_STACK_REVERSE ##### -->
+<para>
+Reverse the order of a stack.  The top of the stack will now point to
+the node that was the bottom.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro) to affect.
+
+
+<!-- ##### MACRO GSK_STACK_FOREACH ##### -->
+<para>
+Run code on each element of the list.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro).
+@iter_var: variable to set to each element of the list in turn.
+@code: code to invoke on each element of the list.
+
+
+<!-- ##### MACRO GSK_STACK_SORT ##### -->
+<para>
+Sort a stack.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro).
+@comparator: a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+
+
+<!-- ##### MACRO GSK_STACK_GET_BOTTOM ##### -->
+<para>
+Find the bottom of the stack.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro).
+@rv_node: This will assigned to the bottom of the stack,
+or NULL if the stack is empty.
+
+
+<!-- ##### MACRO GSK_STACK_IS_EMPTY ##### -->
+<para>
+Evaluates to TRUE iff the stack is empty.
+</para>
+
+@stack: the stack (a list of three arguments provided by a macro).
+
+
+<!-- ##### MACRO GSK_QUEUE_ENQUEUE ##### -->
+<para>
+Append a node to the queue.
+</para>
+
+@queue: the queue (a list of four arguments provided by a macro) to affect.
+@node: the node to append.
+
+
+<!-- ##### MACRO GSK_QUEUE_DEQUEUE ##### -->
+<para>
+Remove a node from the front of the queue.
+</para>
+
+@queue: the queue (a list of four arguments provided by a macro) to affect.
+@rv_node: this pointer will be set to the node
+that was the front of the queue, or NULL if the queue was empty.
+
+
+<!-- ##### MACRO GSK_QUEUE_PREPEND ##### -->
+<para>
+Prepend a node to the queue.
+</para>
+
+@queue: the queue (a list of four arguments provided by a macro) to affect.
+@node: the node to prepend.
+
+
+<!-- ##### MACRO GSK_QUEUE_REVERSE ##### -->
+<para>
+Reverse the order of a queue.  The front
+of the queue will point to what used to be the back
+of the queue, and vice versa.
+</para>
+<para>
+This operation runs in O(N) time.
+</para>
+
+@queue: the queue to reverse.
+
+
+<!-- ##### MACRO GSK_QUEUE_SORT ##### -->
+<para>
+Sort the elements of the queue.
+</para>
+
+@queue: the queue (a list of four arguments provided by a macro) to affect.
+@comparator: a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+
+
+<!-- ##### MACRO GSK_QUEUE_IS_EMPTY ##### -->
+<para>
+Evaluates to TRUE iff the queue is empty.
+</para>
+
+@queue: the queue (a list of four arguments provided by a macro).
+
+
+<!-- ##### MACRO GSK_LIST_PREPEND ##### -->
+<para>
+Prepend a node to the list.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+@node: the node to prepend.
+
+
+<!-- ##### MACRO GSK_LIST_APPEND ##### -->
+<para>
+Append a node to the list.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+@node: the node to append.
+
+
+<!-- ##### MACRO GSK_LIST_REMOVE_FIRST ##### -->
+<para>
+Remove the first element from the list.
+The list must not be empty initially.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+
+
+<!-- ##### MACRO GSK_LIST_REMOVE_LAST ##### -->
+<para>
+Remove the last element from the list.
+The list must not be empty initially.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+
+
+<!-- ##### MACRO GSK_LIST_REMOVE ##### -->
+<para>
+Remove a node from a list.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+@node: the node to remove from the list.
+
+
+<!-- ##### MACRO GSK_LIST_INSERT_AFTER ##### -->
+<para>
+Insert the new node @node after the node @at in the list.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+@at: the node in the list telling where to insert @node.
+@node: the node to insert into the list.
+
+
+<!-- ##### MACRO GSK_LIST_INSERT_BEFORE ##### -->
+<para>
+Insert the new node @node before the node @at in the list.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+@at: the node in the list telling where to insert @node.
+@node: the node to insert into the list.
+
+
+<!-- ##### MACRO GSK_LIST_IS_EMPTY ##### -->
+<para>
+Evaluates to TRUE iff the list is empty.
+</para>
+
+@list: the list (a list of five arguments provided by a macro).
+
+
+<!-- ##### MACRO GSK_LIST_REVERSE ##### -->
+<para>
+Reverse the order of a list.  The first and last pointers
+and next/prev pointers are switched.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+
+
+<!-- ##### MACRO GSK_LIST_SORT ##### -->
+<para>
+Sort the elements of the list.
+</para>
+
+@list: the list (a list of five arguments provided by a macro) to affect.
+@comparator: a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+
+

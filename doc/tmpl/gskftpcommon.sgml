@@ -1,0 +1,315 @@
+<!-- ##### SECTION Title ##### -->
+gskftpcommon
+
+<!-- ##### SECTION Short_Description ##### -->
+basic ftp definitions
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Structures and definitions for the FTP protocol implementation.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskFtpCommand ##### -->
+<para>
+
+</para>
+
+@type: 
+@struct_type: 
+@transfer_mode: 
+@pathname: 
+@help_topic: 
+
+<!-- ##### ENUM GskFtpCommandType ##### -->
+<para>
+
+</para>
+
+@GSK_FTP_COMMAND_USER: 
+@GSK_FTP_COMMAND_PASS: 
+@GSK_FTP_COMMAND_ACCT: 
+@GSK_FTP_COMMAND_CWD: 
+@GSK_FTP_COMMAND_CDUP: 
+@GSK_FTP_COMMAND_SMNT: 
+@GSK_FTP_COMMAND_REIN: 
+@GSK_FTP_COMMAND_QUIT: 
+@GSK_FTP_COMMAND_PORT: 
+@GSK_FTP_COMMAND_PASV: 
+@GSK_FTP_COMMAND_TYPE: 
+@GSK_FTP_COMMAND_STRU: 
+@GSK_FTP_COMMAND_MODE: 
+@GSK_FTP_COMMAND_RETR: 
+@GSK_FTP_COMMAND_STOR: 
+@GSK_FTP_COMMAND_STOU: 
+@GSK_FTP_COMMAND_APPE: 
+@GSK_FTP_COMMAND_ALLO: 
+@GSK_FTP_COMMAND_REST: 
+@GSK_FTP_COMMAND_RNFR: 
+@GSK_FTP_COMMAND_RNTO: 
+@GSK_FTP_COMMAND_ABOR: 
+@GSK_FTP_COMMAND_DELE: 
+@GSK_FTP_COMMAND_RMD: 
+@GSK_FTP_COMMAND_MKD: 
+@GSK_FTP_COMMAND_PWD: 
+@GSK_FTP_COMMAND_LIST: 
+@GSK_FTP_COMMAND_NLST: 
+@GSK_FTP_COMMAND_SITE: 
+@GSK_FTP_COMMAND_SYST: 
+@GSK_FTP_COMMAND_STAT: 
+@GSK_FTP_COMMAND_HELP: 
+@GSK_FTP_COMMAND_NOOP: 
+
+<!-- ##### ENUM GskFtpCharType ##### -->
+<para>
+
+</para>
+
+@GSK_FTP_CHAR_TYPE_ASCII: 
+@GSK_FTP_CHAR_TYPE_EBCDIC: 
+@GSK_FTP_CHAR_TYPE_IMAGE: 
+
+<!-- ##### ENUM GskFtpTerminalType ##### -->
+<para>
+
+</para>
+
+@GSK_FTP_TERMINAL_NONPRINT: 
+@GSK_FTP_TERMINAL_TELNET: 
+@GSK_FTP_TERMINAL_CARRIAGE_CONTROL: 
+
+<!-- ##### ENUM GskFtpFileStructure ##### -->
+<para>
+
+</para>
+
+@GSK_FTP_FILE_STRUCTURE_FILE: 
+@GSK_FTP_FILE_STRUCTURE_RECORD: 
+@GSK_FTP_FILE_STRUCTURE_PAGE: 
+
+<!-- ##### ENUM GskFtpTransferMode ##### -->
+<para>
+
+</para>
+
+@GSK_FTP_TRANSFER_MODE_STREAM: 
+@GSK_FTP_TRANSFER_MODE_BLOCK: 
+@GSK_FTP_TRANSFER_MODE_COMPRESSED: 
+
+<!-- ##### FUNCTION gsk_ftp_command_name ##### -->
+<para>
+
+</para>
+
+@command_type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_user ##### -->
+<para>
+
+</para>
+
+@username: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_password ##### -->
+<para>
+
+</para>
+
+@username: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_account ##### -->
+<para>
+
+</para>
+
+@account: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_mount ##### -->
+<para>
+
+</para>
+
+@mount_point: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_rep_type ##### -->
+<para>
+
+</para>
+
+@char_type: 
+@terminal_type: 
+@byte_size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_file_struct ##### -->
+<para>
+
+</para>
+
+@file_struct: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_transfer_mode ##### -->
+<para>
+
+</para>
+
+@transfer_mode: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_help ##### -->
+<para>
+
+</para>
+
+@topic: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_file ##### -->
+<para>
+
+</para>
+
+@cmd_type: 
+@path: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_new_simple ##### -->
+<para>
+
+</para>
+
+@cmd_type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_parse ##### -->
+<para>
+
+</para>
+
+@parse: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_to_string ##### -->
+<para>
+
+</para>
+
+@command: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_append ##### -->
+<para>
+
+</para>
+
+@command: 
+@buffer: 
+
+
+<!-- ##### FUNCTION gsk_ftp_command_destroy ##### -->
+<para>
+
+</para>
+
+@command: 
+
+
+<!-- ##### STRUCT GskFtpReply ##### -->
+<para>
+
+</para>
+
+@type: 
+@literal: 
+
+<!-- ##### FUNCTION gsk_ftp_reply_new_simple ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_reply_new_status ##### -->
+<para>
+
+</para>
+
+@type: 
+@message: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_reply_new_system ##### -->
+<para>
+
+</para>
+
+@system: 
+@additional: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_reply_new_ready_in_n ##### -->
+<para>
+
+</para>
+
+@num_minutes: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_reply_parse ##### -->
+<para>
+
+</para>
+
+@raw_string: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_reply_to_string ##### -->
+<para>
+
+</para>
+
+@reply: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_ftp_reply_append ##### -->
+<para>
+
+</para>
+
+@reply: 
+@buffer: 
+
+

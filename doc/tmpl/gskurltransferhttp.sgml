@@ -1,0 +1,101 @@
+<!-- ##### SECTION Title ##### -->
+GskUrlTransferHttp
+
+<!-- ##### SECTION Short_Description ##### -->
+An HTTP- or HTTPS-based transfer.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A transfer with an HTTP-based URL.
+In particular, this class defines many HTTP specific configurations.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GskUrlTransfer.
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskUrlTransferHttp ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_url_transfer_http_set_ssl_cert ##### -->
+<para>
+
+</para>
+
+@http: 
+@cert_fname: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_http_set_ssl_key ##### -->
+<para>
+
+</para>
+
+@http: 
+@key_fname: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_http_set_ssl_password ##### -->
+<para>
+
+</para>
+
+@http: 
+@password: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_http_set_user_agent ##### -->
+<para>
+
+</para>
+
+@http: 
+@user_agent: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_http_add_extra_header ##### -->
+<para>
+
+</para>
+
+@http: 
+@key: 
+@value: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_http_set_proxy_address ##### -->
+<para>
+
+</para>
+
+@http: 
+@proxy_address: 
+
+
+<!-- ##### USER_FUNCTION GskUrlTransferHttpRequestModifierFunc ##### -->
+<para>
+
+</para>
+
+@request: 
+@mod_data: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_http_add_modifier ##### -->
+<para>
+
+</para>
+
+@http: 
+@modifier: 
+@data: 
+@destroy: 
+
+

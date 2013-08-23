@@ -1,0 +1,589 @@
+<!-- ##### SECTION Title ##### -->
+gskdns
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_DNS_PORT ##### -->
+<para>
+The default TCP and UDP port on this DNS is transacted.
+Nameservers, unlike mots servers, basically must be on this port,
+since the protocol has no way to specify which port of a nameserver
+to try.
+</para>
+
+
+
+<!-- ##### STRUCT GskDnsMessage ##### -->
+<para>
+This structure encapsulates a DNS packet, either a query or a response.
+</para>
+<para>
+Many of the field descriptions are taken from RFC 1035, Section 4.1.1.
+</para>
+
+@id: this number is used by the client to match together queries and responses.
+So a server's responses must set this to the same value as for the query.
+@is_query: whether the Message is a query.  Otherwise, it is a response.
+@is_authoritative: only for responses.  Whether the DNS server sending the message
+is the authority for the first entry in the answer section which matches
+the query name, ie the owner of the first entry in the question section.
+@is_truncated: specifies that this message was truncated
+due to length greater than that permitted on the
+transmission channel.
+@recursion_available: 
+Recursion Available - this be is set or cleared in a
+response, and denotes whether recursive query support is
+available in the name server.
+@recursion_desired: 
+Recursion Desired - this bit may be set in a query and
+is copied into the response.  If RD is set, it directs
+the name server to pursue the query recursively.
+Recursive query support is optional.
+@questions: List of #GskDnsQuestion  For a query, this is the most important section.
+Questions are often found in a response; they should just be copies of questions
+from the corresponding query.
+@error_code: in a response, this is a #GskDnsResponseCode telling what went
+wrong, if anything.  0 means "no error".
+@answers: In a response, this is a list of #GskDnsResourceRecord's.
+They should lead toward answering the question in the query.
+@authority: resource records which give information about 
+authority nameservers relevant to the @answers.
+@additional: resource records which give auxilliary useful information.
+For example, it is typical to give an address (an A record) for any
+nameservers (NS records) given in prior sections.
+
+<!-- ##### STRUCT GskDnsResourceRecord ##### -->
+<para>
+An atom of information about a host in the DNS system.
+The exact type of information depends on @type,
+but it may be a pointer to another name (CNAME, PTR),
+a pointer to another nameserver to query (NS),
+information about the authoritativeness and timeouts of the
+response (SOA), or a host's address (A).  There are other, rarely used,
+types of record, too.
+</para>
+
+@type: what type of information this record contains.
+@owner: what host or domain name this record pertains to.
+@time_to_live: how long this record should be retained, in seconds.
+@record_class: what address domain this record applies to.
+Almost always 'IN' meaning the internet, or IPv4.  (Other systems are
+now obsolete).
+@domain_name: 
+@txt: 
+
+<!-- ##### STRUCT GskDnsQuestion ##### -->
+<para>
+A question, asked by a client resolver of a server.
+</para>
+
+@query_name: what hostname or domainname is desired.
+@query_type: what information about the host is wanted.
+@query_class: which address namespace this question is about.
+
+<!-- ##### ENUM GskDnsResourceRecordType ##### -->
+<para>
+This is a list of types of information that may be
+available about some domain names.
+</para>
+<para>
+This is the list of types of resource-records,
+and it doubles as a list of types of questions that can
+be asked.  (See GskDnsResourceRecord::type
+and GskDnsQuestion::query_type)
+</para>
+
+@GSK_DNS_RR_HOST_ADDRESS: 
+The numeric address of the host of the given name.
+@GSK_DNS_RR_NAME_SERVER: 
+A nameserver which can be used to find more information
+about the name.
+@GSK_DNS_RR_CANONICAL_NAME: 
+Another name for the domain.  The canonical name given by
+this record should be the preferred name.
+@GSK_DNS_RR_HOST_INFO: 
+Host data, like CPU and OS.  Never used.
+@GSK_DNS_RR_MAIL_EXCHANGE: 
+A host which is responsible for mail for this domain.
+@GSK_DNS_RR_POINTER: 
+A pointer to another name.  This is almost always
+used for reverse dns lookups.  See gsk_dns_rr_new_ptr().
+@GSK_DNS_RR_START_OF_AUTHORITY: 
+Information about how quickly to time out records from this domain.
+@GSK_DNS_RR_TEXT: 
+Free form information about the domain.
+@GSK_DNS_RR_WELL_KNOWN_SERVICE: 
+XXX
+@GSK_DNS_RR_HOST_ADDRESS_IPV6: 
+@GSK_DNS_RR_ZONE_TRANSFER: 
+XXX
+@GSK_DNS_RR_ZONE_MAILB: 
+XXX
+@GSK_DNS_RR_WILDCARD: 
+If reforming a query, this can be used to obtain records of any
+type about the domain name.
+
+<!-- ##### ENUM GskDnsResourceClass ##### -->
+<para>
+What type of addresses are we considering.
+Almost always GSK_DNS_CLASS_INTERNET.
+</para>
+
+@GSK_DNS_CLASS_INTERNET: the internet (IPv4).
+@GSK_DNS_CLASS_CHAOS: obsolete network.
+@GSK_DNS_CLASS_HESIOD: obsolete network.
+@GSK_DNS_CLASS_WILDCARD: when performing a query, this can
+be used to find records for any class.
+
+<!-- ##### MACRO GSK_DNS_SERIAL_LESS_THAN ##### -->
+<para>
+Test whether @serial_1 is less that @serial_2.  See RFC 1982.
+</para>
+
+@serial_1: the first serial number.
+@serial_2: the second serial number.
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_generic ##### -->
+<para>
+
+</para>
+
+@allocator: 
+@owner: 
+@ttl: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_a ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@ip_address: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_aaaa ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@address: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_ns ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@name_server: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_cname ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@canonical_name: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_ptr ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@ptr: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_mx ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@preference: 
+@mail_host: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_hinfo ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@cpu: 
+@os: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_soa ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@mname: 
+@rname: 
+@serial: 
+@refresh_time: 
+@retry_time: 
+@expire_time: 
+@minimum_time: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_txt ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@text: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_free ##### -->
+<para>
+
+</para>
+
+@record: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_copy ##### -->
+<para>
+
+</para>
+
+@record: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_new_wildcard ##### -->
+<para>
+
+</para>
+
+@owner: 
+@ttl: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_question_new ##### -->
+<para>
+
+</para>
+
+@query_name: 
+@query_type: 
+@query_class: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_question_copy ##### -->
+<para>
+
+</para>
+
+@question: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_question_free ##### -->
+<para>
+
+</para>
+
+@question: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_text_parse ##### -->
+<para>
+
+</para>
+
+@record: 
+@last_owner: 
+@origin: 
+@err_msg: 
+@allocator: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_text_to_str ##### -->
+<para>
+
+</para>
+
+@rr: 
+@last_owner: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_question_text_to_str ##### -->
+<para>
+
+</para>
+
+@question: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_rr_text_write ##### -->
+<para>
+
+</para>
+
+@rr: 
+@out_buffer: 
+@last_owner: 
+
+
+<!-- ##### ENUM GskDnsResponseCode ##### -->
+<para>
+Types of errors that can be encountered from the DNS server.
+(From RFC 1035 Section 4.1.1)
+All other values are reserved for future use.
+</para>
+
+@GSK_DNS_RESPONSE_ERROR_NONE: 
+No error condition
+@GSK_DNS_RESPONSE_ERROR_FORMAT: 
+Format error - The name server was unable to interpret the query.
+@GSK_DNS_RESPONSE_ERROR_SERVER_FAILURE: 
+Server failure - The name server was unable to process this query due
+to a problem with the name server.
+@GSK_DNS_RESPONSE_ERROR_NAME_ERROR: 
+Name Error - Meaningful only for responses from an authoritative name
+server, this code signifies that the domain name referenced in the query
+does not exist.
+@GSK_DNS_RESPONSE_ERROR_NOT_IMPLEMENTED: 
+Not Implemented - The name server does
+not support the requested kind of query.
+@GSK_DNS_RESPONSE_ERROR_REFUSED: 
+Refused - The name server refuses to perform the specified operation for
+policy reasons.  For example, a name server may not wish to provide the
+information to the particular requester, or a name server may not wish to
+perform a particular operation (e.g., zone transfer) for particular data.
+
+<!-- ##### FUNCTION gsk_dns_message_new ##### -->
+<para>
+
+</para>
+
+@id: 
+@is_request: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_parse_buffer ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_parse_data ##### -->
+<para>
+
+</para>
+
+@data: 
+@length: 
+@bytes_used_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_write_buffer ##### -->
+<para>
+
+</para>
+
+@message: 
+@buffer: 
+@compress: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_to_packet ##### -->
+<para>
+
+</para>
+
+@message: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_append_question ##### -->
+<para>
+
+</para>
+
+@message: 
+@question: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_append_answer ##### -->
+<para>
+
+</para>
+
+@message: 
+@answer: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_append_auth ##### -->
+<para>
+
+</para>
+
+@message: 
+@auth: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_append_addl ##### -->
+<para>
+
+</para>
+
+@message: 
+@addl: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_remove_question ##### -->
+<para>
+
+</para>
+
+@message: 
+@question: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_remove_answer ##### -->
+<para>
+
+</para>
+
+@message: 
+@answer: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_remove_auth ##### -->
+<para>
+
+</para>
+
+@message: 
+@auth: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_remove_addl ##### -->
+<para>
+
+</para>
+
+@message: 
+@addl: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_unref ##### -->
+<para>
+
+</para>
+
+@message: 
+
+
+<!-- ##### FUNCTION gsk_dns_message_ref ##### -->
+<para>
+
+</para>
+
+@message: 
+
+
+<!-- ##### FUNCTION gsk_dns_dump_message_fp ##### -->
+<para>
+
+</para>
+
+@message: 
+@fp: 
+
+
+<!-- ##### FUNCTION gsk_dns_dump_question_fp ##### -->
+<para>
+
+</para>
+
+@question: 
+@fp: 
+
+
+<!-- ##### FUNCTION gsk_dns_parse_ip_address ##### -->
+<para>
+
+</para>
+
+@pat: 
+@ip_addr_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_test_domain_name_validity ##### -->
+<para>
+
+</para>
+
+@domain_name: 
+@Returns: 
+
+

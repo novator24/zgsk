@@ -1,0 +1,84 @@
+<!-- ##### SECTION Title ##### -->
+gsknetworkinterface
+
+<!-- ##### SECTION Short_Description ##### -->
+Obtain information about your local network interfaces.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+These methods allow you to obtain information about the
+local network interfaces.
+</para>
+<para>
+A network interface is abstract jargon for an ethernet card,
+that is, it's a device that transmits and receives packets.
+Or, it can be a virtual interface, like the loopback interface is.
+One other possibility is that the interface is an alias:
+this sort of trick is done to make a computer listen
+on two IP addresses.
+</para>
+<para>
+The information returned by this function is a name
+for each interface (the same name as returned by <command>ifconfig</command>)
+and addresses, mostly the address used to connect to this device,
+ie your IP address (with port set to 0).
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskNetworkInterface ##### -->
+<para>
+Information about a single network interface.
+</para>
+
+@ifname: the name of the interface.
+@address: the IP address of the interface (with port set to 0).
+@hw_address: the ethernet address of the interface.
+@p2p_address: the remote IP address of a point-to-point connection.
+@broadcast: the broadcast IP address.
+
+<!-- ##### STRUCT GskNetworkInterfaceSet ##### -->
+<para>
+Information about a number of network interfaces.
+</para>
+
+@num_interfaces: the number of interfaces.
+@interfaces: the interfaces.
+
+<!-- ##### ENUM GskNetworkInterfaceFlags ##### -->
+<para>
+Constraints governing which interfaces to return.
+</para>
+
+@GSK_NETWORK_INTERFACE_UP: The interface must be up, ready to transmit
+and receive packets.
+@GSK_NETWORK_INTERFACE_LOOPBACK: The interface must be a loopback interface,
+a virtual interface, as opposed to a piece of hardware.
+@GSK_NETWORK_INTERFACE_NON_LOOPBACK: The interface must be a non-loopback interface,
+an actual piece of hardware.
+@GSK_NETWORK_INTERFACE_HAS_BROADCAST: The interface must have a broadcast address.
+@GSK_NETWORK_INTERFACE_HAS_MULTICAST: The interface must have a multicast support.
+
+<!-- ##### FUNCTION gsk_network_interface_set_new ##### -->
+<para>
+
+</para>
+
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_network_interface_set_destroy ##### -->
+<para>
+
+</para>
+
+@set: 
+
+

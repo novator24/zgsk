@@ -1,0 +1,25 @@
+<!-- ##### SECTION Title ##### -->
+GskMainLoopPoll
+
+<!-- ##### SECTION Short_Description ##### -->
+a poll(2)-based main-loop.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A main-loop which uses poll(2) as its underlying multiplexing method.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMainLoopPoll ##### -->
+<para>
+The poll(2)-based main-loop.
+</para>
+
+

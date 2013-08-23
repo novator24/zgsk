@@ -1,0 +1,88 @@
+<!-- ##### SECTION Title ##### -->
+gskdate
+
+<!-- ##### SECTION Short_Description ##### -->
+Date parsing and printing code.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Code to parse and print dates in a number of standard documented
+formats.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### ENUM GskDateFormatMask ##### -->
+<para>
+Formats to accept when parsing with gsk_date_parse().
+</para>
+
+@GSK_DATE_FORMAT_1123: 
+As per RFC 1123.
+@GSK_DATE_FORMAT_1036: 
+As per RFC 1036.
+@GSK_DATE_FORMAT_ANSI_C: 
+As per the ANSI C standard.
+@GSK_DATE_FORMAT_ISO8601: 
+@GSK_DATE_FORMAT_HTTP: 
+All formats permitted by the HTTP standard.
+
+<!-- ##### FUNCTION gsk_date_parse ##### -->
+<para>
+
+</para>
+
+@date_str: 
+@tm_out: 
+@tzoffset_out: 
+@formats_allowed: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_date_parse_timet ##### -->
+<para>
+
+</para>
+
+@date_str: 
+@out: 
+@formats_allowed: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_date_print ##### -->
+<para>
+
+</para>
+
+@tm: 
+@date_str_out: 
+@date_str_max_len: 
+@format: 
+
+
+<!-- ##### FUNCTION gsk_date_print_timet ##### -->
+<para>
+
+</para>
+
+@t: 
+@date_str_out: 
+@date_str_max_len: 
+@format: 
+
+
+<!-- ##### MACRO GSK_DATE_MAX_LENGTH ##### -->
+<para>
+Number of bytes required for any date format given in
+gsk-date, including the terminating NUL.
+</para>
+
+
+

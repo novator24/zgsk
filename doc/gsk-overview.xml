@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+]>
+
+
+<article id="index" lang="en"> <articleinfo>
+<title>GSK Manual</title>
+<copyright>
+<year>2002</year>
+<holder>David Benson</holder>
+</copyright>
+<authorgroup>
+<author>
+<firstname>David</firstname> <surname>Benson</surname>
+<affiliation><orgname>ffem.org</orgname>
+<address><email>daveb@ffem.org</email></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<releaseinfo>
+This is preliminary documentation.
+For discussion only.
+</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="intro">
+<title>What is GSK?</title>
+<para>
+so i'm in the process of planning how i want gsk
+to be in the era of glib2.0.
+</para><para>
+i guess i could minimize the impact in some ways -- but i'm
+planning instead on maximizing them:  namely i'm planning on
+ditching 'actor' which is kind-of a change.
+</para><para>
+the reason is:  currently it's hard to connect two actors.
+they don't fit.  connecting gskactorbuffered's in a loop
+(with one input tied to another output) is impossible.
+relatedly the distinction betwen GskActorStreamSocket and GskStreamSocket
+is pretty questionable from the start.
+</para><para>
+obviously at this stage i'm heavily looking for feedback.
+i haven't done much yet actually; what is there is in gsk2-premature
+in cvs. (as a main directory)
+</para>
+</sect1>
+
+
+<sect1 id="hooks">
+ <title>Hooks</title>
+<para>
+  Hooks are both a useful mechanism you can use from your
+  own code, as well as being the basis of the implementation
+  for the most important classes in GSK.  
+</para>
+<para>
+  A hook is a trappable, closable event with a notification method.
+  Classes may have any fixed number of hooks.
+  The base class uses two hooks: one for read-notification
+  and another for write-notification.
+</para>
+<para>
+ Here is a list of features that hook provides:
+ <orderedlist>
+  <listitem><para>
+    The hook can be trapped.  But it can only 
+    be trapped by one user - that's because the events triggered by
+    <structname>GskHook</structname>s <emphasis>require</emphasis>
+    the user to call some sort of method
+    to fetch data.  For example, a <structname>GskStream</structname>
+    has <command>read</command> and <command>write</command>
+    methods that retrieve data from the stream.  If two users connected
+    and both tried to use those methods the results would be chaos.
+    If they both connected for writing, then their writes would
+    be arbitrarily intermingled.  If they were both connected for reading
+    then each user would collect half the blocks of data.
+  </para></listitem>
+  <listitem><para>
+    The hook can be blocked.  The hook internally keeps a block-count.
+  </para></listitem>
+  <listitem><para>
+   It provides <firstterm>idle-notification</firstterm>.
+   That means it provides functions
+   to start and stop continuous notification.  For example to implement the
+   <structname>GskStream</structname> that outputs data from a buffer we use this to provide continuous notification
+   until the buffer is empty.  See  <function>gsk_stream_mark_idle_notify_write</function>,
+   for example.
+  </para></listitem>
+ </orderedlist>
+</para>
+
+</sect1>
+<sect1 id="streams">
+<title>Streams</title>
+<sect2 id="stream-intro">
+ <title>So now what do you mean by ``stream''?</title>
+<para>
+...
+</para>
+</sect2>
+</sect1>
+<sect1 id="main-loops">
+<title>Main Loops</title>
+<para>
+GOAL:  in gsk2, g_idle_add,etc should be basically ok.
+</para><para>
+One major defect of gsk1 is that it doesn't properly integrate with
+the glib main-loop.
+</para><para>
+Fortunately glib2.0's main loop makes it easy to write a wrapper
+that calls the glib main-loop.  should work great.  of course,
+if another library does the same stunt, then to cooperate we should be
+able to bow down and revert back to glib's main-loop.  we'll
+do that by making gsk_main_loop_default()'s initial value by the main-loop
+corresponding to glib's main-loop.
+</para>
+</sect1>
+<sect1 id="object-system">
+<title>The Object System</title>
+<para>
+We use glib2's object system, of course.
+</para><para>
+In fact, we plan on using it willy-nilly, especially the signal system.
+For example, gsk_stream_connect above principally will work via signals,
+I think.  
+</para>
+</sect1>
+<sect1>
+<title>Memory Management</title>
+<para>
+There are a few memory management implementation detains i'd
+like to sort out:
+<orderedlist>
+<listitem><para>
+   - having our own heap structure for use in implementing realtime heaps
+     would be nice in gdam.
+</para></listitem>
+<listitem><para>
+   - an 'alloca' clone that doesn't use the stack would also be nice.
+</para></listitem>
+<listitem><para>
+   - GMemChunk isn't very fast: should we write
+     (maybe fully-threadsafe?) GskMemChunk?
+</para></listitem>
+</orderedlist>
+</para>
+</sect1>
+<sect1>
+<title>File-wise Summary</title>
+<para>
+well, this isn't exhaustive, but i wanted an informative sampling.
+gskactor.h			Deprecated.
+gskactorbuffered.h		Deprecated. Use Stream.
+gskactordatagramsocket.h	Not known.
+gskactorlistener.h		Deprecated. Use StreamListener.
+gskactorstreamsocket.h		Deprecated. Use StreamFd.
+gskactorparser.h		Deprecated. Use SimpleParser.
+gskarrayedarg.h			Not known. (Roughly: replace with glib's arg system)
+gskbuffer.h			Few changes.
+gskbufferiterator.h		No changes.
+gskactorudp.h			Not known.
+gskconstraint.h			Deprecated. Use glib-2.0's GParamSpec functionality.
+gskdaemonize.h			Few changes.
+gskdaemonsettings.h		Few changes.
+gskdatagramsocket.h		Datagram: not known.
+gskdebug.h			Deprecated: use g_log and glib's memory tracking stuff.
+gskdebugoptions.h		Not known.
+gskgtk.h			Deprecated: use glib's object system, not gtk's.
+gskinterface.h			Use glib's type system.
+gsklog.h			Deprecated: use glib's logging system.
+gskmain.h			Few changes.
+gskmainloop.h			Few changes, except actor disappearance.
+gsksocketaddress.h		Few changes, I think.
+gsksocketlistener.h		Deprecated. Use StreamListener.
+gsksocketlocation.h		Deprecated. Use GskSocketAddress.
+gskstreamsocket.h		Deprecated. See Stream discussion above.
+gskthreadpool.h			Deprecated. Use glib's threadpool.
+gskutil.h			Probably similar.
+gskvalidator.h			Deprecated. Use glib's object system.
+gtkreflection.h			Deprecated. Use glib's object system.
+
+the subdirectories retain a more similar feel, but i dunno yet.
+</para>
+<para>TODO: obviously the above need to be formatted somehow.</para>
+</sect1>
+</article>

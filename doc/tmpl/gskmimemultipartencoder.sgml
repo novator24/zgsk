@@ -1,0 +1,106 @@
+<!-- ##### SECTION Title ##### -->
+GskMimeMultipartEncoder
+
+<!-- ##### SECTION Short_Description ##### -->
+encode several MIME pieces into one body.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Multipart MIME encodings are how mail attachments
+are implements, and how large form data is uploaded
+from web servers.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GskMimeMultipartDecoder
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_MIME_MULTIPART_ENCODER_GOOD_BOUNDARY ##### -->
+<para>
+A string which can be used to construct an encoder
+that can handle any quoted-printable or base64 encoded chunk.
+</para>
+
+
+
+<!-- ##### STRUCT GskMimeMultipartEncoderClass ##### -->
+<para>
+
+</para>
+
+@stream_class: 
+@new_part_needed_set_poll: 
+@new_part_needed_shutdown: 
+
+<!-- ##### STRUCT GskMimeMultipartEncoder ##### -->
+<para>
+
+</para>
+
+@stream: 
+@new_part_needed: 
+@outgoing_pieces: 
+@active_stream: 
+@outgoing_data: 
+@boundary_str: 
+@max_buffered: 
+@blocked_active_stream: 
+@shutdown: 
+@wrote_terminator: 
+
+<!-- ##### FUNCTION gsk_mime_multipart_encoder_new ##### -->
+<para>
+
+</para>
+
+@boundary: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_mime_multipart_encoder_add_part ##### -->
+<para>
+
+</para>
+
+@encoder: 
+@piece: 
+@error: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_mime_multipart_encoder_new_defaults ##### -->
+<para>
+Allocate a new encoder with the default/recommended settings.
+</para>
+<para>
+Such an encoder cannot deal with some 'identity' encoded pieces;
+that is because an appropriate boundary string can
+only be had with some knowledge of the contents.
+</para>
+
+
+
+<!-- ##### MACRO gsk_mime_multipart_encoder_trap_part_needed ##### -->
+<para>
+Trap availability of a Multipart-Piece becomes available.
+</para>
+
+@encoder: the encoder to trap.
+@func: the function to invoke when the piece is available.
+@data: data to pass to @func.
+
+
+<!-- ##### MACRO gsk_mime_multipart_encoder_terminate ##### -->
+<para>
+Shutdown the encoder so that no more pieces may be added.
+The stream will remain readable until all the data
+is processed.
+</para>
+
+@encoder: the encoder to shut down.
+
+

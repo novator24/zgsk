@@ -1,0 +1,127 @@
+<!-- ##### SECTION Title ##### -->
+gsklispinput
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GskLispLexer ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_lisp_lexer_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_lexer_feed ##### -->
+<para>
+
+</para>
+
+@lexer: 
+@length: 
+@txt: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_lexer_feed_str ##### -->
+<para>
+
+</para>
+
+@lexer: 
+@txt: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_lexer_destroy ##### -->
+<para>
+
+</para>
+
+@lexer: 
+
+
+<!-- ##### FUNCTION gsk_lisp_lexer_has_partial ##### -->
+<para>
+
+</para>
+
+@lexer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_lexer_free_list ##### -->
+<para>
+
+</para>
+
+@list: 
+
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_int ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_uint ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_bool ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_double ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_enum ##### -->
+<para>
+
+</para>
+
+@atom: 
+@enum_type: 
+@value_out: 
+@Returns: 
+
+

@@ -1,0 +1,11 @@
+#! /bin/sh
+
+dir=gsktable-test-dir-$$-`date +%s`
+
+echo -n simple replacement tests: ''
+for a in simple-replacement-0.in ; do
+  ./test-gsktable-helper -i gsktable-tests/$a --dir=$dir || exit 1
+  rm -rf "$dir"
+  echo -n .
+done
+echo '' done.

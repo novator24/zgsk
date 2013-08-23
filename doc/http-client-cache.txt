@@ -1,0 +1,109 @@
+This document is an attempt to design a
+way to cache HTTP clients to re-use sockets via
+keep-alive.
+
+Basically the plan is to implement an object
+GskHttpClientCache which implements all the keep-alive
+configuration, as well as the actual cache of potentially
+reusable connections.
+
+To do this, the cache has methods which allow setting
+various aspects of the configuration depending on
+the hostname of the URL.
+
+Also, there is a backend API for donating potentially
+reusable client/stream-fd pairs to the cache.
+The only user of this API will be GskUrlTransferHttp, probably.
+
+Another aspect to clean up with this rewrite is to add
+automatic retry of an HTTP connection to UrlTransferHttp.
+This will be done as an add-on to the redirect mechanism.
+GskUrlTransferRedirect will become GskUrlTransferAttempt,
+and the is_permanent boolean will become an enum's worth of options.
+See URL TRANSFER EXTENSIONS.
+
+
+HTTP CLIENT CACHE CONFIGURATION
+-------------------------------
+Configuration is on a host-name basis, and there is a default config.
+That is, there's a http_client_cache_add_config(HttpClientCache,
+                                                SocketAddress, /* optional */
+                                                char *hostname,/* optional */
+						HttpClientCacheConfig);
+and there's a "default" configuration: see
+gsk_http_client_cache_get_defaults(), and helper functions.
+
+After a cache has been used, it becomes immutable.
+That is, you must finish configuring the cache
+before you use it.
+
+Then the rest of the work is constructing client-cache-config objects.
+
+CLIENT-CACHE-CONFIG MEMBERS
+---------------------------
+
+	max-keepalive-clients
+	max-idle-millis
+	max-connecting
+	max-pipelined
+	min-connect-interval-millis
+
+SUGAR
+-----
+Instead of forcing the user to do:
+  gsk_http_client_cache_config_set_idle_timeout (gsk_http_client_cache_get_defaults(cache), 120*1000);
+make helper functions for the "defaults" config:
+  gsk_http_client_cache_set_idle_timeout (cache, 120*1000);
+
+likewise, there should probably be a default client-cache for
+url-transfer so that you can just do
+  cache = gsk_http_client_cache_new ();
+  gsk_url_transfer_http_set_default_client_cache (cache);
+to enable keepalive.
+
+In fact, that last example should probably happen in gsk_init():
+the user can do gsk_url_transfer_http_set_default_client_cache (NULL)
+to disable caching.
+
+BACKEND API
+-----------
+- The cache creates can make HttpClients of any type,
+  even a non-keepalive client.  Use CacheSlot->use_keepalive
+  to see if keepalive is appropriate for this request.
+
+- request a client-stream-fd pair
+   /* may make a non-keepalive client;
+      must be called once per gsk_http_client_request() */
+   gsk_http_client_cache_make_client (Cache          *cache,
+                                      ClientReadyFunc func,
+				      ClientErrorFunc error_func,
+				      gpointer        data,
+				      GDestroyNotify  destroy);
+
+- donate a client/stream-fd pair
+   gsk_http_client_cache_slot_done  (CacheSlot        slot,
+				     HttpRequest      request,
+				     HttpResponse     response);
+
+URL TRANSFER EXTENSIONS
+-----------------------
+The most important thing is that we want to generalize
+the situations in which we start the url transfer process.
+Instead of UrlTransferRedirect we will have UrlTransferAttempt
+with a 'cause' member that can be one of the following
+enum values:
+  GSK_URL_TRANSFER_RETRY_...
+  ...NONFATAL_FAILURE
+  ...PERMANENT_REDIRECT
+  ...TEMPORARY_REDIRECT
+  ...MISSING_AUTHORIZATION   [used to implement http auth]
+
+
+
+WHAT WE ARE NOT DOING
+---------------------
+Providing an abstraction for HttpClientCache:
+we may allow the user to register certain function-pointers
+but that'll be it, at least for now.
+
+Allowing redirects between url schemes.

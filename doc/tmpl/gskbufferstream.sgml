@@ -1,0 +1,183 @@
+<!-- ##### SECTION Title ##### -->
+gskbufferstream
+
+<!-- ##### SECTION Short_Description ##### -->
+Simple Buffering Stream
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This class provides trivial buffering, and additional
+hooks to be notified of buffer events.
+</para>
+<para>
+This class can be used for simple sources where there is
+minimal need for input/output monitoring.
+For example, it can be used to proxy for a foreign source.
+We use it for this purpose in gskopensslbufferstream.c
+to make a connected pair of a BIO (the SSL i/o abstraction)
+and a #GskStream (which is really a GskBufferStream).
+</para>
+<para>
+Most functions in the API are intended only for
+"implementors", that is, users who are using a #GskBufferStream
+as an internal stream.  Most users who are given a #GskBufferStream
+which is returned as a #GskStream should not use this API,
+because it may conflict with the way the implementor of
+the function which returned it expects it to be used.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskStream.
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskBufferStreamClass ##### -->
+<para>
+The class which has the buffer methods.
+</para>
+
+@stream_class: 
+@buffered_read_set_poll: 
+@buffered_write_set_poll: 
+@buffered_read_shutdown: 
+@buffered_write_shutdown: 
+
+<!-- ##### STRUCT GskBufferStream ##### -->
+<para>
+The buffered stream.  All of its members are private
+and should be accessed through the methods below only.
+</para>
+<para>
+However, for debugging purposes, ....
+</para>
+
+@stream: 
+
+<!-- ##### FUNCTION gsk_buffer_stream_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### MACRO gsk_buffer_stream_read_hook ##### -->
+<para>
+Get a pointer to a hook on the buffered-read method.
+This hook will be triggered as long as the stream's read-hook
+wants data and the buffer is empty.
+</para>
+
+@stream: the #GskBufferStream to get the read-hook for.
+
+
+<!-- ##### MACRO gsk_buffer_stream_write_hook ##### -->
+<para>
+Get a pointer to a hook of the buffered-write method.
+This will be triggered as long as the write-buffer
+is non-empty.
+</para>
+
+@stream: the #GskBufferStream to get the write-hook for.
+
+
+<!-- ##### FUNCTION gsk_buffer_stream_read_buffer_changed ##### -->
+<para>
+
+</para>
+
+@stream: 
+
+
+<!-- ##### FUNCTION gsk_buffer_stream_write_buffer_changed ##### -->
+<para>
+
+</para>
+
+@stream: 
+
+
+<!-- ##### FUNCTION gsk_buffer_stream_read_shutdown ##### -->
+<para>
+
+</para>
+
+@stream: 
+
+
+<!-- ##### FUNCTION gsk_buffer_stream_changed ##### -->
+<para>
+
+</para>
+
+@stream: 
+
+
+<!-- ##### MACRO gsk_buffer_stream_clear_strict_max_write ##### -->
+<para>
+Stop forcing the buffer-writer to be in strict-compliance
+with the max-write-buffer quantity.  In this case,
+max-write-buffer just used for polling purposes.
+</para>
+
+@stream: 
+
+
+<!-- ##### MACRO gsk_buffer_stream_has_strict_max_write ##### -->
+<para>
+Whether the #GskBufferStream will strictly enforce
+the maximum write-buffer threshold by
+forcing writes beyond the maximum to get
+clipped (possibly to 0).
+</para>
+
+@stream: the stream to query.
+
+
+<!-- ##### MACRO gsk_buffer_stream_get_max_write_buffer ##### -->
+<para>
+Get the maximum number of bytes in the write buffer.
+</para>
+
+@stream: the stream to query.
+
+
+<!-- ##### MACRO gsk_buffer_stream_peek_write_buffer ##### -->
+<para>
+Peek at the write-buffer (the buffer where the input gsk_stream_write()
+is appended).  Note that you must call gsk_buffer_stream_write_buffer_changed()
+if you change the returned buffer.
+</para>
+
+@stream: the stream whose write-buffer is returned.
+
+
+<!-- ##### MACRO gsk_buffer_stream_peek_read_buffer ##### -->
+<para>
+Peek at the read-buffer (the buffer where the output gsk_stream_read()
+is drain from).
+Note that you must call gsk_buffer_stream_read_buffer_changed()
+if you change the returned buffer.
+</para>
+
+@stream: the stream whose read-buffer is returned.
+
+
+<!-- ##### MACRO gsk_buffer_stream_mark_strict_max_write ##### -->
+<para>
+Indicate that strict enforcement of the maximum-write buffer size
+is desired.
+</para>
+<para>
+Note that this only affect the write implementation:
+existing buffered data is retained, and also
+the implementor can always gsk_buffer_append() to cram
+extra data in.
+</para>
+
+@stream: the stream where the max-write-buffer should be strictly enforced.
+
+

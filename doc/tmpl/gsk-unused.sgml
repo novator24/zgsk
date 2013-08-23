@@ -1,0 +1,5536 @@
+<!-- ##### SECTION ./tmpl/config.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/config.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/config.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/config.sgml:Title ##### -->
+config
+
+
+<!-- ##### SECTION ./tmpl/gsk-unused.sgml:Stability_Level ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsk.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsk.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsk.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsk.sgml:Title ##### -->
+gsk
+
+
+<!-- ##### SECTION ./tmpl/gskbasic.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskbasic.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskbasic.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskbasic.sgml:Title ##### -->
+gskbasic
+
+
+<!-- ##### SECTION ./tmpl/gskcinterp.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskcinterp.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskcinterp.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskcinterp.sgml:Title ##### -->
+gskcinterp
+
+
+<!-- ##### SECTION ./tmpl/gskcommandtable.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskcommandtable.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskcommandtable.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskcommandtable.sgml:Title ##### -->
+gskcommandtable
+
+
+<!-- ##### SECTION ./tmpl/gskftpclient.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskftpclient.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskftpclient.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskftpclient.sgml:Title ##### -->
+GskFtpClient
+
+
+<!-- ##### SECTION ./tmpl/gskhttp.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskhttp.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskhttp.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskhttp.sgml:Title ##### -->
+gskhttp
+
+
+<!-- ##### SECTION ./tmpl/gskimapclient.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskimapclient.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskimapclient.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskimapclient.sgml:Title ##### -->
+GskImapClient
+
+
+<!-- ##### SECTION ./tmpl/gskimapcommon.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskimapcommon.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskimapcommon.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskimapcommon.sgml:Title ##### -->
+gskimapcommon
+
+
+<!-- ##### SECTION ./tmpl/gskimapmessage.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskimapmessage.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskimapmessage.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskimapmessage.sgml:Title ##### -->
+gskimapmessage
+
+
+<!-- ##### SECTION ./tmpl/gsklispinput.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsklispinput.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsklispinput.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsklispinput.sgml:Title ##### -->
+gsklispinput
+
+
+<!-- ##### SECTION ./tmpl/gsklispnode.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsklispnode.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsklispnode.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsklispnode.sgml:Title ##### -->
+gsklispnode
+
+
+<!-- ##### SECTION ./tmpl/gsklispoutput.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsklispoutput.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsklispoutput.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsklispoutput.sgml:Title ##### -->
+gsklispoutput
+
+
+<!-- ##### SECTION ./tmpl/gskmainloopselect.sgml.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskmainloopselect.sgml.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskmainloopselect.sgml.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskmainloopselect.sgml.sgml:Title ##### -->
+GskMainLoopEpoll
+
+
+<!-- ##### SECTION ./tmpl/gskopensslbiostream.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskopensslbiostream.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskopensslbiostream.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskopensslbiostream.sgml:Title ##### -->
+gskopensslbiostream
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprocessor.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprocessor.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprocessor.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprocessor.sgml:Title ##### -->
+gskrpcprocessor
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprotocol.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprotocol.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprotocol.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskrpcprotocol.sgml:Title ##### -->
+gskrpcprotocol
+
+
+<!-- ##### SECTION ./tmpl/gskrpcstream.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskrpcstream.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskrpcstream.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskrpcstream.sgml:Title ##### -->
+GskRpcStream
+
+
+<!-- ##### SECTION ./tmpl/gskseekable.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskseekable.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskseekable.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskseekable.sgml:Title ##### -->
+gskseekable
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparser.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparser.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparser.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparser.sgml:Title ##### -->
+GskSimpleParser
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparserstream.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparserstream.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparserstream.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsksimpleparserstream.sgml:Title ##### -->
+GskSimpleParserStream
+
+
+<!-- ##### SECTION ./tmpl/gskstreambio.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskstreambio.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskstreambio.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskstreambio.sgml:Title ##### -->
+gskstreambio
+
+
+<!-- ##### SECTION ./tmpl/gskstringify.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskstringify.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskstringify.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskstringify.sgml:Title ##### -->
+GskStringifyIface
+
+
+<!-- ##### SECTION ./tmpl/gsktask.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsktask.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsktask.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsktask.sgml:Title ##### -->
+gsktask
+
+
+<!-- ##### SECTION ./tmpl/gsktasksequence.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsktasksequence.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gsktasksequence.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gsktasksequence.sgml:Title ##### -->
+gsktasksequence
+
+
+<!-- ##### SECTION ./tmpl/gskxdr.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxdr.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxdr.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskxdr.sgml:Title ##### -->
+gskxdr
+
+
+<!-- ##### SECTION ./tmpl/gskxmldeserialize.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmldeserialize.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmldeserialize.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskxmldeserialize.sgml:Title ##### -->
+gskxmldeserialize
+
+
+<!-- ##### SECTION ./tmpl/gskxmlparser.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmlparser.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmlparser.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskxmlparser.sgml:Title ##### -->
+gskxmlparser
+
+
+<!-- ##### SECTION ./tmpl/gskxmlprocessor.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmlprocessor.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmlprocessor.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskxmlprocessor.sgml:Title ##### -->
+gskxmlprocessor
+
+
+<!-- ##### SECTION ./tmpl/gskxmlstream.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmlstream.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmlstream.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskxmlstream.sgml:Title ##### -->
+GskXmlStream
+
+
+<!-- ##### SECTION ./tmpl/gskxmltoken.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmltoken.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gskxmltoken.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gskxmltoken.sgml:Title ##### -->
+gskxmltoken
+
+
+<!-- ##### MACRO GSK_BUFFER_SIZEOF_INT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_DO_NOTHING ##### -->
+<para>
+
+</para>
+
+@...: 
+
+<!-- ##### MACRO GSK_HTTP_REQUEST ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_HTTP_REQUEST_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_HTTP_REQUEST_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_HTTP_RESPONSE ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_HTTP_RESPONSE_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_HTTP_RESPONSE_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_IS_HTTP_REQUEST ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_IS_HTTP_REQUEST_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_IS_HTTP_RESPONSE ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_IS_HTTP_RESPONSE_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_IPV4 ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_IPV4_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_IPV6 ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_IPV6_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_LOCAL ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_LOCAL_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_SYMBOLIC_IPV4 ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_IS_SOCKET_ADDRESS_SYMBOLIC_IPV4_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_LISP_NODE_IS_LIST ##### -->
+<para>
+
+</para>
+
+@node: 
+
+<!-- ##### MACRO GSK_LIST_APPEND_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+@node: 
+
+<!-- ##### MACRO GSK_LIST_INSERT_AFTER_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+@at: 
+@node: 
+
+<!-- ##### MACRO GSK_LIST_INSERT_BEFORE_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+@at: 
+@node: 
+
+<!-- ##### MACRO GSK_LIST_IS_EMPTY_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+
+<!-- ##### MACRO GSK_LIST_PREPEND_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+@node: 
+
+<!-- ##### MACRO GSK_LIST_REMOVE_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+@node: 
+
+<!-- ##### MACRO GSK_LIST_REMOVE_FIRST_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+
+<!-- ##### MACRO GSK_LIST_REMOVE_LAST_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+
+<!-- ##### MACRO GSK_LIST_REVERSE_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+
+<!-- ##### MACRO GSK_LIST_SORT_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@first: 
+@last: 
+@prev: 
+@next: 
+@comparator: 
+
+<!-- ##### MACRO GSK_PACKET_QUEUE_FD_USE_GLIB_MAIN_LOOP ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_QUEUE_DEQUEUE_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@head: 
+@tail: 
+@next: 
+@rv_node: 
+
+<!-- ##### MACRO GSK_QUEUE_ENQUEUE_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@head: 
+@tail: 
+@next: 
+@node: 
+
+<!-- ##### MACRO GSK_QUEUE_IS_EMPTY_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@head: 
+@tail: 
+@next: 
+
+<!-- ##### MACRO GSK_QUEUE_PREPEND_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@head: 
+@tail: 
+@next: 
+@node: 
+
+<!-- ##### MACRO GSK_QUEUE_REVERSE_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@head: 
+@tail: 
+@next: 
+
+<!-- ##### MACRO GSK_QUEUE_SORT_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@head: 
+@tail: 
+@next: 
+@comparator: 
+
+<!-- ##### MACRO GSK_RBCTREE_FIRST_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_GET_BY_INDEX_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@index: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_GET_BY_INDEX_UNCHECKED_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@index: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_GET_NODE_INDEX_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@node: 
+@index_out: 
+
+<!-- ##### MACRO GSK_RBCTREE_INFIMUM_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_INFIMUM_COMPARATOR_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@key_comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_INSERT_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@node: 
+@collision_node: 
+
+<!-- ##### MACRO GSK_RBCTREE_LAST_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_LOOKUP_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_LOOKUP_COMPARATOR_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@key_comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_NEXT_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@in: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_PREV_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@in: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_REMOVE_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@node: 
+
+<!-- ##### MACRO GSK_RBCTREE_ROTATE_LEFT ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@parent: 
+@left: 
+@right: 
+@get_count: 
+@set_count: 
+@node: 
+
+<!-- ##### MACRO GSK_RBCTREE_ROTATE_RIGHT ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@parent: 
+@left: 
+@right: 
+@get_count: 
+@set_count: 
+@node: 
+
+<!-- ##### MACRO GSK_RBCTREE_SUPREMUM_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@out: 
+
+<!-- ##### MACRO GSK_RBCTREE_SUPREMUM_COMPARATOR_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@get_count: 
+@set_count: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@key_comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_FIRST_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_INFIMUM_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_INFIMUM_COMPARATOR_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@key_comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_INSERT_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@node: 
+@collision_node: 
+
+<!-- ##### MACRO GSK_RBTREE_LAST_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_LOOKUP_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_LOOKUP_COMPARATOR_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@key_comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_NEXT_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@in: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_PREV_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@in: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_REMOVE_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@node: 
+
+<!-- ##### MACRO GSK_RBTREE_ROTATE_LEFT ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@parent: 
+@left: 
+@right: 
+@node: 
+
+<!-- ##### MACRO GSK_RBTREE_ROTATE_RIGHT ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@parent: 
+@left: 
+@right: 
+@node: 
+
+<!-- ##### MACRO GSK_RBTREE_SUPREMUM_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@out: 
+
+<!-- ##### MACRO GSK_RBTREE_SUPREMUM_COMPARATOR_ ##### -->
+<para>
+
+</para>
+
+@top: 
+@type: 
+@is_red: 
+@set_is_red: 
+@parent: 
+@left: 
+@right: 
+@comparator: 
+@key: 
+@key_comparator: 
+@out: 
+
+<!-- ##### MACRO GSK_SIMPLE_PARSER_DEFAULT_MAX_LENGTH ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_IPV4 ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_IPV4_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_IPV4_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_IPV6 ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_IPV6_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_IPV6_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_LOCAL ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_LOCAL_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_LOCAL_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_SYMBOLIC_IPV4 ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_SYMBOLIC_IPV4_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_SYMBOLIC_IPV4_GET_CLASS ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+<!-- ##### MACRO GSK_STACK_FOREACH_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+@iter_var: 
+@code: 
+
+<!-- ##### MACRO GSK_STACK_GET_BOTTOM_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+@rv_node: 
+
+<!-- ##### MACRO GSK_STACK_INSERT_AFTER_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+@above_node: 
+@new_node: 
+
+<!-- ##### MACRO GSK_STACK_IS_EMPTY_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+
+<!-- ##### MACRO GSK_STACK_POP_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+@rv_node: 
+
+<!-- ##### MACRO GSK_STACK_PUSH_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+@node: 
+
+<!-- ##### MACRO GSK_STACK_REVERSE_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+
+<!-- ##### MACRO GSK_STACK_SORT_ ##### -->
+<para>
+
+</para>
+
+@type: 
+@top: 
+@next: 
+@comparator: 
+
+<!-- ##### MACRO GSK_STREAM_FD_USE_GLIB_MAIN_LOOP ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TASK ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### MACRO GSK_TASK_CODE ##### -->
+<para>
+
+</para>
+
+@code: 
+
+<!-- ##### MACRO GSK_TASK_CODE_MAGIC ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TASK_GET_CODE ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### MACRO GSK_TYPE_COMMAND_TABLE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_CONNECTION ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_CONTENT_ENCODING ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_ENCODING ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_MEDIA_SET ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_RANGE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_REQUEST ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_RESPONSE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_STATUS ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_TRANSFER_ENCODING ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_HTTP_VERB ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_LISP_NODE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_SOCKET_ADDRESS_IPV4 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_SOCKET_ADDRESS_IPV6 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_SOCKET_ADDRESS_LOCAL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_TYPE_SOCKET_ADDRESS_SYMBOLIC_IPV4 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_XDR_NO_MAX_SIZE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_XML_TOKEN_CLOSE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_XML_TOKEN_COMMENT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_XML_TOKEN_OPEN ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GSK_XML_TOKEN_TEXT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO G_STMT_END ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO G_STMT_START ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskBufferWalker ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskCInterpConfig ##### -->
+<para>
+
+</para>
+
+@has_switch_statement: 
+@has_references: 
+@has_pointers: 
+@has_arrays: 
+@two_word_types: 
+
+<!-- ##### STRUCT GskCInterpStatement ##### -->
+<para>
+
+</para>
+
+@type: 
+@parent: 
+@next: 
+
+<!-- ##### ENUM GskCInterpStatementType ##### -->
+<para>
+
+</para>
+
+@GSK_C_INTERP_STATEMENT_NOP: 
+@GSK_C_INTERP_STATEMENT_SCOPE: 
+@GSK_C_INTERP_STATEMENT_VAR_DECL: 
+@GSK_C_INTERP_STATEMENT_ASSIGN: 
+@GSK_C_INTERP_STATEMENT_FOR_LOOP: 
+@GSK_C_INTERP_STATEMENT_DO_WHILE_LOOP: 
+@GSK_C_INTERP_STATEMENT_WHILE_LOOP: 
+
+<!-- ##### STRUCT GskCInterpValue ##### -->
+<para>
+
+</para>
+
+@type: 
+
+<!-- ##### ENUM GskCInterpValueType ##### -->
+<para>
+
+</para>
+
+@GSK_C_INTERP_VALUE_CONST: 
+@GSK_C_INTERP_VALUE_FUNCTION_CALL: 
+@GSK_C_INTERP_VALUE_OP_LIST: 
+
+<!-- ##### STRUCT GskCommandTable ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskCommandTableDoneNotify ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskCommandTableEqual ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@ptr_len: 
+@key: 
+@key_len: 
+@hook_type_data: 
+@Returns: 
+
+<!-- ##### ENUM GskCommandTableFlags ##### -->
+<para>
+
+</para>
+
+@GSK_COMMAND_TABLE_NONBLOCKING: 
+
+<!-- ##### USER_FUNCTION GskCommandTableHash ##### -->
+<para>
+
+</para>
+
+@ptr_to_hash: 
+@ptr_len: 
+@hook_type_data: 
+@Returns: 
+
+<!-- ##### USER_FUNCTION GskCommandTableHashKey ##### -->
+<para>
+
+</para>
+
+@key_to_hash: 
+@key_len: 
+@hook_type_data: 
+@Returns: 
+
+<!-- ##### USER_FUNCTION GskCommandTableMarshal ##### -->
+<para>
+
+</para>
+
+@data: 
+@len: 
+@hook_data: 
+@output_buffer: 
+@args: 
+@hook: 
+@Param7: 
+
+<!-- ##### USER_FUNCTION GskCommandTableTask ##### -->
+<para>
+
+</para>
+
+@data: 
+@len: 
+@hook_data: 
+@output_buffer: 
+@args: 
+@Param6: 
+
+<!-- ##### USER_FUNCTION GskDnsRRCacheTrapFunc ##### -->
+<para>
+
+</para>
+
+@message: 
+@pending_record: 
+@record: 
+@trap_data: 
+
+<!-- ##### STRUCT GskDnsRRTrap ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskFtpClientHandleResponse ##### -->
+<para>
+
+</para>
+
+@client: 
+@response: 
+@data: 
+@Returns: 
+
+<!-- ##### STRUCT GskHttpCacheDirective ##### -->
+<para>
+   [From RFC 2616; Section 14.9]
+   The Cache-Control general-header field is used to specify directives
+   that MUST be obeyed by all caching mechanisms along the
+   request/response chain. The directives specify behavior intended to
+   prevent caches from adversely interfering with the request or
+   response. These directives typically override the default caching
+   algorithms. Cache directives are unidirectional in that the presence
+   of a directive in a request does not imply that the same directive is
+   to be given in the response.
+</para>
+<para>
+      Note that HTTP/1.0 caches might not implement Cache-Control and
+      might only implement Pragma: no-cache (see section 14.32).
+</para>
+<para>
+   Cache directives MUST be passed through by a proxy or gateway
+   application, regardless of their significance to that application,
+   since the directives might be applicable to all recipients along the
+   request/response chain. It is not possible to specify a cache-
+   directive for a specific cache.
+
+</para>
+
+@no_cache: 
+      [RFC 2616; 14.9.1]
+      If the no-cache directive does not specify a field-name, then a
+      cache MUST NOT use the response to satisfy a subsequent request
+      without successful revalidation with the origin server. This
+      allows an origin server to prevent caching even by caches that
+      have been configured to return stale responses to client requests.
+
+      If the no-cache directive does specify one or more field-names,
+      then a cache MAY use the response to satisfy a subsequent request,
+      subject to any other restrictions on caching. However, the
+      specified field-name(s) MUST NOT be sent in the response to a
+      subsequent request without successful revalidation with the origin
+      server. This allows an origin server to prevent the re-use of
+      certain header fields in a response, while still allowing caching
+      of the rest of the response.
+
+       Note: Most HTTP/1.0 caches will not recognize or obey this
+       directive.
+@no_store: 
+      [RFC 2616; 14.9.2]
+      The purpose of the no-store directive is to prevent the
+      inadvertent release or retention of sensitive information (for
+      example, on backup tapes). The no-store directive applies to the
+      entire message, and MAY be sent either in a response or in a
+      request. If sent in a request, a cache MUST NOT store any part of
+      either this request or any response to it. If sent in a response,
+      a cache MUST NOT store any part of either this response or the
+      request that elicited it. This directive applies to both non-
+      shared and shared caches. "MUST NOT store" in this context means
+      that the cache MUST NOT intentionally store the information in
+      non-volatile storage, and MUST make a best-effort attempt to
+      remove the information from volatile storage as promptly as
+      possible after forwarding it.
+
+      Even when this directive is associated with a response, users
+      might explicitly store such a response outside of the caching
+      system (e.g., with a "Save As" dialog). History buffers MAY store
+      such responses as part of their normal operation.
+
+      The purpose of this directive is to meet the stated requirements
+      of certain users and service authors who are concerned about
+      accidental releases of information via unanticipated accesses to
+      cache data structures. While the use of this directive might
+      improve privacy in some cases, we caution that it is NOT in any
+      way a reliable or sufficient mechanism for ensuring privacy. In
+      particular, malicious or compromised caches might not recognize or
+      obey this directive, and communications networks might be
+      vulnerable to eavesdropping.
+@no_transform: 
+      [RFC 2616; 14.9.5]
+      Implementors of intermediate caches (proxies) have found it useful
+      to convert the media type of certain entity bodies. A non-
+      transparent proxy might, for example, convert between image
+      formats in order to save cache space or to reduce the amount of
+      traffic on a slow link.
+
+      Serious operational problems occur, however, when these
+      transformations are applied to entity bodies intended for certain
+      kinds of applications. For example, applications for medical
+      imaging, scientific data analysis and those using end-to-end
+      authentication, all depend on receiving an entity body that is bit
+      for bit identical to the original entity-body.
+
+      Therefore, if a message includes the no-transform directive, an
+      intermediate cache or proxy MUST NOT change those headers that are
+      listed in section 13.5.2 as being subject to the no-transform
+      directive. This implies that the cache or proxy MUST NOT change
+      any aspect of the entity-body that is specified by these headers,
+      including the value of the entity-body itself.
+@is_public: 
+      [RFC 2616; 14.9.1]
+      Indicates that the response MAY be cached by any cache, even if it
+      would normally be non-cacheable or cacheable only within a non-
+      shared cache. (See also Authorization, section 14.8, for
+      additional details.)
+@is_private: 
+      [RFC 2616; 14.9.1]
+      Indicates that all or part of the response message is intended for
+      a single user and MUST NOT be cached by a shared cache. This
+      allows an origin server to state that the specified parts of the
+      response are intended for only one user and are not a valid
+      response for requests by other users. A private (non-shared) cache
+      MAY cache the response.
+
+       Note: This usage of the word private only controls where the
+       response may be cached, and cannot ensure the privacy of the
+       message content.
+@only_if_cached: 
+      [RFC 2616; 14.9.4]
+      In some cases, such as times of extremely poor network
+      connectivity, a client may want a cache to return only those
+      responses that it currently has stored, and not to reload or
+      revalidate with the origin server. To do this, the client may
+      include the only-if-cached directive in a request. If it receives
+      this directive, a cache SHOULD either respond using a cached entry
+      that is consistent with the other constraints of the request, or
+      respond with a 504 (Gateway Timeout) status. However, if a group
+      of caches is being operated as a unified system with good internal
+      connectivity, such a request MAY be forwarded within that group of
+      caches.
+@must_revalidate: 
+      [RFC 2616; 14.9.4]
+      Because a cache MAY be configured to ignore a server's specified
+      expiration time, and because a client request MAY include a max-
+      stale directive (which has a similar effect), the protocol also
+      includes a mechanism for the origin server to require revalidation
+      of a cache entry on any subsequent use. When the must-revalidate
+      directive is present in a response received by a cache, that cache
+      MUST NOT use the entry after it becomes stale to respond to a
+      subsequent request without first revalidating it with the origin
+      server. (I.e., the cache MUST do an end-to-end revalidation every
+      time, if, based solely on the origin server's Expires or max-age
+      value, the cached response is stale.)
+
+      The must-revalidate directive is necessary to support reliable
+      operation for certain protocol features. In all circumstances an
+      HTTP/1.1 cache MUST obey the must-revalidate directive; in
+      particular, if the cache cannot reach the origin server for any
+      reason, it MUST generate a 504 (Gateway Timeout) response.
+
+      Servers SHOULD send the must-revalidate directive if and only if
+      failure to revalidate a request on the entity could result in
+      incorrect operation, such as a silently unexecuted financial
+      transaction. Recipients MUST NOT take any automated action that
+      violates this directive, and MUST NOT automatically provide an
+      unvalidated copy of the entity if revalidation fails.
+
+      Although this is not recommended, user agents operating under
+      severe connectivity constraints MAY violate this directive but, if
+      so, MUST explicitly warn the user that an unvalidated response has
+      been provided. The warning MUST be provided on each unvalidated
+      access, and SHOULD require explicit user confirmation.
+@proxy_revalidate: 
+      [RFC 2616; 14.9.4]
+      The proxy-revalidate directive has the same meaning as the must-
+      revalidate directive, except that it does not apply to non-shared
+      user agent caches. It can be used on a response to an
+      authenticated request to permit the user's cache to store and
+      later return the response without needing to revalidate it (since
+      it has already been authenticated once by that user), while still
+      requiring proxies that service many users to revalidate each time
+      (in order to make sure that each user has been authenticated).
+      Note that such authenticated responses also need the public cache
+      control directive in order to allow them to be cached at all.
+@max_age: 
+      [RFC 2616; 14.9.4]
+      When an intermediate cache is forced, by means of a max-age=0
+      directive, to revalidate its own cache entry, and the client has
+      supplied its own validator in the request, the supplied validator
+      might differ from the validator currently stored with the cache
+      entry. In this case, the cache MAY use either validator in making
+      its own request without affecting semantic transparency.
+
+      However, the choice of validator might affect performance. The
+      best approach is for the intermediate cache to use its own
+      validator when making its request. If the server replies with 304
+      (Not Modified), then the cache can return its now validated copy
+      to the client with a 200 (OK) response. If the server replies with
+      a new entity and cache validator, however, the intermediate cache
+      can compare the returned validator with the one provided in the
+      client's request, using the strong comparison function. If the
+      client's validator is equal to the origin server's, then the
+      intermediate cache simply returns 304 (Not Modified). Otherwise,
+      it returns the new entity with a 200 (OK) response.
+
+      If a request includes the no-cache directive, it SHOULD NOT
+      include min-fresh, max-stale, or max-age.
+
+      XXX: there's a different max-age directive in [RFC 2616; 14.9.3]; fix!!??
+@smax_age: 
+      [RFC 2616; 14.9.3]
+       If a response includes an s-maxage directive, then for a shared
+       cache (but not for a private cache), the maximum age specified by
+       this directive overrides the maximum age specified by either the
+       max-age directive or the Expires header. The s-maxage directive
+       also implies the semantics of the proxy-revalidate directive (see
+       section 14.9.4), i.e., that the shared cache must not use the
+       entry after it becomes stale to respond to a subsequent request
+       without first revalidating it with the origin server. The s-
+       maxage directive is always ignored by a private cache.
+@max_stale: 
+      [RFC 2616; 14.9.3]
+      Indicates that the client is willing to accept a response that has
+      exceeded its expiration time. If max-stale is assigned a value,
+      then the client is willing to accept a response that has exceeded
+      its expiration time by no more than the specified number of
+      seconds. If no value is assigned to max-stale, then the client is
+      willing to accept a stale response of any age.
+@min_fresh: 
+      [RFC 2616; 14.9.3]
+      Indicates that the client is willing to accept a response whose
+      freshness lifetime is no less than its current age plus the
+      specified time in seconds. That is, the client wants a response
+      that will still be fresh for at least the specified number of
+      seconds.
+@s_max_age: 
+      [RFC 2616; 14.9.3]
+       If a response includes an s-maxage directive, then for a shared
+       cache (but not for a private cache), the maximum age specified by
+       this directive overrides the maximum age specified by either the
+       max-age directive or the Expires header. The s-maxage directive
+       also implies the semantics of the proxy-revalidate directive (see
+       section 14.9.4), i.e., that the shared cache must not use the
+       entry after it becomes stale to respond to a subsequent request
+       without first revalidating it with the origin server. The s-
+       maxage directive is always ignored by a private cache.
+
+   Note that most older caches, not compliant with this specification,
+   do not implement any cache-control directives. An origin server
+   wishing to use a cache-control directive that restricts, but does not
+   prevent, caching by an HTTP/1.1-compliant cache MAY exploit the
+   requirement that the max-age directive overrides the Expires header,
+   and the fact that pre-HTTP/1.1-compliant caches do not observe the
+   max-age directive.
+@private_name: 
+   Intended for more detailed specification of private cache data.
+@no_cache_name: 
+   Intended for more detailed specification of no-cache data.
+
+<!-- ##### ENUM GskHttpEncoding ##### -->
+<para>
+Recognized content encodings.  See RFC 2616, Section 3.5.
+</para>
+<para>
+TODO: support gzip.
+</para>
+
+@GSK_HTTP_ENCODING_NONE: 
+@GSK_HTTP_ENCODING_CHUNKED: 
+@GSK_HTTP_ENCODING_UNRECOGNIZED: 
+
+<!-- ##### STRUCT GskHttpEncodingSet ##### -->
+<para>
+
+</para>
+
+@encoding: 
+@quality: 
+
+<!-- ##### ARG GskHttpHeader:encoding ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskHttpHeader:encoding-string ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskHttpRequest:authorization ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskHttpRequest:proxy-authorization ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskHttpResponse:content-charset ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskHttpResponse:content-encoding ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskHttpResponse:content-subtype ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskHttpResponse:content-type ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskHttpServerResponse ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GskImapClientState ##### -->
+<para>
+
+</para>
+
+@GSK_IMAP_CLIENT_STATE_WAITING_FOR_GREETING: 
+@GSK_IMAP_CLIENT_STATE_NONAUTHENTICATED: 
+@GSK_IMAP_CLIENT_STATE_AUTHENTICATING: 
+@GSK_IMAP_CLIENT_STATE_AUTHENTICATED: 
+@GSK_IMAP_CLIENT_STATE_LOGGING_OUT: 
+@GSK_IMAP_CLIENT_STATE_LOGGED_OUT: 
+
+<!-- ##### ENUM GskImapCommandType ##### -->
+<para>
+
+</para>
+
+@GSK_IMAP_COMMAND_CAPABILITY: 
+@GSK_IMAP_COMMAND_NOOP: 
+@GSK_IMAP_COMMAND_LOGOUT: 
+@GSK_IMAP_COMMAND_AUTHENTICATE: 
+@GSK_IMAP_COMMAND_LOGIN: 
+@GSK_IMAP_COMMAND_EXAMINE: 
+@GSK_IMAP_COMMAND_CREATE: 
+@GSK_IMAP_COMMAND_DELETE: 
+@GSK_IMAP_COMMAND_RENAME: 
+@GSK_IMAP_COMMAND_SUBSCRIBE: 
+@GSK_IMAP_COMMAND_UNSUBSCRIBE: 
+@GSK_IMAP_COMMAND_LIST: 
+@GSK_IMAP_COMMAND_LSUB: 
+@GSK_IMAP_COMMAND_STATUS: 
+@GSK_IMAP_COMMAND_APPEND: 
+@GSK_IMAP_COMMAND_CHECK: 
+@GSK_IMAP_COMMAND_CLOSE: 
+@GSK_IMAP_COMMAND_EXPUNGE: 
+@GSK_IMAP_COMMAND_SEARCH: 
+@GSK_IMAP_COMMAND_FETCH: 
+@GSK_IMAP_COMMAND_STORE: 
+@GSK_IMAP_COMMAND_COPY: 
+@GSK_IMAP_COMMAND_UID: 
+
+<!-- ##### STRUCT GskKqueueEvent ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskKqueueUpdate ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskLispLexer ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskLispNode ##### -->
+<para>
+
+</para>
+
+@is_atom: 
+@parent: 
+
+<!-- ##### USER_FUNCTION GskMainLoopResultFunc ##### -->
+<para>
+Process the return-value of the run function.
+</para>
+
+@result_data: data returned by the #GskMainLoopRunFunc which was
+registered as the run_func parameter to to gsk_main_loop_run_background().
+@run_data: data passed to gsk_main_loop_run_background()
+(it was only the argument to the thread's function too).
+
+<!-- ##### USER_FUNCTION GskMainLoopRunFunc ##### -->
+<para>
+A function which will run in a background thread,
+possibly in a thread-pool.
+</para>
+
+@run_data: data passed to gsk_main_loop_run_background().
+@Returns: opaque result data which will be passed to the #GskMainLoopResultFunc.
+
+<!-- ##### STRUCT GskQsortStack ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskQsortStackNode ##### -->
+<para>
+
+</para>
+
+@start: 
+@len: 
+
+<!-- ##### ENUM GskRpcCommandType ##### -->
+<para>
+
+</para>
+
+@GSK_RPC_COMMAND_GET_PARAMS: 
+@GSK_RPC_COMMAND_SET_PARAMS: 
+@GSK_RPC_COMMAND_EMIT_SIGNAL: 
+@GSK_RPC_COMMAND_EMIT_CLASS_SIGNAL: 
+@GSK_RPC_COMMAND_DETACH: 
+@GSK_RPC_COMMAND_CREATE: 
+@GSK_RPC_COMMAND_LOOKUP: 
+@GSK_RPC_COMMAND_TRAP_PARAM_CHANGE: 
+@GSK_RPC_COMMAND_TRAP_SIGNAL: 
+@GSK_RPC_COMMAND_TRAP_CLASS_SIGNAL: 
+@GSK_RPC_COMMAND_DETACH_TRAP: 
+@GSK_RPC_COMMAND_PARAM_CHANGE_NOTIFY: 
+@GSK_RPC_COMMAND_SIGNAL_NOTIFY: 
+@GSK_RPC_COMMAND_CLASS_SIGNAL_NOTIFY: 
+
+<!-- ##### ENUM GskRpcError ##### -->
+<para>
+
+</para>
+
+@GSK_RPC_ERROR_TYPE_NOT_FOUND: 
+@GSK_RPC_ERROR_TYPE_MISMATCH: 
+
+<!-- ##### UNION GskRpcMessage ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskRpcMessageFailure ##### -->
+<para>
+
+</para>
+
+@message_type: 
+@command_type: 
+@command_id: 
+@error_code: 
+
+<!-- ##### STRUCT GskRpcMessageRequest ##### -->
+<para>
+
+</para>
+
+@message_type: 
+@command_type: 
+@command_id: 
+
+<!-- ##### STRUCT GskRpcMessageSuccess ##### -->
+<para>
+
+</para>
+
+@message_type: 
+@command_type: 
+@command_id: 
+
+<!-- ##### ENUM GskRpcMessageType ##### -->
+<para>
+
+</para>
+
+@GSK_RPC_MESSAGE_REQUEST: 
+@GSK_RPC_MESSAGE_SUCCESS: 
+@GSK_RPC_MESSAGE_FAILURE: 
+
+<!-- ##### TYPEDEF GskRpcObjectRef ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskSeekable ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskSeekableIface ##### -->
+<para>
+
+</para>
+
+@g_iface: 
+@is_seekable: 
+@seek: 
+@tell: 
+@get_length: 
+
+<!-- ##### ENUM GskSeekableMode ##### -->
+<para>
+
+</para>
+
+@GSK_SEEKABLE_FROM_START: 
+@GSK_SEEKABLE_FROM_CURRENT: 
+@GSK_SEEKABLE_FROM_END: 
+
+<!-- ##### USER_FUNCTION GskSimpleParserCallback ##### -->
+<para>
+
+</para>
+
+@callback_data: 
+@parsed_buffer: 
+@parsed_buffer_length: 
+
+<!-- ##### ARG GskSimpleParserStream:command-table ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskSimpleParserStream:simple-parser ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskSourceKqueue ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GskStreamListenerSocketFlags ##### -->
+<para>
+
+</para>
+
+@GSK_STREAM_LISTENER_SOCKET_DONT_REUSE_ADDRESS: 
+
+<!-- ##### STRUCT GskTask ##### -->
+<para>
+
+</para>
+
+@code: 
+@is_trapped: 
+@is_starting: 
+@is_started: 
+@is_done: 
+@tried_cancel: 
+@is_cancelled: 
+@suspend_count: 
+@ref_count: 
+@start_hook: 
+@cancel_hook: 
+@done_hook: 
+@finalize_hook: 
+@data: 
+@destroy: 
+
+<!-- ##### STRUCT GskTaskCode ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GskTaskCodeFlags ##### -->
+<para>
+
+</para>
+
+@GSK_TASK_CODE_NONBLOCKING: 
+@GSK_TASK_CODE_POLYMORPHOUS_INPUT: 
+@GSK_TASK_CODE_POLYMORPHOUS_OUTPUT: 
+
+<!-- ##### STRUCT GskTaskCodeInfo ##### -->
+<para>
+
+</para>
+
+@task_size: 
+@flags: 
+@num_input_types: 
+@input_types: 
+@num_output_types: 
+@output_types: 
+@init_task: 
+@start_task: 
+@func: 
+@cancel_task: 
+@suspend_task: 
+@resume_task: 
+@destruct_task: 
+@data: 
+@destroy_data: 
+
+<!-- ##### USER_FUNCTION GskTaskFunc ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### USER_FUNCTION GskTaskHook ##### -->
+<para>
+
+</para>
+
+@task: 
+@data: 
+
+<!-- ##### USER_FUNCTION GskTaskHookValues ##### -->
+<para>
+
+</para>
+
+@task: 
+@n_values: 
+@values: 
+@data: 
+
+<!-- ##### STRUCT GskTaskSequence ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskTaskStartFunc ##### -->
+<para>
+
+</para>
+
+@task: 
+@n_input_types: 
+@input_types: 
+
+<!-- ##### STRUCT GskUrlTransferHttpModifierNode ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskXdrContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GskXdrFundamental ##### -->
+<para>
+
+</para>
+
+@GSK_XDR_FUNDAMENTAL_INT: 
+@GSK_XDR_FUNDAMENTAL_UNSIGNED_INT: 
+@GSK_XDR_FUNDAMENTAL_HYPERINT: 
+@GSK_XDR_FUNDAMENTAL_UNSIGNED_HYPERINT: 
+@GSK_XDR_FUNDAMENTAL_SINGLE_FLOAT: 
+@GSK_XDR_FUNDAMENTAL_DOUBLE_FLOAT: 
+@GSK_XDR_FUNDAMENTAL_QUADRUPLE_FLOAT: 
+
+<!-- ##### STRUCT GskXdrType ##### -->
+<para>
+
+</para>
+
+@context: 
+@category: 
+@is_optional: 
+
+<!-- ##### ENUM GskXdrTypeCategory ##### -->
+<para>
+
+</para>
+
+@GSK_XDR_TYPE_CATEGORY_FUNDAMENTAL: 
+@GSK_XDR_TYPE_CATEGORY_ENUM: 
+@GSK_XDR_TYPE_CATEGORY_UNION: 
+@GSK_XDR_TYPE_CATEGORY_STRUCT: 
+@GSK_XDR_TYPE_CATEGORY_TYPEDEF: 
+@GSK_XDR_TYPE_CATEGORY_OPAQUE_FIXED: 
+@GSK_XDR_TYPE_CATEGORY_OPAQUE_VARIABLE: 
+@GSK_XDR_TYPE_CATEGORY_ARRAY_FIXED: 
+@GSK_XDR_TYPE_CATEGORY_ARRAY_VARIABLE: 
+@GSK_XDR_TYPE_CATEGORY_STRING: 
+
+<!-- ##### STRUCT GskXmlConfig ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskXmlEndElementHandler ##### -->
+<para>
+
+</para>
+
+@user_data: 
+@name: 
+
+<!-- ##### USER_FUNCTION GskXmlErrorFunc ##### -->
+<para>
+
+</para>
+
+@filename: 
+@line_no: 
+@message: 
+@data: 
+
+<!-- ##### USER_FUNCTION GskXmlGetType ##### -->
+<para>
+
+</para>
+
+@name: 
+@user_data: 
+@Returns: 
+
+<!-- ##### STRUCT GskXmlNamespace ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskXmlParser ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GskXmlParserFlags ##### -->
+<para>
+
+</para>
+
+@GSK_XML_PARSER_READ_COMMENTS: 
+
+<!-- ##### ENUM GskXmlParserStatus ##### -->
+<para>
+
+</para>
+
+@GSK_XML_PARSER_OK: 
+@GSK_XML_PARSER_TAG_MISMATCH: 
+@GSK_XML_PARSER_MALFORMED: 
+@GSK_XML_PARSER_OUT_OF_DATA: 
+@GSK_XML_PARSER_PREMATURE_EOF: 
+@GSK_XML_PARSER_EOF: 
+@GSK_XML_PARSER_INTERNAL: 
+
+<!-- ##### STRUCT GskXmlProcessor ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskXmlStartElementHandler ##### -->
+<para>
+
+</para>
+
+@user_data: 
+@name: 
+@atts: 
+
+<!-- ##### USER_FUNCTION GskXmlTextHandler ##### -->
+<para>
+
+</para>
+
+@user_data: 
+@content: 
+@content_length: 
+
+<!-- ##### UNION GskXmlToken ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskXmlTokenAny ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+
+<!-- ##### STRUCT GskXmlTokenClose ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@tag_name: 
+
+<!-- ##### STRUCT GskXmlTokenComment ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@comment: 
+
+<!-- ##### STRUCT GskXmlTokenOpen ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@tag_name: 
+@num_param: 
+@params: 
+
+<!-- ##### STRUCT GskXmlTokenText ##### -->
+<para>
+
+</para>
+
+@type: 
+@ref_count: 
+@filename: 
+@lineno: 
+@text: 
+
+<!-- ##### USER_FUNCTION GskXmlTypeTestFunc ##### -->
+<para>
+
+</para>
+
+@type: 
+@user_data: 
+@Returns: 
+
+<!-- ##### USER_FUNCTION GskXmlValueCallback ##### -->
+<para>
+
+</para>
+
+@value: 
+@user_data: 
+
+<!-- ##### STRUCT GskXmlrpcIncoming ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskXmlrpcOutgoing ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAS_SOCKADDR_SA_LEN ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_DLFCN_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_EPOLL_SUPPORT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_INTTYPES_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_MEMORY_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_NET_IF_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_OPENSSL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_POLL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_SELECT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STDINT_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STDLIB_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STRINGS_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STRING_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STRTOLL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STRTOQ ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STRTOULL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_STRTOUQ ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_SYSLOG ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_SYS_IOCTL_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_SYS_POLL_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_SYS_STAT_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_SYS_TYPES_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_TIMEGM ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_UNISTD_H ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO HAVE_WRITEV ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO PACKAGE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO PACKAGE_BUGREPORT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO PACKAGE_NAME ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO PACKAGE_STRING ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO PACKAGE_TARNAME ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO PACKAGE_VERSION ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO STDC_HEADERS ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO SUPPORTS_IPV6 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO VERSION ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM _GskInitFlags ##### -->
+<para>
+
+</para>
+
+@_GSK_INIT_SUPPORT_THREADS: 
+
+<!-- ##### FUNCTION gsk_buffer_make_walker ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_buffer_walker_cur ##### -->
+<para>
+
+</para>
+
+@walker: 
+@data_out: 
+@length_out: 
+
+<!-- ##### FUNCTION gsk_buffer_walker_next ##### -->
+<para>
+
+</para>
+
+@walker: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_buffer_walker_prev ##### -->
+<para>
+
+</para>
+
+@walker: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_c_interp_parse_statement ##### -->
+<para>
+
+</para>
+
+@scanner: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_add_hook ##### -->
+<para>
+
+</para>
+
+@table: 
+@hook_type: 
+@key_data: 
+@key_len: 
+@key_destroy: 
+@func: 
+@hook_data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_command_table_add_hook_m ##### -->
+<para>
+
+</para>
+
+@table: 
+@hook_type: 
+@key_data: 
+@key_len: 
+@key_destroy: 
+@marshal: 
+@hook: 
+@hook_data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_command_table_add_hook_type ##### -->
+<para>
+
+</para>
+
+@table: 
+@hash_key: 
+@hash: 
+@equal: 
+@hook_type_data: 
+@hook_type_destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_done_notify ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+<!-- ##### FUNCTION gsk_command_table_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_is_nonblocking ##### -->
+<para>
+
+</para>
+
+@table: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_new ##### -->
+<para>
+
+</para>
+
+@flags: 
+@arg_type_0: 
+@Varargs: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_new_v ##### -->
+<para>
+
+</para>
+
+@num_task_args: 
+@task_arg_types: 
+@flags: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_peek_types ##### -->
+<para>
+
+</para>
+
+@table: 
+@num_out: 
+@types_out: 
+
+<!-- ##### FUNCTION gsk_command_table_ref ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+<!-- ##### FUNCTION gsk_command_table_run ##### -->
+<para>
+
+</para>
+
+@table: 
+@data: 
+@len: 
+@output_buffer: 
+@done: 
+@done_data: 
+@Varargs: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_run_v ##### -->
+<para>
+
+</para>
+
+@table: 
+@data: 
+@len: 
+@output_buffer: 
+@done: 
+@done_data: 
+@values: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_command_table_unref ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+<!-- ##### FUNCTION gsk_control_client_process_raw_line ##### -->
+<para>
+
+</para>
+
+@cc: 
+@line: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_control_client_run_current_command ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+<!-- ##### FUNCTION gsk_control_server_peek_file ##### -->
+<para>
+
+</para>
+
+@server: 
+@path: 
+@content_out: 
+@content_length_out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_dns_client_parse_etc_hosts ##### -->
+<para>
+
+</para>
+
+@client: 
+@filename: 
+@may_be_missing: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_trap_finish ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@pending_record: 
+@trap_func: 
+@trap_data: 
+@trap_destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_dns_rr_cache_untrap ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@trap: 
+
+<!-- ##### FUNCTION gsk_ftp_client_issue_request ##### -->
+<para>
+
+</para>
+
+@client: 
+@request: 
+
+<!-- ##### FUNCTION gsk_ftp_client_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_ftp_client_trap_response ##### -->
+<para>
+
+</para>
+
+@client: 
+@handler: 
+@data: 
+@destroy: 
+
+<!-- ##### MACRO gsk_g_debug ##### -->
+<para>
+
+</para>
+
+@...: 
+
+<!-- ##### FUNCTION gsk_g_hash_table_get_keys_slist ##### -->
+<para>
+
+</para>
+
+@table: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_g_hash_table_get_values_slist ##### -->
+<para>
+</para>
+
+@table: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_hook_set_never_blocks ##### -->
+<para>
+
+</para>
+
+@hook: 
+
+<!-- ##### FUNCTION gsk_http_authenticate_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_authenticate_new ##### -->
+<para>
+
+</para>
+
+@challenge: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_authorization_free ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+<!-- ##### FUNCTION gsk_http_authorization_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_authorization_new ##### -->
+<para>
+
+</para>
+
+@credentials: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_cache_directive_free ##### -->
+<para>
+
+</para>
+
+@directive: 
+
+<!-- ##### FUNCTION gsk_http_cache_directive_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_cache_directive_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_cache_directive_set_no_cache_name ##### -->
+<para>
+
+</para>
+
+@directive: 
+@name: 
+
+<!-- ##### FUNCTION gsk_http_cache_directive_set_private_name ##### -->
+<para>
+
+</para>
+
+@directive: 
+@name: 
+
+<!-- ##### FUNCTION gsk_http_char_set_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_connection_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_content_encoding_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_content_encoding_set_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_cookie_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_encoding_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_encoding_set_free ##### -->
+<para>
+
+</para>
+
+@Param1: 
+
+<!-- ##### FUNCTION gsk_http_encoding_set_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_encoding_set_new ##### -->
+<para>
+
+</para>
+
+@encoding: 
+@quality: 
+@Returns: 
+
+<!-- ##### MACRO gsk_http_header_get_age ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### FUNCTION gsk_http_header_get_cmd_table ##### -->
+<para>
+
+</para>
+
+@is_request: 
+@Returns: 
+
+<!-- ##### MACRO gsk_http_header_get_etag ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### MACRO gsk_http_header_get_from ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### MACRO gsk_http_header_get_last_modified ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### FUNCTION gsk_http_header_get_parser ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### MACRO gsk_http_header_get_server ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### FUNCTION gsk_http_header_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_header_new ##### -->
+<para>
+
+</para>
+
+@is_request: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_header_new_response ##### -->
+<para>
+
+</para>
+
+@header: 
+@length: 
+@code: 
+@Returns: 
+
+<!-- ##### MACRO gsk_http_header_peek_etag ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### MACRO gsk_http_header_peek_from ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### MACRO gsk_http_header_peek_location ##### -->
+<para>
+  Obtain the Location: header value, or NULL if not set or relevant.
+</para>
+
+@header: The HTTP header to query.
+
+<!-- ##### FUNCTION gsk_http_header_process_first_line ##### -->
+<para>
+
+</para>
+
+@header: 
+@text: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_header_set_age ##### -->
+<para>
+
+</para>
+
+@header: 
+@age: 
+
+<!-- ##### FUNCTION gsk_http_header_set_allowed_verbs ##### -->
+<para>
+
+</para>
+
+@header: 
+@allowed: 
+
+<!-- ##### FUNCTION gsk_http_header_set_encoding_string ##### -->
+<para>
+
+</para>
+
+@header: 
+@str: 
+
+<!-- ##### MACRO gsk_http_header_set_etag ##### -->
+<para>
+
+</para>
+
+@header: 
+@etag: 
+
+<!-- ##### MACRO gsk_http_header_set_from ##### -->
+<para>
+
+</para>
+
+@header: 
+@from: 
+
+<!-- ##### MACRO gsk_http_header_set_last_modified ##### -->
+<para>
+
+</para>
+
+@header: 
+@last_modified: 
+@last_mod: 
+
+<!-- ##### MACRO gsk_http_header_set_location ##### -->
+<para>
+Set the Location: tag for a header.
+</para>
+<para>
+   [from RFC 2616, Section 14.30]
+   The Location response-header field is used to redirect the recipient
+   to a location other than the Request-URI for completion of the
+   request or identification of a new resource. For 201 (Created)
+   responses, the Location is that of the new resource which was created
+   by the request. For 3xx responses, the location SHOULD indicate the
+   server's preferred URI for automatic redirection to the resource. The
+   field value consists of a single absolute URI.
+</para>
+
+@header: The HTTP header to affect.
+@location: The location URI as a string.
+
+<!-- ##### FUNCTION gsk_http_header_set_md5 ##### -->
+<para>
+Set the 16-byte binary MD5 checksum for this header.
+This should be the hash of the contents of this message.
+</para>
+<para>
+Currently, GSK does not check that the provided stream matches the
+MD5 sum given by the caller; currently, that is the application's responsibility.
+</para>
+
+@header: the header to affect.
+@md5sum: pointer to the 16-byte MD5 computed by the caller.
+
+<!-- ##### FUNCTION gsk_http_header_set_no_retry_after ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### FUNCTION gsk_http_header_set_proxy_authenticate ##### -->
+<para>
+
+</para>
+
+@header: 
+@auth: 
+
+<!-- ##### FUNCTION gsk_http_header_set_retry_after ##### -->
+<para>
+
+</para>
+
+@header: 
+@is_relative: 
+@time: 
+
+<!-- ##### FUNCTION gsk_http_header_set_status_code ##### -->
+<para>
+
+</para>
+
+@header: 
+@path: 
+
+<!-- ##### FUNCTION gsk_http_header_write_to_buffer ##### -->
+<para>
+
+</para>
+
+@header: 
+@output: 
+
+<!-- ##### FUNCTION gsk_http_language_set_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_media_type_set_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_range_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_range_set_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_request_add_encodings ##### -->
+<para>
+
+</para>
+
+@header: 
+@set: 
+
+<!-- ##### FUNCTION gsk_http_request_clear_encodings ##### -->
+<para>
+
+</para>
+
+@header: 
+
+<!-- ##### FUNCTION gsk_http_request_from_buffer ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@flags: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_request_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_request_process_first_line ##### -->
+<para>
+
+</para>
+
+@request: 
+@line: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_response_from_buffer ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@flags: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_response_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_transfer_encoding_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_transfer_encoding_set_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_http_verb_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_bool ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_double ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_enum ##### -->
+<para>
+
+</para>
+
+@atom: 
+@enum_type: 
+@value_out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_int ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_atom_parse_uint ##### -->
+<para>
+
+</para>
+
+@atom: 
+@out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_lexer_destroy ##### -->
+<para>
+
+</para>
+
+@lexer: 
+
+<!-- ##### FUNCTION gsk_lisp_lexer_feed ##### -->
+<para>
+
+</para>
+
+@lexer: 
+@length: 
+@txt: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_lexer_feed_str ##### -->
+<para>
+
+</para>
+
+@lexer: 
+@txt: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_lexer_free_list ##### -->
+<para>
+
+</para>
+
+@list: 
+
+<!-- ##### FUNCTION gsk_lisp_lexer_has_partial ##### -->
+<para>
+
+</para>
+
+@lexer: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_lexer_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_node_destroy ##### -->
+<para>
+
+</para>
+
+@lisp: 
+
+<!-- ##### FUNCTION gsk_lisp_node_destroy_recursive ##### -->
+<para>
+
+</para>
+
+@lisp: 
+
+<!-- ##### FUNCTION gsk_lisp_node_dump ##### -->
+<para>
+
+</para>
+
+@node: 
+
+<!-- ##### FUNCTION gsk_lisp_node_from_arg ##### -->
+<para>
+
+</para>
+
+@arg: 
+@ns: 
+@with_arg_name: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_node_from_object ##### -->
+<para>
+
+</para>
+
+@object: 
+@ns: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_node_list_append ##### -->
+<para>
+
+</para>
+
+@list: 
+@child: 
+
+<!-- ##### FUNCTION gsk_lisp_node_new_atom ##### -->
+<para>
+
+</para>
+
+@parent: 
+@txt: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_node_new_list ##### -->
+<para>
+
+</para>
+
+@parent: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_lisp_node_output ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@first_indent: 
+@indent: 
+@line_length: 
+@node: 
+
+<!-- ##### FUNCTION gsk_main_loop_adjust_io ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@source: 
+@events: 
+
+<!-- ##### FUNCTION gsk_main_loop_adjust_timer ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@timer_source: 
+@millis_expire: 
+@milli_period: 
+@loop: 
+
+<!-- ##### FUNCTION gsk_main_loop_remove ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@source: 
+
+<!-- ##### FUNCTION gsk_main_loop_run_background ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@run_func: 
+@run_data: 
+@result_func: 
+@result_data: 
+@Returns: 
+@loop: 
+
+<!-- ##### FUNCTION gsk_main_loop_run_foreground ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@run_func: 
+@run_data: 
+@result_func: 
+@result_data: 
+@Returns: 
+@loop: 
+
+<!-- ##### FUNCTION gsk_name_resolve ##### -->
+<para>
+
+</para>
+
+@family: 
+@name: 
+@success: 
+@failure: 
+@func_data: 
+@destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_openssl_bio_stream_pair ##### -->
+<para>
+
+</para>
+
+@bio_out: 
+@stream_out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_rpc_object_call ##### -->
+<para>
+
+</para>
+
+@object: 
+@func_name: 
+@n_params: 
+@params: 
+
+<!-- ##### FUNCTION gsk_rpc_object_call_class ##### -->
+<para>
+
+</para>
+
+@processor: 
+@type_name: 
+@func_name: 
+@n_params: 
+@params: 
+
+<!-- ##### FUNCTION gsk_rpc_object_getv ##### -->
+<para>
+
+</para>
+
+@object: 
+@n_params: 
+@names: 
+@func: 
+@failure: 
+@data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_rpc_object_setv ##### -->
+<para>
+
+</para>
+
+@object: 
+@num_params: 
+@params: 
+@success: 
+@failure: 
+@data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_rpc_object_trap_param ##### -->
+<para>
+
+</para>
+
+@object: 
+@name: 
+@func: 
+@data: 
+@destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_rpc_object_trap_signal ##### -->
+<para>
+
+</para>
+
+@object: 
+@func: 
+@data: 
+@destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_rpc_processor_create ##### -->
+<para>
+
+</para>
+
+@processor: 
+@is_local: 
+@type_name: 
+@num_params: 
+@params: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_rpc_processor_lookup ##### -->
+<para>
+
+</para>
+
+@processor: 
+@name: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_rpc_processor_new ##### -->
+<para>
+
+</para>
+
+@stream: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_rpc_stream_new ##### -->
+<para>
+
+</para>
+
+@local_context: 
+@remote_info: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_rpc_trap_destroy ##### -->
+<para>
+
+</para>
+
+@trap: 
+
+<!-- ##### FUNCTION gsk_rpc_trap_ref ##### -->
+<para>
+
+</para>
+
+@trap: 
+
+<!-- ##### FUNCTION gsk_rpc_trap_unref ##### -->
+<para>
+
+</para>
+
+@trap: 
+
+<!-- ##### FUNCTION gsk_rpc_type_register_boxed ##### -->
+<para>
+
+</para>
+
+@boxed_type: 
+@parser: 
+@writer: 
+@data: 
+
+<!-- ##### FUNCTION gsk_seekable_get_length ##### -->
+<para>
+
+</para>
+
+@seekable: 
+@length_out: 
+@error: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_seekable_is_seekable ##### -->
+<para>
+
+</para>
+
+@seekable: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_seekable_seek ##### -->
+<para>
+
+</para>
+
+@seekable: 
+@mode: 
+@error: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_seekable_tell ##### -->
+<para>
+
+</para>
+
+@seekable: 
+@offset_out: 
+@error: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_new_char_terminated ##### -->
+<para>
+
+</para>
+
+@c: 
+@max_length: 
+@chomp: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_new_fixed ##### -->
+<para>
+
+</para>
+
+@length: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_new_line_based ##### -->
+<para>
+
+</para>
+
+@max_length: 
+@chomp_all_whitespace: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_new_str_terminated ##### -->
+<para>
+
+</para>
+
+@str: 
+@max_length: 
+@chomp: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_parse ##### -->
+<para>
+
+</para>
+
+@parser: 
+@len_out: 
+@data_out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_parse_callback ##### -->
+<para>
+
+</para>
+
+@parser: 
+@callback: 
+@data: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_set_buffer ##### -->
+<para>
+
+</para>
+
+@parser: 
+@buffer: 
+
+<!-- ##### FUNCTION gsk_simple_parser_stream_new ##### -->
+<para>
+
+</para>
+
+@parser: 
+@table: 
+@Varargs: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_stream_new_v ##### -->
+<para>
+
+</para>
+
+@parser: 
+@table: 
+@values: 
+@destroy_data: 
+@destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_simple_parser_stream_setup ##### -->
+<para>
+
+</para>
+
+@stream: 
+@parser: 
+@table: 
+@Varargs: 
+
+<!-- ##### FUNCTION gsk_simple_parser_stream_setup_static ##### -->
+<para>
+
+</para>
+
+@stream: 
+@parser: 
+@table: 
+@values: 
+
+<!-- ##### FUNCTION gsk_simple_parser_stream_setup_v ##### -->
+<para>
+
+</para>
+
+@stream: 
+@parser: 
+@table: 
+@values: 
+@destroy_data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_simple_parser_stream_setup_valist ##### -->
+<para>
+
+</para>
+
+@stream: 
+@parser: 
+@table: 
+@values: 
+
+<!-- ##### FUNCTION gsk_socket_address_get_local_quark ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_socket_address_get_remote_quark ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### MACRO gsk_socket_address_ipv4_any ##### -->
+<para>
+Create a new address which should match any host.
+This is only useful for binding, if you wish to bind
+to any address.
+</para>
+
+@port: the port on the local host the address should refer to.
+@Returns: the newly allocated #GskSocketAddressIpv4.
+
+<!-- ##### FUNCTION gsk_socket_address_ipv4_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### MACRO gsk_socket_address_ipv4_loopback ##### -->
+<para>
+Create a new address pointing to this host,
+on the given port.
+</para>
+
+@port: the port on the local host the address should refer to.
+@Returns: the newly allocated #GskSocketAddressIpv4.
+
+<!-- ##### FUNCTION gsk_socket_address_ipv6_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_socket_address_local_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### MACRO gsk_socket_address_new_local ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_socket_address_symbolic_ipv4_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_stream_connection_ref ##### -->
+<para>
+
+</para>
+
+@connection: 
+
+<!-- ##### FUNCTION gsk_stream_connection_unref ##### -->
+<para>
+
+</para>
+
+@connection: 
+
+<!-- ##### FUNCTION gsk_stream_external_new_simple ##### -->
+<para>
+
+</para>
+
+@flags: 
+@stdin_filename: 
+@stdout_filename: 
+@term_func: 
+@err_func: 
+@user_data: 
+@argv0: 
+@Varargs: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_stream_get_openssl_bio ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_stream_listener_socket_flags_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_cancel_notify ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### MACRO gsk_task_code_is_nonblocking ##### -->
+<para>
+
+</para>
+
+@code: 
+
+<!-- ##### FUNCTION gsk_task_code_lookup ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_code_new ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_code_peek_info ##### -->
+<para>
+
+</para>
+
+@task_code: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_code_ref ##### -->
+<para>
+
+</para>
+
+@task_code: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_code_unref ##### -->
+<para>
+
+</para>
+
+@task_code: 
+
+<!-- ##### FUNCTION gsk_task_done_notify ##### -->
+<para>
+
+</para>
+
+@task: 
+@n_values: 
+@values: 
+
+<!-- ##### MACRO gsk_task_is_starting ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### MACRO gsk_task_is_suspended ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### FUNCTION gsk_task_new ##### -->
+<para>
+
+</para>
+
+@task_code: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_ref ##### -->
+<para>
+
+</para>
+
+@task: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_resume ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### FUNCTION gsk_task_run_nonblocking ##### -->
+<para>
+
+</para>
+
+@task_code: 
+@n_input_params: 
+@input_params: 
+@done_func: 
+@done_data: 
+
+<!-- ##### FUNCTION gsk_task_sequence_add_assign ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@id_dst: 
+@id_src: 
+
+<!-- ##### FUNCTION gsk_task_sequence_add_call ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@function: 
+@n_inputs: 
+@input_ids: 
+@n_outputs: 
+@output_ids: 
+
+<!-- ##### FUNCTION gsk_task_sequence_add_ifthenelse ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@boolean_id: 
+
+<!-- ##### FUNCTION gsk_task_sequence_add_init_v ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@id_dst: 
+@value: 
+
+<!-- ##### FUNCTION gsk_task_sequence_add_label ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@label: 
+
+<!-- ##### FUNCTION gsk_task_sequence_alloc_var ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@name: 
+@type: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_sequence_create_scope ##### -->
+<para>
+
+</para>
+
+@sequence: 
+
+<!-- ##### FUNCTION gsk_task_sequence_destroy ##### -->
+<para>
+
+</para>
+
+@sequence: 
+
+<!-- ##### FUNCTION gsk_task_sequence_end_scope ##### -->
+<para>
+
+</para>
+
+@sequence: 
+
+<!-- ##### FUNCTION gsk_task_sequence_find_var ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@name: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_sequence_id_to_type ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@id: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_sequence_input_id ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@input_index: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_sequence_make_code ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_sequence_new ##### -->
+<para>
+
+</para>
+
+@num_inputs: 
+@inputs: 
+@input_names: 
+@num_outputs: 
+@outputs: 
+@output_names: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_sequence_output_id ##### -->
+<para>
+
+</para>
+
+@sequence: 
+@output_index: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_task_start ##### -->
+<para>
+
+</para>
+
+@task: 
+@n_input_params: 
+@input_params: 
+
+<!-- ##### FUNCTION gsk_task_suspend ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### FUNCTION gsk_task_trap ##### -->
+<para>
+
+</para>
+
+@task: 
+@start: 
+@cancel: 
+@done: 
+@finalize: 
+@data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_task_try_cancel ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### FUNCTION gsk_task_unref ##### -->
+<para>
+
+</para>
+
+@task: 
+
+<!-- ##### FUNCTION gsk_tree_node_nth ##### -->
+<para>
+
+</para>
+
+@tree: 
+@index: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_context_add_struct_mapping ##### -->
+<para>
+
+</para>
+
+@struct_type: 
+@Param2: 
+@offsets: 
+
+<!-- ##### FUNCTION gsk_xdr_context_destroy ##### -->
+<para>
+
+</para>
+
+@context: 
+
+<!-- ##### FUNCTION gsk_xdr_context_lookup ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_context_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_context_parse_xdr_buf ##### -->
+<para>
+
+</para>
+
+@context: 
+@to_parse: 
+@list_to_prepend_to: 
+@error: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_context_write_gsk_code ##### -->
+<para>
+
+</para>
+
+@context: 
+@to_parse: 
+@error: 
+@Returns: 
+
+<!-- ##### TYPEDEF gsk_xdr_double_float ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_xdr_find_sizeof ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_find_wire_size ##### -->
+<para>
+
+</para>
+
+@type: 
+@struct_ptr: 
+@Returns: 
+
+<!-- ##### TYPEDEF gsk_xdr_hyperint ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_int ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_xdr_parse ##### -->
+<para>
+
+</para>
+
+@type: 
+@buffer: 
+@struct_ptr: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_parser_abandon ##### -->
+<para>
+
+</para>
+
+@parser: 
+@error: 
+
+<!-- ##### FUNCTION gsk_xdr_parser_continue ##### -->
+<para>
+
+</para>
+
+@parser: 
+@error: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_parser_destroy ##### -->
+<para>
+
+</para>
+
+@parser: 
+
+<!-- ##### FUNCTION gsk_xdr_parser_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_parser_parse ##### -->
+<para>
+
+</para>
+
+@parser: 
+@type_to_parse: 
+@struct_ptr: 
+@error: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_print_as_text ##### -->
+<para>
+
+</para>
+
+@type: 
+@struct_ptr: 
+@buffer: 
+@Returns: 
+
+<!-- ##### TYPEDEF gsk_xdr_quadruple_float ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_single_float ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_xdr_test_parse ##### -->
+<para>
+
+</para>
+
+@type: 
+@buffer: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_array ##### -->
+<para>
+
+</para>
+
+@context: 
+@is_variable_len: 
+@element_type: 
+@Param4: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_enum ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@type: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_fundamental ##### -->
+<para>
+
+</para>
+
+@context: 
+@fundamental: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_opaque ##### -->
+<para>
+
+</para>
+
+@context: 
+@is_variable_len: 
+@Param3: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_string ##### -->
+<para>
+
+</para>
+
+@context: 
+@Param2: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_struct ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Param3: 
+@member_names: 
+@member_types: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_typedef ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@type: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xdr_type_new_union ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Param3: 
+@member_names: 
+@member_types: 
+@Returns: 
+
+<!-- ##### TYPEDEF gsk_xdr_unsigned_hyperint ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF gsk_xdr_unsigned_int ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_xdr_write ##### -->
+<para>
+
+</para>
+
+@type: 
+@struct_ptr: 
+@buffer: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_config_add_type ##### -->
+<para>
+
+</para>
+
+@config: 
+@type: 
+
+<!-- ##### FUNCTION gsk_xml_config_add_type_test ##### -->
+<para>
+
+</para>
+
+@config: 
+@type_func: 
+@test_data: 
+@test_destroy: 
+
+<!-- ##### FUNCTION gsk_xml_config_load_type ##### -->
+<para>
+
+</para>
+
+@config: 
+@type_name: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_config_new ##### -->
+<para>
+
+</para>
+
+@ns: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_config_peek_globals ##### -->
+<para>
+
+</para>
+
+@config: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_config_ref ##### -->
+<para>
+
+</para>
+
+@config: 
+
+<!-- ##### FUNCTION gsk_xml_config_set_loader ##### -->
+<para>
+
+</para>
+
+@config: 
+@get_type_func: 
+@get_type_data: 
+@destroy: 
+
+<!-- ##### FUNCTION gsk_xml_config_test_type ##### -->
+<para>
+
+</para>
+
+@config: 
+@type: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_config_unref ##### -->
+<para>
+
+</para>
+
+@config: 
+
+<!-- ##### FUNCTION gsk_xml_deserialize_parse_value ##### -->
+<para>
+
+</para>
+
+@type: 
+@value: 
+@str: 
+@len: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_loader_introspective ##### -->
+<para>
+
+</para>
+
+@type_name: 
+@unused: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_namespace_assign ##### -->
+<para>
+
+</para>
+
+@ns: 
+@name: 
+@value: 
+
+<!-- ##### FUNCTION gsk_xml_namespace_lookup ##### -->
+<para>
+
+</para>
+
+@ns: 
+@name: 
+@value_out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_namespace_new ##### -->
+<para>
+
+</para>
+
+@parent: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_namespace_pop ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+<!-- ##### FUNCTION gsk_xml_namespace_push ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+<!-- ##### FUNCTION gsk_xml_namespace_ref ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+<!-- ##### FUNCTION gsk_xml_namespace_unref ##### -->
+<para>
+
+</para>
+
+@ns: 
+
+<!-- ##### FUNCTION gsk_xml_parser_destroy ##### -->
+<para>
+
+</para>
+
+@parser: 
+
+<!-- ##### FUNCTION gsk_xml_parser_feed ##### -->
+<para>
+
+</para>
+
+@parser: 
+@length: 
+@data: 
+
+<!-- ##### FUNCTION gsk_xml_parser_get_flags ##### -->
+<para>
+
+</para>
+
+@parser: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_parser_get_position ##### -->
+<para>
+
+</para>
+
+@parser: 
+@filename_out: 
+@lineno_out: 
+
+<!-- ##### FUNCTION gsk_xml_parser_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_parser_set_comment_handler ##### -->
+<para>
+
+</para>
+
+@parser: 
+@Param2: 
+
+<!-- ##### FUNCTION gsk_xml_parser_set_element_handlers ##### -->
+<para>
+
+</para>
+
+@parser: 
+@Param2: 
+@Param3: 
+
+<!-- ##### FUNCTION gsk_xml_parser_set_eof ##### -->
+<para>
+
+</para>
+
+@parser: 
+
+<!-- ##### FUNCTION gsk_xml_parser_set_flags ##### -->
+<para>
+
+</para>
+
+@parser: 
+@flags: 
+
+<!-- ##### FUNCTION gsk_xml_parser_set_position ##### -->
+<para>
+
+</para>
+
+@parser: 
+@filename: 
+@lineno: 
+
+<!-- ##### FUNCTION gsk_xml_parser_set_text_handler ##### -->
+<para>
+
+</para>
+
+@parser: 
+@Param2: 
+
+<!-- ##### FUNCTION gsk_xml_parser_set_user_data ##### -->
+<para>
+
+</para>
+
+@parser: 
+@user_data: 
+
+<!-- ##### FUNCTION gsk_xml_parser_try ##### -->
+<para>
+
+</para>
+
+@parser: 
+@token_out: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_processor_destroy ##### -->
+<para>
+
+</para>
+
+@processor: 
+
+<!-- ##### FUNCTION gsk_xml_processor_error ##### -->
+<para>
+
+</para>
+
+@processor: 
+@format: 
+@Varargs: 
+
+<!-- ##### FUNCTION gsk_xml_processor_errorv ##### -->
+<para>
+
+</para>
+
+@processor: 
+@format: 
+@args: 
+
+<!-- ##### FUNCTION gsk_xml_processor_had_error ##### -->
+<para>
+
+</para>
+
+@processor: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_processor_input ##### -->
+<para>
+
+</para>
+
+@processor: 
+@input: 
+@num_read: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_processor_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@output_type: 
+@value_cb: 
+@value_cb_data: 
+@value_cb_destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_processor_peek_ns ##### -->
+<para>
+
+</para>
+
+@processor: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_processor_set_pos ##### -->
+<para>
+
+</para>
+
+@processor: 
+@filename: 
+@lineno: 
+
+<!-- ##### FUNCTION gsk_xml_processor_trap_err ##### -->
+<para>
+
+</para>
+
+@processor: 
+@error_handler: 
+@error_data: 
+@destroy: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_processor_untrap_err ##### -->
+<para>
+
+</para>
+
+@processor: 
+@trap_id: 
+
+<!-- ##### FUNCTION gsk_xml_token_close_new ##### -->
+<para>
+
+</para>
+
+@tag_name: 
+@tag_name_len: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_token_comment_new ##### -->
+<para>
+
+</para>
+
+@comment: 
+@comment_len: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_token_open_new ##### -->
+<para>
+
+</para>
+
+@tag_name: 
+@tag_name_len: 
+@tag: 
+@num_params: 
+@param_start: 
+@param_name_len: 
+@param_value_len: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_token_ref ##### -->
+<para>
+
+</para>
+
+@token: 
+
+<!-- ##### FUNCTION gsk_xml_token_text_new ##### -->
+<para>
+
+</para>
+
+@text: 
+@text_len: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_token_type_name ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+<!-- ##### FUNCTION gsk_xml_token_unref ##### -->
+<para>
+
+</para>
+
+@token: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_fault_array ##### -->
+<para>
+
+</para>
+
+@response: 
+@array: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_fault_data ##### -->
+<para>
+
+</para>
+
+@response: 
+@data: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_fault_date ##### -->
+<para>
+
+</para>
+
+@response: 
+@value: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_fault_double ##### -->
+<para>
+
+</para>
+
+@response: 
+@value: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_fault_int32 ##### -->
+<para>
+
+</para>
+
+@response: 
+@value: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_fault_string ##### -->
+<para>
+
+</para>
+
+@response: 
+@value: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_fault_struct ##### -->
+<para>
+
+</para>
+
+@response: 
+@substructure: 
+
+<!-- ##### FUNCTION gsk_xmlrpc_response_set_name ##### -->
+<para>
+
+</para>
+
+@response: 
+@name: 
+

@@ -1,0 +1,123 @@
+<!-- ##### SECTION Title ##### -->
+GskControlClient
+
+<!-- ##### SECTION Short_Description ##### -->
+a client for manipulating an implementation of GskControlServer.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This provides the client end of the server control code.
+</para>
+<para>
+This class is rarely needed, because the gsk-control-client
+that comes with Gsk can manipulate any control server.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskControlServer.
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskControlClient ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskControlClientErrorFunc ##### -->
+<para>
+
+</para>
+
+@error: 
+@data: 
+
+
+<!-- ##### ENUM GskControlClientFlag ##### -->
+<para>
+
+</para>
+
+@GSK_CONTROL_CLIENT_ADD_NEWLINES_AS_NEEDED: 
+
+<!-- ##### FUNCTION gsk_control_client_get_flag ##### -->
+<para>
+
+</para>
+
+@cc: 
+@flag: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_control_client_get_prompt_string ##### -->
+<para>
+
+</para>
+
+@cc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_control_client_new ##### -->
+<para>
+
+</para>
+
+@server: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_control_client_parse_command_line_args ##### -->
+<para>
+
+</para>
+
+@cc: 
+@argc_inout: 
+@argv_inout: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_control_client_print_command_line_usage ##### -->
+<para>
+
+</para>
+
+@flags: 
+
+
+<!-- ##### FUNCTION gsk_control_client_run_command ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@command_and_args: 
+@input_file: 
+@output_file: 
+
+
+<!-- ##### FUNCTION gsk_control_client_set_flag ##### -->
+<para>
+
+</para>
+
+@cc: 
+@flag: 
+@value: 
+
+
+<!-- ##### FUNCTION gsk_control_client_set_prompt ##### -->
+<para>
+
+</para>
+
+@cc: 
+@prompt_format: 
+
+

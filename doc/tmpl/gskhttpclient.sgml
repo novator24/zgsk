@@ -1,0 +1,186 @@
+<!-- ##### SECTION Title ##### -->
+GskHttpClient
+
+<!-- ##### SECTION Short_Description ##### -->
+The client end of an HTTP connection.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This class manages the queuing of outgoing requests,
+and the handling of incoming responses.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskHttpClientRequest ##### -->
+<para>
+An opaque object representing a request that may be made
+to the HTTP server.
+</para>
+
+
+<!-- ##### USER_FUNCTION GskHttpClientResponse ##### -->
+<para>
+A callback to handle the response from the server.
+(The response content actually streams back -- at this
+point we may have merely have gotten the header.)
+</para>
+
+@request: the #GskHttpRequest initially sent by the client.
+@response: the #GskHttpResponse parsed from the server.
+@input: a #GskStream which is the content, if any.
+@hook_data: the argument to gsk_http_client_request().
+
+
+<!-- ##### USER_FUNCTION GskHttpClientTrap ##### -->
+<para>
+Notification that the client is ready to take another HTTP request.
+</para>
+
+@client: the ready GskHttpClient
+@data: data passed to gsk_http_client_trap_requestable()
+@Returns: whether to keep getting new notifications.
+
+
+<!-- ##### STRUCT GskHttpClientClass ##### -->
+<para>Class of the HTTP client stream.
+Not broadly useful.</para>
+
+@stream_class: the base stream.
+@set_poll_requestable: function called by the hook
+to change whether the HTTP client trap should be triggered.
+@shutdown_requestable: function called by the hook
+to stop being able to accept new requests.
+
+<!-- ##### STRUCT GskHttpClient ##### -->
+<para>
+A stream which is the client side of an HTTP connection.
+</para>
+
+
+<!-- ##### MACRO GSK_HTTP_CLIENT_FAST_NOTIFY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GSK_HTTP_CLIENT_DEFERRED_SHUTDOWN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GSK_HTTP_CLIENT_HOOK ##### -->
+<para>
+Obtain the hook which is triggered by
+new ability to make a new request.
+</para>
+<para>
+Mostly private.
+</para>
+
+@client: the client whose hook should be returned.
+
+
+<!-- ##### MACRO GSK_HTTP_CLIENT_IS_FAST ##### -->
+<para>
+
+</para>
+
+@client: 
+
+
+<!-- ##### MACRO gsk_http_client_trap_requestable ##### -->
+<para>
+Trap the event that the HTTP client is ready for
+another request to be issued.
+</para>
+<para>
+If this is set to do "fast notify" (see GSK_HTTP_CLIENT_IS_FAST()), then
+this hook will be triggered nearly continuously.
+</para>
+
+@client: the HTTP client to watch.
+@func: the callback for when a header is ready.
+@shutdown: function called when no further requests can be made.
+@data: data to pass to @func and @shutdown.
+@destroy: function to call when the trap is removed.
+
+
+<!-- ##### MACRO gsk_http_client_untrap_requestable ##### -->
+<para>
+Untrap the event that the HTTP client is ready for
+another request to be issued.
+</para>
+
+@client: the HTTP client to stop watching.
+
+
+<!-- ##### MACRO gsk_http_client_is_requestable ##### -->
+<para>
+Get whether the HTTP client is able to handle another
+request. 
+</para>
+<para>
+Or at least, whether it thinks it is able
+to handle another request.  The server may elect to set Connection: close
+and then further requests will never be processed.
+</para>
+
+@client: the client to query.
+
+
+<!-- ##### FUNCTION gsk_http_client_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_client_notify_fast ##### -->
+<para>
+
+</para>
+
+@client: 
+@is_fast: 
+
+
+<!-- ##### FUNCTION gsk_http_client_request ##### -->
+<para>
+
+</para>
+
+@client: 
+@request: 
+@post_data: 
+@handle_response: 
+@hook_data: 
+@hook_destroy: 
+
+
+<!-- ##### FUNCTION gsk_http_client_shutdown_when_done ##### -->
+<para>
+
+</para>
+
+@client: 
+
+
+<!-- ##### FUNCTION gsk_http_client_propagate_content_read_shutdown ##### -->
+<para>
+
+</para>
+
+@client: 
+
+

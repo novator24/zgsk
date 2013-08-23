@@ -1,0 +1,170 @@
+<!-- ##### SECTION Title ##### -->
+gskdnsresolver
+
+<!-- ##### SECTION Short_Description ##### -->
+An interface that DNS resolvers provide.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This is an interface which classes that provide DNS lookups 
+may implement.  It provides an easy way to conform
+to the #GskNameResolver interface.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskDnsLocalResolver and GskDnsClient.
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskDnsResolverHints ##### -->
+<para>
+
+</para>
+
+@address: 
+
+<!-- ##### STRUCT GskDnsResolverIface ##### -->
+<para>
+The interface for DNS resolvers.
+</para>
+
+@base_iface: 
+@resolve: begin a name-resolution task.  The pointer returned
+should identify the task to the resolver object,
+so that it can be cancelled.  Alternatively, if 
+the resolver can operate without blocking, it may return NULL,
+after having called the success or failure callback.
+@cancel: a method to cancel a still running DNS task.
+
+<!-- ##### STRUCT GskDnsResolver ##### -->
+<para>
+Any object which implements this interface.
+</para>
+
+
+<!-- ##### STRUCT GskDnsResolverTask ##### -->
+<para>
+An opaque structure which represents a DNS resolving task.
+</para>
+
+
+<!-- ##### USER_FUNCTION GskDnsResolverLookupFunc ##### -->
+<para>
+Function to call when an address is found from a name.
+</para>
+
+@address: the address that was found.
+@func_data: data passed to gsk_dns_resolver_lookup().
+
+
+<!-- ##### USER_FUNCTION GskDnsResolverRevLookupFunc ##### -->
+<para>
+Function to call when an name is found from an address.
+</para>
+
+@name: the name that was found.
+@func_data: data passed to gsk_dns_resolver_rev_lookup().
+
+
+<!-- ##### USER_FUNCTION GskDnsResolverResponseFunc ##### -->
+<para>
+Handle a list of DNS results.
+This has all the sections of a #GskDnsMessage
+except the questions.
+</para>
+
+@answers: 
+Direct answers to the questions posed to gsk_dns_resolver_resolve().
+(A GSList of #GskDnsResourceRecord's)
+@authority: 
+Information about the authority of the @answers.
+(A GSList of #GskDnsResourceRecord's)
+@additional: 
+Supporting data, for example, the numeric address of a nameserver.
+(To try to save the client from making more queries.)
+(A GSList of #GskDnsResourceRecord's)
+@neg_questions: 
+@func_data: 
+Data passed to gsk_dns_resolver_resolve().
+<!-- # Unused Parameters # -->
+@negatives: 
+Questions which were definitely answered in the negative,
+meaning that the name authoritatively does not exist.
+(A GSList of #GskDnsQuestion's)
+
+
+<!-- ##### USER_FUNCTION GskDnsResolverFailFunc ##### -->
+<para>
+Called when a DNS resolution fails.
+</para>
+
+@error: the error which caused the DNS query to fail.
+@func_data: 
+Data passed to gsk_dns_resolver_resolve(),
+gsk_dns_resolver_lookup() or gsk_dns_resolver_rev_lookup().
+
+
+<!-- ##### FUNCTION gsk_dns_resolver_resolve ##### -->
+<para>
+
+</para>
+
+@resolver: 
+@recursive: 
+@dns_questions: 
+@func: 
+@on_fail: 
+@func_data: 
+@destroy: 
+@hints: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_resolver_cancel ##### -->
+<para>
+
+</para>
+
+@resolver: 
+@task: 
+
+
+<!-- ##### FUNCTION gsk_dns_resolver_lookup ##### -->
+<para>
+
+</para>
+
+@resolver: 
+@name: 
+@func: 
+@on_fail: 
+@func_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_resolver_rev_lookup ##### -->
+<para>
+
+</para>
+
+@resolver: 
+@name: 
+@func: 
+@on_fail: 
+@func_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_dns_resolver_add_name_resolver_iface ##### -->
+<para>
+
+</para>
+
+@type: 
+
+

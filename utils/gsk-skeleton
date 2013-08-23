@@ -1,0 +1,1102 @@
+#! /usr/bin/perl -w
+
+sub usage();
+sub maybe_load_user_info ($);
+sub finish_with_user_type_info ($$);
+
+$debug_version = ($0 =~ /-debug$/);
+$debug_suffix = $debug_version ? "-debug" : "";
+$hyphenated_filenames = 0;
+
+$gsk_prefix = `gsk-config$debug_suffix --prefix`;
+if ($? != 0)
+  { $gsk_prefix = "/usr/local" }
+else
+  { chomp ($gsk_prefix) }
+
+@default_skeleton_data_locations = (
+  "$ENV{HOME}/.gsk-skeleton",
+  "./.gsk-skeleton",
+  "$gsk_prefix/share/gsk-skeleton",
+  "/usr/local/share/gsk-skeleton",
+  "/usr/share/gsk-skeleton"
+);
+
+%TYPE_MACRO_LOOKUP = (
+  'gboolean' => 'G_TYPE_BOOL',
+  'int' => 'G_TYPE_INT',
+  'gint' => 'G_TYPE_INT',
+  'uint' => 'G_TYPE_UINT',
+  'guint' => 'G_TYPE_UINT',
+  'double' => 'G_TYPE_DOUBLE',
+  'gdouble' => 'G_TYPE_DOUBLE',
+  'char *' => 'G_TYPE_STRING',
+  'string' => 'G_TYPE_STRING',
+);
+
+%CTYPE_LOOKUP = (
+  'string' => 'char *'
+);
+
+%VALUE_MACRO_LOOKUP = (
+  'G_TYPE_BOOL' => 'G_VALUE_BOOL',
+  'G_TYPE_INT' => 'G_VALUE_INT',
+  'G_TYPE_UINT' => 'G_VALUE_UINT',
+  'G_TYPE_DOUBLE' => 'G_VALUE_DOUBLE',
+  'G_TYPE_STRING' => 'G_VALUE_STRING',
+);
+
+# User-defined (in .skeleton-data) information.
+# map containing argument shortcut data.
+%USER_ARG_TYPE_INFO = ();
+
+# table from type => parent_type (expressed as studly-capped class-names)
+%USER_TYPE_PARENT = ();
+
+# Map from method-name to list of methods with that name
+# (in different parts of the type-hierarchy)
+%USER_METHODS = ();
+
+# Whether to output the code to standard-output.
+$to_stdout = 0;
+
+# Whether to be brief.
+$brief = 0;
+
+# Convert the argument's dashes to underscores.
+sub dash_to_uc($)
+{
+  my $rv = $_[0];
+  $rv =~ s/-/_/g;
+  return $rv;
+}
+
+# Count the indentation in spaces from the beginning of the string.
+sub count_indentation($)
+{
+  my $x = $_[0];
+  my $in = 0;
+  while ($x =~ s/^(\s)//)
+    {
+      if ($1 eq "\t")
+        {
+	  $in += 8 - ($in % 8);
+	}
+      else
+        {
+	  $in++;
+	}
+    }
+  return $in;
+}
+
+# print_at_indent(FILE-HANDLE, INDENTATION, STR)
+# print a multiline block STR at a particular indentation INDENTATION,
+# ignoring the indentation of the first line of STR.
+sub print_at_indent($$$)
+{
+  my ($fh, $indent, $str) = @_;
+  my @lines = split /\n/, $str;
+  while ($lines[0] =~ /^(\s*)$/)
+    {
+      shift @lines;
+    }
+  $lines[0] =~ /^(\s*)/;
+  my $ws_len = count_indentation ($1);
+  for (@lines)
+    {
+      s/^(\s*)//;
+      my $cur_ws_len = count_indentation ($1);
+      print $fh (" " x ($cur_ws_len - $ws_len + $indent)), $_, "\n";
+    }
+}
+
+sub print_at_indent_except_first($$$)
+{
+  my ($fh, $indent, $str) = @_;
+  my @lines = split /\n/, $str;
+  while (scalar (@lines) > 0 && $lines[0] =~ /^(\s*)$/)
+    {
+      shift @lines;
+    }
+  $lines[0] =~ /^(\s*)/;
+  my $ws_len = count_indentation ($1);
+  my $first = 1;
+  for (@lines)
+    {
+      s/^(\s*)//;
+      my $cur_ws_len = count_indentation ($1);
+      if ($first)
+        {
+	  print $fh $_, "\n";
+	  $first = 0;
+	}
+      else
+        {
+	  print $fh (" " x ($cur_ws_len - $ws_len + $indent)), $_, "\n";
+	}
+    }
+}
+
+sub parse_arg_spec ($)
+{
+  my @pieces = split /:/, $_[0];
+  my $arg_name = shift (@pieces);
+  my $arg_type = shift (@pieces);
+  my $rv = {'name' => $arg_name, 'type' => $arg_type};
+  die "error parsing arg spec $_[0]" unless defined $arg_type;
+  for my $piece (@pieces)
+    {
+      if ($piece eq 'ro')
+        {
+	  $rv->{readonly} = 1;
+	  next;
+	}
+      if ($piece eq 'wo')
+        {
+	  $rv->{writeonly} = 1;
+	  next;
+	}
+      if ($piece eq 't')
+        {
+	  $rv->{trivial} = 1;
+	  next;
+	}
+      die "error parsing arg spec `$_[0]' at `:$piece'";
+    }
+  $rv->{name} = $arg_name;
+  $rv->{cname} = dash_to_uc ($rv->{name});
+  $rv->{enum_name} = "ARG_" . uc($rv->{cname});
+
+  if (defined ($USER_ARG_TYPE_INFO {$arg_type}))
+    {
+      finish_with_user_type_info ($rv, $arg_type);
+      return $rv;
+    }
+
+  if ($arg_type =~ /(.*)_TYPE_(.*)/)
+    {
+      my $tmp = lc ($1 . "_" . $2);
+      $rv->{type_macro} = $arg_type;
+      $tmp =~ s/_([0-9a-z])/uc($1)/eg;
+      $tmp =~ s/^([0-9a-z])/uc($1)/e;
+      $rv->{ctype} = "$tmp *";
+      $rv->{var_prefix} = $rv->{ctype};
+    }
+  else
+    {
+      if (defined ($CTYPE_LOOKUP{$rv->{type}}))
+        { $rv->{ctype} = $CTYPE_LOOKUP{$rv->{type}}; }
+      else
+	{ $rv->{ctype} = $rv->{type}; }
+      $rv->{var_prefix} = $rv->{ctype} . " ";
+      $rv->{type_macro} = $TYPE_MACRO_LOOKUP{$rv->{type}};
+      die "unknown type $rv->{type}" unless defined $rv->{type_macro};
+    }
+  $rv->{value_macro} = $VALUE_MACRO_LOOKUP{$rv->{type_macro}};
+  if (!defined ($rv->{value_macro}))
+    {
+      $rv->{value_macro} = 'G_VALUE_OBJECT';
+      $rv->{needs_cast} = 1;
+      $rv->{cast_macro} = $rv->{type_macro};
+      $rv->{cast_macro} =~ s/_TYPE//;
+    }
+  return $rv;
+}
+
+@methods = ();
+@ifaces = ();
+@config_paths = ();
+
+for (@ARGV)
+  {
+    if (/--config=(.*)/)
+      {
+        push (@config_paths, (split /,/, $1));
+      }
+  }
+
+if (scalar (@config_paths) == 0)
+  {
+    @config_paths = @default_skeleton_data_locations;
+  }
+
+read_configs (@config_paths);
+
+while (defined($option = shift))
+{
+  last unless $option =~ /^-/;
+
+  if ($option =~ /^--arg=(.*)/)
+    {
+      my $tmp = $1;
+      push @arg_data, parse_arg_spec ($tmp);
+      next;
+    }
+  if ($option =~ /^--method=(.*)/)
+    {
+      my $method_list = $1;
+      push @methods, (split /,/, $method_list);
+      next;
+    }
+  if ($option =~ /^--implement=(.*)/)
+    {
+      my $iface_list = $1;
+      push @ifaces, (split /,/, $iface_list);
+      next;
+    }
+  if ($option =~ /^--config/)
+    {
+      next;
+    }
+  if ($option eq '--brief')
+    {
+      $brief = 1;
+      next;
+    }
+  if ($option eq '--stdout')
+    {
+      $to_stdout = 1;
+      next;
+    }
+  if ($option eq '--hyphenated-filenames' or $option eq '-h')
+    {
+      $hyphenated_filenames = 1;
+      next;
+    }
+  usage ();
+}
+
+for my $t (@ifaces)
+  {
+    die "unknown interface $t" unless defined $USER_IFACE_INFO{$t};
+  }
+
+undef $/;
+$std_header = <DATA>;
+$/ = "\n";
+
+$new = $option;
+$base = shift(@ARGV);
+
+sub usage() {
+	print STDERR <<"EOF";
+usage: $0 [-p] [OPTIONS]
+	             GdamNew GdamBase
+
+Defines a new class named `GdamNew' deriving from `GdamBase'
+and writes the most tedious bits of Gtk macro.
+
+Arguments may be built at the same time; the SPEC is a colon-seperated
+list of fields:
+
+OPTIONS:
+ --stdout
+
+   Output the .c and .h files to standard-output.
+
+ --brief
+  
+   Skip unnecessary comments.
+
+ --config=SKELETON-DATA
+
+   Provide alternate information to use for the type hierarchy,
+   methods and interfaces.
+
+ --arg=ARG-NAME:ARG-TYPE:OPTIONS
+
+   Arg-Type may be either a full gtk type macro
+   or one of the known abbreviations (int, uint, double, etc).
+
+   Options may be `ro' for read-only, `wo' for write-only,
+   `c' for construct-only, `t' for trivial, meaning "make a stub member
+   and write set/get bodies.
+
+ --method=METHOD
+ --interface=INTERFACE
+
+   Provide stub interface or virtual method implementations.
+
+ --hyphenated-name
+
+   Hyphenate the filename.
+
+Methods only work in conjunction with .skeleton-data,
+they cause stub prototypes for known methods to be added to
+the .c file.
+
+EOF
+  exit (1);
+}
+
+
+usage () unless defined $base;
+
+$new_und_lc = $new;
+$new_und_lc =~ s/([A-Z])/"_" . lc($1)/eg; $new_und_lc =~ s/^_//;
+$new_und_uc = uc($new_und_lc);
+
+$base_und_lc = $base;
+$base_und_lc =~ s/([A-Z])/"_" . lc($1)/eg; $base_und_lc =~ s/^_//;
+$base_und_uc = uc($base_und_lc);
+
+$fname = $new_und_lc;
+if ($hyphenated_filenames)
+  {
+    $fname =~ s/_/-/g;
+  }
+else
+  {
+    $fname =~ s/_//g;
+  }
+
+$suffix_uc = $new_und_uc; $suffix_uc =~ s/^.+?_//;
+$prefix_uc = $new_und_uc; $prefix_uc =~ s/_.*//;
+$suffix_lc = lc($suffix_uc);
+$prefix_lc = lc($prefix_uc);
+$typemacro = "${prefix_uc}_TYPE_${suffix_uc}";
+
+$base_suffix_uc = $base_und_uc; $base_suffix_uc =~ s/^.+?_//;
+$base_prefix_uc = $base_und_uc; $base_prefix_uc =~ s/_.*//;
+$base_suffix_lc = lc($base_suffix_uc);
+#$base_prefix_lc = lc($base_prefix_uc);
+$basetypemacro = "${base_prefix_uc}_TYPE_${base_suffix_uc}";
+
+#
+# Script to output a template of a gdam class.
+
+$filename = "$fname.h";
+$filename .= ".generated" if -e $filename;
+if ($to_stdout)
+  {
+    open HFILE, ">&STDOUT";
+  }
+else
+  {
+    open HFILE, ">$filename";
+  }
+print HFILE $std_header;
+if (!$to_stdout)
+  {
+    print HFILE <<"EOF";
+#ifndef __${new_und_uc}_H_
+#define __${new_und_uc}_H_
+
+G_BEGIN_DECLS
+
+EOF
+  }
+
+print HFILE "/* --- typedefs --- */\n" unless $brief;
+
+print HFILE <<"EOF";
+typedef struct _${new} ${new};
+typedef struct _${new}Class ${new}Class;
+EOF
+
+print HFILE "/* --- type macros --- */\n" unless $brief;
+print HFILE <<"EOF";
+GType ${prefix_lc}_${suffix_lc}_get_type(void) G_GNUC_CONST;
+#define $typemacro			(${new_und_lc}_get_type ())
+#define ${new_und_uc}(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), $typemacro, $new))
+#define ${new_und_uc}_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), $typemacro, ${new}Class))
+#define ${new_und_uc}_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), $typemacro, ${new}Class))
+#define ${prefix_uc}_IS_${suffix_uc}(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), $typemacro))
+#define ${prefix_uc}_IS_${suffix_uc}_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), $typemacro))
+
+EOF
+print HFILE "/* --- structures --- */\n" unless $brief;
+
+print HFILE <<"EOF";
+struct _${new}Class 
+{
+  ${base}Class base_class;
+};
+struct _${new} 
+{
+  ${base}      base_instance;
+EOF
+
+for my $arg (@arg_data)
+  {
+    my $name = $arg->{cname};
+    if (defined ($arg->{trivial}))
+      {
+	if (defined ($arg->{trivial_struct_def}))
+	  {
+	    for my $line (split /\n/, $arg->{trivial_struct_def})
+	      {
+	        $line =~ s/^\s+//;
+		$line =~ s/\@CNAME\@/$name/g;
+		print HFILE "  $line\n";
+	      }
+	  }
+	else
+	  {
+	    print HFILE "  ", $arg->{ctype}, " ", $arg->{cname}, ";\n";
+	  }
+      }
+  }
+
+print HFILE "};\n";
+
+print HFILE "/* --- prototypes --- */\n" unless $brief;
+
+if (!$to_stdout)
+  {
+    print HFILE <<"EOF";
+G_END_DECLS
+
+#endif
+EOF
+  }
+
+$filename = "$fname.c";
+$filename .= ".generated" if -e $filename;
+
+$GET_PARENT = $basetypemacro;
+
+if ($to_stdout)
+  {
+    open CFILE, ">&STDOUT";
+  }
+else
+  {
+    open CFILE, ">$filename";
+  }
+print CFILE "$std_header#include \"$fname.h\"\n" unless $to_stdout;
+
+print CFILE <<"EOF";
+static GObjectClass *parent_class = NULL;
+
+EOF
+
+# --- Method & interface stubs ---
+sub print_method_stub($)
+{
+  my $meth = $_[0];
+  die unless defined $meth;
+  print CFILE "static ", $meth->{return_value}, "\n",
+	      "${new_und_lc}_", $meth->{name}, " ";
+  my $indent = length ("${new_und_lc}_" . $meth->{name} . " ");
+  print_at_indent_except_first ('CFILE', $indent, $meth->{signature});
+  print CFILE "{\n  ...\n}\n\n";
+}
+sub method_matches_type ($$)
+{
+  my ($meth_name, $type_name) = @_;
+  my $methods = $USER_METHODS{$meth_name};
+  return undef unless $methods;
+  for (@$methods)
+    {
+      return $_ if ($_->{object_type} eq $type_name);
+    }
+  return undef;
+}
+
+%needed_classes = ();
+
+my $cur_type = $base;
+while (defined ($cur_type))
+  {
+    my $first_method = 1;
+    for $m (@methods)
+      {
+	my $meth = method_matches_type ($m, $cur_type);
+        if (defined ($meth))
+	  {
+	    if ($first_method)
+	      {
+	        print CFILE "/* --- $cur_type methods --- */\n" unless $brief;
+		$first_method = 0;
+		$needed_classes{$cur_type} = 1;
+	      }
+	    print_method_stub ($meth);
+	  }
+      }
+    $cur_type = $USER_TYPE_PARENT{$cur_type};
+  }
+
+for my $iface (@ifaces)
+  {
+    my $iface_info = $USER_IFACE_INFO{$iface};
+    print CFILE "/* --- $iface interface definition --- */\n\n";
+    my $methods = $iface_info->{methods};
+    for my $m (@$methods)
+      {
+        print_method_stub ($m);
+      }
+  }
+
+# --- Arguments ---
+$settable = 0;
+$gettable = 0;
+for (@arg_data) 
+  {
+    $settable = 1 unless $_->{readonly};
+    $gettable = 1 unless $_->{writeonly};
+  }
+
+if (scalar (@ifaces) != 0 || $settable || $gettable)
+  { $needed_classes{GObject} = 1 }
+
+if ($settable || $gettable)
+  {
+    my $spaces____ = " " x length ($new_und_lc);
+print CFILE <<"EOF";
+/* --- arguments --- */
+enum
+{
+  ARG_0,
+EOF
+    for (@arg_data) 
+      {
+        print CFILE "  ", $_->{enum_name}, ",\n";
+      }
+print CFILE <<"EOF";
+};
+EOF
+    
+    if ($gettable)
+      {
+	print CFILE <<"EOF";
+
+static void
+${new_und_lc}_get_arg (GObject *object,
+${spaces____}          GParam    *arg,
+${spaces____}          guint      arg_id)
+{
+  $new *$suffix_lc = $new_und_uc (object);
+  switch (arg_id)
+    {
+EOF
+	for (@arg_data)
+	  {
+	    next if $_->{writeonly};
+	    print CFILE "    case ", $_->{enum_name}, ":\n";
+	    my $value_macro = $_->{value_macro};
+	    if ($_->{trivial})
+	      {
+		if ($_->{trivial_get})
+		  {
+		    my $tmp = $_->{trivial_get};
+		    $tmp =~ s/\@THIS\@/$suffix_lc/gs;
+		    my $n = $_->{cname};
+		    $tmp =~ s/\@CNAME\@/$n/gs;
+		    print_at_indent ('CFILE', 6, "$tmp\n");
+		  }
+		elsif ($_->{needs_cast})
+		  {
+		    print CFILE "      $value_macro (*arg) = ",
+		                "GTK_OBJECT (",
+				"$suffix_lc->",
+				$_->{cname}, ");\n";
+		  }
+		else
+		  {
+		    print CFILE "      $value_macro (*arg) = $suffix_lc->",
+				$_->{cname}, ";\n";
+		  }
+	      }
+	    else
+	      {
+		print CFILE "      $value_macro (*arg) = ...;\n";
+	      }
+	    print CFILE "      break;\n";
+	  }
+	print CFILE <<"EOF";
+    }
+}
+
+EOF
+  }
+    if ($settable)
+      {
+print CFILE <<"EOF";
+
+static void
+${new_und_lc}_set_arg (GObject *object,
+${spaces____}          GParam    *param,
+${spaces____}          guint      arg_id)
+{
+  $new *$suffix_lc = $new_und_uc (object);
+  switch (arg_id)
+    {
+EOF
+        for (@arg_data)
+          {
+            next if $_->{readonly};
+	    print CFILE "    case ", $_->{enum_name}, ":\n";
+	    my $value_macro = $_->{value_macro};
+	    if ($_->{trivial})
+	      {
+		if ($_->{trivial_set})
+		  {
+		    my $tmp = $_->{trivial_set};
+		    $tmp =~ s/\@THIS\@/$suffix_lc/gs;
+		    my $n = $_->{cname};
+		    $tmp =~ s/\@CNAME\@/$n/gs;
+		    print_at_indent ('CFILE', 6, "$tmp\n");
+		  }
+		elsif ($_->{needs_cast})
+		  {
+		    print CFILE "      $suffix_lc->", $_->{cname}, 
+				" = ", $_->{cast_macro}, " (",
+				"$value_macro (*arg));\n";
+		  }
+		else
+		  {
+		    print CFILE "      $suffix_lc->", $_->{cname}, 
+				" = $value_macro (*arg);\n";
+		  }
+	      }
+	    else
+	      {
+	        print CFILE "      {\n";
+		if ($_->{needs_cast})
+		  {
+		    my $cast = $_->{cast_macro};
+		    print CFILE "        $_->{var_prefix}tmp = $cast ($value_macro (*arg));\n";
+		  }
+		else
+		  {
+		    print CFILE "        $_->{var_prefix}tmp = $value_macro (*arg);\n";
+		  }
+	        print CFILE "        ...\n";
+	        print CFILE "      }\n";
+	      }
+	    print CFILE "      break;\n";
+          }
+	print CFILE <<"EOF";
+    }
+}
+
+EOF
+      }
+  }
+
+print CFILE <<"EOF";
+/* --- functions --- */
+static void
+${new_und_lc}_init ($new *$suffix_lc)
+{
+}
+static void
+${new_und_lc}_class_init (${new}Class *class)
+{
+  parent_class = g_type_class_peek_parent (class);
+EOF
+
+sub make_u_name ($)
+{
+  my $type_name = $_[0];
+  my $u_name = $type_name;
+  $u_name =~ s/([A-Z])/"_" . lc($1)/eg;
+  $u_name =~ s/^_//;
+  return $u_name;
+}
+
+for my $iface (@ifaces)
+  {
+    print CFILE "  static ${iface}Iface ", make_u_name ($iface."Iface"), " =\n",
+                "  {\n";
+    my $iobject = $USER_IFACE_INFO{$iface};
+    die unless defined $iobject;
+    my $ms = $iobject->{methods};
+    for my $m (@$ms) { print CFILE "    ${new_und_lc}_", $m->{name}, ",\n" }
+    print CFILE "  };\n";
+  }
+
+for my $type_name (sort keys %needed_classes)
+  {
+    my $u_name = make_u_name ($type_name);
+    my $short_name = $u_name;
+    $short_name =~ s/^[^_]*_//;
+    my $all_caps = uc($u_name);
+    print CFILE "  ${type_name}Class *${short_name}_class = ${all_caps}_CLASS (class);\n";
+  }
+
+for my $type_name (sort keys %needed_classes)
+  {
+    for my $method (@methods)
+      {
+	my $m = method_matches_type ($method, $type_name);
+	if (defined ($m))
+	  {
+	    my $u_name = make_u_name ($type_name);
+	    my $short_name = $u_name;
+	    $short_name =~ s/^[^_]*_//;
+	    print CFILE "  ${short_name}_class->", $m->{name}, " = ${new_und_lc}_", $m->{name}, ";\n";
+	  }
+      }
+  }
+
+if ($settable)
+  {
+    print CFILE "  object_class->set_arg = ${new_und_lc}_set_arg;\n";
+  }
+if ($gettable)
+  {
+    print CFILE "  object_class->get_arg = ${new_und_lc}_get_arg;\n";
+  }
+for (@arg_data)
+  {
+    my $flags;
+    if (defined($_->{readonly}))     { $flags = 'G_PARAM_READABLE' }
+    elsif (defined($_->{writeonly})) { $flags = 'G_PARAM_WRITABLE' }
+    else                             { $flags = 'G_PARAM_READWRITE' }
+    if (defined($_->{construct_only})){$flags .= ' | G_PARAM_CONSTRUCT_ONLY' };
+
+    print CFILE "  g_object_class_add_param_spec (\"${new}::", $_->{name}, "\",\n",
+                "                           ", $_->{type_macro}, ",\n",
+                "                           $flags,\n",
+                "                           ", $_->{enum_name}, ");\n";
+    if (defined ($_->{post_add_arg}))
+      {
+        my $tmp = $_->{post_add_arg};
+	my $name = $_->{name};
+	$tmp =~ s/^\s*\{//;
+	$tmp =~ s/\}\s*$//;
+	$tmp =~ s/\@QUOTED_NAME\@/"$name"/gs;
+	$tmp =~ s/\@TYPE\@/object_class->type/gs;
+        print_at_indent ('CFILE', 2, $tmp);
+      }
+  }
+
+for (@ifaces)
+  {
+    my $u_name = make_u_name ($_);
+    my $short_name = $u_name;
+    $short_name =~ s/^([^_]*)_//;
+    my $prefix = $1;
+    my $iface_type = uc($prefix . "_type_" . $short_name . "_iface");
+    print CFILE "  gsk_interface_implement ($iface_type,\n",
+                "                           object_class,\n",
+		"                           \&$u_name);\n";
+  }
+
+print CFILE <<"EOF";
+}
+
+GType ${new_und_lc}_get_type()
+{
+  static GType ${suffix_lc}_type = 0;
+  if (!${suffix_lc}_type)
+    {
+      static const GTypeInfo ${suffix_lc}_info =
+      {
+	sizeof(${new}Class),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) ${new_und_lc}_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data */
+	sizeof ($new),
+	0,		/* n_preallocs */
+	(GInstanceInitFunc) ${new_und_lc}_init,
+	NULL		/* value_table */
+      };
+      ${suffix_lc}_type = g_type_register_static ($GET_PARENT,
+                                                  "$new",
+						  &${suffix_lc}_info, 0);
+    }
+  return ${suffix_lc}_type;
+}
+EOF
+
+# --- User Type Information ---
+
+sub read_directive ($)
+{
+  my $fh = $_[0];
+  my $bias = 0;
+  my $rv = '';
+  my $got_something = 0;
+  my $start_line = $.;
+  while (<$fh>)
+    {
+      $got_something = 1;
+      s/\#.*//;
+      $rv .= ' ' unless ($rv eq '');
+      my $continued = 0;
+      $continued = 1 if s/\\$//;
+      $rv .= $_;
+      $bias += tr/({/({/;
+      $bias -= tr/)}/)}/;
+      next if $continued;
+      last if $bias == 0;
+    }
+  if ($bias != 0)
+    {
+      print STDERR "Parenthesis/brace mismatch starting at line $start_line.\n";
+    }
+  return $got_something ? $rv : undef;
+}
+
+# scan shortcut info from a file, returning the first unknown line.
+sub scan_shortcut ($$)
+{
+  my ($fh, $shortcut) = @_;
+  while (defined ($line=read_directive ($fh)))
+    {
+      chomp ($line);
+      if ($line =~ s/^Trivial-Set://)
+	{ $shortcut->{trivial_set} = $line; }
+      elsif ($line =~ s/^Non-Trivial-Set://)
+	{ $shortcut->{nontrivial_set} = $line; }
+      elsif ($line =~ s/^Trivial-Get://)
+	{ $shortcut->{trivial_get} = $line; }
+      elsif ($line =~ s/^Non-Trivial-Get://)
+	{ $shortcut->{nontrivial_get} = $line; }
+      elsif ($line =~ s/^Trivial-Struct-Def://)
+        { $shortcut->{trivial_struct_def} = $line; }
+      elsif ($line =~ s/^Type-Macro://)
+        { $shortcut->{type_macro} = $line; }
+      elsif ($line =~ s/^Arg-Validator-Add://)
+        { $shortcut->{post_add_arg} = $line; }
+      else
+	{
+	  return $line;
+	}
+    }
+  return undef;
+}
+
+# scan an interface definition
+sub scan_iface ($$)
+{
+  my ($fh, $iface) = @_;
+  my $methods = $iface->{methods} = [];
+
+  while (defined ($line=read_directive ($fh)))
+    {
+      if ($line =~ /^Iface-Method:\s*(.*)/)
+        {
+	  my $method = {'name'=>$1, 'iface'=>$iface};
+	  $line = scan_method ($fh, $method);
+	  push @$methods, $method;
+	  redo if defined $line;
+	}
+      elsif ($line =~ /^\s*$/)
+        {
+	}
+      else
+        {
+	  return $line;
+	}
+    }
+  return undef;
+}
+
+# scan method info from a file, returning the last line.
+sub scan_method ($$)
+{
+  my ($fh, $method) = @_;
+  while (defined ($line=read_directive ($fh)))
+    {
+      if ($line =~ /^Type:\s*(.*)/)
+        {
+	  $method->{object_type} = $1;
+	}
+      elsif ($line =~ /^Machine-Generated:\s*(.*)/)
+	{
+	  $method->{machine_generated} = $1;
+	}
+      elsif ($line =~ s/^Return-Value:\s*//)
+	{
+	  chomp ($line);
+	  $line =~ s/\s+$//s;
+	  $method->{return_value} = $line;
+	}
+      elsif ($line =~ s/Signature://)
+	{
+	  $method->{signature} = $line;
+	}
+      else
+	{
+	  return $line;
+	}
+    }
+  return undef;
+}
+
+sub maybe_load_user_info ($)
+{
+  open RCFILE, $_[0] or return;
+  
+  while (<RCFILE>)
+    {
+      s/\#.*//;
+      s/\s+$//;
+      chomp;
+      next if /^$/;
+
+      if (/^Base-Class:\s*(\S+)\s+(\S+)$/)
+	{
+	  my $parent = $1;
+	  my $child = $2;
+	  $USER_TYPE_PARENT{$child} = $parent;
+	}
+      elsif (/^Arg-Shortcut:\s*(\S+)$/)
+	{
+	  my $shortcut = {'name' => $1};
+          $USER_ARG_TYPE_INFO{$1} = $shortcut;
+	  $_ = scan_shortcut ('RCFILE', $shortcut);
+	  redo if defined;
+	}
+      elsif (/^Method:\s*(\S+)$/)
+	{
+	  my $method = {'name' => $1};
+	  my $list = $USER_METHODS{$1};
+          if (defined ($list))
+	    { push @$list, $method }
+	  else
+	    { $USER_METHODS{$1} = [$method] }
+	  $_ = scan_method ('RCFILE', $method);
+	  redo if defined;
+	}
+      elsif (/^Interface:\s*(\S+)$/)
+	{
+	  my $iface = {'name' => $1};
+	  $USER_IFACE_INFO{$1} = $iface;
+	  $_ = scan_iface ('RCFILE', $iface);
+	  {
+	    my $ms = $iface->{methods};
+	  }
+	  redo if defined;
+	}
+      else
+	{
+	  die "unrecognized line $. in $_[0] ($_)";
+	}
+    }
+  close (RCFILE);
+}
+sub finish_with_user_type_info ($$)
+{
+  my ($arg_info, $type) = @_;
+  my $shortcut = $USER_ARG_TYPE_INFO{$type};
+  die unless defined $shortcut;
+
+  for (qw(trivial_set trivial_get nontrivial_set nontrivial_get
+          trivial_struct_def type_macro ctype post_add_arg))
+    {
+      if (defined ($shortcut->{$_}))
+	{
+	  $arg_info->{$_} = $shortcut->{$_}
+	}
+    }
+}
+sub read_configs
+{
+  print STDOUT "read_configs(@_)\n";
+  for my $f (@_)
+    {
+      if (-d $f)
+        {
+	  opendir Z, "$f" or die "couldn't read $f/";
+	  for my $subf (readdir Z)
+	    {
+	      next if ($subf eq '.' || $subf eq '..');
+	      maybe_load_user_info ("$f/$subf") if (-e "$f/$subf");
+	    }
+	  closedir Z;
+	}
+      else
+        {
+	  maybe_load_user_info ($f);
+	}
+    }
+}
+
+=pod
+
+=head1 NAME
+
+skeleton - Generate template .h and .c files for the Glib Type System.
+
+=head1 SYNOPSIS
+
+skeleton [-p] [--arg=SPEC ...] YourDerived YourBase
+
+=head1 DESCRIPTION
+
+C<gsk-skeleton> output the most tedious code required
+by the Gtk/Gsk systems.  It will write C<.c> and C<.h>
+files named as the new class (except lower-case).
+If either of those files already exist, C<gsk-skeleton>
+will write a C<.c.generated> or C<.h.generated>, respectively.
+
+A number of things may be done to immediately configure
+the class:
+
+=over 4
+
+=item --arg=ARG-NAME:ARG-TYPE:OPTIONS
+
+Arg-Type may be either a full gtk type macro
+or one of the known abbreviations (int, uint, double, etc).
+
+Options may be C<ro> for read-only, C<wo> for write-only,
+C<c> for construct-only, C<t> for trivial, meaning "make a stub member
+and write set/get bodies."
+
+=item --implement=INTERFACE
+
+Write out stub implementation of the specified interface.
+
+=item --method=METHOD
+
+Write out stub implementation of the specified method.
+
+=back
+
+=head1 CONFIGURATION
+
+C<skeleton> also tries to read a C<.skeleton-data>
+from the current direction; it may contain shortcuts and
+method signatures used in skeletonizing.
+
+Generally, the format of the config file
+is there is one-directive per line, however, a mismatched
+parenthesis will cause continuation, e.g.
+
+    Method: on_accept
+    Machine-Generated: true
+    Return-Value: gboolean
+    Signature:\
+    (GskActorListener *listener,
+     GskMainLoop      *main_loop,
+     GskStreamSocket  *accepted,
+     GskSocketAddress *addr)
+
+Because of the mismatched parenthesis, the Signature clause
+is treated as one directive.
+
+There are several special directives: B<Method>, B<Arg-Shortcut>,
+B<Interface> and B<Base-Class>.
+
+C<Method> directives indicate that a particular class implements a
+particular virtual method.  
+
+C<Base-Class> describes a inheritance relationship in the type tree.
+
+C<Arg-Shortcut> describes a bit of glue code to inject
+for common argument idioms, for example, manipulating
+a GskSocketLocation into a GskSocketAddress (non-pointer).
+
+=head2 Arg-Shortcuts
+
+Often a certain idiom is used frequently in conjunction
+with certain argument types.  For example, C<GskSocketLocation>
+is generally used as an object which encapsulates
+a C<GskSocketAddress>.  It is common to use it just to extract the
+GskSocketAddress into a member of the appropriate class.
+See C<Arg-Shortcut: sockaddr> from the C<gsk-skeleton-shortcuts>
+file that comes with GSK.
+
+=cut
+
+__END__
+/* Insert header here. */

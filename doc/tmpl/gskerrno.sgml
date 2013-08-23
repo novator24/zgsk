@@ -1,0 +1,38 @@
+<!-- ##### SECTION Title ##### -->
+Old-Fashioned errno Handling
+
+<!-- ##### SECTION Short_Description ##### -->
+A few tricks which operate on the same type as errno, an int.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Methods to determine in an errno is important, and to extract
+it from a file-descriptor that had an error.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_errno_is_ignorable ##### -->
+<para>
+
+</para>
+
+@errno_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_errno_from_fd ##### -->
+<para>
+
+</para>
+
+@fd: 
+@Returns: 
+
+

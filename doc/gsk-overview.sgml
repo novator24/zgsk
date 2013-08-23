@@ -1,0 +1,22 @@
+<!doctype refentry PUBLIC "-//OASIS//DTD DocBook V3.1//EN">
+
+<refentry>
+
+<refsect1><title>DESCRIPTION</title>
+<para>
+  This is a general utility library for writing (generally) single-threaded
+  servers using a simple event loop.
+</para>
+<para>
+  Besides a main loop which use various system-level
+  interfaces efficiently (select, poll, kqueue),
+  we have support for thread pooling and we use Gtk+ version 1.2's object
+  system (See <ulink url="http://www.gtk.org/">the Gtk Home Page</ulink>).
+</para>
+</refsect1>
+
+<refsect1><title>CLASS HIERARCHY</title>
+<para>
+</para>
+</refsect1>
+

@@ -1,0 +1,93 @@
+<!-- ##### SECTION Title ##### -->
+GskStreamListenerSocket
+
+<!-- ##### SECTION Short_Description ##### -->
+socket-based stream-listener.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This is a #GskStreamListener that takes new input streams
+from a raw socket.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskStreamListenerSocket ##### -->
+<para>
+An instance of a socket-based #GskStreamListener.
+</para>
+
+
+<!-- ##### ARG GskStreamListenerSocket:file-descriptor ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamListenerSocket:listening-address ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamListenerSocket:may-reuse-address ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskStreamListenerSocket:unlink-when-done ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gsk_stream_listener_socket_new_bind ##### -->
+<para>
+
+</para>
+
+@address: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_listener_socket_new_bind_full ##### -->
+<para>
+
+</para>
+
+@address: 
+@flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_stream_listener_socket_set_backlog ##### -->
+<para>
+
+</para>
+
+@lis: 
+@backlog: 
+
+
+<!-- ##### FUNCTION gsk_stream_listener_socket_new_from_fd ##### -->
+<para>
+
+</para>
+
+@fd: 
+@error: 
+@Returns: 
+
+
+<!-- ##### MACRO GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP ##### -->
+<para>
+
+</para>
+
+
+

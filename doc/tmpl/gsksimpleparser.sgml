@@ -1,0 +1,105 @@
+<!-- ##### SECTION Title ##### -->
+GskSimpleParser
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO GSK_SIMPLE_PARSER_DEFAULT_MAX_LENGTH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### USER_FUNCTION GskSimpleParserCallback ##### -->
+<para>
+
+</para>
+
+@callback_data: 
+@parsed_buffer: 
+@parsed_buffer_length: 
+
+
+<!-- ##### FUNCTION gsk_simple_parser_new_fixed ##### -->
+<para>
+
+</para>
+
+@length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_simple_parser_new_char_terminated ##### -->
+<para>
+
+</para>
+
+@c: 
+@max_length: 
+@chomp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_simple_parser_new_line_based ##### -->
+<para>
+
+</para>
+
+@max_length: 
+@chomp_all_whitespace: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_simple_parser_new_str_terminated ##### -->
+<para>
+
+</para>
+
+@str: 
+@max_length: 
+@chomp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_simple_parser_set_buffer ##### -->
+<para>
+
+</para>
+
+@parser: 
+@buffer: 
+
+
+<!-- ##### FUNCTION gsk_simple_parser_parse ##### -->
+<para>
+
+</para>
+
+@parser: 
+@len_out: 
+@data_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_simple_parser_parse_callback ##### -->
+<para>
+
+</para>
+
+@parser: 
+@callback: 
+@data: 
+@Returns: 
+
+

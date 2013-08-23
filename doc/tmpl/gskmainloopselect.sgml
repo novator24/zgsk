@@ -1,0 +1,26 @@
+<!-- ##### SECTION Title ##### -->
+GskMainLoopSelect
+
+<!-- ##### SECTION Short_Description ##### -->
+a select(2)-based event loop.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A main-loop where the underlying multiplexing mechanism
+is select(2).
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMainLoopSelect ##### -->
+<para>
+The main loop which uses select(2).
+</para>
+
+

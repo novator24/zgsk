@@ -1,0 +1,11 @@
+<h1>GSK - a C Library for Writing Services</h1>
+<p>
+@open B, "../doc/BLURB" or die; my $rv = ''; while (<B>) { if (/^$/) { $rv .= "<p>\n" } else { $rv .= $_ } } ; close B; $rv@
+<p>
+We are working on a book that explains the motivations and
+high level objects in GSK.  We have the beginnings available
+<a href="gsk-book.pdf">pdf</a>, 
+and <a href="gsk-book.latex">LaTeX</a>.
+<p>
+A <a href="http://gsk.sourceforge.net/gsk-reference/">reference manual</a>
+is also available.

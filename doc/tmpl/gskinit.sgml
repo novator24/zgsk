@@ -1,0 +1,95 @@
+<!-- ##### SECTION Title ##### -->
+Library Initialization
+
+<!-- ##### SECTION Short_Description ##### -->
+Perform general initialization with limited argument parsing.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Almost always one run gsk_init() at the top of main and forgets about it.
+But sometimes you wish to separate the parsing and the initialization 
+so these routines give you more fine-grained control,
+by separating the parsing into gsk_init_info_parse_args() and 
+the real initialization into gsk_init_raw().
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskInitInfo ##### -->
+<para>
+Information about how to initialize GSK.
+</para>
+
+@prgname: The name of the program, may be NULL.
+@needs_threads: Whether the program needs threads.  True by default.
+
+<!-- ##### FUNCTION gsk_init_info_get_defaults ##### -->
+<para>
+
+</para>
+
+@info: 
+
+
+<!-- ##### FUNCTION gsk_init ##### -->
+<para>
+
+</para>
+
+@argc: 
+@argv: 
+@info: 
+
+
+<!-- ##### FUNCTION gsk_init_without_threads ##### -->
+<para>
+
+</para>
+
+@argc: 
+@argv: 
+
+
+<!-- ##### MACRO gsk_init_get_support_threads ##### -->
+<para>
+Ascertain whether thread support is necessary.
+</para>
+
+
+
+<!-- ##### FUNCTION gsk_init_info_parse_args ##### -->
+<para>
+
+</para>
+
+@in_out: 
+@argc: 
+@argv: 
+
+
+<!-- ##### FUNCTION gsk_init_raw ##### -->
+<para>
+
+</para>
+
+@info: 
+
+
+<!-- ##### VARIABLE gsk_init_flags ##### -->
+<para>
+Flags given to gsk_init().
+</para>
+
+
+<!-- ##### VARIABLE gsk_main_thread ##### -->
+<para>
+
+</para>
+
+

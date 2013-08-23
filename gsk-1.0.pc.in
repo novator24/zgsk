@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: GSK
+Description: Generic Server Kit
+Version: @VERSION@
+Requires: gobject-2.0 gthread-2.0
+Libs: -L${libdir} -lgsk-1.0
+Cflags: -I${includedir}/gsk-1.0
+

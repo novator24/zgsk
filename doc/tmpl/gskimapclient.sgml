@@ -1,0 +1,28 @@
+<!-- ##### SECTION Title ##### -->
+GskImapClient
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GskImapClientState ##### -->
+<para>
+
+</para>
+
+@GSK_IMAP_CLIENT_STATE_WAITING_FOR_GREETING: 
+@GSK_IMAP_CLIENT_STATE_NONAUTHENTICATED: 
+@GSK_IMAP_CLIENT_STATE_AUTHENTICATING: 
+@GSK_IMAP_CLIENT_STATE_AUTHENTICATED: 
+@GSK_IMAP_CLIENT_STATE_LOGGING_OUT: 
+@GSK_IMAP_CLIENT_STATE_LOGGED_OUT: 
+

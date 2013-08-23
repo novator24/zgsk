@@ -1,0 +1,188 @@
+<!-- ##### SECTION Title ##### -->
+Socket Address Lookup by Name
+
+<!-- ##### SECTION Short_Description ##### -->
+A way to lookup addresses from names.
+(Like a generic DNS.)
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This code provides (1) a method to lookup an address given the type of address and
+its name, and (2) a way of registering new types of address families and namespaces.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskNameResolver ##### -->
+<para>
+Opaque object representing an instance which implements
+the NameResolver interface.
+</para>
+
+
+<!-- ##### STRUCT GskNameResolverIface ##### -->
+<para>
+An interface that can be implemented by a class which provides name-lookups.
+</para>
+
+@object_class: base class.
+@start_resolve: method to start a name lookup.
+@cancel_resolve: method to cancel a name lookup.
+
+<!-- ##### STRUCT GskNameResolverTask ##### -->
+<para>
+An opaque type representing a name lookup (which may be running,
+or it may be succeeded, failed or been cancelled).
+</para>
+
+
+<!-- ##### USER_FUNCTION GskNameResolverSuccessFunc ##### -->
+<para>
+Function to call when an address has been successfully found for the name.
+</para>
+
+@address: the address corresponding to the name.
+@func_data: data passed to gsk_name_resolve().
+
+
+<!-- ##### USER_FUNCTION GskNameResolverFailureFunc ##### -->
+<para>
+Function to call when a name lookup fails.
+</para>
+
+@error: what when wrong with the name lookup.
+@func_data: data passed to gsk_name_resolve().
+
+
+<!-- ##### ENUM GskNameResolverFamily ##### -->
+<para>
+Namespaces.  This enum is extendable.
+</para>
+
+@GSK_NAME_RESOLVER_FAMILY_NONE: 
+An invalid namespace used to report errors.  Must be 0.
+@GSK_NAME_RESOLVER_FAMILY_IPV4: 
+The IPv4 namespace, used for practically all of the internet (in 2003)
+
+<!-- ##### FUNCTION gsk_name_resolver_family_get_by_name ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_family_get_name ##### -->
+<para>
+
+</para>
+
+@family: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_lookup ##### -->
+<para>
+
+</para>
+
+@family: 
+@name: 
+@success: 
+@failure: 
+@func_data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_task_new ##### -->
+<para>
+
+</para>
+
+@family: 
+@name: 
+@success: 
+@failure: 
+@func_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_task_cancel ##### -->
+<para>
+
+</para>
+
+@task: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_task_ref ##### -->
+<para>
+
+</para>
+
+@task: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_task_unref ##### -->
+<para>
+
+</para>
+
+@task: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_family_unique ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_add_family_name ##### -->
+<para>
+
+</para>
+
+@family: 
+@name: 
+
+
+<!-- ##### USER_FUNCTION GskNameResolverFamilyHandler ##### -->
+<para>
+Create a reference to a name-resolver on demand.
+</para>
+
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_add_family_resolver ##### -->
+<para>
+
+</para>
+
+@family: 
+@resolver: 
+
+
+<!-- ##### FUNCTION gsk_name_resolver_add_family_handler ##### -->
+<para>
+
+</para>
+
+@family: 
+@handler: 
+@data: 
+@destroy: 
+
+

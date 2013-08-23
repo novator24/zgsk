@@ -1,0 +1,467 @@
+AC_INIT(src/gskmainloop.c)
+GSK_VERSION=1.0.71
+
+AM_INIT_AUTOMAKE(gsk1.0, $GSK_VERSION)
+
+PACKAGE=gsk
+
+# Check for pkg-config; we'll use that to glean the rest
+# of our configuration.
+
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test "$PKG_CONFIG" = no ; then
+  echo "$0: pkg-config is required to compile gsk2" 1>&2
+  exit 1
+fi
+
+AC_PROG_CC
+dnl ###############################################################
+dnl Find whether openssl is available,
+dnl if it is,
+dnl      define HAVE_OPENSSL=1,
+dnl      and set up OPENSSL_LIBS, OPENSSL_CFLAGS appropriately.
+dnl if it is not,
+dnl      define HAVE_OPENSSL=0.
+dnl ###############################################################
+
+AC_MSG_CHECKING(for openssl)
+AC_ARG_ENABLE(
+  ssl,
+  [  --disable-ssl            Don't even try and detect openssl.],
+  [if test "${enableval}" = no ; then
+      MY_CHECK_SSL=0
+   else
+      MY_CHECK_SSL=1
+   fi
+  ],
+  MY_CHECK_SSL=1
+)
+
+if test "$MY_CHECK_SSL" = 1 ; then
+  db_backup_libs_openssl="$LIBS"
+  HAVE_OPENSSL=0
+  for test_flag in "-L/usr/local/lib/ssl -lssl -lcrypto"  \
+		   "-L/usr/lib/ssl -lssl -lcrypto" \
+		   "-L$libdir/ssl -lssl -lcrypto" ; do 
+    OPENSSL_FLAGS=""
+    LIBS="$test_flag $db_backup_libs_openssl"
+
+    AC_TRY_LINK(,
+      SSL_new();,
+      OPENSSL_LIBS="$test_flag"
+      HAVE_OPENSSL=1
+    )
+    if test "$HAVE_OPENSSL" = "1" ; then
+      break
+    fi
+  done
+  LIBS="$db_backup_libs_openssl"
+
+  AC_TRY_COMPILE([#include <openssl/ssl.h>],
+    [ ],
+    [],
+    [if test "$HAVE_OPENSSL" = 1; then
+      echo "WARNING: you probably have a broken openssl installation" 1>&2
+      echo "You don't happen to be running redhat 9, do you?" 1>&2
+     fi;
+    HAVE_OPENSSL=0])
+
+  if test "$HAVE_OPENSSL" = "1" ; then
+    HAVE_OPENSSL=1
+    AC_DEFINE(HAVE_OPENSSL, , Define if you have openssl support.)
+    AC_MSG_RESULT(yes)
+  else
+    HAVE_OPENSSL=0
+    AC_MSG_RESULT(no)
+  fi
+else
+  HAVE_OPENSSL=0
+  AC_MSG_RESULT(no)
+fi
+AM_CONDITIONAL(HAVE_OPENSSL, test $HAVE_OPENSSL = 1)
+AC_SUBST(OPENSSL_LIBS)
+AC_SUBST(OPENSSL_CFLAGS)
+AC_SUBST(HAVE_OPENSSL)
+test $HAVE_OPENSSL = 1 || {
+  AC_MSG_ERROR([openssl is now required by GSK])
+  exit 1
+}
+
+##################################################
+# Check for socket library variation...
+##################################################
+
+AC_MSG_CHECKING([for socklen_t type])
+AC_TRY_COMPILE([#include <sys/types.h>]
+  [#include <sys/socket.h>],
+  [socklen_t unused_socket_length = 0;],
+  [has_socklen_t=yes],
+  [has_socklen_t=no])
+
+if test "$has_socklen_t" = "no" ; then
+  AC_DEFINE(socklen_t, unsigned, [the type to use for a socket address size])
+  AC_MSG_RESULT([no, using unsigned int])
+else
+  AC_MSG_RESULT([yes])
+fi
+
+AC_MSG_CHECKING([sockaddr has sa_len member])
+AC_TRY_COMPILE([#include <sys/types.h>]
+  [#include <sys/socket.h>],
+  [struct sockaddr address;
+  address.sa_len = 0;],
+  [has_sockaddr_sa_len=1; has_sockaddr_sa_len_yesno=yes],
+  [has_sockaddr_sa_len=0; has_sockaddr_sa_len_yesno=no])
+
+AC_DEFINE_UNQUOTED(HAS_SOCKADDR_SA_LEN, $has_sockaddr_sa_len,
+                   [whether the sockaddr structure has a length member])
+AC_MSG_RESULT($has_sockaddr_sa_len_yesno)
+
+AC_MSG_CHECKING([for PF_UNIX and AF_UNIX])
+AC_TRY_COMPILE([#include <sys/types.h>]
+  [#include <sys/socket.h>],
+  [int i = PF_UNIX; i = AF_UNIX;],
+  [HAS_PF_UNIX=1],
+  [HAS_PF_UNIX=0])
+if test "$HAS_PF_UNIX" = "0" ; then
+  AC_MSG_RESULT([no])
+else
+  AC_DEFINE(HAS_PF_UNIX, 1, [whether we have a PF_UNIX constant])
+  AC_MSG_RESULT([yes])
+fi
+AC_MSG_CHECKING([for PF_LOCAL and AF_LOCAL])
+AC_TRY_COMPILE([#include <sys/types.h>]
+  [#include <sys/socket.h>],
+  [int i = PF_LOCAL; i = AF_LOCAL;],
+  [HAS_PF_LOCAL=1],
+  [HAS_PF_LOCAL=0])
+if test "$HAS_PF_LOCAL" = "0" ; then
+  AC_MSG_RESULT([no])
+else
+  AC_DEFINE(HAS_PF_LOCAL, 1, [whether we have a PF_LOCAL constant])
+  AC_MSG_RESULT([yes])
+fi
+
+AC_C_INLINE
+AC_HEADER_TIME
+AC_CHECK_HEADERS([sys/time.h c_asm.h intrinsics.h mach/mach_time.h])
+
+AC_CHECK_TYPE([hrtime_t],[AC_DEFINE(HAVE_HRTIME_T, 1, [Define to 1 if hrtime_t is defined in <sys/time.h>])],,[#if HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif])
+
+AC_CHECK_FUNCS([gethrtime read_real_time time_base_to_time clock_gettime mach_absolute_time])
+
+dnl Cray UNICOS _rtc() (real-time clock) intrinsic
+AC_MSG_CHECKING([for _rtc intrinsic])
+rtc_ok=yes
+AC_TRY_LINK([#ifdef HAVE_INTRINSICS_H
+#include <intrinsics.h>
+#endif], [_rtc()], [AC_DEFINE(HAVE__RTC,1,[Define if you have the UNICOS _rtc() intrinsic.])], [rtc_ok=no])
+AC_MSG_RESULT($rtc_ok)
+
+AC_MSG_CHECKING([for readline support])
+has_readline=0; readline_hdr=
+AC_CHECK_HEADERS([readline.h], [has_readline=1; readline_hdr=readline.h; readline_history_hdr=history.h])
+AC_CHECK_HEADERS([readline/readline.h],
+                 [has_readline=1 ; readline_hdr=readline/readline.h; readline_history_hdr=readline/history.h])
+AC_CHECK_LIB(termcap, tgetent,
+             [termcap_libs=-ltermcap],
+             [termcap_libs=])
+AC_CHECK_LIB(readline, readline,
+             [READLINE_LIBS="-lreadline -lhistory $termcap_libs"],
+	     [has_readline=0],
+             [$termcap_libs])
+
+AC_DEFINE_UNQUOTED(SUPPORT_READLINE, $has_readline,
+                   [0 or 1 depending on whether the readline library is available])
+AC_DEFINE_UNQUOTED(READLINE_HEADER_NAME, [<$readline_hdr>],
+                   [what header to include to get the readline functions])
+AC_DEFINE_UNQUOTED(READLINE_HISTORY_HEADER_NAME, [<$readline_history_hdr>],
+                   [what header to include to get the readline/history functions])
+AC_SUBST(READLINE_LIBS)
+if test $has_readline = 1 ; then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
+
+# DEBUGGING ONLY
+echo "
+READLINE:
+  has_readline=$has_readline
+  READLINE_LIBS=$READLINE_LIBS
+  readline_hdr=$readline_hdr
+"
+
+
+AC_CANONICAL_HOST
+AC_MSG_CHECKING([for implementation of memory-barriers])
+if test x"$GCC" = xyes; then
+  case $host_cpu in
+    i?86)
+      memory_barrier_impl='__asm__ __volatile__ ("")'
+      memory_barrier_support=1
+      AC_MSG_RESULT([x86 style])
+      ;;
+    sparc*)
+      memory_barrier_impl='__asm__ __volatile__ ("membar #LoadLoad | #LoadStore | #StoreLoad | #StoreStore" : : : "memory")'
+      memory_barrier_support=1
+      AC_MSG_RESULT([sparc style])
+      ;;
+    alpha*)
+      memory_barrier_impl='__asm__ ("mb" : : : "memory")'
+      memory_barrier_support=1
+      AC_MSG_RESULT([alpha style])
+      ;;
+    x86_64)
+      memory_barrier_impl='__asm__ __volatile__ ("")'
+      memory_barrier_support=1
+      AC_MSG_RESULT([x86_64 style])
+      ;;
+    powerpc*)
+      memory_barrier_impl='__asm__ ("sync" : : : "memory")'
+      memory_barrier_support=1
+      AC_MSG_RESULT([powerpc style])
+      ;;	
+    ia64)
+      memory_barrier_impl='__sync_synchronize ()'
+      memory_barrier_support=1
+      AC_MSG_RESULT([ia64 style])
+      ;;	
+    s390|s390x)
+      memory_barrier_impl='__asm__ __volatile__ ("")'
+      memory_barrier_support=1
+      AC_MSG_RESULT([s390 style])
+      ;;	
+    *)
+      memory_barrier_impl=''
+      memory_barrier_support=0
+      AC_MSG_RESULT([no... unknown platform])
+      ;;
+  esac
+else
+  memory_barrier_impl=''
+  memory_barrier_support=0
+  AC_MSG_RESULT([no... unknown compiler])
+fi
+
+if test $memory_barrier_support = 0 ; then
+  membar_body="/* no memory-barrier support on this platform:
+     GCC=$GCC
+     host_cpu=$host_cpu
+  Therefore, GSK_MEMORY_BARRIER is undefined... */"
+else
+  membar_body="#define GSK_MEMORY_BARRIER()   $memory_barrier_impl"
+fi
+
+echo "#ifndef __GSK_MEMORY_BARRIER_H_
+#define __GSK_MEMORY_BARRIER_H_
+
+/* generated by gsk's configure script */
+$membar_body
+
+/* on later GCC's, there's a builtin for this. */
+#ifdef __GCC__
+# if (__GCC__ > 4 || (__GCC__ == 4 && __GCC_MINOR__ >= 1))
+#  ifdef GSK_MEMORY_BARRIER
+#   undef GSK_MEMORY_BARRIER
+#  endif
+#  define GSK_MEMORY_BARRIER  __sync_synchronize()
+# endif
+#endif
+
+/** GSK_MEMORY_BARRIER:
+ *  Implement a memory-barrier.
+ *
+ *  When defined, this ensures that all writes to the
+ *  memory have been committed.  This also ensures
+ *  that compiler optimization (which could allow reordering 
+ *  of writes) will not be done.
+ *
+ *  To really effectively use this,
+ *  you should read something about memory-models,
+ *  preferably something pessimistic, like:
+ *      http://www.hpl.hp.com/techreports/2004/HPL-2004-209.pdf
+ */
+
+#endif" > src/gskmemorybarrier.h
+
+##################################################
+# Check for gtk-doc.
+##################################################
+
+AC_ARG_WITH(html-dir, [  --with-html-dir=PATH path to installed docs ])
+
+if test "x$with_html_dir" = "x" ; then
+  HTML_DIR='${datadir}/gtk-doc/html'
+else
+  HTML_DIR=$with_html_dir
+fi
+
+AC_SUBST(HTML_DIR)
+
+GTK_DOC_CHECK
+AM_CONDITIONAL(GTK_DOC_USE_LIBTOOL, true)
+
+# Check for glib-2.0
+REQUIRED_GLIB_VERSION=2.6.0
+"$PKG_CONFIG" --atleast-version="$REQUIRED_GLIB_VERSION" gobject-2.0 || {
+  AC_MSG_ERROR(gobject 2.0 is required (at minimum version $REQUIRED_GLIB_VERSION))
+}
+#"$PKG_CONFIG" --exists zlib || {
+#  AC_MSG_ERROR(zlib is required )
+#}
+
+GLIB_CFLAGS=`"$PKG_CONFIG" --cflags gobject-2.0 gthread-2.0 gmodule-2.0`
+GLIB_LIBS=`"$PKG_CONFIG" --libs gobject-2.0 gthread-2.0 gmodule-2.0`
+AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
+AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums, no)
+AC_SUBST(GLIB_MKENUMS)
+GLIB_EXTRA_LDFLAGS=`"$PKG_CONFIG" --libs-only-other gobject-2.0 gthread-2.0 gmodule-2.0`
+AC_SUBST(GLIB_EXTRA_LDFLAGS)
+
+AC_MSG_CHECKING([GTimeVal and system timeval are equivalent])
+CFLAGS_BACKUP="$CFLAGS"
+CFLAGS="$GLIB_CFLAGS"
+export CFLAGS
+AC_TRY_COMPILE([#include <sys/time.h>]
+  [#include <time.h>]
+  [#include <glib.h>],
+  [#define COMPILE_IF_EQUAL(a,b) \
+   switch (0) { case FALSE: ; \
+                case (a)==(b): ; }
+   COMPILE_IF_EQUAL(G_STRUCT_OFFSET(struct timeval, tv_sec),
+                    G_STRUCT_OFFSET(GTimeVal, tv_sec))
+   COMPILE_IF_EQUAL(G_STRUCT_OFFSET(struct timeval, tv_usec),
+                    G_STRUCT_OFFSET(GTimeVal, tv_usec))
+   COMPILE_IF_EQUAL(sizeof(struct timeval),
+                    sizeof(GTimeVal))
+  ],
+  [GTIMEVAL_EQUALS_SYS_TIMEVAL=1],
+  [GTIMEVAL_EQUALS_SYS_TIMEVAL=0])
+if test "$GTIMEVAL_EQUALS_SYS_TIMEVAL" = "0" ; then
+  AC_MSG_RESULT([no])
+else
+  AC_DEFINE(GTIMEVAL_EQUALS_SYS_TIMEVAL, 1, [whether we GTimeVal is timeval])
+  AC_MSG_RESULT([yes])
+fi
+CFLAGS="$CFLAGS_BACKUP"
+
+GSK_DEBUG_MODE=0
+AC_ARG_ENABLE(gsk-debug,
+[  --enable-gsk-debug      Add additional runtime debugging code.],
+[case "${enableval}" in
+  yes) GSK_DEBUG=1 ; GSK_DEBUG_CFLAGS="-DGSK_DEBUG" ;;
+  no)  GSK_DEBUG=0 ; GSK_DEBUG_CFLAGS="" ;;
+  *) AC_MSG_ERROR(bad value ${enableval} for --enable-gsk-debug) ;;
+esac])
+AC_SUBST(GSK_DEBUG)
+AC_ARG_ENABLE(buggy-http-server-transfer-encoding-chunked,
+[  --enable-buggy-http-server-transfer-encoding-chunked  Use broken HTTP/1.1 impl],
+[case "${enableval}" in
+  yes) GSK_DEBUG_CFLAGS="$GSK_DEBUG_CFLAGS -DBUGGY_SERVER_TRANSFER_ENCODING_CHUNKED=1" ;;
+  no)  ;;
+  *) AC_MSG_ERROR(bad value ${enableval} for --enable-gsk-debug) ;;
+esac])
+AC_SUBST(GSK_DEBUG_CFLAGS)
+
+AC_CHECK_HEADERS(unistd.h net/if.h sys/ioctl.h sys/poll.h execinfo.h)
+AC_CHECK_FUNCS(writev poll select kqueue syslog strtoll strtoq strtoull strtouq timegm gmtime_r localtime_r getrusage)
+
+dnl AC_CACHE_CHECK(for /dev/poll support, ac_cv_dev_poll,
+dnl     AC_TRY_COMPILE([#include <sys/ioctl.h>
+dnl #include <sys/stat.h>
+dnl #include <sys/types.h>
+dnl #include <sys/poll.h>
+dnl #include <sys/devpoll.h>],
+dnl [
+dnl   struct dvpoll p;
+dnl   p.dp_timeout = 0;
+dnl   p.dp_nfds = 0;
+dnl   p.dp_fds = (struct pollfd *) 0;
+dnl   return 0;
+dnl ],
+dnl     ac_cv_dev_poll=yes
+dnl     [$1],
+dnl     ac_cv_dev_poll=no
+dnl     [$2]
+dnl     )
+dnl )
+dnl AC_DEFINE_UNQUOTED(HAVE_DEVPOLL_SUPPORT, $HAVE_DEVPOLL_SUPPORT,
+dnl                    [whether to support the /dev/poll])
+
+dnl Check for the epoll_*() library functions.
+EPOLL_LIBS=""
+AC_CHECK_FUNC(epoll_create, [EPOLL_LIBS="" ; HAVE_EPOLL_SUPPORT=1], [HAVE_EPOLL_SUPPORT=0])
+AC_SUBST(EPOLL_LIBS)
+AC_DEFINE_UNQUOTED(HAVE_EPOLL_SUPPORT, $HAVE_EPOLL_SUPPORT,
+                   [whether to support the new epoll_* functions])
+
+# Test for IP v6 support. [see rfc 2553, i guess]
+AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>],
+[
+  struct sockaddr_in6 addr;
+  addr.sin6_family = 1;
+  addr.sin6_port = 1;
+  (void) &addr.sin6_addr.s6_addr;
+],
+[HAS_IPV6=yes],
+[HAS_IPV6=no])
+if test $HAS_IPV6 = yes ; then
+  SUPPORTS_IPV6=1
+else
+  SUPPORTS_IPV6=0
+fi
+AC_DEFINE_UNQUOTED(SUPPORTS_IPV6, $SUPPORTS_IPV6, [ipv6 support])
+
+AC_PROG_MAKE_SET
+AM_PROG_LIBTOOL
+
+AC_SYS_LARGEFILE
+
+AM_CONFIG_HEADER(src/config.h)
+
+GSK_CC="$CC"
+GSK_COMPILE_ONLY_FLAG="-c"
+GSK_CFLAGS="$CFLAGS $CPPFLAGS"
+GSK_LD_SHLIB="$CC"
+GSK_LD_SHLIB_FLAGS="$LDFLAGS"
+GSK_LD_PROGRAM="$CC"
+GSK_LD_PROGRAM_FLAGS="$LDFLAGS"
+
+## only if gcc, really...
+GSK_CFLAGS="$GSK_CFLAGS -fPIC -DPIC"
+GSK_LD_SHLIB_FLAGS="$GSK_LDFLAGS -shared"
+AC_SUBST(GSK_CC)
+AC_SUBST(GSK_COMPILE_ONLY_FLAG)
+AC_SUBST(GSK_CFLAGS)
+AC_SUBST(GSK_LD_SHLIB)
+AC_SUBST(GSK_LD_SHLIB_FLAGS)
+AC_SUBST(GSK_LD_PROGRAM)
+AC_SUBST(GSK_LD_PROGRAM_FLAGS)
+
+
+AC_OUTPUT([Makefile
+	   gsk-1.0.pc
+	   pkgwriteinfo
+           src/Makefile src/tests/Makefile
+           src/main-loops/Makefile 
+	   src/common/Makefile
+           src/dns/Makefile
+	   src/mime/Makefile 
+	   src/http/Makefile 
+	   src/zlib/Makefile 
+	   src/hash/Makefile 
+	   src/ssl/Makefile
+	   src/control/Makefile
+	   src/store/Makefile
+	   src/url/Makefile
+	   src/xmlrpc/Makefile
+	   src/programs/Makefile
+	   src/compile-info.h
+	   doc/Makefile ])

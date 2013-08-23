@@ -1,0 +1,37 @@
+<!-- ##### SECTION Title ##### -->
+gskzlib
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_zlib_error_to_gsk_error ##### -->
+<para>
+
+</para>
+
+@zlib_error_rv: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_zlib_error_to_message ##### -->
+<para>
+
+</para>
+
+@zlib_error_rv: 
+@Returns: 
+
+

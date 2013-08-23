@@ -1,0 +1,70 @@
+<!-- ##### SECTION Title ##### -->
+GskPacketQueueFd
+
+<!-- ##### SECTION Short_Description ##### -->
+A PacketQueue based on a file descriptor.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A datagram client or server.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskPacketQueueFd ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GskPacketQueueFd:file-descriptor ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gsk_packet_queue_fd_new ##### -->
+<para>
+
+</para>
+
+@fd: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_packet_queue_fd_new_by_family ##### -->
+<para>
+
+</para>
+
+@addr_family: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_packet_queue_fd_new_bound ##### -->
+<para>
+
+</para>
+
+@address: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_packet_queue_fd_set_broadcast ##### -->
+<para>
+
+</para>
+
+@packet_queue_fd: 
+@allow_broadcast: 
+@error: 
+@Returns: 
+
+

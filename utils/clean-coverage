@@ -1,0 +1,3 @@
+#! /bin/sh
+
+rm -f src/*.{bb,bbg,gcov,da} src/*/*.{bb,bbg,gcov,da}

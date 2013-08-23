@@ -1,0 +1,450 @@
+<!-- ##### SECTION Title ##### -->
+GskUrlTransfer
+
+<!-- ##### SECTION Short_Description ##### -->
+Transfer data with a location by URL.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A GskUrlTransfer represents a single upload and/or download with
+a resource designed by a URL.  Although most of the interface
+is URL-scheme independent, for convenience we allow users to see
+the URL-specific portions as well.
+</para>
+<para>
+Some types of URLs are download only,
+and others support upload, but possibly not at the same time.
+</para>
+<para>
+The basic plan is to make a #GskUrlTransfer
+object.  If you wish to upload, provide a way of constructing 
+an upload content-stream.  If you wish to download, provide a function
+that will be called with the downloading content-stream.
+Additional configuration may be done: for example, whether to follow redirections.
+</para>
+<para>
+The transfer which is returned from gsk_url_transfer_new()
+is in an "unstarted" state.  After you are done configuring it,
+you should invoke gsk_url_transfer_start() to begin doing
+actual work.
+</para>
+<para>
+You should at least connect a handler to it
+before you start it using gsk_url_transfer_set_handler().
+</para>
+<para>
+Your handler is guaranteed to be called
+exactly once, after or during the invocation of gsk_url_transfer_start().
+</para>
+<para>
+Internally, the URL-transfer code maintains a mapping from url-scheme to
+a list of GskUrlTransferClasses responsible for that type of URL.
+When gsk_url_transfer_new(url) is called, each handler for the url's scheme is tried in
+sequence until one is found that accepts the URL, or NULL will returned
+if no suitable class is found.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GskUrlTransferHttp.
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskUrlTransferRedirect ##### -->
+<para>
+A node in the linked-list of redirections we have receieved.
+</para>
+
+@is_permanent: whether the redirect is permanent (versus temporary).
+@url: the location that we have been redirected to.
+@request: the request object.
+@response: the response object.
+@next: next redirect chronologically.
+
+<!-- ##### ENUM GskUrlTransferResult ##### -->
+<para>
+The result element of transfer is prepared before
+the user's done-handler is invoked and is a general indicator
+of the result of the transfer.
+</para>
+<para>
+This enumeration therefore lists all possible ways
+that a Url-transfer can conclude.
+</para>
+<para>
+For error values, the "error" member of transfer should be set.
+</para>
+
+@GSK_URL_TRANSFER_ERROR_BAD_REQUEST: 
+Some aspect request was invalidly formed:
+for example, the user provided a bad SSL certificate
+or upload-function.
+@GSK_URL_TRANSFER_ERROR_BAD_NAME: 
+DNS failed on the hostname.
+@GSK_URL_TRANSFER_ERROR_NO_SERVER: 
+Problem connecting to the server.
+@GSK_URL_TRANSFER_ERROR_NOT_FOUND: 
+Server indicated the entity was not found.
+@GSK_URL_TRANSFER_ERROR_SERVER_ERROR: 
+Server indicated another error.
+@GSK_URL_TRANSFER_ERROR_UNSUPPORTED: 
+Request was not supported (either by the server,
+the protocol, or the url-transfer-code).
+@GSK_URL_TRANSFER_ERROR_TIMED_OUT: 
+Request timed out.
+@GSK_URL_TRANSFER_ERROR_REDIRECT_LOOP: 
+Request redirection looped circulurly.
+@GSK_URL_TRANSFER_REDIRECT: 
+The URL transfer code was not instructed to follow
+redirects, but a redirect was encountered.
+See the transfer's redirect_url member.
+@GSK_URL_TRANSFER_CANCELLED: 
+The transfer was aborted because
+gsk_url_transfer_cancel() was called on it.
+@GSK_URL_TRANSFER_SUCCESS: 
+The transfer initiated successfully
+(the data may not be transferred yet, though)
+
+<!-- ##### MACRO GSK_URL_TRANSFER_N_RESULTS ##### -->
+<para>
+Number of result-codes, seldom needed.
+</para>
+
+
+
+<!-- ##### FUNCTION gsk_url_transfer_result_name ##### -->
+<para>
+Get a mixed-case human-readable name for the Transfer-Result.
+</para>
+
+@result: the result code.
+@Returns: the name as an ASCII string.
+
+
+<!-- ##### USER_FUNCTION GskUrlTransferFunc ##### -->
+<para>
+A function that is called when the transfer is "done".
+This function is called if the transfer is successful,
+or has an error, or times out, or is cancelled.
+</para>
+<para>
+It will only be called after gsk_url_transfer_start() returns TRUE.
+</para>
+
+@info: the object that contains information about the transfer.
+@user_data: data registered with gsk_url_transfer()
+or gsk_url_transfer_set_handler().
+
+
+<!-- ##### USER_FUNCTION GskUrlUploadFunc ##### -->
+<para>
+In order to upload content and still follow redirects,
+we need to be able to make any number of upload streams.
+Therefore, in order to upload data, you may wish to provide
+a function like this.
+</para>
+<para>
+If you don't care about POST-redirects,
+as you probably don't,
+you can just use gsk_url_transfer_set_oneshot_upload().
+</para>
+
+@upload_data: data passed into gsk_url_transfer()
+or gsk_url_transfer_set_upload().
+@size_out: optionally set the length of the stream in bytes.
+Setting it to -1 is equivalent to not setting it,
+and indicates that the length is not known in advance.
+@error: if you cannot make a stream, the error should be set.
+@Returns: a newly allocated stream, or NULL if an error occurs.
+
+
+<!-- ##### STRUCT GskUrlTransfer ##### -->
+<para>
+A GObject that represents a transfer of data with the entity responsible
+for that type of URL.
+</para>
+
+@result: code indicating final status of the transfer.
+(only valid in the "done" state)
+@url: the url of the initial request.
+@redirect_urls: XXX: UNUSED
+@address: socket-address of the server for this url.
+@request: request header.
+@response: response header.
+@content: downloading data.
+@redirect_url: target of first redirect.
+@redirect_is_permanent: whether the redirection was permenant (versus temporary)
+@error: the error, if something went wrong.
+
+<!-- ##### FUNCTION gsk_url_transfer ##### -->
+<para>
+
+</para>
+
+@url: 
+@upload_func: 
+@upload_data: 
+@upload_destroy: 
+@handler: 
+@data: 
+@destroy: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_new ##### -->
+<para>
+
+</para>
+
+@url: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_handler ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@handler: 
+@data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_url ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@url: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_upload ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@func: 
+@data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_upload_packet ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@packet: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_oneshot_upload ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@stream: 
+@size: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_timeout ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@millis: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_clear_timeout ##### -->
+<para>
+
+</para>
+
+@transfer: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_follow_redirects ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@follow_redirs: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_address_hint ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@address: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_start ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_cancel ##### -->
+<para>
+
+</para>
+
+@transfer: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_has_upload ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_create_upload ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@size_out: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_peek_expects_download_stream ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_is_done ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_address ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@addr: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_add_redirect ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@request: 
+@response: 
+@is_permanent: 
+@dest_url: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_download ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@content: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_request ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@request: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_response ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@response: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_set_error ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@error: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_take_error ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@error: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_notify_done ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@result: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_class_register ##### -->
+<para>
+
+</para>
+
+@scheme: 
+@transfer_class: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_get_state_string ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_transfer_stream_new ##### -->
+<para>
+
+</para>
+
+@transfer: 
+@error: 
+@Returns: 
+
+

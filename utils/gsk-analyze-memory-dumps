@@ -1,0 +1,155 @@
+#! /usr/bin/perl -w
+
+my $filename_prefix = '';
+my $filename_suffix = '';
+my $dir = '.';
+my $output = 'gsk-allocations-report.txt';
+
+sub usage()
+{
+  print <<"EOF";
+usage: $0 --dir=DIR --prefix=FILENAME_PREFIX --suffix=FILENAME_SUFFIX
+
+Analyzes a set of GSK Memory Dumps (done with the debug allocator),
+and prints a report about their trends.
+
+Options:
+  --prefix=PREFIX     Beginning of each dumps filename. [default '']
+  --suffix=SUFFIX     Beginning of each dumps filename. [default '']
+  --dir=DIR           Location of memory dumps. [default '.']
+  --output=FILE       Output filename (default 'gsk-allocations-report.txt').
+
+  --max-size-threshold=BYTES
+                      Only print a report stanza if at least this many
+		      bytes are allocated by the context.
+EOF
+  exit(1);
+}
+
+for (@ARGV) {
+  if (/^--prefix=(.*)$/) { $filename_prefix = $1; }
+  elsif (/^--suffix=(.*)$/) { $filename_suffix = $1; }
+  elsif (/^--max-size-threshold=(.*)$/) { $max_size_threshold = $1; }
+  elsif (/^--dir=(.*)$/) { $dir = $1; }
+  elsif (/^--version$/) { print "$0 version $version.\n"; exit(1); }
+  else { usage() }
+}
+
+
+opendir Z, "." or die;
+$context_id = 0;
+for (readdir Z) {
+  next unless /$prefix(\d+)$filename_suffix/;
+  if (! defined $earliest || $earliest > $1) { $earliest = $1 }
+  open X, "<$_" or die;
+  my $line;
+  print STDERR ".";
+  while (<X>) {
+    $line = $_;
+    RESTART:
+    last if $line =~ /Summary/;
+    die unless $line =~ /(\d+) bytes allocated in (\d+) blocks from:/;
+    my $bytes = $1; my $blocks = $2;
+    my $ctx = '';
+    while (<X>) {
+      if (!/^  /) { $line = $_; last; }
+      $ctx .= $_;
+    }
+    if (!defined $context_nos{$ctx}) { $context_nos{$ctx} = $context_id++; }
+    goto RESTART;
+  }
+}
+closedir Z;
+my @total_blocks = ();
+my @total_bytes = ();
+my @total_blocks_sq = ();
+my @total_bytes_sq = ();
+my @contexts_by_id = ();
+my @max_bytes = ();
+for (sort { $context_nos{$a} <=> $context_nos{$b} } keys %context_nos) {
+  push @total_bytes, 0;
+  push @total_blocks, 0;
+  push @max_bytes, 0;
+  push @contexts_by_id, $_;
+}
+
+print STDERR "$context_id contexts.\n";
+
+my $tmpfile = "allocations-by-time-and-context.tsv.$$";
+
+opendir Z, "." or die;
+open O, "| sort -n > $tmpfile" or die;
+my $n_files = 0;
+for (readdir Z) {
+  next unless /$prefix-(\d+).log/;
+  my $time = $1 - $earliest;
+  open X, "<$_" or die;
+  my @ctx_info = ();
+  for (my $i = 0; $i < $context_id; $i++) { push @ctx_info, "0/0" }
+  my $line;
+  while (<X>) {
+    $line = $_;
+    RESTART:
+    last if $line =~ /Summary/;
+    die unless $line =~ /(\d+) bytes allocated in (\d+) blocks from:/;
+    my $bytes = $1; my $blocks = $2;
+    my $ctx = '';
+    while (<X>) {
+      if (!/^  /) { $line = $_; last; }
+      $ctx .= $_;
+    }
+    my $no = $context_nos{$ctx};
+    goto RESTART if !defined $no;
+    $total_blocks[$no] += $blocks;
+    $total_bytes[$no] += $bytes;
+    $max_bytes[$no] = $bytes if ($max_bytes[$no] == 0 || $max_bytes[$no] < $bytes);
+    $ctx_info[$no] = "$bytes/$blocks";
+    goto RESTART;
+  }
+  print O join("\t", $time, @ctx_info);
+  print O "\n";
+  $n_files++;
+}
+closedir Z;
+close O;
+
+open R, ">$output" or die;
+for (my $i = 0; $i < $context_id; $i++) {
+  my $avg_bytes = $total_bytes[$i] / $n_files;
+  my $avg_blocks = $total_blocks[$i] / $n_files;
+  my $dev_bytes = 0;
+  my $dev_blocks = 0;
+  my @graph_lines = ();
+  for (my $j = 0; $j <= 10; $j++) { push @graph_lines, '' }
+  next if $max_bytes[$i] <= $max_size_threshold;
+  open I, "<$tmpfile" or die;
+  while (<I>) {
+    chomp;
+    my $bb = (split /\t/, $_)[$i+1];
+    $bb =~ /(\d+)\/(\d+)/ or die "expected slashed number, got $bb";
+    my $bytes = $1;
+    my $blocks = $2;
+    my $dblocks = $blocks - $avg_blocks;
+    my $dbytes = $bytes - $avg_bytes;
+    $dev_blocks += $dblocks * $dblocks;
+    $dev_bytes += $dbytes * $dbytes;
+    for (my $j = 0; $j <= 10; $j++) {
+      my $bdy = int($max_bytes[$i] * $j / 10);
+      if ($bytes >= $bdy) { $graph_lines[$j] .= "X"; }
+      else                { $graph_lines[$j] .= " "; }
+    }
+  }
+  my $stddev_bytes = sqrt($dev_bytes / $n_files);
+  my $stddev_blocks = sqrt($dev_blocks / $n_files);
+
+  print R "=== Context $i ===\n";
+  print R "Blocks: $avg_blocks +/- $stddev_blocks\n";
+  print R "Bytes: $avg_bytes +/- $stddev_bytes\n";
+  print R "\n";
+  print R $contexts_by_id[$i] . "\n";
+  for (my $j = 10; $j >= 0; $j--) {
+    print R sprintf("%8d %s\n", int($max_bytes[$i] * $j / 10), $graph_lines[$j]);
+  }
+  print R "\n\n";
+}
+  

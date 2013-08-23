@@ -1,0 +1,49 @@
+<!-- ##### SECTION Title ##### -->
+GskZlibDeflator
+
+<!-- ##### SECTION Short_Description ##### -->
+a zlib compressor.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A stream which compresses data on its input to its output.
+This is the raw zlib deflated data.  See RFCs 1950 and 1951.
+</para>
+<para>
+We use the implementation in a shared library -lz.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskZlibInflator
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskZlibDeflator ##### -->
+<para>
+A zlib deflator (compressor) object.
+One writes raw data to it, and one can
+read the compressed data from it.
+</para>
+
+@stream: parent instance.
+@private_stream: zlib library object.
+@compressed: buffer of compressed data.
+@level: compressor level (private).
+@flush_millis: milliseconds to wait to flush the buffer
+or -1 to indicate that flush need only be done at end-of-file.
+@flush_source: private: flush timeout source.
+@use_gzip: 
+
+<!-- ##### FUNCTION gsk_zlib_deflator_new ##### -->
+<para>
+
+</para>
+
+@compression_level: 
+@flush_millis: 
+@Returns: 
+
+

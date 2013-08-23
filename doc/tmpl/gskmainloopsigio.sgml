@@ -1,0 +1,26 @@
+<!-- ##### SECTION Title ##### -->
+GskMainLoopSigio
+
+<!-- ##### SECTION Short_Description ##### -->
+signal I/O based event loop.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A main-loop which uses signal-driven I/O.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMainLoopSigio ##### -->
+<para>
+Signal-driven I/O main-loop object.
+</para>
+
+@main_loop: the signal-driven I/O main-loop.
+

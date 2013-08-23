@@ -1,0 +1,94 @@
+<!-- ##### SECTION Title ##### -->
+Runtime Toggled Debug Logging
+
+<!-- ##### SECTION Short_Description ##### -->
+methods to quickly turn logging on and off for portions of GSK.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+These functions allow you to programmitcally
+set the GSK debugging flags.  Usually, one
+sets these at runtime instead, by using the --gsk-debug=FLAGS
+command-line argument to your program.
+</para>
+<para>
+In any event, GSK's debugging facilities are only available if
+GSK itself was configured with gsk-debug support,
+by specifying <arg>--enable-gsk-debug</arg> to 
+GSK's configure script.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### ENUM GskDebugFlags ##### -->
+<para>
+Flags which may be turned on to print debugging messages about
+them.
+</para>
+
+@GSK_DEBUG_IO: 
+I/O hook debugging.
+@GSK_DEBUG_STREAM: 
+Read/write debugging.
+@GSK_DEBUG_STREAM_LISTENER: 
+Server listener debugging.
+@GSK_DEBUG_STREAM_DATA: 
+Stream debugging by dumping all the data exchanged with
+the stream.
+@GSK_DEBUG_LIFETIME: 
+Debug object lifetime issues.
+@GSK_DEBUG_MAIN_LOOP: 
+Debug main-loop behavior.
+@GSK_DEBUG_DNS: 
+Debug name lookup behavior.
+@GSK_DEBUG_HOOK: 
+Debug hooks.
+@GSK_DEBUG_SSL: 
+Debug SSL (a secure transport layer, used by https).
+@GSK_DEBUG_HTTP: 
+Debug HTTP, the protocol used for web pages.
+@GSK_DEBUG_FTP: 
+@GSK_DEBUG_REQUEST: 
+@GSK_DEBUG_FD: 
+Debug file-descriptor usage.
+@GSK_DEBUG_ALL: 
+All debug flags.
+
+<!-- ##### VARIABLE gsk_debugging_on ##### -->
+<para>
+Whether debugging is on.
+</para>
+<para>
+This corresponds with whether GSK's <program>configure</program>
+script was run with the <arg>--enable-gsk-debug</arg> option.
+</para>
+
+
+<!-- ##### FUNCTION gsk_debug_set_flags ##### -->
+<para>
+
+</para>
+
+@flags: 
+
+
+<!-- ##### FUNCTION gsk_debug_add_flags ##### -->
+<para>
+
+</para>
+
+@flags: 
+
+
+<!-- ##### VARIABLE gsk_debug_flags ##### -->
+<para>
+
+</para>
+
+

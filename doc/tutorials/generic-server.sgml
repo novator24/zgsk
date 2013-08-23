@@ -1,0 +1,259 @@
+<refentry id="tutorial-server">
+<refmeta>
+<refentrytitle>Writing a Generic Server</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Tutorial: Writing a server</refname><refpurpose>How to write a server</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Writing a Server</title>
+<para>
+This section of the tutorial describes how to write a server.
+</para>
+<para>
+Most servers bind to a #GskSocketAddress using a #GskStreamListenerSocket.
+They call gsk_stream_listener_handle_accept()
+to receive notification when new clients have connected.
+</para>
+<para>
+The easiest way to handle incoming client connections is 
+to make a #GskStream that can handle the protocol.
+If you do not have an appropriate protocol stream,
+and don't wish to make one,
+use a #GskBufferStream to get simple I/O buffering,
+or one can directly call gsk_stream_trap_readable()
+and gsk_stream_trap_writable() to get notification when
+the stream can be written or read.
+</para>
+<para>
+If the server/client communication is unidirectional,
+you should probably call gsk_stream_read_shutdown()
+or gsk_stream_write_shutdown() to terminate whichever
+direction you don't plan on using.
+</para>
+</refsect1>
+
+<refsect1>
+<title>Example: A NUL-Separated Server</title>
+<para>
+This gives a simple server where each request is terminated by
+a NUL (the 0 byte).  Each request has a single NUL-terminated response.
+This matches an example in the client tutorial.
+</para>
+<para>
+Such a server merely creates a listener on the appropriate
+address and waits for connections:
+<programlisting><![CDATA[
+int main(int argc, char **argv)
+{
+  int port;
+  gsk_init (&argc, &argv, NULL);
+  if (argc != 2)
+    g_error ("usage: %s PORT", argv[0]);
+  port = atoi (argv[1]);
+  if (port <= 0)
+    g_error ("port must be a positive integer");
+  address = gsk_socket_address_ipv4_new (gsk_ipv4_ip_address_any, port);
+  listener = gsk_stream_listener_socket_new_bind (address, &error);
+  if (listener == NULL)
+    g_error ("error binding to port %u: %s", port, error->message);
+  gsk_stream_listener_handle_accept (listener,
+                                     handle_connection,
+				     handle_error,
+				     NULL, NULL);
+  return gsk_main_run ();
+}
+]]></programlisting>
+</para>
+<para>The error handling is easy, at least for our purposes:
+<programlisting><![CDATA[
+static void
+handle_error (GError  *error, gpointer data)
+{
+  g_error ("error listening: %s", error->message);
+}
+]]></programlisting>
+</para>
+<para>Accepting a new connection is more complicated,
+because that is where all the protocol logic begins.
+There are really two ways to handle the protocols.
+You can directly trapp the streams read and write events,
+or you can implement a stream that speaks the protocol and
+use <function>gsk_stream_attach_pair</function>.
+We recommend the latter, because it is more flexible and modular,
+but you should know both techniques.
+</para>
+<para>
+Both implementations should a common function that
+computes the response given the request.  For demonstration purposes,
+we just reverse the string:
+<programlisting><![CDATA[
+static char *
+compute_response (const char *request)
+{
+  return g_strreverse (g_strdup (request));
+}
+]]></programlisting>
+</para>
+<refsect2><title>Implementing the accept handler with a custom stream</title>
+<para>
+To implement this the handler we must make a GObject that derives
+from GskStream.  Here is, once again the boilerplate GObject code:
+<programlisting><![CDATA[
+typedef struct _MyStream MyStream;
+typedef struct _MyStreamClass MyStreamClass;
+GType my_stream_get_type(void) G_GNUC_CONST;
+#define MY_TYPE_STREAM			(my_stream_get_type ())
+#define MY_STREAM(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), MY_TYPE_STREAM, MyStream))
+#define MY_STREAM_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MY_TYPE_STREAM, MyStreamClass))
+#define MY_STREAM_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MY_TYPE_STREAM, MyStreamClass))
+#define MY_IS_STREAM(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), MY_TYPE_STREAM))
+#define MY_IS_STREAM_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MY_TYPE_STREAM))
+
+struct _MyStreamClass 
+{
+  GskStreamClass base_class;
+};
+struct _MyStream 
+{
+  GskStream      base_instance;
+  GskBuffer      incoming;
+  GskBuffer      outgoing;
+};
+G_DEFINE_TYPE (MyStream, my_stream, GSK_TYPE_STREAM);
+
+/* --- functions --- */
+static void
+my_stream_init (MyStream *stream)
+{
+  gsk_stream_mark_is_readable (stream);
+  gsk_stream_mark_is_writable (stream);
+}
+static void
+my_stream_class_init (MyStreamClass *class)
+{
+  GskStreamClass *stream_class = GSK_STREAM_CLASS (class);
+  GskIOClass *io_class = GSK_IO_CLASS (class);
+  GObjectclass *object_class = G_OBJECT_CLASS (class);
+  stream_class->raw_read = my_stream_raw_read;
+  stream_class->raw_write = my_stream_raw_write;
+  io_class->shutdown_read = my_stream_shutdown_read;
+  io_class->shutdown_write = my_stream_shutdown_write;
+  object_class->finalize = my_stream_finalize;
+}
+]]></programlisting>
+</para>
+<para>
+ Now we just need to implement this functions.
+ One thing we need to be careful of is that streams
+ are obligated to give notification when they are ready to be read from or written to.
+ The easiest way to do that for virtual streams is to use
+ gsk_stream_{mark,clear}_idle_notify_{read,write}().
+ Here is a function that calls those as needed, after checking the buffer state:
+<programlisting><![CDATA[
+  #define MAX_OUTGOING_DATA	16384
+  static void
+  update_idle_notification (MyStream *stream)
+  {
+    if (stream->outgoing.size > 0)
+      gsk_stream_mark_idle_notify_read (stream);
+    else
+      gsk_stream_clear_idle_notify_read (stream);
+
+    if (stream->outgoing.size > MAX_OUTGOING_DATA)
+      gsk_stream_clear_idle_notify_write (stream);
+    else
+      gsk_stream_mark_idle_notify_write (stream);
+  }
+]]></programlisting>
+ This will be used by the read and write implementations, which are now mostly trivial:
+<programlisting><![CDATA[
+  static guint
+  my_stream_raw_read        (GskStream     *stream,
+			     gpointer       data,
+			     guint          length,
+			     GError       **error)
+  {
+    MyStream *my_stream = MY_STREAM (stream);
+    guint rv = gsk_buffer_read (&my_stream->outgoing, data, length);
+
+    /* Handle the case if we've gotten a write-shutdown already. */
+    if (my_stream.outgoing.size == 0
+     && !gsk_stream_get_is_writable (my_stream))
+      {
+        gsk_io_notify_read_shutdown (GSK_IO (stream));
+	return rv;
+      }
+    update_idle_notification (my_stream);
+    return rv;
+  }
+
+  static guint
+  my_stream_raw_write       (GskStream     *stream,
+			     gconstpointer  data,
+			     guint          length,
+			     GError       **error)
+  {
+    MyStream *my_stream = MY_STREAM (stream);
+    char *request;
+    gsk_buffer_append (&my_stream->incoming, data, length);
+    while ((request=gsk_buffer_parse_string0 (&my_stream->incoming)))
+      {
+        char *response = compute_response (request);
+	gsk_buffer_append_string0 (&my_stream->outgoing, response);
+	g_free (request);
+	g_free (response);
+      }
+    update_idle_notification (my_stream);
+  }
+]]></programlisting>
+</para>
+<para>Shutdown handling is always a bit sticky,
+since it is easy to have one side waiting for the other.
+<programlisting><![CDATA[
+  static gboolean
+  my_stream_shutdown_read   (GskIO      *io,
+			     GError    **error)
+  {
+    gsk_io_notify_write_shutdown (io);
+    return TRUE;
+  }
+  static gboolean
+  my_stream_shutdown_write  (GskIO      *io,
+		    	     GError    **error)
+  {
+    MyStream *my_stream = MY_STREAM (io);
+    if (my_stream->outgoing.size == 0)
+      gsk_io_notify_read_shutdown (io);
+    return TRUE;
+  }
+]]></programlisting>
+</para>
+<para>Once you've written all that,
+at least handle_connection is easy to implement:
+<programlisting><![CDATA[
+static gboolean
+handle_connection (GskStream *stream,
+                   gpointer   data,
+		   GError   **error)
+{
+  GskStream *my_stream = g_object_new (MY_TYPE_STREAM, NULL);
+  gboolean rv = gsk_stream_attach_pair (my_stream, stream, error);
+  g_object_unref (my_stream);
+  return rv;
+}
+]]></programlisting>
+</para>
+</refsect2>
+<refsect2><title>Implementing the accept handler by trapping the stream</title>
+<para>
+...
+</para>
+</refsect2>
+</refsect1>
+
+</refentry>

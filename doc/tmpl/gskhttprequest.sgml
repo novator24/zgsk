@@ -1,0 +1,384 @@
+<!-- ##### SECTION Title ##### -->
+GskHttpRequest
+
+<!-- ##### SECTION Short_Description ##### -->
+An HTTP header that is sent from client to server.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A request is the first of two messages in an HTTP transaction.
+It indicates the type of transaction, usually GET or POST,
+and the desired path, and other assorted flags.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+GskHttpHeader, GskHttpResponse
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskHttpRequest ##### -->
+<para>
+An instance of a HTTP request header.
+</para>
+
+@verb: type of request (the intended action).
+@path: the location of the resource to affect.
+@accept_charsets: list of character-sets acceptable to the client.
+@accept_content_encodings: list of content-encodings acceptable to the client.
+@accept_transfer_encodings: list of transfer-encodings acceptable to the client.
+@accept_media_types: list of media-types acceptable to the client.
+@authorization: optional authorization information.
+@accept_languages: 
+@host: optional host header, required principally on machines which do
+virtual hosting.
+@had_if_match: whether an If-Match header is present.
+@if_match: 
+@if_modified_since: unix time or -1 if no such header present.
+@user_agent: program or agent making the request.
+@referrer: URL which led us to this resource.
+@from: 
+@cookies: list of cookies.
+@proxy_authorization: 
+@keep_alive_seconds: 
+@max_forwards: 
+@ua_height: 
+@ua_color: 
+@ua_os: 
+@ua_cpu: 
+@ua_language: 
+@cache_control: 
+
+<!-- ##### ARG GskHttpRequest:host ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpRequest:if-modified-since ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpRequest:max-forwards ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpRequest:path ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpRequest:referrer ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpRequest:user-agent ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskHttpRequest:verb ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gsk_http_request_add_cookie ##### -->
+<para>
+
+</para>
+
+@header: 
+@cookie: 
+
+
+<!-- ##### FUNCTION gsk_http_request_remove_cookie ##### -->
+<para>
+
+</para>
+
+@header: 
+@cookie: 
+
+
+<!-- ##### FUNCTION gsk_http_request_find_cookie ##### -->
+<para>
+
+</para>
+
+@header: 
+@key: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_request_add_charsets ##### -->
+<para>
+
+</para>
+
+@header: 
+@char_sets: 
+
+
+<!-- ##### FUNCTION gsk_http_request_clear_charsets ##### -->
+<para>
+
+</para>
+
+@header: 
+
+
+<!-- ##### FUNCTION gsk_http_request_add_content_encodings ##### -->
+<para>
+
+</para>
+
+@header: 
+@set: 
+
+
+<!-- ##### FUNCTION gsk_http_request_clear_content_encodings ##### -->
+<para>
+
+</para>
+
+@header: 
+
+
+<!-- ##### FUNCTION gsk_http_request_add_transfer_encodings ##### -->
+<para>
+
+</para>
+
+@header: 
+@set: 
+
+
+<!-- ##### FUNCTION gsk_http_request_clear_transfer_encodings ##### -->
+<para>
+
+</para>
+
+@header: 
+
+
+<!-- ##### FUNCTION gsk_http_request_add_media ##### -->
+<para>
+
+</para>
+
+@header: 
+@set: 
+
+
+<!-- ##### FUNCTION gsk_http_request_clear_media ##### -->
+<para>
+
+</para>
+
+@header: 
+
+
+<!-- ##### FUNCTION gsk_http_request_new_blank ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_request_new ##### -->
+<para>
+
+</para>
+
+@verb: 
+@path: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_http_request_set_verb ##### -->
+<para>
+The verb is GSK's name for the type of action being requested.
+It is the very first word of the HTTP transaction.
+See #GskHttpVerb for a list.
+</para>
+
+@request: the request to affect.
+@verb: the new HTTP request verb.
+
+
+<!-- ##### MACRO gsk_http_request_get_verb ##### -->
+<para>
+Get the type of action being requested.
+See #GskHttpVerb for a list.
+</para>
+<para>
+Every HTTP server should know GET and HEAD requested;
+other requests might not be allowed unless the
+server had indicated that they are with a "Allow" response header.
+</para>
+
+@request: the request to query.
+
+
+<!-- ##### MACRO gsk_http_request_peek_from ##### -->
+<para>
+Get the From field, if any, from the HTTP header.
+</para>
+
+@request: the request to query.
+
+
+<!-- ##### MACRO gsk_http_request_set_from ##### -->
+<para>
+   [From RFC 2616, Section 14.22]
+   The From request-header field, if given, SHOULD contain an Internet
+   e-mail address for the human user who controls the requesting user
+   agent. The address SHOULD be machine-usable, as defined by "mailbox"
+   in RFC 822 as updated by RFC 1123.
+</para>
+
+@request: the request to affect.
+@from: the email of the user making the request.
+
+
+<!-- ##### MACRO gsk_http_request_set_if_modified_since ##### -->
+<para>
+[From RFC 2616, Section 14.25]
+The If-Modified-Since request-header field is used with a method to
+make it conditional: if the requested variant has not been modified
+since the time specified in this field, an entity will not be
+returned from the server; instead, a 304 (not modified) response will
+be returned without any message-body.
+</para>
+
+@request: the header to affect.
+@t: the time to compare the content's modification time with.
+The content should only be transmitted if its modification time
+is later than @t.
+
+
+<!-- ##### MACRO gsk_http_request_get_if_modified_since ##### -->
+<para>
+Get the time which will be compared with the content's modification
+time by the server to eliminate unnecessary content transfers.
+If this returns (time_t)-1 then there is no If-Modified-Since header.
+</para>
+
+@request: the request to query.
+
+
+<!-- ##### FUNCTION gsk_http_request_set_authorization ##### -->
+<para>
+
+</para>
+
+@request: 
+@is_proxy_auth: 
+@auth: 
+
+
+<!-- ##### MACRO gsk_http_request_set_host ##### -->
+<para>
+Set the Host: header for the HTTP request.
+</para>
+
+@request: the HTTP Request object to affect.
+@host: the hostname as a string.
+
+
+<!-- ##### MACRO gsk_http_request_set_user_agent ##### -->
+<para>
+
+</para>
+
+@request: 
+@user_agent: 
+
+
+<!-- ##### MACRO gsk_http_request_peek_user_agent ##### -->
+<para>
+
+</para>
+
+@request: 
+
+
+<!-- ##### FUNCTION gsk_http_request_peek_authorization ##### -->
+<para>
+
+</para>
+
+@request: 
+@is_proxy_auth: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_request_cache_directive_free ##### -->
+<para>
+
+</para>
+
+@directive: 
+
+
+<!-- ##### FUNCTION gsk_http_request_cache_directive_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_request_parse_first_line ##### -->
+<para>
+
+</para>
+
+@request: 
+@line: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_request_set_cache_control ##### -->
+<para>
+
+</para>
+
+@request: 
+@directive: 
+
+
+<!-- ##### FUNCTION gsk_http_request_has_content_body ##### -->
+<para>
+
+</para>
+
+@request: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_parse_cgi_query_string ##### -->
+<para>
+
+</para>
+
+@query_string: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_http_request_parse_cgi_query_string ##### -->
+<para>
+
+</para>
+
+@query_string: 
+@Returns: 
+
+

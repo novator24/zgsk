@@ -1,0 +1,64 @@
+#! /bin/sh
+
+package=gsk1
+
+version=`perl -e 'while (<STDIN>) { if (/GSK_VERSION=(\S+)/) { print("$1\n");exit(0); } } exit(1);' < configure.in`
+test $? = 0 || { echo "error getting GSK_VERSION" 1>&2; exit 1; }
+
+id=`basename "$0"`
+
+release="$1"
+if test "x$release" = "x" ; then
+  echo "usage: $id RELEASE-NUMBER" 1>&2
+  exit 1
+fi
+
+pvr=$package-$version-$release
+mkdir $pvr
+
+cat <<"EOF" > $pvr/$pvr.options
+configure_style=gnu
+configure_options="--disable-gtk-doc"
+EOF
+test "$?" = 0 || {
+  echo "$id: couldn't create $pvr.options" 1>&2
+  exit 1
+}
+
+cat <<EOF > $pvr/$pvr.dep
+glib2 [2.6.1-1,)
+openssl
+EOF
+test "$?" = 0 || {
+  echo "$id: couldn't create $pvr.dep" 1>&2
+  exit 1
+}
+
+cat <<EOF > $pvr/$pvr.urls
+http://osdn.dl.sourceforge.net/sourceforge/gsk/gsk-$version.tar.gz
+EOF
+test "$?" = 0 || {
+  echo "$id: couldn't create $pvr.dep" 1>&2
+  exit 1
+}
+
+cat <<EOF > $pvr/$pvr.files
+gsk-$version.tar.gz
+$pvr.options
+$pvr.dep
+$pvr.files
+$pvr.urls
+EOF
+test "$?" = 0 || {
+  echo "$id: couldn't create $pvr.files" 1>&2
+  exit 1
+}
+
+cp gsk-$version.tar.gz $pvr
+
+cd $pvr
+md5sum `cat $pvr.files` > $pvr.md5sums
+test "$?" = 0 || {
+  echo "$id: couldn't create $pvr.md5sums" 1>&2
+  exit 1
+}

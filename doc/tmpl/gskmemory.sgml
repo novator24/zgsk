@@ -1,0 +1,109 @@
+<!-- ##### SECTION Title ##### -->
+memory-based streams
+
+<!-- ##### SECTION Short_Description ##### -->
+streams whose data is "memory", inside pointer-accessed data.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+These are sources and sinks which use memory to store output
+and input.  Because of system-architectures, memory never blocks.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_memory_buffer_source_new ##### -->
+<para>
+
+</para>
+
+@buffer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_memory_slab_source_new ##### -->
+<para>
+
+</para>
+
+@data: 
+@data_len: 
+@destroy: 
+@destroy_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_memory_source_new_printf ##### -->
+<para>
+
+</para>
+
+@format: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_memory_source_new_vprintf ##### -->
+<para>
+
+</para>
+
+@format: 
+@args: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_memory_source_static_string ##### -->
+<para>
+
+</para>
+
+@str: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_memory_source_static_string_n ##### -->
+<para>
+
+</para>
+
+@str: 
+@length: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GskMemoryBufferCallback ##### -->
+<para>
+Function to call when a memory-buffer-sink (as created
+with gsk_memory_buffer_sink_new()) is finished.
+This takes the buffer, which is full of data,
+and the data argument to gsk_memory_buffer_sink_new()
+as well.
+</para>
+<para>
+The buffer will be destroyed immediately after this
+call, so it does not matter if you read or peek from this
+buffer.
+</para>
+
+@buffer: the buffer which has been filled.
+@data: user-data to pass through to this function.
+
+
+<!-- ##### FUNCTION gsk_memory_buffer_sink_new ##### -->
+<para>
+
+</para>
+
+@callback: 
+@data: 
+@destroy: 
+@Returns: 
+
+

@@ -1,0 +1,35 @@
+#! /usr/bin/perl -w
+
+# This program filters the output of
+# gsk_print_debug_mem_vtable(). */
+
+$program = undef;
+%addr_to_line_cache = ();
+
+sub map_addr2line($) {
+  my $addr = $_[0];
+  my $line = $addr_to_line_cache{$addr};
+  if (!defined ($line)) {
+    $line = `addr2line -e $program $addr`;
+    chomp $line;
+    $addr_to_line_cache{$addr} = $line;
+  }
+  print "  $program [$addr] $line\n"
+}
+
+while (<STDIN>) {
+  if (defined $program) {
+    if (m,^  $program \[(0x[\da-fA-F]+)\],) {
+      map_addr2line($1);
+    } else {
+      print;
+    }
+  } else {
+    if (m,^  (.*) \[(0x\d+)\],) {
+      my ($pprogram,$addr) = ($1,$2);
+      if (!/\.so\./ && !/\(/)
+        {  $program = $pprogram }
+      if (defined $program) { map_addr2line($addr) } else { print }
+    }
+  }
+}

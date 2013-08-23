@@ -1,0 +1,381 @@
+<!-- ##### SECTION Title ##### -->
+Main Loop (Generic Event Management)
+
+<!-- ##### SECTION Short_Description ##### -->
+Convenient way to be notified when certain types of event occur.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A main loop is an object which can trap events and call user functions
+when those events happen.
+</para>
+<para>
+The events that our main loop handles are fixed:  file-descriptors being
+readied, signals being delivered, timeouts, idle functions and child-process
+termination are the currently known events.
+</para>
+<para>
+GskMainLoop itself is abstract, you must use a system-specific derived class
+to do polling.  Use gsk_main_loop_default() to get a main loop which is
+appropriate to your system.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskMainLoopChange ##### -->
+<para>
+This structure is passed to the system-dependent polling
+mechanism to indicate a change in events we want notification of.
+</para>
+
+@type: what type of change is to occur.
+
+<!-- ##### STRUCT GskMainLoopEvent ##### -->
+<para>
+An event passed back from the system-dependent polling
+mechanism.
+</para>
+
+@type: what type of event occurred.
+@process_wait_info: 
+
+<!-- ##### STRUCT GskMainLoopWaitInfo ##### -->
+<para>
+Information about a process's termination.
+</para>
+
+@pid: the process-id which terminated.
+@exited: whether the process exited, versus being killed
+by a signal, including crashes, which exit with SIGSEGV, SIGABRT, etc.
+@dumped_core: whether the process dumped core.
+
+<!-- ##### STRUCT GskSource ##### -->
+<para>
+An opaque object representing a trap of an event.
+</para>
+
+
+<!-- ##### STRUCT GskMainLoopContextList ##### -->
+<para>
+Private.
+</para>
+
+
+<!-- ##### ENUM GskMainLoopEventType ##### -->
+<para>
+Types of event that can be dealt with by this main-loop.
+</para>
+
+@GSK_MAIN_LOOP_EVENT_IO: 
+An input/output event.  This is really just a file-descriptor event.
+@GSK_MAIN_LOOP_EVENT_SIGNAL: 
+@GSK_MAIN_LOOP_EVENT_PROCESS: 
+
+<!-- ##### STRUCT GskMainLoopClass ##### -->
+<para>
+The virtual function which must be implemented for each type of main-loop.
+</para>
+
+@object_class: the base class from which the main-loop is derived.
+@setup: function to call to initialize the main-loop.
+@change: function invoked to indicate that a change in events we
+are interested in has occurred.
+@poll: function invoked to check which events have occurred.
+
+<!-- ##### STRUCT GskMainLoop ##### -->
+<para>
+A main-loop.  This holds information about all its sources.
+</para>
+
+@exit_status: Stored exit status which the user may
+return from main().
+@event_array_cache: 
+@first_context: first GMainContext in the list.
+@last_context: last GMainContext in the list.
+
+<!-- ##### USER_FUNCTION GskMainLoopWaitPidFunc ##### -->
+<para>
+A function which will be invoked when a process terminates.
+</para>
+
+@info: information about the process and why it terminated.
+@user_data: data registered to gsk_main_loop_add_waitpid().
+
+
+<!-- ##### USER_FUNCTION GskMainLoopIdleFunc ##### -->
+<para>
+Function to be called repetitively (that is, with no blocking or waiting; however,
+other events will continue to be processed).  It will stop when gsk_main_loop_remove()
+is run on its source, or if it returns FALSE.
+</para>
+
+@user_data: data registered to gsk_main_loop_add_idle().
+@Returns: whether to continue running.
+
+
+<!-- ##### USER_FUNCTION GskMainLoopSignalFunc ##### -->
+<para>
+Function to be called whenever a UNIX signal of a particular number is raised.
+</para>
+<para>
+It will be untrapped when gsk_main_loop_remove() is run on its source,
+or if it returns FALSE.
+</para>
+
+@sig_no: the number of the signal that was raised.
+@user_data: data registered to gsk_main_loop_add_signal().
+@Returns: whether to continue trapping the unix signal.
+
+
+<!-- ##### USER_FUNCTION GskMainLoopTimeoutFunc ##### -->
+<para>
+Function to invoke whenever a timeout expires.
+</para>
+<para>
+It will be untrapped when gsk_main_loop_remove() is run on its source,
+or if it returns FALSE, or after it runs if it was registered as a one-shot (with
+milli_period==-1).
+</para>
+
+@user_data: data registered to gsk_main_loop_add_timer() or
+gsk_main_loop_add_timer_absolute().
+@Returns: whether to keep running this timer.  (Will be ignored if it is a one-shot timer
+or if the source has been destroyed)
+
+
+<!-- ##### USER_FUNCTION GskMainLoopIOFunc ##### -->
+<para>
+Function to run whenever some subset of a set of 
+requested events are noticed.
+</para>
+
+@fd: the file-descriptor that the events occured on.
+@condition: the events that triggered the callback.
+@user_data: data registered to gsk_main_loop_add_io().
+@Returns: whether to keep these source.
+
+
+<!-- ##### ENUM GskMainLoopCreateFlags ##### -->
+<para>
+Indicate user requirements for the main-loop being constructed.
+</para>
+
+@GSK_MAIN_LOOP_NEEDS_THREADS: 
+Some main loops (like GskMainLoopKqueue) don't cooperate with
+threads at all!  This flag precludes choosing main-loops
+which are have this property.
+If you don't need threads, this flag does not hurt, except
+that kqueue() is a pretty good mechanism, so you probably
+want to get it right for a high-volume single-threaded server.
+
+<!-- ##### FUNCTION gsk_main_loop_new ##### -->
+<para>
+Make a new main loop.
+</para>
+
+@create_flags: Stipulations on the nature of the main-loop.
+@Returns: a new main loop.
+
+
+<!-- ##### FUNCTION gsk_main_loop_default ##### -->
+<para>
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_run ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@timeout: 
+@t_waited_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_add_idle ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@source_func: 
+@user_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_add_signal ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@signal_number: 
+@signal_func: 
+@user_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_add_waitpid ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@process_id: 
+@waitpid_func: 
+@user_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_add_io ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@fd: 
+@events: 
+@io_func: 
+@user_data: 
+@destroy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_source_adjust_io ##### -->
+<para>
+
+</para>
+
+@source: 
+@events: 
+
+
+<!-- ##### FUNCTION gsk_source_remove_io_events ##### -->
+<para>
+
+</para>
+
+@source: 
+@events: 
+
+
+<!-- ##### FUNCTION gsk_source_add_io_events ##### -->
+<para>
+
+</para>
+
+@source: 
+@events: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_add_timer ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@timer_func: 
+@timer_data: 
+@timer_destroy: 
+@millis_expire: 
+@milli_period: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_add_timer_absolute ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@timer_func: 
+@timer_data: 
+@timer_destroy: 
+@unixtime: 
+@unixtime_micro: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_source_adjust_timer ##### -->
+<para>
+
+</para>
+
+@timer_source: 
+@millis_expire: 
+@milli_period: 
+
+
+<!-- ##### FUNCTION gsk_source_remove ##### -->
+<para>
+
+</para>
+
+@source: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_add_context ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@context: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_quit ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_should_continue ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_source_peek_main_loop ##### -->
+<para>
+
+</para>
+
+@source: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_destroy_all_sources ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+
+
+<!-- ##### FUNCTION gsk_main_loop_do_waitpid ##### -->
+<para>
+
+</para>
+
+@pid: 
+@wait_info: 
+@Returns: 
+
+

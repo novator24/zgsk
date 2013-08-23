@@ -1,0 +1,91 @@
+<!-- ##### SECTION Title ##### -->
+Base-64
+
+<!-- ##### SECTION Short_Description ##### -->
+Base-64 Encoding and Decoding
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A collection of methods to deal with base-64 encoding and decoding.
+Base-64 is defined in RFC 2045, Section 6.8.
+</para>
+<para>
+The number of terminal = characters is specified
+in the FAQ such that a base-64 encoded string
+is always a multiple of 4 bytes long.
+</para>
+<para>
+XXX: The encoding end of this class probably needs
+some fixing in light of RFC 2045.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GSK_BASE64_GET_ENCODED_LEN ##### -->
+<para>
+Get the number of bytes needed to encode in base-64 a binary block of data of
+a given length.  This includes space for a terminal = sign,
+but does not include space for a NUL.
+</para>
+
+@length: the length of the raw binary string.
+
+
+<!-- ##### MACRO GSK_BASE64_GET_MAX_DECODED_LEN ##### -->
+<para>
+Get the maximum number of bytes a base-64 encoded string may require.
+This assumes that there is no terminal = character, but there may be one,
+causing the actual number of bytes once decoded to be smaller.
+The actual number is returned by gsk_base64_decode().
+</para>
+
+@length: the length of the base64 encoded string.
+
+
+<!-- ##### FUNCTION gsk_base64_decode ##### -->
+<para>
+
+</para>
+
+@dst: 
+@dst_len: 
+@src: 
+@src_len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_base64_decode_alloc ##### -->
+<para>
+
+</para>
+
+@src: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_base64_encode ##### -->
+<para>
+
+</para>
+
+@dst: 
+@src: 
+@src_len: 
+
+
+<!-- ##### FUNCTION gsk_base64_encode_alloc ##### -->
+<para>
+
+</para>
+
+@src: 
+@src_len: 
+@Returns: 
+
+

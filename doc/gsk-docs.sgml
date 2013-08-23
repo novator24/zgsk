@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY hash "#">
+<!ENTITY gsk-gskhook SYSTEM "xml/gskhook.xml">
+<!ENTITY gsk-gskdebug SYSTEM "xml/gskdebug.xml">
+<!ENTITY gsk-gskinit SYSTEM "xml/gskinit.xml">
+<!ENTITY gsk-gskmacros SYSTEM "xml/gskmacros.xml">
+<!ENTITY gsk-GskIO SYSTEM "xml/gskio.xml">
+<!ENTITY gsk-GskStream SYSTEM "xml/gskstream.xml">
+<!ENTITY gsk-gsklog SYSTEM "xml/gsklog.xml">
+<!ENTITY gsk-gskstreamconnection SYSTEM "xml/gskstreamconnection.xml">
+<!ENTITY gsk-GskMainLoop SYSTEM "xml/gskmainloop.xml">
+<!ENTITY gsk-gsknameresolver SYSTEM "xml/gsknameresolver.xml">
+<!ENTITY gsk-gsknetworkinterface SYSTEM "xml/gsknetworkinterface.xml">
+<!ENTITY gsk-GskPacketQueue SYSTEM "xml/gskpacketqueue.xml">
+<!ENTITY gsk-GskPacketQueueFd SYSTEM "xml/gskpacketqueuefd.xml">
+<!ENTITY gsk-GskSimpleFilter SYSTEM "xml/gsksimplefilter.xml">
+<!ENTITY gsk-GskSocketAddressIpv6 SYSTEM "xml/gsksocketaddress.xml">
+<!ENTITY gsk-GskStreamFd SYSTEM "xml/gskstreamfd.xml">
+<!ENTITY gsk-GskStreamExternal SYSTEM "xml/gskstreamexternal.xml">
+<!ENTITY gsk-GskStreamListener SYSTEM "xml/gskstreamlistener.xml">
+<!ENTITY gsk-GskStreamListenerSocket SYSTEM "xml/gskstreamlistenersocket.xml">
+<!ENTITY gsk-GskBufferStream SYSTEM "xml/gskbufferstream.xml">
+<!ENTITY gsk-gskdnsclient SYSTEM "xml/gskdnsclient.xml">
+<!ENTITY gsk-gskdnslocalresolver SYSTEM "xml/gskdnslocalresolver.xml">
+<!ENTITY gsk-gskdnsresolver SYSTEM "xml/gskdnsresolver.xml">
+<!ENTITY gsk-gskdnsserver SYSTEM "xml/gskdnsserver.xml">
+<!ENTITY gsk-GskHttpClient SYSTEM "xml/gskhttpclient.xml">
+<!ENTITY gsk-GskHttpHeader SYSTEM "xml/gskhttpheader.xml">
+<!ENTITY gsk-GskHttpResponse SYSTEM "xml/gskhttpresponse.xml">
+<!ENTITY gsk-GskHttpRequest SYSTEM "xml/gskhttprequest.xml">
+<!ENTITY gsk-GskHttpServer SYSTEM "xml/gskhttpserver.xml">
+<!ENTITY gsk-GskMainLoopDevPoll SYSTEM "xml/gskmainloopdevpoll.xml">
+<!ENTITY gsk-GskMainLoopKqueue SYSTEM "xml/gskmainloopkqueue.xml">
+<!ENTITY gsk-GskMainLoopPoll SYSTEM "xml/gskmainlooppoll.xml">
+<!ENTITY gsk-GskMainLoopPollBase SYSTEM "xml/gskmainlooppollbase.xml">
+<!ENTITY gsk-GskMainLoopSelect SYSTEM "xml/gskmainloopselect.xml">
+<!ENTITY gsk-gskmimemultipartpiece SYSTEM "xml/gskmimemultipartpiece.xml">
+<!ENTITY gsk-GskMimeMultipartDecoder SYSTEM "xml/gskmimemultipartdecoder.xml">
+<!ENTITY gsk-GskUrl SYSTEM "xml/gskurl.xml">
+<!ENTITY gsk-GskUrlTransfer SYSTEM "xml/gskurltransfer.xml">
+<!ENTITY gsk-GskUrlTransferHttp SYSTEM "xml/gskurltransferhttp.xml">
+<!ENTITY gsk-gskbuffer SYSTEM "xml/gskbuffer.xml">
+<!ENTITY gsk-gskdns SYSTEM "xml/gskdns.xml">
+<!ENTITY gsk-gskerrno SYSTEM "xml/gskerrno.xml">
+<!ENTITY gsk-gskerror SYSTEM "xml/gskerror.xml">
+<!ENTITY gsk-gskfork SYSTEM "xml/gskfork.xml">
+<!ENTITY gsk-gskghelpers SYSTEM "xml/gskghelpers.xml">
+<!ENTITY gsk-gskmain SYSTEM "xml/gskmain.xml">
+<!ENTITY gsk-gskmemory SYSTEM "xml/gskmemory.xml">
+<!ENTITY gsk-gskmempool SYSTEM "xml/gskmempool.xml">
+<!ENTITY gsk-gskpacket SYSTEM "xml/gskpacket.xml">
+<!ENTITY gsk-gskstreamclient SYSTEM "xml/gskstreamclient.xml">
+<!ENTITY gsk-GskStreamQueue SYSTEM "xml/gskstreamqueue.xml">
+<!ENTITY gsk-gsktree SYSTEM "xml/gsktree.xml">
+<!ENTITY gsk-gsktypes SYSTEM "xml/gsktypes.xml">
+<!ENTITY gsk-gskbase64 SYSTEM "xml/gskbase64.xml">
+<!ENTITY gsk-gskhash SYSTEM "xml/gskhash.xml">
+<!ENTITY gsk-gskdate SYSTEM "xml/gskdate.xml">
+<!ENTITY gsk-gskdns SYSTEM "xml/gskdns.xml">
+<!ENTITY gsk-gskdnsrrcache SYSTEM "xml/gskdnsrrcache.xml">
+<!ENTITY gsk-gskftpcommon SYSTEM "xml/gskftpcommon.xml">
+<!ENTITY gsk-zlib SYSTEM "xml/gskzlib.xml">
+<!ENTITY gsk-GskStreamSsl SYSTEM "xml/gskstreamssl.xml">
+<!ENTITY gsk-gskthreadpool SYSTEM "xml/gskthreadpool.xml">
+<!ENTITY gsk-GskZlibDeflator SYSTEM "xml/gskzlibdeflator.xml">
+<!ENTITY gsk-GskZlibInflator SYSTEM "xml/gskzlibinflator.xml">
+<!ENTITY gsk-gskutils SYSTEM "xml/gskutils.xml">
+<!ENTITY gsk-gskxmlrpc SYSTEM "xml/gskxmlrpc.xml">
+<!ENTITY gsk-GskXmlRpcStream SYSTEM "xml/gskxmlrpcstream.xml">
+<!ENTITY gsk-gskrbtreemacros SYSTEM "xml/gskrbtreemacros.xml">
+<!ENTITY gsk-gsklistmacros SYSTEM "xml/gsklistmacros.xml">
+<!ENTITY gsk-gskqsortmacro SYSTEM "xml/gskqsortmacro.xml">
+<!ENTITY gsk-tutorial-debugging-hints SYSTEM "tutorials/debugging-hints.sgml">
+<!ENTITY gsk-tutorial-http-server SYSTEM "tutorials/http-server.sgml">
+<!ENTITY gsk-tutorial-generic-client SYSTEM "tutorials/generic-client.sgml">
+<!ENTITY gsk-tutorial-generic-server SYSTEM "tutorials/generic-server.sgml">
+<!ENTITY gsk-tutorial-http-client SYSTEM "tutorials/http-client.sgml">
+<!ENTITY index-Object-Tree SYSTEM "xml/tree_index.sgml">
+]>
+<book id="index">
+  <bookinfo>
+    <title>GSK Reference Manual</title>
+  </bookinfo>
+
+  <chapter>
+    <title>Core Library Support</title>
+    &gsk-gskhook;
+    &gsk-gskinit;
+    &gsk-gskmacros;
+    &gsk-GskIO;
+    &gsk-GskStream;
+    &gsk-gskstreamconnection;
+    &gsk-GskMainLoop;
+    &gsk-gsknameresolver;
+    &gsk-gsktypes;
+    &gsk-gskbuffer;
+    &gsk-gskerrno;
+    &gsk-gskerror;
+    &gsk-gskmain;
+    &gsk-gskghelpers;
+    &gsk-GskPacketQueue;
+    &gsk-gskpacket;
+    &gsk-GskStreamListener;
+    &gsk-gskstreamclient;
+    &gsk-GskSocketAddressIpv6;
+    &gsk-gsklog;
+    &gsk-tutorial-debugging-hints;
+    &gsk-gskdebug;
+    &gsk-gskutils;
+  </chapter>
+
+  <chapter>
+    <title>Object Hierarchy</title>
+    &index-Object-Tree;
+  </chapter>
+
+  <chapter>
+    <title>Tutorials</title>
+    &gsk-tutorial-generic-server;
+    &gsk-tutorial-generic-client;
+    &gsk-tutorial-http-server;
+    &gsk-tutorial-http-client;
+  </chapter>
+
+  <chapter>
+    <title>Standard Implementations</title>
+    &gsk-GskPacketQueueFd;
+    &gsk-GskStreamFd;
+    &gsk-GskStreamExternal;
+    &gsk-GskStreamListenerSocket;
+    &gsk-GskBufferStream;
+  </chapter>
+
+  <chapter>
+    <title>Standard Objects: the URL class</title>
+    &gsk-GskUrl;
+    &gsk-GskUrlTransfer;
+    &gsk-GskUrlTransferHttp;
+  </chapter>
+
+  <chapter>
+    <title>Standard Streams:  the HTTP client and server</title>
+    &gsk-GskHttpHeader;
+    &gsk-GskHttpRequest;
+    &gsk-GskHttpResponse;
+    &gsk-GskHttpClient;
+    &gsk-GskHttpServer;
+  </chapter>
+  <!---
+  <chapter>
+    <title>Standard Streams:  the FTP client and server</title>
+    &gsk-gskftpcommon;
+  </chapter>
+  -->
+  <chapter>
+    <title>Standard Streams:  standard compression algorithms</title>
+    &gsk-GskZlibDeflator;
+    &gsk-GskZlibInflator;
+    &gsk-zlib;
+  </chapter>
+  <chapter>
+    <title>Standard Streams:  utility streams</title>
+    &gsk-GskStreamQueue;
+    &gsk-gskmemory;
+  </chapter>
+  <chapter>
+    <title>DNS library (client and server support)</title>
+    &gsk-gskdns;
+    &gsk-gskdnsrrcache;
+    &gsk-gskdnsclient;
+    &gsk-gskdnslocalresolver;
+    &gsk-gskdnsresolver;
+    &gsk-gskdnsserver;
+  </chapter>
+  <chapter>
+    <title>SSL interface</title>
+    &gsk-GskStreamSsl;
+  </chapter>
+  <chapter>
+    <title>MIME handling</title>
+    &gsk-gskmimemultipartpiece;
+    &gsk-GskMimeMultipartDecoder;
+  </chapter>
+  <chapter>
+    <title>RPC protocols</title>
+    &gsk-gskxmlrpc;
+    &gsk-GskXmlRpcStream;
+  </chapter>
+  <chapter>
+    <title>Main Loops</title>
+    &gsk-GskMainLoopDevPoll;
+    &gsk-GskMainLoopKqueue;
+    &gsk-GskMainLoopPoll;
+    &gsk-GskMainLoopPollBase;
+    &gsk-GskMainLoopSelect;
+  </chapter>
+  <chapter>
+    <title>Odds and Ends</title>
+    &gsk-gskbase64;
+    &gsk-gskhash;
+    &gsk-gskmempool;
+    &gsk-gsknetworkinterface;
+    &gsk-gskdate;
+  </chapter>
+  <chapter>
+    <title>Macro Madness</title>
+    &gsk-gsklistmacros;
+    &gsk-gskrbtreemacros;
+    &gsk-gskqsortmacro;
+  </chapter>
+  <chapter>
+    <title>Questionable ideas</title>
+    &gsk-gsktree;
+    &gsk-gskfork;
+  </chapter>
+</book>

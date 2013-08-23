@@ -1,0 +1,27 @@
+#! /usr/bin/perl
+
+use strict;
+
+my $programs = {};
+my $libraries = {};
+my $entity_types = {};
+
+
+
+# --- Functions to be used from users' gsk-build.info files ---
+sub add_program($@@)
+{
+  my ($program_name, $sources, $libs) = @_;
+  ...
+}
+
+sub add_library($@@)
+{
+  my ($library_name, $sources, $libs) = @_;
+  ...
+}
+
+sub add_code_generator($@@)
+{
+  ...
+}

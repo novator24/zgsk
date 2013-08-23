@@ -1,0 +1,441 @@
+<!-- ##### SECTION Title ##### -->
+GskUrl
+
+<!-- ##### SECTION Short_Description ##### -->
+A Universal Resource Locator (or Identifier)
+object.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A URL is a pointer to content on the internet.
+(Well, not all types of URLs apply across the internet;
+especially file URLs are really quite local.)
+</para>
+<para>
+This class provides convenient parsing and printing methods,
+as well as support for downloading the content of various URL types.
+</para>
+<para>
+Also, we provide interfaces for URL encoding and decoding strings.
+This may be used to provide GET data from the HTTP client, amongst other
+things.
+TODO: find a reference RFC for URL encoding.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskUrl ##### -->
+<para>
+A URL (Universal Resource Locator).
+This structure contains a number of read-only, pre-parsed
+fields, which make it easy to use the URL from C.
+</para>
+<para>
+It also derived from GObject, so you get the usual g_object_ref/unref
+and other usual benefits.
+</para>
+
+
+<!-- ##### ARG GskUrl:fragment ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskUrl:host ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskUrl:password ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskUrl:path ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskUrl:port ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskUrl:query ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GskUrl:user-name ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GskUrlScheme ##### -->
+<para>
+Types of URLs that are known.
+(This is an extensible enum-- you can allocate new enum values
+using gsk_url_scheme_get_unique()).
+</para>
+
+@GSK_URL_SCHEME_FILE: 
+The URL corresponds to a local file.
+@GSK_URL_SCHEME_HTTP: 
+The URL corresponds to HTTP-retrievable content.
+@GSK_URL_SCHEME_HTTPS: 
+The URL corresponds to HTTPS-retrievable content.
+HTTPS is secure HTTP:  it is just HTTP over SSL.
+@GSK_URL_SCHEME_FTP: 
+The URL corresponds to FTP-retrievable content.
+@GSK_URL_SCHEME_OTHER: 
+An unknown URL scheme was encountered.
+
+<!-- ##### MACRO GSK_URL_RESERVED_CHARSET ##### -->
+<para>
+[From RFC 2396, section 2.2.]
+Characters having specific meaning within a url; 
+these should be escaped to be passed on to the underlying scheme.
+</para>
+
+
+
+<!-- ##### MACRO GSK_URL_UNRESERVED_CHARSET ##### -->
+<para>
+[From RFC 2396, section 2.3.]
+Characters which do not normally need escaping within a URL.
+</para>
+
+
+
+<!-- ##### FUNCTION gsk_url_new ##### -->
+<para>
+
+</para>
+
+@spec: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_new_in_context ##### -->
+<para>
+
+</para>
+
+@spec: 
+@context: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_new_from_parts ##### -->
+<para>
+
+</para>
+
+@scheme: 
+@host: 
+@port: 
+@user_name: 
+@password: 
+@path: 
+@query: 
+@fragment: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_new_relative ##### -->
+<para>
+
+</para>
+
+@base_url: 
+@location: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_get_relative_path ##### -->
+<para>
+
+</para>
+
+@url: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_get_port ##### -->
+<para>
+
+</para>
+
+@url: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_decode ##### -->
+<para>
+
+</para>
+
+@encoded: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_decode_http ##### -->
+<para>
+
+</para>
+
+@encoded: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_encode ##### -->
+<para>
+
+</para>
+
+@decoded: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_encode_http ##### -->
+<para>
+
+</para>
+
+@decoded: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_url_is_valid_fragment ##### -->
+<para>
+
+</para>
+
+@str: 
+@bad_char_out: 
+
+
+<!-- ##### FUNCTION gsk_url_is_valid_generic_component ##### -->
+<para>
+
+</para>
+
+@str: 
+@bad_char_out: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_is_valid_hostname ##### -->
+<para>
+
+</para>
+
+@str: 
+@bad_char_out: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_url_is_valid_path ##### -->
+<para>
+
+</para>
+
+@str: 
+@bad_char_out: 
+
+
+<!-- ##### MACRO gsk_url_is_valid_query ##### -->
+<para>
+
+</para>
+
+@str: 
+@bad_char_out: 
+
+
+<!-- ##### FUNCTION gsk_url_split_form_urlencoded ##### -->
+<para>
+
+</para>
+
+@encoded_query: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_to_string ##### -->
+<para>
+
+</para>
+
+@url: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GskUrlSuccess ##### -->
+<para>
+Function to call with an input stream if the URL
+download request seems to be succeeding.
+</para>
+
+@stream: content stream of the data referenced
+by the URL which was passed to gsk_url_download().
+@user_data: data passed to gsk_url_download().
+
+
+<!-- ##### USER_FUNCTION GskUrlFailure ##### -->
+<para>
+Function to call if the URL
+download seems to be failing.
+</para>
+
+@error: the error that preventing the URL download from starting.
+@user_data: data passed to gsk_url_download().
+
+
+<!-- ##### FUNCTION gsk_url_download ##### -->
+<para>
+
+</para>
+
+@url: 
+@success_func: 
+@failure_func: 
+@user_data: 
+
+
+<!-- ##### USER_FUNCTION GskUrlParser ##### -->
+<para>
+Function to parse a string (of a given scheme)
+into a #GskUrl.  This is used to register new types
+of URL.  See gsk_url_scheme_get_unique().
+</para>
+
+@scheme: the type of URL, as determined by the first characters of the URL.
+@url: the whole URL.
+@data: data passed to gsk_url_scheme_get_unique().
+@Returns: a newly allocated URL, or NULL on a parse error.
+
+
+<!-- ##### USER_FUNCTION GskUrlToString ##### -->
+<para>
+Function to convert a #GskUrl into a NUL-terminated string.
+This is used to register new types
+of URL.  See gsk_url_scheme_get_unique().
+</para>
+
+@url: the URL to print.
+@data: data passed to gsk_url_scheme_get_unique().
+@Returns: a newly allocated C string, or NULL on error.
+
+
+<!-- ##### FUNCTION gsk_url_scheme_get_unique ##### -->
+<para>
+
+</para>
+
+@url_scheme: 
+@default_port: 
+@parse_func: 
+@print_func: 
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_hash ##### -->
+<para>
+
+</para>
+
+@url: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_equal ##### -->
+<para>
+
+</para>
+
+@a: 
+@b: 
+@Returns: 
+
+
+<!-- ##### STRUCT GskUrlDownload ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GskUrlDownloadMethod ##### -->
+<para>
+Function to begin downloading a given URL.
+</para>
+<para>
+A function which must eventually call gsk_url_download_fail()
+or gsk_url_download_success().  (Note: it may happen long after this
+function returns, but it is allowed to call these functions
+before returning as well).
+</para>
+<para>
+This function type is only used to register new methods for downloading URLs.
+</para>
+
+@download: the object representing the download.
+@download_data: data passed in to gsk_url_scheme_add_dl_method().
+
+
+<!-- ##### FUNCTION gsk_url_scheme_add_dl_method ##### -->
+<para>
+
+</para>
+
+@scheme: 
+@download_method: 
+@download_data: 
+
+
+<!-- ##### FUNCTION gsk_url_download_success ##### -->
+<para>
+
+</para>
+
+@download: 
+@stream: 
+
+
+<!-- ##### FUNCTION gsk_url_download_fail ##### -->
+<para>
+
+</para>
+
+@download: 
+@error: 
+
+
+<!-- ##### FUNCTION gsk_url_download_peek_url ##### -->
+<para>
+
+</para>
+
+@download: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_url_download_redirect ##### -->
+<para>
+
+</para>
+
+@download: 
+@new_url: 
+
+

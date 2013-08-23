@@ -1,0 +1,88 @@
+- GskBuffer profiling... currently we use 16 32k buffers...
+  is there any way to optimize this?
+- searchpath in dns is not obeyed (gsk-dns-client's client-task needs
+  a "searchpath_index" member that tries the global domain only
+  after all search paths.)
+- deal with raise() bug on RH9.0  (!= kill (getpid(), sig))
+- error handling (mostly marked by XXX/TODO flags)
+  - hunt down g_warnings and g_messages that should be GError returns
+- fix XXX marks in dns code
+- fix XXX marks in http code
+- add sufficient test code to GskMimeMultipartDecoder to remove
+  debugging prints
+- FTP support
+- mailto: URIs
+- basic tutorials need serious work. [simple-http-server is very misleading, should use gskhttpcontent]
+- BUILD: should check for zlib
+- TODO: contention on POST data:  right now, we buffer as much
+   data as the user feels like giving us... need to block the hook.
+- TODO: GskStreamConnection::handle_error() needs to NOT just warn, 
+  it needs to be adjustable (ie a signal or trap)
+  (or a bunch of bits to suppress certain errors, EPIPE, ECONNREFUSED etc)
+- optimization: use read_buffer() and write_buffer() in gskstreamconnection
+- http: Chunked-Body doesn't support a Trailer.
+- HTTP authentication.
+  - DONE: most of the structures and parsing are in place.
+    Still some TODOs in the parsing code that may require structural changes.
+    GskHttp{Request,Response} have the necessary members.
+  - Need methods to compute and check "authorization".
+    Hence digest does not even come close to working.
+  - Need to add support to gskhttpheader-output.c
+  - Need support in url-transfer-http (for client-side)
+  - Need support in GskHttpContent (for server-side)
+- missing HTTP headers:
+   Vary: *
+   Cache-Expires: Thu, 24 Mar 2005 13:11:58 GMT
+   Vary: Accept-Encoding, User-Agent
+   Via: 1.1 siterl10 (Redline Networks Web I/O Processor - T|X 3.2.18 0)
+   Expires: now
+   Expires: -1
+   Expires: 0
+   Content-Location: http://foo.com
+   Compression-Control: whitespace
+   Keep-Alive:
+   Proxy-Connection:
+- need list of commmon extensions that we don't want to be warned
+  about:  P3P, MicrosoftOfficeWebServer, Page-Completion-Status,
+  IISExport, test, MS-Author-Via
+
+
+- split gskrbtreemacros subparts into gsktreemacros.
+  the trick is that gsk_tree_insert() needs hooks to 
+  implement gsk_rbtree_insert(); likewise
+  for "remove".  otherwise, all other methods don't use the redness,
+  hence gsk_tree_XXX and gsk_rbtree_XXX are equivalent. 
+- gsk_tree_replace_node() [and rbtree variant]
+  
+- url_check_is_valid() needs conformance review
+- url_check_is_valid() must be called in all the constructor-pathways:
+  gsk_url_new(), gsk_url_new_relative(), gsk_url_new_from_pieces();
+  probably need a gsk_url_new_from_pieces_check() that
+  does this, since the non-_check version doesn't return an error.
+- caused a warning: (but aren't probably worth fixing)
+   From: NEWSWEB08
+   P3P: policyref="http://www.lycos.com/w3c/p3p.xml", CP="IDC DSP COR CURa ADMa DEVa CUSa PSAa IVAa CONo OUR IND UNI STA"
+   PICS-Label: (PICS-1.0 "http://www.rsac.org/ratingsv01.html" l on "2003.09.02T11:37-0700" exp "2004.09.02T12:00-0700" r (v 0 s 0 n 0 l 0))
+   P3P: CP="BUS CUR CONo FIN IVDo ONL OUR PHY SAMo TELo"
+- the malformed HTTP header flag:
+    Content-Type: text/html; charset!UTF-8
+  causes the parser to hang.
+- apparently, http headers can be continued on the next line,
+  if the next line starts with whitespace!
+  this needs fixing in gskhttpserver.c, gskhttpclient.c
+  and gskhttpheader-input.c.
+
+Someday:
+- GskHttpClientCache, to take advantage of Keep-Alive transparently.
+  XXX: instead integrate into GskUrlTransferHttp
+- MAIL support [IMAP and POP3/4 etc] [client first, then server]
+- RFC compliance sections in the docs would be awesome.
+
+need full test code:
+- GskHook basics [test all macros and basic interactions]
+- GskMemory tests [test hooking memory sources together]
+- GskHttpHeader tests: [test TEXT->PARSED->TEXT->PARSED->TEXT expectations]
+  [see test-http-header for beginnings]
+- GskHook recursion tests [test various reentrance conditions]
+- see the 'coverage' file output by utils/get-coverage.
+- test code for gskxmlrpcstream

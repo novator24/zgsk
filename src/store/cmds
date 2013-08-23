@@ -1,0 +1,7 @@
+for a in gskasynccache.c,1.1.2.3,1.1.2.4 gskstorageformat.c,1.1.2.1,1.1.2.2 gskstore.c,1.1.2.6,1.1.2.7 gskstreammap.c,1.1.2.1,1.1.2.2 gskvaluerequest.c,1.1.2.1,1.1.2.2
+do
+  f=`echo $a|sed -e 's/,.*//'`
+  r=`echo $a|sed -e 's/.*,//'`
+  o=`echo $a|sed -e 's/[^,]*,//' -e 's/,.*//'`
+  cvs diff -u -r$r -r$o $f
+done

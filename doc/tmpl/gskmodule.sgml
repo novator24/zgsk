@@ -1,0 +1,154 @@
+<!-- ##### SECTION Title ##### -->
+gskmodule
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskCompileContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GskModule ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gsk_compile_context_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_compile_context_add_cflags ##### -->
+<para>
+
+</para>
+
+@context: 
+@flags: 
+
+
+<!-- ##### FUNCTION gsk_compile_context_add_ldflags ##### -->
+<para>
+
+</para>
+
+@context: 
+@flags: 
+
+
+<!-- ##### FUNCTION gsk_compile_context_add_pkg ##### -->
+<para>
+
+</para>
+
+@context: 
+@pkg: 
+
+
+<!-- ##### FUNCTION gsk_compile_context_set_tmp_dir ##### -->
+<para>
+
+</para>
+
+@context: 
+@tmp_dir: 
+
+
+<!-- ##### FUNCTION gsk_compile_context_set_gdb ##### -->
+<para>
+
+</para>
+
+@context: 
+@support: 
+
+
+<!-- ##### FUNCTION gsk_compile_context_set_verbose ##### -->
+<para>
+
+</para>
+
+@context: 
+@support: 
+
+
+<!-- ##### FUNCTION gsk_compile_context_free ##### -->
+<para>
+
+</para>
+
+@context: 
+
+
+<!-- ##### FUNCTION gsk_module_compile ##### -->
+<para>
+
+</para>
+
+@context: 
+@n_sources: 
+@sources: 
+@flags: 
+@delete_sources: 
+@program_output: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_module_open ##### -->
+<para>
+
+</para>
+
+@filename: 
+@flags: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_module_ref ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_module_unref ##### -->
+<para>
+
+</para>
+
+@module: 
+
+
+<!-- ##### FUNCTION gsk_module_lookup ##### -->
+<para>
+
+</para>
+
+@module: 
+@symbol_name: 
+@Returns: 
+
+

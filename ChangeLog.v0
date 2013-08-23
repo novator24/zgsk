@@ -1,0 +1,79 @@
+gsk (0.3.7)
+
+  * added hashing (gskhash) code
+  * added process spawning (gskspawn) code
+
+ -- Dave Benson <daveb@ffem.org>  Fri, 21 Sep 2001 14:40:22 -0700
+
+gsk (0.3.6)
+
+  * removed gsk_main_loop_close()
+  * rewrote GskMainLoop hierarchy: from 4924 lines to 3436 lines.
+
+ -- Dave Benson <daveb@ffem.org> to be released
+
+gsk (0.3.5)
+
+  * thread safe gtk
+
+-- Paul Mineiro <paul@mineiro.com> Sat Aug 18 01:15:26 PDT 2001
+
+  * gsk_main_loop_close and close_handlers.
+  * kqueue() fixes for recent BSD's
+
+ -- Dave Benson <daveb@ffem.org> to be released
+
+gsk (0.3.4)
+
+  * GskMainLoop::quit is now a signal.
+
+ -- Dave Benson <daveb@ffem.org> to be released
+
+gsk (0.3.3)
+
+  * significantly revised the lisp-marshalling, in particular
+    moving some of the code into a generic-marshalling routine.
+    (See gskgenericmarshal.h)
+    - in particular note that GskLispRunner and GskLispCompiler
+      (which are function-typedefs) now take another parameter,
+      `marshal_data'.
+    - remove GskLispArgSpec from the interface
+    - gsk-generate-marshals is distributed in the developers' packages.
+    - double variants of all the operators
+  * added gsk_gtk_{arg_destruct_array,arg_value_size}
+  * improved gsk_gtk_type_from_name
+
+ -- Dave Benson <daveb@ffem.org>  Sat,  2 Jun 2001 19:49:37 -0700
+
+gsk (0.3.2)
+
+  * better aclocal diagnostics
+  * the COPYING file used to contain the GPL.  We always intended to
+    use the LGPL.  Now the COPYING file contains the LGPL.
+
+ -- Dave Benson <daveb@ffem.org>  Wed, 30 May 2001 21:23:57 -0700
+
+gsk (0.3.1)
+
+  * support for BOOL in skeleton (daveb)
+  * lisp-like syntax support (daveb)
+  * gskghelpers: useful function only dependent on glib1.2 (daveb)
+  * gsk_main_loop_run_foreground (pmineiro)
+  * gsk_main_loop_add_timer_absolute (daveb)
+  * bug fixes
+    - destroy from within read or write callback was unsafe in
+      some circumstances from ActorStreamSocket
+    - provide gsk_gtk_signal_query, for proper memory wrapping
+    - gsk_thread_pool_destroy_now now calls gsk_main_loop_remove_source,
+      which was causing a memory leak in GskMainLoopDevPoll.
+    - xml-serialization of objects now goes through the parent types
+
+ -- Dave Benson <daveb@ffem.org> Sun, 20 May 2001 17:18:28 -0700
+
+0.3.0:  first public release
+0.2.3:  adds interfaces
+        reentrance bugs in gskactorparser
+0.2.2:  bug fixes
+0.2.0:  Added gsk_actor_parser_block_input ()
+        and gsk_actor_parser_unblock_input (), other _block
+	improvements wrt on_parse.

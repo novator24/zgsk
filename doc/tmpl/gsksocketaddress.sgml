@@ -1,0 +1,247 @@
+<!-- ##### SECTION Title ##### -->
+Socket Addresses.
+
+<!-- ##### SECTION Short_Description ##### -->
+The location of a socket endpoint, in some domain.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+This is a #GObject equivalent of sockaddr_t.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskSocketAddressClass ##### -->
+<para>
+The base-class for all types of socket-addresses.
+The members of this class should only be used by derived classes.
+</para>
+
+@object_class: the base-class.
+@sizeof_native_address: how big is a socket-address of
+this type in the native OS representation.
+@protocol_family: native PF_* macro value for this type of address.
+@address_family: native AF_* macro value for this type of address.
+@to_native: Convert to a native struct sockaddr* type representation.
+@from_native: Convert from a native struct sockaddr* type representation.
+@to_string: Convert to a human-readable ASCII representation.
+@equals: Test if this is equal to another #GskSocketAddress
+of this exact type are equal.
+@hash: Compute a hash-value based on this socket.
+
+<!-- ##### STRUCT GskSocketAddress ##### -->
+<para>
+The base instance for all socket addresses.
+</para>
+
+
+<!-- ##### STRUCT GskSocketAddressIpv4 ##### -->
+<para>
+An IPv4 Socket Address.  This is a 4-byte host IP address
+and a 2-byte port number (as a guint16).
+</para>
+
+
+<!-- ##### STRUCT GskSocketAddressLocal ##### -->
+<para>
+A local socket, often called a UNIX-domain socket.
+</para>
+
+
+<!-- ##### STRUCT GskSocketAddressIpv6 ##### -->
+<para>
+An IPv6 Socket Address.  For now, the IPv6 implementation is unfinished.
+</para>
+
+
+<!-- ##### STRUCT GskSocketAddressEthernet ##### -->
+<para>
+
+</para>
+
+@socket_address: 
+@mac_address: 
+
+<!-- ##### FUNCTION gsk_socket_address_from_native ##### -->
+<para>
+
+</para>
+
+@native_data: 
+@native_size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_protocol_family ##### -->
+<para>
+
+</para>
+
+@address: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_address_family ##### -->
+<para>
+
+</para>
+
+@address: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_sizeof_native ##### -->
+<para>
+
+</para>
+
+@address: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_to_native ##### -->
+<para>
+
+</para>
+
+@address: 
+@output: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_to_string ##### -->
+<para>
+
+</para>
+
+@address: 
+@Returns: 
+
+
+<!-- ##### MACRO gsk_socket_address_ipv4_localhost ##### -->
+<para>
+Create a new address pointing to this host,
+on the given port.
+</para>
+
+@port: the port on the local host the address should refer to.
+@Returns: the newly allocated #GskSocketAddressIpv4.
+
+
+<!-- ##### FUNCTION gsk_socket_address_ipv4_new ##### -->
+<para>
+
+</para>
+
+@ip_address: 
+@port: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_ipv6_new ##### -->
+<para>
+
+</para>
+
+@address: 
+@port: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_ethernet_new ##### -->
+<para>
+
+</para>
+
+@mac_addr: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_local_new ##### -->
+<para>
+
+</para>
+
+@path: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_system_supports_ipv6 ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_register_subclass ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_connect_fd ##### -->
+<para>
+
+</para>
+
+@address: 
+@is_connected: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_finish_fd ##### -->
+<para>
+
+</para>
+
+@fd: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_equals ##### -->
+<para>
+
+</para>
+
+@address_a_ptr: 
+@address_b_ptr: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_socket_address_hash ##### -->
+<para>
+
+</para>
+
+@address_ptr: 
+@Returns: 
+
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_REMOTE_QUARK ##### -->
+<para>
+Used with g_object_set_qdata() to store
+the remote-address of a stream.
+</para>
+
+
+
+<!-- ##### MACRO GSK_SOCKET_ADDRESS_LOCAL_QUARK ##### -->
+<para>
+Used with g_object_set_qdata() to store
+the local-address of a stream.
+</para>
+
+
+

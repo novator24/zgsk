@@ -1,0 +1,118 @@
+<refentry id="tutorial-client">
+<refmeta>
+<refentrytitle>Writing a Generic Client</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Tutorial: Writing a client</refname><refpurpose>How to write a client</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Writing a Client</title>
+<para>
+This section of the tutorial describes how to write a client.
+</para>
+<para>
+The first step in implementing a client is figuring out how to
+determine the host and port to connect to:
+<itemizedlist>
+<listitem><para>Is there a default host?  If not, the host should either be
+determined programmatically (eg via an environment variable, a configuration
+file, a command-line parameter, or some other way), or the host may be a standard IP address or
+name.  You may have to wait on DNS lookups; use the gsk_name_resolve function to
+lookup the name.
+</para></listitem>
+<listitem><para>
+The port often defaults to a service-specific default port.
+Traditionally <filename>/etc/services</filename> gives
+a map from the port number to service name.
+More often, the default port is just hardcoded into the program.
+</para></listitem>
+</itemizedlist>
+</para>
+  
+</refsect1>
+
+<refsect1>
+<title>Example:  A TCP-Client API</title>
+<para>
+Let us suppose that you have a server
+that responds to NUL-terminated requests
+with NUL-terminated responses.  You want to make
+a client API and a sample client program.
+</para>
+<para>First you have to design the client API:
+<programlisting><![CDATA[
+typedef struct _MyClient MyClient;
+
+MyClient *my_client_new         (const char    *hostname,
+                                 int            port);
+void      my_client_trap_errors (MyClient      *client,
+                                 MyClientErrorFunc func,
+				 gpointer       data,
+				 GDestroyNotify destroy);
+void      my_client_request     (MyClient      *client,
+                                 const char    *request,
+				 MyClientResponseCallback func,
+				 gpointer       data,
+				 GDestroyNotify destroy);
+void      my_client_destroy     (MyClient      *client);
+]]></programlisting>
+</para>
+<para>Then you have to design the <structname>MyClient</structname> data structure.
+We will keep a buffer of data that hasn't made it out to the server,
+and a queue of response callbacks, information about the actual connection,
+and the error-handlers.
+<programlisting><![CDATA[
+struct _MyClient
+{
+  GskNameResolverTask *name_lookup;
+  int port;
+  GskStream *connection;
+
+  GskBuffer outgoing;
+  GskBuffer incoming;
+
+  GQueue *response_callbacks;
+
+  MyClientErrorFunc func;
+  gpointer       data;
+  GDestroyNotify destroy;
+};
+]]></programlisting>
+</para>
+<para>
+TODO: Implement it!
+</para>
+<refsect2><title>Sample Use of API</title>
+<para>
+ Whenever you make an API like that, you should use it in a trivial test program.
+ This is vital for testing and debugging.
+</para>
+<para>In that spirit, we provide a trivial use of the <structname>MyClient</structname> API.
+<programlisting><![CDATA[
+#include "my-client.h"
+static void
+handle_response (const char *response, gpointer data)
+{
+  g_print ("%s\n", response);
+  gsk_main_quit ();
+}
+int main (int argc, char **argv)
+{
+  gsk_init (&argc, &argv, NULL);
+  if (argc != 4)
+    g_error ("usage: %s HOST PORT QUERY", argv[0]);
+  client = my_client_new (argv[1], atoi (argv[2]));
+  my_client_request (client, argv[3], handle_response, NULL, NULL);
+  return gsk_main_run ();
+}
+]]></programlisting>
+</para>
+</refsect2>
+
+</refsect1>
+
+</refentry>

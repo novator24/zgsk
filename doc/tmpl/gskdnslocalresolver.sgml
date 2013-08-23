@@ -1,0 +1,71 @@
+<!-- ##### SECTION Title ##### -->
+gskdnslocalresolver
+
+<!-- ##### SECTION Short_Description ##### -->
+a DNS resolver which uses just a local resource-record cache.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A DNS resolver which uses nothing more than a #GskDnsRRCache.
+This can be used to provide a backend for a server.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskDnsLocalResolverClass ##### -->
+<para>
+Class for local DNS resolvers.
+</para>
+
+
+<!-- ##### STRUCT GskDnsLocalResolver ##### -->
+<para>
+Instance for local DNS resolvers.
+</para>
+
+
+<!-- ##### ARG GskDnsLocalResolver:resource-cache ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gsk_dns_local_resolver_new ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@Returns: 
+
+
+<!-- ##### ENUM GskDnsLocalResult ##### -->
+<para>
+Possible results from a local DNS query.
+</para>
+
+@GSK_DNS_LOCAL_NO_DATA: 
+No relevant data was found.
+@GSK_DNS_LOCAL_PARTIAL_DATA: 
+Some data was found, but not a complete answer.
+@GSK_DNS_LOCAL_NEGATIVE: 
+A definite negative answer was found.
+@GSK_DNS_LOCAL_SUCCESS: 
+All requested data was found successfully.
+
+<!-- ##### FUNCTION gsk_dns_local_resolver_answer ##### -->
+<para>
+
+</para>
+
+@rr_cache: 
+@question: 
+@results: 
+@Returns: 
+
+

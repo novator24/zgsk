@@ -1,0 +1,15 @@
+#! /bin/sh
+
+set -x
+url="http://www.google.com/"
+outfile="ud-$$.out"
+./url-download "$url" > "$outfile" || {
+  echo "error running url-download on $url" 1>&2
+  exit 1
+}
+grep -qi google "$outfile" || {
+  echo "probably did not download $url correctly." 1>&2
+  exit 1
+}
+rm -f "$outfile"
+

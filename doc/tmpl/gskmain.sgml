@@ -1,0 +1,43 @@
+<!-- ##### SECTION Title ##### -->
+Trivial Main Functions.
+
+<!-- ##### SECTION Short_Description ##### -->
+These are trivial interfaces to the main-loop.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+These function can be used to run the main loop
+for a fixed duration, or to quit / exit the program.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gsk_main_run ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_main_quit ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gsk_main_exit ##### -->
+<para>
+
+</para>
+
+@exit_status: 
+
+

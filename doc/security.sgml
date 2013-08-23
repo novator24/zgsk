@@ -1,0 +1,21 @@
+<!doctype book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" [
+]>
+<book id="security">
+
+<bookinfo>
+  <title>Security Considerations with GSK</title>
+  <RELEASEINFO>$Revision: 1.1.2.1 $</RELEASEINFO>
+  <revhistory>
+    <revision>
+      <revnumber>$Revision: 1.1.2.1 $</revnumber>
+      <date>$Date: 2003/10/23 15:13:38 $</date>
+    </revision>
+  </revhistory>
+</bookinfo>
+
+<toc>
+</toc>
+
+<chapter id="overview"><title>Overview</title>
+</chapter>
+</book>

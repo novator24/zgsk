@@ -1,0 +1,109 @@
+<!-- ##### SECTION Title ##### -->
+gskthreadpool
+
+<!-- ##### SECTION Short_Description ##### -->
+For running things in other threads.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A thread pool is an optimization which allows many
+small jobs to be run in a background thread.
+Our thread pools are tied to main-loops, and 
+the view process termination as
+just another kind of event.
+</para>
+<para>
+Task done notification is run in the main-thread.
+The Main-thread is the thread to which the main-loop
+belongs, and is the only thread from
+which the #GskThreadPool methods (eg #gsk_thread_pool_push)
+may be run.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GskThreadPool ##### -->
+<para>
+An opaque structure which houses a number of worker threads.
+</para>
+
+
+<!-- ##### USER_FUNCTION GskThreadPoolRunFunc ##### -->
+<para>
+A function to be run in the background thread.
+It may create a return value that will be
+examined in the main-thread.
+</para>
+<para>
+Anytime run_data is used in this thread must be thread-safe,
+meaning: either only the background thread is accessing it,
+or it can be guarded by mutexes.
+(is that really the plural of "mutex"?)
+</para>
+
+@run_data: data that was passed to gsk_thread_pool_push().
+@Returns: the result_data, which will be passed
+to the #GskThreadPoolResultFunc.
+
+
+<!-- ##### USER_FUNCTION GskThreadPoolResultFunc ##### -->
+<para>
+A function to be run in the main thread with the
+result of the background processing.
+</para>
+
+@run_data: data that was passed to gsk_thread_pool_push().
+@result_data: data that was returned by the #GskThreadPoolRunFunc.
+
+
+<!-- ##### USER_FUNCTION GskThreadPoolDestroyFunc ##### -->
+<para>
+Function to run in the main thread after #GskThreadPoolRunFunc is finished,
+or if the thread-pool is destroyed before the
+task can be started.
+</para>
+
+@run_data: data that was passed to gsk_thread_pool_push().
+@result_data: data that was returned by the #GskThreadPoolRunFunc,
+or #NULL if the task had not been started before the thread-pool
+was destroyed.
+
+
+<!-- ##### FUNCTION gsk_thread_pool_new ##### -->
+<para>
+
+</para>
+
+@main_loop: 
+@max_threads: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gsk_thread_pool_push ##### -->
+<para>
+
+</para>
+
+@pool: 
+@run: 
+@handle_result: 
+@run_data: 
+@destroy: 
+
+
+<!-- ##### FUNCTION gsk_thread_pool_destroy ##### -->
+<para>
+
+</para>
+
+@pool: 
+@destroy: 
+@destroy_data: 
+
+
