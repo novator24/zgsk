@@ -44,9 +44,9 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libgsk_control_la_LIBADD =
-am_libgsk_control_la_OBJECTS = gskcontrolserver.lo gskcontrolclient.lo
-libgsk_control_la_OBJECTS = $(am_libgsk_control_la_OBJECTS)
+libzgsk_control_la_LIBADD =
+am_libzgsk_control_la_OBJECTS = gskcontrolserver.lo gskcontrolclient.lo
+libzgsk_control_la_OBJECTS = $(am_libzgsk_control_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -59,8 +59,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libgsk_control_la_SOURCES)
-DIST_SOURCES = $(libgsk_control_la_SOURCES)
+SOURCES = $(libzgsk_control_la_SOURCES)
+DIST_SOURCES = $(libzgsk_control_la_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -203,10 +203,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_LTLIBRARIES = libgsk-control.la
+noinst_LTLIBRARIES = libzgsk-control.la
 pkginclude_controldir = $(includedir)/gsk-1.0/gsk/control
 INCLUDES = @GLIB_CFLAGS@ @GSK_DEBUG_CFLAGS@
-libgsk_control_la_SOURCES = \
+libzgsk_control_la_SOURCES = \
 gskcontrolserver.c \
 gskcontrolclient.c
 
@@ -256,8 +256,8 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libgsk-control.la: $(libgsk_control_la_OBJECTS) $(libgsk_control_la_DEPENDENCIES) 
-	$(LINK)  $(libgsk_control_la_OBJECTS) $(libgsk_control_la_LIBADD) $(LIBS)
+libzgsk-control.la: $(libzgsk_control_la_OBJECTS) $(libzgsk_control_la_DEPENDENCIES) 
+	$(LINK)  $(libzgsk_control_la_OBJECTS) $(libzgsk_control_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

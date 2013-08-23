@@ -44,12 +44,12 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libgsk_http_la_LIBADD =
-am_libgsk_http_la_OBJECTS = gskhttpclient.lo gskhttpcontent.lo \
+libzgsk_http_la_LIBADD =
+am_libzgsk_http_la_OBJECTS = gskhttpclient.lo gskhttpcontent.lo \
 	gskhttpheader.lo gskhttpheader-input.lo \
 	gskhttpheader-output.lo gskhttprequest.lo gskhttpresponse.lo \
 	gskhttpserver.lo gskprefixtree.lo
-libgsk_http_la_OBJECTS = $(am_libgsk_http_la_OBJECTS)
+libzgsk_http_la_OBJECTS = $(am_libzgsk_http_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -62,8 +62,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libgsk_http_la_SOURCES)
-DIST_SOURCES = $(libgsk_http_la_SOURCES)
+SOURCES = $(libzgsk_http_la_SOURCES)
+DIST_SOURCES = $(libzgsk_http_la_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -206,10 +206,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_LTLIBRARIES = libgsk-http.la
+noinst_LTLIBRARIES = libzgsk-http.la
 pkginclude_httpdir = $(includedir)/gsk-1.0/gsk/http
 INCLUDES = @GLIB_CFLAGS@ @GSK_DEBUG_CFLAGS@
-libgsk_http_la_SOURCES = \
+libzgsk_http_la_SOURCES = \
 gskhttpclient.c \
 gskhttpcontent.c \
 gskhttpheader.c \
@@ -271,8 +271,8 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libgsk-http.la: $(libgsk_http_la_OBJECTS) $(libgsk_http_la_DEPENDENCIES) 
-	$(LINK)  $(libgsk_http_la_OBJECTS) $(libgsk_http_la_LIBADD) $(LIBS)
+libzgsk-http.la: $(libzgsk_http_la_OBJECTS) $(libzgsk_http_la_DEPENDENCIES) 
+	$(LINK)  $(libzgsk_http_la_OBJECTS) $(libzgsk_http_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

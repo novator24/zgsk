@@ -53,14 +53,14 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(gskincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-@HAVE_OPENSSL_TRUE@am__DEPENDENCIES_1 = ssl/libgsk-ssl.la
-libgsk_1_0_la_DEPENDENCIES = main-loops/libgsk-mainloops.la \
-	dns/libgsk-dns.la common/libgsk-common.la http/libgsk-http.la \
-	mime/libgsk-mime.la $(am__DEPENDENCIES_1) url/libgsk-url.la \
-	xmlrpc/libgsk-xmlrpc.la zlib/libgsk-zlib.la \
-	hash/libgsk-hash.la control/libgsk-control.la \
-	store/libgsk-store.la
-am_libgsk_1_0_la_OBJECTS = inlines.lo gskbuffer.lo gskbufferstream.lo \
+@HAVE_OPENSSL_TRUE@am__DEPENDENCIES_1 = ssl/libzgsk-ssl.la
+libzgsk_1_0_la_DEPENDENCIES = main-loops/libzgsk-mainloops.la \
+	dns/libzgsk-dns.la common/libzgsk-common.la http/libzgsk-http.la \
+	mime/libzgsk-mime.la $(am__DEPENDENCIES_1) url/libzgsk-url.la \
+	xmlrpc/libzgsk-xmlrpc.la zlib/libzgsk-zlib.la \
+	hash/libzgsk-hash.la control/libzgsk-control.la \
+	store/libzgsk-store.la
+am_libzgsk_1_0_la_OBJECTS = inlines.lo gskbuffer.lo gskbufferstream.lo \
 	gskdaemonize.lo gskdebug.lo gskdebugalloc.lo gskerrno.lo \
 	gskerror.lo gskfork.lo gskghelpers.lo gskhook.lo gskinit.lo \
 	gskinlines.lo gskio.lo gskipv4.lo gsklog.lo \
@@ -77,10 +77,10 @@ am_libgsk_1_0_la_OBJECTS = inlines.lo gskbuffer.lo gskbufferstream.lo \
 	gskstreamtransferrequest.lo gskstreamwatchdog.lo \
 	gsktable-flat.lo gsktable-options.lo gsktable.lo \
 	gskthreadpool.lo gsktree.lo gsktypes.lo gskutils.lo
-libgsk_1_0_la_OBJECTS = $(am_libgsk_1_0_la_OBJECTS)
-libgsk_1_0_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+libzgsk_1_0_la_OBJECTS = $(am_libzgsk_1_0_la_OBJECTS)
+libzgsk_1_0_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(libgsk_1_0_la_LDFLAGS) $(LDFLAGS) -o $@
+	$(libzgsk_1_0_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -93,8 +93,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libgsk_1_0_la_SOURCES)
-DIST_SOURCES = $(libgsk_1_0_la_SOURCES)
+SOURCES = $(libzgsk_1_0_la_SOURCES)
+DIST_SOURCES = $(libzgsk_1_0_la_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -244,7 +244,7 @@ top_srcdir = @top_srcdir@
 @HAVE_OPENSSL_FALSE@ssl_dirs = 
 @HAVE_OPENSSL_TRUE@ssl_dirs = ssl
 @HAVE_OPENSSL_FALSE@ssl_libs = 
-@HAVE_OPENSSL_TRUE@ssl_libs = ssl/libgsk-ssl.la
+@HAVE_OPENSSL_TRUE@ssl_libs = ssl/libzgsk-ssl.la
 composite_headers = \
 gsk.h \
 gskhttp.h \
@@ -253,7 +253,7 @@ gskdns.h
 
 SUBDIRS = main-loops common dns zlib $(ssl_dirs) hash mime http xmlrpc url store control . programs tests
 INCLUDES = @GLIB_CFLAGS@ @GSK_DEBUG_CFLAGS@
-gskincludedir = $(includedir)/gsk-1.0/gsk
+gskincludedir = $(includedir)/zgsk-1.0/zgsk
 gskinclude_HEADERS = \
 $(composite_headers) \
 gskbuffer.h \
@@ -312,8 +312,8 @@ gsktree.h \
 gsktypes.h \
 gskutils.h
 
-lib_LTLIBRARIES = libgsk-1.0.la
-libgsk_1_0_la_SOURCES = \
+lib_LTLIBRARIES = libzgsk-1.0.la
+libzgsk_1_0_la_SOURCES = \
 inlines.c \
 gskbuffer.c \
 gskbufferstream.c \
@@ -376,20 +376,20 @@ gsktable-implement-run-merge-task.inc.c \
 debug.h \
 cycle.h
 
-libgsk_1_0_la_LDFLAGS = @GLIB_LIBS@
-libgsk_1_0_la_LIBADD = \
-main-loops/libgsk-mainloops.la \
-dns/libgsk-dns.la \
-common/libgsk-common.la \
-http/libgsk-http.la \
-mime/libgsk-mime.la \
+libzgsk_1_0_la_LDFLAGS = @GLIB_LIBS@
+libzgsk_1_0_la_LIBADD = \
+main-loops/libzgsk-mainloops.la \
+dns/libzgsk-dns.la \
+common/libzgsk-common.la \
+http/libzgsk-http.la \
+mime/libzgsk-mime.la \
 $(ssl_libs) \
-url/libgsk-url.la \
-xmlrpc/libgsk-xmlrpc.la \
-zlib/libgsk-zlib.la \
-hash/libgsk-hash.la \
-control/libgsk-control.la \
-store/libgsk-store.la
+url/libzgsk-url.la \
+xmlrpc/libzgsk-xmlrpc.la \
+zlib/libzgsk-zlib.la \
+hash/libzgsk-hash.la \
+control/libzgsk-control.la \
+store/libzgsk-store.la
 
 BUILT_SOURCES = gskmemorybarrier.h gsktable-implementations-generated.c
 EXTRA_DIST = gen-gsk-table-includes.pl
@@ -473,8 +473,8 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libgsk-1.0.la: $(libgsk_1_0_la_OBJECTS) $(libgsk_1_0_la_DEPENDENCIES) 
-	$(libgsk_1_0_la_LINK) -rpath $(libdir) $(libgsk_1_0_la_OBJECTS) $(libgsk_1_0_la_LIBADD) $(LIBS)
+libzgsk-1.0.la: $(libzgsk_1_0_la_OBJECTS) $(libzgsk_1_0_la_DEPENDENCIES) 
+	$(libzgsk_1_0_la_LINK) -rpath $(libdir) $(libzgsk_1_0_la_OBJECTS) $(libzgsk_1_0_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

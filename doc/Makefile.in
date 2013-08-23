@@ -221,7 +221,7 @@ extra_files =
 # CFLAGS and LDFLAGS for compiling scan program. Only needed if your app/lib
 # contains GtkObjects/GObjects and you want to document signals and properties.
 GTKDOC_CFLAGS = @GLIB_CFLAGS@ -g -I../src
-GTKDOC_LIBS = $(top_builddir)/src/libgsk-1.0.la
+GTKDOC_LIBS = $(top_builddir)/src/libzgsk-1.0.la
 SCANGOBJ_OPTIONS = --type-init-func="gsk_init_without_threads(&argc, &argv);"
 
 # If you need to override some of the declarations, place them in the

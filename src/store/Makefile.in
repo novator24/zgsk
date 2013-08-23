@@ -44,12 +44,12 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libgsk_store_la_LIBADD =
-am_libgsk_store_la_OBJECTS = gskasynccache.lo gskfilestreammap.lo \
+libzgsk_store_la_LIBADD =
+am_libzgsk_store_la_OBJECTS = gskasynccache.lo gskfilestreammap.lo \
 	gskgtypeloader.lo gskstorageformat.lo gskstore.lo \
 	gskstreammap.lo gskvaluerequest.lo gskxmlformat.lo \
 	gskxmlvaluereader.lo gskxmlvaluewriter.lo
-libgsk_store_la_OBJECTS = $(am_libgsk_store_la_OBJECTS)
+libzgsk_store_la_OBJECTS = $(am_libzgsk_store_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -62,8 +62,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libgsk_store_la_SOURCES)
-DIST_SOURCES = $(libgsk_store_la_SOURCES)
+SOURCES = $(libzgsk_store_la_SOURCES)
+DIST_SOURCES = $(libzgsk_store_la_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -206,10 +206,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_LTLIBRARIES = libgsk-store.la
+noinst_LTLIBRARIES = libzgsk-store.la
 pkginclude_storedir = $(includedir)/gsk-1.0/gsk/store
 INCLUDES = @GLIB_CFLAGS@ @GSK_DEBUG_CFLAGS@
-libgsk_store_la_SOURCES = \
+libzgsk_store_la_SOURCES = \
 gskasynccache.c \
 gskfilestreammap.c \
 gskgtypeloader.c \
@@ -275,8 +275,8 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libgsk-store.la: $(libgsk_store_la_OBJECTS) $(libgsk_store_la_DEPENDENCIES) 
-	$(LINK)  $(libgsk_store_la_OBJECTS) $(libgsk_store_la_LIBADD) $(LIBS)
+libzgsk-store.la: $(libzgsk_store_la_OBJECTS) $(libzgsk_store_la_DEPENDENCIES) 
+	$(LINK)  $(libzgsk_store_la_OBJECTS) $(libzgsk_store_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
