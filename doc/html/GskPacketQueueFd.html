@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskPacketQueueFd</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch04.html" title="Standard Implementations">
+<link rel="prev" href="ch04.html" title="Standard Implementations">
+<link rel="next" href="GskStreamFd.html" title="GskStreamFd">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch04.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskStreamFd.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskPacketQueueFd.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskPacketQueueFd.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskPacketQueueFd.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#GskPacketQueueFd.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskPacketQueueFd"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskPacketQueueFd.top_of_page"></a>GskPacketQueueFd</span></h2>
+<p>GskPacketQueueFd — A PacketQueue based on a file descriptor.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskPacketQueueFd.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskPacketQueueFd.html#GskPacketQueueFd-struct" title="GskPacketQueueFd">GskPacketQueueFd</a>;
+<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *    <a class="link" href="GskPacketQueueFd.html#gsk-packet-queue-fd-new" title="gsk_packet_queue_fd_new ()">gsk_packet_queue_fd_new</a>             (int fd);
+<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *    <a class="link" href="GskPacketQueueFd.html#gsk-packet-queue-fd-new-by-family" title="gsk_packet_queue_fd_new_by_family ()">gsk_packet_queue_fd_new_by_family</a>   (int addr_family,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *    <a class="link" href="GskPacketQueueFd.html#gsk-packet-queue-fd-new-bound" title="gsk_packet_queue_fd_new_bound ()">gsk_packet_queue_fd_new_bound</a>       (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskPacketQueueFd.html#gsk-packet-queue-fd-set-broadcast" title="gsk_packet_queue_fd_set_broadcast ()">gsk_packet_queue_fd_set_broadcast</a>   (<a class="link" href="GskPacketQueueFd.html" title="GskPacketQueueFd">GskPacketQueueFd</a> *packet_queue_fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> allow_broadcast,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueueFd.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+         +----<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a>
+               +----GskPacketQueueFd
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueueFd.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GskPacketQueueFd.html#GskPacketQueueFd--file-descriptor" title='The "file-descriptor" property'>file-descriptor</a>"          GskFd                 : Read / Write / Construct Only
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueueFd.description"></a><h2>Description</h2>
+<p>
+A datagram client or server.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueueFd.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskPacketQueueFd-struct"></a><h3>GskPacketQueueFd</h3>
+<pre class="programlisting">typedef struct _GskPacketQueueFd GskPacketQueueFd;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-fd-new"></a><h3>gsk_packet_queue_fd_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *    gsk_packet_queue_fd_new             (int fd);</pre>
+<p>
+Create a new <a class="link" href="GskPacketQueue.html" title="Datagram I/O"><span class="type">GskPacketQueue</span></a> from an already opened
+file-descriptor.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> the datagram socket file-descriptor.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new packet-queue.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-fd-new-by-family"></a><h3>gsk_packet_queue_fd_new_by_family ()</h3>
+<pre class="programlisting"><a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *    gsk_packet_queue_fd_new_by_family   (int addr_family,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a new Packet Queue using a newly opened datagram
+socket of a given address family.  The address family
+is the sequence of AF_ defines in the header &amp;lt;sys/socket.h&amp;gt;
+on most unices.
+</p>
+<p>
+The address family of a <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a> may be found
+using <a class="link" href="GskSocketAddress.html#gsk-socket-address-protocol-family" title="gsk_socket_address_protocol_family ()"><code class="function">gsk_socket_address_protocol_family()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>addr_family</code></em> :</span></p></td>
+<td> the system-specific address family.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional pointer to an error to set if things go wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new packet-queue, or NULL if there is a problem creating the socket.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-fd-new-bound"></a><h3>gsk_packet_queue_fd_new_bound ()</h3>
+<pre class="programlisting"><a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *    gsk_packet_queue_fd_new_bound       (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a new Packet Queue using a newly opened datagram
+socket which is bound to a given address.
+</p>
+<p>
+Note that socket address space for TCP and UDP is
+separate, so it's allowed (and sometimes encouraged)
+to bind to the same port for both a packet queue,
+and a stream-listener.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the address to bind to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional pointer to an error to set if things go wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new packet-queue, or NULL if there is a problem creating the socket or binding.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-fd-set-broadcast"></a><h3>gsk_packet_queue_fd_set_broadcast ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_packet_queue_fd_set_broadcast   (<a class="link" href="GskPacketQueueFd.html" title="GskPacketQueueFd">GskPacketQueueFd</a> *packet_queue_fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> allow_broadcast,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Changes the operating-system-level flag of whether
+sends and receives of broadcast packets are allowed
+on datagram sockets.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet_queue_fd</code></em> :</span></p></td>
+<td> the packet-queue to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>allow_broadcast</code></em> :</span></p></td>
+<td> whether to allow (TRUE) or disallow broadcast sends
+and receives.  The default for a new datagram socket is to
+disallow broadcast packets.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional address of an error to set if things go wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the operation was successful.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueueFd.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskPacketQueueFd--file-descriptor"></a><h3>The <code class="literal">"file-descriptor"</code> property</h3>
+<pre class="programlisting">  "file-descriptor"          GskFd                 : Read / Write / Construct Only</pre>
+<p>for reading and/or writing.</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

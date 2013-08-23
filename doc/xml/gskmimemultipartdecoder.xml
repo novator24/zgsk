@@ -1,0 +1,256 @@
+<refentry id="gsk-GskMimeMultipartDecoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskMimeMultipartDecoder.top_of_page">GskMimeMultipartDecoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskMimeMultipartDecoder</refname>
+<refpurpose>read Content-Type multipart/*.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskMimeMultipartDecoder.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskMimeMultipartDecoderHook">*GskMimeMultipartDecoderHook</link>)      (<link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> *multipart_decoder);
+enum                <link linkend="GskMimeMultipartDecoderMode">GskMimeMultipartDecoderMode</link>;
+                    <link linkend="GskMimeMultipartDecoderClass">GskMimeMultipartDecoderClass</link>;
+                    <link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link>;
+<link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> * <link linkend="gsk-mime-multipart-decoder-new">gsk_mime_multipart_decoder_new</link>
+                                                        (<link linkend="char">char</link> **kv_pairs);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-decoder-set-mode">gsk_mime_multipart_decoder_set_mode</link> (<link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> *decoder,
+                                                         <link linkend="GskMimeMultipartDecoderMode">GskMimeMultipartDecoderMode</link> mode);
+<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> * <link linkend="gsk-mime-multipart-decoder-get-piece">gsk_mime_multipart_decoder_get_piece</link>
+                                                        (<link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> *decoder);
+#define             <link linkend="gsk-mime-multipart-decoder-trap">gsk_mime_multipart_decoder_trap</link>     (multipart_decoder, func, shutdown, data, destroy)
+#define             <link linkend="gsk-mime-multipart-decoder-untrap">gsk_mime_multipart_decoder_untrap</link>   (multipart_decoder)
+#define             <link linkend="gsk-mime-multipart-decoder-block">gsk_mime_multipart_decoder_block</link>    (multipart_decoder)
+#define             <link linkend="gsk-mime-multipart-decoder-unblock">gsk_mime_multipart_decoder_unblock</link>  (multipart_decoder)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskMimeMultipartDecoder.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This code implements the MIME multipart encapsulation
+format, which is defined
+in "RFC 2046, Section 5: MIME MultipartDecoder Media Types".
+This format is often encountered parsing form data from webpages.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskMimeMultipartDecoder.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMimeMultipartDecoderHook" role="function">
+<title>GskMimeMultipartDecoderHook ()</title>
+<indexterm zone="GskMimeMultipartDecoderHook"><primary sortas="GskMimeMultipartDecoderHook">GskMimeMultipartDecoderHook</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskMimeMultipartDecoderHook)      (<link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> *multipart_decoder);</programlisting>
+<para>
+Function to invoke when a new piece is available.
+</para><variablelist role="params">
+<varlistentry><term><parameter>multipart_decoder</parameter>&#160;:</term>
+<listitem><simpara>the decoder which can be read from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to continue being notified of the availability
+of un-retrieved pieces.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMimeMultipartDecoderMode" role="enum">
+<title>enum GskMimeMultipartDecoderMode</title>
+<indexterm zone="GskMimeMultipartDecoderMode"><primary sortas="GskMimeMultipartDecoderMode">GskMimeMultipartDecoderMode</primary></indexterm><programlisting>typedef enum
+{
+  GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT,
+  GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_MEMORY,
+  GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM
+} GskMimeMultipartDecoderMode;
+</programlisting>
+<para>
+Multipart pieces may be streaming or a memory buffer.
+This gives the user control over which format to use.
+</para>
+<para>
+(Note: currently <link linkend="GSK-MIME-MULTIPART-DECODER-MODE-DEFAULT--CAPS"><type>GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT</type></link>
+acts like <link linkend="GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-STREAM--CAPS"><type>GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM</type></link>.)
+</para><variablelist role="enum">
+<varlistentry id="GSK-MIME-MULTIPART-DECODER-MODE-DEFAULT--CAPS" role="constant">
+<term><literal>GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT</literal></term>
+<listitem><simpara>
+The pieces may be either streaming, or pure memory,
+whichever is easier.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-MEMORY--CAPS" role="constant">
+<term><literal>GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_MEMORY</literal></term>
+<listitem><simpara>
+The pieces must be memory slabs.  They will
+not be available until all there data has been
+received and parsed.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-STREAM--CAPS" role="constant">
+<term><literal>GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM</literal></term>
+<listitem><simpara>
+The pieces must be streams, even if that means allocating
+a stream for just a few bytes.  This is can be slightly inconvenient.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMimeMultipartDecoderClass" role="struct">
+<title>GskMimeMultipartDecoderClass</title>
+<indexterm zone="GskMimeMultipartDecoderClass"><primary sortas="GskMimeMultipartDecoderClass">GskMimeMultipartDecoderClass</primary></indexterm><programlisting>typedef struct {
+  GskStreamClass base_class;
+
+  gboolean (*set_poll_new_part) (GskMimeMultipartDecoder *decoder,
+				 gboolean do_polling);
+  void     (*shutdown_new_part) (GskMimeMultipartDecoder *decoder);
+} GskMimeMultipartDecoderClass;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskMimeMultipartDecoder" role="struct">
+<title>GskMimeMultipartDecoder</title>
+<indexterm zone="GskMimeMultipartDecoder"><primary sortas="GskMimeMultipartDecoder">GskMimeMultipartDecoder</primary></indexterm><programlisting>typedef struct {
+  GskStream      base_instance;
+
+  /* these are parsed out of the initial key-value pairs. */
+  char *type;		/* 3.1: type of the body */
+  char *start;		/* 3.2: content-id of root part */
+  char *start_info;	/* 3.3: random application information */
+} GskMimeMultipartDecoder;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-mime-multipart-decoder-new" role="function">
+<title>gsk_mime_multipart_decoder_new ()</title>
+<indexterm zone="gsk-mime-multipart-decoder-new"><primary sortas="gsk_mime_multipart_decoder_new">gsk_mime_multipart_decoder_new</primary></indexterm><programlisting><link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> * gsk_mime_multipart_decoder_new
+                                                        (<link linkend="char">char</link> **kv_pairs);</programlisting>
+<para>
+Allocate a new MIME multipart decoder,
+which is a write-only <link linkend="GskStream"><type>GskStream</type></link>
+that converts to a stream of individual pieces.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>kv_pairs</parameter>&#160;:</term>
+<listitem><simpara> key,value pairs of auxillary information parsed along
+with the Content-Type field.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-decoder-set-mode" role="function">
+<title>gsk_mime_multipart_decoder_set_mode ()</title>
+<indexterm zone="gsk-mime-multipart-decoder-set-mode"><primary sortas="gsk_mime_multipart_decoder_set_mode">gsk_mime_multipart_decoder_set_mode</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_decoder_set_mode (<link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> *decoder,
+                                                         <link linkend="GskMimeMultipartDecoderMode">GskMimeMultipartDecoderMode</link> mode);</programlisting>
+<para>
+Set whether to force the decoder to convert
+everything to memory or a stream, or it may
+specify to use whatever the MultipartDecoder
+internals prefer.
+</para>
+<para>
+This function should only be called immediately after
+construction.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>decoder</parameter>&#160;:</term>
+<listitem><simpara> the multipart decoder to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mode</parameter>&#160;:</term>
+<listitem><simpara> the operating mode of the decoder.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-decoder-get-piece" role="function">
+<title>gsk_mime_multipart_decoder_get_piece ()</title>
+<indexterm zone="gsk-mime-multipart-decoder-get-piece"><primary sortas="gsk_mime_multipart_decoder_get_piece">gsk_mime_multipart_decoder_get_piece</primary></indexterm><programlisting><link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> * gsk_mime_multipart_decoder_get_piece
+                                                        (<link linkend="GskMimeMultipartDecoder">GskMimeMultipartDecoder</link> *decoder);</programlisting>
+<para>
+Retrieve a piece of multipart content.
+Pieces will be retrieve in the order they are
+received.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>decoder</parameter>&#160;:</term>
+<listitem><simpara> the multipart decoder to retrieve the part.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a piece that the caller must
+<link linkend="gsk-mime-multipart-piece-unref"><function>gsk_mime_multipart_piece_unref()</function></link>, or NULL if there
+is no remaining piece.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-decoder-trap" role="macro">
+<title>gsk_mime_multipart_decoder_trap()</title>
+<indexterm zone="gsk-mime-multipart-decoder-trap"><primary sortas="gsk_mime_multipart_decoder_trap">gsk_mime_multipart_decoder_trap</primary></indexterm><programlisting>#define             gsk_mime_multipart_decoder_trap(multipart_decoder, func, shutdown, data, destroy)</programlisting>
+<para>
+Get notification when a MIME piece is available.
+</para><variablelist role="params">
+<varlistentry><term><parameter>multipart_decoder</parameter>&#160;:</term>
+<listitem><simpara>the decoder to watch.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>function to invoke when a piece is available.
+(It will be invoked repeatedly until all the pieces have
+been dequeued)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown</parameter>&#160;:</term>
+<listitem><simpara>function to invoke when no more pieces will ever
+be available.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data to pass to <parameter>func</parameter>, <parameter>shutdown</parameter> and <parameter>destroy</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>data to call when the trap is destroyed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-decoder-untrap" role="macro">
+<title>gsk_mime_multipart_decoder_untrap()</title>
+<indexterm zone="gsk-mime-multipart-decoder-untrap"><primary sortas="gsk_mime_multipart_decoder_untrap">gsk_mime_multipart_decoder_untrap</primary></indexterm><programlisting>#define             gsk_mime_multipart_decoder_untrap(multipart_decoder)</programlisting>
+<para>
+Untrap the new-piece-available hook.
+Its destroy method will be run.
+</para><variablelist role="params">
+<varlistentry><term><parameter>multipart_decoder</parameter>&#160;:</term>
+<listitem><simpara>the decoder to stop watching.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-decoder-block" role="macro">
+<title>gsk_mime_multipart_decoder_block()</title>
+<indexterm zone="gsk-mime-multipart-decoder-block"><primary sortas="gsk_mime_multipart_decoder_block">gsk_mime_multipart_decoder_block</primary></indexterm><programlisting>#define             gsk_mime_multipart_decoder_block(multipart_decoder)</programlisting>
+<para>
+Stop notifying about new MIME piece availability,
+if we are currently notifying.
+Invocations to this function may be stacked;
+it is undone with <link linkend="gsk-mime-multipart-decoder-unblock"><function>gsk_mime_multipart_decoder_unblock()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>multipart_decoder</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskMimeMultipartDecoder"><type>GskMimeMultipartDecoder</type></link> to watch.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-decoder-unblock" role="macro">
+<title>gsk_mime_multipart_decoder_unblock()</title>
+<indexterm zone="gsk-mime-multipart-decoder-unblock"><primary sortas="gsk_mime_multipart_decoder_unblock">gsk_mime_multipart_decoder_unblock</primary></indexterm><programlisting>#define             gsk_mime_multipart_decoder_unblock(multipart_decoder)</programlisting>
+<para>
+Resume notifying about new MIME piece availability,
+if we are currently notifying and if this is the last blocker.
+It undones one invocation of <link linkend="gsk-mime-multipart-decoder-block"><function>gsk_mime_multipart_decoder_block()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>multipart_decoder</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskMimeMultipartDecoder"><type>GskMimeMultipartDecoder</type></link> to stop watching.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

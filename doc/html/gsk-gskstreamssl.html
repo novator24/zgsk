@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskStreamSsl</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch10.html" title="SSL interface">
+<link rel="prev" href="ch10.html" title="SSL interface">
+<link rel="next" href="ch11.html" title="MIME handling">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch10.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch10.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch11.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskstreamssl.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskstreamssl.description" class="shortcut">Description</a>
+                 | 
+                <a href="#gsk-gskstreamssl.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#gsk-gskstreamssl.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskstreamssl"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskstreamssl.top_of_page"></a>GskStreamSsl</span></h2>
+<p>GskStreamSsl</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskstreamssl.synopsis"></a><h2>Synopsis</h2>
+<a name="GskStreamSsl"></a><pre class="synopsis">
+                    <a class="link" href="gsk-gskstreamssl.html#GskStreamSsl-struct" title="GskStreamSsl">GskStreamSsl</a>;
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskstreamssl.html#gsk-stream-ssl-new-client" title="gsk_stream_ssl_new_client ()">gsk_stream_ssl_new_client</a>           (const char *cert_file,
+                                                         const char *key_file,
+                                                         const char *password,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *transport,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskstreamssl.html#gsk-stream-ssl-new-server" title="gsk_stream_ssl_new_server ()">gsk_stream_ssl_new_server</a>           (const char *cert_file,
+                                                         const char *key_file,
+                                                         const char *password,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *transport,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskstreamssl.html#gsk-stream-ssl-peek-backend" title="gsk_stream_ssl_peek_backend ()">gsk_stream_ssl_peek_backend</a>         (<a class="link" href="gsk-gskstreamssl.html#GskStreamSsl">GskStreamSsl</a> *ssl);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamssl.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+         +----<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a>
+               +----GskStreamSsl
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamssl.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="gsk-gskstreamssl.html#GskStreamSsl--cert-file" title='The "cert-file" property'>cert-file</a>"                <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write / Construct Only
+  "<a class="link" href="gsk-gskstreamssl.html#GskStreamSsl--is-client" title='The "is-client" property'>is-client</a>"                <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only
+  "<a class="link" href="gsk-gskstreamssl.html#GskStreamSsl--key-file" title='The "key-file" property'>key-file</a>"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write / Construct Only
+  "<a class="link" href="gsk-gskstreamssl.html#GskStreamSsl--password" title='The "password" property'>password</a>"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Write / Construct Only
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamssl.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamssl.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamSsl-struct"></a><h3>GskStreamSsl</h3>
+<pre class="programlisting">typedef struct _GskStreamSsl GskStreamSsl;</pre>
+<p>
+A SSL client or server.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-ssl-new-client"></a><h3>gsk_stream_ssl_new_client ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_ssl_new_client           (const char *cert_file,
+                                                         const char *key_file,
+                                                         const char *password,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *transport,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create the client end of a SSL connection.
+This should be attached to a connecting or connected stream,
+usually provided as the <em class="parameter"><code>transport</code></em> argument.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cert_file</code></em> :</span></p></td>
+<td> the PEM x509 certificate file.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_file</code></em> :</span></p></td>
+<td> key file???
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>password</code></em> :</span></p></td>
+<td> password required by the certificate, or NULL.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transport</code></em> :</span></p></td>
+<td> optional transport layer (which will be connected
+to the backend stream by bidirectionally).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional location in which to store a <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+><span class="type">GError</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new SSL stream, or NULL if an error occurs.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-ssl-new-server"></a><h3>gsk_stream_ssl_new_server ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_ssl_new_server           (const char *cert_file,
+                                                         const char *key_file,
+                                                         const char *password,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *transport,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a new SSL server.
+It should be connected to a socket which was accepted from
+a server (usually provided as the <em class="parameter"><code>transport</code></em> argument).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cert_file</code></em> :</span></p></td>
+<td> the PEM x509 certificate file.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_file</code></em> :</span></p></td>
+<td> key file???
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>password</code></em> :</span></p></td>
+<td> password required by the certificate, or NULL.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transport</code></em> :</span></p></td>
+<td> optional transport layer (which will be connected
+to the backend stream by bidirectionally).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional location in which to store a <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+><span class="type">GError</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new SSL stream, or NULL if an error occurs.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-ssl-peek-backend"></a><h3>gsk_stream_ssl_peek_backend ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_ssl_peek_backend         (<a class="link" href="gsk-gskstreamssl.html#GskStreamSsl">GskStreamSsl</a> *ssl);</pre>
+<p>
+Get a reference to the backend stream, which
+should be connected to the underlying transport
+layer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ssl</code></em> :</span></p></td>
+<td> the stream to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the SSL backend (to be connected to the transport,
+which is the stream which is typically insecure
+without SSL protection).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamssl.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamSsl--cert-file"></a><h3>The <code class="literal">"cert-file"</code> property</h3>
+<pre class="programlisting">  "cert-file"                <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write / Construct Only</pre>
+<p>the x.509 PEM Certificate.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamSsl--is-client"></a><h3>The <code class="literal">"is-client"</code> property</h3>
+<pre class="programlisting">  "is-client"                <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only</pre>
+<p>is this a SSL client (versus a server).</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamSsl--key-file"></a><h3>The <code class="literal">"key-file"</code> property</h3>
+<pre class="programlisting">  "key-file"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write / Construct Only</pre>
+<p>the x.509 PEM Key.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamSsl--password"></a><h3>The <code class="literal">"password"</code> property</h3>
+<pre class="programlisting">  "password"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Write / Construct Only</pre>
+<p>secret passphrase for the certificate.</p>
+<p>Default value: NULL</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

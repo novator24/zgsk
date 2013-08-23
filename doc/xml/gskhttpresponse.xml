@@ -1,0 +1,759 @@
+<refentry id="GskHttpResponse">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskHttpResponse.top_of_page">GskHttpResponse</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskHttpResponse</refname>
+<refpurpose>An HTTP header that is sent from server to client.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskHttpResponse.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskHttpResponse-struct">GskHttpResponse</link>;
+<link linkend="GskHttpResponse">GskHttpResponse</link> *   <link linkend="gsk-http-response-new-blank">gsk_http_response_new_blank</link>         (void);
+<link linkend="GskHttpResponse">GskHttpResponse</link> *   <link linkend="gsk-http-response-new-redirect">gsk_http_response_new_redirect</link>      (const <link linkend="char">char</link> *location);
+<link linkend="GskHttpResponse">GskHttpResponse</link> *   <link linkend="gsk-http-response-from-request">gsk_http_response_from_request</link>      (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpStatus">GskHttpStatus</link> status_code,
+                                                         <link linkend="gint64">gint64</link> length);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-http-response-process-first-line">gsk_http_response_process_first_line</link>
+                                                        (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         const <link linkend="char">char</link> *line);
+#define             <link linkend="gsk-http-response-set-status-code">gsk_http_response_set_status_code</link>   (response, status)
+#define             <link linkend="gsk-http-response-get-status-code">gsk_http_response_get_status_code</link>   (response)
+<link linkend="void">void</link>                <link linkend="gsk-http-response-set-allowed-verbs">gsk_http_response_set_allowed_verbs</link> (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="guint">guint</link> allowed);
+#define             <link linkend="gsk-http-response-get-allowed-verbs">gsk_http_response_get_allowed_verbs</link> (header)
+#define             <link linkend="gsk-http-response-set-age">gsk_http_response_set_age</link>           (response, age)
+#define             <link linkend="gsk-http-response-get-age">gsk_http_response_get_age</link>           (response)
+#define             <link linkend="gsk-http-response-set-location">gsk_http_response_set_location</link>      (response, location)
+#define             <link linkend="gsk-http-response-peek-location">gsk_http_response_peek_location</link>     (response)
+#define             <link linkend="gsk-http-response-set-etag">gsk_http_response_set_etag</link>          (response, etag)
+#define             <link linkend="gsk-http-response-peek-etag">gsk_http_response_peek_etag</link>         (response)
+<link linkend="void">void</link>                <link linkend="gsk-http-response-set-cache-control">gsk_http_response_set_cache_control</link> (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive);
+#define             <link linkend="gsk-http-response-peek-cache-control">gsk_http_response_peek_cache_control</link>(response)
+#define             <link linkend="gsk-http-response-set-last-modified">gsk_http_response_set_last_modified</link> (response, last_modified)
+#define             <link linkend="gsk-http-response-get-last-modified">gsk_http_response_get_last_modified</link> (response)
+#define             <link linkend="gsk-http-response-set-expires">gsk_http_response_set_expires</link>       (response, expires)
+#define             <link linkend="gsk-http-response-get-expires">gsk_http_response_get_expires</link>       (response)
+<link linkend="void">void</link>                <link linkend="gsk-http-response-set-md5">gsk_http_response_set_md5</link>           (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         const <link linkend="guint8">guint8</link> *md5sum);
+const <link linkend="guint8">guint8</link> *      <link linkend="gsk-http-response-peek-md5">gsk_http_response_peek_md5</link>          (<link linkend="GskHttpResponse">GskHttpResponse</link> *response);
+#define             <link linkend="gsk-http-response-set-server">gsk_http_response_set_server</link>        (response, server)
+#define             <link linkend="gsk-http-response-peek-server">gsk_http_response_peek_server</link>       (response)
+<link linkend="void">void</link>                <link linkend="gsk-http-response-set-retry-after">gsk_http_response_set_retry_after</link>   (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_relative,
+                                                         <link linkend="glong">glong</link> time);
+<link linkend="void">void</link>                <link linkend="gsk-http-response-set-no-retry-after">gsk_http_response_set_no_retry_after</link>
+                                                        (<link linkend="GskHttpResponse">GskHttpResponse</link> *response);
+<link linkend="void">void</link>                <link linkend="gsk-http-response-set-authenticate">gsk_http_response_set_authenticate</link>  (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth,
+                                                         <link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> *auth);
+<link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * <link linkend="gsk-http-response-peek-authenticate">gsk_http_response_peek_authenticate</link>
+                                                        (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-http-response-has-content-body">gsk_http_response_has_content_body</link>  (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request);
+<link linkend="void">void</link>                <link linkend="gsk-http-response-cache-directive-free">gsk_http_response_cache_directive_free</link>
+                                                        (<link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive);
+<link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> * <link linkend="gsk-http-response-cache-directive-new">gsk_http_response_cache_directive_new</link>
+                                                        (void);
+<link linkend="void">void</link>                <link linkend="gsk-http-response-cache-directive-set-no-cache-name">gsk_http_response_cache_directive_set_no_cache_name</link>
+                                                        (<link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="gsize">gsize</link> name_len);
+<link linkend="void">void</link>                <link linkend="gsk-http-response-cache-directive-set-private-name">gsk_http_response_cache_directive_set_private_name</link>
+                                                        (<link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="gsize">gsize</link> name_len);
+#define             <link linkend="gsk-http-response-get-content-subtype">gsk_http_response_get_content_subtype</link>
+#define             <link linkend="gsk-http-response-get-content-type">gsk_http_response_get_content_type</link>
+#define             <link linkend="gsk-http-response-set-content-subtype">gsk_http_response_set_content_subtype</link>
+#define             <link linkend="gsk-http-response-set-content-type">gsk_http_response_set_content_type</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskHttpResponse.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskHttpHeader">GskHttpHeader</link>
+         +----GskHttpResponse
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="GskHttpResponse.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskHttpResponse--age">age</link>&quot;                      <link linkend="glong">glong</link>                 : Read / Write
+  &quot;<link linkend="GskHttpResponse--e-tag">e-tag</link>&quot;                    <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpResponse--expires">expires</link>&quot;                  <link linkend="glong">glong</link>                 : Read / Write
+  &quot;<link linkend="GskHttpResponse--last-modified">last-modified</link>&quot;            <link linkend="glong">glong</link>                 : Read / Write
+  &quot;<link linkend="GskHttpResponse--location">location</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpResponse--server">server</link>&quot;                   <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpResponse--status-code">status-code</link>&quot;              <link linkend="GskHttpStatus">GskHttpStatus</link>         : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="GskHttpResponse.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A response is the last of two messages in an HTTP transaction.
+It indicates whether the request succeeded, or what went wrong.
+It may also include often information about the content.
+</para>
+</refsect1>
+
+<refsect1 id="GskHttpResponse.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskHttpResponse-struct" role="struct">
+<title>GskHttpResponse</title>
+<indexterm zone="GskHttpResponse-struct"><primary sortas="GskHttpResponse">GskHttpResponse</primary></indexterm><programlisting>typedef struct _GskHttpResponse GskHttpResponse;</programlisting>
+<para>
+An instance of a HTTP response header.
+</para></refsect2>
+<refsect2 id="gsk-http-response-new-blank" role="function">
+<title>gsk_http_response_new_blank ()</title>
+<indexterm zone="gsk-http-response-new-blank"><primary sortas="gsk_http_response_new_blank">gsk_http_response_new_blank</primary></indexterm><programlisting><link linkend="GskHttpResponse">GskHttpResponse</link> *   gsk_http_response_new_blank         (void);</programlisting>
+<para>
+Create a new, empty default response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated response.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-new-redirect" role="function">
+<title>gsk_http_response_new_redirect ()</title>
+<indexterm zone="gsk-http-response-new-redirect"><primary sortas="gsk_http_response_new_redirect">gsk_http_response_new_redirect</primary></indexterm><programlisting><link linkend="GskHttpResponse">GskHttpResponse</link> *   gsk_http_response_new_redirect      (const <link linkend="char">char</link> *location);</programlisting>
+<para>
+Create a redirection HTTP response header.
+</para>
+<para>
+We use the 302 ("Found") status code.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>location</parameter>&#160;:</term>
+<listitem><simpara> the URL to redirect the client to, as a string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated header.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-from-request" role="function">
+<title>gsk_http_response_from_request ()</title>
+<indexterm zone="gsk-http-response-from-request"><primary sortas="gsk_http_response_from_request">gsk_http_response_from_request</primary></indexterm><programlisting><link linkend="GskHttpResponse">GskHttpResponse</link> *   gsk_http_response_from_request      (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpStatus">GskHttpStatus</link> status_code,
+                                                         <link linkend="gint64">gint64</link> length);</programlisting>
+<para>
+Create a response which macthes the request,
+with a caller-supplied status code and optional length.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the client's request to match.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status_code</parameter>&#160;:</term>
+<listitem><simpara> the return status of the request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara> the length of the message, or -1 for unknown.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new, matching response.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-process-first-line" role="function">
+<title>gsk_http_response_process_first_line ()</title>
+<indexterm zone="gsk-http-response-process-first-line"><primary sortas="gsk_http_response_process_first_line">gsk_http_response_process_first_line</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_http_response_process_first_line
+                                                        (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         const <link linkend="char">char</link> *line);</programlisting>
+<para>
+Parse the first line of an HTTP response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to initialize
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>line</parameter>&#160;:</term>
+<listitem><simpara> first line of response header.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the line was the start of a valid HTTP-response.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-status-code" role="macro">
+<title>gsk_http_response_set_status_code()</title>
+<indexterm zone="gsk-http-response-set-status-code"><primary sortas="gsk_http_response_set_status_code">gsk_http_response_set_status_code</primary></indexterm><programlisting>#define             gsk_http_response_set_status_code(response, status)</programlisting>
+<para>
+Set what kind of response is going to be given.
+See <link linkend="GskHttpStatus"><type>GskHttpStatus</type></link> for a description of all the status codes
+defined in HTTP/1.1 (RFC 2616).
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>status</parameter>&#160;:</term>
+<listitem><simpara>the new status code.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-get-status-code" role="macro">
+<title>gsk_http_response_get_status_code()</title>
+<indexterm zone="gsk-http-response-get-status-code"><primary sortas="gsk_http_response_get_status_code">gsk_http_response_get_status_code</primary></indexterm><programlisting>#define             gsk_http_response_get_status_code(response)</programlisting>
+<para>
+Query the status code from a response.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-allowed-verbs" role="function">
+<title>gsk_http_response_set_allowed_verbs ()</title>
+<indexterm zone="gsk-http-response-set-allowed-verbs"><primary sortas="gsk_http_response_set_allowed_verbs">gsk_http_response_set_allowed_verbs</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_set_allowed_verbs (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="guint">guint</link> allowed);</programlisting>
+<para>
+Set the Allow: header to indicate a particular set of HTTP verbs
+are allowed from the client.  If you give a request with
+a verb which is not allowed, you should get a GSK_HTTP_STATUS_METHOD_NOT_ALLOWED response.
+That response MUST have an Allow: header.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allowed</parameter>&#160;:</term>
+<listitem><simpara> bits telling which type of requests this server allows.
+The bit for a verb 'Q' is (1 &amp;lt;&amp;lt; GSK_HTTP_VERB_Q);
+the default allowed bits are (1&amp;lt;&amp;lt;GSK_HTTP_VERB_GET) | (1&amp;lt;&amp;lt;GSK_HTTP_VERB_HEAD).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-get-allowed-verbs" role="macro">
+<title>gsk_http_response_get_allowed_verbs()</title>
+<indexterm zone="gsk-http-response-get-allowed-verbs"><primary sortas="gsk_http_response_get_allowed_verbs">gsk_http_response_get_allowed_verbs</primary></indexterm><programlisting>#define             gsk_http_response_get_allowed_verbs(header)</programlisting>
+<para>
+Get the bitmask of verbs allowed by the server, according
+to the Allow: header line.
+</para>
+<para>
+XXX: what should happen in the absence of an Allow header????
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-age" role="macro">
+<title>gsk_http_response_set_age()</title>
+<indexterm zone="gsk-http-response-set-age"><primary sortas="gsk_http_response_set_age">gsk_http_response_set_age</primary></indexterm><programlisting>#define             gsk_http_response_set_age(response, age)</programlisting>
+<para>
+Set the age of a response.  This is only used for cached responses.
+It tells the length of time that the data has been
+sitting in the cache.  [See RFC 2616, Section 14.6]
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to indicate the age of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>age</parameter>&#160;:</term>
+<listitem><simpara>the indicated age, or -1 to unset the age indication.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-get-age" role="macro">
+<title>gsk_http_response_get_age()</title>
+<indexterm zone="gsk-http-response-get-age"><primary sortas="gsk_http_response_get_age">gsk_http_response_get_age</primary></indexterm><programlisting>#define             gsk_http_response_get_age(response)</programlisting>
+<para>
+Get the age of a response.  This is only used for cached responses.
+It tells the length of time that the data has been
+sitting in the cache.  [See RFC 2616, Section 14.6]
+</para>
+<para>
+If there is no Age field, -1 is returned.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-location" role="macro">
+<title>gsk_http_response_set_location()</title>
+<indexterm zone="gsk-http-response-set-location"><primary sortas="gsk_http_response_set_location">gsk_http_response_set_location</primary></indexterm><programlisting>#define             gsk_http_response_set_location(response, location)</programlisting>
+<para>
+   [RFC 2616, 14.30]
+   The Location response-header field is used to redirect the recipient
+   to a location other than the Request-URI for completion of the
+   request or identification of a new resource. For 201 (Created)
+   responses, the Location is that of the new resource which was created
+   by the request. For 3xx responses, the location SHOULD indicate the
+   server's preferred URI for automatic redirection to the resource. The
+   field value consists of a single absolute URI.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>location</parameter>&#160;:</term>
+<listitem><simpara>the absolute URI for the content the user is probably really interested in.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-peek-location" role="macro">
+<title>gsk_http_response_peek_location()</title>
+<indexterm zone="gsk-http-response-peek-location"><primary sortas="gsk_http_response_peek_location">gsk_http_response_peek_location</primary></indexterm><programlisting>#define             gsk_http_response_peek_location(response)</programlisting>
+<para>
+  Peek at the destination for a redirect.
+  May return NULL if there is no redirect planned.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-etag" role="macro">
+<title>gsk_http_response_set_etag()</title>
+<indexterm zone="gsk-http-response-set-etag"><primary sortas="gsk_http_response_set_etag">gsk_http_response_set_etag</primary></indexterm><programlisting>#define             gsk_http_response_set_etag(response, etag)</programlisting>
+<para>
+   Provide a unique tag for the content- this may be used
+   by caches and proxy servers.
+</para>
+<para>
+   [RFC 2616, 14.19]
+   The ETag response-header field provides the current value of the
+   entity tag for the requested variant. The headers used with entity
+</para>
+<para>
+   This is typically used in conjunction with the If-Match,
+   If-None-Match, and Vary.
+   14.24, 14.26 and 14.44, 13.3.3.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>etag</parameter>&#160;:</term>
+<listitem><simpara>the entity-tag for the associated conetnt.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-peek-etag" role="macro">
+<title>gsk_http_response_peek_etag()</title>
+<indexterm zone="gsk-http-response-peek-etag"><primary sortas="gsk_http_response_peek_etag">gsk_http_response_peek_etag</primary></indexterm><programlisting>#define             gsk_http_response_peek_etag(response)</programlisting>
+<para>
+Get the entity-tag for this content from the header.
+This is NULL by default, to indicate that there is no
+ETag field.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-cache-control" role="function">
+<title>gsk_http_response_set_cache_control ()</title>
+<indexterm zone="gsk-http-response-set-cache-control"><primary sortas="gsk_http_response_set_cache_control">gsk_http_response_set_cache_control</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_set_cache_control (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive);</programlisting>
+<para>
+Set the cache-control flags in the header.
+Note that <parameter>directive</parameter> will be freed by the HTTP header when
+it is destroyed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the HTTP response header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>directive</parameter>&#160;:</term>
+<listitem><simpara> the new cache control directive, stolen by the HTTP header.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-peek-cache-control" role="macro">
+<title>gsk_http_response_peek_cache_control()</title>
+<indexterm zone="gsk-http-response-peek-cache-control"><primary sortas="gsk_http_response_peek_cache_control">gsk_http_response_peek_cache_control</primary></indexterm><programlisting>#define             gsk_http_response_peek_cache_control(response)</programlisting>
+<para>
+Obtain the <link linkend="GskHttpCacheDirective"><type>GskHttpCacheDirective</type></link> associated with the
+response.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the HTTP response whose cache-directive should be returned.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-last-modified" role="macro">
+<title>gsk_http_response_set_last_modified()</title>
+<indexterm zone="gsk-http-response-set-last-modified"><primary sortas="gsk_http_response_set_last_modified">gsk_http_response_set_last_modified</primary></indexterm><programlisting>#define             gsk_http_response_set_last_modified(response, last_modified)</programlisting>
+<para>
+   [RFC 2616, Section 14.29]
+   The Last-Modified entity-header field indicates the date and time at
+   which the origin server believes the variant was last modified.
+</para>
+<para>
+   If the time is -1, then there will be no Last-Modified header printed.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>last_modified</parameter>&#160;:</term>
+<listitem><simpara>the unix time the content was last modified.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-get-last-modified" role="macro">
+<title>gsk_http_response_get_last_modified()</title>
+<indexterm zone="gsk-http-response-get-last-modified"><primary sortas="gsk_http_response_get_last_modified">gsk_http_response_get_last_modified</primary></indexterm><programlisting>#define             gsk_http_response_get_last_modified(response)</programlisting>
+<para>
+Get the time that the response advertises that the content
+was last modified.  It returns -1 if there will be no
+such indication.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-expires" role="macro">
+<title>gsk_http_response_set_expires()</title>
+<indexterm zone="gsk-http-response-set-expires"><primary sortas="gsk_http_response_set_expires">gsk_http_response_set_expires</primary></indexterm><programlisting>#define             gsk_http_response_set_expires(response, expires)</programlisting>
+<para>
+   [From RFC 2616, Section 14.21]
+   The Expires entity-header field gives the date/time after which the
+   response is considered stale. A stale cache entry may not normally be
+   returned by a cache (either a proxy cache or a user agent cache)
+   unless it is first validated with the origin server (or with an
+   intermediate cache that has a fresh copy of the entity). See section
+   13.2 for further discussion of the expiration model.
+</para>
+<para>
+   The presence of an Expires field does not imply that the original
+   resource will change or cease to exist at, before, or after that
+   time.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>expires</parameter>&#160;:</term>
+<listitem><simpara>the expiration time in standard unix notation, ie. seconds from 1Jan1970 GMT.
+Or -1 may be used to indicate that there is no Expires header.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-get-expires" role="macro">
+<title>gsk_http_response_get_expires()</title>
+<indexterm zone="gsk-http-response-get-expires"><primary sortas="gsk_http_response_get_expires">gsk_http_response_get_expires</primary></indexterm><programlisting>#define             gsk_http_response_get_expires(response)</programlisting>
+<para>
+Get the expiration time for this content, or -1 if no expiration time given.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-md5" role="function">
+<title>gsk_http_response_set_md5 ()</title>
+<indexterm zone="gsk-http-response-set-md5"><primary sortas="gsk_http_response_set_md5">gsk_http_response_set_md5</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_set_md5           (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         const <link linkend="guint8">guint8</link> *md5sum);</programlisting>
+<para>
+Set the MD5 field of the HTTP response to the given <parameter>md5sum</parameter>.
+GSK does not attempt to verify the MD5 sum;
+the caller should be sure they have the right MD5 sum.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the HTTP response whose content MD5 sum is being given.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>md5sum</parameter>&#160;:</term>
+<listitem><simpara> the 16-byte binary value of the MD5 hash of the content.
+If this is NULL, unset the MD5 field.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-peek-md5" role="function">
+<title>gsk_http_response_peek_md5 ()</title>
+<indexterm zone="gsk-http-response-peek-md5"><primary sortas="gsk_http_response_peek_md5">gsk_http_response_peek_md5</primary></indexterm><programlisting>const <link linkend="guint8">guint8</link> *      gsk_http_response_peek_md5          (<link linkend="GskHttpResponse">GskHttpResponse</link> *response);</programlisting>
+<para>
+Get the MD5 sum associated with this response.
+(It should be the MD5 sum of the content stream).
+</para>
+<para>
+It will return NULL if there is no associated content MD5 sum.
+This is the default state.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the MD5 checksum (as 16 binary bytes) or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-server" role="macro">
+<title>gsk_http_response_set_server()</title>
+<indexterm zone="gsk-http-response-set-server"><primary sortas="gsk_http_response_set_server">gsk_http_response_set_server</primary></indexterm><programlisting>#define             gsk_http_response_set_server(response, server)</programlisting>
+<para>
+Set the server name of this HTTP header.
+This may be any ASCII string.
+</para>
+<para>
+See RFC 2616, Section 14.38.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara>the name of the server, which will be copied.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-peek-server" role="macro">
+<title>gsk_http_response_peek_server()</title>
+<indexterm zone="gsk-http-response-peek-server"><primary sortas="gsk_http_response_peek_server">gsk_http_response_peek_server</primary></indexterm><programlisting>#define             gsk_http_response_peek_server(response)</programlisting>
+<para>
+Obtain a reference to the type of server from which this response
+came, as a C string.
+This field is optional, but is helpful for debugging, etc.
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the response to look for a server in
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-retry-after" role="function">
+<title>gsk_http_response_set_retry_after ()</title>
+<indexterm zone="gsk-http-response-set-retry-after"><primary sortas="gsk_http_response_set_retry_after">gsk_http_response_set_retry_after</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_set_retry_after   (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_relative,
+                                                         <link linkend="glong">glong</link> time);</programlisting>
+<para>
+Set the Retry-After header for this response.
+</para>
+<para>
+[From RFC 2616, Section 14.37]
+The Retry-After response-header field can be used with a 503 (Service
+Unavailable) response to indicate how long the service is expected to
+be unavailable to the requesting client. This field MAY also be used
+with any 3xx (Redirection) response to indicate the minimum time the
+user-agent is asked wait before issuing the redirected request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to set a Retry-After line in.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_relative</parameter>&#160;:</term>
+<listitem><simpara> whether the time should be relative to the current time (in which case it is
+printed as a raw integer), or whether it is an absolute time (in which case it is printed
+in the standard date format.)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>time</parameter>&#160;:</term>
+<listitem><simpara> the time in seconds.  If is_relative, then its the number of seconds after
+the current time; otherwise, it's unix time (ie seconds after Jan 1 1970, GMT).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-no-retry-after" role="function">
+<title>gsk_http_response_set_no_retry_after ()</title>
+<indexterm zone="gsk-http-response-set-no-retry-after"><primary sortas="gsk_http_response_set_no_retry_after">gsk_http_response_set_no_retry_after</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_set_no_retry_after
+                                                        (<link linkend="GskHttpResponse">GskHttpResponse</link> *response);</programlisting>
+<para>
+Clear the Retry-After header for this response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to clear the Retry-After line from.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-set-authenticate" role="function">
+<title>gsk_http_response_set_authenticate ()</title>
+<indexterm zone="gsk-http-response-set-authenticate"><primary sortas="gsk_http_response_set_authenticate">gsk_http_response_set_authenticate</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_set_authenticate  (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth,
+                                                         <link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> *auth);</programlisting>
+<para>
+Set the authentication for this response.
+This is like a key to get access to certain entities.
+</para>
+<para>
+Proxy-Authorization is intended to provide access control to the proxy.
+Normal Authorization is passed through a proxy.
+See sections 14.8 for normal Authorization and 14.34.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to adjust the authentication for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_proxy_auth</parameter>&#160;:</term>
+<listitem><simpara> whether to set the Proxy-Authorization or the Authorization field.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara> the new authentication to use in this response.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-peek-authenticate" role="function">
+<title>gsk_http_response_peek_authenticate ()</title>
+<indexterm zone="gsk-http-response-peek-authenticate"><primary sortas="gsk_http_response_peek_authenticate">gsk_http_response_peek_authenticate</primary></indexterm><programlisting><link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * gsk_http_response_peek_authenticate
+                                                        (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth);</programlisting>
+<para>
+Get the responseed authentication information.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_proxy_auth</parameter>&#160;:</term>
+<listitem><simpara> whether to query information about proxy authentication,
+or normal server authentication.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the authentication information, or NULL if none exists (default).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-has-content-body" role="function">
+<title>gsk_http_response_has_content_body ()</title>
+<indexterm zone="gsk-http-response-has-content-body"><primary sortas="gsk_http_response_has_content_body">gsk_http_response_has_content_body</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_http_response_has_content_body  (<link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request);</programlisting>
+<para>
+Find out whether a HTTP Response should be
+accompanied by a body.
+</para>
+<para>
+It also depends on the request, in particular,
+HEAD requests do not retrieve bodies.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to query
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request that provoked the response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the response should be accompanied
+by a body of data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-cache-directive-free" role="function">
+<title>gsk_http_response_cache_directive_free ()</title>
+<indexterm zone="gsk-http-response-cache-directive-free"><primary sortas="gsk_http_response_cache_directive_free">gsk_http_response_cache_directive_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_cache_directive_free
+                                                        (<link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive);</programlisting>
+<para>
+Deallocate a GskHttpResponseCacheDirective.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>directive</parameter>&#160;:</term>
+<listitem><simpara> cache-directive to de-allocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-cache-directive-new" role="function">
+<title>gsk_http_response_cache_directive_new ()</title>
+<indexterm zone="gsk-http-response-cache-directive-new"><primary sortas="gsk_http_response_cache_directive_new">gsk_http_response_cache_directive_new</primary></indexterm><programlisting><link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> * gsk_http_response_cache_directive_new
+                                                        (void);</programlisting>
+<para>
+</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new cache response directive.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-cache-directive-set-no-cache-name" role="function">
+<title>gsk_http_response_cache_directive_set_no_cache_name ()</title>
+<indexterm zone="gsk-http-response-cache-directive-set-no-cache-name"><primary sortas="gsk_http_response_cache_directive_set_no_cache_name">gsk_http_response_cache_directive_set_no_cache_name</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_cache_directive_set_no_cache_name
+                                                        (<link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="gsize">gsize</link> name_len);</programlisting>
+<para>
+Intended for more detailed specification of no-cache data,
+which is never supposed to be cached.
+</para>
+<para>
+[RFC 2616, 14.9.1]
+If the no-cache directive does specify one or more field-names,
+then a cache MAY use the response to satisfy a subsequent request,
+subject to any other restrictions on caching. However, the
+specified field-name(s) MUST NOT be sent in the response to a
+subsequent request without successful revalidation with the origin
+server. This allows an origin server to prevent the re-use of
+certain header fields in a response, while still allowing caching
+of the rest of the response.
+</para>
+<para>
+good luck.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>directive</parameter>&#160;:</term>
+<listitem><simpara> the cache directive to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> new qualifier for how the no-cache data is allowed to be used.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name_len</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-cache-directive-set-private-name" role="function">
+<title>gsk_http_response_cache_directive_set_private_name ()</title>
+<indexterm zone="gsk-http-response-cache-directive-set-private-name"><primary sortas="gsk_http_response_cache_directive_set_private_name">gsk_http_response_cache_directive_set_private_name</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_response_cache_directive_set_private_name
+                                                        (<link linkend="GskHttpResponseCacheDirective">GskHttpResponseCacheDirective</link> *directive,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="gsize">gsize</link> name_len);</programlisting>
+<para>
+Intended for more detailed specification of private cache data.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>directive</parameter>&#160;:</term>
+<listitem><simpara> the cache directive to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> new qualifier for how the private data is allowed to be used.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name_len</parameter>&#160;:</term>
+<listitem><simpara> length of name string
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-response-get-content-subtype" role="macro">
+<title>gsk_http_response_get_content_subtype</title>
+<indexterm zone="gsk-http-response-get-content-subtype"><primary sortas="gsk_http_response_get_content_subtype">gsk_http_response_get_content_subtype</primary></indexterm><programlisting>#define             gsk_http_response_get_content_subtype</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-http-response-get-content-type" role="macro">
+<title>gsk_http_response_get_content_type</title>
+<indexterm zone="gsk-http-response-get-content-type"><primary sortas="gsk_http_response_get_content_type">gsk_http_response_get_content_type</primary></indexterm><programlisting>#define             gsk_http_response_get_content_type</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-http-response-set-content-subtype" role="macro">
+<title>gsk_http_response_set_content_subtype</title>
+<indexterm zone="gsk-http-response-set-content-subtype"><primary sortas="gsk_http_response_set_content_subtype">gsk_http_response_set_content_subtype</primary></indexterm><programlisting>#define             gsk_http_response_set_content_subtype</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-http-response-set-content-type" role="macro">
+<title>gsk_http_response_set_content_type</title>
+<indexterm zone="gsk-http-response-set-content-type"><primary sortas="gsk_http_response_set_content_type">gsk_http_response_set_content_type</primary></indexterm><programlisting>#define             gsk_http_response_set_content_type</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+<refsect1 id="GskHttpResponse.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskHttpResponse--age" role="property"><title>The <literal>&quot;age&quot;</literal> property</title>
+<indexterm zone="GskHttpResponse--age"><primary sortas="GskHttpResponse:age">GskHttpResponse:age</primary></indexterm><programlisting>  &quot;age&quot;                      <link linkend="glong">glong</link>                 : Read / Write</programlisting>
+<para>Age of content.</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpResponse--e-tag" role="property"><title>The <literal>&quot;e-tag&quot;</literal> property</title>
+<indexterm zone="GskHttpResponse--e-tag"><primary sortas="GskHttpResponse:e-tag">GskHttpResponse:e-tag</primary></indexterm><programlisting>  &quot;e-tag&quot;                    <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Unique identifier for this content.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpResponse--expires" role="property"><title>The <literal>&quot;expires&quot;</literal> property</title>
+<indexterm zone="GskHttpResponse--expires"><primary sortas="GskHttpResponse:expires">GskHttpResponse:expires</primary></indexterm><programlisting>  &quot;expires&quot;                  <link linkend="glong">glong</link>                 : Read / Write</programlisting>
+<para>Length of time to wait for content to expire.</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpResponse--last-modified" role="property"><title>The <literal>&quot;last-modified&quot;</literal> property</title>
+<indexterm zone="GskHttpResponse--last-modified"><primary sortas="GskHttpResponse:last-modified">GskHttpResponse:last-modified</primary></indexterm><programlisting>  &quot;last-modified&quot;            <link linkend="glong">glong</link>                 : Read / Write</programlisting>
+<para>Time this content was last changed.</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpResponse--location" role="property"><title>The <literal>&quot;location&quot;</literal> property</title>
+<indexterm zone="GskHttpResponse--location"><primary sortas="GskHttpResponse:location">GskHttpResponse:location</primary></indexterm><programlisting>  &quot;location&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>The URL of the content, for redirect responses.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpResponse--server" role="property"><title>The <literal>&quot;server&quot;</literal> property</title>
+<indexterm zone="GskHttpResponse--server"><primary sortas="GskHttpResponse:server">GskHttpResponse:server</primary></indexterm><programlisting>  &quot;server&quot;                   <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Name of this webserver program.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpResponse--status-code" role="property"><title>The <literal>&quot;status-code&quot;</literal> property</title>
+<indexterm zone="GskHttpResponse--status-code"><primary sortas="GskHttpResponse:status-code">GskHttpResponse:status-code</primary></indexterm><programlisting>  &quot;status-code&quot;              <link linkend="GskHttpStatus">GskHttpStatus</link>         : Read / Write</programlisting>
+<para>HTTP status code.</para><para>Default value: GSK_HTTP_STATUS_OK</para>
+</refsect2>
+</refsect1>
+
+
+
+<refsect1 id="GskHttpResponse.see-also">
+<title>See Also</title>
+<para>
+GskHttpHeader, GskHttpRequest
+</para>
+</refsect1>
+
+</refentry>

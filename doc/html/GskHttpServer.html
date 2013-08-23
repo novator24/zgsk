@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskHttpServer</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="prev" href="GskHttpClient.html" title="GskHttpClient">
+<link rel="next" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskHttpClient.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch06.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch07.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskHttpServer.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskHttpServer.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskHttpServer.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskHttpServer"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskHttpServer.top_of_page"></a>GskHttpServer</span></h2>
+<p>GskHttpServer — The server end of an HTTP connection.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskHttpServer.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="GskHttpServer.html#GskHttpServerTrap" title="GskHttpServerTrap ()">*GskHttpServerTrap</a>)                (<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *server,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+                    <a class="link" href="GskHttpServer.html#GskHttpServerClass" title="GskHttpServerClass">GskHttpServerClass</a>;
+                    <a class="link" href="GskHttpServer.html#GskHttpServer-struct" title="GskHttpServer">GskHttpServer</a>;
+#define             <a class="link" href="GskHttpServer.html#GSK-HTTP-SERVER-HOOK--CAPS" title="GSK_HTTP_SERVER_HOOK()">GSK_HTTP_SERVER_HOOK</a>                (client)
+#define             <a class="link" href="GskHttpServer.html#gsk-http-server-trap" title="gsk_http_server_trap()">gsk_http_server_trap</a>                (server,func,shutdown,data,destroy)
+#define             <a class="link" href="GskHttpServer.html#gsk-http-server-untrap" title="gsk_http_server_untrap()">gsk_http_server_untrap</a>              (server)
+<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *     <a class="link" href="GskHttpServer.html#gsk-http-server-new" title="gsk_http_server_new ()">gsk_http_server_new</a>                 (void);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskHttpServer.html#gsk-http-server-get-request" title="gsk_http_server_get_request ()">gsk_http_server_get_request</a>         (<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *server,
+                                                         <a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> **request_out,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **post_data_out);
+void                <a class="link" href="GskHttpServer.html#gsk-http-server-respond" title="gsk_http_server_respond ()">gsk_http_server_respond</a>             (<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *server,
+                                                         <a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *content);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpServer.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+         +----<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a>
+               +----GskHttpServer
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpServer.description"></a><h2>Description</h2>
+<p>
+This class manages incoming requests (including post-data),
+and outgoing responses (by passing a supplied <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>
+as HTTP content).
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpServer.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHttpServerTrap"></a><h3>GskHttpServerTrap ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskHttpServerTrap)                (<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *server,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+Function which will be called when the server has a request ready.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>the server which has the request available.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>as passed in to <a class="link" href="GskHttpServer.html#gsk-http-server-trap" title="gsk_http_server_trap()"><code class="function">gsk_http_server_trap()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether to keep the trap active.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpServerClass"></a><h3>GskHttpServerClass</h3>
+<pre class="programlisting">typedef struct {
+  GskStreamClass stream_class;
+  void         (*set_poll_request) (GskHttpServer *server,
+				    gboolean       do_poll);
+  void         (*shutdown_request) (GskHttpServer *server);
+} GskHttpServerClass;
+</pre>
+<p>
+Virtual functions which are implemented by an
+HTTP server.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskStream.html#GskStreamClass" title="GskStreamClass">GskStreamClass</a> <em class="structfield"><code>stream_class</code></em>;</span></p></td>
+<td>the base server class.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>set_poll_request</code></em> ()</span></p></td>
+<td>function to indicate whether to
+notify on the HTTP trap.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>shutdown_request</code></em> ()</span></p></td>
+<td>function to call to stop
+accepting requests.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpServer-struct"></a><h3>GskHttpServer</h3>
+<pre class="programlisting">typedef struct _GskHttpServer GskHttpServer;</pre>
+<p>
+Stream which is the server end of an HTTP connection.
+</p>
+<p>
+This has a trap which is triggered when new requests are
+available.  This HTTP server does not define any behavior--
+the user is responsible for calling <a class="link" href="GskHttpServer.html#gsk-http-server-respond" title="gsk_http_server_respond ()"><code class="function">gsk_http_server_respond()</code></a>
+to handle the request.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HTTP-SERVER-HOOK--CAPS"></a><h3>GSK_HTTP_SERVER_HOOK()</h3>
+<pre class="programlisting">#define             GSK_HTTP_SERVER_HOOK(client)</pre>
+<p>
+Get the hook which is triggered on HTTP request availability.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>the client to get the hook from.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-server-trap"></a><h3>gsk_http_server_trap()</h3>
+<pre class="programlisting">#define             gsk_http_server_trap(server,func,shutdown,data,destroy)</pre>
+<p>
+Register a function which will get called as long as a request is
+available.
+The request should be dequeued with <a class="link" href="GskHttpServer.html#gsk-http-server-get-request" title="gsk_http_server_get_request ()"><code class="function">gsk_http_server_get_request()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>the server to watch.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>the function to call if a request is available.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown</code></em> :</span></p></td>
+<td>the function to call if no further requests are going to be available.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>data to pass to <em class="parameter"><code>func</code></em> and <em class="parameter"><code>shutdown</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>the function to call when the trap is removed or destroyed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-server-untrap"></a><h3>gsk_http_server_untrap()</h3>
+<pre class="programlisting">#define             gsk_http_server_untrap(server)</pre>
+<p>
+Unregister the function which was to be called
+whenever a request was available.
+</p>
+<p>
+This has the same effect as returning FALSE from the function
+registered with <a class="link" href="GskHttpServer.html#gsk-http-server-trap" title="gsk_http_server_trap()"><code class="function">gsk_http_server_trap()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>the server to stop watching.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-server-new"></a><h3>gsk_http_server_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *     gsk_http_server_new                 (void);</pre>
+<p>
+Allocate a new HTTP server protocol processor.
+(Note that generally you will need to connect it
+to an accepted socket)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated server.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-server-get-request"></a><h3>gsk_http_server_get_request ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_http_server_get_request         (<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *server,
+                                                         <a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> **request_out,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **post_data_out);</pre>
+<p>
+Grab a client request if available.  Use <a class="link" href="GskHttpServer.html#gsk-http-server-trap" title="gsk_http_server_trap()"><code class="function">gsk_http_server_trap()</code></a>
+to get notification when a request is available.
+</p>
+<p>
+The corresponding POST data stream must be retrieved at the 
+same time.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the HTTP server to grab the request from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request_out</code></em> :</span></p></td>
+<td> location to store a reference to the HTTP request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>post_data_out</code></em> :</span></p></td>
+<td> location to store a reference to the HTTP request's POST data,
+or NULL will be stored if this is not a POST-type request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether a request was successfully dequeued.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-server-respond"></a><h3>gsk_http_server_respond ()</h3>
+<pre class="programlisting">void                gsk_http_server_respond             (<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a> *server,
+                                                         <a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *content);</pre>
+<p>
+Give a response to a client's request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the server to write the response to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request obtained with <a class="link" href="GskHttpServer.html#gsk-http-server-get-request" title="gsk_http_server_get_request ()"><code class="function">gsk_http_server_get_request()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response constructed to this request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content</code></em> :</span></p></td>
+<td> content data if appropriate to this request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpServer.see-also"></a><h2>See Also</h2>
+<p>
+GskHttpClient
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

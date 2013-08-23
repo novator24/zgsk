@@ -1,0 +1,1668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskUrlTransfer</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="prev" href="GskUrl.html" title="GskUrl">
+<link rel="next" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskUrl.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch05.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskUrlTransferHttp.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskUrlTransfer.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskUrlTransfer.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskUrlTransfer.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskUrlTransfer"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskUrlTransfer.top_of_page"></a>GskUrlTransfer</span></h2>
+<p>GskUrlTransfer — Transfer data with a location by URL.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskUrlTransfer.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskUrlTransfer.html#GskUrlTransferRedirect" title="GskUrlTransferRedirect">GskUrlTransferRedirect</a>;
+enum                <a class="link" href="GskUrlTransfer.html#GskUrlTransferResult" title="enum GskUrlTransferResult">GskUrlTransferResult</a>;
+#define             <a class="link" href="GskUrlTransfer.html#GSK-URL-TRANSFER-N-RESULTS--CAPS" title="GSK_URL_TRANSFER_N_RESULTS">GSK_URL_TRANSFER_N_RESULTS</a>
+const char *        <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-result-name" title="gsk_url_transfer_result_name ()">gsk_url_transfer_result_name</a>        (<a class="link" href="GskUrlTransfer.html#GskUrlTransferResult" title="enum GskUrlTransferResult">GskUrlTransferResult</a> result);
+void                (<a class="link" href="GskUrlTransfer.html#GskUrlTransferFunc" title="GskUrlTransferFunc ()">*GskUrlTransferFunc</a>)               (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *info,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         (<a class="link" href="GskUrlTransfer.html#GskUrlUploadFunc" title="GskUrlUploadFunc ()">*GskUrlUploadFunc</a>)                 (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> upload_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> *size_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+                    <a class="link" href="GskUrlTransfer.html#GskUrlTransfer-struct" title="GskUrlTransfer">GskUrlTransfer</a>;
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskUrlTransfer.html#gsk-url-transfer" title="gsk_url_transfer ()">gsk_url_transfer</a>                    (<a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *url,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlUploadFunc" title="GskUrlUploadFunc ()">GskUrlUploadFunc</a> upload_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> upload_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> upload_destroy,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlTransferFunc" title="GskUrlTransferFunc ()">GskUrlTransferFunc</a> handler,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *    <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-new" title="gsk_url_transfer_new ()">gsk_url_transfer_new</a>                (<a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *url);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-handler" title="gsk_url_transfer_set_handler ()">gsk_url_transfer_set_handler</a>        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlTransferFunc" title="GskUrlTransferFunc ()">GskUrlTransferFunc</a> handler,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-url" title="gsk_url_transfer_set_url ()">gsk_url_transfer_set_url</a>            (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *url);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-upload" title="gsk_url_transfer_set_upload ()">gsk_url_transfer_set_upload</a>         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlUploadFunc" title="GskUrlUploadFunc ()">GskUrlUploadFunc</a> func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-upload-packet" title="gsk_url_transfer_set_upload_packet ()">gsk_url_transfer_set_upload_packet</a>  (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-oneshot-upload" title="gsk_url_transfer_set_oneshot_upload ()">gsk_url_transfer_set_oneshot_upload</a> (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> size);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-timeout" title="gsk_url_transfer_set_timeout ()">gsk_url_transfer_set_timeout</a>        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> millis);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-clear-timeout" title="gsk_url_transfer_clear_timeout ()">gsk_url_transfer_clear_timeout</a>      (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-follow-redirects" title="gsk_url_transfer_set_follow_redirects ()">gsk_url_transfer_set_follow_redirects</a>
+                                                        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> follow_redirs);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-address-hint" title="gsk_url_transfer_set_address_hint ()">gsk_url_transfer_set_address_hint</a>   (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-start" title="gsk_url_transfer_start ()">gsk_url_transfer_start</a>              (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-cancel" title="gsk_url_transfer_cancel ()">gsk_url_transfer_cancel</a>             (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-has-upload" title="gsk_url_transfer_has_upload ()">gsk_url_transfer_has_upload</a>         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-create-upload" title="gsk_url_transfer_create_upload ()">gsk_url_transfer_create_upload</a>      (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> *size_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-peek-expects-download-stream" title="gsk_url_transfer_peek_expects_download_stream ()">gsk_url_transfer_peek_expects_download_stream</a>
+                                                        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-is-done" title="gsk_url_transfer_is_done ()">gsk_url_transfer_is_done</a>            (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-address" title="gsk_url_transfer_set_address ()">gsk_url_transfer_set_address</a>        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *addr);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-add-redirect" title="gsk_url_transfer_add_redirect ()">gsk_url_transfer_add_redirect</a>       (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_permanent,
+                                                         <a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *dest_url);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-download" title="gsk_url_transfer_set_download ()">gsk_url_transfer_set_download</a>       (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *content);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-request" title="gsk_url_transfer_set_request ()">gsk_url_transfer_set_request</a>        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *request);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-response" title="gsk_url_transfer_set_response ()">gsk_url_transfer_set_response</a>       (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *response);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-error" title="gsk_url_transfer_set_error ()">gsk_url_transfer_set_error</a>          (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-take-error" title="gsk_url_transfer_take_error ()">gsk_url_transfer_take_error</a>         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-notify-done" title="gsk_url_transfer_notify_done ()">gsk_url_transfer_notify_done</a>        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlTransferResult" title="enum GskUrlTransferResult">GskUrlTransferResult</a> result);
+void                <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-class-register" title="gsk_url_transfer_class_register ()">gsk_url_transfer_class_register</a>     (<a class="link" href="GskUrl.html#GskUrlScheme" title="enum GskUrlScheme">GskUrlScheme</a> scheme,
+                                                         GskUrlTransferClass *transfer_class);
+char *              <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-get-state-string" title="gsk_url_transfer_get_state_string ()">gsk_url_transfer_get_state_string</a>   (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-stream-new" title="gsk_url_transfer_stream_new ()">gsk_url_transfer_stream_new</a>         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransfer.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskUrlTransfer
+         +----<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a>
+         +----GskUrlTransferFile
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransfer.description"></a><h2>Description</h2>
+<p>
+A GskUrlTransfer represents a single upload and/or download with
+a resource designed by a URL.  Although most of the interface
+is URL-scheme independent, for convenience we allow users to see
+the URL-specific portions as well.
+</p>
+<p>
+Some types of URLs are download only,
+and others support upload, but possibly not at the same time.
+</p>
+<p>
+The basic plan is to make a <a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer"><span class="type">GskUrlTransfer</span></a>
+object.  If you wish to upload, provide a way of constructing
+an upload content-stream.  If you wish to download, provide a function
+that will be called with the downloading content-stream.
+Additional configuration may be done: for example, whether to follow redirections.
+</p>
+<p>
+The transfer which is returned from <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-new" title="gsk_url_transfer_new ()"><code class="function">gsk_url_transfer_new()</code></a>
+is in an "unstarted" state.  After you are done configuring it,
+you should invoke <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-start" title="gsk_url_transfer_start ()"><code class="function">gsk_url_transfer_start()</code></a> to begin doing
+actual work.
+</p>
+<p>
+You should at least connect a handler to it
+before you start it using <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-handler" title="gsk_url_transfer_set_handler ()"><code class="function">gsk_url_transfer_set_handler()</code></a>.
+</p>
+<p>
+Your handler is guaranteed to be called
+exactly once, after or during the invocation of <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-start" title="gsk_url_transfer_start ()"><code class="function">gsk_url_transfer_start()</code></a>.
+</p>
+<p>
+Internally, the URL-transfer code maintains a mapping from url-scheme to
+a list of GskUrlTransferClasses responsible for that type of URL.
+When gsk_url_transfer_new(url) is called, each handler for the url's scheme is tried in
+sequence until one is found that accepts the URL, or NULL will returned
+if no suitable class is found.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransfer.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskUrlTransferRedirect"></a><h3>GskUrlTransferRedirect</h3>
+<pre class="programlisting">typedef struct {
+  gboolean is_permanent;
+  GskUrl *url;
+  GObject *request;
+  GObject *response;
+  GskUrlTransferRedirect *next;
+} GskUrlTransferRedirect;
+</pre>
+<p>
+A node in the linked-list of redirections we have receieved.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> <em class="structfield"><code>is_permanent</code></em>;</span></p></td>
+<td>whether the redirect is permanent (versus temporary).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *<em class="structfield"><code>url</code></em>;</span></p></td>
+<td>the location that we have been redirected to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *<em class="structfield"><code>request</code></em>;</span></p></td>
+<td>the request object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *<em class="structfield"><code>response</code></em>;</span></p></td>
+<td>the response object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskUrlTransfer.html#GskUrlTransferRedirect" title="GskUrlTransferRedirect">GskUrlTransferRedirect</a> *<em class="structfield"><code>next</code></em>;</span></p></td>
+<td>next redirect chronologically.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskUrlTransferResult"></a><h3>enum GskUrlTransferResult</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_URL_TRANSFER_ERROR_BAD_REQUEST,
+  GSK_URL_TRANSFER_ERROR_BAD_NAME,
+  GSK_URL_TRANSFER_ERROR_NO_SERVER,
+  GSK_URL_TRANSFER_ERROR_NOT_FOUND,
+  GSK_URL_TRANSFER_ERROR_SERVER_ERROR,
+  GSK_URL_TRANSFER_ERROR_UNSUPPORTED,
+  GSK_URL_TRANSFER_ERROR_TIMED_OUT,
+  GSK_URL_TRANSFER_ERROR_REDIRECT_LOOP,
+  GSK_URL_TRANSFER_REDIRECT,
+  GSK_URL_TRANSFER_CANCELLED,
+  GSK_URL_TRANSFER_SUCCESS
+} GskUrlTransferResult;
+</pre>
+<p>
+The result element of transfer is prepared before
+the user's done-handler is invoked and is a general indicator
+of the result of the transfer.
+</p>
+<p>
+This enumeration therefore lists all possible ways
+that a Url-transfer can conclude.
+</p>
+<p>
+For error values, the "error" member of transfer should be set.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-BAD-REQUEST--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_BAD_REQUEST</code></span></p></td>
+<td>
+Some aspect request was invalidly formed:
+for example, the user provided a bad SSL certificate
+or upload-function.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-BAD-NAME--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_BAD_NAME</code></span></p></td>
+<td>
+DNS failed on the hostname.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-NO-SERVER--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_NO_SERVER</code></span></p></td>
+<td>
+Problem connecting to the server.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-NOT-FOUND--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_NOT_FOUND</code></span></p></td>
+<td>
+Server indicated the entity was not found.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-SERVER-ERROR--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_SERVER_ERROR</code></span></p></td>
+<td>
+Server indicated another error.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-UNSUPPORTED--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_UNSUPPORTED</code></span></p></td>
+<td>
+Request was not supported (either by the server,
+the protocol, or the url-transfer-code).
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-TIMED-OUT--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_TIMED_OUT</code></span></p></td>
+<td>
+Request timed out.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-ERROR-REDIRECT-LOOP--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_ERROR_REDIRECT_LOOP</code></span></p></td>
+<td>
+Request redirection looped circulurly.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-REDIRECT--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_REDIRECT</code></span></p></td>
+<td>
+The URL transfer code was not instructed to follow
+redirects, but a redirect was encountered.
+See the transfer's redirect_url member.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-CANCELLED--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_CANCELLED</code></span></p></td>
+<td>
+The transfer was aborted because
+<a class="link" href="GskUrlTransfer.html#gsk-url-transfer-cancel" title="gsk_url_transfer_cancel ()"><code class="function">gsk_url_transfer_cancel()</code></a> was called on it.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-URL-TRANSFER-SUCCESS--CAPS"></a><span class="term"><code class="literal">GSK_URL_TRANSFER_SUCCESS</code></span></p></td>
+<td>
+The transfer initiated successfully
+(the data may not be transferred yet, though)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-URL-TRANSFER-N-RESULTS--CAPS"></a><h3>GSK_URL_TRANSFER_N_RESULTS</h3>
+<pre class="programlisting">#define             GSK_URL_TRANSFER_N_RESULTS</pre>
+<p>
+Number of result-codes, seldom needed.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-result-name"></a><h3>gsk_url_transfer_result_name ()</h3>
+<pre class="programlisting">const char *        gsk_url_transfer_result_name        (<a class="link" href="GskUrlTransfer.html#GskUrlTransferResult" title="enum GskUrlTransferResult">GskUrlTransferResult</a> result);</pre>
+<p>
+<em class="parameter"><code>result</code></em>: the enumeration value.
+</p>
+<p>
+Convert a GskUrlTransferResult value
+into a human-readable string.</p>
+<p>
+Get a mixed-case human-readable name for the Transfer-Result.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>result</code></em> :</span></p></td>
+<td>the result code.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the constant string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskUrlTransferFunc"></a><h3>GskUrlTransferFunc ()</h3>
+<pre class="programlisting">void                (*GskUrlTransferFunc)               (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *info,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+A function that is called when the transfer is "done".
+This function is called if the transfer is successful,
+or has an error, or times out, or is cancelled.
+</p>
+<p>
+It will only be called after <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-start" title="gsk_url_transfer_start ()"><code class="function">gsk_url_transfer_start()</code></a> returns TRUE.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>the object that contains information about the transfer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>data registered with <a class="link" href="GskUrlTransfer.html#gsk-url-transfer" title="gsk_url_transfer ()"><code class="function">gsk_url_transfer()</code></a>
+or <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-handler" title="gsk_url_transfer_set_handler ()"><code class="function">gsk_url_transfer_set_handler()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskUrlUploadFunc"></a><h3>GskUrlUploadFunc ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         (*GskUrlUploadFunc)                 (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> upload_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> *size_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+In order to upload content and still follow redirects,
+we need to be able to make any number of upload streams.
+Therefore, in order to upload data, you may wish to provide
+a function like this.
+</p>
+<p>
+If you don't care about POST-redirects,
+as you probably don't,
+you can just use <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-oneshot-upload" title="gsk_url_transfer_set_oneshot_upload ()"><code class="function">gsk_url_transfer_set_oneshot_upload()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>upload_data</code></em> :</span></p></td>
+<td>data passed into <a class="link" href="GskUrlTransfer.html#gsk-url-transfer" title="gsk_url_transfer ()"><code class="function">gsk_url_transfer()</code></a>
+or <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-upload" title="gsk_url_transfer_set_upload ()"><code class="function">gsk_url_transfer_set_upload()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size_out</code></em> :</span></p></td>
+<td>optionally set the length of the stream in bytes.
+Setting it to -1 is equivalent to not setting it,
+and indicates that the length is not known in advance.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>if you cannot make a stream, the error should be set.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly allocated stream, or NULL if an error occurs.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskUrlTransfer-struct"></a><h3>GskUrlTransfer</h3>
+<pre class="programlisting">typedef struct {
+  /* --- information prepared for the handler --- */
+  GskUrlTransferResult result;
+  GskUrl *url;
+  GSList *redirect_urls;        // XXX: unused
+  GskUrlTransferRedirect *first_redirect, *last_redirect;
+  GskSocketAddress *address;
+
+  /* may be available: protocol-specific headers */
+  GObject *request;     /* a GskHttpRequest probably */
+  GObject *response;    /* a GskHttpResponse probably */
+
+  GskStream *content;   /* the downloading content */
+
+  /* the last redirect (if any) */
+  GskUrl *redirect_url; /* [just a peeked version of last_redirect-&gt;url, not a ref] */
+  gboolean redirect_is_permanent;
+
+  /* ERROR status codes */
+  GError *error;
+} GskUrlTransfer;
+</pre>
+<p>
+A GObject that represents a transfer of data with the entity responsible
+for that type of URL.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskUrlTransfer.html#GskUrlTransferResult" title="enum GskUrlTransferResult">GskUrlTransferResult</a> <em class="structfield"><code>result</code></em>;</span></p></td>
+<td>code indicating final status of the transfer.
+(only valid in the "done" state)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *<em class="structfield"><code>url</code></em>;</span></p></td>
+<td>the url of the initial request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *<em class="structfield"><code>redirect_urls</code></em>;</span></p></td>
+<td>XXX: UNUSED
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *<em class="structfield"><code>address</code></em>;</span></p></td>
+<td>socket-address of the server for this url.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *<em class="structfield"><code>request</code></em>;</span></p></td>
+<td>request header.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *<em class="structfield"><code>response</code></em>;</span></p></td>
+<td>response header.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *<em class="structfield"><code>content</code></em>;</span></p></td>
+<td>downloading data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *<em class="structfield"><code>redirect_url</code></em>;</span></p></td>
+<td>target of first redirect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> <em class="structfield"><code>redirect_is_permanent</code></em>;</span></p></td>
+<td>whether the redirection was permenant (versus temporary)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *<em class="structfield"><code>error</code></em>;</span></p></td>
+<td>the error, if something went wrong.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer"></a><h3>gsk_url_transfer ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_url_transfer                    (<a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *url,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlUploadFunc" title="GskUrlUploadFunc ()">GskUrlUploadFunc</a> upload_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> upload_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> upload_destroy,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlTransferFunc" title="GskUrlTransferFunc ()">GskUrlTransferFunc</a> handler,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Begin a upload and/or download with a URL.
+There is no way to cancel this transfer.
+</p>
+<p>
+If you wish to perform an upload,
+provide a function that can create the stream of content to
+upload on demand.  Note that the <code class="function">upload_destroy()</code> method
+is called only once the transfer is done and all the upload streams
+are finalized.  Therefore, you can assume that the upload_data
+will be available for all your upload-streams.
+</p>
+<p>
+The handler/data/destroy triple is used for result notification.
+<code class="function">handler()</code> is always invoked exactly once.  To find out how things
+went, the <code class="function">handler()</code> should almost always start by
+examining transfer-&gt;result.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>url</code></em> :</span></p></td>
+<td> the URL to which to upload or from which to download data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>upload_func</code></em> :</span></p></td>
+<td> optional function that can create the upload's content
+as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>upload_data</code></em> :</span></p></td>
+<td> data which can be used by the upload function.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>upload_destroy</code></em> :</span></p></td>
+<td> optional function that will be notified when <code class="function">upload()</code>
+will no longer be called (note that the streams it created may
+still be extant though).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handler</code></em> :</span></p></td>
+<td> function to be called with the transfer request is
+done.  (The transfer content itself is just provided as a stream
+though-- only after reading the stream is the transfer truly done)
+This function may also be called in a number of error cases.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> data to pass to the handler function.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to call when you are done with data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> place to put the error if anything goes wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the transfer began.
+Unsupported URL schemes and malformed URLs are the
+most common ways for this function to fail.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-new"></a><h3>gsk_url_transfer_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *    gsk_url_transfer_new                (<a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *url);</pre>
+<p>
+Create a URL transfer of the appropriate type for the given URL.
+We try the registered classes, in order.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>url</code></em> :</span></p></td>
+<td> the URL to create a transfer object for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly allocated Transfer object, or NULL if no transfer-class
+could handle the URL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-handler"></a><h3>gsk_url_transfer_set_handler ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_handler        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlTransferFunc" title="GskUrlTransferFunc ()">GskUrlTransferFunc</a> handler,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+The handler/data/destroy triple is used for result notification.
+<code class="function">handler()</code> is always invoked exactly once.  To find out how things
+went, the <code class="function">handler()</code> should almost always start by
+examining transfer-&gt;result.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handler</code></em> :</span></p></td>
+<td> function to be called with the transfer request is
+done.  (The transfer content itself is just provided as a stream
+though-- only after reading the stream is the transfer truly done)
+This function may also be called in a number of error cases.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> data to pass to the handler function.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to call when you are done with data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-url"></a><h3>gsk_url_transfer_set_url ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_url            (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *url);</pre>
+<p>
+Set the URL that is the target of this transfer.
+This can only be done once, before the transfer
+is started.
+</p>
+<p>
+You seldom need to use this function, as it
+is called by <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-new" title="gsk_url_transfer_new ()"><code class="function">gsk_url_transfer_new()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>url</code></em> :</span></p></td>
+<td> the URL to which to upload or from which to download data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-upload"></a><h3>gsk_url_transfer_set_upload ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_upload         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlUploadFunc" title="GskUrlUploadFunc ()">GskUrlUploadFunc</a> func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Set the upload stream as generally as possible.
+Actually you must provide a function
+that can make an upload stream on demand--
+this is necessary to get redirects right.
+</p>
+<p>
+The <code class="function">destroy()</code> function will be called after no more upload-streams
+need to be created-- it is quite possible that not all upload-streams
+have been finalized by the time the <code class="function">destroy()</code> is invoked.
+</p>
+<p>
+If you don't care about redirects, you can
+use <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-oneshot-upload" title="gsk_url_transfer_set_oneshot_upload ()"><code class="function">gsk_url_transfer_set_oneshot_upload()</code></a>.
+</p>
+<p>
+If you have a slab of memory that you want to use as the upload stream,
+consider using <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-upload-packet" title="gsk_url_transfer_set_upload_packet ()"><code class="function">gsk_url_transfer_set_upload_packet()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> function that can create the upload's content
+as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> data which can be used by the upload function.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> optional function that will be notified when <code class="function">upload()</code>
+will no longer be called (note that the streams it created may
+still be extant though).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-upload-packet"></a><h3>gsk_url_transfer_set_upload_packet ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_upload_packet  (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);</pre>
+<p>
+Set the upload stream in an easy, reliable way using a GskPacket.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet</code></em> :</span></p></td>
+<td> the GskPacket containing the upload content as data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-oneshot-upload"></a><h3>gsk_url_transfer_set_oneshot_upload ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_oneshot_upload (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> size);</pre>
+<p>
+Set the content to upload to the remote URL,
+as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.
+</p>
+<p>
+Since streams can only be read once,
+this method only works on URLs that do not require
+redirection.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the upload content stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td> the length of the stream in bytes, or -1 if you don't know.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-timeout"></a><h3>gsk_url_transfer_set_timeout ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_timeout        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> millis);</pre>
+<p>
+Set the timeout on the download.
+</p>
+<p>
+This can be used to avoid hanging on slow servers.
+</p>
+<p>
+This must be called before the transfer is started
+(with gsk_url_transfer_start).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>millis</code></em> :</span></p></td>
+<td> milliseconds to wait before aborting the transfer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-clear-timeout"></a><h3>gsk_url_transfer_clear_timeout ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_clear_timeout      (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);</pre>
+<p>
+Clear the timeout on the download.
+</p>
+<p>
+This must be called before the transfer is started
+(with gsk_url_transfer_start).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-follow-redirects"></a><h3>gsk_url_transfer_set_follow_redirects ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_follow_redirects
+                                                        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> follow_redirs);</pre>
+<p>
+Configure how the transfer will behave when it encounters
+redirection responses.
+</p>
+<p>
+The default behavior is to follow redirects,
+adding them to the list of redirects, but not notifying the
+user until we reach a real page (or error).
+</p>
+<p>
+If follow_redirects is FALSE, then we are done
+even if the download led to a redirect.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>follow_redirs</code></em> :</span></p></td>
+<td> whether to follow redirect responses.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-address-hint"></a><h3>gsk_url_transfer_set_address_hint ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_address_hint   (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+To avoid DNS lookups in very bulky transfer situations,
+DNS may be bypassed and replaced with this address.
+</p>
+<p>
+Chances are, you want to suppress redirects to:
+otherwise, DNS may be used on the redirected URLs.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the socket-address to use for connecting,
+possibly with the wrong port (the port will be overridden by
+the URL's port).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-start"></a><h3>gsk_url_transfer_start ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_url_transfer_start              (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Begin the upload and/or download.  (Maybe start with name-lookup).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> place to put the error if anything goes wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the transfer started successfully.
+If it returns TRUE, you are guaranteed to receive your
+done-notification.  If is returns FALSE, you will definitely not
+receive done-notification.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-cancel"></a><h3>gsk_url_transfer_cancel ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_cancel             (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);</pre>
+<p>
+Abort a running transfer.
+</p>
+<p>
+If you registered a handler, it will be called with 
+result GSK_URL_TRANSFER_CANCELLED.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-has-upload"></a><h3>gsk_url_transfer_has_upload ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_url_transfer_has_upload         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);</pre>
+<p>
+Figure out whether this transfer has upload data.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the transfer has upload data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-create-upload"></a><h3>gsk_url_transfer_create_upload ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_url_transfer_create_upload      (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> *size_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a upload stream for this transfer based on the user's creator
+function.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to use.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size_out</code></em> :</span></p></td>
+<td> the size of the stream in bytes, or -1 if the size is unknown.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional location to store the <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+><span class="type">GError</span></a> if there is a problem.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly allocated <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>, or NULL if an error occurs.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-peek-expects-download-stream"></a><h3>gsk_url_transfer_peek_expects_download_stream ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_url_transfer_peek_expects_download_stream
+                                                        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);</pre>
+<p>
+This function can be used to see if download-content is expected.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to use.
+returns: whether this transfer has a download handler.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-is-done"></a><h3>gsk_url_transfer_is_done ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_url_transfer_is_done            (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);</pre>
+<p>
+Find out whether the transfer is done.
+The transfer is done iff the callback has been invoked.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the function is done.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-address"></a><h3>gsk_url_transfer_set_address ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_address        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *addr);</pre>
+<p>
+Set the socket-address for informational purposes.
+This is occasionally interesting to the user of the Transfer.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>addr</code></em> :</span></p></td>
+<td> the address of the host whose lookup was completed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-add-redirect"></a><h3>gsk_url_transfer_add_redirect ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_url_transfer_add_redirect       (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_permanent,
+                                                         <a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a> *dest_url);</pre>
+<p>
+Add an entry to the list of redirects
+that we have encountered while trying to
+service this request.
+</p>
+<p>
+Most users of GskUrlTransfer won't care about these redirects--
+they are provided to the rare client that cares about the redirect-path.
+More commonly, users merely wish to suppress redirect handling: that can be done
+more easily by <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-set-follow-redirects" title="gsk_url_transfer_set_follow_redirects ()"><code class="function">gsk_url_transfer_set_follow_redirects()</code></a>.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request object for this segment of the transfer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response object for this segment of the transfer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_permanent</code></em> :</span></p></td>
+<td> whether the content is permanently relocated to this address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest_url</code></em> :</span></p></td>
+<td> the URL to which we have been redirected.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the redirect was allowed (it is disallowed if
+it is a circular redirect. In that case, we will set 'transfer-&gt;error',
+and call <a class="link" href="GskUrlTransfer.html#gsk-url-transfer-notify-done" title="gsk_url_transfer_notify_done ()"><code class="function">gsk_url_transfer_notify_done()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-download"></a><h3>gsk_url_transfer_set_download ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_download       (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *content);</pre>
+<p>
+Set the incoming-content that is associated with this transfer.
+This will used by the user of the Transfer.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content</code></em> :</span></p></td>
+<td> the content-stream for the downloaded data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-request"></a><h3>gsk_url_transfer_set_request ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_request        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *request);</pre>
+<p>
+Set the outgoing-request header data for this transaction.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request object to store in the transfer information.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-response"></a><h3>gsk_url_transfer_set_response ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_response       (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *response);</pre>
+<p>
+Set the incoming-response header data for this transaction.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response object to store in the transfer information.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-set-error"></a><h3>gsk_url_transfer_set_error ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_set_error          (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error);</pre>
+<p>
+Set the error field for this transaction.
+A copy of the error parameter is made.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> the error to associate with the transfer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-take-error"></a><h3>gsk_url_transfer_take_error ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_take_error         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error);</pre>
+<p>
+Set the error field for this transaction.
+The error parameter will be freed eventually by the
+<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer"><span class="type">GskUrlTransfer</span></a>.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> the error to associate with the transfer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-notify-done"></a><h3>gsk_url_transfer_notify_done ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_notify_done        (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a class="link" href="GskUrlTransfer.html#GskUrlTransferResult" title="enum GskUrlTransferResult">GskUrlTransferResult</a> result);</pre>
+<p>
+Transition the transfer to the DONE state,
+and invoke the user's callback (if any).
+This function may only be invoked once per transfer.
+</p>
+<p>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the Transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>result</code></em> :</span></p></td>
+<td> the transfer's result status code.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-class-register"></a><h3>gsk_url_transfer_class_register ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_class_register     (<a class="link" href="GskUrl.html#GskUrlScheme" title="enum GskUrlScheme">GskUrlScheme</a> scheme,
+                                                         GskUrlTransferClass *transfer_class);</pre>
+<p>
+Register a class of URL transfer that can
+handle a given scheme.
+It will only be instantiated if the class' test method</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>scheme</code></em> :</span></p></td>
+<td> the URL scheme that this class of transfer can handle.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer_class</code></em> :</span></p></td>
+<td> the class that can handle the URL type.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-get-state-string"></a><h3>gsk_url_transfer_get_state_string ()</h3>
+<pre class="programlisting">char *              gsk_url_transfer_get_state_string   (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer);</pre>
+<p>
+Get a newly allocated, human-readable description
+of the state of the transfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the transfer to describe.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly-allocated string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-stream-new"></a><h3>gsk_url_transfer_stream_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_url_transfer_stream_new         (<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a> *transfer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+This code will start the transfer,
+and return a stream that you can trap immediately.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>transfer</code></em> :</span></p></td>
+<td> the transfer.  must not be started.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional location to store the <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+><span class="type">GError</span></a> if there is a problem.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new stream, or NULL if an error occurred.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransfer.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp"><span class="type">GskUrlTransferHttp</span></a>.
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<refentry id="gsk-gskghelpers">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskghelpers.top_of_page">Glib Helper Routines</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Glib Helper Routines</refname>
+<refpurpose>Miscellaneous helper routines that could conceivably be moved to glib someday.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskghelpers.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="gsk-g-ptr-array-foreach">gsk_g_ptr_array_foreach</link>             (<link linkend="GPtrArray">GPtrArray</link> *array,
+                                                         <link linkend="GFunc">GFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-g-tree-min">gsk_g_tree_min</link>                      (<link linkend="GTree">GTree</link> *tree);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-g-tree-max">gsk_g_tree_max</link>                      (<link linkend="GTree">GTree</link> *tree);
+<link linkend="GSList">GSList</link> *            <link linkend="gsk-g-tree-key-slist">gsk_g_tree_key_slist</link>                (<link linkend="GTree">GTree</link> *tree);
+<link linkend="GSList">GSList</link> *            <link linkend="gsk-g-tree-value-slist">gsk_g_tree_value_slist</link>              (<link linkend="GTree">GTree</link> *tree);
+<link linkend="GSList">GSList</link> *            <link linkend="gsk-g-hash-table-key-slist">gsk_g_hash_table_key_slist</link>          (<link linkend="GHashTable">GHashTable</link> *table);
+<link linkend="GSList">GSList</link> *            <link linkend="gsk-g-hash-table-value-slist">gsk_g_hash_table_value_slist</link>        (<link linkend="GHashTable">GHashTable</link> *table);
+<link linkend="gint64">gint64</link>              <link linkend="gsk-strtoll">gsk_strtoll</link>                         (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> **endp,
+                                                         <link linkend="int">int</link> base);
+<link linkend="guint64">guint64</link>             <link linkend="gsk-strtoull">gsk_strtoull</link>                        (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> **endp,
+                                                         <link linkend="int">int</link> base);
+<link linkend="guint">guint</link>               <link linkend="gsk-strnlen">gsk_strnlen</link>                         (const <link linkend="char">char</link> *ptr,
+                                                         <link linkend="guint">guint</link> max_len);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-fd-set-nonblocking">gsk_fd_set_nonblocking</link>              (<link linkend="int">int</link> fd);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskghelpers.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Provide various simple functions that we have found useful.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskghelpers.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-g-ptr-array-foreach" role="function">
+<title>gsk_g_ptr_array_foreach ()</title>
+<indexterm zone="gsk-g-ptr-array-foreach"><primary sortas="gsk_g_ptr_array_foreach">gsk_g_ptr_array_foreach</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_g_ptr_array_foreach             (<link linkend="GPtrArray">GPtrArray</link> *array,
+                                                         <link linkend="GFunc">GFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Like <link linkend="g-slist-foreach"><function>g_slist_foreach()</function></link>, except it iterates over a GPtrArray instead.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to iterate over.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function to call on each element of <parameter>array</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> second parameter to <parameter>func</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-g-tree-min" role="function">
+<title>gsk_g_tree_min ()</title>
+<indexterm zone="gsk-g-tree-min"><primary sortas="gsk_g_tree_min">gsk_g_tree_min</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_g_tree_min                      (<link linkend="GTree">GTree</link> *tree);</programlisting>
+<para>
+Find the minimum key in the tree.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> tree to examine.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> smallest key in the tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-g-tree-max" role="function">
+<title>gsk_g_tree_max ()</title>
+<indexterm zone="gsk-g-tree-max"><primary sortas="gsk_g_tree_max">gsk_g_tree_max</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_g_tree_max                      (<link linkend="GTree">GTree</link> *tree);</programlisting>
+<para>
+Find the maximum key in the tree.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> tree to examine.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> largest key in the tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-g-tree-key-slist" role="function">
+<title>gsk_g_tree_key_slist ()</title>
+<indexterm zone="gsk-g-tree-key-slist"><primary sortas="gsk_g_tree_key_slist">gsk_g_tree_key_slist</primary></indexterm><programlisting><link linkend="GSList">GSList</link> *            gsk_g_tree_key_slist                (<link linkend="GTree">GTree</link> *tree);</programlisting>
+<para>
+Get a list of all the keys in the trees, sorted.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to scan.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated list of pointers to the keys.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-g-tree-value-slist" role="function">
+<title>gsk_g_tree_value_slist ()</title>
+<indexterm zone="gsk-g-tree-value-slist"><primary sortas="gsk_g_tree_value_slist">gsk_g_tree_value_slist</primary></indexterm><programlisting><link linkend="GSList">GSList</link> *            gsk_g_tree_value_slist              (<link linkend="GTree">GTree</link> *tree);</programlisting>
+<para>
+Get a list of all the values in the trees, sorted by key.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to scan.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated list of pointers to the keys.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-g-hash-table-key-slist" role="function">
+<title>gsk_g_hash_table_key_slist ()</title>
+<indexterm zone="gsk-g-hash-table-key-slist"><primary sortas="gsk_g_hash_table_key_slist">gsk_g_hash_table_key_slist</primary></indexterm><programlisting><link linkend="GSList">GSList</link> *            gsk_g_hash_table_key_slist          (<link linkend="GHashTable">GHashTable</link> *table);</programlisting>
+<para>
+Accumulate all the keys in the hash table into a big list.
+You may not assume anything about the order of the list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>table</parameter>&#160;:</term>
+<listitem><simpara> the hash table to scan.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> an allocated GSList of all the keys in the hash-table.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-g-hash-table-value-slist" role="function">
+<title>gsk_g_hash_table_value_slist ()</title>
+<indexterm zone="gsk-g-hash-table-value-slist"><primary sortas="gsk_g_hash_table_value_slist">gsk_g_hash_table_value_slist</primary></indexterm><programlisting><link linkend="GSList">GSList</link> *            gsk_g_hash_table_value_slist        (<link linkend="GHashTable">GHashTable</link> *table);</programlisting>
+<para>
+Accumulate all the values in the hash table into a big list.
+You may not assume anything about the order of the list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>table</parameter>&#160;:</term>
+<listitem><simpara> the hash table to scan.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> an allocated GSList of all the values in the hash-table.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-strtoll" role="function">
+<title>gsk_strtoll ()</title>
+<indexterm zone="gsk-strtoll"><primary sortas="gsk_strtoll">gsk_strtoll</primary></indexterm><programlisting><link linkend="gint64">gint64</link>              gsk_strtoll                         (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> **endp,
+                                                         <link linkend="int">int</link> base);</programlisting>
+<para>
+Like strtol, but for 64-bit integers.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> the string to parse a longlong integer (gint64) from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>endp</parameter>&#160;:</term>
+<listitem><simpara> optional place to store the character right past
+the number in <parameter>str</parameter>.  If *endp == <parameter>str</parameter>, then you may assume an error
+occurred.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>base</parameter>&#160;:</term>
+<listitem><simpara> the assumed base for the number to parse.  eg "2" to
+parse a binary, "8" for octal, "10" for decimal, "16" for hexidecimal.
+Also, "0" is autodetects the C-style base.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the parsed integer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-strtoull" role="function">
+<title>gsk_strtoull ()</title>
+<indexterm zone="gsk-strtoull"><primary sortas="gsk_strtoull">gsk_strtoull</primary></indexterm><programlisting><link linkend="guint64">guint64</link>             gsk_strtoull                        (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> **endp,
+                                                         <link linkend="int">int</link> base);</programlisting>
+<para>
+Like strtol, but for 64-bit unsigned integers.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> the string to parse a longlong unsigned integer (guint64) from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>endp</parameter>&#160;:</term>
+<listitem><simpara> optional place to store the character right past
+the number in <parameter>str</parameter>.  If *endp == <parameter>str</parameter>, then you may assume an error
+occurred.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>base</parameter>&#160;:</term>
+<listitem><simpara> the assumed base for the number to parse.  eg "2" to
+parse a binary, "8" for octal, "10" for decimal, "16" for hexidecimal.
+Also, "0" is autodetects the C-style base.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the parsed unsigned integer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-strnlen" role="function">
+<title>gsk_strnlen ()</title>
+<indexterm zone="gsk-strnlen"><primary sortas="gsk_strnlen">gsk_strnlen</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_strnlen                         (const <link linkend="char">char</link> *ptr,
+                                                         <link linkend="guint">guint</link> max_len);</programlisting>
+<para>
+Find the length of a string, which is only allocated
+<parameter>max_len</parameter> bytes, and does not need to be NUL-terminated.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ptr</parameter>&#160;:</term>
+<listitem><simpara> the string to find the length of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_len</parameter>&#160;:</term>
+<listitem><simpara> the maximum length the string could be.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the length.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fd-set-nonblocking" role="function">
+<title>gsk_fd_set_nonblocking ()</title>
+<indexterm zone="gsk-fd-set-nonblocking"><primary sortas="gsk_fd_set_nonblocking">gsk_fd_set_nonblocking</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_fd_set_nonblocking              (<link linkend="int">int</link> fd);</programlisting>
+<para>
+Make a file-descriptor non-blocking.
+When it is non-blocking, operations that would
+cause it to block should instead return
+EAGAIN.  (Although you should use <link linkend="gsk-errno-is-ignorable"><function>gsk_errno_is_ignorable()</function></link>
+to test, since windoze uses a different code, EWOULDBLOCK,
+and you should always ignore EINTR.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the file-descriptor to make non-blocking.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether it was able to set the file descriptor non-blocking.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,135 @@
+<refentry id="gsk-gskdnsserver">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskdnsserver.top_of_page">gskdnsserver</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskdnsserver</refname>
+<refpurpose>base class for a DNS server.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskdnsserver.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="GskDnsServer"/>
+<synopsis>
+                    <link linkend="GskDnsServerClass">GskDnsServerClass</link>;
+                    <link linkend="GskDnsServer-struct">GskDnsServer</link>;
+<link linkend="GskDnsServer">GskDnsServer</link> *      <link linkend="gsk-dns-server-new">gsk_dns_server_new</link>                  (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         <link linkend="GskPacketQueue">GskPacketQueue</link> *packet_queue);
+<link linkend="GskDnsResolver">GskDnsResolver</link> *    <link linkend="gsk-dns-server-peek-resolver">gsk_dns_server_peek_resolver</link>        (<link linkend="GskDnsServer">GskDnsServer</link> *server);
+<link linkend="void">void</link>                <link linkend="gsk-dns-server-set-resolver">gsk_dns_server_set_resolver</link>         (<link linkend="GskDnsServer">GskDnsServer</link> *server,
+                                                         <link linkend="GskDnsResolver">GskDnsResolver</link> *resolver);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gsk-gskdnsserver.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskDnsServer
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="gsk-gskdnsserver.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskDnsServer--packet-queue">packet-queue</link>&quot;             <link linkend="GskPacketQueue">GskPacketQueue</link>*       : Read / Write / Construct Only
+  &quot;<link linkend="GskDnsServer--resolver">resolver</link>&quot;                 <link linkend="GskDnsResolver">GskDnsResolver</link>*       : Read / Write / Construct Only
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskdnsserver.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A generic DNS server.
+This can be made to answer questions through
+a sensible resolver, or it can be used to implement wacky DNS hacks.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskdnsserver.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskDnsServerClass" role="struct">
+<title>GskDnsServerClass</title>
+<indexterm zone="GskDnsServerClass"><primary sortas="GskDnsServerClass">GskDnsServerClass</primary></indexterm><programlisting>typedef struct _GskDnsServerClass GskDnsServerClass;</programlisting>
+<para>
+Base class for DNS servers.
+</para></refsect2>
+<refsect2 id="GskDnsServer-struct" role="struct">
+<title>GskDnsServer</title>
+<indexterm zone="GskDnsServer-struct"><primary sortas="GskDnsServer">GskDnsServer</primary></indexterm><programlisting>typedef struct _GskDnsServer GskDnsServer;</programlisting>
+<para>
+Base instance for DNS servers.
+A DNS server is packet-based and must handle an arbitrary
+number of requests.
+</para></refsect2>
+<refsect2 id="gsk-dns-server-new" role="function">
+<title>gsk_dns_server_new ()</title>
+<indexterm zone="gsk-dns-server-new"><primary sortas="gsk_dns_server_new">gsk_dns_server_new</primary></indexterm><programlisting><link linkend="GskDnsServer">GskDnsServer</link> *      gsk_dns_server_new                  (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         <link linkend="GskPacketQueue">GskPacketQueue</link> *packet_queue);</programlisting>
+<para>
+Allocate a DNS server using the optional <parameter>resolver</parameter> to answer questions.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>resolver</parameter>&#160;:</term>
+<listitem><simpara> the resolver to query for answers to incoming questions.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>packet_queue</parameter>&#160;:</term>
+<listitem><simpara> transport for incoming DNS requests and outgoing responses.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated DNS server.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-server-peek-resolver" role="function">
+<title>gsk_dns_server_peek_resolver ()</title>
+<indexterm zone="gsk-dns-server-peek-resolver"><primary sortas="gsk_dns_server_peek_resolver">gsk_dns_server_peek_resolver</primary></indexterm><programlisting><link linkend="GskDnsResolver">GskDnsResolver</link> *    gsk_dns_server_peek_resolver        (<link linkend="GskDnsServer">GskDnsServer</link> *server);</programlisting>
+<para>
+Obtain a peeked reference at the resolver which this server is using to
+answer questions.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server to inspect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a GskDnsResolver if one is being used, or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-server-set-resolver" role="function">
+<title>gsk_dns_server_set_resolver ()</title>
+<indexterm zone="gsk-dns-server-set-resolver"><primary sortas="gsk_dns_server_set_resolver">gsk_dns_server_set_resolver</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_server_set_resolver         (<link linkend="GskDnsServer">GskDnsServer</link> *server,
+                                                         <link linkend="GskDnsResolver">GskDnsResolver</link> *resolver);</programlisting>
+<para>
+Set the DNS server's resolver.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>resolver</parameter>&#160;:</term>
+<listitem><simpara> the DNS resolver to use, or NULL to stop using any resolver.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gsk-gskdnsserver.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskDnsServer--packet-queue" role="property"><title>The <literal>&quot;packet-queue&quot;</literal> property</title>
+<indexterm zone="GskDnsServer--packet-queue"><primary sortas="GskDnsServer:packet-queue">GskDnsServer:packet-queue</primary></indexterm><programlisting>  &quot;packet-queue&quot;             <link linkend="GskPacketQueue">GskPacketQueue</link>*       : Read / Write / Construct Only</programlisting>
+<para>raw i/o handle to use for requests/responses.</para></refsect2>
+<refsect2 id="GskDnsServer--resolver" role="property"><title>The <literal>&quot;resolver&quot;</literal> property</title>
+<indexterm zone="GskDnsServer--resolver"><primary sortas="GskDnsServer:resolver">GskDnsServer:resolver</primary></indexterm><programlisting>  &quot;resolver&quot;                 <link linkend="GskDnsResolver">GskDnsResolver</link>*       : Read / Write / Construct Only</programlisting>
+<para>DNS resolver to obtain responses from.</para></refsect2>
+</refsect1>
+
+
+
+
+</refentry>

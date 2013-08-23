@@ -1,0 +1,899 @@
+<refentry id="GskHttpRequest">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskHttpRequest.top_of_page">GskHttpRequest</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskHttpRequest</refname>
+<refpurpose>An HTTP header that is sent from client to server.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskHttpRequest.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskHttpRequest-struct">GskHttpRequest</link>;
+<link linkend="void">void</link>                <link linkend="gsk-http-request-add-cookie">gsk_http_request_add_cookie</link>         (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpCookie">GskHttpCookie</link> *cookie);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-remove-cookie">gsk_http_request_remove_cookie</link>      (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpCookie">GskHttpCookie</link> *cookie);
+<link linkend="GskHttpCookie">GskHttpCookie</link> *     <link linkend="gsk-http-request-find-cookie">gsk_http_request_find_cookie</link>        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         const <link linkend="char">char</link> *key);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-add-charsets">gsk_http_request_add_charsets</link>       (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpCharSet">GskHttpCharSet</link> *char_sets);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-clear-charsets">gsk_http_request_clear_charsets</link>     (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-add-content-encodings">gsk_http_request_add_content_encodings</link>
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link> *set);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-clear-content-encodings">gsk_http_request_clear_content_encodings</link>
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-add-transfer-encodings">gsk_http_request_add_transfer_encodings</link>
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link> *set);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-clear-transfer-encodings">gsk_http_request_clear_transfer_encodings</link>
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-add-media">gsk_http_request_add_media</link>          (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link> *set);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-clear-media">gsk_http_request_clear_media</link>        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);
+<link linkend="GskHttpRequest">GskHttpRequest</link> *    <link linkend="gsk-http-request-new-blank">gsk_http_request_new_blank</link>          (void);
+<link linkend="GskHttpRequest">GskHttpRequest</link> *    <link linkend="gsk-http-request-new">gsk_http_request_new</link>                (<link linkend="GskHttpVerb">GskHttpVerb</link> verb,
+                                                         const <link linkend="char">char</link> *path);
+#define             <link linkend="gsk-http-request-set-verb">gsk_http_request_set_verb</link>           (request, verb)
+#define             <link linkend="gsk-http-request-get-verb">gsk_http_request_get_verb</link>           (request)
+#define             <link linkend="gsk-http-request-peek-from">gsk_http_request_peek_from</link>          (request)
+#define             <link linkend="gsk-http-request-set-from">gsk_http_request_set_from</link>           (request, from)
+#define             <link linkend="gsk-http-request-set-if-modified-since">gsk_http_request_set_if_modified_since</link>(request, t)
+#define             <link linkend="gsk-http-request-get-if-modified-since">gsk_http_request_get_if_modified_since</link>(request)
+<link linkend="void">void</link>                <link linkend="gsk-http-request-set-authorization">gsk_http_request_set_authorization</link>  (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth,
+                                                         <link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *auth);
+#define             <link linkend="gsk-http-request-set-host">gsk_http_request_set_host</link>           (request, host)
+#define             <link linkend="gsk-http-request-set-user-agent">gsk_http_request_set_user_agent</link>     (request, user_agent)
+#define             <link linkend="gsk-http-request-peek-user-agent">gsk_http_request_peek_user_agent</link>    (request)
+<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * <link linkend="gsk-http-request-peek-authorization">gsk_http_request_peek_authorization</link>
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-cache-directive-free">gsk_http_request_cache_directive_free</link>
+                                                        (<link linkend="GskHttpRequestCacheDirective">GskHttpRequestCacheDirective</link> *directive);
+<link linkend="GskHttpRequestCacheDirective">GskHttpRequestCacheDirective</link> * <link linkend="gsk-http-request-cache-directive-new">gsk_http_request_cache_directive_new</link>
+                                                        (void);
+<link linkend="GskHttpRequestFirstLineStatus">GskHttpRequestFirstLineStatus</link>  <link linkend="gsk-http-request-parse-first-line">gsk_http_request_parse_first_line</link>
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         const <link linkend="char">char</link> *line,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-http-request-set-cache-control">gsk_http_request_set_cache_control</link>  (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpRequestCacheDirective">GskHttpRequestCacheDirective</link> *directive);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-http-request-has-content-body">gsk_http_request_has_content_body</link>   (<link linkend="GskHttpRequest">GskHttpRequest</link> *request);
+<link linkend="char">char</link> **             <link linkend="gsk-http-parse-cgi-query-string">gsk_http_parse_cgi_query_string</link>     (const <link linkend="char">char</link> *query_string,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GHashTable">GHashTable</link> *        <link linkend="gsk-http-request-parse-cgi-query-string">gsk_http_request_parse_cgi_query_string</link>
+                                                        (const <link linkend="char">char</link> *query_string);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskHttpRequest.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskHttpHeader">GskHttpHeader</link>
+         +----GskHttpRequest
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="GskHttpRequest.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskHttpRequest--host">host</link>&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpRequest--if-modified-since">if-modified-since</link>&quot;        <link linkend="glong">glong</link>                 : Read / Write
+  &quot;<link linkend="GskHttpRequest--max-forwards">max-forwards</link>&quot;             <link linkend="glong">glong</link>                 : Read / Write
+  &quot;<link linkend="GskHttpRequest--path">path</link>&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpRequest--referrer">referrer</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpRequest--user-agent">user-agent</link>&quot;               <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpRequest--verb">verb</link>&quot;                     <link linkend="GskHttpVerb">GskHttpVerb</link>           : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="GskHttpRequest.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A request is the first of two messages in an HTTP transaction.
+It indicates the type of transaction, usually GET or POST,
+and the desired path, and other assorted flags.
+</para>
+</refsect1>
+
+<refsect1 id="GskHttpRequest.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskHttpRequest-struct" role="struct">
+<title>GskHttpRequest</title>
+<indexterm zone="GskHttpRequest-struct"><primary sortas="GskHttpRequest">GskHttpRequest</primary></indexterm><programlisting>typedef struct {
+  /* the command: GET, PUT, POST, HEAD, etc */
+  GskHttpVerb                   verb;
+
+  /* Note that HTTP/1.1 servers must accept the entire
+   * URL being included in `path'! (maybe including http:// ... */
+  char                         *path;
+
+  GskHttpCharSet           *accept_charsets;              /* Accept-CharSet */
+  GskHttpContentEncodingSet*accept_content_encodings;     /* Accept-Encoding */
+  GskHttpTransferEncodingSet*accept_transfer_encodings;   /* TE */
+  GskHttpMediaTypeSet      *accept_media_types;           /* Accept */
+  GskHttpAuthorization     *authorization;                /* Authorization */
+  GskHttpLanguageSet       *accept_languages;             /* Accept-Languages */
+  char                     *host;                         /* Host */
+
+  gboolean                  had_if_match;
+  char                    **if_match;             /* If-Match */
+  glong                     if_modified_since;    /* If-Modified-Since */
+  char                     *user_agent;           /* User-Agent */
+
+  char                     *referrer;             /* Referer */
+
+  char                     *from;      /* The From: header (sect 14.22) */
+
+  /* List of Cookie: headers. */
+  GSList                   *cookies;
+
+  GskHttpAuthorization     *proxy_authorization;
+
+  int                       keep_alive_seconds;   /* -1 if not used */
+
+  /* rarely used: */
+  int                       max_forwards;         /* -1 if not used */
+
+  /* Nonstandard User-Agent information.
+     Many browsers provide this data to allow
+     dynamic content to take advantage of the
+     client configuration.  (0 indicated "not supplied").  */
+  unsigned                  ua_width, ua_height;
+  char                     *ua_color;
+  char                     *ua_os;
+  char                     *ua_cpu;
+  char                     *ua_language;
+
+  GskHttpRequestCacheDirective *cache_control;        /* Cache-Control */
+} GskHttpRequest;
+</programlisting>
+<para>
+An instance of a HTTP request header.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskHttpVerb">GskHttpVerb</link>&#160;<structfield>verb</structfield>;</term>
+<listitem><simpara>type of request (the intended action).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>path</structfield>;</term>
+<listitem><simpara>the location of the resource to affect.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpCharSet">GskHttpCharSet</link>&#160;*<structfield>accept_charsets</structfield>;</term>
+<listitem><simpara>list of character-sets acceptable to the client.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link>&#160;*<structfield>accept_content_encodings</structfield>;</term>
+<listitem><simpara>list of content-encodings acceptable to the client.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link>&#160;*<structfield>accept_transfer_encodings</structfield>;</term>
+<listitem><simpara>list of transfer-encodings acceptable to the client.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link>&#160;*<structfield>accept_media_types</structfield>;</term>
+<listitem><simpara>list of media-types acceptable to the client.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpAuthorization">GskHttpAuthorization</link>&#160;*<structfield>authorization</structfield>;</term>
+<listitem><simpara>optional authorization information.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpLanguageSet">GskHttpLanguageSet</link>&#160;*<structfield>accept_languages</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>host</structfield>;</term>
+<listitem><simpara>optional host header, required principally on machines which do
+virtual hosting.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gboolean">gboolean</link>&#160;<structfield>had_if_match</structfield>;</term>
+<listitem><simpara>whether an If-Match header is present.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;**<structfield>if_match</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="glong">glong</link>&#160;<structfield>if_modified_since</structfield>;</term>
+<listitem><simpara>unix time or -1 if no such header present.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>user_agent</structfield>;</term>
+<listitem><simpara>program or agent making the request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>referrer</structfield>;</term>
+<listitem><simpara>URL which led us to this resource.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>from</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>cookies</structfield>;</term>
+<listitem><simpara>list of cookies.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpAuthorization">GskHttpAuthorization</link>&#160;*<structfield>proxy_authorization</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>keep_alive_seconds</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>max_forwards</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term>unsigned&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<link linkend="ua-width">ua_width</link>&#160;<structfield>ua_height</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>ua_color</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>ua_os</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>ua_cpu</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>ua_language</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpRequestCacheDirective">GskHttpRequestCacheDirective</link>&#160;*<structfield>cache_control</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-add-cookie" role="function">
+<title>gsk_http_request_add_cookie ()</title>
+<indexterm zone="gsk-http-request-add-cookie"><primary sortas="gsk_http_request_add_cookie">gsk_http_request_add_cookie</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_add_cookie         (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpCookie">GskHttpCookie</link> *cookie);</programlisting>
+<para>
+Add a Cookie header line to a request.
+</para>
+<para>
+Cookies are defined in RFC 2965, a draft standard.
+</para>
+<para>
+[Section 3.3.4]  Sending Cookies to the Origin Server.
+When [the user-agent] sends a request
+to an origin server, the user agent includes a Cookie request header
+if it has stored cookies that are applicable to the request, based on
+(1) the request-host and request-port;
+(2) the request-URI;
+(3) the cookie's age.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cookie</parameter>&#160;:</term>
+<listitem><simpara> the cookie to add to the request.
+It will be freed when the request is freed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-remove-cookie" role="function">
+<title>gsk_http_request_remove_cookie ()</title>
+<indexterm zone="gsk-http-request-remove-cookie"><primary sortas="gsk_http_request_remove_cookie">gsk_http_request_remove_cookie</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_remove_cookie      (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpCookie">GskHttpCookie</link> *cookie);</programlisting>
+<para>
+Remove a cookie from the request's list and delete it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cookie</parameter>&#160;:</term>
+<listitem><simpara> the cookie to remove from the request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-find-cookie" role="function">
+<title>gsk_http_request_find_cookie ()</title>
+<indexterm zone="gsk-http-request-find-cookie"><primary sortas="gsk_http_request_find_cookie">gsk_http_request_find_cookie</primary></indexterm><programlisting><link linkend="GskHttpCookie">GskHttpCookie</link> *     gsk_http_request_find_cookie        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         const <link linkend="char">char</link> *key);</programlisting>
+<para>
+Find a cookie provided in the request by key.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> the key field of the cookie to return.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a pointer to the cookie, or NULL if not found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-add-charsets" role="function">
+<title>gsk_http_request_add_charsets ()</title>
+<indexterm zone="gsk-http-request-add-charsets"><primary sortas="gsk_http_request_add_charsets">gsk_http_request_add_charsets</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_add_charsets       (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpCharSet">GskHttpCharSet</link> *char_sets);</programlisting>
+<para>
+Add Accept-CharSet headers to the header.
+The char-sets will be freed when <parameter>header</parameter>
+is destroyed.
+</para>
+<para>
+A CharSet is a string representing a Character Set,
+and an optional real quality factor for that particular Character Set.
+(The default is 1.0)
+</para>
+<para>
+The CharSet "*" matches all other Character Sets.
+If no "*" is given, then it is as though all other character sets
+were given a quality of 0.0.
+</para>
+<para>
+If no Accept-CharSet header is given, then all character sets
+are equally acceptable.
+</para>
+<para>
+If a server cannot meet character set requirements,
+it SHOULD response with an error (<link linkend="GSK-HTTP-STATUS-NOT-ACCEPTABLE--CAPS"><type>GSK_HTTP_STATUS_NOT_ACCEPTABLE</type></link>)
+but it may also ignore it, and send output in a character-set
+the client has not suggested.
+</para>
+<para>
+See RFC 2616, Section 14.2.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>char_sets</parameter>&#160;:</term>
+<listitem><simpara> list of a <link linkend="GskHttpCharSet"><type>GskHttpCharSet</type></link>'s to indicate are accepted.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-clear-charsets" role="function">
+<title>gsk_http_request_clear_charsets ()</title>
+<indexterm zone="gsk-http-request-clear-charsets"><primary sortas="gsk_http_request_clear_charsets">gsk_http_request_clear_charsets</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_clear_charsets     (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);</programlisting>
+<para>
+Delete all accepted char-sets from the HTTP request.
+</para>
+<para>
+This has the effect of leaving a server free to use any
+character set.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-add-content-encodings" role="function">
+<title>gsk_http_request_add_content_encodings ()</title>
+<indexterm zone="gsk-http-request-add-content-encodings"><primary sortas="gsk_http_request_add_content_encodings">gsk_http_request_add_content_encodings</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_add_content_encodings
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link> *set);</programlisting>
+<para>
+Add Accept-Encoding lines to the header.
+Each GskHttpContentEncodingSet represents a single
+possible encoding and an optional associated
+quality factor.
+</para>
+<para>
+The rules for conduct are the same as for character set,
+with the exception that if no Accept-Encoding line
+is given then the 'identity' encoding should be preferred.
+</para>
+<para>
+Note that the GSK http server and client handle content
+encoding automatically, and will do the correct thing
+without your intervention.
+</para>
+<para>
+See RFC 2616, Section 14.3.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>set</parameter>&#160;:</term>
+<listitem><simpara> list of a <link linkend="GskHttpContentEncodingSet"><type>GskHttpContentEncodingSet</type></link>'s to indicate are acceptable.
+  The list is taken over by the header;
+  you must not free it or use it further.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-clear-content-encodings" role="function">
+<title>gsk_http_request_clear_content_encodings ()</title>
+<indexterm zone="gsk-http-request-clear-content-encodings"><primary sortas="gsk_http_request_clear_content_encodings">gsk_http_request_clear_content_encodings</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_clear_content_encodings
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);</programlisting>
+<para>
+Delete all accepted encodings from the HTTP request.
+</para>
+<para>
+This has the effect of leaving a server free to use any
+content encoding.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-add-transfer-encodings" role="function">
+<title>gsk_http_request_add_transfer_encodings ()</title>
+<indexterm zone="gsk-http-request-add-transfer-encodings"><primary sortas="gsk_http_request_add_transfer_encodings">gsk_http_request_add_transfer_encodings</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_add_transfer_encodings
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link> *set);</programlisting>
+<para>
+The rules for conduct are the same as for character set,
+with the exception that the defaults are
+'none' for HTTP 1.0 clients,
+and 'none' and 'chunked' for HTTP 1.1 clients.
+</para>
+<para>
+Note that the GSK http server and client handle content
+encoding automatically, and will do the correct thing
+without your intervention.
+</para>
+<para>
+This corresponds to the TE: header.
+See RFC 2616, Section 14.39.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>set</parameter>&#160;:</term>
+<listitem><simpara> list of a <link linkend="GskHttpTransferEncodingSet"><type>GskHttpTransferEncodingSet</type></link>'s to indicate are acceptable.
+  The list is taken over by the header;
+  you must not free it or use it further.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-clear-transfer-encodings" role="function">
+<title>gsk_http_request_clear_transfer_encodings ()</title>
+<indexterm zone="gsk-http-request-clear-transfer-encodings"><primary sortas="gsk_http_request_clear_transfer_encodings">gsk_http_request_clear_transfer_encodings</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_clear_transfer_encodings
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);</programlisting>
+<para>
+Delete all accepted transfer encodings from the HTTP request.
+</para>
+<para>
+This has the effect of leaving a server free to use just
+no encoding for HTTP 1.0 clients and also 'chunked' for HTTP 1.1 clients.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-add-media" role="function">
+<title>gsk_http_request_add_media ()</title>
+<indexterm zone="gsk-http-request-add-media"><primary sortas="gsk_http_request_add_media">gsk_http_request_add_media</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_add_media          (<link linkend="GskHttpRequest">GskHttpRequest</link> *header,
+                                                         <link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link> *set);</programlisting>
+<para>
+Add Accept: headers to the header.
+The media-type-sets will be freed when <parameter>header</parameter>
+is destroyed.
+</para>
+<para>
+A MediaSet is a range of media accepted,
+with quality factors as for <link linkend="gsk-http-request-add-charsets"><function>gsk_http_request_add_charsets()</function></link>.
+</para>
+<para>
+Note that '*' in a subtype applies to all
+media with that major type, but
+if a specific subtype matches, then it's
+quality is given priority.
+</para>
+<para>
+XXX: Also, there is an accept-extension 'level='...
+find out what it does!
+</para>
+<para>
+See RFC 2616, Section 14.1.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>set</parameter>&#160;:</term>
+<listitem><simpara> list of a <link linkend="GskHttpMediaTypeSet"><type>GskHttpMediaTypeSet</type></link>'s to indicate are acceptable.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-clear-media" role="function">
+<title>gsk_http_request_clear_media ()</title>
+<indexterm zone="gsk-http-request-clear-media"><primary sortas="gsk_http_request_clear_media">gsk_http_request_clear_media</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_clear_media        (<link linkend="GskHttpRequest">GskHttpRequest</link> *header);</programlisting>
+<para>
+Delete all accepted media-type-sets from the HTTP request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the request to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-new-blank" role="function">
+<title>gsk_http_request_new_blank ()</title>
+<indexterm zone="gsk-http-request-new-blank"><primary sortas="gsk_http_request_new_blank">gsk_http_request_new_blank</primary></indexterm><programlisting><link linkend="GskHttpRequest">GskHttpRequest</link> *    gsk_http_request_new_blank          (void);</programlisting>
+<para>
+Create a new empty HTTP request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-new" role="function">
+<title>gsk_http_request_new ()</title>
+<indexterm zone="gsk-http-request-new"><primary sortas="gsk_http_request_new">gsk_http_request_new</primary></indexterm><programlisting><link linkend="GskHttpRequest">GskHttpRequest</link> *    gsk_http_request_new                (<link linkend="GskHttpVerb">GskHttpVerb</link> verb,
+                                                         const <link linkend="char">char</link> *path);</programlisting>
+<para>
+Create a new simple HTTP request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>verb</parameter>&#160;:</term>
+<listitem><simpara> what type of request to make.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> path requested.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-set-verb" role="macro">
+<title>gsk_http_request_set_verb()</title>
+<indexterm zone="gsk-http-request-set-verb"><primary sortas="gsk_http_request_set_verb">gsk_http_request_set_verb</primary></indexterm><programlisting>#define             gsk_http_request_set_verb(request, verb)</programlisting>
+<para>
+The verb is GSK's name for the type of action being requested.
+It is the very first word of the HTTP transaction.
+See <link linkend="GskHttpVerb"><type>GskHttpVerb</type></link> for a list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>verb</parameter>&#160;:</term>
+<listitem><simpara>the new HTTP request verb.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-get-verb" role="macro">
+<title>gsk_http_request_get_verb()</title>
+<indexterm zone="gsk-http-request-get-verb"><primary sortas="gsk_http_request_get_verb">gsk_http_request_get_verb</primary></indexterm><programlisting>#define             gsk_http_request_get_verb(request)</programlisting>
+<para>
+Get the type of action being requested.
+See <link linkend="GskHttpVerb"><type>GskHttpVerb</type></link> for a list.
+</para>
+<para>
+Every HTTP server should know GET and HEAD requested;
+other requests might not be allowed unless the
+server had indicated that they are with a "Allow" response header.
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the request to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-peek-from" role="macro">
+<title>gsk_http_request_peek_from()</title>
+<indexterm zone="gsk-http-request-peek-from"><primary sortas="gsk_http_request_peek_from">gsk_http_request_peek_from</primary></indexterm><programlisting>#define             gsk_http_request_peek_from(request)</programlisting>
+<para>
+Get the From field, if any, from the HTTP header.
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the request to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-set-from" role="macro">
+<title>gsk_http_request_set_from()</title>
+<indexterm zone="gsk-http-request-set-from"><primary sortas="gsk_http_request_set_from">gsk_http_request_set_from</primary></indexterm><programlisting>#define             gsk_http_request_set_from(request, from)</programlisting>
+<para>
+   [From RFC 2616, Section 14.22]
+   The From request-header field, if given, SHOULD contain an Internet
+   e-mail address for the human user who controls the requesting user
+   agent. The address SHOULD be machine-usable, as defined by "mailbox"
+   in RFC 822 as updated by RFC 1123.
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the request to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>from</parameter>&#160;:</term>
+<listitem><simpara>the email of the user making the request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-set-if-modified-since" role="macro">
+<title>gsk_http_request_set_if_modified_since()</title>
+<indexterm zone="gsk-http-request-set-if-modified-since"><primary sortas="gsk_http_request_set_if_modified_since">gsk_http_request_set_if_modified_since</primary></indexterm><programlisting>#define             gsk_http_request_set_if_modified_since(request, t)</programlisting>
+<para>
+[From RFC 2616, Section 14.25]
+The If-Modified-Since request-header field is used with a method to
+make it conditional: if the requested variant has not been modified
+since the time specified in this field, an entity will not be
+returned from the server; instead, a 304 (not modified) response will
+be returned without any message-body.
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>t</parameter>&#160;:</term>
+<listitem><simpara>the time to compare the content's modification time with.
+The content should only be transmitted if its modification time
+is later than <parameter>t</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-get-if-modified-since" role="macro">
+<title>gsk_http_request_get_if_modified_since()</title>
+<indexterm zone="gsk-http-request-get-if-modified-since"><primary sortas="gsk_http_request_get_if_modified_since">gsk_http_request_get_if_modified_since</primary></indexterm><programlisting>#define             gsk_http_request_get_if_modified_since(request)</programlisting>
+<para>
+Get the time which will be compared with the content's modification
+time by the server to eliminate unnecessary content transfers.
+If this returns (time_t)-1 then there is no If-Modified-Since header.
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the request to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-set-authorization" role="function">
+<title>gsk_http_request_set_authorization ()</title>
+<indexterm zone="gsk-http-request-set-authorization"><primary sortas="gsk_http_request_set_authorization">gsk_http_request_set_authorization</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_set_authorization  (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth,
+                                                         <link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *auth);</programlisting>
+<para>
+Set the authorization for this request.
+This is like a key to get access to certain entities.
+</para>
+<para>
+Proxy-Authorization is intended to provide access control to the proxy.
+Normal Authorization is passed through a proxy.
+See sections 14.8 for normal Authorization and 14.34.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request to adjust the authorization for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_proxy_auth</parameter>&#160;:</term>
+<listitem><simpara> whether to set the Proxy-Authorization or the Authorization field.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara> the new authorization to use in this request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-set-host" role="macro">
+<title>gsk_http_request_set_host()</title>
+<indexterm zone="gsk-http-request-set-host"><primary sortas="gsk_http_request_set_host">gsk_http_request_set_host</primary></indexterm><programlisting>#define             gsk_http_request_set_host(request, host)</programlisting>
+<para>
+Set the Host: header for the HTTP request.
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the HTTP Request object to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host</parameter>&#160;:</term>
+<listitem><simpara>the hostname as a string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-set-user-agent" role="macro">
+<title>gsk_http_request_set_user_agent()</title>
+<indexterm zone="gsk-http-request-set-user-agent"><primary sortas="gsk_http_request_set_user_agent">gsk_http_request_set_user_agent</primary></indexterm><programlisting>#define             gsk_http_request_set_user_agent(request, user_agent)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_agent</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-peek-user-agent" role="macro">
+<title>gsk_http_request_peek_user_agent()</title>
+<indexterm zone="gsk-http-request-peek-user-agent"><primary sortas="gsk_http_request_peek_user_agent">gsk_http_request_peek_user_agent</primary></indexterm><programlisting>#define             gsk_http_request_peek_user_agent(request)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-peek-authorization" role="function">
+<title>gsk_http_request_peek_authorization ()</title>
+<indexterm zone="gsk-http-request-peek-authorization"><primary sortas="gsk_http_request_peek_authorization">gsk_http_request_peek_authorization</primary></indexterm><programlisting><link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * gsk_http_request_peek_authorization
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="gboolean">gboolean</link> is_proxy_auth);</programlisting>
+<para>
+Get the requested authorization information.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_proxy_auth</parameter>&#160;:</term>
+<listitem><simpara> whether to query information about proxy authorization,
+or normal server authorization.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the authorization information, or NULL if none exists (default).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-cache-directive-free" role="function">
+<title>gsk_http_request_cache_directive_free ()</title>
+<indexterm zone="gsk-http-request-cache-directive-free"><primary sortas="gsk_http_request_cache_directive_free">gsk_http_request_cache_directive_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_cache_directive_free
+                                                        (<link linkend="GskHttpRequestCacheDirective">GskHttpRequestCacheDirective</link> *directive);</programlisting>
+<para>
+Deallocate a GskHttpRequestCacheDirective.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>directive</parameter>&#160;:</term>
+<listitem><simpara> cache-directive to de-allocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-cache-directive-new" role="function">
+<title>gsk_http_request_cache_directive_new ()</title>
+<indexterm zone="gsk-http-request-cache-directive-new"><primary sortas="gsk_http_request_cache_directive_new">gsk_http_request_cache_directive_new</primary></indexterm><programlisting><link linkend="GskHttpRequestCacheDirective">GskHttpRequestCacheDirective</link> * gsk_http_request_cache_directive_new
+                                                        (void);</programlisting>
+<para>
+</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-parse-first-line" role="function">
+<title>gsk_http_request_parse_first_line ()</title>
+<indexterm zone="gsk-http-request-parse-first-line"><primary sortas="gsk_http_request_parse_first_line">gsk_http_request_parse_first_line</primary></indexterm><programlisting><link linkend="GskHttpRequestFirstLineStatus">GskHttpRequestFirstLineStatus</link>  gsk_http_request_parse_first_line
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         const <link linkend="char">char</link> *line,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Parse the first line of an HTTP request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to initialize
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>line</parameter>&#160;:</term>
+<listitem><simpara> first line of request header, e.g. GET / HTTP/1.0
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the line was the start of a valid HTTP-request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-set-cache-control" role="function">
+<title>gsk_http_request_set_cache_control ()</title>
+<indexterm zone="gsk-http-request-set-cache-control"><primary sortas="gsk_http_request_set_cache_control">gsk_http_request_set_cache_control</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_request_set_cache_control  (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpRequestCacheDirective">GskHttpRequestCacheDirective</link> *directive);</programlisting>
+<para>
+Set the cache-control flags in the header.
+Note that <parameter>directive</parameter> will be freed by the HTTP header when
+it is destroyed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the HTTP request header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>directive</parameter>&#160;:</term>
+<listitem><simpara> the new cache control directive, stolen by the HTTP header.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-has-content-body" role="function">
+<title>gsk_http_request_has_content_body ()</title>
+<indexterm zone="gsk-http-request-has-content-body"><primary sortas="gsk_http_request_has_content_body">gsk_http_request_has_content_body</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_http_request_has_content_body   (<link linkend="GskHttpRequest">GskHttpRequest</link> *request);</programlisting>
+<para>
+Get whether this header should be accompanied by
+a content-body.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-parse-cgi-query-string" role="function">
+<title>gsk_http_parse_cgi_query_string ()</title>
+<indexterm zone="gsk-http-parse-cgi-query-string"><primary sortas="gsk_http_parse_cgi_query_string">gsk_http_parse_cgi_query_string</primary></indexterm><programlisting><link linkend="char">char</link> **             gsk_http_parse_cgi_query_string     (const <link linkend="char">char</link> *query_string,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Parse the CGI key-value pairs from a query.
+The keys are normal alphanumeric strings;
+the values are de-escaped.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>query_string</parameter>&#160;:</term>
+<listitem><simpara> the full path from the HttpRequest.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> the place to put the error if something goes wrong.
+returns: the key-value pairs of CGI data, NULL-terminated.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-request-parse-cgi-query-string" role="function">
+<title>gsk_http_request_parse_cgi_query_string ()</title>
+<indexterm zone="gsk-http-request-parse-cgi-query-string"><primary sortas="gsk_http_request_parse_cgi_query_string">gsk_http_request_parse_cgi_query_string</primary></indexterm><programlisting><link linkend="GHashTable">GHashTable</link> *        gsk_http_request_parse_cgi_query_string
+                                                        (const <link linkend="char">char</link> *query_string);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>query_string</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GskHttpRequest.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskHttpRequest--host" role="property"><title>The <literal>&quot;host&quot;</literal> property</title>
+<indexterm zone="GskHttpRequest--host"><primary sortas="GskHttpRequest:host">GskHttpRequest:host</primary></indexterm><programlisting>  &quot;host&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Hostname.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpRequest--if-modified-since" role="property"><title>The <literal>&quot;if-modified-since&quot;</literal> property</title>
+<indexterm zone="GskHttpRequest--if-modified-since"><primary sortas="GskHttpRequest:if-modified-since">GskHttpRequest:if-modified-since</primary></indexterm><programlisting>  &quot;if-modified-since&quot;        <link linkend="glong">glong</link>                 : Read / Write</programlisting>
+<para>IMS tag.</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpRequest--max-forwards" role="property"><title>The <literal>&quot;max-forwards&quot;</literal> property</title>
+<indexterm zone="GskHttpRequest--max-forwards"><primary sortas="GskHttpRequest:max-forwards">GskHttpRequest:max-forwards</primary></indexterm><programlisting>  &quot;max-forwards&quot;             <link linkend="glong">glong</link>                 : Read / Write</programlisting>
+<para>IMax-Forwards.</para><para>Allowed values: [-1,32]</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpRequest--path" role="property"><title>The <literal>&quot;path&quot;</literal> property</title>
+<indexterm zone="GskHttpRequest--path"><primary sortas="GskHttpRequest:path">GskHttpRequest:path</primary></indexterm><programlisting>  &quot;path&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Path.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpRequest--referrer" role="property"><title>The <literal>&quot;referrer&quot;</literal> property</title>
+<indexterm zone="GskHttpRequest--referrer"><primary sortas="GskHttpRequest:referrer">GskHttpRequest:referrer</primary></indexterm><programlisting>  &quot;referrer&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Referrer.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpRequest--user-agent" role="property"><title>The <literal>&quot;user-agent&quot;</literal> property</title>
+<indexterm zone="GskHttpRequest--user-agent"><primary sortas="GskHttpRequest:user-agent">GskHttpRequest:user-agent</primary></indexterm><programlisting>  &quot;user-agent&quot;               <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>User Agent.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpRequest--verb" role="property"><title>The <literal>&quot;verb&quot;</literal> property</title>
+<indexterm zone="GskHttpRequest--verb"><primary sortas="GskHttpRequest:verb">GskHttpRequest:verb</primary></indexterm><programlisting>  &quot;verb&quot;                     <link linkend="GskHttpVerb">GskHttpVerb</link>           : Read / Write</programlisting>
+<para>verb.</para><para>Default value: GSK_HTTP_VERB_GET</para>
+</refsect2>
+</refsect1>
+
+
+
+<refsect1 id="GskHttpRequest.see-also">
+<title>See Also</title>
+<para>
+GskHttpHeader, GskHttpResponse
+</para>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskhash</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch14.html" title="Odds and Ends">
+<link rel="prev" href="gsk-gskbase64.html" title="Base-64">
+<link rel="next" href="gsk-gskmempool.html" title="gskmempool">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskbase64.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch14.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskmempool.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskhash.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskhash.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskhash"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskhash.top_of_page"></a>gskhash</span></h2>
+<p>gskhash — hash computing objects</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskhash.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a>;
+<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *           <a class="link" href="gsk-gskhash.html#gsk-hash-new-md5" title="gsk_hash_new_md5 ()">gsk_hash_new_md5</a>                    (void);
+<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *           <a class="link" href="gsk-gskhash.html#gsk-hash-new-sha1" title="gsk_hash_new_sha1 ()">gsk_hash_new_sha1</a>                   (void);
+<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *           <a class="link" href="gsk-gskhash.html#gsk-hash-new-crc32" title="gsk_hash_new_crc32 ()">gsk_hash_new_crc32</a>                  (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> big_endian);
+void                <a class="link" href="gsk-gskhash.html#gsk-hash-feed" title="gsk_hash_feed ()">gsk_hash_feed</a>                       (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);
+void                <a class="link" href="gsk-gskhash.html#gsk-hash-feed-str" title="gsk_hash_feed_str ()">gsk_hash_feed_str</a>                   (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         const char *str);
+void                <a class="link" href="gsk-gskhash.html#gsk-hash-done" title="gsk_hash_done ()">gsk_hash_done</a>                       (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskhash.html#gsk-hash-get-size" title="gsk_hash_get_size ()">gsk_hash_get_size</a>                   (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash);
+void                <a class="link" href="gsk-gskhash.html#gsk-hash-get" title="gsk_hash_get ()">gsk_hash_get</a>                        (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *data_out);
+void                <a class="link" href="gsk-gskhash.html#gsk-hash-get-hex" title="gsk_hash_get_hex ()">gsk_hash_get_hex</a>                    (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *hex_out);
+void                <a class="link" href="gsk-gskhash.html#gsk-hash-destroy" title="gsk_hash_destroy ()">gsk_hash_destroy</a>                    (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskhash.description"></a><h2>Description</h2>
+<p>
+These small objects can compute a hash-function
+of a stream of data incrementally.
+Just pass pieces of data to <a class="link" href="gsk-gskhash.html#gsk-hash-feed" title="gsk_hash_feed ()"><code class="function">gsk_hash_feed()</code></a>
+and it will keep track of the hash-objects state.
+Call <a class="link" href="gsk-gskhash.html#gsk-hash-done" title="gsk_hash_done ()"><code class="function">gsk_hash_done()</code></a> to finish the hash off,
+then use <a class="link" href="gsk-gskhash.html#gsk-hash-get" title="gsk_hash_get ()"><code class="function">gsk_hash_get()</code></a> or <a class="link" href="gsk-gskhash.html#gsk-hash-get-hex" title="gsk_hash_get_hex ()"><code class="function">gsk_hash_get_hex()</code></a> to
+get the value of the hash.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskhash.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHash"></a><h3>GskHash</h3>
+<pre class="programlisting">typedef struct {
+  /* The size of the hash-key (in bytes) */
+  guint       size;
+} GskHash;
+</pre>
+<p>
+An abstract hashing object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>size</code></em>;</span></p></td>
+<td>number of bytes in the hash.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-new-md5"></a><h3>gsk_hash_new_md5 ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *           gsk_hash_new_md5                    (void);</pre>
+<p>
+Create a new MD5 hasher.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated hash object.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-new-sha1"></a><h3>gsk_hash_new_sha1 ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *           gsk_hash_new_sha1                   (void);</pre>
+<p>
+Create a new SHA1 hasher.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated hash object.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-new-crc32"></a><h3>gsk_hash_new_crc32 ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *           gsk_hash_new_crc32                  (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> big_endian);</pre>
+<p>
+Typically called as gsk_hash_new_crc32(G_BYTE_ORDER == G_BIG_ENDIAN).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>big_endian</code></em> :</span></p></td>
+<td> whether to compute a big-endian crc32 hash.
+(As opposed to a little endian hash).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated hash object.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-feed"></a><h3>gsk_hash_feed ()</h3>
+<pre class="programlisting">void                gsk_hash_feed                       (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);</pre>
+<p>
+Affect the hash incrementally;
+hash the given binary data.
+</p>
+<p>
+You may call this function on little bits of data
+and it must have exactly the same effect
+is if you called it once with a larger
+slab of data.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hash</code></em> :</span></p></td>
+<td> the hash to feed data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> binary data to accumulate in the hash.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td> length of the binary data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-feed-str"></a><h3>gsk_hash_feed_str ()</h3>
+<pre class="programlisting">void                gsk_hash_feed_str                   (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         const char *str);</pre>
+<p>
+Hash the given binary data (incrementally).
+</p>
+<p>
+You may mix calls to <a class="link" href="gsk-gskhash.html#gsk-hash-feed" title="gsk_hash_feed ()"><code class="function">gsk_hash_feed()</code></a> and <a class="link" href="gsk-gskhash.html#gsk-hash-feed-str" title="gsk_hash_feed_str ()"><code class="function">gsk_hash_feed_str()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hash</code></em> :</span></p></td>
+<td> the hash to feed data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> a NUL-terminated string to feed to the hash.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-done"></a><h3>gsk_hash_done ()</h3>
+<pre class="programlisting">void                gsk_hash_done                       (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash);</pre>
+<p>
+Finish processing loose data for the hash.
+This may only be called once in
+the lifetime of the hash.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hash</code></em> :</span></p></td>
+<td> the hash to finish.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-get-size"></a><h3>gsk_hash_get_size ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_hash_get_size                   (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash);</pre>
+<p>
+Get the number of binary bytes that this
+function maps to.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hash</code></em> :</span></p></td>
+<td> the hash to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes of binary data in this hash.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-get"></a><h3>gsk_hash_get ()</h3>
+<pre class="programlisting">void                gsk_hash_get                        (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *data_out);</pre>
+<p>
+Get a binary hash value.  This should be of the
+size returned by <a class="link" href="gsk-gskhash.html#gsk-hash-get-size" title="gsk_hash_get_size ()"><code class="function">gsk_hash_get_size()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hash</code></em> :</span></p></td>
+<td> the hash to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data_out</code></em> :</span></p></td>
+<td> binary buffer to fill with the hash value.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-get-hex"></a><h3>gsk_hash_get_hex ()</h3>
+<pre class="programlisting">void                gsk_hash_get_hex                    (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *hex_out);</pre>
+<p>
+Get a hex hash value.  This should be of the
+size returned by (<a class="link" href="gsk-gskhash.html#gsk-hash-get-size" title="gsk_hash_get_size ()"><code class="function">gsk_hash_get_size()</code></a> * 2 + 1).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hash</code></em> :</span></p></td>
+<td> the hash to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hex_out</code></em> :</span></p></td>
+<td> buffer to fill with a NUL-terminated hex hash value.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hash-destroy"></a><h3>gsk_hash_destroy ()</h3>
+<pre class="programlisting">void                gsk_hash_destroy                    (<a class="link" href="gsk-gskhash.html#GskHash" title="GskHash">GskHash</a> *hash);</pre>
+<p>
+Free memory used by the hash object.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hash</code></em> :</span></p></td>
+<td> the hash function.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

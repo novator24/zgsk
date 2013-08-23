@@ -1,0 +1,876 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Socket Addresses.</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskstreamclient.html" title="Client Stream">
+<link rel="next" href="gsk-gsklog.html" title="gsklog">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskstreamclient.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gsklog.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskSocketAddress.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskSocketAddress.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskSocketAddress.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskSocketAddress"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskSocketAddress.top_of_page"></a>Socket Addresses.</span></h2>
+<p>Socket Addresses. — The location of a socket endpoint, in some domain.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskSocketAddress.synopsis"></a><h2>Synopsis</h2>
+<a name="GskSocketAddressIpv4"></a><a name="GskSocketAddressLocal"></a><a name="GskSocketAddressIpv6"></a><pre class="synopsis">
+                    <a class="link" href="GskSocketAddress.html#GskSocketAddressClass" title="GskSocketAddressClass">GskSocketAddressClass</a>;
+                    <a class="link" href="GskSocketAddress.html#GskSocketAddress-struct" title="GskSocketAddress">GskSocketAddress</a>;
+                    <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4-struct" title="GskSocketAddressIpv4">GskSocketAddressIpv4</a>;
+                    <a class="link" href="GskSocketAddress.html#GskSocketAddressLocal-struct" title="GskSocketAddressLocal">GskSocketAddressLocal</a>;
+                    <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv6-struct" title="GskSocketAddressIpv6">GskSocketAddressIpv6</a>;
+                    <a class="link" href="GskSocketAddress.html#GskSocketAddressEthernet" title="GskSocketAddressEthernet">GskSocketAddressEthernet</a>;
+<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  <a class="link" href="GskSocketAddress.html#gsk-socket-address-from-native" title="gsk_socket_address_from_native ()">gsk_socket_address_from_native</a>      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> native_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> native_size);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                <a class="link" href="GskSocketAddress.html#gsk-socket-address-protocol-family" title="gsk_socket_address_protocol_family ()">gsk_socket_address_protocol_family</a>  (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                <a class="link" href="GskSocketAddress.html#gsk-socket-address-address-family" title="gsk_socket_address_address_family ()">gsk_socket_address_address_family</a>   (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="GskSocketAddress.html#gsk-socket-address-sizeof-native" title="gsk_socket_address_sizeof_native ()">gsk_socket_address_sizeof_native</a>    (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskSocketAddress.html#gsk-socket-address-to-native" title="gsk_socket_address_to_native ()">gsk_socket_address_to_native</a>        (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> output,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+char *              <a class="link" href="GskSocketAddress.html#gsk-socket-address-to-string" title="gsk_socket_address_to_string ()">gsk_socket_address_to_string</a>        (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+#define             <a class="link" href="GskSocketAddress.html#gsk-socket-address-ipv4-localhost" title="gsk_socket_address_ipv4_localhost()">gsk_socket_address_ipv4_localhost</a>   (port)
+<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  <a class="link" href="GskSocketAddress.html#gsk-socket-address-ipv4-new" title="gsk_socket_address_ipv4_new ()">gsk_socket_address_ipv4_new</a>         (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *ip_address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint16"
+>guint16</a> port);
+<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  <a class="link" href="GskSocketAddress.html#gsk-socket-address-ipv6-new" title="gsk_socket_address_ipv6_new ()">gsk_socket_address_ipv6_new</a>         (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint16"
+>guint16</a> port);
+<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  <a class="link" href="GskSocketAddress.html#gsk-socket-address-ethernet-new" title="gsk_socket_address_ethernet_new ()">gsk_socket_address_ethernet_new</a>     (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *mac_addr);
+<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  <a class="link" href="GskSocketAddress.html#gsk-socket-address-local-new" title="gsk_socket_address_local_new ()">gsk_socket_address_local_new</a>        (const char *path);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskSocketAddress.html#gsk-socket-address-system-supports-ipv6" title="gsk_socket_address_system_supports_ipv6 ()">gsk_socket_address_system_supports_ipv6</a>
+                                                        (void);
+void                <a class="link" href="GskSocketAddress.html#gsk-socket-address-register-subclass" title="gsk_socket_address_register_subclass ()">gsk_socket_address_register_subclass</a>
+                                                        (<a class="link" href="GskSocketAddress.html#GskSocketAddressClass" title="GskSocketAddressClass">GskSocketAddressClass</a> *klass);
+int                 <a class="link" href="GskSocketAddress.html#gsk-socket-address-connect-fd" title="gsk_socket_address_connect_fd ()">gsk_socket_address_connect_fd</a>       (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> *is_connected,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskSocketAddress.html#gsk-socket-address-finish-fd" title="gsk_socket_address_finish_fd ()">gsk_socket_address_finish_fd</a>        (int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskSocketAddress.html#gsk-socket-address-equals" title="gsk_socket_address_equals ()">gsk_socket_address_equals</a>           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> address_a_ptr,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> address_b_ptr);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="GskSocketAddress.html#gsk-socket-address-hash" title="gsk_socket_address_hash ()">gsk_socket_address_hash</a>             (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> address_ptr);
+#define             <a class="link" href="GskSocketAddress.html#GSK-SOCKET-ADDRESS-REMOTE-QUARK--CAPS" title="GSK_SOCKET_ADDRESS_REMOTE_QUARK">GSK_SOCKET_ADDRESS_REMOTE_QUARK</a>
+#define             <a class="link" href="GskSocketAddress.html#GSK-SOCKET-ADDRESS-LOCAL-QUARK--CAPS" title="GSK_SOCKET_ADDRESS_LOCAL_QUARK">GSK_SOCKET_ADDRESS_LOCAL_QUARK</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskSocketAddress.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskSocketAddress
+         +----<a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a>
+         +----<a class="link" href="GskSocketAddress.html#GskSocketAddressIpv6">GskSocketAddressIpv6</a>
+         +----<a class="link" href="GskSocketAddress.html#GskSocketAddressLocal">GskSocketAddressLocal</a>
+</pre>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a>
+         +----GskSocketAddressIpv4
+</pre>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a>
+         +----GskSocketAddressLocal
+</pre>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a>
+         +----GskSocketAddressIpv6
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskSocketAddress.description"></a><h2>Description</h2>
+<p>
+This is a <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+><span class="type">GObject</span></a> equivalent of sockaddr_t.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskSocketAddress.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskSocketAddressClass"></a><h3>GskSocketAddressClass</h3>
+<pre class="programlisting">typedef struct {
+  GObjectClass object_class;
+  gsize sizeof_native_address;
+  gint protocol_family;		/* eg PF_INET, PF_LOCAL etc */
+  gint address_family;		/* eg AF_INET, AF_LOCAL etc */
+  gboolean (*to_native)  (GskSocketAddress *address,
+			  gpointer          output);
+  gboolean (*from_native)(GskSocketAddress *address,
+			  gconstpointer     sockaddr_data,
+			  gsize             sockaddr_length);
+  char    *(*to_string)  (GskSocketAddress *address);
+  /* note: both addresses will be of exactly the same type */
+  gboolean (*equals)     (GskSocketAddress *addr1,
+			  GskSocketAddress *addr2);
+  guint    (*hash)       (GskSocketAddress *addr);
+} GskSocketAddressClass;
+</pre>
+<p>
+The base-class for all types of socket-addresses.
+The members of this class should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"
+>GObjectClass</a> <em class="structfield"><code>object_class</code></em>;</span></p></td>
+<td>the base-class.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> <em class="structfield"><code>sizeof_native_address</code></em>;</span></p></td>
+<td>how big is a socket-address of
+this type in the native OS representation.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> <em class="structfield"><code>protocol_family</code></em>;</span></p></td>
+<td>native PF_* macro value for this type of address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> <em class="structfield"><code>address_family</code></em>;</span></p></td>
+<td>native AF_* macro value for this type of address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>to_native</code></em> ()</span></p></td>
+<td>Convert to a native struct sockaddr* type representation.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>from_native</code></em> ()</span></p></td>
+<td>Convert from a native struct sockaddr* type representation.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>to_string</code></em> ()</span></p></td>
+<td>Convert to a human-readable ASCII representation.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>equals</code></em> ()</span></p></td>
+<td>Test if this is equal to another <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a>
+of this exact type are equal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>hash</code></em> ()</span></p></td>
+<td>Compute a hash-value based on this socket.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskSocketAddress-struct"></a><h3>GskSocketAddress</h3>
+<pre class="programlisting">typedef struct _GskSocketAddress GskSocketAddress;</pre>
+<p>
+The base instance for all socket addresses.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskSocketAddressIpv4-struct"></a><h3>GskSocketAddressIpv4</h3>
+<pre class="programlisting">typedef struct _GskSocketAddressIpv4 GskSocketAddressIpv4;</pre>
+<p>
+An IPv4 Socket Address.  This is a 4-byte host IP address
+and a 2-byte port number (as a guint16).
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskSocketAddressLocal-struct"></a><h3>GskSocketAddressLocal</h3>
+<pre class="programlisting">typedef struct _GskSocketAddressLocal GskSocketAddressLocal;</pre>
+<p>
+A local socket, often called a UNIX-domain socket.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskSocketAddressIpv6-struct"></a><h3>GskSocketAddressIpv6</h3>
+<pre class="programlisting">typedef struct _GskSocketAddressIpv6 GskSocketAddressIpv6;</pre>
+<p>
+An IPv6 Socket Address.  For now, the IPv6 implementation is unfinished.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskSocketAddressEthernet"></a><h3>GskSocketAddressEthernet</h3>
+<pre class="programlisting">typedef struct {
+  GskSocketAddress      socket_address;
+  guint8                mac_address[6];
+} GskSocketAddressEthernet;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-from-native"></a><h3>gsk_socket_address_from_native ()</h3>
+<pre class="programlisting"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  gsk_socket_address_from_native      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> native_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> native_size);</pre>
+<p>
+Allocate a new GskSocketAddress based on
+native_data, if we know how.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>native_data</code></em> :</span></p></td>
+<td> a struct sockaddr_t*.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>native_size</code></em> :</span></p></td>
+<td> length of native_data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskSocketAddress or NULL if we could not interpret the sockaddr.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-protocol-family"></a><h3>gsk_socket_address_protocol_family ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                gsk_socket_address_protocol_family  (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+Get the PF_* macro value corresponding to this address.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> a socket address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the protocol family.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-address-family"></a><h3>gsk_socket_address_address_family ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                gsk_socket_address_address_family   (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+Get the AF_* macro value corresponding to this address.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> a socket address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the address family.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-sizeof-native"></a><h3>gsk_socket_address_sizeof_native ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_socket_address_sizeof_native    (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+Determine how many bytes of storage the sockaddr_t
+based on this object will require.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> a socket address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the size in bytes of the native sockaddr type.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-to-native"></a><h3>gsk_socket_address_to_native ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_socket_address_to_native        (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> output,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Convert a socket-address to its native form.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> a socket address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>output</code></em> :</span></p></td>
+<td> a struct sockaddr_t (at least conceptually)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether it was able to convert the address.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-to-string"></a><h3>gsk_socket_address_to_string ()</h3>
+<pre class="programlisting">char *              gsk_socket_address_to_string        (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+Convert a socket-address to a newly allocated string,
+which the caller must free.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> a socket address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a string for the user to free.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-ipv4-localhost"></a><h3>gsk_socket_address_ipv4_localhost()</h3>
+<pre class="programlisting">#define             gsk_socket_address_ipv4_localhost(port)</pre>
+<p>
+Create a new address pointing to this host,
+on the given port.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>port</code></em> :</span></p></td>
+<td>the port on the local host the address should refer to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly allocated <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4"><span class="type">GskSocketAddressIpv4</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-ipv4-new"></a><h3>gsk_socket_address_ipv4_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  gsk_socket_address_ipv4_new         (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *ip_address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint16"
+>guint16</a> port);</pre>
+<p>
+Allocate a new IPv4 address given a numeric IP and port number.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ip_address</code></em> :</span></p></td>
+<td> the 4-byte IP address
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>port</code></em> :</span></p></td>
+<td> the port number.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskSocketAddress
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-ipv6-new"></a><h3>gsk_socket_address_ipv6_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  gsk_socket_address_ipv6_new         (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint16"
+>guint16</a> port);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>port</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-ethernet-new"></a><h3>gsk_socket_address_ethernet_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  gsk_socket_address_ethernet_new     (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *mac_addr);</pre>
+<p>
+Allocate a new socket address corresponding to an
+ethernet device.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mac_addr</code></em> :</span></p></td>
+<td> the 6-byte unique address of this ethernet device.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated socket-address.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-local-new"></a><h3>gsk_socket_address_local_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *  gsk_socket_address_local_new        (const char *path);</pre>
+<p>
+Create a socket-address which is associated with a path
+in the local filesystem.  Such socket-addresses
+are useful for fast communication between processes on the same
+host.
+</p>
+<p>
+Sometimes, these types of addresses are called unix-domain addresses,
+but it is better to avoid the term unix for a generic concept.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td> path in filesystem to hook this socket up.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated socket address.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-system-supports-ipv6"></a><h3>gsk_socket_address_system_supports_ipv6 ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_socket_address_system_supports_ipv6
+                                                        (void);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-register-subclass"></a><h3>gsk_socket_address_register_subclass ()</h3>
+<pre class="programlisting">void                gsk_socket_address_register_subclass
+                                                        (<a class="link" href="GskSocketAddress.html#GskSocketAddressClass" title="GskSocketAddressClass">GskSocketAddressClass</a> *klass);</pre>
+<p>
+Add the class to a per address-family hash table
+for use converting from native.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>klass</code></em> :</span></p></td>
+<td> a concrete derived class.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-connect-fd"></a><h3>gsk_socket_address_connect_fd ()</h3>
+<pre class="programlisting">int                 gsk_socket_address_connect_fd       (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> *is_connected,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Begin connecting to a location by address.
+</p>
+<p>
+If the connection is fully established before returning to
+the caller, then *<em class="parameter"><code>is_connected</code></em> will be set to TRUE
+and a non-negative file descriptor will be returned.
+</p>
+<p>
+Sometimes connections only partially succeed,
+in which case *<em class="parameter"><code>is_connected</code></em> will be set to FALSE,
+and you must call <a class="link" href="GskSocketAddress.html#gsk-socket-address-finish-fd" title="gsk_socket_address_finish_fd ()"><code class="function">gsk_socket_address_finish_fd()</code></a> whenever the
+file-description polls ready to input or output.
+</p>
+<p>
+If the connect fails immediately, -1 will be returned
+and *<em class="parameter"><code>error</code></em> will be set if <em class="parameter"><code>error</code></em> is non-NULL.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the address to connect to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_connected</code></em> :</span></p></td>
+<td> whether the connection succeeded completely.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> an optional error return.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the connecting or connected file-descriptor, or -1 on error.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-finish-fd"></a><h3>gsk_socket_address_finish_fd ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_socket_address_finish_fd        (int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Finish connecting a partially connected file-descriptor.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> a file descriptor which may be done connecting.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> an optional error return.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> TRUE if the connection is now established,
+otherwise it returns FALSE and will set *<em class="parameter"><code>error</code></em> if an error occurred.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-equals"></a><h3>gsk_socket_address_equals ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_socket_address_equals           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> address_a_ptr,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> address_b_ptr);</pre>
+<p>
+This function is a GEqualFunc which can determine
+if two socket address are the same.
+This is principally used with <a class="link" href="GskSocketAddress.html#gsk-socket-address-hash" title="gsk_socket_address_hash ()"><span class="type">gsk_socket_address_hash</span></a>
+to make a hash-table mapping from socket-addresses.
+</p>
+<p>
+(This just uses the virtual method of GskSocketAddressClass)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address_a_ptr</code></em> :</span></p></td>
+<td> a pointer to a <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address_b_ptr</code></em> :</span></p></td>
+<td> a pointer to a <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the addresses are equal.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-socket-address-hash"></a><h3>gsk_socket_address_hash ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_socket_address_hash             (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> address_ptr);</pre>
+<p>
+This function is a GHashFunc which can determine
+a hash value for a socket-address.
+</p>
+<p>
+This is principally used with <a class="link" href="GskSocketAddress.html#gsk-socket-address-equals" title="gsk_socket_address_equals ()"><span class="type">gsk_socket_address_equals</span></a>
+to make a hash-table mapping from socket-addresses.
+</p>
+<p>
+(This just uses the virtual method of GskSocketAddressClass)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address_ptr</code></em> :</span></p></td>
+<td> a pointer to a <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the hash value for the socket-address.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-SOCKET-ADDRESS-REMOTE-QUARK--CAPS"></a><h3>GSK_SOCKET_ADDRESS_REMOTE_QUARK</h3>
+<pre class="programlisting">#define             GSK_SOCKET_ADDRESS_REMOTE_QUARK</pre>
+<p>
+Used with <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-set-qdata"
+><code class="function">g_object_set_qdata()</code></a> to store
+the remote-address of a stream.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-SOCKET-ADDRESS-LOCAL-QUARK--CAPS"></a><h3>GSK_SOCKET_ADDRESS_LOCAL_QUARK</h3>
+<pre class="programlisting">#define             GSK_SOCKET_ADDRESS_LOCAL_QUARK</pre>
+<p>
+Used with <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-set-qdata"
+><code class="function">g_object_set_qdata()</code></a> to store
+the local-address of a stream.
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

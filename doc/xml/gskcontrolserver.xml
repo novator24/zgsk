@@ -1,0 +1,200 @@
+<refentry id="gsk-GskControlServer">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskControlServer.top_of_page">GskControlServer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskControlServer</refname>
+<refpurpose>a simple mechanism for handling control connections</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskControlServer.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskControlServer">GskControlServer</link>;
+<link linkend="void">void</link>                <link linkend="gsk-control-server-add-command">gsk_control_server_add_command</link>      (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         const <link linkend="char">char</link> *command_name,
+                                                         <link linkend="GskControlServerCommandFunc">GskControlServerCommandFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-control-server-delete-file">gsk_control_server_delete_file</link>      (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         const <link linkend="char">char</link> *path,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-control-server-listen">gsk_control_server_listen</link>           (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskControlServer">GskControlServer</link> *  <link linkend="gsk-control-server-new">gsk_control_server_new</link>              (void);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-control-server-set-file">gsk_control_server_set_file</link>         (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="guint8">guint8</link> *content,
+                                                         <link linkend="guint">guint</link> content_length,
+                                                         <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskControlServer.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This provides a simple server that can be used
+from the gsk-control-client for runtime manipulation.
+</para>
+<para>
+You can register data and commands that the client
+will be able to invoke.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskControlServer.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskControlServer" role="struct">
+<title>GskControlServer</title>
+<indexterm zone="GskControlServer"><primary sortas="GskControlServer">GskControlServer</primary></indexterm><programlisting>typedef struct _GskControlServer GskControlServer;</programlisting>
+<para>
+Opaque class which acts as a database of virtual files and commands.
+</para></refsect2>
+<refsect2 id="gsk-control-server-add-command" role="function">
+<title>gsk_control_server_add_command ()</title>
+<indexterm zone="gsk-control-server-add-command"><primary sortas="gsk_control_server_add_command">gsk_control_server_add_command</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_control_server_add_command      (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         const <link linkend="char">char</link> *command_name,
+                                                         <link linkend="GskControlServerCommandFunc">GskControlServerCommandFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Add a command to the command server.
+The command will show up when users 'ls /bin'
+and they may also type it directly.
+</para>
+<para>
+The command must not conflict with any of the
+reserved commands: ls, cat, set, get.</para>
+<para>
+Add a command to the server.
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server which should learn the command.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>command_name</parameter>&#160;:</term>
+<listitem><simpara> the name of the new command.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> the function that implements the new command.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> opaque data to pass to 'func'.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-server-delete-file" role="function">
+<title>gsk_control_server_delete_file ()</title>
+<indexterm zone="gsk-control-server-delete-file"><primary sortas="gsk_control_server_delete_file">gsk_control_server_delete_file</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_control_server_delete_file      (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         const <link linkend="char">char</link> *path,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Remove a file from the virtual filesystem.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server which have the virtual file removed from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> the virtual path for the file's location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to store the error if failure occurs.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>an error if the file does not exist or is a directory.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-server-listen" role="function">
+<title>gsk_control_server_listen ()</title>
+<indexterm zone="gsk-control-server-listen"><primary sortas="gsk_control_server_listen">gsk_control_server_listen</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_control_server_listen           (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Bind to address and answer the requests using server.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server that should listen.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the port to listen on.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to store the error if failure occurs.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the bind operation was successful.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-server-new" role="function">
+<title>gsk_control_server_new ()</title>
+<indexterm zone="gsk-control-server-new"><primary sortas="gsk_control_server_new">gsk_control_server_new</primary></indexterm><programlisting><link linkend="GskControlServer">GskControlServer</link> *  gsk_control_server_new              (void);</programlisting>
+<para>
+Allocate a new GskControlServer.
+</para>
+<para>
+It has a few builtin commands: 'ls', 'cat'.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-server-set-file" role="function">
+<title>gsk_control_server_set_file ()</title>
+<indexterm zone="gsk-control-server-set-file"><primary sortas="gsk_control_server_set_file">gsk_control_server_set_file</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_control_server_set_file         (<link linkend="GskControlServer">GskControlServer</link> *server,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="guint8">guint8</link> *content,
+                                                         <link linkend="guint">guint</link> content_length,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Try to create a file in the virtual file-system
+that clients will have access to.
+</para>
+<para>
+The clients can find the file using 'ls'
+and read the file using 'cat'.
+</para>
+<para>
+This may replace an old copy of the file.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server which have the virtual file added.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> the virtual path for the file's location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the data for the file.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>content_length</parameter>&#160;:</term>
+<listitem><simpara> the contents of the file.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to store the error if failure occurs.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether this command succeeded.
+This can fail if it cannot make a virtual-directory.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-GskControlServer.see-also">
+<title>See Also</title>
+<para>
+GskControlClient, gsk-control-client.
+</para>
+</refsect1>
+
+</refentry>

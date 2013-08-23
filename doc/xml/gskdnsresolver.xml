@@ -1,0 +1,382 @@
+<refentry id="gsk-gskdnsresolver">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskdnsresolver.top_of_page">gskdnsresolver</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskdnsresolver</refname>
+<refpurpose>An interface that DNS resolvers provide.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskdnsresolver.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="GskDnsResolver"/>
+<synopsis>
+                    <link linkend="GskDnsResolverHints">GskDnsResolverHints</link>;
+                    <link linkend="GskDnsResolverIface">GskDnsResolverIface</link>;
+                    <link linkend="GskDnsResolver-struct">GskDnsResolver</link>;
+                    <link linkend="GskDnsResolverTask">GskDnsResolverTask</link>;
+<link linkend="void">void</link>                (<link linkend="GskDnsResolverLookupFunc">*GskDnsResolverLookupFunc</link>)         (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gpointer">gpointer</link> func_data);
+<link linkend="void">void</link>                (<link linkend="GskDnsResolverRevLookupFunc">*GskDnsResolverRevLookupFunc</link>)      (const <link linkend="char">char</link> *name,
+                                                         <link linkend="gpointer">gpointer</link> func_data);
+<link linkend="void">void</link>                (<link linkend="GskDnsResolverResponseFunc">*GskDnsResolverResponseFunc</link>)       (<link linkend="GSList">GSList</link> *answers,
+                                                         <link linkend="GSList">GSList</link> *authority,
+                                                         <link linkend="GSList">GSList</link> *additional,
+                                                         <link linkend="GSList">GSList</link> *neg_questions,
+                                                         <link linkend="gpointer">gpointer</link> func_data);
+<link linkend="void">void</link>                (<link linkend="GskDnsResolverFailFunc">*GskDnsResolverFailFunc</link>)           (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> func_data);
+<link linkend="GskDnsResolverTask">GskDnsResolverTask</link> * <link linkend="gsk-dns-resolver-resolve">gsk_dns_resolver_resolve</link>           (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         <link linkend="gboolean">gboolean</link> recursive,
+                                                         <link linkend="GSList">GSList</link> *dns_questions,
+                                                         <link linkend="GskDnsResolverResponseFunc">GskDnsResolverResponseFunc</link> func,
+                                                         <link linkend="GskDnsResolverFailFunc">GskDnsResolverFailFunc</link> on_fail,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="GskDnsResolverHints">GskDnsResolverHints</link> *hints);
+<link linkend="void">void</link>                <link linkend="gsk-dns-resolver-cancel">gsk_dns_resolver_cancel</link>             (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         <link linkend="GskDnsResolverTask">GskDnsResolverTask</link> *task);
+<link linkend="GskDnsResolverTask">GskDnsResolverTask</link> * <link linkend="gsk-dns-resolver-lookup">gsk_dns_resolver_lookup</link>            (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskDnsResolverLookupFunc">GskDnsResolverLookupFunc</link> func,
+                                                         <link linkend="GskDnsResolverFailFunc">GskDnsResolverFailFunc</link> on_fail,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="GskDnsResolverTask">GskDnsResolverTask</link> * <link linkend="gsk-dns-resolver-rev-lookup">gsk_dns_resolver_rev_lookup</link>        (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskDnsResolverRevLookupFunc">GskDnsResolverRevLookupFunc</link> func,
+                                                         <link linkend="GskDnsResolverFailFunc">GskDnsResolverFailFunc</link> on_fail,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-dns-resolver-add-name-resolver-iface">gsk_dns_resolver_add_name_resolver_iface</link>
+                                                        (<link linkend="GType">GType</link> type);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gsk-gskdnsresolver.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GInterface">GInterface</link>
+   +----GskDnsResolver
+</synopsis>
+</refsect1>
+
+<refsect1 id="gsk-gskdnsresolver.prerequisites" role="prerequisites">
+<title role="prerequisites.title">Prerequisites</title>
+<para>
+GskDnsResolver requires
+ <link linkend="GObject">GObject</link>.</para>
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskdnsresolver.implementations" role="implementations">
+<title role="implementations.title">Known Implementations</title>
+<para>
+GskDnsResolver is implemented by
+ <link linkend="GskDnsClient">GskDnsClient</link>.</para>
+</refsect1>
+
+
+
+
+<refsect1 id="gsk-gskdnsresolver.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This is an interface which classes that provide DNS lookups
+may implement.  It provides an easy way to conform
+to the <link linkend="GskNameResolver"><type>GskNameResolver</type></link> interface.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskdnsresolver.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskDnsResolverHints" role="struct">
+<title>GskDnsResolverHints</title>
+<indexterm zone="GskDnsResolverHints"><primary sortas="GskDnsResolverHints">GskDnsResolverHints</primary></indexterm><programlisting>typedef struct {
+  GskSocketAddress       *address;
+} GskDnsResolverHints;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskDnsResolverIface" role="struct">
+<title>GskDnsResolverIface</title>
+<indexterm zone="GskDnsResolverIface"><primary sortas="GskDnsResolverIface">GskDnsResolverIface</primary></indexterm><programlisting>typedef struct {
+  GTypeInterface base_iface;
+  gpointer            (*resolve) (GskDnsResolver               *resolver,
+				  gboolean                      recursive,
+				  GSList                       *dns_questions,
+				  GskDnsResolverResponseFunc    func,
+				  GskDnsResolverFailFunc        on_fail,
+				  gpointer                      func_data,
+				  GDestroyNotify                destroy,
+				  GskDnsResolverHints          *optional_hints);
+  void                (*cancel)  (GskDnsResolver               *resolver,
+				  gpointer                      task);
+} GskDnsResolverIface;
+</programlisting>
+<para>
+The interface for DNS resolvers.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GTypeInterface">GTypeInterface</link>&#160;<structfield>base_iface</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>resolve</structfield>&#160;()</term>
+<listitem><simpara>begin a name-resolution task.  The pointer returned
+should identify the task to the resolver object,
+so that it can be cancelled.  Alternatively, if
+the resolver can operate without blocking, it may return NULL,
+after having called the success or failure callback.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>cancel</structfield>&#160;()</term>
+<listitem><simpara>a method to cancel a still running DNS task.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResolver-struct" role="struct">
+<title>GskDnsResolver</title>
+<indexterm zone="GskDnsResolver-struct"><primary sortas="GskDnsResolver">GskDnsResolver</primary></indexterm><programlisting>typedef struct _GskDnsResolver GskDnsResolver;</programlisting>
+<para>
+Any object which implements this interface.
+</para></refsect2>
+<refsect2 id="GskDnsResolverTask" role="struct">
+<title>GskDnsResolverTask</title>
+<indexterm zone="GskDnsResolverTask"><primary sortas="GskDnsResolverTask">GskDnsResolverTask</primary></indexterm><programlisting>typedef struct _GskDnsResolverTask GskDnsResolverTask;</programlisting>
+<para>
+An opaque structure which represents a DNS resolving task.
+</para></refsect2>
+<refsect2 id="GskDnsResolverLookupFunc" role="function">
+<title>GskDnsResolverLookupFunc ()</title>
+<indexterm zone="GskDnsResolverLookupFunc"><primary sortas="GskDnsResolverLookupFunc">GskDnsResolverLookupFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskDnsResolverLookupFunc)         (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gpointer">gpointer</link> func_data);</programlisting>
+<para>
+Function to call when an address is found from a name.
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>the address that was found.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-dns-resolver-lookup"><function>gsk_dns_resolver_lookup()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResolverRevLookupFunc" role="function">
+<title>GskDnsResolverRevLookupFunc ()</title>
+<indexterm zone="GskDnsResolverRevLookupFunc"><primary sortas="GskDnsResolverRevLookupFunc">GskDnsResolverRevLookupFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskDnsResolverRevLookupFunc)      (const <link linkend="char">char</link> *name,
+                                                         <link linkend="gpointer">gpointer</link> func_data);</programlisting>
+<para>
+Function to call when an name is found from an address.
+</para><variablelist role="params">
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>the name that was found.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-dns-resolver-rev-lookup"><function>gsk_dns_resolver_rev_lookup()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResolverResponseFunc" role="function">
+<title>GskDnsResolverResponseFunc ()</title>
+<indexterm zone="GskDnsResolverResponseFunc"><primary sortas="GskDnsResolverResponseFunc">GskDnsResolverResponseFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskDnsResolverResponseFunc)       (<link linkend="GSList">GSList</link> *answers,
+                                                         <link linkend="GSList">GSList</link> *authority,
+                                                         <link linkend="GSList">GSList</link> *additional,
+                                                         <link linkend="GSList">GSList</link> *neg_questions,
+                                                         <link linkend="gpointer">gpointer</link> func_data);</programlisting>
+<para>
+Handle a list of DNS results.
+This has all the sections of a <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>
+except the questions.
+</para><variablelist role="params">
+<varlistentry><term><parameter>answers</parameter>&#160;:</term>
+<listitem><simpara>
+Direct answers to the questions posed to <link linkend="gsk-dns-resolver-resolve"><function>gsk_dns_resolver_resolve()</function></link>.
+(A GSList of <link linkend="GskDnsResourceRecord"><type>GskDnsResourceRecord</type></link>'s)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>authority</parameter>&#160;:</term>
+<listitem><simpara>
+Information about the authority of the <parameter>answers</parameter>.
+(A GSList of <link linkend="GskDnsResourceRecord"><type>GskDnsResourceRecord</type></link>'s)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>additional</parameter>&#160;:</term>
+<listitem><simpara>
+Supporting data, for example, the numeric address of a nameserver.
+(To try to save the client from making more queries.)
+(A GSList of <link linkend="GskDnsResourceRecord"><type>GskDnsResourceRecord</type></link>'s)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>neg_questions</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara>
+Data passed to <link linkend="gsk-dns-resolver-resolve"><function>gsk_dns_resolver_resolve()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResolverFailFunc" role="function">
+<title>GskDnsResolverFailFunc ()</title>
+<indexterm zone="GskDnsResolverFailFunc"><primary sortas="GskDnsResolverFailFunc">GskDnsResolverFailFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskDnsResolverFailFunc)           (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> func_data);</programlisting>
+<para>
+Called when a DNS resolution fails.
+</para><variablelist role="params">
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>the error which caused the DNS query to fail.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara>
+Data passed to <link linkend="gsk-dns-resolver-resolve"><function>gsk_dns_resolver_resolve()</function></link>,
+<link linkend="gsk-dns-resolver-lookup"><function>gsk_dns_resolver_lookup()</function></link> or <link linkend="gsk-dns-resolver-rev-lookup"><function>gsk_dns_resolver_rev_lookup()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-resolver-resolve" role="function">
+<title>gsk_dns_resolver_resolve ()</title>
+<indexterm zone="gsk-dns-resolver-resolve"><primary sortas="gsk_dns_resolver_resolve">gsk_dns_resolver_resolve</primary></indexterm><programlisting><link linkend="GskDnsResolverTask">GskDnsResolverTask</link> * gsk_dns_resolver_resolve           (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         <link linkend="gboolean">gboolean</link> recursive,
+                                                         <link linkend="GSList">GSList</link> *dns_questions,
+                                                         <link linkend="GskDnsResolverResponseFunc">GskDnsResolverResponseFunc</link> func,
+                                                         <link linkend="GskDnsResolverFailFunc">GskDnsResolverFailFunc</link> on_fail,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="GskDnsResolverHints">GskDnsResolverHints</link> *hints);</programlisting>
+<para>
+Begin a DNS lookup task.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>resolver</parameter>&#160;:</term>
+<listitem><simpara> the DNS resolver which should begin processing the request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recursive</parameter>&#160;:</term>
+<listitem><simpara> whether to use recursive name resolution on the server.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dns_questions</parameter>&#160;:</term>
+<listitem><simpara> list of GskDnsQuestion's to resolve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function which will be called with answers
+to the given questions.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>on_fail</parameter>&#160;:</term>
+<listitem><simpara> function to call if the name cannot be resolved.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>func</parameter> and <parameter>on_fail</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call with the task is over.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>hints</parameter>&#160;:</term>
+<listitem><simpara> flags to pass to the name resolver.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a running DNS lookup task.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-resolver-cancel" role="function">
+<title>gsk_dns_resolver_cancel ()</title>
+<indexterm zone="gsk-dns-resolver-cancel"><primary sortas="gsk_dns_resolver_cancel">gsk_dns_resolver_cancel</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_resolver_cancel             (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         <link linkend="GskDnsResolverTask">GskDnsResolverTask</link> *task);</programlisting>
+<para>
+Cancel a running DNS lookup task.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>resolver</parameter>&#160;:</term>
+<listitem><simpara> a resolver which is running a DNS lookup task.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>task</parameter>&#160;:</term>
+<listitem><simpara> a DNS lookup task to cancel.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-resolver-lookup" role="function">
+<title>gsk_dns_resolver_lookup ()</title>
+<indexterm zone="gsk-dns-resolver-lookup"><primary sortas="gsk_dns_resolver_lookup">gsk_dns_resolver_lookup</primary></indexterm><programlisting><link linkend="GskDnsResolverTask">GskDnsResolverTask</link> * gsk_dns_resolver_lookup            (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskDnsResolverLookupFunc">GskDnsResolverLookupFunc</link> func,
+                                                         <link linkend="GskDnsResolverFailFunc">GskDnsResolverFailFunc</link> on_fail,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Begin a simple DNS lookup, using the underlying general resolver.
+</para>
+<para>
+TODO. IPv6 support.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>resolver</parameter>&#160;:</term>
+<listitem><simpara> DNS client to ask questions.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> name of host to look up.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function to call on successful name lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>on_fail</parameter>&#160;:</term>
+<listitem><simpara> function to call on name lookup failure.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>func</parameter> and <parameter>on_fail</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call when the task is destroyed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a running DNS lookup task.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-resolver-rev-lookup" role="function">
+<title>gsk_dns_resolver_rev_lookup ()</title>
+<indexterm zone="gsk-dns-resolver-rev-lookup"><primary sortas="gsk_dns_resolver_rev_lookup">gsk_dns_resolver_rev_lookup</primary></indexterm><programlisting><link linkend="GskDnsResolverTask">GskDnsResolverTask</link> * gsk_dns_resolver_rev_lookup        (<link linkend="GskDnsResolver">GskDnsResolver</link> *resolver,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskDnsResolverRevLookupFunc">GskDnsResolverRevLookupFunc</link> func,
+                                                         <link linkend="GskDnsResolverFailFunc">GskDnsResolverFailFunc</link> on_fail,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>resolver</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>on_fail</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-resolver-add-name-resolver-iface" role="function">
+<title>gsk_dns_resolver_add_name_resolver_iface ()</title>
+<indexterm zone="gsk-dns-resolver-add-name-resolver-iface"><primary sortas="gsk_dns_resolver_add_name_resolver_iface">gsk_dns_resolver_add_name_resolver_iface</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_resolver_add_name_resolver_iface
+                                                        (<link linkend="GType">GType</link> type);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskdnsresolver.see-also">
+<title>See Also</title>
+<para>
+GskDnsLocalResolver and GskDnsClient.
+</para>
+</refsect1>
+
+</refentry>

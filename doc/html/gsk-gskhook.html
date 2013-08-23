@@ -1,0 +1,1243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Lightweight Hookable Events</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="ch01.html" title="Core Library Support">
+<link rel="next" href="gsk-gskinit.html" title="Library Initialization">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch01.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskinit.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskhook.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskhook.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskhook"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskhook.top_of_page"></a>Lightweight Hookable Events</span></h2>
+<p>Lightweight Hookable Events — a blockable, optionally shutdown-able, trap-able
+structure inside a GObject.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskhook.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a>;
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="gsk-gskhook.html#GskHookFunc" title="GskHookFunc ()">*GskHookFunc</a>)                      (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+void                (<a class="link" href="gsk-gskhook.html#GskHookSetPollFunc" title="GskHookSetPollFunc ()">*GskHookSetPollFunc</a>)               (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> do_polling);
+void                (<a class="link" href="gsk-gskhook.html#GskHookShutdownFunc" title="GskHookShutdownFunc ()">*GskHookShutdownFunc</a>)              (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="gsk-gskhook.html#GskHookShutdownErrorFunc" title="GskHookShutdownErrorFunc ()">*GskHookShutdownErrorFunc</a>)         (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+enum                <a class="link" href="gsk-gskhook.html#GskHookFlags" title="enum GskHookFlags">GskHookFlags</a>;
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-GET-OBJECT--CAPS" title="GSK_HOOK_GET_OBJECT()">GSK_HOOK_GET_OBJECT</a>                 (hook)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-TEST-FLAG--CAPS" title="GSK_HOOK_TEST_FLAG()">GSK_HOOK_TEST_FLAG</a>                  (hook, flag_shortname)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-SET-FLAG--CAPS" title="GSK_HOOK_SET_FLAG">GSK_HOOK_SET_FLAG</a>
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-CLEAR-FLAG--CAPS" title="GSK_HOOK_CLEAR_FLAG()">GSK_HOOK_CLEAR_FLAG</a>                 (hook, flag_shortname)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-TEST-USER-FLAG--CAPS" title="GSK_HOOK_TEST_USER_FLAG()">GSK_HOOK_TEST_USER_FLAG</a>             (hook, bit)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-MARK-USER-FLAG--CAPS" title="GSK_HOOK_MARK_USER_FLAG()">GSK_HOOK_MARK_USER_FLAG</a>             (hook, bit)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-CLEAR-USER-FLAG--CAPS" title="GSK_HOOK_CLEAR_USER_FLAG()">GSK_HOOK_CLEAR_USER_FLAG</a>            (hook, bit)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-TEST-SHUTTING-DOWN--CAPS" title="GSK_HOOK_TEST_SHUTTING_DOWN()">GSK_HOOK_TEST_SHUTTING_DOWN</a>         (hook)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-TEST-NEVER-BLOCKS--CAPS" title="GSK_HOOK_TEST_NEVER_BLOCKS()">GSK_HOOK_TEST_NEVER_BLOCKS</a>          (hook)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-TEST-IS-AVAILABLE--CAPS" title="GSK_HOOK_TEST_IS_AVAILABLE()">GSK_HOOK_TEST_IS_AVAILABLE</a>          (hook)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-TEST-IDLE-NOTIFY--CAPS" title="GSK_HOOK_TEST_IDLE_NOTIFY()">GSK_HOOK_TEST_IDLE_NOTIFY</a>           (hook)
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-trap" title="gsk_hook_trap ()">gsk_hook_trap</a>                       (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a class="link" href="gsk-gskhook.html#GskHookFunc" title="GskHookFunc ()">GskHookFunc</a> func,
+                                                         <a class="link" href="gsk-gskhook.html#GskHookFunc" title="GskHookFunc ()">GskHookFunc</a> shutdown,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-untrap" title="gsk_hook_untrap ()">gsk_hook_untrap</a>                     (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+#define             <a class="link" href="gsk-gskhook.html#gsk-hook-is-trapped" title="gsk_hook_is_trapped()">gsk_hook_is_trapped</a>                 (hook)
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-block" title="gsk_hook_block ()">gsk_hook_block</a>                      (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-unblock" title="gsk_hook_unblock ()">gsk_hook_unblock</a>                    (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskhook.html#gsk-hook-shutdown" title="gsk_hook_shutdown ()">gsk_hook_shutdown</a>                   (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-init" title="gsk_hook_init ()">gsk_hook_init</a>                       (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a class="link" href="gsk-gskhook.html#GskHookFlags" title="enum GskHookFlags">GskHookFlags</a> flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> inset,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> class_set_poll_offset,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> class_shutdown_offset);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-class-init" title="gsk_hook_class_init ()">gsk_hook_class_init</a>                 (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"
+>GObjectClass</a> *object_class,
+                                                         const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> hook_offset);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-notify" title="gsk_hook_notify ()">gsk_hook_notify</a>                     (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-notify-shutdown" title="gsk_hook_notify_shutdown ()">gsk_hook_notify_shutdown</a>            (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-destruct" title="gsk_hook_destruct ()">gsk_hook_destruct</a>                   (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-set-idle-notify" title="gsk_hook_set_idle_notify ()">gsk_hook_set_idle_notify</a>            (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> should_idle_notify);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-mark-idle-notify" title="gsk_hook_mark_idle_notify ()">gsk_hook_mark_idle_notify</a>           (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-clear-idle-notify" title="gsk_hook_clear_idle_notify ()">gsk_hook_clear_idle_notify</a>          (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+void                <a class="link" href="gsk-gskhook.html#gsk-hook-mark-never-blocks" title="gsk_hook_mark_never_blocks ()">gsk_hook_mark_never_blocks</a>          (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskhook.html#gsk-hook-get-last-poll-state" title="gsk_hook_get_last_poll_state ()">gsk_hook_get_last_poll_state</a>        (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-INIT--CAPS" title="GSK_HOOK_INIT()">GSK_HOOK_INIT</a>                       (object, struct, member, flags, set_poll, shutdown)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-INIT-NO-SHUTDOWN--CAPS" title="GSK_HOOK_INIT_NO_SHUTDOWN()">GSK_HOOK_INIT_NO_SHUTDOWN</a>           (object, struct, member, flags, set_poll)
+#define             <a class="link" href="gsk-gskhook.html#GSK-HOOK-CLASS-INIT--CAPS" title="GSK_HOOK_CLASS_INIT()">GSK_HOOK_CLASS_INIT</a>                 (object_class, hook_name, Type, member)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskhook.description"></a><h2>Description</h2>
+<p>
+GskHook is to be used as a member of a GObject.
+Its class must have at least a <a class="link" href="gsk-gskhook.html#GskHookSetPollFunc" title="GskHookSetPollFunc ()"><span class="type">GskHookSetPollFunc</span></a> member,
+and for hooks which have a corresponding shutdown method,
+that should be in the class as well.
+</p>
+<p>
+The point of this class is to encapsulate i/o event handling.
+This means that it must be possible to trap the event,
+and it also must not waste cpu notifying us if the event is not trapped.
+</p>
+<p>
+Therefore, <a class="link" href="gsk-gskhook.html#GskHook" title="GskHook"><span class="type">GskHook</span></a> has two components:
+(1) methods to make it easy to write classes which have GskHooks in them.
+(2) methods to be exposed to an end user of such a class:
+meaning, ways to trap, untrap, block, unblock the events.
+</p>
+<p>
+To implement a class which contains a <a class="link" href="gsk-gskhook.html#GskHook" title="GskHook"><span class="type">GskHook</span></a>,
+traditionally, you should have a set_poll method of the class
+which should just turn on or off whether the class
+tries to call <a class="link" href="gsk-gskhook.html#gsk-hook-notify" title="gsk_hook_notify ()"><code class="function">gsk_hook_notify()</code></a>.
+Furthermore, you might want a shutdown method.  It's optional.
+</p>
+<p>
+Sometimes a hook is always ready to trigger.
+You can call <a class="link" href="gsk-gskhook.html#gsk-hook-mark-idle-notify" title="gsk_hook_mark_idle_notify ()"><code class="function">gsk_hook_mark_idle_notify()</code></a> to cause
+the hook to trigger constantly, if it's trapped and unblocked.
+Also, <a class="link" href="gsk-gskhook.html#gsk-hook-clear-idle-notify" title="gsk_hook_clear_idle_notify ()"><code class="function">gsk_hook_clear_idle_notify()</code></a> stops that.
+In this case, you may not need a set_poll function even.
+</p>
+<p>
+When a hook is shut down, it is marked as unavailable.
+When you wish to shut down a hook, you should call
+<a class="link" href="gsk-gskhook.html#gsk-hook-shutdown" title="gsk_hook_shutdown ()"><code class="function">gsk_hook_shutdown()</code></a>.  Typically, the shutdown happens immediately.
+However, the implementation of a class that contains a hook
+may need to leave the object in a transitional state, SHUTTING_DOWN.
+Even if this happens, the hook is still marked as unavailable.
+The implementation should eventually call <a class="link" href="gsk-gskhook.html#gsk-hook-notify-shutdown" title="gsk_hook_notify_shutdown ()"><code class="function">gsk_hook_notify_shutdown()</code></a>
+to indicate that the shutdown finally finished.
+The shutdown hook registered with <a class="link" href="gsk-gskhook.html#gsk-hook-trap" title="gsk_hook_trap ()"><code class="function">gsk_hook_trap()</code></a>
+will only be run after <a class="link" href="gsk-gskhook.html#gsk-hook-notify-shutdown" title="gsk_hook_notify_shutdown ()"><code class="function">gsk_hook_notify_shutdown()</code></a> is called in that case.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskhook.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHook"></a><h3>GskHook</h3>
+<pre class="programlisting">typedef struct {
+} GskHook;
+</pre>
+<p>
+A structure which you can embed in a GObject.
+All of its members are private.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHookFunc"></a><h3>GskHookFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskHookFunc)                      (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+To be called when the hook is triggered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>the object which contains this hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user-data passed in to <a class="link" href="gsk-gskhook.html#gsk-hook-trap" title="gsk_hook_trap ()"><span class="type">gsk_hook_trap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether the hook should stay trapped.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHookSetPollFunc"></a><h3>GskHookSetPollFunc ()</h3>
+<pre class="programlisting">void                (*GskHookSetPollFunc)               (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> do_polling);</pre>
+<p>
+To be called when the class should start or stop
+calling <a class="link" href="gsk-gskhook.html#gsk-hook-notify" title="gsk_hook_notify ()"><span class="type">gsk_hook_notify</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>the object which contains this hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>do_polling</code></em> :</span></p></td>
+<td>whether to trigger the hook.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHookShutdownFunc"></a><h3>GskHookShutdownFunc ()</h3>
+<pre class="programlisting">void                (*GskHookShutdownFunc)              (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object);</pre>
+<p>
+This function is how the "shutdown" method in a class will
+be invoked (if the hook WAS NOT created
+with <a class="link" href="gsk-gskhook.html#GSK-HOOK-CAN-HAVE-SHUTDOWN-ERROR--CAPS"><span class="type">GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR</span></a>; see <a class="link" href="gsk-gskhook.html#GskHookShutdownErrorFunc" title="GskHookShutdownErrorFunc ()"><span class="type">GskHookShutdownErrorFunc</span></a>).
+</p>
+<p>
+GSK automatically untraps after this is over,
+since there is no more potential for this hook to trigger.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>the object whose hook should shut down.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHookShutdownErrorFunc"></a><h3>GskHookShutdownErrorFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskHookShutdownErrorFunc)         (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a> *object,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+This function is how the "shutdown" method in a class will
+be invoked (if the hook WAS NOT created
+without <a class="link" href="gsk-gskhook.html#GSK-HOOK-CAN-HAVE-SHUTDOWN-ERROR--CAPS"><span class="type">GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR</span></a>; see <a class="link" href="gsk-gskhook.html#GskHookShutdownErrorFunc" title="GskHookShutdownErrorFunc ()"><span class="type">GskHookShutdownErrorFunc</span></a>).
+</p>
+<p>
+This function returns with whether the shutdown completed successfully.
+</p>
+<p>
+If this function return FALSE but sets no error, then
+this hook is not shutdown, but it is working on shutting down.
+(The shutdown notify hook should be called by the
+object itself later.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>the object whose hook should shut down.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>place for an error to be placed if shutdown fails.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether shutdown succeeds.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHookFlags"></a><h3>enum GskHookFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_HOOK_IS_AVAILABLE            	= (1 &lt;&lt; 0),
+  GSK_HOOK_NEVER_AUTO_SHUTS_DOWN   	= (1 &lt;&lt; 1),
+  GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR 	= (1 &lt;&lt; 2),
+  GSK_HOOK_private_IDLE_NOTIFY     	= (1 &lt;&lt; 3), /*&lt; private &gt;*/
+  GSK_HOOK_private_JUST_NEVER_BLOCKS    = (1 &lt;&lt; 4), /*&lt; private &gt;*/
+  GSK_HOOK_private_NEVER_BLOCKS		= (GSK_HOOK_private_IDLE_NOTIFY | GSK_HOOK_private_JUST_NEVER_BLOCKS), /*&lt; private &gt;*/
+  GSK_HOOK_private_CAN_DEFER_SHUTDOWN   = (1 &lt;&lt; 5), /*&lt; private &gt;*/
+  GSK_HOOK_private_SHUTTING_DOWN        = (1 &lt;&lt; 6), /*&lt; private &gt;*/
+  _GSK_HOOK_FLAGS_RESERVED	   	= (0xff &lt;&lt; 8), /*&lt; private &gt;*/
+} GskHookFlags;
+</pre>
+<p>
+Flags which can be read about any hook.
+See <a class="link" href="gsk-gskhook.html#GSK-HOOK-TEST-FLAG--CAPS" title="GSK_HOOK_TEST_FLAG()"><code class="function">GSK_HOOK_TEST_FLAG()</code></a>, <a class="link" href="gsk-gskhook.html#GSK-HOOK-SET-FLAG--CAPS" title="GSK_HOOK_SET_FLAG"><code class="function">GSK_HOOK_SET_FLAG()</code></a>
+and <a class="link" href="gsk-gskhook.html#GSK-HOOK-CLEAR-FLAG--CAPS" title="GSK_HOOK_CLEAR_FLAG()"><code class="function">GSK_HOOK_CLEAR_FLAG()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-HOOK-IS-AVAILABLE--CAPS"></a><span class="term"><code class="literal">GSK_HOOK_IS_AVAILABLE</code></span></p></td>
+<td>whether the hook is available
+to be trapped.  (It is not available either because it
+was never available, or because it was shut down.)
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-NEVER-AUTO-SHUTS-DOWN--CAPS"></a><span class="term"><code class="literal">GSK_HOOK_NEVER_AUTO_SHUTS_DOWN</code></span></p></td>
+<td>
+whether the hook will auto-shutdown in some circumstances,
+ie due to end-of-file or error.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-CAN-HAVE-SHUTDOWN-ERROR--CAPS"></a><span class="term"><code class="literal">GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR</code></span></p></td>
+<td>
+whether this hook can have an error on shutdown.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-private-IDLE-NOTIFY"></a><span class="term"><code class="literal">GSK_HOOK_private_IDLE_NOTIFY</code></span></p></td>
+<td>
+private. (used by macros so it has to be exposed)
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-private-JUST-NEVER-BLOCKS"></a><span class="term"><code class="literal">GSK_HOOK_private_JUST_NEVER_BLOCKS</code></span></p></td>
+<td>
+private. (used by macros so it has to be exposed)
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-private-NEVER-BLOCKS"></a><span class="term"><code class="literal">GSK_HOOK_private_NEVER_BLOCKS</code></span></p></td>
+<td>
+private. (used by macros so it has to be exposed)
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-private-CAN-DEFER-SHUTDOWN"></a><span class="term"><code class="literal">GSK_HOOK_private_CAN_DEFER_SHUTDOWN</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-private-SHUTTING-DOWN"></a><span class="term"><code class="literal">GSK_HOOK_private_SHUTTING_DOWN</code></span></p></td>
+<td>
+private. (used by macros so it has to be exposed)
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HOOK-FLAGS-RESERVED--CAPS"></a><span class="term"><code class="literal">_GSK_HOOK_FLAGS_RESERVED</code></span></p></td>
+<td>
+bits used internally.  private.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-GET-OBJECT--CAPS"></a><h3>GSK_HOOK_GET_OBJECT()</h3>
+<pre class="programlisting">#define             GSK_HOOK_GET_OBJECT(hook)</pre>
+<p>
+Get a pointer to the GObject which owns this hook.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook whose GObject should be found.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-TEST-FLAG--CAPS"></a><h3>GSK_HOOK_TEST_FLAG()</h3>
+<pre class="programlisting">#define             GSK_HOOK_TEST_FLAG(hook, flag_shortname)</pre>
+<p>
+Test if a particular flag in the GskHook is set.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook to test.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flag_shortname</code></em> :</span></p></td>
+<td>the name of the flag, without
+its GSK_HOOK prefix.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-SET-FLAG--CAPS"></a><h3>GSK_HOOK_SET_FLAG</h3>
+<pre class="programlisting">#define             GSK_HOOK_SET_FLAG</pre>
+<p>
+Set the bit of the hook to TRUE.  This should
+only be used by implementors of
+GskHook-containing objects.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-CLEAR-FLAG--CAPS"></a><h3>GSK_HOOK_CLEAR_FLAG()</h3>
+<pre class="programlisting">#define             GSK_HOOK_CLEAR_FLAG(hook, flag_shortname)</pre>
+<p>
+Set the bit of the hook to FALSE.  This should
+only be used by implementors of
+GskHook-containing objects.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flag_shortname</code></em> :</span></p></td>
+<td>the name of the flag, without
+its GSK_HOOK prefix.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-TEST-USER-FLAG--CAPS"></a><h3>GSK_HOOK_TEST_USER_FLAG()</h3>
+<pre class="programlisting">#define             GSK_HOOK_TEST_USER_FLAG(hook, bit)</pre>
+<p>
+Test if a class-usable bit of the hook is TRUE.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook whose class-usable bit should be tested.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>bit</code></em> :</span></p></td>
+<td>the bit.  (a guint16)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-MARK-USER-FLAG--CAPS"></a><h3>GSK_HOOK_MARK_USER_FLAG()</h3>
+<pre class="programlisting">#define             GSK_HOOK_MARK_USER_FLAG(hook, bit)</pre>
+<p>
+Set a class-usable bit of the hook to TRUE.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook whose class-usable bit should be marked (set to 1).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>bit</code></em> :</span></p></td>
+<td>the bit.  (a guint16)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-CLEAR-USER-FLAG--CAPS"></a><h3>GSK_HOOK_CLEAR_USER_FLAG()</h3>
+<pre class="programlisting">#define             GSK_HOOK_CLEAR_USER_FLAG(hook, bit)</pre>
+<p>
+Set a class-usable bit of the hook to FALSE.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook whose class-usable bit should be cleared (set to 0).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>bit</code></em> :</span></p></td>
+<td>the bit.  (a guint16)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-TEST-SHUTTING-DOWN--CAPS"></a><h3>GSK_HOOK_TEST_SHUTTING_DOWN()</h3>
+<pre class="programlisting">#define             GSK_HOOK_TEST_SHUTTING_DOWN(hook)</pre>
+<p>
+Test if a hook is in the process of shutting down.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-TEST-NEVER-BLOCKS--CAPS"></a><h3>GSK_HOOK_TEST_NEVER_BLOCKS()</h3>
+<pre class="programlisting">#define             GSK_HOOK_TEST_NEVER_BLOCKS(hook)</pre>
+<p>
+Test if a hook is permanently non-blocking.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-TEST-IS-AVAILABLE--CAPS"></a><h3>GSK_HOOK_TEST_IS_AVAILABLE()</h3>
+<pre class="programlisting">#define             GSK_HOOK_TEST_IS_AVAILABLE(hook)</pre>
+<p>
+Test if a hook is available for trapping.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-TEST-IDLE-NOTIFY--CAPS"></a><h3>GSK_HOOK_TEST_IDLE_NOTIFY()</h3>
+<pre class="programlisting">#define             GSK_HOOK_TEST_IDLE_NOTIFY(hook)</pre>
+<p>
+Test whether this hook is in the idle-notify state,
+meaning that it will trigger an active trap constantly.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-trap"></a><h3>gsk_hook_trap ()</h3>
+<pre class="programlisting">void                gsk_hook_trap                       (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a class="link" href="gsk-gskhook.html#GskHookFunc" title="GskHookFunc ()">GskHookFunc</a> func,
+                                                         <a class="link" href="gsk-gskhook.html#GskHookFunc" title="GskHookFunc ()">GskHookFunc</a> shutdown,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Traps hook triggers and shutdowns.  The caller's functions will
+be run in response to <a class="link" href="gsk-gskhook.html#gsk-hook-notify" title="gsk_hook_notify ()"><span class="type">gsk_hook_notify</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to trap
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> function to call with the hook is triggered.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown</code></em> :</span></p></td>
+<td> function to be called if the hook is shutting down and will
+never trigger again.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> user-data to pass to func and shutdown.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to call on user-data when the hook is untrapped.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-untrap"></a><h3>gsk_hook_untrap ()</h3>
+<pre class="programlisting">void                gsk_hook_untrap                     (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+Stops trapping the hook.  The user's function will
+no longer be run, and invoke the user's destroy method,
+if it was supplied to <a class="link" href="gsk-gskhook.html#gsk-hook-trap" title="gsk_hook_trap ()"><span class="type">gsk_hook_trap</span></a>.
+</p>
+<p>
+If you untrap the hook while it is executing,
+the destroy handler will be deferred
+until after the hook is done notifying and/or shutdown-notifying.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to untrap
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-is-trapped"></a><h3>gsk_hook_is_trapped()</h3>
+<pre class="programlisting">#define             gsk_hook_is_trapped(hook)</pre>
+<p>
+Return whether the hook is trapped (has a callback).
+</p>
+<p>
+Note that the hook may be blocked.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td>the hook to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-block"></a><h3>gsk_hook_block ()</h3>
+<pre class="programlisting">void                gsk_hook_block                      (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+Temporarily block the hook from triggerring the callback.
+This may cause the set_poll method to be run.
+</p>
+<p>
+This increases a block_count, so you may call
+gsk_hook_block as many times as you like,
+but you must call <a class="link" href="gsk-gskhook.html#gsk-hook-unblock" title="gsk_hook_unblock ()"><span class="type">gsk_hook_unblock</span></a> an equal number of times.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to block.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-unblock"></a><h3>gsk_hook_unblock ()</h3>
+<pre class="programlisting">void                gsk_hook_unblock                    (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+Undoes a <a class="link" href="gsk-gskhook.html#gsk-hook-block" title="gsk_hook_block ()"><code class="function">gsk_hook_block()</code></a>.  The block count is decreased,
+and if it gets to 0, the hook may be eligible to start
+triggering again.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to unblock.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-shutdown"></a><h3>gsk_hook_shutdown ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_hook_shutdown                   (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Shutdown a hook.  You may call gsk_hook_shutdown on a hook more than
+once, but it will be ignored after the first time.
+</p>
+<p>
+Note that when gsk_hook_shutdown succeeds, the hook is not necessarily
+completely shut down.  Some hooks (for example, for a socket waiting
+for a reply from a remote server) may remain in the SHUTTING_DOWN state
+for some time before the shutdown completes and the user's shutdown
+callback is invoked.  You may test whether the shutdown has completed
+using GSK_HOOK_TEST_SHUTTING_DOWN (hook): if true, the shutdown is still
+in progress.
+</p>
+<p>
+Regardless of whether the shutdown succeeds, or whether the shutdown
+completes immediately, the hook will be marked unavailable after
+calling gsk_hook_shutdown.  (That is, GSK_HOOK_TEST_IS_AVAILABLE (hook)
+will be false.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to shut down.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> true if successful, or false if an error occurred.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-init"></a><h3>gsk_hook_init ()</h3>
+<pre class="programlisting">void                gsk_hook_init                       (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a class="link" href="gsk-gskhook.html#GskHookFlags" title="enum GskHookFlags">GskHookFlags</a> flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> inset,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> class_set_poll_offset,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> class_shutdown_offset);</pre>
+<p>
+Prepare a GskHook to be used.  This should almost always
+be done in the instance-init function of the class which contains the hook.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> The hook to initialize.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> Special details about the hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>inset</code></em> :</span></p></td>
+<td> Offset in bytes of this hook inside the containing object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>class_set_poll_offset</code></em> :</span></p></td>
+<td> Offset in bytes of the set_poll
+method in the containing object's class.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>class_shutdown_offset</code></em> :</span></p></td>
+<td> Offset in bytes of the shutdown
+method in the containing object's class, or 0 if there is no shutdown
+method.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-class-init"></a><h3>gsk_hook_class_init ()</h3>
+<pre class="programlisting">void                gsk_hook_class_init                 (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"
+>GObjectClass</a> *object_class,
+                                                         const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> hook_offset);</pre>
+<p>
+This is used to register a hook.  This is mostly used
+to make debugging printouts easier to read.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object_class</code></em> :</span></p></td>
+<td> the class of the object which contains this hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> an identifying name for this type of hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook_offset</code></em> :</span></p></td>
+<td> the offset of the hook in the structure.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-notify"></a><h3>gsk_hook_notify ()</h3>
+<pre class="programlisting">void                gsk_hook_notify                     (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+This is called by the implementation of a class
+which contains a hook to trigger it, i.e. call the user's
+callback.
+</p>
+<p>
+Generally, you should only call this if the user is ready
+for data (so that set_poll has been called with TRUE);
+however, if you call it, it will be remembered,
+and immediately triggered once it is allowed to:
+for example, when the block count gets to 0.
+</p>
+<p>
+Some gory details come up now and then:
+</p>
+<p>
+- there are reentrance guards which prevent recursive calls
+  to do anything.  Also, notify within shutdown is not allowed.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook which is triggering.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-notify-shutdown"></a><h3>gsk_hook_notify_shutdown ()</h3>
+<pre class="programlisting">void                gsk_hook_notify_shutdown            (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+Notify the user that a shutdown event has occurred.
+This may happen because you called <a class="link" href="gsk-gskhook.html#gsk-hook-shutdown" title="gsk_hook_shutdown ()"><code class="function">gsk_hook_shutdown()</code></a>
+or because the hook was shut down by the object:
+for example, the remote side of a connection may have shutdown.
+</p>
+<p>
+This does nothing if the hook is not presently available or in the
+middle of shutting down (i.e., IS_AVAILABLE || SHUTTING_DOWN); after
+this call the hook will be marked both unavailable and completely
+shut down (i.e., !IS_AVAILABLE &amp;&amp; !SHUTTING_DOWN).
+</p>
+<p>
+A shutdown hook will no longer be idle-notified.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook which has shut down.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-destruct"></a><h3>gsk_hook_destruct ()</h3>
+<pre class="programlisting">void                gsk_hook_destruct                   (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+This should be called only by the class which contains the hook,
+from the instance's finalize method.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to destroy.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-set-idle-notify"></a><h3>gsk_hook_set_idle_notify ()</h3>
+<pre class="programlisting">void                gsk_hook_set_idle_notify            (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> should_idle_notify);</pre>
+<p>
+When idle_notify is set, the hook will run every cycle of the
+main-loop.  Nothing will happen unless the user
+has trapped the event, and it's not blocked.
+</p>
+<p>
+Opposite of <a class="link" href="gsk-gskhook.html#gsk-hook-clear-idle-notify" title="gsk_hook_clear_idle_notify ()"><code class="function">gsk_hook_clear_idle_notify()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to run constantly.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>should_idle_notify</code></em> :</span></p></td>
+<td> whether to run the user's callback
+continually.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-mark-idle-notify"></a><h3>gsk_hook_mark_idle_notify ()</h3>
+<pre class="programlisting">void                gsk_hook_mark_idle_notify           (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+When idle_notify is set, the hook will run every cycle of the
+main-loop.  Of course, nothing will happen unless the user
+has trapped the event, and it's not blocked.
+</p>
+<p>
+Opposite of <a class="link" href="gsk-gskhook.html#gsk-hook-clear-idle-notify" title="gsk_hook_clear_idle_notify ()"><code class="function">gsk_hook_clear_idle_notify()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to run constantly.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-clear-idle-notify"></a><h3>gsk_hook_clear_idle_notify ()</h3>
+<pre class="programlisting">void                gsk_hook_clear_idle_notify          (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+Stop running the hook at every cycle of the main-loop.
+</p>
+<p>
+Opposite of <a class="link" href="gsk-gskhook.html#gsk-hook-set-idle-notify" title="gsk_hook_set_idle_notify ()"><code class="function">gsk_hook_set_idle_notify()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook to stop running constantly.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-mark-never-blocks"></a><h3>gsk_hook_mark_never_blocks ()</h3>
+<pre class="programlisting">void                gsk_hook_mark_never_blocks          (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+Indicate that you will never block, ever.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> the hook which will never block.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-hook-get-last-poll-state"></a><h3>gsk_hook_get_last_poll_state ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_hook_get_last_poll_state        (<a class="link" href="gsk-gskhook.html#GskHook" title="GskHook">GskHook</a> *hook);</pre>
+<p>
+Get whether this hook is supposed to be polling or not.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook</code></em> :</span></p></td>
+<td> test whether the last invocation of the set-poll function
+was called with TRUE or FALSE.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the hook is being polled.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-INIT--CAPS"></a><h3>GSK_HOOK_INIT()</h3>
+<pre class="programlisting">#define             GSK_HOOK_INIT(object, struct, member, flags, set_poll, shutdown)</pre>
+<p>
+Initialize a hook which is contained in a GObject.
+This should only be used for GObject instance init functions.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>a pointer to an instance of a GObject.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>struct</code></em> :</span></p></td>
+<td>name of type for this init function.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member</code></em> :</span></p></td>
+<td>member name of hook inside of type <em class="parameter"><code>struct</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>@GskHookFlags which apply to this hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>set_poll</code></em> :</span></p></td>
+<td>member function of type gboolean(*)(GObject*, gpointer)
+in the class whose name is <em class="parameter"><code>struct</code></em> with Class appended.
+to call to specify whether or not the hook should be triggered.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown</code></em> :</span></p></td>
+<td>member function to perform shutdown
+in the class whose name is <em class="parameter"><code>struct</code></em> with Class appended.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-INIT-NO-SHUTDOWN--CAPS"></a><h3>GSK_HOOK_INIT_NO_SHUTDOWN()</h3>
+<pre class="programlisting">#define             GSK_HOOK_INIT_NO_SHUTDOWN(object, struct, member, flags, set_poll)</pre>
+<p>
+Initialize a hook which is contained in a GObject.
+This should only be used for GObject instance init functions.
+This hook is for when have no shutdown virtual is wanted
+in the base class.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>a pointer to an instance of a GObject.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>struct</code></em> :</span></p></td>
+<td>name of type for this init function.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member</code></em> :</span></p></td>
+<td>member name of hook inside of type <em class="parameter"><code>struct</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>@GskHookFlags which apply to this hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>set_poll</code></em> :</span></p></td>
+<td>member function of type gboolean(*)(GObject*, gpointer)
+in the class whose name is <em class="parameter"><code>struct</code></em> with Class appended.
+to call to specify whether or not the hook should be triggered.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-HOOK-CLASS-INIT--CAPS"></a><h3>GSK_HOOK_CLASS_INIT()</h3>
+<pre class="programlisting">#define             GSK_HOOK_CLASS_INIT(object_class, hook_name, Type, member)</pre>
+<p>
+For assigning a hook a name.
+This is mostly used by debugging printout code.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object_class</code></em> :</span></p></td>
+<td>a class whose instances will always have hooks.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hook_name</code></em> :</span></p></td>
+<td>name of the hook.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Type</code></em> :</span></p></td>
+<td>type name of the instance.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member</code></em> :</span></p></td>
+<td>member name of this hook in <em class="parameter"><code>Type</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskhook.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>, <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

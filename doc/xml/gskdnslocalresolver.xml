@@ -1,0 +1,156 @@
+<refentry id="gsk-gskdnslocalresolver">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskdnslocalresolver.top_of_page">gskdnslocalresolver</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskdnslocalresolver</refname>
+<refpurpose>a DNS resolver which uses just a local resource-record cache.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskdnslocalresolver.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="GskDnsLocalResolver"/>
+<synopsis>
+                    <link linkend="GskDnsLocalResolverClass">GskDnsLocalResolverClass</link>;
+                    <link linkend="GskDnsLocalResolver-struct">GskDnsLocalResolver</link>;
+<link linkend="GskDnsResolver">GskDnsResolver</link> *    <link linkend="gsk-dns-local-resolver-new">gsk_dns_local_resolver_new</link>          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache);
+enum                <link linkend="GskDnsLocalResult">GskDnsLocalResult</link>;
+<link linkend="GskDnsLocalResult">GskDnsLocalResult</link>   <link linkend="gsk-dns-local-resolver-answer">gsk_dns_local_resolver_answer</link>       (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsQuestion">GskDnsQuestion</link> *question,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *results);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gsk-gskdnslocalresolver.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskDnsLocalResolver
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="gsk-gskdnslocalresolver.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskDnsLocalResolver--resource-cache">resource-cache</link>&quot;           <link linkend="GskDnsRRCache">GskDnsRRCache</link>*        : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskdnslocalresolver.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A DNS resolver which uses nothing more than a <link linkend="GskDnsRRCache"><type>GskDnsRRCache</type></link>.
+This can be used to provide a backend for a server.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskdnslocalresolver.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskDnsLocalResolverClass" role="struct">
+<title>GskDnsLocalResolverClass</title>
+<indexterm zone="GskDnsLocalResolverClass"><primary sortas="GskDnsLocalResolverClass">GskDnsLocalResolverClass</primary></indexterm><programlisting>typedef struct _GskDnsLocalResolverClass GskDnsLocalResolverClass;</programlisting>
+<para>
+Class for local DNS resolvers.
+</para></refsect2>
+<refsect2 id="GskDnsLocalResolver-struct" role="struct">
+<title>GskDnsLocalResolver</title>
+<indexterm zone="GskDnsLocalResolver-struct"><primary sortas="GskDnsLocalResolver">GskDnsLocalResolver</primary></indexterm><programlisting>typedef struct _GskDnsLocalResolver GskDnsLocalResolver;</programlisting>
+<para>
+Instance for local DNS resolvers.
+</para></refsect2>
+<refsect2 id="gsk-dns-local-resolver-new" role="function">
+<title>gsk_dns_local_resolver_new ()</title>
+<indexterm zone="gsk-dns-local-resolver-new"><primary sortas="gsk_dns_local_resolver_new">gsk_dns_local_resolver_new</primary></indexterm><programlisting><link linkend="GskDnsResolver">GskDnsResolver</link> *    gsk_dns_local_resolver_new          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache);</programlisting>
+<para>
+Create a new local resolver based on an optional resource-record cache.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> resource-record cache to use.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated resolver.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsLocalResult" role="enum">
+<title>enum GskDnsLocalResult</title>
+<indexterm zone="GskDnsLocalResult"><primary sortas="GskDnsLocalResult">GskDnsLocalResult</primary></indexterm><programlisting>typedef enum
+{
+  GSK_DNS_LOCAL_NO_DATA,
+  GSK_DNS_LOCAL_PARTIAL_DATA,
+  GSK_DNS_LOCAL_NEGATIVE,
+  GSK_DNS_LOCAL_SUCCESS
+} GskDnsLocalResult;
+</programlisting>
+<para>
+Possible results from a local DNS query.
+</para><variablelist role="enum">
+<varlistentry id="GSK-DNS-LOCAL-NO-DATA--CAPS" role="constant">
+<term><literal>GSK_DNS_LOCAL_NO_DATA</literal></term>
+<listitem><simpara>
+No relevant data was found.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-LOCAL-PARTIAL-DATA--CAPS" role="constant">
+<term><literal>GSK_DNS_LOCAL_PARTIAL_DATA</literal></term>
+<listitem><simpara>
+Some data was found, but not a complete answer.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-LOCAL-NEGATIVE--CAPS" role="constant">
+<term><literal>GSK_DNS_LOCAL_NEGATIVE</literal></term>
+<listitem><simpara>
+A definite negative answer was found.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-LOCAL-SUCCESS--CAPS" role="constant">
+<term><literal>GSK_DNS_LOCAL_SUCCESS</literal></term>
+<listitem><simpara>
+All requested data was found successfully.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-local-resolver-answer" role="function">
+<title>gsk_dns_local_resolver_answer ()</title>
+<indexterm zone="gsk-dns-local-resolver-answer"><primary sortas="gsk_dns_local_resolver_answer">gsk_dns_local_resolver_answer</primary></indexterm><programlisting><link linkend="GskDnsLocalResult">GskDnsLocalResult</link>   gsk_dns_local_resolver_answer       (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsQuestion">GskDnsQuestion</link> *question,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *results);</programlisting>
+<para>
+Attempt to compute an answer to a DNS question,
+using only information locally available in
+the resource-record cache.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> resource-record cache to use to derive the answer to the question.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>question</parameter>&#160;:</term>
+<listitem><simpara> question to answer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>results</parameter>&#160;:</term>
+<listitem><simpara> message to store results in.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the result of the query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gsk-gskdnslocalresolver.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskDnsLocalResolver--resource-cache" role="property"><title>The <literal>&quot;resource-cache&quot;</literal> property</title>
+<indexterm zone="GskDnsLocalResolver--resource-cache"><primary sortas="GskDnsLocalResolver:resource-cache">GskDnsLocalResolver:resource-cache</primary></indexterm><programlisting>  &quot;resource-cache&quot;           <link linkend="GskDnsRRCache">GskDnsRRCache</link>*        : Read / Write</programlisting>
+<para>cache of resource data used to answer queries.</para></refsect2>
+</refsect1>
+
+
+
+
+</refentry>

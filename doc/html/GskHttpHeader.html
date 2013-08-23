@@ -1,0 +1,4220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskHttpHeader</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="prev" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="next" href="GskHttpRequest.html" title="GskHttpRequest">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch06.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch06.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskHttpRequest.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskHttpHeader.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskHttpHeader.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskHttpHeader.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#GskHttpHeader.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskHttpHeader"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskHttpHeader.top_of_page"></a>GskHttpHeader</span></h2>
+<p>GskHttpHeader — Base class for HTTP headers.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskHttpHeader.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpLanguageSet" title="GskHttpLanguageSet">GskHttpLanguageSet</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpRangeSet" title="GskHttpRangeSet">GskHttpRangeSet</a>;
+enum                <a class="link" href="GskHttpHeader.html#GskHttpStatus" title="enum GskHttpStatus">GskHttpStatus</a>;
+enum                <a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb">GskHttpVerb</a>;
+enum                <a class="link" href="GskHttpHeader.html#GskHttpRange" title="enum GskHttpRange">GskHttpRange</a>;
+enum                <a class="link" href="GskHttpHeader.html#GskHttpContentEncoding" title="enum GskHttpContentEncoding">GskHttpContentEncoding</a>;
+enum                <a class="link" href="GskHttpHeader.html#GskHttpTransferEncoding" title="enum GskHttpTransferEncoding">GskHttpTransferEncoding</a>;
+enum                <a class="link" href="GskHttpHeader.html#GskHttpConnection" title="enum GskHttpConnection">GskHttpConnection</a>;
+<a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a> * <a class="link" href="GskHttpHeader.html#gsk-http-media-type-set-new" title="gsk_http_media_type_set_new ()">gsk_http_media_type_set_new</a>       (const char *type,
+                                                         const char *subtype,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-media-type-set-free" title="gsk_http_media_type_set_free ()">gsk_http_media_type_set_free</a>        (<a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a> *set);
+<a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a> *    <a class="link" href="GskHttpHeader.html#gsk-http-char-set-new" title="gsk_http_char_set_new ()">gsk_http_char_set_new</a>               (const char *charset_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-char-set-free" title="gsk_http_char_set_free ()">gsk_http_char_set_free</a>              (<a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a> *char_set);
+<a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a> * <a class="link" href="GskHttpHeader.html#gsk-http-content-encoding-set-new" title="gsk_http_content_encoding_set_new ()">gsk_http_content_encoding_set_new</a>
+                                                        (<a class="link" href="GskHttpHeader.html#GskHttpContentEncoding" title="enum GskHttpContentEncoding">GskHttpContentEncoding</a> encoding,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-content-encoding-set-free" title="gsk_http_content_encoding_set_free ()">gsk_http_content_encoding_set_free</a>  (<a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a> *encoding_set);
+<a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a> * <a class="link" href="GskHttpHeader.html#gsk-http-transfer-encoding-set-new" title="gsk_http_transfer_encoding_set_new ()">gsk_http_transfer_encoding_set_new</a>
+                                                        (<a class="link" href="GskHttpHeader.html#GskHttpTransferEncoding" title="enum GskHttpTransferEncoding">GskHttpTransferEncoding</a> encoding,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-transfer-encoding-set-free" title="gsk_http_transfer_encoding_set_free ()">gsk_http_transfer_encoding_set_free</a> (<a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a> *encoding_set);
+<a class="link" href="GskHttpHeader.html#GskHttpRangeSet" title="GskHttpRangeSet">GskHttpRangeSet</a> *   <a class="link" href="GskHttpHeader.html#gsk-http-range-set-new" title="gsk_http_range_set_new ()">gsk_http_range_set_new</a>              (<a class="link" href="GskHttpHeader.html#GskHttpRange" title="enum GskHttpRange">GskHttpRange</a> range_type);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-range-set-free" title="gsk_http_range_set_free ()">gsk_http_range_set_free</a>             (<a class="link" href="GskHttpHeader.html#GskHttpRangeSet" title="GskHttpRangeSet">GskHttpRangeSet</a> *set);
+<a class="link" href="GskHttpHeader.html#GskHttpLanguageSet" title="GskHttpLanguageSet">GskHttpLanguageSet</a> * <a class="link" href="GskHttpHeader.html#gsk-http-language-set-new" title="gsk_http_language_set_new ()">gsk_http_language_set_new</a>          (const char *language,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-language-set-free" title="gsk_http_language_set_free ()">gsk_http_language_set_free</a>          (<a class="link" href="GskHttpHeader.html#GskHttpLanguageSet" title="GskHttpLanguageSet">GskHttpLanguageSet</a> *set);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authenticate-new-basic" title="gsk_http_authenticate_new_basic ()">gsk_http_authenticate_new_basic</a>   (const char *realm);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authenticate-new-digest" title="gsk_http_authenticate_new_digest ()">gsk_http_authenticate_new_digest</a>  (const char *realm,
+                                                         const char *domain,
+                                                         const char *nonce,
+                                                         const char *opaque,
+                                                         const char *algorithm);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authenticate-new-unknown" title="gsk_http_authenticate_new_unknown ()">gsk_http_authenticate_new_unknown</a> (const char *auth_scheme_name,
+                                                         const char *realm,
+                                                         const char *options);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authorization-new-basic" title="gsk_http_authorization_new_basic ()">gsk_http_authorization_new_basic</a> (const char *user,
+                                                         const char *password);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authorization-new-respond-post" title="gsk_http_authorization_new_respond_post ()">gsk_http_authorization_new_respond_post</a>
+                                                        (const <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> *,
+                                                         const char *user,
+                                                         const char *password,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> post_data_len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> post_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authorization-new-unknown" title="gsk_http_authorization_new_unknown ()">gsk_http_authorization_new_unknown</a>
+                                                        (const char *auth_scheme_name,
+                                                         const char *response);
+const char *        <a class="link" href="GskHttpHeader.html#gsk-http-authorization-peek-response-digest" title="gsk_http_authorization_peek_response_digest ()">gsk_http_authorization_peek_response_digest</a>
+                                                        (<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authorization-copy" title="gsk_http_authorization_copy ()">gsk_http_authorization_copy</a>      (const <a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authorization-new-digest" title="gsk_http_authorization_new_digest ()">gsk_http_authorization_new_digest</a>
+                                                        (const char *realm,
+                                                         const char *domain,
+                                                         const char *nonce,
+                                                         const char *opaque,
+                                                         const char *algorithm,
+                                                         const char *user,
+                                                         const char *password,
+                                                         const char *response_digest,
+                                                         const char *entity_digest);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * <a class="link" href="GskHttpHeader.html#gsk-http-authorization-new-respond" title="gsk_http_authorization_new_respond ()">gsk_http_authorization_new_respond</a>
+                                                        (const <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> *,
+                                                         const char *user,
+                                                         const char *password,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-authorization-set-nonce" title="gsk_http_authorization_set_nonce ()">gsk_http_authorization_set_nonce</a>    (<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *,
+                                                         const char *nonce);
+<a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *     <a class="link" href="GskHttpHeader.html#gsk-http-cookie-new" title="gsk_http_cookie_new ()">gsk_http_cookie_new</a>                 (const char *key,
+                                                         const char *value,
+                                                         const char *path,
+                                                         const char *domain,
+                                                         const char *expire_date,
+                                                         const char *comment,
+                                                         int max_age);
+<a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *     <a class="link" href="GskHttpHeader.html#gsk-http-cookie-copy" title="gsk_http_cookie_copy ()">gsk_http_cookie_copy</a>                (const <a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *orig);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-cookie-free" title="gsk_http_cookie_free ()">gsk_http_cookie_free</a>                (<a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *orig);
+                    <a class="link" href="GskHttpHeader.html#GskHttpHeaderClass" title="GskHttpHeaderClass">GskHttpHeaderClass</a>;
+                    <a class="link" href="GskHttpHeader.html#GskHttpHeader-struct" title="GskHttpHeader">GskHttpHeader</a>;
+enum                <a class="link" href="GskHttpHeader.html#GskHttpParseFlags" title="enum GskHttpParseFlags">GskHttpParseFlags</a>;
+<a class="link" href="GskHttpHeader.html#GskHttpConnection" title="enum GskHttpConnection">GskHttpConnection</a>   <a class="link" href="GskHttpHeader.html#gsk-http-header-get-connection" title="gsk_http_header_get_connection ()">gsk_http_header_get_connection</a>      (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header);
+<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *     <a class="link" href="GskHttpHeader.html#gsk-http-header-from-buffer" title="gsk_http_header_from_buffer ()">gsk_http_header_from_buffer</a>         (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *input,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_request,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpParseFlags" title="enum GskHttpParseFlags">GskHttpParseFlags</a> flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-to-buffer" title="gsk_http_header_to_buffer ()">gsk_http_header_to_buffer</a>           (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *output);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-set-content-encoding" title="gsk_http_header_set_content_encoding ()">gsk_http_header_set_content_encoding</a>
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *encoding);
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-content-encoding" title="gsk_http_header_get_content_encoding()">gsk_http_header_get_content_encoding</a>(header)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-date" title="gsk_http_header_set_date()">gsk_http_header_set_date</a>            (header, date)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-date" title="gsk_http_header_get_date()">gsk_http_header_get_date</a>            (header)
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-add-misc" title="gsk_http_header_add_misc ()">gsk_http_header_add_misc</a>            (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *key,
+                                                         const char *value);
+const char *        <a class="link" href="GskHttpHeader.html#gsk-http-header-lookup-misc" title="gsk_http_header_lookup_misc ()">gsk_http_header_lookup_misc</a>         (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *key);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-remove-misc" title="gsk_http_header_remove_misc ()">gsk_http_header_remove_misc</a>         (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *key);
+                    <a class="link" href="GskHttpHeader.html#GskHttpHeaderLineParser" title="GskHttpHeaderLineParser">GskHttpHeaderLineParser</a>;
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="GskHttpHeader.html#GskHttpHeaderLineParserFunc" title="GskHttpHeaderLineParserFunc ()">*GskHttpHeaderLineParserFunc</a>)      (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *        <a class="link" href="GskHttpHeader.html#gsk-http-header-get-parser-table" title="gsk_http_header_get_parser_table ()">gsk_http_header_get_parser_table</a>    (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_request);
+void                (<a class="link" href="GskHttpHeader.html#GskHttpHeaderPrintFunc" title="GskHttpHeaderPrintFunc ()">*GskHttpHeaderPrintFunc</a>)           (const char *text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-print" title="gsk_http_header_print ()">gsk_http_header_print</a>               (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *http_header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpHeaderPrintFunc" title="GskHttpHeaderPrintFunc ()">GskHttpHeaderPrintFunc</a> print_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> print_data);
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-connection-type" title="gsk_http_header_set_connection_type()">gsk_http_header_set_connection_type</a> (header, connection_type)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-connection-type" title="gsk_http_header_get_connection_type()">gsk_http_header_get_connection_type</a> (header)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-transfer-encoding" title="gsk_http_header_set_transfer_encoding()">gsk_http_header_set_transfer_encoding</a>(header, enc)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-transfer-encoding" title="gsk_http_header_get_transfer_encoding()">gsk_http_header_get_transfer_encoding</a>(header)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-content-type" title="gsk_http_header_get_content_type()">gsk_http_header_get_content_type</a>    (header)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-content-type" title="gsk_http_header_set_content_type()">gsk_http_header_set_content_type</a>    (header, content_type)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-content-subtype" title="gsk_http_header_get_content_subtype()">gsk_http_header_get_content_subtype</a> (header)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-content-subtype" title="gsk_http_header_set_content_subtype()">gsk_http_header_set_content_subtype</a> (header, content_type)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-content-length" title="gsk_http_header_set_content_length()">gsk_http_header_set_content_length</a>  (header, len)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-content-length" title="gsk_http_header_get_content_length()">gsk_http_header_get_content_length</a>  (header)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-content-charset" title="gsk_http_header_get_content_charset()">gsk_http_header_get_content_charset</a> (header)
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-add-accepted-range" title="gsk_http_header_add_accepted_range ()">gsk_http_header_add_accepted_range</a>  (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpRange" title="enum GskHttpRange">GskHttpRange</a> range);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-add-pragma" title="gsk_http_header_add_pragma ()">gsk_http_header_add_pragma</a>          (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *pragma);
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-content-charset" title="gsk_http_header_set_content_charset()">gsk_http_header_set_content_charset</a> (header, content_type)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-set-range" title="gsk_http_header_set_range()">gsk_http_header_set_range</a>           (header, start, end)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-range-start" title="gsk_http_header_get_range_start()">gsk_http_header_get_range_start</a>     (header)
+#define             <a class="link" href="GskHttpHeader.html#gsk-http-header-get-range-end" title="gsk_http_header_get_range_end()">gsk_http_header_get_range_end</a>       (header)
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-set-string" title="gsk_http_header_set_string ()">gsk_http_header_set_string</a>          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         char **p_str,
+                                                         const char *str);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-set-string-val" title="gsk_http_header_set_string_val ()">gsk_http_header_set_string_val</a>      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         char **p_str,
+                                                         const <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"
+>GValue</a> *value);
+char *              <a class="link" href="GskHttpHeader.html#gsk-http-header-cut-string" title="gsk_http_header_cut_string ()">gsk_http_header_cut_string</a>          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         const char *start,
+                                                         const char *end);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-free-string" title="gsk_http_header_free_string ()">gsk_http_header_free_string</a>         (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         char *str);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-set-connection-string" title="gsk_http_header_set_connection_string ()">gsk_http_header_set_connection_string</a>
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *str);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-set-content-encoding-string" title="gsk_http_header_set_content_encoding_string ()">gsk_http_header_set_content_encoding_string</a>
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *str);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-set-transfer-encoding-string" title="gsk_http_header_set_transfer_encoding_string ()">gsk_http_header_set_transfer_encoding_string</a>
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *str);
+void                <a class="link" href="GskHttpHeader.html#gsk-http-header-set-version" title="gsk_http_header_set_version ()">gsk_http_header_set_version</a>         (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> major,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> minor);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpHeader.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskHttpHeader
+         +----<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a>
+         +----<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpHeader.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--connection" title='The "connection" property'>connection</a>"               <a class="link" href="GskHttpHeader.html#GskHttpConnection" title="enum GskHttpConnection">GskHttpConnection</a>     : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--connection-string" title='The "connection-string" property'>connection-string</a>"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--content-charset" title='The "content-charset" property'>content-charset</a>"          <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--content-encoding" title='The "content-encoding" property'>content-encoding</a>"         <a class="link" href="GskHttpHeader.html#GskHttpContentEncoding" title="enum GskHttpContentEncoding">GskHttpContentEncoding</a>  : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--content-encoding-string" title='The "content-encoding-string" property'>content-encoding-string</a>"  <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--content-length" title='The "content-length" property'>content-length</a>"           <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--content-subtype" title='The "content-subtype" property'>content-subtype</a>"          <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--content-type" title='The "content-type" property'>content-type</a>"             <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--date" title='The "date" property'>date</a>"                     <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--major-version" title='The "major-version" property'>major-version</a>"            <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>                 : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--minor-version" title='The "minor-version" property'>minor-version</a>"            <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>                 : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--range-end" title='The "range-end" property'>range-end</a>"                <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--range-start" title='The "range-start" property'>range-start</a>"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--transfer-encoding" title='The "transfer-encoding" property'>transfer-encoding</a>"        <a class="link" href="GskHttpHeader.html#GskHttpTransferEncoding" title="enum GskHttpTransferEncoding">GskHttpTransferEncoding</a>  : Read / Write
+  "<a class="link" href="GskHttpHeader.html#GskHttpHeader--transfer-encoding-string" title='The "transfer-encoding-string" property'>transfer-encoding-string</a>" <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpHeader.description"></a><h2>Description</h2>
+<p>
+The class provides methods and structure to parse and
+examime HTTP requests and responses.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpHeader.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHttpAuthorization"></a><h3>GskHttpAuthorization</h3>
+<pre class="programlisting">typedef struct {
+  GskHttpAuthMode mode;
+  char           *auth_scheme_name;
+  union
+  {
+    struct {
+      char                   *response;
+    } unknown;
+    struct {
+      char                   *user;
+      char                   *password;
+    } basic;
+    struct {
+      char                   *realm;
+      char                   *domain;
+      char                   *nonce;
+      char                   *opaque;
+      char                   *algorithm;
+      char                   *user;
+      char                   *password;
+      char                   *response_digest;
+      char                   *entity_digest;
+    } digest;
+  } info;
+} GskHttpAuthorization;
+</pre>
+<p>
+  A response to a Authenticate: challenge.
+  This string may provide a cryptographic proof that the
+  client-side has access to a secret key.
+</p>
+<p>
+      From RFC 2616, Section 14.8: If a request is
+      authenticated and a realm specified, the same credentials SHOULD
+      be valid for all other requests within this realm (assuming that
+      the authentication scheme itself does not require otherwise, such
+      as credentials that vary according to a challenge value or using
+      synchronized clocks).
+</p>
+<p>
+    The details of authentification are in a sister RFC,
+    namely RFC 2617, "HTTP Authentication: Basic and Digest Access Authentication",
+    by J Franks, et al.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpAuthenticate"></a><h3>GskHttpAuthenticate</h3>
+<pre class="programlisting">typedef struct {
+  GskHttpAuthMode mode;
+  char           *auth_scheme_name;
+  char           *realm;
+  union
+  {
+    struct {
+      char                   *options;
+    } unknown;
+    /* no members:
+    struct {
+    } basic;
+    */
+    struct {
+      char                   *domain;
+      char                   *nonce;
+      char                   *opaque;
+      gboolean                is_stale;
+      char                   *algorithm;
+    } digest;
+  } info;
+} GskHttpAuthenticate;
+</pre>
+<p>
+XXX: should be a list of possible authenification strategies.
+</p>
+<p>
+The WWW-Authenticate response-header field MUST be included in 401
+(Unauthorized) response messages. The field value consists of at
+least one challenge that indicates the authentication scheme(s) and
+parameters applicable to the Request-URI.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpCharSet"></a><h3>GskHttpCharSet</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: read-only &gt;*/
+  char                 *charset_name;
+  gfloat                quality;                /* -1 if not present */
+} GskHttpCharSet;
+</pre>
+<p>
+A character set, along with optional quality factor.
+The default quality is 1.0.  See also <a class="link" href="GskHttpRequest.html#gsk-http-request-add-charsets" title="gsk_http_request_add_charsets ()"><code class="function">gsk_http_request_add_charsets()</code></a>
+and <code class="function">gsk_http_response_set_charset()</code>.  The HTTP standard does not concretely
+define the Character Set strings that are mentioned in RFC 2616, Section 3.4.
+But it recommends the documents
+RFC 2279 "UTF-8, a transformation format of Unicode and ISO-10646"; and
+RFC 2277 "IETF Policy on Character Sets and Languages".
+</p>
+<p>
+...
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>charset_name</code></em>;</span></p></td>
+<td>the name of the character set, as recommended by IETF policy.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> <em class="structfield"><code>quality</code></em>;</span></p></td>
+<td>ranking of the character set, on a range from 0 to 1.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpCookie"></a><h3>GskHttpCookie</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: read-only &gt;*/
+  char                   *key;
+  char                   *value;
+  char                   *domain;
+  char                   *path;
+  char                   *expire_date;
+  char                   *comment;
+  int                     max_age;
+  gboolean                secure;               /* default is FALSE */
+  guint                   version;              /* default is 0, unspecified */
+} GskHttpCookie;
+</pre>
+<p>
+See RFC 2964 "Use of HTTP State Management"
+and RFC 2965 "HTTP State Management Mechanism".
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpLanguageSet"></a><h3>GskHttpLanguageSet</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: read-only &gt;*/
+
+  /* these give a language (with optional dialect specifier) */
+  char                 *language;
+  gfloat                quality;                /* -1 if not present */
+} GskHttpLanguageSet;
+</pre>
+<p>
+A list of natural languages that may be acceptable
+to the client.  Examples: en, en-US, en-cockney, i-cherokee, x-pig-latin.
+</p>
+<p>
+This is intended for human languages - computer languages are specifically prohibited.
+</p>
+<p>
+Any two-letter primary tag ('en') must be an ISO-639 language abbreviation.
+Any two-letter subtag ('US') must be an ISO-3166 country abbreviation.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>language</code></em>;</span></p></td>
+<td>the ASCII text of the language name.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> <em class="structfield"><code>quality</code></em>;</span></p></td>
+<td>quality from 0 to 1, or -1 for unspecified.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpMediaTypeSet"></a><h3>GskHttpMediaTypeSet</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: read-only &gt;*/
+  char                 *type;
+  char                 *subtype;
+  gfloat                quality;                /* -1 if not present */
+} GskHttpMediaTypeSet;
+</pre>
+<p>
+A list of media types that the client can handle, and
+some quality factors to break ties.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>type</code></em>;</span></p></td>
+<td>standard types like "image" or "text", or "x-"-prefixed types which are not well standardized.
+May be "*" to mean any major type.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>subtype</code></em>;</span></p></td>
+<td>specific format of data: "html" or "jpeg".
+May be "*" to mean any subtype.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> <em class="structfield"><code>quality</code></em>;</span></p></td>
+<td>quality from 0 to 1, or -1 for unspecified.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpContentEncodingSet"></a><h3>GskHttpContentEncodingSet</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: read-only &gt;*/
+  GskHttpContentEncoding       encoding;
+  gfloat                       quality;       /* -1 if not present */
+} GskHttpContentEncodingSet;
+</pre>
+<p>
+A node in a list of content-encodings allowed by the server.
+Each element may have an associated quality.
+If the quality is -1, then it is implicit, but for
+comparison purposes it should be treated at +1.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpContentEncoding" title="enum GskHttpContentEncoding">GskHttpContentEncoding</a> <em class="structfield"><code>encoding</code></em>;</span></p></td>
+<td>the encoding being rated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> <em class="structfield"><code>quality</code></em>;</span></p></td>
+<td>quality from 0 to 1, or -1 for unspecified.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpTransferEncodingSet"></a><h3>GskHttpTransferEncodingSet</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: read-only &gt;*/
+  GskHttpTransferEncoding      encoding;
+  gfloat                       quality;       /* -1 if not present */
+} GskHttpTransferEncodingSet;
+</pre>
+<p>
+A node in a list of transfer-encodings allowed by the server.
+Each element may have an associated quality.
+If the quality is -1, then it is implicit, but for
+comparison purposes it should be treated at +1.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpTransferEncoding" title="enum GskHttpTransferEncoding">GskHttpTransferEncoding</a> <em class="structfield"><code>encoding</code></em>;</span></p></td>
+<td>the encoding being rated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> <em class="structfield"><code>quality</code></em>;</span></p></td>
+<td>quality from 0 to 1, or -1 for unspecified.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRangeSet"></a><h3>GskHttpRangeSet</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: read-only &gt;*/
+  GskHttpRange          range_type;
+} GskHttpRangeSet;
+</pre>
+<p>
+A node in a list of range-specifiers allowed by the server.
+Each element may have an associated quality.
+If the quality is -1, then it is implicit, but for
+comparison purposes it should be treated at +1.
+</p>
+<p>
+This mechanism is rather pointless, as there is only
+one valid unit allowed, 'bytes'.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpRange" title="enum GskHttpRange">GskHttpRange</a> <em class="structfield"><code>range_type</code></em>;</span></p></td>
+<td>the units permitted for partial content requests.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpStatus"></a><h3>enum GskHttpStatus</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_HTTP_STATUS_CONTINUE                      = 100,
+  GSK_HTTP_STATUS_SWITCHING_PROTOCOLS           = 101,
+  GSK_HTTP_STATUS_OK                            = 200,
+  GSK_HTTP_STATUS_CREATED                       = 201,
+  GSK_HTTP_STATUS_ACCEPTED                      = 202,
+  GSK_HTTP_STATUS_NONAUTHORITATIVE_INFO         = 203,
+  GSK_HTTP_STATUS_NO_CONTENT                    = 204,
+  GSK_HTTP_STATUS_RESET_CONTENT                 = 205,
+  GSK_HTTP_STATUS_PARTIAL_CONTENT               = 206,
+  GSK_HTTP_STATUS_MULTIPLE_CHOICES              = 300,
+  GSK_HTTP_STATUS_MOVED_PERMANENTLY             = 301,
+  GSK_HTTP_STATUS_FOUND                         = 302,
+  GSK_HTTP_STATUS_SEE_OTHER                     = 303,
+  GSK_HTTP_STATUS_NOT_MODIFIED                  = 304,
+  GSK_HTTP_STATUS_USE_PROXY                     = 305,
+  GSK_HTTP_STATUS_TEMPORARY_REDIRECT            = 306,
+  GSK_HTTP_STATUS_BAD_REQUEST                   = 400,
+  GSK_HTTP_STATUS_UNAUTHORIZED                  = 401,
+  GSK_HTTP_STATUS_PAYMENT_REQUIRED              = 402,
+  GSK_HTTP_STATUS_FORBIDDEN                     = 403,
+  GSK_HTTP_STATUS_NOT_FOUND                     = 404,
+  GSK_HTTP_STATUS_METHOD_NOT_ALLOWED            = 405,
+  GSK_HTTP_STATUS_NOT_ACCEPTABLE                = 406,
+  GSK_HTTP_STATUS_PROXY_AUTH_REQUIRED           = 407,
+  GSK_HTTP_STATUS_REQUEST_TIMEOUT               = 408,
+  GSK_HTTP_STATUS_CONFLICT                      = 409,
+  GSK_HTTP_STATUS_GONE                          = 410,
+  GSK_HTTP_STATUS_LENGTH_REQUIRED               = 411,
+  GSK_HTTP_STATUS_PRECONDITION_FAILED           = 412,
+  GSK_HTTP_STATUS_ENTITY_TOO_LARGE              = 413,
+  GSK_HTTP_STATUS_URI_TOO_LARGE                 = 414,
+  GSK_HTTP_STATUS_UNSUPPORTED_MEDIA             = 415,
+  GSK_HTTP_STATUS_BAD_RANGE                     = 416,
+  GSK_HTTP_STATUS_EXPECTATION_FAILED            = 417,
+  GSK_HTTP_STATUS_INTERNAL_SERVER_ERROR         = 500,
+  GSK_HTTP_STATUS_NOT_IMPLEMENTED               = 501,
+  GSK_HTTP_STATUS_BAD_GATEWAY                   = 502,
+  GSK_HTTP_STATUS_SERVICE_UNAVAILABLE           = 503,
+  GSK_HTTP_STATUS_GATEWAY_TIMEOUT               = 504,
+  GSK_HTTP_STATUS_UNSUPPORTED_VERSION           = 505
+} GskHttpStatus;
+</pre>
+<p>
+Status code corresponding to the number on the
+first line of an HTTP response. This enum
+takes on the same numerical value.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-CONTINUE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_CONTINUE</code></span></p></td>
+<td>
+   [From RFC 2616, Section 8.2.3; see also Section 10.1.1]
+   The purpose of the 100 (Continue) status (see section 10.1.1) is to
+   allow a client that is sending a request message with a request body
+   to determine if the origin server is willing to accept the request
+   (based on the request headers) before the client sends the request
+   body. In some cases, it might either be inappropriate or highly
+   inefficient for the client to send the body if the server will reject
+   the message without looking at the body.
+   Currently, GSK has only very limited support for this protocol.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-SWITCHING-PROTOCOLS--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_SWITCHING_PROTOCOLS</code></span></p></td>
+<td>
+   Rarely used.
+   [From RFC 2616, Section 10.1.2]
+   The server understands and is willing to comply with the client's
+   request, via the Upgrade message header field (section 14.42), for a
+   change in the application protocol being used on this connection. The
+   server will switch protocols to those defined by the response's
+   Upgrade header field immediately after the empty line which
+   terminates the 101 response.
+   The protocol SHOULD be switched only when it is advantageous to do
+   so. For example, switching to a newer version of HTTP is advantageous
+   over older versions, and switching to a real-time, synchronous
+   protocol might be advantageous when delivering resources that use
+   such features.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-OK--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_OK</code></span></p></td>
+<td>
+   The standard response to indicate that the request is about
+   to be successfully executed.
+   Section 10.2.1 states what content will be available (it depends
+   on the request's verb.)
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-CREATED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_CREATED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.2.2]
+   The request has been fulfilled and resulted in a new resource being
+   created. The newly created resource can be referenced by the URI(s)
+   returned in the entity of the response, with the most specific URI
+   for the resource given by a Location header field. The response
+   SHOULD include an entity containing a list of resource
+   characteristics and location(s) from which the user or user agent can
+   choose the one most appropriate. The entity format is specified by
+   the media type given in the Content-Type header field. The origin
+   server MUST create the resource before returning the 201 status code.
+   If the action cannot be carried out immediately, the server SHOULD
+   respond with 202 (Accepted) response instead.
+   A 201 response MAY contain an ETag response header field indicating
+   the current value of the entity tag for the requested variant just
+   created, see section 14.19.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-ACCEPTED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_ACCEPTED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.2.3]
+   The request has been accepted for processing, but the processing has
+   not been completed.  The request might or might not eventually be
+   acted upon, as it might be disallowed when processing actually takes
+   place. There is no facility for re-sending a status code from an
+   asynchronous operation such as this.
+   The 202 response is intentionally non-committal. Its purpose is to
+   allow a server to accept a request for some other process (perhaps a
+   batch-oriented process that is only run once per day) without
+   requiring that the user agent's connection to the server persist
+   until the process is completed. The entity returned with this
+   response SHOULD include an indication of the request's current status
+   and either a pointer to a status monitor or some estimate of when the
+   user can expect the request to be fulfilled.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-NONAUTHORITATIVE-INFO--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_NONAUTHORITATIVE_INFO</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.2.4]
+   The returned metainformation in the entity-header is not the
+   definitive set as available from the origin server, but is gathered
+   from a local or a third-party copy. The set presented MAY be a subset
+   or superset of the original version. For example, including local
+   annotation information about the resource might result in a superset
+   of the metainformation known by the origin server. Use of this
+   response code is not required and is only appropriate when the
+   response would otherwise be 200 (OK).
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-NO-CONTENT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_NO_CONTENT</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.2.5]
+   The server has fulfilled the request but does not need to return an
+   entity-body, and might want to return updated metainformation. The
+   response MAY include new or updated metainformation in the form of
+   entity-headers, which if present SHOULD be associated with the
+   requested variant.
+   If the client is a user agent, it SHOULD NOT change its document view
+   from that which caused the request to be sent. This response is
+   primarily intended to allow input for actions to take place without
+   causing a change to the user agent's active document view, although
+   any new or updated metainformation SHOULD be applied to the document
+   currently in the user agent's active view.
+   The 204 response MUST NOT include a message-body, and thus is always
+   terminated by the first empty line after the header fields.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-RESET-CONTENT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_RESET_CONTENT</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.2.6]
+   The server has fulfilled the request and the user agent SHOULD reset
+   the document view which caused the request to be sent. This response
+   is primarily intended to allow input for actions to take place via
+   user input, followed by a clearing of the form in which the input is
+   given so that the user can easily initiate another input action. The
+   response MUST NOT include an entity.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-PARTIAL-CONTENT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_PARTIAL_CONTENT</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.2.7]
+   The server has fulfilled the partial GET request for the resource.
+   The request MUST have included a Range header field (section 14.35)
+   indicating the desired range, and MAY have included an If-Range
+   header field (section 14.27) to make the request conditional.
+   [by daveb]
+   In addition, the response must contain several normally optional
+   fields, namely Content-Range, Date, and either ETag or Content-Location.
+   Furthermore if must have cache-info, i.e.  Expires, Cache-Control, and/or Vary.
+   See the RFC for the painful details.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-MULTIPLE-CHOICES--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_MULTIPLE_CHOICES</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.3.1]
+   The requested resource corresponds to any one of a set of
+   representations, each with its own specific location, and agent-
+   driven negotiation information (section 12) is being provided so that
+   the user (or user agent) can select a preferred representation and
+   redirect its request to that location.
+   Unless it was a HEAD request, the response SHOULD include an entity
+   containing a list of resource characteristics and location(s) from
+   which the user or user agent can choose the one most appropriate. The
+   entity format is specified by the media type given in the Content-
+   Type header field. Depending upon the format and the capabilities of
+   the user agent, selection of the most appropriate choice MAY be
+   performed automatically. However, this specification does not define
+   any standard for such automatic selection.
+   If the server has a preferred choice of representation, it SHOULD
+   include the specific URI for that representation in the Location
+   field; user agents MAY use the Location field value for automatic
+   redirection. This response is cacheable unless indicated otherwise.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-MOVED-PERMANENTLY--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_MOVED_PERMANENTLY</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.3.2]
+   The requested resource has been assigned a new permanent URI and any
+   future references to this resource SHOULD use one of the returned
+   URIs.  Clients with link editing capabilities ought to automatically
+   re-link references to the Request-URI to one or more of the new
+   references returned by the server, where possible. This response is
+   cacheable unless indicated otherwise.
+   The new permanent URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s).
+   If the 301 status code is received in response to a request other
+   than GET or HEAD, the user agent MUST NOT automatically redirect the
+   request unless it can be confirmed by the user, since this might
+   change the conditions under which the request was issued.
+      Note: When automatically redirecting a POST request after
+      receiving a 301 status code, some existing HTTP/1.0 user agents
+      will erroneously change it into a GET request.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-FOUND--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_FOUND</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.3.3]
+   The requested resource resides temporarily under a different URI.
+   Since the redirection might be altered on occasion, the client SHOULD
+   continue to use the Request-URI for future requests.  This response
+   is only cacheable if indicated by a Cache-Control or Expires header
+   field.
+   The temporary URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s).
+   [There's more detail in the RFC]
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-SEE-OTHER--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_SEE_OTHER</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.3.4]
+   The response to the request can be found under a different URI and
+   SHOULD be retrieved using a GET method on that resource. This method
+   exists primarily to allow the output of a POST-activated script to
+   redirect the user agent to a selected resource. The new URI is not a
+   substitute reference for the originally requested resource. The 303
+   response MUST NOT be cached, but the response to the second
+   (redirected) request might be cacheable.
+   The different URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s).
+      Note: Many pre-HTTP/1.1 user agents do not understand the 303
+      status. When interoperability with such clients is a concern, the
+      302 status code may be used instead, since most user agents react
+      to a 302 response as described here for 303.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-NOT-MODIFIED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_NOT_MODIFIED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.3.5]
+   If the client has performed a conditional GET request and access is
+   allowed, but the document has not been modified, the server SHOULD
+   respond with this status code. The 304 response MUST NOT contain a
+   message-body, and thus is always terminated by the first empty line
+   after the header fields.
+   The response MUST include the following header fields:
+      - Date, unless its omission is required by section 14.18.1
+   If a clockless origin server obeys these rules, and proxies and
+   clients add their own Date to any response received without one (as
+   already specified by [RFC 2068], section 14.19), caches will operate
+   correctly.
+      - ETag and/or Content-Location, if the header would have been sent
+        in a 200 response to the same request
+      - Expires, Cache-Control, and/or Vary, if the field-value might
+        differ from that sent in any previous response for the same
+        variant
+   If the conditional GET used a strong cache validator (see section
+   13.3.3), the response SHOULD NOT include other entity-headers.
+   Otherwise (i.e., the conditional GET used a weak validator), the
+   response MUST NOT include other entity-headers; this prevents
+   inconsistencies between cached entity-bodies and updated headers.
+   If a 304 response indicates an entity not currently cached, then the
+   cache MUST disregard the response and repeat the request without the
+   conditional.
+   If a cache uses a received 304 response to update a cache entry, the
+   cache MUST update the entry to reflect any new field values given in
+   the response.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-USE-PROXY--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_USE_PROXY</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.3.6]
+   The requested resource MUST be accessed through the proxy given by
+   the Location field. The Location field gives the URI of the proxy.
+   The recipient is expected to repeat this single request via the
+   proxy. 305 responses MUST only be generated by origin servers.
+      Note: RFC 2068 was not clear that 305 was intended to redirect a
+      single request, and to be generated by origin servers only.  Not
+      observing these limitations has significant security consequences.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-TEMPORARY-REDIRECT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_TEMPORARY_REDIRECT</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.3.8]
+   The requested resource resides temporarily under a different URI.
+   Since the redirection MAY be altered on occasion, the client SHOULD
+   continue to use the Request-URI for future requests.  This response
+   is only cacheable if indicated by a Cache-Control or Expires header
+   field.
+   The temporary URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s) , since many pre-HTTP/1.1 user agents do not
+   understand the 307 status. Therefore, the note SHOULD contain the
+   information necessary for a user to repeat the original request on
+   the new URI.
+   If the 307 status code is received in response to a request other
+   than GET or HEAD, the user agent MUST NOT automatically redirect the
+   request unless it can be confirmed by the user, since this might
+   change the conditions under which the request was issued.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-BAD-REQUEST--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_BAD_REQUEST</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.1]
+   The request could not be understood by the server due to malformed
+   syntax. The client SHOULD NOT repeat the request without
+   modifications.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-UNAUTHORIZED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_UNAUTHORIZED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.2]
+   The request requires user authentication. The response MUST include a
+   WWW-Authenticate header field (section 14.47) containing a challenge
+   applicable to the requested resource. The client MAY repeat the
+   request with a suitable Authorization header field (section 14.8). If
+   the request already included Authorization credentials, then the 401
+   response indicates that authorization has been refused for those
+   credentials. If the 401 response contains the same challenge as the
+   prior response, and the user agent has already attempted
+   authentication at least once, then the user SHOULD be presented the
+   entity that was given in the response, since that entity might
+   include relevant diagnostic information. HTTP access authentication
+   is explained in "HTTP Authentication: Basic and Digest Access
+   Authentication" [43].
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-PAYMENT-REQUIRED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_PAYMENT_REQUIRED</code></span></p></td>
+<td>
+   Gotta love this one.
+   [From RFC 2616, Section 10.4.3]
+   This code is reserved for future use.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-FORBIDDEN--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_FORBIDDEN</code></span></p></td>
+<td>
+[From RFC 2616, Section 10.4.4]
+   The server understood the request, but is refusing to fulfill it.
+   Authorization will not help and the request SHOULD NOT be repeated.
+   If the request method was not HEAD and the server wishes to make
+   public why the request has not been fulfilled, it SHOULD describe the
+   reason for the refusal in the entity.  If the server does not wish to
+   make this information available to the client, the status code 404
+   (Not Found) can be used instead.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-NOT-FOUND--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_NOT_FOUND</code></span></p></td>
+<td>
+[From RFC 2616, Section 10.4.5]
+   The server has not found anything matching the Request-URI. No
+   indication is given of whether the condition is temporary or
+   permanent. The 410 (Gone) status code SHOULD be used if the server
+   knows, through some internally configurable mechanism, that an old
+   resource is permanently unavailable and has no forwarding address.
+   This status code is commonly used when the server does not wish to
+   reveal exactly why the request has been refused, or when no other
+   response is applicable.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-METHOD-NOT-ALLOWED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_METHOD_NOT_ALLOWED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.6]
+   The method specified in the Request-Line is not allowed for the
+   resource identified by the Request-URI. The response MUST include an
+   Allow header containing a list of valid methods for the requested
+   resource.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-NOT-ACCEPTABLE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_NOT_ACCEPTABLE</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.7]
+   The resource identified by the request is only capable of generating
+   response entities which have content characteristics not acceptable
+   according to the accept headers sent in the request.
+   Unless it was a HEAD request, the response SHOULD include an entity
+   containing a list of available entity characteristics and location(s)
+   from which the user or user agent can choose the one most
+   appropriate. The entity format is specified by the media type given
+   in the Content-Type header field. Depending upon the format and the
+   capabilities of the user agent, selection of the most appropriate
+   choice MAY be performed automatically. However, this specification
+   does not define any standard for such automatic selection.
+      Note: HTTP/1.1 servers are allowed to return responses which are
+      not acceptable according to the accept headers sent in the
+      request. In some cases, this may even be preferable to sending a
+      406 response. User agents are encouraged to inspect the headers of
+      an incoming response to determine if it is acceptable.
+   If the response could be unacceptable, a user agent SHOULD
+   temporarily stop receipt of more data and query the user for a
+   decision on further actions.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-PROXY-AUTH-REQUIRED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_PROXY_AUTH_REQUIRED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.8]
+   This code is similar to 401 (Unauthorized), but indicates that the
+   client must first authenticate itself with the proxy. The proxy MUST
+   return a Proxy-Authenticate header field (section 14.33) containing a
+   challenge applicable to the proxy for the requested resource. The
+   client MAY repeat the request with a suitable Proxy-Authorization
+   header field (section 14.34). HTTP access authentication is explained
+   in "HTTP Authentication: Basic and Digest Access Authentication".
+   RFC 2617.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-REQUEST-TIMEOUT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_REQUEST_TIMEOUT</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.9]
+   The client did not produce a request within the time that the server
+   was prepared to wait. The client MAY repeat the request without
+   modifications at any later time.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-CONFLICT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_CONFLICT</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.10]
+   The request could not be completed due to a conflict with the current
+   state of the resource. This code is only allowed in situations where
+   it is expected that the user might be able to resolve the conflict
+   and resubmit the request. The response body SHOULD include enough
+   information for the user to recognize the source of the conflict.
+   Ideally, the response entity would include enough information for the
+   user or user agent to fix the problem; however, that might not be
+   possible and is not required.
+   Conflicts are most likely to occur in response to a PUT request. For
+   example, if versioning were being used and the entity being PUT
+   included changes to a resource which conflict with those made by an
+   earlier (third-party) request, the server might use the 409 response
+   to indicate that it can't complete the request. In this case, the
+   response entity would likely contain a list of the differences
+   between the two versions in a format defined by the response
+   Content-Type.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-GONE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_GONE</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.11]
+   The requested resource is no longer available at the server and no
+   forwarding address is known. This condition is expected to be
+   considered permanent. Clients with link editing capabilities SHOULD
+   delete references to the Request-URI after user approval. If the
+   server does not know, or has no facility to determine, whether or not
+   the condition is permanent, the status code 404 (Not Found) SHOULD be
+   used instead. This response is cacheable unless indicated otherwise.
+   The 410 response is primarily intended to assist the task of web
+   maintenance by notifying the recipient that the resource is
+   intentionally unavailable and that the server owners desire that
+   remote links to that resource be removed. Such an event is common for
+   limited-time, promotional services and for resources belonging to
+   individuals no longer working at the server's site. It is not
+   necessary to mark all permanently unavailable resources as "gone" or
+   to keep the mark for any length of time -- that is left to the
+   discretion of the server owner.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-LENGTH-REQUIRED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_LENGTH_REQUIRED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.12]
+   The server refuses to accept the request without a defined Content-
+   Length. The client MAY repeat the request if it adds a valid
+   Content-Length header field containing the length of the message-body
+   in the request message.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-PRECONDITION-FAILED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_PRECONDITION_FAILED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.13]
+   The precondition given in one or more of the request-header fields
+   evaluated to false when it was tested on the server. This response
+   code allows the client to place preconditions on the current resource
+   metainformation (header field data) and thus prevent the requested
+   method from being applied to a resource other than the one intended.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-ENTITY-TOO-LARGE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_ENTITY_TOO_LARGE</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.14]
+   The server is refusing to process a request because the request
+   entity is larger than the server is willing or able to process. The
+   server MAY close the connection to prevent the client from continuing
+   the request.
+   If the condition is temporary, the server SHOULD include a Retry-
+   After header field to indicate that it is temporary and after what
+   time the client MAY try again.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-URI-TOO-LARGE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_URI_TOO_LARGE</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.15]
+   The server is refusing to service the request because the Request-URI
+   is longer than the server is willing to interpret. This rare
+   condition is only likely to occur when a client has improperly
+   converted a POST request to a GET request with long query
+   information, when the client has descended into a URI "black hole" of
+   redirection (e.g., a redirected URI prefix that points to a suffix of
+   itself), or when the server is under attack by a client attempting to
+   exploit security holes present in some servers using fixed-length
+   buffers for reading or manipulating the Request-URI.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-UNSUPPORTED-MEDIA--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_UNSUPPORTED_MEDIA</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.16]
+   The server is refusing to service the request because the entity of
+   the request is in a format not supported by the requested resource
+   for the requested method.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-BAD-RANGE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_BAD_RANGE</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.17]
+   A server SHOULD return a response with this status code if a request
+   included a Range request-header field (section 14.35), and none of
+   the range-specifier values in this field overlap the current extent
+   of the selected resource, and the request did not include an If-Range
+   request-header field. (For byte-ranges, this means that the first-
+   byte-pos of all of the byte-range-spec values were greater than the
+   current length of the selected resource.)
+   When this status code is returned for a byte-range request, the
+   response SHOULD include a Content-Range entity-header field
+   specifying the current length of the selected resource (see section
+   14.16). This response MUST NOT use the multipart/byteranges content-
+   type.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-EXPECTATION-FAILED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_EXPECTATION_FAILED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.4.18]
+   The expectation given in an Expect request-header field (see section
+   14.20) could not be met by this server, or, if the server is a proxy,
+   the server has unambiguous evidence that the request could not be met
+   by the next-hop server.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-INTERNAL-SERVER-ERROR--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_INTERNAL_SERVER_ERROR</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.5.1]
+   The server encountered an unexpected condition which prevented it
+   from fulfilling the request.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-NOT-IMPLEMENTED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_NOT_IMPLEMENTED</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.5.2]
+   The server does not support the functionality required to fulfill the
+   request. This is the appropriate response when the server does not
+   recognize the request method and is not capable of supporting it for
+   any resource.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-BAD-GATEWAY--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_BAD_GATEWAY</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.5.3]
+   The server, while acting as a gateway or proxy, received an invalid
+   response from the upstream server it accessed in attempting to
+   fulfill the request.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-SERVICE-UNAVAILABLE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_SERVICE_UNAVAILABLE</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.5.4]
+   The server is currently unable to handle the request due to a
+   temporary overloading or maintenance of the server. The implication
+   is that this is a temporary condition which will be alleviated after
+   some delay. If known, the length of the delay MAY be indicated in a
+   Retry-After header. If no Retry-After is given, the client SHOULD
+   handle the response as it would for a 500 response.
+      Note: The existence of the 503 status code does not imply that a
+      server must use it when becoming overloaded. Some servers may wish
+      to simply refuse the connection.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-GATEWAY-TIMEOUT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_GATEWAY_TIMEOUT</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.5.5]
+   The server, while acting as a gateway or proxy, did not receive a
+   timely response from the upstream server specified by the URI (e.g.
+   HTTP, FTP, LDAP) or some other auxiliary server (e.g. DNS) it needed
+   to access in attempting to complete the request.
+      Note: Note to implementors: some deployed proxies are known to
+      return 400 or 500 when DNS lookups time out.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-STATUS-UNSUPPORTED-VERSION--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_STATUS_UNSUPPORTED_VERSION</code></span></p></td>
+<td>
+   [From RFC 2616, Section 10.5.6]
+   The server does not support, or refuses to support, the HTTP protocol
+   version that was used in the request message. The server is
+   indicating that it is unable or unwilling to complete the request
+   using the same major version as the client, as described in section
+   3.1, other than with this error message. The response SHOULD contain
+   an entity describing why that version is not supported and what other
+   protocols are supported by that server.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpVerb"></a><h3>enum GskHttpVerb</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_HTTP_VERB_GET,
+  GSK_HTTP_VERB_POST,
+  GSK_HTTP_VERB_PUT,
+  GSK_HTTP_VERB_HEAD,
+  GSK_HTTP_VERB_OPTIONS,
+  GSK_HTTP_VERB_DELETE,
+  GSK_HTTP_VERB_TRACE,
+  GSK_HTTP_VERB_CONNECT
+} GskHttpVerb;
+</pre>
+<p>
+The type of action requested by the User or User-Agent.
+It is common practice that GET and HEAD requests
+are "safe"-- they are intended for information retrieval
+are should never have harmful side-effects.
+</p>
+<p>
+Some additional methods are idempotent, meaning that running
+the command more than once SHOULD have no effect.
+In particular, PUT, DELETE, OPTIONS, and TRACE
+have this property, as well as the safe methods GET and HEAD.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-GET--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_GET</code></span></p></td>
+<td>
+   [RFC 2616; 9.3]
+   The GET method means retrieve whatever information (in the form of an
+   entity) is identified by the Request-URI. If the Request-URI refers
+   to a data-producing process, it is the produced data which shall be
+   returned as the entity in the response and not the source text of the
+   process, unless that text happens to be the output of the process.
+   The semantics of the GET method change to a "conditional GET" if the
+   request message includes an If-Modified-Since, If-Unmodified-Since,
+   If-Match, If-None-Match, or If-Range header field. A conditional GET
+   method requests that the entity be transferred only under the
+   circumstances described by the conditional header field(s). The
+   conditional GET method is intended to reduce unnecessary network
+   usage by allowing cached entities to be refreshed without requiring
+   multiple requests or transferring data already held by the client.
+   The semantics of the GET method change to a "partial GET" if the
+   request message includes a Range header field. A partial GET requests
+   that only part of the entity be transferred, as described in section
+   14.35. The partial GET method is intended to reduce unnecessary
+   network usage by allowing partially-retrieved entities to be
+   completed without transferring data already held by the client.
+   The response to a GET request is cacheable if and only if it meets
+   the requirements for HTTP caching described in section 13.
+   See section 15.1.3 for security considerations when used for forms.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-POST--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_POST</code></span></p></td>
+<td>
+   [RFC 2616; 9.5]
+   The POST method is used to request that the origin server accept the
+   entity enclosed in the request as a new subordinate of the resource
+   identified by the Request-URI in the Request-Line. POST is designed
+   to allow a uniform method to cover the following functions:
+      - Annotation of existing resources;
+      - Posting a message to a bulletin board, newsgroup, mailing list,
+        or similar group of articles;
+      - Providing a block of data, such as the result of submitting a
+        form, to a data-handling process;
+      - Extending a database through an append operation.
+   The actual function performed by the POST method is determined by the
+   server and is usually dependent on the Request-URI. The posted entity
+   is subordinate to that URI in the same way that a file is subordinate
+   to a directory containing it, a news article is subordinate to a
+   newsgroup to which it is posted, or a record is subordinate to a
+   database.
+   The action performed by the POST method might not result in a
+   resource that can be identified by a URI. In this case, either 200
+   (OK) or 204 (No Content) is the appropriate response status,
+   depending on whether or not the response includes an entity that
+   describes the result.
+   If a resource has been created on the origin server, the response
+   SHOULD be 201 (Created) and contain an entity which describes the
+   status of the request and refers to the new resource, and a Location
+   header (see section 14.30).
+   Responses to this method are not cacheable, unless the response
+   includes appropriate Cache-Control or Expires header fields. However,
+   the 303 (See Other) response can be used to direct the user agent to
+   retrieve a cacheable resource.
+   POST requests MUST obey the message transmission requirements set out
+   in section 8.2.
+   See section 15.1.3 for security considerations.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-PUT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_PUT</code></span></p></td>
+<td>
+   [RFC 2616; 9.6]
+   The PUT method requests that the enclosed entity be stored under the
+   supplied Request-URI. If the Request-URI refers to an already
+   existing resource, the enclosed entity SHOULD be considered as a
+   modified version of the one residing on the origin server. If the
+   Request-URI does not point to an existing resource, and that URI is
+   capable of being defined as a new resource by the requesting user
+   agent, the origin server can create the resource with that URI. If a
+   new resource is created, the origin server MUST inform the user agent
+   via the 201 (Created) response. If an existing resource is modified,
+   either the 200 (OK) or 204 (No Content) response codes SHOULD be sent
+   to indicate successful completion of the request. If the resource
+   could not be created or modified with the Request-URI, an appropriate
+   error response SHOULD be given that reflects the nature of the
+   problem. The recipient of the entity MUST NOT ignore any Content-*
+   (e.g. Content-Range) headers that it does not understand or implement
+   and MUST return a 501 (Not Implemented) response in such cases.
+   If the request passes through a cache and the Request-URI identifies
+   one or more currently cached entities, those entries SHOULD be
+   treated as stale. Responses to this method are not cacheable.
+   The fundamental difference between the POST and PUT requests is
+   reflected in the different meaning of the Request-URI. The URI in a
+   POST request identifies the resource that will handle the enclosed
+   entity. That resource might be a data-accepting process, a gateway to
+   some other protocol, or a separate entity that accepts annotations.
+   In contrast, the URI in a PUT request identifies the entity enclosed
+   with the request -- the user agent knows what URI is intended and the
+   server MUST NOT attempt to apply the request to some other resource.
+   If the server desires that the request be applied to a different URI,
+   it MUST send a 301 (Moved Permanently) response; the user agent MAY
+   then make its own decision regarding whether or not to redirect the
+   request.
+   A single resource MAY be identified by many different URIs. For
+   example, an article might have a URI for identifying "the current
+   version" which is separate from the URI identifying each particular
+   version. In this case, a PUT request on a general URI might result in
+   several other URIs being defined by the origin server.
+   HTTP/1.1 does not define how a PUT method affects the state of an
+   origin server.
+   PUT requests MUST obey the message transmission requirements set out
+   in section 8.2.
+   Unless otherwise specified for a particular entity-header, the
+   entity-headers in the PUT request SHOULD be applied to the resource
+   created or modified by the PUT.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-HEAD--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_HEAD</code></span></p></td>
+<td>
+   [RFC 2616; 9.4]
+   The HEAD method is identical to GET except that the server MUST NOT
+   return a message-body in the response. The metainformation contained
+   in the HTTP headers in response to a HEAD request SHOULD be identical
+   to the information sent in response to a GET request. This method can
+   be used for obtaining metainformation about the entity implied by the
+   request without transferring the entity-body itself. This method is
+   often used for testing hypertext links for validity, accessibility,
+   and recent modification.
+   The response to a HEAD request MAY be cacheable in the sense that the
+   information contained in the response MAY be used to update a
+   previously cached entity from that resource. If the new field values
+   indicate that the cached entity differs from the current entity (as
+   would be indicated by a change in Content-Length, Content-MD5, ETag
+   or Last-Modified), then the cache MUST treat the cache entry as
+   stale.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-OPTIONS--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_OPTIONS</code></span></p></td>
+<td>
+   [RFC 2616; 9.2]
+   The OPTIONS method represents a request for information about the
+   communication options available on the request/response chain
+   identified by the Request-URI. This method allows the client to
+   determine the options and/or requirements associated with a resource,
+   or the capabilities of a server, without implying a resource action
+   or initiating a resource retrieval.
+   Responses to this method are not cacheable.
+   If the OPTIONS request includes an entity-body (as indicated by the
+   presence of Content-Length or Transfer-Encoding), then the media type
+   MUST be indicated by a Content-Type field. Although this
+   specification does not define any use for such a body, future
+   extensions to HTTP might use the OPTIONS body to make more detailed
+   queries on the server. A server that does not support such an
+   extension MAY discard the request body.
+   If the Request-URI is an asterisk ("*"), the OPTIONS request is
+   intended to apply to the server in general rather than to a specific
+   resource. Since a server's communication options typically depend on
+   the resource, the "*" request is only useful as a "ping" or "no-op"
+   type of method; it does nothing beyond allowing the client to test
+   the capabilities of the server. For example, this can be used to test
+   a proxy for HTTP/1.1 compliance (or lack thereof).
+   If the Request-URI is not an asterisk, the OPTIONS request applies
+   only to the options that are available when communicating with that
+   resource.
+   A 200 response SHOULD include any header fields that indicate
+   optional features implemented by the server and applicable to that
+   resource (e.g., Allow), possibly including extensions not defined by
+   this specification. The response body, if any, SHOULD also include
+   information about the communication options. The format for such a
+   body is not defined by this specification, but might be defined by
+   future extensions to HTTP. Content negotiation MAY be used to select
+   the appropriate response format. If no response body is included, the
+   response MUST include a Content-Length field with a field-value of
+   "0".
+   The Max-Forwards request-header field MAY be used to target a
+   specific proxy in the request chain. When a proxy receives an OPTIONS
+   request on an absoluteURI for which request forwarding is permitted,
+   the proxy MUST check for a Max-Forwards field. If the Max-Forwards
+   field-value is zero ("0"), the proxy MUST NOT forward the message;
+   instead, the proxy SHOULD respond with its own communication options.
+   If the Max-Forwards field-value is an integer greater than zero, the
+   proxy MUST decrement the field-value when it forwards the request. If
+   no Max-Forwards field is present in the request, then the forwarded
+   request MUST NOT include a Max-Forwards field.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-DELETE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_DELETE</code></span></p></td>
+<td>
+   [RFC 2616; 9.7]
+   The DELETE method requests that the origin server delete the resource
+   identified by the Request-URI. This method MAY be overridden by human
+   intervention (or other means) on the origin server. The client cannot
+   be guaranteed that the operation has been carried out, even if the
+   status code returned from the origin server indicates that the action
+   has been completed successfully. However, the server SHOULD NOT
+   indicate success unless, at the time the response is given, it
+   intends to delete the resource or move it to an inaccessible
+   location.
+   A successful response SHOULD be 200 (OK) if the response includes an
+   entity describing the status, 202 (Accepted) if the action has not
+   yet been enacted, or 204 (No Content) if the action has been enacted
+   but the response does not include an entity.
+   If the request passes through a cache and the Request-URI identifies
+   one or more currently cached entities, those entries SHOULD be
+   treated as stale. Responses to this method are not cacheable.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-TRACE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_TRACE</code></span></p></td>
+<td>
+   [RFC 2616; 9.8]
+   The TRACE method is used to invoke a remote, application-layer loop-
+   back of the request message. The final recipient of the request
+   SHOULD reflect the message received back to the client as the
+   entity-body of a 200 (OK) response. The final recipient is either the
+   origin server or the first proxy or gateway to receive a Max-Forwards
+   value of zero (0) in the request (see section 14.31). A TRACE request
+   MUST NOT include an entity.
+   TRACE allows the client to see what is being received at the other
+   end of the request chain and use that data for testing or diagnostic
+   information. The value of the Via header field (section 14.45) is of
+   particular interest, since it acts as a trace of the request chain.
+   Use of the Max-Forwards header field allows the client to limit the
+   length of the request chain, which is useful for testing a chain of
+   proxies forwarding messages in an infinite loop.
+   If the request is valid, the response SHOULD contain the entire
+   request message in the entity-body, with a Content-Type of
+   "message/http". Responses to this method MUST NOT be cached.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-VERB-CONNECT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_VERB_CONNECT</code></span></p></td>
+<td>
+   [RFC 2616; 9.9]
+   This specification reserves the method name CONNECT for use with a
+   proxy that can dynamically switch to being a tunnel (e.g. SSL
+   tunneling [44]).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRange"></a><h3>enum GskHttpRange</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_HTTP_RANGE_BYTES
+} GskHttpRange;
+</pre>
+<p>
+This gives units, or allowed units, for the Content-Range.
+This is used when you want to retreive part of a document.
+(Not all servers support that, of course.)
+</p>
+<p>
+Currently, only bytes are allowed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><a name="GSK-HTTP-RANGE-BYTES--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_RANGE_BYTES</code></span></p></td>
+<td>
+Indicate that the range of the partial content will be given in
+bytes.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpContentEncoding"></a><h3>enum GskHttpContentEncoding</h3>
+<pre class="programlisting">typedef enum {
+  GSK_HTTP_CONTENT_ENCODING_IDENTITY,
+  GSK_HTTP_CONTENT_ENCODING_GZIP,
+  GSK_HTTP_CONTENT_ENCODING_COMPRESS,
+  GSK_HTTP_CONTENT_ENCODING_UNRECOGNIZED = 0x100
+} GskHttpContentEncoding;
+</pre>
+<p>
+This gives ways in which content can be encoded.
+The default encoding is "identity", which means that the
+data is not re-encoded as all: it is sent as itself.
+</p>
+<p>
+Currently, all non-identity encodings are compression schemes.
+</p>
+<p>
+XXX: the spec says that multiple content-encodings are allowed,
+and that they are applied left-to-right.
+But we won't even parse such a line, due to the limited types
+of content-encoding we are aware of.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-HTTP-CONTENT-ENCODING-IDENTITY--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_CONTENT_ENCODING_IDENTITY</code></span></p></td>
+<td>
+Transfer the data without any special encoding.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-CONTENT-ENCODING-GZIP--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_CONTENT_ENCODING_GZIP</code></span></p></td>
+<td>
+Transfer the data after compressing it with gzip.
+RFC 1952.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-CONTENT-ENCODING-COMPRESS--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_CONTENT_ENCODING_COMPRESS</code></span></p></td>
+<td>
+Transfer the data after compressing it with compress,
+the classic unix program.
+There is no RFC corresponding to this format.
+(See RFC 2616, Section 3.5 for an apologetic explanation).
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-CONTENT-ENCODING-UNRECOGNIZED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_CONTENT_ENCODING_UNRECOGNIZED</code></span></p></td>
+<td>
+An unrecognized type of content-encoding was requested.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpTransferEncoding"></a><h3>enum GskHttpTransferEncoding</h3>
+<pre class="programlisting">typedef enum {
+  GSK_HTTP_TRANSFER_ENCODING_NONE    = 0,
+  GSK_HTTP_TRANSFER_ENCODING_CHUNKED = 1,
+  GSK_HTTP_TRANSFER_ENCODING_UNRECOGNIZED = 0x100
+} GskHttpTransferEncoding;
+</pre>
+<p>
+   [RFC 2616, Section 3.6]
+   Transfer-coding values are used to indicate an encoding
+   transformation that has been, can be, or may need to be applied to an
+   entity-body in order to ensure "safe transport" through the network.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-HTTP-TRANSFER-ENCODING-NONE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_TRANSFER_ENCODING_NONE</code></span></p></td>
+<td>
+The data is transferred unmodified.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-TRANSFER-ENCODING-CHUNKED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_TRANSFER_ENCODING_CHUNKED</code></span></p></td>
+<td>
+The data is transferred in length-prefixed packets.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-TRANSFER-ENCODING-UNRECOGNIZED--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_TRANSFER_ENCODING_UNRECOGNIZED</code></span></p></td>
+<td>
+An unrecognized transfer encoding was received.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpConnection"></a><h3>enum GskHttpConnection</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_HTTP_CONNECTION_NONE       = 0,
+  GSK_HTTP_CONNECTION_CLOSE      = 1,
+  GSK_HTTP_CONNECTION_KEEPALIVE  = 2,
+} GskHttpConnection;
+</pre>
+<p>
+Specify what should happen once the transaction is done.
+</p>
+<p>
+This is used to support persistent connections,
+which can be more efficient than making a new connection
+for each transaction.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-HTTP-CONNECTION-NONE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_CONNECTION_NONE</code></span></p></td>
+<td>
+The default behavior applies:  HTTP/1.0 clients treat this
+as CLOSE; HTTP/1.1 clients treat this as KEEPALIVE.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-CONNECTION-CLOSE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_CONNECTION_CLOSE</code></span></p></td>
+<td>
+Close the connection after this transaction.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-CONNECTION-KEEPALIVE--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_CONNECTION_KEEPALIVE</code></span></p></td>
+<td>
+Try to keep the connection alive after this transaction.
+This is not always possible:  for example, if Transfer-Encoding
+chunked is not supported but the server doesn't know the
+length in advance.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-media-type-set-new"></a><h3>gsk_http_media_type_set_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a> * gsk_http_media_type_set_new       (const char *type,
+                                                         const char *subtype,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);</pre>
+<p>
+Allocate a new node in a GskHttpMediaTypeSet list.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> major type of the media to allow, like "text" or "image".
+     An asterisk can be used to allow any major type.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>subtype</code></em> :</span></p></td>
+<td> format of the media to allow, like "html", "plain" or "jpeg".
+     An asterisk can be used to allow any format.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>quality</code></em> :</span></p></td>
+<td> relative preference for this encoding. -1 means "not specified", which has a default of 1.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-media-type-set-free"></a><h3>gsk_http_media_type_set_free ()</h3>
+<pre class="programlisting">void                gsk_http_media_type_set_free        (<a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a> *set);</pre>
+<p>
+Free the memory associated with the media-type-set node.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>set</code></em> :</span></p></td>
+<td> the media type set to deallocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-char-set-new"></a><h3>gsk_http_char_set_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a> *    gsk_http_char_set_new               (const char *charset_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);</pre>
+<p>
+Allocate a single GskHttpCharSet preference.
+You may wish to build a list of these.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>charset_name</code></em> :</span></p></td>
+<td> name of the character set.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>quality</code></em> :</span></p></td>
+<td> quality from 0 to 1, or -1 if no quality flag was given.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new character-set.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-char-set-free"></a><h3>gsk_http_char_set_free ()</h3>
+<pre class="programlisting">void                gsk_http_char_set_free              (<a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a> *char_set);</pre>
+<p>
+Deallocate a GskHttpCharSet.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>char_set</code></em> :</span></p></td>
+<td> character set to free.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-content-encoding-set-new"></a><h3>gsk_http_content_encoding_set_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a> * gsk_http_content_encoding_set_new
+                                                        (<a class="link" href="GskHttpHeader.html#GskHttpContentEncoding" title="enum GskHttpContentEncoding">GskHttpContentEncoding</a> encoding,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);</pre>
+<p>
+Allocate a new node in a GskHttpContentEncodingSet list.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>encoding</code></em> :</span></p></td>
+<td> the encoding to list a preference for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>quality</code></em> :</span></p></td>
+<td> relative preference for this encoding.
+A value of -1 means that the quality was omitted,
+which means it should be treated as 1.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new encoding node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-content-encoding-set-free"></a><h3>gsk_http_content_encoding_set_free ()</h3>
+<pre class="programlisting">void                gsk_http_content_encoding_set_free  (<a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a> *encoding_set);</pre>
+<p>
+Deallocate the encoding.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>encoding_set</code></em> :</span></p></td>
+<td> the encoding set to deallocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-transfer-encoding-set-new"></a><h3>gsk_http_transfer_encoding_set_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a> * gsk_http_transfer_encoding_set_new
+                                                        (<a class="link" href="GskHttpHeader.html#GskHttpTransferEncoding" title="enum GskHttpTransferEncoding">GskHttpTransferEncoding</a> encoding,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);</pre>
+<p>
+Allocate a new node in a GskHttpTransferEncodingSet list.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>encoding</code></em> :</span></p></td>
+<td> the encoding to list a preference for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>quality</code></em> :</span></p></td>
+<td> relative preference for this encoding.
+A value of -1 means that the quality was omitted,
+which means it should be treated as 1.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new encoding node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-transfer-encoding-set-free"></a><h3>gsk_http_transfer_encoding_set_free ()</h3>
+<pre class="programlisting">void                gsk_http_transfer_encoding_set_free (<a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a> *encoding_set);</pre>
+<p>
+Deallocate the encoding (a single node in the list).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>encoding_set</code></em> :</span></p></td>
+<td> the encoding set to deallocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-range-set-new"></a><h3>gsk_http_range_set_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpRangeSet" title="GskHttpRangeSet">GskHttpRangeSet</a> *   gsk_http_range_set_new              (<a class="link" href="GskHttpHeader.html#GskHttpRange" title="enum GskHttpRange">GskHttpRange</a> range_type);</pre>
+<p>
+Allocate a node telling what units are available for
+specifying partial content.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>range_type</code></em> :</span></p></td>
+<td> allocate a new node in a allowable range units list.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-range-set-free"></a><h3>gsk_http_range_set_free ()</h3>
+<pre class="programlisting">void                gsk_http_range_set_free             (<a class="link" href="GskHttpHeader.html#GskHttpRangeSet" title="GskHttpRangeSet">GskHttpRangeSet</a> *set);</pre>
+<p>
+Free the memory associated with the node in the range-set.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>set</code></em> :</span></p></td>
+<td> range-unit node to deallocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-language-set-new"></a><h3>gsk_http_language_set_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpLanguageSet" title="GskHttpLanguageSet">GskHttpLanguageSet</a> * gsk_http_language_set_new          (const char *language,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gfloat"
+>gfloat</a> quality);</pre>
+<p>
+Allocate a new node in a GskHttpLanguageSet list.
+Though any ASCII string is basically allowed,
+a two letter language code (en, de, pl, it, etc)
+is the usual start of the language name;
+a two letter country code (US, UK, DE, etc)
+is the second more optional part, like "en-US".</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>language</code></em> :</span></p></td>
+<td> the human language code to list a preference for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>quality</code></em> :</span></p></td>
+<td> relative preference for this encoding.
+A value of -1 means that the quality was omitted,
+which means it should be treated as 1.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new language node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-language-set-free"></a><h3>gsk_http_language_set_free ()</h3>
+<pre class="programlisting">void                gsk_http_language_set_free          (<a class="link" href="GskHttpHeader.html#GskHttpLanguageSet" title="GskHttpLanguageSet">GskHttpLanguageSet</a> *set);</pre>
+<p>
+Deallocate the node in the language-set.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>set</code></em> :</span></p></td>
+<td> the language set node to deallocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authenticate-new-basic"></a><h3>gsk_http_authenticate_new_basic ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * gsk_http_authenticate_new_basic   (const char *realm);</pre>
+<p>
+Create an <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate"><span class="type">GskHttpAuthenticate</span></a> for basic authentication.
+Basic authentication is very insecure: the password
+is merely transmitted base64 encoded.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>realm</code></em> :</span></p></td>
+<td> the area on the site to authenticate for.
+This is the name used by the RFC.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new challenge.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authenticate-new-digest"></a><h3>gsk_http_authenticate_new_digest ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * gsk_http_authenticate_new_digest  (const char *realm,
+                                                         const char *domain,
+                                                         const char *nonce,
+                                                         const char *opaque,
+                                                         const char *algorithm);</pre>
+<p>
+Create an <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate"><span class="type">GskHttpAuthenticate</span></a> for Digest authentication.
+Digest authentication improves Basic authentication by
+using a hash of the password.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>realm</code></em> :</span></p></td>
+<td> the area on the site to authenticate for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>nonce</code></em> :</span></p></td>
+<td> value hashed into the digest to keep it secure against replay attacks.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opaque</code></em> :</span></p></td>
+<td> value which must be sent back to the server,
+which the client does not interpret.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>algorithm</code></em> :</span></p></td>
+<td> digest algorithm.  Only MD5 is supported for now,
+and is equivalent to specifying NULL.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new challenge.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authenticate-new-unknown"></a><h3>gsk_http_authenticate_new_unknown ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * gsk_http_authenticate_new_unknown (const char *auth_scheme_name,
+                                                         const char *realm,
+                                                         const char *options);</pre>
+<p>
+Handling your special purpose authenticator.
+Note that Basic and Digest authenticator parsers
+are built-in to GSK, this is only for other types.
+</p>
+<p>
+It is given from the server to the client.
+The client must response (in another message) with
+an authorization.
+</p>
+<p>
+The purpose of a challenge in cryptographic systems
+is to randomize the transaction so that an attacker cannot
+use the same Authorization lines to get access to a machine.
+</p>
+<p>
+Of course, if you use an insecure transport layer, it is MUCH
+harder to make things secure -- using SSL is recommended.
+</p>
+<p>
+Some WWW-Authenticate header is required
+in a GSK_HTTP_STATUS_UNAUTHORIZED response message.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>auth_scheme_name</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>realm</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>options</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new challenge.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-new-basic"></a><h3>gsk_http_authorization_new_basic ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * gsk_http_authorization_new_basic (const char *user,
+                                                         const char *password);</pre>
+<p>
+Basic HTTP authentication response.
+Not very secure because your password is provided plain-text.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user</code></em> :</span></p></td>
+<td> name of the account to authenticate for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>password</code></em> :</span></p></td>
+<td> password of the account to authenticate for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the response to the authentication request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-new-respond-post"></a><h3>gsk_http_authorization_new_respond_post ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * gsk_http_authorization_new_respond_post
+                                                        (const <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> *,
+                                                         const char *user,
+                                                         const char *password,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> post_data_len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> post_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Param1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>password</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>post_data_len</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>post_data</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-new-unknown"></a><h3>gsk_http_authorization_new_unknown ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * gsk_http_authorization_new_unknown
+                                                        (const char *auth_scheme_name,
+                                                         const char *response);</pre>
+<p>
+Arbitrary authorization response.
+</p>
+<p>
+We recommend you use <a class="link" href="GskHttpHeader.html#gsk-http-authorization-new-digest" title="gsk_http_authorization_new_digest ()"><code class="function">gsk_http_authorization_new_digest()</code></a>
+instead, or <a class="link" href="GskHttpHeader.html#gsk-http-authorization-new-basic" title="gsk_http_authorization_new_basic ()"><code class="function">gsk_http_authorization_new_basic()</code></a> if that's all
+the server can do.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>auth_scheme_name</code></em> :</span></p></td>
+<td> name of the authentification scheme.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the response to the authentication request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-peek-response-digest"></a><h3>gsk_http_authorization_peek_response_digest ()</h3>
+<pre class="programlisting">const char *        gsk_http_authorization_peek_response_digest
+                                                        (<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Param1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-copy"></a><h3>gsk_http_authorization_copy ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * gsk_http_authorization_copy      (const <a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Param1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-new-digest"></a><h3>gsk_http_authorization_new_digest ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * gsk_http_authorization_new_digest
+                                                        (const char *realm,
+                                                         const char *domain,
+                                                         const char *nonce,
+                                                         const char *opaque,
+                                                         const char *algorithm,
+                                                         const char *user,
+                                                         const char *password,
+                                                         const char *response_digest,
+                                                         const char *entity_digest);</pre>
+<p>
+Create a new Digest-based authentication response.
+Many of the parameters must match the Authenticate header.
+</p>
+<p>
+The response_digest is a value computed from nonce, user, and password.
+The security of Digest authentication derives from the difficulty of
+computing the password from the digest, since the password itself is
+not transmitted cleartext.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>realm</code></em> :</span></p></td>
+<td> the area on the site to authenticate for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>nonce</code></em> :</span></p></td>
+<td> value hashed into the digest to keep it secure against replay attacks.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opaque</code></em> :</span></p></td>
+<td> value which must be sent back to the server,
+which the client does not interpret.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>algorithm</code></em> :</span></p></td>
+<td> digest algorithm.  Only MD5 is supported for now,
+and is equivalent to specifying NULL.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user</code></em> :</span></p></td>
+<td> name of the account to authenticate for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>password</code></em> :</span></p></td>
+<td> password of the account to authenticate for. [unnecessary if you have the response digest]
+This value is NOT transmitted to the remote host.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response_digest</code></em> :</span></p></td>
+<td> the securely-hashed response.   If NULL, Gsk will compute the response.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>entity_digest</code></em> :</span></p></td>
+<td> the securely-hashed information about your POST content.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the response to the authentication request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-new-respond"></a><h3>gsk_http_authorization_new_respond ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * gsk_http_authorization_new_respond
+                                                        (const <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> *,
+                                                         const char *user,
+                                                         const char *password,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Attempt to use the given user/password pair as authentication information for
+the given request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Param1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user</code></em> :</span></p></td>
+<td> the username of the account (or whatever) to use.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>password</code></em> :</span></p></td>
+<td> password of the account to authenticate for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional place to put the error if something goes wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new response, or NULL if something goes wrong.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-authorization-set-nonce"></a><h3>gsk_http_authorization_set_nonce ()</h3>
+<pre class="programlisting">void                gsk_http_authorization_set_nonce    (<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *,
+                                                         const char *nonce);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Param1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>nonce</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-cookie-new"></a><h3>gsk_http_cookie_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *     gsk_http_cookie_new                 (const char *key,
+                                                         const char *value,
+                                                         const char *path,
+                                                         const char *domain,
+                                                         const char *expire_date,
+                                                         const char *comment,
+                                                         int max_age);</pre>
+<p>
+Allocate a cookie.  Once allocated, it cannot be changed.
+</p>
+<p>
+Cookies are a mechanism for tracking users.
+The remote host sends a Set-Cookie directive which,
+should be client choose to accept it, may be sent with
+subsequent relevant requests.
+</p>
+<p>
+NOTE: GSK does not automatically handle cookies.
+That is up to the application.
+</p>
+<p>
+TODO: GSK should have a cookie database mechanism.
+</p>
+<p>
+See RFC 2964 and 2965.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> token used to identify the cookie.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> information associated with the cookie.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td> applicable area in server directory structure for this cookie.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td> domain names this cookie applies to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>expire_date</code></em> :</span></p></td>
+<td> when this cookie should be discarded.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>comment</code></em> :</span></p></td>
+<td> miscellaneous information about this cookie.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_age</code></em> :</span></p></td>
+<td> maximum number of seconds that this cookie should be retained.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated cookie.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-cookie-copy"></a><h3>gsk_http_cookie_copy ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *     gsk_http_cookie_copy                (const <a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *orig);</pre>
+<p>
+Copy a cookie.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>orig</code></em> :</span></p></td>
+<td> the cookie to copy.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new cookie.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-cookie-free"></a><h3>gsk_http_cookie_free ()</h3>
+<pre class="programlisting">void                gsk_http_cookie_free                (<a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *orig);</pre>
+<p>
+Free the memory associated with the cookie.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>orig</code></em> :</span></p></td>
+<td> the cookie to deallocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeaderClass"></a><h3>GskHttpHeaderClass</h3>
+<pre class="programlisting">typedef struct {
+  GObjectClass                  base_class;
+} GskHttpHeaderClass;
+</pre>
+<p>
+Virtual functions of HTTP headers (none, for now).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"
+>GObjectClass</a> <em class="structfield"><code>base_class</code></em>;</span></p></td>
+<td>object system.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader-struct"></a><h3>GskHttpHeader</h3>
+<pre class="programlisting">typedef struct {
+  guint16                       http_major_version;             /* always 1 */
+  guint16                       http_minor_version;
+
+  GskHttpConnection             connection_type;
+
+  GskHttpTransferEncoding       transfer_encoding_type;
+  GskHttpContentEncoding        content_encoding_type;
+  GskHttpRangeSet              *accepted_range_units;  /* Accept-Ranges */
+
+  char                         *unrecognized_transfer_encoding;
+  char                         *unrecognized_content_encoding;
+
+  char                     *content_encoding;     /* Content-Encoding */
+
+  unsigned                  has_content_type : 1;
+
+  char                     *content_type;             /* Content-Type */
+  char                     *content_subtype;
+  char                     *content_charset;
+  GSList                   *content_additional;
+
+  /* NULL-terminated array of language tags from the Content-Language
+   * header, or NULL if header not present. */
+  char                    **content_languages;
+
+  /* Bytes ranges. Both with be == -1 if there is no Range tag. */
+  int                           range_start;
+  int                           range_end;
+
+  /* may be set to ((time_t) -1) to omit them. */
+  glong                         date;
+
+  /* From the Content-Length header. */
+  gint64                        content_length;
+
+
+  /* Key/value searchable header lines. */
+  GHashTable                   *header_lines;
+
+  /* Error messages.  */
+  GSList                       *errors;		      /* list of char* Error: directives */
+
+  /* General headers.  */
+  GSList                       *pragmas;
+
+  /* and actual accumulated parse error (a bit of a hack) */
+  GError                       *g_error;
+} GskHttpHeader;
+</pre>
+<p>
+Base class for all HTTP headers.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint16"
+>guint16</a> <em class="structfield"><code>http_major_version</code></em>;</span></p></td>
+<td>
+The major version of the HTTP protocol, according to the header.
+This must always by '1'.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint16"
+>guint16</a> <em class="structfield"><code>http_minor_version</code></em>;</span></p></td>
+<td>
+The minor version of the HTTP protocol, according to the header.
+This must always by '0' or '1'.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpConnection" title="enum GskHttpConnection">GskHttpConnection</a> <em class="structfield"><code>connection_type</code></em>;</span></p></td>
+<td>
+Whether to close or keep alive the connection at the
+end of the current transaction.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpTransferEncoding" title="enum GskHttpTransferEncoding">GskHttpTransferEncoding</a> <em class="structfield"><code>transfer_encoding_type</code></em>;</span></p></td>
+<td>
+Type of encoding used to package the header for transmission
+across the transport.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpContentEncoding" title="enum GskHttpContentEncoding">GskHttpContentEncoding</a> <em class="structfield"><code>content_encoding_type</code></em>;</span></p></td>
+<td>
+Type of encoding used encode the content.  This is mostly
+used to support compressed transactions.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpRangeSet" title="GskHttpRangeSet">GskHttpRangeSet</a> *<em class="structfield"><code>accepted_range_units</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>unrecognized_transfer_encoding</code></em>;</span></p></td>
+<td>
+A string, if the header has an unknown transfer encoding.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>unrecognized_content_encoding</code></em>;</span></p></td>
+<td>
+A string, if the header has an unknown content encoding.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>content_encoding</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>content_type</code></em>;</span></p></td>
+<td>major type of the content.
+Typical examples are 'text' or 'image'.
+Types beginning with 'x-' are for unstandardized extensions.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>content_subtype</code></em>;</span></p></td>
+<td>minor type of the content.
+Typical examples depend on the major type.
+For 'text', one encounters 'plain' and 'html'.
+For 'image', one encounters 'jpeg', 'png', 'gif' etc.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>content_charset</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *<em class="structfield"><code>content_additional</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char **<em class="structfield"><code>content_languages</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>range_start</code></em>;</span></p></td>
+<td>
+First byte to transmit, or -1 if not using partial ranges.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>range_end</code></em>;</span></p></td>
+<td>
+Immediately after the last byte to transport,
+or -1 if no end range given.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a> <em class="structfield"><code>date</code></em>;</span></p></td>
+<td>
+The date of the transaction, in UNIX time, or -1 if not specified.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> <em class="structfield"><code>content_length</code></em>;</span></p></td>
+<td>
+The length of the content associated with this side of this
+transaction.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *<em class="structfield"><code>header_lines</code></em>;</span></p></td>
+<td>
+Hash-table of key-&gt;value mappings, for headers which
+are not handled directly by this implementation.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *<em class="structfield"><code>errors</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *<em class="structfield"><code>pragmas</code></em>;</span></p></td>
+<td>
+A list of strings from Pragma: header lines.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *<em class="structfield"><code>g_error</code></em>;</span></p></td>
+<td>
+A <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+><span class="type">GError</span></a> that indicates what last went wrong with
+this header.  Usually NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpParseFlags"></a><h3>enum GskHttpParseFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_HTTP_PARSE_STRICT = (1 &lt;&lt; 0),
+
+  /* instead of giving up on unknown headers, just 
+   * add them as misc-headers */
+  GSK_HTTP_PARSE_SAVE_ERRORS = (1 &lt;&lt; 1)
+} GskHttpParseFlags;
+</pre>
+<p>
+Flags which affect how headers are parsed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-HTTP-PARSE-STRICT--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_PARSE_STRICT</code></span></p></td>
+<td>
+Require the header to be in strict(er) HTTP conformance
+when parsing.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-HTTP-PARSE-SAVE-ERRORS--CAPS"></a><span class="term"><code class="literal">GSK_HTTP_PARSE_SAVE_ERRORS</code></span></p></td>
+<td>
+Add headers that don't parse correctly into
+the misc-headers hashtable.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-connection"></a><h3>gsk_http_header_get_connection ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpConnection" title="enum GskHttpConnection">GskHttpConnection</a>   gsk_http_header_get_connection      (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header);</pre>
+<p>
+Returns the connection semantics.
+Note that this will never return <a class="link" href="GskHttpHeader.html#GSK-HTTP-CONNECTION-NONE--CAPS"><span class="type">GSK_HTTP_CONNECTION_NONE</span></a>;
+it will figure out if the default is keep-alive or close.
+</p>
+<p>
+Use <a class="link" href="GskHttpHeader.html#gsk-http-header-get-connection-type" title="gsk_http_header_get_connection_type()"><code class="function">gsk_http_header_get_connection_type()</code></a> to get the 
+actual connection-type that will be transmitted over the
+wire (with NONE meaning that there is no Connection: header).
+</p>
+<p>
+Note that the client can make Connection: requests,
+but the server is allowed to ignore keep-alive directives.
+So calling this on the request gets the client's suggestions,
+and calling this on the response gets the server's intentions.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the HTTP header to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the connection semantics.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-from-buffer"></a><h3>gsk_http_header_from_buffer ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *     gsk_http_header_from_buffer         (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *input,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_request,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpParseFlags" title="enum GskHttpParseFlags">GskHttpParseFlags</a> flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Parse the HTTP header from the buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>input</code></em> :</span></p></td>
+<td> the buffer from which to parse the request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_request</code></em> :</span></p></td>
+<td> whether this is a request; otherwise, it is a response.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> preferences for parsing.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new reference to the header.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-to-buffer"></a><h3>gsk_http_header_to_buffer ()</h3>
+<pre class="programlisting">void                gsk_http_header_to_buffer           (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *output);</pre>
+<p>
+Appends an HTTP header into a buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the HTTP header to write into the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>output</code></em> :</span></p></td>
+<td> the buffer to store the header in, as text.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-content-encoding"></a><h3>gsk_http_header_set_content_encoding ()</h3>
+<pre class="programlisting">void                gsk_http_header_set_content_encoding
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *encoding);</pre>
+<p>
+Set encoding method for the content.
+The actual encoding is done transparently by <a class="link" href="GskHttpClient.html" title="GskHttpClient"><span class="type">GskHttpClient</span></a> and <a class="link" href="GskHttpServer.html" title="GskHttpServer"><span class="type">GskHttpServer</span></a> usually.
+Encoding is only used for POST and PUT requests
+and any response that has a body (most do).
+The default is the identity encoding.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>encoding</code></em> :</span></p></td>
+<td>the new content encoding method.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-content-encoding"></a><h3>gsk_http_header_get_content_encoding()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_content_encoding(header)</pre>
+<p>
+Get encoding method for the content.
+(The actual encoding is done transparently by <a class="link" href="GskHttpClient.html" title="GskHttpClient"><span class="type">GskHttpClient</span></a> and <a class="link" href="GskHttpServer.html" title="GskHttpServer"><span class="type">GskHttpServer</span></a> usually.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-date"></a><h3>gsk_http_header_set_date()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_date(header, date)</pre>
+<p>
+The date of the request.
+Defines as the same as "orig-date in RFC 822".
+Basically, clients should only send dates with POST or PUT data,
+and even then it is optional.  Servers should usually send dates, but if there is no content
+then the date is optional.  The precise rules are set out
+in [RFC 2616, Section 14.18].
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> The HTTP header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>date</code></em> :</span></p></td>
+<td>The date, as a unix time number.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-date"></a><h3>gsk_http_header_get_date()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_date(header)</pre>
+<p>
+  Get the Date on the request, or -1 if not set.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>The HTTP header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-add-misc"></a><h3>gsk_http_header_add_misc ()</h3>
+<pre class="programlisting">void                gsk_http_header_add_misc            (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *key,
+                                                         const char *value);</pre>
+<p>
+Add a raw header line to the header, with an associated value.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> a case-insensitive ASCII string for the key for this foreign header.
+  This key should not be a standard HTTP tag.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> a case-sensitive value for that key.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-lookup-misc"></a><h3>gsk_http_header_lookup_misc ()</h3>
+<pre class="programlisting">const char *        gsk_http_header_lookup_misc         (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *key);</pre>
+<p>
+Lookup a miscellaneous HTTP header.  All headers that begin with X-
+are stored in here.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the header to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> a case-insensitive ASCII string for the key for this foreign header.
+  This key should not be a standard HTTP tag.
+returns: value of the key.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-remove-misc"></a><h3>gsk_http_header_remove_misc ()</h3>
+<pre class="programlisting">void                gsk_http_header_remove_misc         (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *key);</pre>
+<p>
+Remove a raw header line from the header.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> a case-insensitive ASCII string for the key for this foreign header.
+  This key should not be a standard HTTP tag.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeaderLineParser"></a><h3>GskHttpHeaderLineParser</h3>
+<pre class="programlisting">typedef struct {
+  const char *name;
+  GskHttpHeaderLineParserFunc func;
+  gpointer data;
+} GskHttpHeaderLineParser;
+</pre>
+<p>
+A structure giving a HTTP header line field-name,
+and a function to parse the value of that kind of field.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">const char *<em class="structfield"><code>name</code></em>;</span></p></td>
+<td>the name of the field in lowercase, i.e. "date" or "content-length".
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpHeaderLineParserFunc" title="GskHttpHeaderLineParserFunc ()">GskHttpHeaderLineParserFunc</a> <em class="structfield"><code>func</code></em>;</span></p></td>
+<td>function to call to parse the value of that field.
+So if a "Date: Thu Jun  5 06:27:39 PDT 2003" line comes in,
+then this function will be called with "Thu Jun  5 06:27:39 PDT 2003",
+and a header to add that information to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> <em class="structfield"><code>data</code></em>;</span></p></td>
+<td>data to pass to function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeaderLineParserFunc"></a><h3>GskHttpHeaderLineParserFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskHttpHeaderLineParserFunc)      (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+A function to be invoked with the value of a specific type of header-line.
+This will add information to <em class="parameter"><code>header</code></em> frequently.
+If it encounters a parse error, it can indicate that by returning FALSE.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>header to affect by this line.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>value of the header line.  That is, everything that follows
+the initial colon and space(s).  So for the header line "Content-Length: 42",
+the <em class="parameter"><code>text</code></em> should merely be "42".
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>pointer from the <a class="link" href="GskHttpHeader.html#GskHttpHeaderLineParser" title="GskHttpHeaderLineParser"><span class="type">GskHttpHeaderLineParser</span></a> to give auxilliary info.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether it was able to process the value.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-parser-table"></a><h3>gsk_http_header_get_parser_table ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *        gsk_http_header_get_parser_table    (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_request);</pre>
+<p>
+Obtain a hash-table which maps lowercased HTTP header keys
+to <a class="link" href="GskHttpHeader.html#GskHttpHeaderLineParser" title="GskHttpHeaderLineParser"><span class="type">GskHttpHeaderLineParser</span></a>'s.  There are different maps
+for requests and responses.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_request</code></em> :</span></p></td>
+<td> whether to get the parse table for request (versus for responses).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the hash-table mapping, which is global and should not be freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeaderPrintFunc"></a><h3>GskHttpHeaderPrintFunc ()</h3>
+<pre class="programlisting">void                (*GskHttpHeaderPrintFunc)           (const char *text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+Function to print a line of HTTP header data.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>NUL-terminated line of HTTP header.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>print_data argument of <a class="link" href="GskHttpHeader.html#gsk-http-header-print" title="gsk_http_header_print ()"><code class="function">gsk_http_header_print()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-print"></a><h3>gsk_http_header_print ()</h3>
+<pre class="programlisting">void                gsk_http_header_print               (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *http_header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpHeaderPrintFunc" title="GskHttpHeaderPrintFunc ()">GskHttpHeaderPrintFunc</a> print_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> print_data);</pre>
+<p>
+Print the HTTP header line-by-line, through a generic
+printing function.  This could conceivable save memory
+and allow better streaming.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_header</code></em> :</span></p></td>
+<td> the header to output, line-by-line.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>print_func</code></em> :</span></p></td>
+<td> a function to call on each line of output.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>print_data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>print_func</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-connection-type"></a><h3>gsk_http_header_set_connection_type()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_connection_type(header, connection_type)</pre>
+<p>
+Change the Connection type reflected in this header.
+</p>
+<p>
+   [From RFC 2616, Section 14.10]
+   The Connection general-header field allows the sender to specify
+   options that are desired for that particular connection and MUST NOT
+   be communicated by proxies over further connections.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection_type</code></em> :</span></p></td>
+<td>the new Connection type.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-connection-type"></a><h3>gsk_http_header_get_connection_type()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_connection_type(header)</pre>
+<p>
+Get the Connection type reflected in this header.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-transfer-encoding"></a><h3>gsk_http_header_set_transfer_encoding()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_transfer_encoding(header, enc)</pre>
+<p>
+   [From RFC 2616, Section 14.41]
+   The Transfer-Encoding general-header field indicates what (if any)
+   type of transformation has been applied to the message body in order
+   to safely transfer it between the sender and the recipient. This
+   differs from the content-coding in that the transfer-coding is a
+   property of the message, not of the entity.
+</p>
+<p>
+   If multiple encodings have been applied to an entity, the transfer-
+   codings MUST be listed in the order in which they were applied.
+   Additional information about the encoding parameters MAY be provided
+   by other entity-header fields not defined by this specification.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>enc</code></em> :</span></p></td>
+<td>the new encoding.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-transfer-encoding"></a><h3>gsk_http_header_get_transfer_encoding()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_transfer_encoding(header)</pre>
+<p>
+   Get the transfer encoding of this message.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-content-type"></a><h3>gsk_http_header_get_content_type()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_content_type(header)</pre>
+<p>
+Get the major type of the content.
+Any header which has content SHOULD have a content-type.
+Typical examples are 'text' and 'image'.
+</p>
+<p>
+XXX: need a reference to a list of content types!!!!
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-content-type"></a><h3>gsk_http_header_set_content_type()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_content_type(header, content_type)</pre>
+<p>
+Set the major type of the content.
+Any header which has content SHOULD have a content-type.
+Typical examples are 'text' and 'image'.
+</p>
+<p>
+XXX: need a reference to a list of content types!!!!
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content_type</code></em> :</span></p></td>
+<td>the new major type of the header.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-content-subtype"></a><h3>gsk_http_header_get_content_subtype()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_content_subtype(header)</pre>
+<p>
+Get the minor subtype of the content.
+Any header which has content SHOULD have a content-subtype.
+</p>
+<p>
+XXX: need a reference to a list of content types!!!!
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-content-subtype"></a><h3>gsk_http_header_set_content_subtype()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_content_subtype(header, content_type)</pre>
+<p>
+Set the minor type of the content.
+Any header which has content SHOULD have a content-subtype.
+</p>
+<p>
+XXX: need a reference to a list of content types!!!!
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content_type</code></em> :</span></p></td>
+<td>the new content subtype.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-content-length"></a><h3>gsk_http_header_set_content_length()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_content_length(header, len)</pre>
+<p>
+  Set the indicated length of the content.  This may be used
+  for POST and PUT requests as well as most responses.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
+<td>the exact length of the content, in bytes, or -1 if the length
+cannot be predetermined.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-content-length"></a><h3>gsk_http_header_get_content_length()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_content_length(header)</pre>
+<p>
+  Get the indicated length of the content.  This may be used
+  in POST and PUT requests as well as most responses.
+  If the content has no specified length, or no length is allowed,
+  then -1 is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-content-charset"></a><h3>gsk_http_header_get_content_charset()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_content_charset(header)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-add-accepted-range"></a><h3>gsk_http_header_add_accepted_range ()</h3>
+<pre class="programlisting">void                gsk_http_header_add_accepted_range  (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpRange" title="enum GskHttpRange">GskHttpRange</a> range);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>range</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-add-pragma"></a><h3>gsk_http_header_add_pragma ()</h3>
+<pre class="programlisting">void                gsk_http_header_add_pragma          (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *pragma);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pragma</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-content-charset"></a><h3>gsk_http_header_set_content_charset()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_content_charset(header, content_type)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content_type</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-range"></a><h3>gsk_http_header_set_range()</h3>
+<pre class="programlisting">#define             gsk_http_header_set_range(header, start, end)</pre>
+<p>
+If retrieving partial content, set the range in bytes of that content.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>start</code></em> :</span></p></td>
+<td>start of the range in bytes.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>end</code></em> :</span></p></td>
+<td>end of the range in bytes.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-range-start"></a><h3>gsk_http_header_get_range_start()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_range_start(header)</pre>
+<p>
+If retrieving partial content, get the offset of the first byte to receive.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-get-range-end"></a><h3>gsk_http_header_get_range_end()</h3>
+<pre class="programlisting">#define             gsk_http_header_get_range_end(header)</pre>
+<p>
+If retrieving partial content, get the offset of the last byte to receive.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-string"></a><h3>gsk_http_header_set_string ()</h3>
+<pre class="programlisting">void                gsk_http_header_set_string          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         char **p_str,
+                                                         const char *str);</pre>
+<p>
+Private function to set a string in a HTTP header.
+(Currently this uses strdup, but we may eventually switch
+allocation strategies).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_header</code></em> :</span></p></td>
+<td> HTTP header which owns the string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>p_str</code></em> :</span></p></td>
+<td> pointer to the string's location.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> string to copy and assign to *<em class="parameter"><code>p_str</code></em>.
+(May be NULL)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-string-val"></a><h3>gsk_http_header_set_string_val ()</h3>
+<pre class="programlisting">void                gsk_http_header_set_string_val      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         char **p_str,
+                                                         const <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"
+>GValue</a> *value);</pre>
+<p>
+Private function to set a string in a HTTP header from a value.
+This is used from the set_property methods in the various HTTP header
+class implementations.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_header</code></em> :</span></p></td>
+<td> HTTP header which owns the string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>p_str</code></em> :</span></p></td>
+<td> pointer to the string's location.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> a value which holds a string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-cut-string"></a><h3>gsk_http_header_cut_string ()</h3>
+<pre class="programlisting">char *              gsk_http_header_cut_string          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         const char *start,
+                                                         const char *end);</pre>
+<p>
+private.
+Copy a substring assuming that http_header is responsible
+for it.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_header</code></em> :</span></p></td>
+<td> HTTP header which owns the string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>start</code></em> :</span></p></td>
+<td> the start of the string
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>end</code></em> :</span></p></td>
+<td> immediately past the input string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the NUL-terminated copy of the string between <em class="parameter"><code>start</code></em>
+and <em class="parameter"><code>end</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-free-string"></a><h3>gsk_http_header_free_string ()</h3>
+<pre class="programlisting">void                gsk_http_header_free_string         (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> http_header,
+                                                         char *str);</pre>
+<p>
+Deallocate a string allocated with 
+<a class="link" href="GskHttpHeader.html#gsk-http-header-set-string" title="gsk_http_header_set_string ()"><code class="function">gsk_http_header_set_string()</code></a>,
+<a class="link" href="GskHttpHeader.html#gsk-http-header-set-string-val" title="gsk_http_header_set_string_val ()"><code class="function">gsk_http_header_set_string_val()</code></a>,
+<a class="link" href="GskHttpHeader.html#gsk-http-header-cut-string" title="gsk_http_header_cut_string ()"><code class="function">gsk_http_header_cut_string()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_header</code></em> :</span></p></td>
+<td> HTTP header which owns the string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> the string to free.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-connection-string"></a><h3>gsk_http_header_set_connection_string ()</h3>
+<pre class="programlisting">void                gsk_http_header_set_connection_string
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *str);</pre>
+<p>
+Change the Connection type reflected in this header.
+</p>
+<p>
+[From RFC 2616, Section 14.10]
+The Connection general-header field allows the sender to specify
+options that are desired for that particular connection and MUST NOT
+be communicated by proxies over further connections.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the HTTP header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> connection type, as a string.  (The string is exactly
+the same as that which is found literally in the header.)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-content-encoding-string"></a><h3>gsk_http_header_set_content_encoding_string ()</h3>
+<pre class="programlisting">void                gsk_http_header_set_content_encoding_string
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *str);</pre>
+<p>
+Change the Content-Encoding type reflected in this header.
+</p>
+<p>
+The actual encoding is done transparently by <a class="link" href="GskHttpClient.html" title="GskHttpClient"><span class="type">GskHttpClient</span></a> and <a class="link" href="GskHttpServer.html" title="GskHttpServer"><span class="type">GskHttpServer</span></a> usually.
+Encoding is only used for POST and PUT requests
+and any response that has a body (most do).
+The default is the identity encoding.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the HTTP header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> content-encoding type, as a string.  (The string is exactly
+the same as that which is found literally in the header.)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-transfer-encoding-string"></a><h3>gsk_http_header_set_transfer_encoding_string ()</h3>
+<pre class="programlisting">void                gsk_http_header_set_transfer_encoding_string
+                                                        (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         const char *str);</pre>
+<p>
+Set the Transfer-Encoding type, as a string.
+</p>
+<p>
+[From RFC 2616, Section 14.41]
+The Transfer-Encoding general-header field indicates what (if any)
+type of transformation has been applied to the message body in order
+to safely transfer it between the sender and the recipient. This
+differs from the content-coding in that the transfer-coding is a
+property of the message, not of the entity.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the HTTP header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> transfer-encoding type, as a string.  (The string is exactly
+the same as that which is found literally in the header.)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-header-set-version"></a><h3>gsk_http_header_set_version ()</h3>
+<pre class="programlisting">void                gsk_http_header_set_version         (<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a> *header,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> major,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> minor);</pre>
+<p>
+Set the major and minor versions;
+for example, to use HTTP 1.0, one would set <em class="parameter"><code>major</code></em> to 1,
+and <em class="parameter"><code>minor</code></em> to 0.
+</p>
+<p>
+In addition to setting the version numbers,
+this function suppresses features not available in
+the respective http implementations.
+</p>
+<p>
+Only HTTP 1.0 and 1.1 are supported.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the HTTP header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>major</code></em> :</span></p></td>
+<td> the major HTTP version number.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>minor</code></em> :</span></p></td>
+<td> the minor HTTP version number.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpHeader.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--connection"></a><h3>The <code class="literal">"connection"</code> property</h3>
+<pre class="programlisting">  "connection"               <a class="link" href="GskHttpHeader.html#GskHttpConnection" title="enum GskHttpConnection">GskHttpConnection</a>     : Read / Write</pre>
+<p>
+The type of connection.  See <a class="link" href="GskHttpHeader.html#gsk-http-header-set-connection-type" title="gsk_http_header_set_connection_type()"><code class="function">gsk_http_header_set_connection_type()</code></a>
+for more documentation.
+</p>
+<p>Default value: GSK_HTTP_CONNECTION_NONE</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--connection-string"></a><h3>The <code class="literal">"connection-string"</code> property</h3>
+<pre class="programlisting">  "connection-string"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>
+The type of connection as a string.
+</p>
+<p>Default value: "close"</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--content-charset"></a><h3>The <code class="literal">"content-charset"</code> property</h3>
+<pre class="programlisting">  "content-charset"          <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>The character set used for text content.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--content-encoding"></a><h3>The <code class="literal">"content-encoding"</code> property</h3>
+<pre class="programlisting">  "content-encoding"         <a class="link" href="GskHttpHeader.html#GskHttpContentEncoding" title="enum GskHttpContentEncoding">GskHttpContentEncoding</a>  : Read / Write</pre>
+<p>
+The way the content is encoded, see <a class="link" href="GskHttpHeader.html#GskHttpConnection" title="enum GskHttpConnection"><span class="type">GskHttpConnection</span></a>
+for more documentation.
+</p>
+<p>Default value: GSK_HTTP_CONTENT_ENCODING_IDENTITY</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--content-encoding-string"></a><h3>The <code class="literal">"content-encoding-string"</code> property</h3>
+<pre class="programlisting">  "content-encoding-string"  <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>
+The way the content is encoded, as a string.  Typical
+values are "identity", "gzip" and "compress".
+</p>
+<p>Default value: "identity"</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--content-length"></a><h3>The <code class="literal">"content-length"</code> property</h3>
+<pre class="programlisting">  "content-length"           <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write</pre>
+<p>
+Length of content associated with this header.
+</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--content-subtype"></a><h3>The <code class="literal">"content-subtype"</code> property</h3>
+<pre class="programlisting">  "content-subtype"          <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>The minor type of content.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--content-type"></a><h3>The <code class="literal">"content-type"</code> property</h3>
+<pre class="programlisting">  "content-type"             <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>The major type of content.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--date"></a><h3>The <code class="literal">"date"</code> property</h3>
+<pre class="programlisting">  "date"                     <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write</pre>
+<p>
+the date of the content of this response.
+</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--major-version"></a><h3>The <code class="literal">"major-version"</code> property</h3>
+<pre class="programlisting">  "major-version"            <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>                 : Read / Write</pre>
+<p>
+major version number of the HTTP protocol.
+Always 1.
+</p>
+<p>Allowed values: &lt;= 2</p>
+<p>Default value: 1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--minor-version"></a><h3>The <code class="literal">"minor-version"</code> property</h3>
+<pre class="programlisting">  "minor-version"            <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>                 : Read / Write</pre>
+<p>
+minor version number of the HTTP protocol.
+Always 0 or 1, usually 1, indicating HTTP/1.1.
+</p>
+<p>Allowed values: &lt;= 10</p>
+<p>Default value: 1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--range-end"></a><h3>The <code class="literal">"range-end"</code> property</h3>
+<pre class="programlisting">  "range-end"                <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write</pre>
+<p>end of the data.</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--range-start"></a><h3>The <code class="literal">"range-start"</code> property</h3>
+<pre class="programlisting">  "range-start"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                  : Read / Write</pre>
+<p>beginning of the data.</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--transfer-encoding"></a><h3>The <code class="literal">"transfer-encoding"</code> property</h3>
+<pre class="programlisting">  "transfer-encoding"        <a class="link" href="GskHttpHeader.html#GskHttpTransferEncoding" title="enum GskHttpTransferEncoding">GskHttpTransferEncoding</a>  : Read / Write</pre>
+<p>type of transfer encoding.</p>
+<p>Default value: GSK_HTTP_TRANSFER_ENCODING_NONE</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpHeader--transfer-encoding-string"></a><h3>The <code class="literal">"transfer-encoding-string"</code> property</h3>
+<pre class="programlisting">  "transfer-encoding-string" <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>type of transfer encoding as string.</p>
+<p>Default value: "none"</p>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpHeader.see-also"></a><h2>See Also</h2>
+<p>
+GskHttpRequest, GskHttpResponse
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

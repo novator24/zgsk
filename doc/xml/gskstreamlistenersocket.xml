@@ -1,0 +1,189 @@
+<refentry id="GskStreamListenerSocket">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskStreamListenerSocket.top_of_page">GskStreamListenerSocket</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskStreamListenerSocket</refname>
+<refpurpose>socket-based stream-listener.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskStreamListenerSocket.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskStreamListenerSocket-struct">GskStreamListenerSocket</link>;
+<link linkend="GskStreamListener">GskStreamListener</link> * <link linkend="gsk-stream-listener-socket-new-bind">gsk_stream_listener_socket_new_bind</link> (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStreamListener">GskStreamListener</link> * <link linkend="gsk-stream-listener-socket-new-bind-full">gsk_stream_listener_socket_new_bind_full</link>
+                                                        (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GskStreamListenerSocketFlags">GskStreamListenerSocketFlags</link> flags,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-stream-listener-socket-set-backlog">gsk_stream_listener_socket_set_backlog</link>
+                                                        (<link linkend="GskStreamListenerSocket">GskStreamListenerSocket</link> *lis,
+                                                         <link linkend="guint">guint</link> backlog);
+<link linkend="GskStreamListener">GskStreamListener</link> * <link linkend="gsk-stream-listener-socket-new-from-fd">gsk_stream_listener_socket_new_from_fd</link>
+                                                        (<link linkend="int">int</link> fd,
+                                                         <link linkend="GError">GError</link> **error);
+#define             <link linkend="GSK-STREAM-LISTENER-SOCKET-USE-GLIB-MAIN-LOOP--CAPS">GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskStreamListenerSocket.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskStreamListener">GskStreamListener</link>
+         +----GskStreamListenerSocket
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="GskStreamListenerSocket.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskStreamListenerSocket--file-descriptor">file-descriptor</link>&quot;          <link linkend="GskFd">GskFd</link>                 : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamListenerSocket--listening-address">listening-address</link>&quot;        <link linkend="GskSocketAddress">GskSocketAddress</link>*     : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamListenerSocket--may-reuse-address">may-reuse-address</link>&quot;        <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamListenerSocket--unlink-when-done">unlink-when-done</link>&quot;         <link linkend="gboolean">gboolean</link>              : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="GskStreamListenerSocket.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This is a <link linkend="GskStreamListener"><type>GskStreamListener</type></link> that takes new input streams
+from a raw socket.
+</para>
+</refsect1>
+
+<refsect1 id="GskStreamListenerSocket.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskStreamListenerSocket-struct" role="struct">
+<title>GskStreamListenerSocket</title>
+<indexterm zone="GskStreamListenerSocket-struct"><primary sortas="GskStreamListenerSocket">GskStreamListenerSocket</primary></indexterm><programlisting>typedef struct _GskStreamListenerSocket GskStreamListenerSocket;</programlisting>
+<para>
+An instance of a socket-based <link linkend="GskStreamListener"><type>GskStreamListener</type></link>.
+</para></refsect2>
+<refsect2 id="gsk-stream-listener-socket-new-bind" role="function">
+<title>gsk_stream_listener_socket_new_bind ()</title>
+<indexterm zone="gsk-stream-listener-socket-new-bind"><primary sortas="gsk_stream_listener_socket_new_bind">gsk_stream_listener_socket_new_bind</primary></indexterm><programlisting><link linkend="GskStreamListener">GskStreamListener</link> * gsk_stream_listener_socket_new_bind (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a new listener bound to a specific socket-address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the address that the listener should be bound to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional location to store error at.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly created stream-listener.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-listener-socket-new-bind-full" role="function">
+<title>gsk_stream_listener_socket_new_bind_full ()</title>
+<indexterm zone="gsk-stream-listener-socket-new-bind-full"><primary sortas="gsk_stream_listener_socket_new_bind_full">gsk_stream_listener_socket_new_bind_full</primary></indexterm><programlisting><link linkend="GskStreamListener">GskStreamListener</link> * gsk_stream_listener_socket_new_bind_full
+                                                        (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GskStreamListenerSocketFlags">GskStreamListenerSocketFlags</link> flags,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a new listener bound to a specific socket-address.
+</para>
+<para>
+If <parameter>flags</parameter> suggests <parameter>GSK_SOCKET_LISTENER_STREAM_DONT_REUSE_ADDRESS</parameter>,
+then the usual timeout rules about how often a port
+may be bound are ignored.  This only really affects
+TCP/IP socket listeners.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the address that the listener should be bound to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> flags controlling the operation of the listener.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional location to store error at.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly created stream-listener.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-listener-socket-set-backlog" role="function">
+<title>gsk_stream_listener_socket_set_backlog ()</title>
+<indexterm zone="gsk-stream-listener-socket-set-backlog"><primary sortas="gsk_stream_listener_socket_set_backlog">gsk_stream_listener_socket_set_backlog</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_listener_socket_set_backlog
+                                                        (<link linkend="GskStreamListenerSocket">GskStreamListenerSocket</link> *lis,
+                                                         <link linkend="guint">guint</link> backlog);</programlisting>
+<para>
+Set the number of incoming connections that can
+be accepted before they are rejected outright.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>lis</parameter>&#160;:</term>
+<listitem><simpara> the listener whose backlog quota should be affected.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>backlog</parameter>&#160;:</term>
+<listitem><simpara> the number of incoming connections to accept before
+refusing them.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-listener-socket-new-from-fd" role="function">
+<title>gsk_stream_listener_socket_new_from_fd ()</title>
+<indexterm zone="gsk-stream-listener-socket-new-from-fd"><primary sortas="gsk_stream_listener_socket_new_from_fd">gsk_stream_listener_socket_new_from_fd</primary></indexterm><programlisting><link linkend="GskStreamListener">GskStreamListener</link> * gsk_stream_listener_socket_new_from_fd
+                                                        (<link linkend="int">int</link> fd,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+<parameter>fd</parameter>: The bound socket.
+<parameter>error</parameter>: optional location to store error at.
+<parameter>returns</parameter>: The newly created stream-listener.
+</para>
+<para>
+Create a new listener for an already bound socket.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STREAM-LISTENER-SOCKET-USE-GLIB-MAIN-LOOP--CAPS" role="macro">
+<title>GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP</title>
+<indexterm zone="GSK-STREAM-LISTENER-SOCKET-USE-GLIB-MAIN-LOOP--CAPS"><primary sortas="GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP">GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP</primary></indexterm><programlisting>#define             GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+<refsect1 id="GskStreamListenerSocket.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskStreamListenerSocket--file-descriptor" role="property"><title>The <literal>&quot;file-descriptor&quot;</literal> property</title>
+<indexterm zone="GskStreamListenerSocket--file-descriptor"><primary sortas="GskStreamListenerSocket:file-descriptor">GskStreamListenerSocket:file-descriptor</primary></indexterm><programlisting>  &quot;file-descriptor&quot;          <link linkend="GskFd">GskFd</link>                 : Read / Write / Construct Only</programlisting>
+<para>whence to accept new connections on.</para></refsect2>
+<refsect2 id="GskStreamListenerSocket--listening-address" role="property"><title>The <literal>&quot;listening-address&quot;</literal> property</title>
+<indexterm zone="GskStreamListenerSocket--listening-address"><primary sortas="GskStreamListenerSocket:listening-address">GskStreamListenerSocket:listening-address</primary></indexterm><programlisting>  &quot;listening-address&quot;        <link linkend="GskSocketAddress">GskSocketAddress</link>*     : Read / Write / Construct Only</programlisting>
+<para>The name others will use to connect.</para></refsect2>
+<refsect2 id="GskStreamListenerSocket--may-reuse-address" role="property"><title>The <literal>&quot;may-reuse-address&quot;</literal> property</title>
+<indexterm zone="GskStreamListenerSocket--may-reuse-address"><primary sortas="GskStreamListenerSocket:may-reuse-address">GskStreamListenerSocket:may-reuse-address</primary></indexterm><programlisting>  &quot;may-reuse-address&quot;        <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only</programlisting>
+<para>Whether a listening address may be reused as soon as it's closed.</para><para>Default value: TRUE</para>
+</refsect2>
+<refsect2 id="GskStreamListenerSocket--unlink-when-done" role="property"><title>The <literal>&quot;unlink-when-done&quot;</literal> property</title>
+<indexterm zone="GskStreamListenerSocket--unlink-when-done"><primary sortas="GskStreamListenerSocket:unlink-when-done">GskStreamListenerSocket:unlink-when-done</primary></indexterm><programlisting>  &quot;unlink-when-done&quot;         <link linkend="gboolean">gboolean</link>              : Read / Write</programlisting>
+<para>Unlink the file from the file-system (only for local socket-listeners).</para><para>Default value: FALSE</para>
+</refsect2>
+</refsect1>
+
+
+
+
+</refentry>

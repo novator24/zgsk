@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Binary Packet</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="GskPacketQueue.html" title="Datagram I/O">
+<link rel="next" href="GskStreamListener.html" title="Listening for Connections">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskPacketQueue.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskStreamListener.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskpacket.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskpacket.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskpacket"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskpacket.top_of_page"></a>Binary Packet</span></h2>
+<p>Binary Packet — A binary data packet.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskpacket.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a>;
+void                (<a class="link" href="gsk-gskpacket.html#GskPacketDestroyFunc" title="GskPacketDestroyFunc ()">*GskPacketDestroyFunc</a>)             (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);
+<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         <a class="link" href="gsk-gskpacket.html#gsk-packet-new" title="gsk_packet_new ()">gsk_packet_new</a>                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacketDestroyFunc" title="GskPacketDestroyFunc ()">GskPacketDestroyFunc</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);
+<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         <a class="link" href="gsk-gskpacket.html#gsk-packet-new-copy" title="gsk_packet_new_copy ()">gsk_packet_new_copy</a>                 (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);
+void                <a class="link" href="gsk-gskpacket.html#gsk-packet-set-src-address" title="gsk_packet_set_src_address ()">gsk_packet_set_src_address</a>          (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+void                <a class="link" href="gsk-gskpacket.html#gsk-packet-set-dst-address" title="gsk_packet_set_dst_address ()">gsk_packet_set_dst_address</a>          (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+void                <a class="link" href="gsk-gskpacket.html#gsk-packet-unref" title="gsk_packet_unref ()">gsk_packet_unref</a>                    (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);
+<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         <a class="link" href="gsk-gskpacket.html#gsk-packet-ref" title="gsk_packet_ref ()">gsk_packet_ref</a>                      (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskpacket.description"></a><h2>Description</h2>
+<p>
+A reference-counted binary piece of data with a destroy-notify
+to allow arbitrary memory management.
+</p>
+<p>
+It may optionally have two <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a> to denote the source
+and destination of the packet.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskpacket.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskPacket"></a><h3>GskPacket</h3>
+<pre class="programlisting">typedef struct {
+  /*&lt; public: readonly &gt;*/
+  gpointer data;
+  guint len;
+  GskSocketAddress *src_address;
+  GskSocketAddress *dst_address;
+  GskPacketDestroyFunc destroy;
+  gpointer destroy_data;
+} GskPacket;
+</pre>
+<p>
+A packet of binary data, optionally associated with
+a particular host.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> <em class="structfield"><code>data</code></em>;</span></p></td>
+<td>the raw binary data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>len</code></em>;</span></p></td>
+<td>length of the raw data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *<em class="structfield"><code>src_address</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *<em class="structfield"><code>dst_address</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskpacket.html#GskPacketDestroyFunc" title="GskPacketDestroyFunc ()">GskPacketDestroyFunc</a> <em class="structfield"><code>destroy</code></em>;</span></p></td>
+<td>destroy notification.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> <em class="structfield"><code>destroy_data</code></em>;</span></p></td>
+<td>data to invoke destroy on.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskPacketDestroyFunc"></a><h3>GskPacketDestroyFunc ()</h3>
+<pre class="programlisting">void                (*GskPacketDestroyFunc)             (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);</pre>
+<p>
+The actual function prototype of destroy.
+This is only useful if you want to examine the whole
+GskPacket from your destroy function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy_data</code></em> :</span></p></td>
+<td>as passed to <a class="link" href="gsk-gskpacket.html#gsk-packet-new" title="gsk_packet_new ()"><code class="function">gsk_packet_new()</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet</code></em> :</span></p></td>
+<td>the whole packet.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-new"></a><h3>gsk_packet_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         gsk_packet_new                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacketDestroyFunc" title="GskPacketDestroyFunc ()">GskPacketDestroyFunc</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);</pre>
+<p>
+Creates a new packet with the given data.
+The packet's ref-count is 1; it will be destroyed
+when it gets to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> binary data in the packet
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td> length of binary data
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> method to destroy the data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy_data</code></em> :</span></p></td>
+<td> the argument to the <em class="parameter"><code>destroy</code></em> method.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskPacket
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-new-copy"></a><h3>gsk_packet_new_copy ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         gsk_packet_new_copy                 (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);</pre>
+<p>
+Creates a new packet with a copy of the given data.
+The packet's ref-count is 1; it will be destroyed
+when it gets to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> binary data to be copied into the packet
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td> length of binary data
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskPacket
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-set-src-address"></a><h3>gsk_packet_set_src_address ()</h3>
+<pre class="programlisting">void                gsk_packet_set_src_address          (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+Change the source address associated with a packet.
+This should be the address of the interface
+the packet was sent from.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet</code></em> :</span></p></td>
+<td> a packet whose source address should be changed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the new address.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-set-dst-address"></a><h3>gsk_packet_set_dst_address ()</h3>
+<pre class="programlisting">void                gsk_packet_set_dst_address          (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+Change the destination address associated with a packet.
+This should be the address of the interface
+the packet was sent to.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet</code></em> :</span></p></td>
+<td> a packet whose destination address should be changed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the new address.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-unref"></a><h3>gsk_packet_unref ()</h3>
+<pre class="programlisting">void                gsk_packet_unref                    (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);</pre>
+<p>
+Remove a reference-count from the packet, deleting the packet 
+if it gets to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>packet</code></em> :</span></p></td>
+<td> a packet to remove a reference from.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-ref"></a><h3>gsk_packet_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         gsk_packet_ref                      (<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *packet);</pre>
+<p>
+Add a reference-count to the packet.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet</code></em> :</span></p></td>
+<td> a packet to add a reference to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the <em class="parameter"><code>packet</code></em>, for convenience.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

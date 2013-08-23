@@ -1,0 +1,1151 @@
+<refentry id="GskIO">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskIO.top_of_page">Base Input/Output Object</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Base Input/Output Object</refname>
+<refpurpose>A base class with input and output triggers,
+but no actual read or write methods.
+Those are left for derived classes to support.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskIO.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskIOClass">GskIOClass</link>;
+                    <link linkend="GskIO-struct">GskIO</link>;
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskIOHookFunc">*GskIOHookFunc</link>)                    (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="gpointer">gpointer</link> data);
+enum                <link linkend="GskIOErrorCause">GskIOErrorCause</link>;
+#define             <link linkend="GSK-IO-READ-HOOK--CAPS">GSK_IO_READ_HOOK</link>                    (io)
+#define             <link linkend="GSK-IO-WRITE-HOOK--CAPS">GSK_IO_WRITE_HOOK</link>                   (io)
+#define             <link linkend="gsk-io-block-read">gsk_io_block_read</link>                   (io)
+#define             <link linkend="gsk-io-block-write">gsk_io_block_write</link>                  (io)
+#define             <link linkend="gsk-io-unblock-read">gsk_io_unblock_read</link>                 (io)
+#define             <link linkend="gsk-io-unblock-write">gsk_io_unblock_write</link>                (io)
+#define             <link linkend="gsk-io-has-read-hook">gsk_io_has_read_hook</link>                (io)
+#define             <link linkend="gsk-io-has-write-hook">gsk_io_has_write_hook</link>               (io)
+#define             <link linkend="gsk-io-trap-readable">gsk_io_trap_readable</link>                (io, func, shutdown_func, data, destroy)
+#define             <link linkend="gsk-io-trap-writable">gsk_io_trap_writable</link>                (io, func, shutdown_func, data, destroy)
+#define             <link linkend="gsk-io-untrap-readable">gsk_io_untrap_readable</link>              (io)
+#define             <link linkend="gsk-io-untrap-writable">gsk_io_untrap_writable</link>              (io)
+<link linkend="void">void</link>                <link linkend="gsk-io-shutdown">gsk_io_shutdown</link>                     (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="GError">GError</link> **error);
+#define             <link linkend="gsk-io-read-shutdown">gsk_io_read_shutdown</link>                (io, error)
+#define             <link linkend="gsk-io-write-shutdown">gsk_io_write_shutdown</link>               (io, error)
+<link linkend="void">void</link>                <link linkend="gsk-io-close">gsk_io_close</link>                        (<link linkend="GskIO">GskIO</link> *io);
+#define             <link linkend="gsk-io-notify-ready-to-read">gsk_io_notify_ready_to_read</link>         (io)
+#define             <link linkend="gsk-io-notify-ready-to-write">gsk_io_notify_ready_to_write</link>        (io)
+#define             <link linkend="gsk-io-notify-read-shutdown">gsk_io_notify_read_shutdown</link>         (io)
+#define             <link linkend="gsk-io-notify-write-shutdown">gsk_io_notify_write_shutdown</link>        (io)
+<link linkend="void">void</link>                <link linkend="gsk-io-notify-shutdown">gsk_io_notify_shutdown</link>              (<link linkend="GskIO">GskIO</link> *io);
+<link linkend="void">void</link>                <link linkend="gsk-io-notify-connected">gsk_io_notify_connected</link>             (<link linkend="GskIO">GskIO</link> *io);
+#define             <link linkend="gsk-io-is-polling-for-read">gsk_io_is_polling_for_read</link>          (io)
+#define             <link linkend="gsk-io-is-polling-for-write">gsk_io_is_polling_for_write</link>         (io)
+#define             <link linkend="gsk-io-get-is-connecting">gsk_io_get_is_connecting</link>            (io)
+#define             <link linkend="gsk-io-get-is-readable">gsk_io_get_is_readable</link>              (io)
+#define             <link linkend="gsk-io-get-is-writable">gsk_io_get_is_writable</link>              (io)
+#define             <link linkend="gsk-io-get-never-partial-reads">gsk_io_get_never_partial_reads</link>      (io)
+#define             <link linkend="gsk-io-get-never-partial-writes">gsk_io_get_never_partial_writes</link>     (io)
+#define             <link linkend="gsk-io-get-never-blocks-write">gsk_io_get_never_blocks_write</link>       (io)
+#define             <link linkend="gsk-io-get-never-blocks-read">gsk_io_get_never_blocks_read</link>        (io)
+#define             <link linkend="gsk-io-get-idle-notify-write">gsk_io_get_idle_notify_write</link>        (io)
+#define             <link linkend="gsk-io-get-idle-notify-read">gsk_io_get_idle_notify_read</link>         (io)
+#define             <link linkend="gsk-io-get-is-open">gsk_io_get_is_open</link>                  (io)
+#define             <link linkend="gsk-io-get-is-read-shutting-down">gsk_io_get_is_read_shutting_down</link>    (io)
+#define             <link linkend="gsk-io-get-is-write-shutting-down">gsk_io_get_is_write_shutting_down</link>   (io)
+#define             <link linkend="gsk-io-get-shutdown-on-error">gsk_io_get_shutdown_on_error</link>        (io)
+#define             <link linkend="gsk-io-mark-is-connecting">gsk_io_mark_is_connecting</link>           (io)
+#define             <link linkend="gsk-io-mark-is-readable">gsk_io_mark_is_readable</link>             (io)
+#define             <link linkend="gsk-io-mark-is-writable">gsk_io_mark_is_writable</link>             (io)
+#define             <link linkend="gsk-io-mark-never-partial-reads">gsk_io_mark_never_partial_reads</link>     (io)
+#define             <link linkend="gsk-io-mark-never-partial-writes">gsk_io_mark_never_partial_writes</link>    (io)
+#define             <link linkend="gsk-io-mark-never-blocks-write">gsk_io_mark_never_blocks_write</link>      (io)
+#define             <link linkend="gsk-io-mark-never-blocks-read">gsk_io_mark_never_blocks_read</link>       (io)
+#define             <link linkend="gsk-io-mark-idle-notify-write">gsk_io_mark_idle_notify_write</link>       (io)
+#define             <link linkend="gsk-io-mark-idle-notify-read">gsk_io_mark_idle_notify_read</link>        (io)
+#define             <link linkend="gsk-io-mark-is-open">gsk_io_mark_is_open</link>                 (io)
+#define             <link linkend="gsk-io-mark-shutdown-on-error">gsk_io_mark_shutdown_on_error</link>       (io)
+#define             <link linkend="gsk-io-clear-is-readable">gsk_io_clear_is_readable</link>            (io)
+#define             <link linkend="gsk-io-clear-is-writable">gsk_io_clear_is_writable</link>            (io)
+#define             <link linkend="gsk-io-clear-never-partial-reads">gsk_io_clear_never_partial_reads</link>    (io)
+#define             <link linkend="gsk-io-clear-never-partial-writes">gsk_io_clear_never_partial_writes</link>   (io)
+#define             <link linkend="gsk-io-clear-idle-notify-write">gsk_io_clear_idle_notify_write</link>      (io)
+#define             <link linkend="gsk-io-clear-idle-notify-read">gsk_io_clear_idle_notify_read</link>       (io)
+#define             <link linkend="gsk-io-clear-is-open">gsk_io_clear_is_open</link>                (io)
+#define             <link linkend="gsk-io-clear-shutdown-on-error">gsk_io_clear_shutdown_on_error</link>      (io)
+#define             <link linkend="gsk-io-set-idle-notify-write">gsk_io_set_idle_notify_write</link>        (io,v)
+#define             <link linkend="gsk-io-set-idle-notify-read">gsk_io_set_idle_notify_read</link>         (io,v)
+<link linkend="void">void</link>                <link linkend="gsk-io-set-error">gsk_io_set_error</link>                    (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="GskIOErrorCause">GskIOErrorCause</link> cause,
+                                                         <link linkend="GskErrorCode">GskErrorCode</link> error_code,
+                                                         const <link linkend="char">char</link> *format,
+                                                         ...);
+<link linkend="void">void</link>                <link linkend="gsk-io-set-gerror">gsk_io_set_gerror</link>                   (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="GskIOErrorCause">GskIOErrorCause</link> cause,
+                                                         <link linkend="GError">GError</link> *error);
+const <link linkend="char">char</link> *        <link linkend="gsk-io-error-cause-to-string">gsk_io_error_cause_to_string</link>        (<link linkend="GskIOErrorCause">GskIOErrorCause</link> cause);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskIO.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskIO
+         +----<link linkend="GskPacketQueue">GskPacketQueue</link>
+         +----<link linkend="GskStream">GskStream</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+<refsect1 id="GskIO.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="GskIO-on-connect">on-connect</link>&quot;                                     : No Recursion
+  &quot;<link linkend="GskIO-on-error">on-error</link>&quot;                                       : No Recursion
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="GskIO.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The primary feature of this class is that it has two hooks;
+a read hook and a write hook, and a ton of convenience methods
+to access them.
+</para>
+</refsect1>
+
+<refsect1 id="GskIO.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskIOClass" role="struct">
+<title>GskIOClass</title>
+<indexterm zone="GskIOClass"><primary sortas="GskIOClass">GskIOClass</primary></indexterm><programlisting>typedef struct {
+  GObjectClass object_class;
+  /* --- signals (do not override, usually) --- */
+  /* Emitted after the connection is made. */
+  void       (*on_connect)      (GskIO      *io);
+  void       (*on_error)        (GskIO      *io);
+
+  /* --- virtuals --- */
+  gboolean   (*open)            (GskIO      *io,
+				 GError    **error);
+  void       (*set_poll_read)   (GskIO      *io,
+				 gboolean    do_poll);
+  void       (*set_poll_write)  (GskIO      *io,
+				 gboolean    do_poll);
+  gboolean   (*shutdown_read)   (GskIO      *io,
+				 GError    **error);
+  gboolean   (*shutdown_write)  (GskIO      *io,
+				 GError    **error);
+  void       (*close)           (GskIO      *io);
+} GskIOClass;
+</programlisting>
+<para>
+Methods which derived classes should overload to
+implement their polling and shutdown strategies.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>object_class</structfield>;</term>
+<listitem><simpara>
+The base class (private).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>on_connect</structfield>&#160;()</term>
+<listitem><simpara>
+This is a signal which is emitted after a connection
+has been completed.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>on_error</structfield>&#160;()</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>open</structfield>&#160;()</term>
+<listitem><simpara>
+Open resources.  This is called when the <link linkend="GskIO"><type>GskIO</type></link> is constructed.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>set_poll_read</structfield>&#160;()</term>
+<listitem><simpara>
+This function should turn on/off whether the implementation
+will call <link linkend="gsk-io-notify-ready-to-read"><function>gsk_io_notify_ready_to_read()</function></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>set_poll_write</structfield>&#160;()</term>
+<listitem><simpara>
+This function should turn on/off whether the implementation
+will call <link linkend="gsk-io-notify-ready-to-write"><function>gsk_io_notify_ready_to_write()</function></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>shutdown_read</structfield>&#160;()</term>
+<listitem><simpara>
+This function should stop the object from being readable
+ever again.  If applicable, a user's read-trap's shutdown callback
+will be run.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>shutdown_write</structfield>&#160;()</term>
+<listitem><simpara>
+This function should stop the object from being writable
+ever again.  If applicable, a user's write-trap's shutdown callback
+will be run.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>close</structfield>&#160;()</term>
+<listitem><simpara>
+Deallocate system resources associated with instance.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskIO-struct" role="struct">
+<title>GskIO</title>
+<indexterm zone="GskIO-struct"><primary sortas="GskIO">GskIO</primary></indexterm><programlisting>typedef struct _GskIO GskIO;</programlisting>
+<para>
+The base class for all input/output objects.
+It has no public members.
+</para></refsect2>
+<refsect2 id="GskIOHookFunc" role="function">
+<title>GskIOHookFunc ()</title>
+<indexterm zone="GskIOHookFunc"><primary sortas="GskIOHookFunc">GskIOHookFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskIOHookFunc)                    (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+A callback which will be run when either the object
+is ready to read or write, or shutdown in either direction.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>an object which is ready to read or write
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>the data passed to <link linkend="gsk-io-trap-readable"><function>gsk_io_trap_readable()</function></link>
+or <link linkend="gsk-io-trap-writable"><function>gsk_io_trap_writable()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether the trap should be kept, otherwise it will
+be deleted.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskIOErrorCause" role="enum">
+<title>enum GskIOErrorCause</title>
+<indexterm zone="GskIOErrorCause"><primary sortas="GskIOErrorCause">GskIOErrorCause</primary></indexterm><programlisting>typedef enum
+{
+  GSK_IO_ERROR_NONE,
+  GSK_IO_ERROR_INIT,
+  GSK_IO_ERROR_CONNECT,
+  GSK_IO_ERROR_OPEN,
+  GSK_IO_ERROR_READ,
+  GSK_IO_ERROR_WRITE,
+  GSK_IO_ERROR_POLL_READ,
+  GSK_IO_ERROR_POLL_WRITE,
+  GSK_IO_ERROR_SHUTDOWN_READ,
+  GSK_IO_ERROR_SHUTDOWN_WRITE,
+  GSK_IO_ERROR_CLOSE,
+  GSK_IO_ERROR_SYNC,
+  GSK_IO_ERROR_POLL
+} GskIOErrorCause;
+</programlisting>
+<para>
+Every <link linkend="GskIO"><type>GskIO</type></link> has an GError and a GskIOErrorCause
+which tells the last error observed on the stream,
+and what type of action triggered it.
+</para>
+<para>
+Implementations can use <link linkend="gsk-io-set-error"><function>gsk_io_set_error()</function></link>
+to register an error.
+</para><variablelist role="enum">
+<varlistentry id="GSK-IO-ERROR-NONE--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_NONE</literal></term>
+<listitem><simpara>
+No error has been observed.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-INIT--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_INIT</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-CONNECT--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_CONNECT</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-OPEN--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_OPEN</literal></term>
+<listitem><simpara>
+An error occurred opening the file.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-READ--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_READ</literal></term>
+<listitem><simpara>
+An error occurred reading from the file.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-WRITE--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_WRITE</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-POLL-READ--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_POLL_READ</literal></term>
+<listitem><simpara>
+An error occurred polling for readability.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-POLL-WRITE--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_POLL_WRITE</literal></term>
+<listitem><simpara>
+An error occurred polling for writability.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-SHUTDOWN-READ--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_SHUTDOWN_READ</literal></term>
+<listitem><simpara>
+An error occurred shutting down the read end.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-SHUTDOWN-WRITE--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_SHUTDOWN_WRITE</literal></term>
+<listitem><simpara>
+An error occurred shutting down the write end.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-CLOSE--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_CLOSE</literal></term>
+<listitem><simpara>
+An error occurred closing.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-SYNC--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_SYNC</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-IO-ERROR-POLL--CAPS" role="constant">
+<term><literal>GSK_IO_ERROR_POLL</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-IO-READ-HOOK--CAPS" role="macro">
+<title>GSK_IO_READ_HOOK()</title>
+<indexterm zone="GSK-IO-READ-HOOK--CAPS"><primary sortas="GSK_IO_READ_HOOK">GSK_IO_READ_HOOK</primary></indexterm><programlisting>#define             GSK_IO_READ_HOOK(io)</programlisting>
+<para>
+Get a pointer to the <link linkend="GskHook"><type>GskHook</type></link>
+corresponding to the read end of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO which contains the read-hook.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-IO-WRITE-HOOK--CAPS" role="macro">
+<title>GSK_IO_WRITE_HOOK()</title>
+<indexterm zone="GSK-IO-WRITE-HOOK--CAPS"><primary sortas="GSK_IO_WRITE_HOOK">GSK_IO_WRITE_HOOK</primary></indexterm><programlisting>#define             GSK_IO_WRITE_HOOK(io)</programlisting>
+<para>
+Get a pointer to the <link linkend="GskHook"><type>GskHook</type></link>
+corresponding to the write end of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO which contains the write-hook.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-block-read" role="macro">
+<title>gsk_io_block_read()</title>
+<indexterm zone="gsk-io-block-read"><primary sortas="gsk_io_block_read">gsk_io_block_read</primary></indexterm><programlisting>#define             gsk_io_block_read(io)</programlisting>
+<para>
+Block the read hook from being triggered.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO whose read hook should be blocked.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-block-write" role="macro">
+<title>gsk_io_block_write()</title>
+<indexterm zone="gsk-io-block-write"><primary sortas="gsk_io_block_write">gsk_io_block_write</primary></indexterm><programlisting>#define             gsk_io_block_write(io)</programlisting>
+<para>
+Block the write hook from being triggered.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO whose write hook should be blocked.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-unblock-read" role="macro">
+<title>gsk_io_unblock_read()</title>
+<indexterm zone="gsk-io-unblock-read"><primary sortas="gsk_io_unblock_read">gsk_io_unblock_read</primary></indexterm><programlisting>#define             gsk_io_unblock_read(io)</programlisting>
+<para>
+Unblock the read hook from being triggered.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO whose read hook should be unblocked.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-unblock-write" role="macro">
+<title>gsk_io_unblock_write()</title>
+<indexterm zone="gsk-io-unblock-write"><primary sortas="gsk_io_unblock_write">gsk_io_unblock_write</primary></indexterm><programlisting>#define             gsk_io_unblock_write(io)</programlisting>
+<para>
+Unblock the write hook from being triggered.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO whose write hook should be unblocked.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-has-read-hook" role="macro">
+<title>gsk_io_has_read_hook()</title>
+<indexterm zone="gsk-io-has-read-hook"><primary sortas="gsk_io_has_read_hook">gsk_io_has_read_hook</primary></indexterm><programlisting>#define             gsk_io_has_read_hook(io)</programlisting>
+<para>
+Return whether the read hook is trapped.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO whose read hook should be tested.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-has-write-hook" role="macro">
+<title>gsk_io_has_write_hook()</title>
+<indexterm zone="gsk-io-has-write-hook"><primary sortas="gsk_io_has_write_hook">gsk_io_has_write_hook</primary></indexterm><programlisting>#define             gsk_io_has_write_hook(io)</programlisting>
+<para>
+Return whether the write hook is trapped.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the GskIO whose write hook should be tested.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-trap-readable" role="macro">
+<title>gsk_io_trap_readable()</title>
+<indexterm zone="gsk-io-trap-readable"><primary sortas="gsk_io_trap_readable">gsk_io_trap_readable</primary></indexterm><programlisting>#define             gsk_io_trap_readable(io, func, shutdown_func, data, destroy)</programlisting>
+<para>
+Trap the read end of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para>
+<para>
+Note that only one trap of a <link linkend="GskIO"><type>GskIO</type></link>'s read-end is allowed at a time.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose read end should be trapped.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>the function to call (a <link linkend="GskIOHookFunc"><type>GskIOHookFunc</type></link>) when it's readable.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown_func</parameter>&#160;:</term>
+<listitem><simpara>the function to call (a <link linkend="GskIOHookFunc"><type>GskIOHookFunc</type></link>) when it's read end is shut down.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data passed along to <parameter>func</parameter> and <parameter>shutdown_func</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>optional function called when the hook is untrapped.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-trap-writable" role="macro">
+<title>gsk_io_trap_writable()</title>
+<indexterm zone="gsk-io-trap-writable"><primary sortas="gsk_io_trap_writable">gsk_io_trap_writable</primary></indexterm><programlisting>#define             gsk_io_trap_writable(io, func, shutdown_func, data, destroy)</programlisting>
+<para>
+Trap the write end of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para>
+<para>
+Note that only one trap of a <link linkend="GskIO"><type>GskIO</type></link>'s write-end is allowed at a time.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose write end should be trapped.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>the function to call (a <link linkend="GskIOHookFunc"><type>GskIOHookFunc</type></link>) when it's writable.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown_func</parameter>&#160;:</term>
+<listitem><simpara>the function to call (a <link linkend="GskIOHookFunc"><type>GskIOHookFunc</type></link>) when it's write end is shut down.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data passed along to <parameter>func</parameter> and <parameter>shutdown_func</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>optional function called when the hook is untrapped.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-untrap-readable" role="macro">
+<title>gsk_io_untrap_readable()</title>
+<indexterm zone="gsk-io-untrap-readable"><primary sortas="gsk_io_untrap_readable">gsk_io_untrap_readable</primary></indexterm><programlisting>#define             gsk_io_untrap_readable(io)</programlisting>
+<para>
+Untrap the read end of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose read end should be untrapped.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-untrap-writable" role="macro">
+<title>gsk_io_untrap_writable()</title>
+<indexterm zone="gsk-io-untrap-writable"><primary sortas="gsk_io_untrap_writable">gsk_io_untrap_writable</primary></indexterm><programlisting>#define             gsk_io_untrap_writable(io)</programlisting>
+<para>
+Untrap the write end of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose write end should be untrapped.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-shutdown" role="function">
+<title>gsk_io_shutdown ()</title>
+<indexterm zone="gsk-io-shutdown"><primary sortas="gsk_io_shutdown">gsk_io_shutdown</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_io_shutdown                     (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Shutdown the read and write ends of a <link linkend="GskIO"><type>GskIO</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara> the object which should be shut down.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error to set upon failure.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-read-shutdown" role="macro">
+<title>gsk_io_read_shutdown()</title>
+<indexterm zone="gsk-io-read-shutdown"><primary sortas="gsk_io_read_shutdown">gsk_io_read_shutdown</primary></indexterm><programlisting>#define             gsk_io_read_shutdown(io, error)</programlisting>
+<para>
+Shutdown both the read ends of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para>
+<para>
+Returns TRUE if the shutdown succeeded immediately.
+</para>
+<para>
+Returns FALSE if the shutdown has been initiated but not finished,
+or if an error occurred.  These cases can be distinguished by looking
+at the <parameter>error</parameter> return.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>error return if things go wrong.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-write-shutdown" role="macro">
+<title>gsk_io_write_shutdown()</title>
+<indexterm zone="gsk-io-write-shutdown"><primary sortas="gsk_io_write_shutdown">gsk_io_write_shutdown</primary></indexterm><programlisting>#define             gsk_io_write_shutdown(io, error)</programlisting>
+<para>
+Shutdown both the write ends of the <link linkend="GskIO"><type>GskIO</type></link>.
+</para>
+<para>
+Returns FALSE if the shutdown has been initiated but not finished,
+or if an error occurred.  These cases can be distinguished by looking
+at the <parameter>error</parameter> return.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>optional error return if things go wrong.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-close" role="function">
+<title>gsk_io_close ()</title>
+<indexterm zone="gsk-io-close"><primary sortas="gsk_io_close">gsk_io_close</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_io_close                        (<link linkend="GskIO">GskIO</link> *io);</programlisting>
+<para>
+Close an open <link linkend="GskIO"><type>GskIO</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="GskIO"><type>GskIO</type></link> to close.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-notify-ready-to-read" role="macro">
+<title>gsk_io_notify_ready_to_read()</title>
+<indexterm zone="gsk-io-notify-ready-to-read"><primary sortas="gsk_io_notify_ready_to_read">gsk_io_notify_ready_to_read</primary></indexterm><programlisting>#define             gsk_io_notify_ready_to_read(io)</programlisting>
+<para>
+Trigger an is-readable event.  This should only be
+called by derived implementations.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose read-end is ready.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-notify-ready-to-write" role="macro">
+<title>gsk_io_notify_ready_to_write()</title>
+<indexterm zone="gsk-io-notify-ready-to-write"><primary sortas="gsk_io_notify_ready_to_write">gsk_io_notify_ready_to_write</primary></indexterm><programlisting>#define             gsk_io_notify_ready_to_write(io)</programlisting>
+<para>
+Trigger an is-writable event.  This should only be
+called by derived implementations.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose write-end is ready.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-notify-read-shutdown" role="macro">
+<title>gsk_io_notify_read_shutdown()</title>
+<indexterm zone="gsk-io-notify-read-shutdown"><primary sortas="gsk_io_notify_read_shutdown">gsk_io_notify_read_shutdown</primary></indexterm><programlisting>#define             gsk_io_notify_read_shutdown(io)</programlisting>
+<para>
+Trigger a read-end-shutdown event.  This should only be
+called by derived implementations.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose read-end is shutdown.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-notify-write-shutdown" role="macro">
+<title>gsk_io_notify_write_shutdown()</title>
+<indexterm zone="gsk-io-notify-write-shutdown"><primary sortas="gsk_io_notify_write_shutdown">gsk_io_notify_write_shutdown</primary></indexterm><programlisting>#define             gsk_io_notify_write_shutdown(io)</programlisting>
+<para>
+Trigger a write-end-shutdown event.  This should only be
+called by derived implementations.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> whose write-end is shutdown.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-notify-shutdown" role="function">
+<title>gsk_io_notify_shutdown ()</title>
+<indexterm zone="gsk-io-notify-shutdown"><primary sortas="gsk_io_notify_shutdown">gsk_io_notify_shutdown</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_io_notify_shutdown              (<link linkend="GskIO">GskIO</link> *io);</programlisting>
+<para>
+This function is called by an implementation
+when the read- and write- ends of the i/o object
+have both shut-down.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara> the object which is shut-down.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-notify-connected" role="function">
+<title>gsk_io_notify_connected ()</title>
+<indexterm zone="gsk-io-notify-connected"><primary sortas="gsk_io_notify_connected">gsk_io_notify_connected</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_io_notify_connected             (<link linkend="GskIO">GskIO</link> *io);</programlisting>
+<para>
+Trigger an is-connected event.  This should only be
+called by derived implementations.
+Called to indicate that the connection has been made.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="GskIO"><type>GskIO</type></link> that finished connecting to the remote side.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-is-polling-for-read" role="macro">
+<title>gsk_io_is_polling_for_read()</title>
+<indexterm zone="gsk-io-is-polling-for-read"><primary sortas="gsk_io_is_polling_for_read">gsk_io_is_polling_for_read</primary></indexterm><programlisting>#define             gsk_io_is_polling_for_read(io)</programlisting>
+<para>
+Check whether the last invocation of <link linkend="set-poll-read"><function>set_poll_read()</function></link>
+indicated that polling for readability was desired.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the IO to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-is-polling-for-write" role="macro">
+<title>gsk_io_is_polling_for_write()</title>
+<indexterm zone="gsk-io-is-polling-for-write"><primary sortas="gsk_io_is_polling_for_write">gsk_io_is_polling_for_write</primary></indexterm><programlisting>#define             gsk_io_is_polling_for_write(io)</programlisting>
+<para>
+Check whether the last invocation of <link linkend="set-poll-write"><function>set_poll_write()</function></link>
+indicated that polling for writability was desired.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the IO to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-is-connecting" role="macro">
+<title>gsk_io_get_is_connecting()</title>
+<indexterm zone="gsk-io-get-is-connecting"><primary sortas="gsk_io_get_is_connecting">gsk_io_get_is_connecting</primary></indexterm><programlisting>#define             gsk_io_get_is_connecting(io)</programlisting>
+<para>
+Return whether the <link linkend="GskIO"><type>GskIO</type></link> is still connecting.
+Will be FALSE if the <link linkend="GskIO"><type>GskIO</type></link> is never connecting.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-is-readable" role="macro">
+<title>gsk_io_get_is_readable()</title>
+<indexterm zone="gsk-io-get-is-readable"><primary sortas="gsk_io_get_is_readable">gsk_io_get_is_readable</primary></indexterm><programlisting>#define             gsk_io_get_is_readable(io)</programlisting>
+<para>
+Return whether the <link linkend="GskIO"><type>GskIO</type></link> is readable.
+(It means that the read-end is available--
+it does not that there is any data which can be read.)
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-is-writable" role="macro">
+<title>gsk_io_get_is_writable()</title>
+<indexterm zone="gsk-io-get-is-writable"><primary sortas="gsk_io_get_is_writable">gsk_io_get_is_writable</primary></indexterm><programlisting>#define             gsk_io_get_is_writable(io)</programlisting>
+<para>
+Return whether the <link linkend="GskIO"><type>GskIO</type></link> is writable.
+(It means that the write-end is available--
+it does not mean that you can necessarily write data.)
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-never-partial-reads" role="macro">
+<title>gsk_io_get_never_partial_reads()</title>
+<indexterm zone="gsk-io-get-never-partial-reads"><primary sortas="gsk_io_get_never_partial_reads">gsk_io_get_never_partial_reads</primary></indexterm><programlisting>#define             gsk_io_get_never_partial_reads(io)</programlisting>
+<para>
+Return whether the <link linkend="GskIO"><type>GskIO</type></link> ever reads a partial buffer.
+</para>
+<para>
+An example of a source which never returns partial data
+is a virtual source like /dev/zero.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-never-partial-writes" role="macro">
+<title>gsk_io_get_never_partial_writes()</title>
+<indexterm zone="gsk-io-get-never-partial-writes"><primary sortas="gsk_io_get_never_partial_writes">gsk_io_get_never_partial_writes</primary></indexterm><programlisting>#define             gsk_io_get_never_partial_writes(io)</programlisting>
+<para>
+Return whether the <link linkend="GskIO"><type>GskIO</type></link> ever writes a partial buffer.
+</para>
+<para>
+An example of a source which never writes partial data
+is a infinite memory buffer, or a sink which merely
+discards data written to it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-never-blocks-write" role="macro">
+<title>gsk_io_get_never_blocks_write()</title>
+<indexterm zone="gsk-io-get-never-blocks-write"><primary sortas="gsk_io_get_never_blocks_write">gsk_io_get_never_blocks_write</primary></indexterm><programlisting>#define             gsk_io_get_never_blocks_write(io)</programlisting>
+<para>
+Return if the <link linkend="GskIO"><type>GskIO</type></link> will never block to write data.  It will always allow
+some data to be written, until it is full and will allow no more ever.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-never-blocks-read" role="macro">
+<title>gsk_io_get_never_blocks_read()</title>
+<indexterm zone="gsk-io-get-never-blocks-read"><primary sortas="gsk_io_get_never_blocks_read">gsk_io_get_never_blocks_read</primary></indexterm><programlisting>#define             gsk_io_get_never_blocks_read(io)</programlisting>
+<para>
+Return if the <link linkend="GskIO"><type>GskIO</type></link> will never block to read data.  It will always return
+some data, until it is empty and will never return any more.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-idle-notify-write" role="macro">
+<title>gsk_io_get_idle_notify_write()</title>
+<indexterm zone="gsk-io-get-idle-notify-write"><primary sortas="gsk_io_get_idle_notify_write">gsk_io_get_idle_notify_write</primary></indexterm><programlisting>#define             gsk_io_get_idle_notify_write(io)</programlisting>
+<para>
+Return whether the write-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-idle-notify-read" role="macro">
+<title>gsk_io_get_idle_notify_read()</title>
+<indexterm zone="gsk-io-get-idle-notify-read"><primary sortas="gsk_io_get_idle_notify_read">gsk_io_get_idle_notify_read</primary></indexterm><programlisting>#define             gsk_io_get_idle_notify_read(io)</programlisting>
+<para>
+Return whether the read-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-is-open" role="macro">
+<title>gsk_io_get_is_open()</title>
+<indexterm zone="gsk-io-get-is-open"><primary sortas="gsk_io_get_is_open">gsk_io_get_is_open</primary></indexterm><programlisting>#define             gsk_io_get_is_open(io)</programlisting>
+<para>
+Return whether the <link linkend="GskIO"><type>GskIO</type></link> is open.  A <link linkend="GskIO"><type>GskIO</type></link> should be open if
+you want to use it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-is-read-shutting-down" role="macro">
+<title>gsk_io_get_is_read_shutting_down()</title>
+<indexterm zone="gsk-io-get-is-read-shutting-down"><primary sortas="gsk_io_get_is_read_shutting_down">gsk_io_get_is_read_shutting_down</primary></indexterm><programlisting>#define             gsk_io_get_is_read_shutting_down(io)</programlisting>
+<para>
+Get whether the read end of the IO is in the process of shutting down.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the IO to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-is-write-shutting-down" role="macro">
+<title>gsk_io_get_is_write_shutting_down()</title>
+<indexterm zone="gsk-io-get-is-write-shutting-down"><primary sortas="gsk_io_get_is_write_shutting_down">gsk_io_get_is_write_shutting_down</primary></indexterm><programlisting>#define             gsk_io_get_is_write_shutting_down(io)</programlisting>
+<para>
+Get whether the write end of the IO is in the process of shutting down.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the IO to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-get-shutdown-on-error" role="macro">
+<title>gsk_io_get_shutdown_on_error()</title>
+<indexterm zone="gsk-io-get-shutdown-on-error"><primary sortas="gsk_io_get_shutdown_on_error">gsk_io_get_shutdown_on_error</primary></indexterm><programlisting>#define             gsk_io_get_shutdown_on_error(io)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-is-connecting" role="macro">
+<title>gsk_io_mark_is_connecting()</title>
+<indexterm zone="gsk-io-mark-is-connecting"><primary sortas="gsk_io_mark_is_connecting">gsk_io_mark_is_connecting</primary></indexterm><programlisting>#define             gsk_io_mark_is_connecting(io)</programlisting>
+<para>
+Set the <link linkend="GskIO"><type>GskIO</type></link>'s is_connecting flag.  This should only be called
+by the implementations of derived classes.  By default,
+GskIO is not in the connecting state.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-is-readable" role="macro">
+<title>gsk_io_mark_is_readable()</title>
+<indexterm zone="gsk-io-mark-is-readable"><primary sortas="gsk_io_mark_is_readable">gsk_io_mark_is_readable</primary></indexterm><programlisting>#define             gsk_io_mark_is_readable(io)</programlisting>
+<para>
+Set whether the <link linkend="GskIO"><type>GskIO</type></link> is_readable.  This should only be called by
+the implementations of derived classes.  In general,
+you should not change is_readable more than once in the lifetime
+of an object; however some types of streams
+can be made readable again once they are shutdown.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-is-writable" role="macro">
+<title>gsk_io_mark_is_writable()</title>
+<indexterm zone="gsk-io-mark-is-writable"><primary sortas="gsk_io_mark_is_writable">gsk_io_mark_is_writable</primary></indexterm><programlisting>#define             gsk_io_mark_is_writable(io)</programlisting>
+<para>
+Set whether the <link linkend="GskIO"><type>GskIO</type></link> is_writable.  This should only be called by
+the implementations of derived classes.  In general,
+you should not change is_writable more than once in the lifetime
+of an object; however some types of streams
+can be made writable again once they are shutdown.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-never-partial-reads" role="macro">
+<title>gsk_io_mark_never_partial_reads()</title>
+<indexterm zone="gsk-io-mark-never-partial-reads"><primary sortas="gsk_io_mark_never_partial_reads">gsk_io_mark_never_partial_reads</primary></indexterm><programlisting>#define             gsk_io_mark_never_partial_reads(io)</programlisting>
+<para>
+Mark the never_partial_reads flag.  This means that the read method
+should never have a partial success.
+This should therefore only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-never-partial-writes" role="macro">
+<title>gsk_io_mark_never_partial_writes()</title>
+<indexterm zone="gsk-io-mark-never-partial-writes"><primary sortas="gsk_io_mark_never_partial_writes">gsk_io_mark_never_partial_writes</primary></indexterm><programlisting>#define             gsk_io_mark_never_partial_writes(io)</programlisting>
+<para>
+Mark the never_partial_writes flag.  This means that the write method
+should never have a partial success.
+This should therefore only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-never-blocks-write" role="macro">
+<title>gsk_io_mark_never_blocks_write()</title>
+<indexterm zone="gsk-io-mark-never-blocks-write"><primary sortas="gsk_io_mark_never_blocks_write">gsk_io_mark_never_blocks_write</primary></indexterm><programlisting>#define             gsk_io_mark_never_blocks_write(io)</programlisting>
+<para>
+Indicate that writing to the <link linkend="GskIO"><type>GskIO</type></link> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-never-blocks-read" role="macro">
+<title>gsk_io_mark_never_blocks_read()</title>
+<indexterm zone="gsk-io-mark-never-blocks-read"><primary sortas="gsk_io_mark_never_blocks_read">gsk_io_mark_never_blocks_read</primary></indexterm><programlisting>#define             gsk_io_mark_never_blocks_read(io)</programlisting>
+<para>
+Indicate that reading from the <link linkend="GskIO"><type>GskIO</type></link> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-idle-notify-write" role="macro">
+<title>gsk_io_mark_idle_notify_write()</title>
+<indexterm zone="gsk-io-mark-idle-notify-write"><primary sortas="gsk_io_mark_idle_notify_write">gsk_io_mark_idle_notify_write</primary></indexterm><programlisting>#define             gsk_io_mark_idle_notify_write(io)</programlisting>
+<para>
+Tell the GskIO system to continually trigger a user's write hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-idle-notify-read" role="macro">
+<title>gsk_io_mark_idle_notify_read()</title>
+<indexterm zone="gsk-io-mark-idle-notify-read"><primary sortas="gsk_io_mark_idle_notify_read">gsk_io_mark_idle_notify_read</primary></indexterm><programlisting>#define             gsk_io_mark_idle_notify_read(io)</programlisting>
+<para>
+Tell the GskIO system to continually trigger a user's read hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-is-open" role="macro">
+<title>gsk_io_mark_is_open()</title>
+<indexterm zone="gsk-io-mark-is-open"><primary sortas="gsk_io_mark_is_open">gsk_io_mark_is_open</primary></indexterm><programlisting>#define             gsk_io_mark_is_open(io)</programlisting>
+<para>
+Indicate that a <link linkend="GskIO"><type>GskIO</type></link> is open.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-mark-shutdown-on-error" role="macro">
+<title>gsk_io_mark_shutdown_on_error()</title>
+<indexterm zone="gsk-io-mark-shutdown-on-error"><primary sortas="gsk_io_mark_shutdown_on_error">gsk_io_mark_shutdown_on_error</primary></indexterm><programlisting>#define             gsk_io_mark_shutdown_on_error(io)</programlisting>
+<para>
+Cause the <link linkend="GskIO"><type>GskIO</type></link> object to be shutdown if it fails.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> object to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-is-readable" role="macro">
+<title>gsk_io_clear_is_readable()</title>
+<indexterm zone="gsk-io-clear-is-readable"><primary sortas="gsk_io_clear_is_readable">gsk_io_clear_is_readable</primary></indexterm><programlisting>#define             gsk_io_clear_is_readable(io)</programlisting>
+<para>
+Indicate that a <link linkend="GskIO"><type>GskIO</type></link> is no longer readable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-is-writable" role="macro">
+<title>gsk_io_clear_is_writable()</title>
+<indexterm zone="gsk-io-clear-is-writable"><primary sortas="gsk_io_clear_is_writable">gsk_io_clear_is_writable</primary></indexterm><programlisting>#define             gsk_io_clear_is_writable(io)</programlisting>
+<para>
+Indicate that a <link linkend="GskIO"><type>GskIO</type></link> is no longer writable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-never-partial-reads" role="macro">
+<title>gsk_io_clear_never_partial_reads()</title>
+<indexterm zone="gsk-io-clear-never-partial-reads"><primary sortas="gsk_io_clear_never_partial_reads">gsk_io_clear_never_partial_reads</primary></indexterm><programlisting>#define             gsk_io_clear_never_partial_reads(io)</programlisting>
+<para>
+Indicate that the GskIO may exhibit partial reads.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-never-partial-writes" role="macro">
+<title>gsk_io_clear_never_partial_writes()</title>
+<indexterm zone="gsk-io-clear-never-partial-writes"><primary sortas="gsk_io_clear_never_partial_writes">gsk_io_clear_never_partial_writes</primary></indexterm><programlisting>#define             gsk_io_clear_never_partial_writes(io)</programlisting>
+<para>
+Indicate that the GskIO may exhibit partial writes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-idle-notify-write" role="macro">
+<title>gsk_io_clear_idle_notify_write()</title>
+<indexterm zone="gsk-io-clear-idle-notify-write"><primary sortas="gsk_io_clear_idle_notify_write">gsk_io_clear_idle_notify_write</primary></indexterm><programlisting>#define             gsk_io_clear_idle_notify_write(io)</programlisting>
+<para>
+Stop continually triggering the user's write hook.
+(This undoes <link linkend="gsk-io-mark-idle-notify-write"><function>gsk_io_mark_idle_notify_write()</function></link>)
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-idle-notify-read" role="macro">
+<title>gsk_io_clear_idle_notify_read()</title>
+<indexterm zone="gsk-io-clear-idle-notify-read"><primary sortas="gsk_io_clear_idle_notify_read">gsk_io_clear_idle_notify_read</primary></indexterm><programlisting>#define             gsk_io_clear_idle_notify_read(io)</programlisting>
+<para>
+Stop continually triggering the user's read hook.
+(This undoes <link linkend="gsk-io-mark-idle-notify-read"><function>gsk_io_mark_idle_notify_read()</function></link>)
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-is-open" role="macro">
+<title>gsk_io_clear_is_open()</title>
+<indexterm zone="gsk-io-clear-is-open"><primary sortas="gsk_io_clear_is_open">gsk_io_clear_is_open</primary></indexterm><programlisting>#define             gsk_io_clear_is_open(io)</programlisting>
+<para>
+Indicate that the GskIO is closed.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskIO"><type>GskIO</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-clear-shutdown-on-error" role="macro">
+<title>gsk_io_clear_shutdown_on_error()</title>
+<indexterm zone="gsk-io-clear-shutdown-on-error"><primary sortas="gsk_io_clear_shutdown_on_error">gsk_io_clear_shutdown_on_error</primary></indexterm><programlisting>#define             gsk_io_clear_shutdown_on_error(io)</programlisting>
+<para>
+Suppress automatic-shutdown when the stream fails.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the stream to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-set-idle-notify-write" role="macro">
+<title>gsk_io_set_idle_notify_write()</title>
+<indexterm zone="gsk-io-set-idle-notify-write"><primary sortas="gsk_io_set_idle_notify_write">gsk_io_set_idle_notify_write</primary></indexterm><programlisting>#define             gsk_io_set_idle_notify_write(io,v)</programlisting>
+<para>
+Set whether to perform idle-notification on the writable end of this GskIO.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the IO object to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>v</parameter>&#160;:</term>
+<listitem><simpara>whether to notify.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-set-idle-notify-read" role="macro">
+<title>gsk_io_set_idle_notify_read()</title>
+<indexterm zone="gsk-io-set-idle-notify-read"><primary sortas="gsk_io_set_idle_notify_read">gsk_io_set_idle_notify_read</primary></indexterm><programlisting>#define             gsk_io_set_idle_notify_read(io,v)</programlisting>
+<para>
+Set whether to perform idle-notification on the readable end of this GskIO.
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara>the IO object to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>v</parameter>&#160;:</term>
+<listitem><simpara>whether to notify.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-set-error" role="function">
+<title>gsk_io_set_error ()</title>
+<indexterm zone="gsk-io-set-error"><primary sortas="gsk_io_set_error">gsk_io_set_error</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_io_set_error                    (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="GskIOErrorCause">GskIOErrorCause</link> cause,
+                                                         <link linkend="GskErrorCode">GskErrorCode</link> error_code,
+                                                         const <link linkend="char">char</link> *format,
+                                                         ...);</programlisting>
+<para>
+Set the error member of the <link linkend="GskIO"><type>GskIO</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara> the object whose GError member should be set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cause</parameter>&#160;:</term>
+<listitem><simpara> what kind of situation triggered the error
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error_code</parameter>&#160;:</term>
+<listitem><simpara> an error code.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>format</parameter>&#160;:</term>
+<listitem><simpara> a printf-like format string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara> values to be embedded in the format string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-set-gerror" role="function">
+<title>gsk_io_set_gerror ()</title>
+<indexterm zone="gsk-io-set-gerror"><primary sortas="gsk_io_set_gerror">gsk_io_set_gerror</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_io_set_gerror                   (<link linkend="GskIO">GskIO</link> *io,
+                                                         <link linkend="GskIOErrorCause">GskIOErrorCause</link> cause,
+                                                         <link linkend="GError">GError</link> *error);</programlisting>
+<para>
+Set the IO's error member, taking ownership of
+the <parameter>error</parameter> parameter.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>io</parameter>&#160;:</term>
+<listitem><simpara> the IO whose error member should be set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cause</parameter>&#160;:</term>
+<listitem><simpara> the operation which caused the error.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> gerror which will be freed by the IO automatically now.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-io-error-cause-to-string" role="function">
+<title>gsk_io_error_cause_to_string ()</title>
+<indexterm zone="gsk-io-error-cause-to-string"><primary sortas="gsk_io_error_cause_to_string">gsk_io_error_cause_to_string</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_io_error_cause_to_string        (<link linkend="GskIOErrorCause">GskIOErrorCause</link> cause);</programlisting>
+<para>
+Convert the GskIOErrorCause code into a human-readable lowercase string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cause</parameter>&#160;:</term>
+<listitem><simpara> the cause code.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the error as a string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+<refsect1 id="GskIO.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="GskIO-on-connect" role="signal"><title>The <literal>&quot;on-connect&quot;</literal> signal</title>
+<indexterm zone="GskIO-on-connect"><primary sortas="GskIO::on-connect">GskIO::on-connect</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="GskIO">GskIO</link>   *gskio,
+                                                        <link linkend="gpointer">gpointer</link> user_data)      : No Recursion</programlisting>
+<para>
+Signal to indicate that the gsk-io has become connected
+(to a remote server).
+</para><variablelist role="params">
+<varlistentry><term><parameter>gskio</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="GskIO-on-error" role="signal"><title>The <literal>&quot;on-error&quot;</literal> signal</title>
+<indexterm zone="GskIO-on-error"><primary sortas="GskIO::on-error">GskIO::on-error</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="GskIO">GskIO</link>   *gskio,
+                                                        <link linkend="gpointer">gpointer</link> user_data)      : No Recursion</programlisting>
+<para>
+Signal to indicate that the gsk-io has had an error.
+Use the 'error' and 'error_cause' members of <link linkend="GskIO"><type>GskIO</type></link>
+to find out what went wrong.
+</para><variablelist role="params">
+<varlistentry><term><parameter>gskio</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+<refsect1 id="GskIO.see-also">
+<title>See Also</title>
+<para>
+GskHook, GskStream
+</para>
+</refsect1>
+
+</refentry>

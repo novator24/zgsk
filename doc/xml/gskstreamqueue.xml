@@ -1,0 +1,242 @@
+<refentry id="gsk-GskStreamQueue">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskStreamQueue.top_of_page">GskStreamQueue</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskStreamQueue</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskStreamQueue.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="GskStreamQueue">GskStreamQueue</link> *    <link linkend="gsk-stream-queue-new">gsk_stream_queue_new</link>                (<link linkend="gboolean">gboolean</link> is_readable,
+                                                         <link linkend="gboolean">gboolean</link> is_writable);
+<link linkend="void">void</link>                <link linkend="gsk-stream-queue-append-read-stream">gsk_stream_queue_append_read_stream</link> (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue,
+                                                         <link linkend="GskStream">GskStream</link> *substream);
+<link linkend="void">void</link>                <link linkend="gsk-stream-queue-append-write-stream">gsk_stream_queue_append_write_stream</link>
+                                                        (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue,
+                                                         <link linkend="GskStream">GskStream</link> *substream);
+<link linkend="void">void</link>                <link linkend="gsk-stream-queue-no-more-read-streams">gsk_stream_queue_no_more_read_streams</link>
+                                                        (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue);
+<link linkend="void">void</link>                <link linkend="gsk-stream-queue-no-more-write-streams">gsk_stream_queue_no_more_write_streams</link>
+                                                        (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue);
+#define             <link linkend="GSK-STREAM-QUEUE-READ-EMPTY-HOOK--CAPS">GSK_STREAM_QUEUE_READ_EMPTY_HOOK</link>    (queue)
+#define             <link linkend="gsk-stream-queue-trap-read-empty">gsk_stream_queue_trap_read_empty</link>    (queue, func, shutdown, data, destroy)
+#define             <link linkend="gsk-stream-queue-untrap-read-empty">gsk_stream_queue_untrap_read_empty</link>  (queue)
+#define             <link linkend="GSK-STREAM-QUEUE-WRITE-EMPTY-HOOK--CAPS">GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK</link>   (queue)
+#define             <link linkend="gsk-stream-queue-trap-write-empty">gsk_stream_queue_trap_write_empty</link>   (queue, func, shutdown, data, destroy)
+#define             <link linkend="gsk-stream-queue-untrap-write-empty">gsk_stream_queue_untrap_write_empty</link> (queue)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskStreamQueue.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskStreamQueue.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-stream-queue-new" role="function">
+<title>gsk_stream_queue_new ()</title>
+<indexterm zone="gsk-stream-queue-new"><primary sortas="gsk_stream_queue_new">gsk_stream_queue_new</primary></indexterm><programlisting><link linkend="GskStreamQueue">GskStreamQueue</link> *    gsk_stream_queue_new                (<link linkend="gboolean">gboolean</link> is_readable,
+                                                         <link linkend="gboolean">gboolean</link> is_writable);</programlisting>
+<para>
+Create a stream which can have other
+streams queueenated to either its read or write ends.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>is_readable</parameter>&#160;:</term>
+<listitem><simpara> whether the read can have readable streamss
+appended to it.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_writable</parameter>&#160;:</term>
+<listitem><simpara> whether the read can have writable streamss
+appended to it.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-append-read-stream" role="function">
+<title>gsk_stream_queue_append_read_stream ()</title>
+<indexterm zone="gsk-stream-queue-append-read-stream"><primary sortas="gsk_stream_queue_append_read_stream">gsk_stream_queue_append_read_stream</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_queue_append_read_stream (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue,
+                                                         <link linkend="GskStream">GskStream</link> *substream);</programlisting>
+<para>
+Append a readable stream to a queue-stream.
+It will be read in the order in which it was appended.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> the larger stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>substream</parameter>&#160;:</term>
+<listitem><simpara> the stream whose data will be read by <parameter>queue</parameter>.
+Note that this function increments the ref-count on substream,
+so you must <link linkend="g-object-unref"><function>g_object_unref()</function></link> it also.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-append-write-stream" role="function">
+<title>gsk_stream_queue_append_write_stream ()</title>
+<indexterm zone="gsk-stream-queue-append-write-stream"><primary sortas="gsk_stream_queue_append_write_stream">gsk_stream_queue_append_write_stream</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_queue_append_write_stream
+                                                        (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue,
+                                                         <link linkend="GskStream">GskStream</link> *substream);</programlisting>
+<para>
+Append a writable stream to a queue-stream.
+It will be written to in the order in which it was appended.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> the larger stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>substream</parameter>&#160;:</term>
+<listitem><simpara> the stream which will be written to by the <parameter>queue</parameter>.
+Note that this function increments the ref-count on substream,
+so you must <link linkend="g-object-unref"><function>g_object_unref()</function></link> it also.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-no-more-read-streams" role="function">
+<title>gsk_stream_queue_no_more_read_streams ()</title>
+<indexterm zone="gsk-stream-queue-no-more-read-streams"><primary sortas="gsk_stream_queue_no_more_read_streams">gsk_stream_queue_no_more_read_streams</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_queue_no_more_read_streams
+                                                        (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue);</programlisting>
+<para>
+Indicate that you are done added substreams to a queue-stream.
+When the last stream shuts down for reading, and all the buffered
+data has been read from queue, then this queue-stream
+will shut down.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> the stream to which no further streams can be appended.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-no-more-write-streams" role="function">
+<title>gsk_stream_queue_no_more_write_streams ()</title>
+<indexterm zone="gsk-stream-queue-no-more-write-streams"><primary sortas="gsk_stream_queue_no_more_write_streams">gsk_stream_queue_no_more_write_streams</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_queue_no_more_write_streams
+                                                        (<link linkend="GskStreamQueue">GskStreamQueue</link> *queue);</programlisting>
+<para>
+Indicate that you are done added substreams to a queue-stream.
+When the last stream shuts down for writeing, then this queue-stream
+will shut down.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> the stream to which no further streams can be appended.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STREAM-QUEUE-READ-EMPTY-HOOK--CAPS" role="macro">
+<title>GSK_STREAM_QUEUE_READ_EMPTY_HOOK()</title>
+<indexterm zone="GSK-STREAM-QUEUE-READ-EMPTY-HOOK--CAPS"><primary sortas="GSK_STREAM_QUEUE_READ_EMPTY_HOOK">GSK_STREAM_QUEUE_READ_EMPTY_HOOK</primary></indexterm><programlisting>#define             GSK_STREAM_QUEUE_READ_EMPTY_HOOK(queue)</programlisting>
+<para>
+GskHook which notifies as long as the queue's supply of readable streams is empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>queue whose hook should be returned.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-trap-read-empty" role="macro">
+<title>gsk_stream_queue_trap_read_empty()</title>
+<indexterm zone="gsk-stream-queue-trap-read-empty"><primary sortas="gsk_stream_queue_trap_read_empty">gsk_stream_queue_trap_read_empty</primary></indexterm><programlisting>#define             gsk_stream_queue_trap_read_empty(queue, func, shutdown, data, destroy)</programlisting>
+<para>
+Provide a function that will be call as long as there are no
+streams to read from.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue to get notification about.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>function to invoke when the queue is empty,
+and which should return whether it wishes to continue
+trapping the event.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown</parameter>&#160;:</term>
+<listitem><simpara>called when the queue is no longer readable,
+should return FALSE.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data to pass to <parameter>func</parameter>, <parameter>shutdown</parameter> and <parameter>destroy</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>called when the func and shutdown can no longer be invoked.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-untrap-read-empty" role="macro">
+<title>gsk_stream_queue_untrap_read_empty()</title>
+<indexterm zone="gsk-stream-queue-untrap-read-empty"><primary sortas="gsk_stream_queue_untrap_read_empty">gsk_stream_queue_untrap_read_empty</primary></indexterm><programlisting>#define             gsk_stream_queue_untrap_read_empty(queue)</programlisting>
+<para>
+Remove the trap set by <link linkend="gsk-stream-queue-trap-read-empty"><function>gsk_stream_queue_trap_read_empty()</function></link>.
+</para>
+<para>
+The destroy function, if any, will be called (possibly not immediately)
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue to stop getting notification about.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STREAM-QUEUE-WRITE-EMPTY-HOOK--CAPS" role="macro">
+<title>GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK()</title>
+<indexterm zone="GSK-STREAM-QUEUE-WRITE-EMPTY-HOOK--CAPS"><primary sortas="GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK">GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK</primary></indexterm><programlisting>#define             GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK(queue)</programlisting>
+<para>
+GskHook which notifies as long as the queue's supply of writable streams is empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>queue whose hook should be returned.
+<para>
+Provide a function that will be call as long as there are no
+streams to write to.
+</para>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-trap-write-empty" role="macro">
+<title>gsk_stream_queue_trap_write_empty()</title>
+<indexterm zone="gsk-stream-queue-trap-write-empty"><primary sortas="gsk_stream_queue_trap_write_empty">gsk_stream_queue_trap_write_empty</primary></indexterm><programlisting>#define             gsk_stream_queue_trap_write_empty(queue, func, shutdown, data, destroy)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-queue-untrap-write-empty" role="macro">
+<title>gsk_stream_queue_untrap_write_empty()</title>
+<indexterm zone="gsk-stream-queue-untrap-write-empty"><primary sortas="gsk_stream_queue_untrap_write_empty">gsk_stream_queue_untrap_write_empty</primary></indexterm><programlisting>#define             gsk_stream_queue_untrap_write_empty(queue)</programlisting>
+<para>
+Remove the trap set by <link linkend="gsk-stream-queue-trap-write-empty"><function>gsk_stream_queue_trap_write_empty()</function></link>.
+</para>
+<para>
+The destroy function, if any, will be called (possibly not immediately)
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue to stop getting notification about.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

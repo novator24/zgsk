@@ -1,0 +1,1077 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskrbtreemacros</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch15.html" title="Macro Madness">
+<link rel="prev" href="gsk-gsklistmacros.html" title="gsklistmacros">
+<link rel="next" href="gsk-gskqsortmacro.html" title="gskqsortmacro">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gsklistmacros.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch15.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskqsortmacro.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskrbtreemacros.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskrbtreemacros.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskrbtreemacros"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskrbtreemacros.top_of_page"></a>gskrbtreemacros</span></h2>
+<p>gskrbtreemacros — Flexible Red-Black Trees implemented as macros</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskrbtreemacros.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-INSERT--CAPS" title="GSK_RBTREE_INSERT()">GSK_RBTREE_INSERT</a>                   (tree, node, collision_node)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-REMOVE--CAPS" title="GSK_RBTREE_REMOVE()">GSK_RBTREE_REMOVE</a>                   (tree, node)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-LOOKUP--CAPS" title="GSK_RBTREE_LOOKUP()">GSK_RBTREE_LOOKUP</a>                   (tree, key, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-LOOKUP-COMPARATOR--CAPS" title="GSK_RBTREE_LOOKUP_COMPARATOR()">GSK_RBTREE_LOOKUP_COMPARATOR</a>        (tree, key, key_comparator, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-FIRST--CAPS" title="GSK_RBTREE_FIRST()">GSK_RBTREE_FIRST</a>                    (tree, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-LAST--CAPS" title="GSK_RBTREE_LAST()">GSK_RBTREE_LAST</a>                     (tree, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-NEXT--CAPS" title="GSK_RBTREE_NEXT()">GSK_RBTREE_NEXT</a>                     (tree, in, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-PREV--CAPS" title="GSK_RBTREE_PREV()">GSK_RBTREE_PREV</a>                     (tree, in, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-SUPREMUM--CAPS" title="GSK_RBTREE_SUPREMUM()">GSK_RBTREE_SUPREMUM</a>                 (tree, key, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-SUPREMUM-COMPARATOR--CAPS" title="GSK_RBTREE_SUPREMUM_COMPARATOR()">GSK_RBTREE_SUPREMUM_COMPARATOR</a>      (tree, key, key_comparator, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-INFIMUM--CAPS" title="GSK_RBTREE_INFIMUM()">GSK_RBTREE_INFIMUM</a>                  (tree, key, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-INFIMUM-COMPARATOR--CAPS" title="GSK_RBTREE_INFIMUM_COMPARATOR()">GSK_RBTREE_INFIMUM_COMPARATOR</a>       (tree, key, key_comparator, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-INSERT--CAPS" title="GSK_RBCTREE_INSERT()">GSK_RBCTREE_INSERT</a>                  (tree, node, collision_node)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-REMOVE--CAPS" title="GSK_RBCTREE_REMOVE()">GSK_RBCTREE_REMOVE</a>                  (tree, node)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-LOOKUP--CAPS" title="GSK_RBCTREE_LOOKUP()">GSK_RBCTREE_LOOKUP</a>                  (tree, key, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS" title="GSK_RBCTREE_LOOKUP_COMPARATOR()">GSK_RBCTREE_LOOKUP_COMPARATOR</a>       (tree, key, key_comparator, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-FIRST--CAPS" title="GSK_RBCTREE_FIRST()">GSK_RBCTREE_FIRST</a>                   (tree, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-LAST--CAPS" title="GSK_RBCTREE_LAST()">GSK_RBCTREE_LAST</a>                    (tree, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-NEXT--CAPS" title="GSK_RBCTREE_NEXT()">GSK_RBCTREE_NEXT</a>                    (tree, in, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-PREV--CAPS" title="GSK_RBCTREE_PREV()">GSK_RBCTREE_PREV</a>                    (tree, in, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-SUPREMUM--CAPS" title="GSK_RBCTREE_SUPREMUM()">GSK_RBCTREE_SUPREMUM</a>                (tree, key, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-SUPREMUM-COMPARATOR--CAPS" title="GSK_RBCTREE_SUPREMUM_COMPARATOR()">GSK_RBCTREE_SUPREMUM_COMPARATOR</a>     (tree, key, key_comparator, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-INFIMUM--CAPS" title="GSK_RBCTREE_INFIMUM()">GSK_RBCTREE_INFIMUM</a>                 (tree, key, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-INFIMUM-COMPARATOR--CAPS" title="GSK_RBCTREE_INFIMUM_COMPARATOR()">GSK_RBCTREE_INFIMUM_COMPARATOR</a>      (tree, key, key_comparator, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-GET-BY-INDEX--CAPS" title="GSK_RBCTREE_GET_BY_INDEX()">GSK_RBCTREE_GET_BY_INDEX</a>            (tree, index, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-GET-BY-INDEX-UNCHECKED--CAPS" title="GSK_RBCTREE_GET_BY_INDEX_UNCHECKED()">GSK_RBCTREE_GET_BY_INDEX_UNCHECKED</a>  (tree, index, out)
+#define             <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-GET-NODE-INDEX--CAPS" title="GSK_RBCTREE_GET_NODE_INDEX()">GSK_RBCTREE_GET_NODE_INDEX</a>          (tree, node, index_out)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskrbtreemacros.description"></a><h2>Description</h2>
+<p>
+The macros defined here allow you to implement
+efficient red-black trees which put their data
+in existing node structures.
+Besides efficiency, this can be much more convenient
+because the same node may be a member of multiple trees.
+It shares these characteristics in
+common with the gsklistmacros,
+so that a member of a rbtree may be a member of a gsk-list,
+etc etc. all simultanteously.
+</p>
+<p>
+ TODO: Description of what an rbtree is.
+</p>
+<p>
+ The actual rbtree consists of a macro with eight arguments:
+ </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">top</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">type*</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">is_red</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">set_is_red</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">parent</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">left, </span><span class="term">right</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">comparator</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+</p>
+<p>
+ TODO: Description of what an rbctree is.
+</p>
+<p>
+ The actual rbctree consists of a macro with ten arguments:
+ </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">top</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">type*</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">is_red</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">set_is_red</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">get_count</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">set_count</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">parent</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">left, </span><span class="term">right</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+<tr>
+<td><p><span class="term">comparator</span></p></td>
+<td><p>
+    ...
+    </p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+</p>
+<p>
+ TODO: example use cases.
+</p>
+<p>
+ TODO: Some example programs.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskrbtreemacros.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-INSERT--CAPS"></a><h3>GSK_RBTREE_INSERT()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_INSERT(tree, node, collision_node)</pre>
+<p>
+Add a new node into the rbtree, potentially removing another node of the same
+key, which will be returned in <em class="parameter"><code>collision_node</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>The node to insert.  It should not be in the tree initially.
+Its parent, left and right pointers will be initialized.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>collision_node</code></em> :</span></p></td>
+<td>A variable that will be set to NULL
+if there was no collision, or the node that was replaced
+if there was a collision.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-REMOVE--CAPS"></a><h3>GSK_RBTREE_REMOVE()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_REMOVE(tree, node)</pre>
+<p>
+Remove a new from the tree.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>The node to remove from the tree.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-LOOKUP--CAPS"></a><h3>GSK_RBTREE_LOOKUP()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_LOOKUP(tree, key, out)</pre>
+<p>
+Lookup a node in the tree.
+</p>
+<p>
+This will use the same comparator as the normal tree lookup,
+so the <em class="parameter"><code>key</code></em> should probably be something that looks like a node.
+See <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBTREE-LOOKUP-COMPARATOR--CAPS" title="GSK_RBTREE_LOOKUP_COMPARATOR()"><span class="type">GSK_RBTREE_LOOKUP_COMPARATOR</span></a> for a method to do the lookup
+using a key that is in a different format.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>A node whose equivalent we are trying to find.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>The node that was found, or NULL if no node was found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-LOOKUP-COMPARATOR--CAPS"></a><h3>GSK_RBTREE_LOOKUP_COMPARATOR()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_LOOKUP_COMPARATOR(tree, key, key_comparator, out)</pre>
+<p>
+Lookup a node in the tree.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>A key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_comparator</code></em> :</span></p></td>
+<td>A macro that takes three arguments: 
+the <em class="parameter"><code>key</code></em>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>The node that was found, or NULL if no node was found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-FIRST--CAPS"></a><h3>GSK_RBTREE_FIRST()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_FIRST(tree, out)</pre>
+<p>
+Get the first element of the tree.
+(The first element is the least element,
+as determined by the comparator)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the first element in the tree,
+or NULL if the tree is empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-LAST--CAPS"></a><h3>GSK_RBTREE_LAST()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_LAST(tree, out)</pre>
+<p>
+Get the last element of the tree.
+(The last element is the greatest element,
+as determined by the comparator)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the last element in the tree,
+or NULL if the tree is empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-NEXT--CAPS"></a><h3>GSK_RBTREE_NEXT()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_NEXT(tree, in, out)</pre>
+<p>
+Get the next element in the tree,
+after a given element.
+</p>
+<p><em class="parameter"><code>in</code></em> and <em class="parameter"><code>out</code></em> may be the same variable.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to traverse.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>in</code></em> :</span></p></td>
+<td>The starting element (must be non-NULL)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the next element in the tree,
+or NULL if <em class="parameter"><code>in</code></em> was the last element.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-PREV--CAPS"></a><h3>GSK_RBTREE_PREV()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_PREV(tree, in, out)</pre>
+<p>
+Get the previous element in the tree,
+after a given element.
+</p>
+<p><em class="parameter"><code>in</code></em> and <em class="parameter"><code>out</code></em> may be the same variable.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to traverse.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>in</code></em> :</span></p></td>
+<td>The starting element (must be non-NULL)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the previous element in the tree,
+or NULL if <em class="parameter"><code>in</code></em> was the first element.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-SUPREMUM--CAPS"></a><h3>GSK_RBTREE_SUPREMUM()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_SUPREMUM(tree, key, out)</pre>
+<p>
+Find the first node in the tree which is after or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the first node in the tree which is after or equal to
+<em class="parameter"><code>key</code></em>, according to the usual tree comparator, or NULL if no
+element is greater than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-SUPREMUM-COMPARATOR--CAPS"></a><h3>GSK_RBTREE_SUPREMUM_COMPARATOR()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_SUPREMUM_COMPARATOR(tree, key, key_comparator, out)</pre>
+<p>
+Find the first node in the tree which is after or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_comparator</code></em> :</span></p></td>
+<td>A macro that takes three arguments: 
+the <em class="parameter"><code>key</code></em>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the first node in the tree which is after or equal to
+<em class="parameter"><code>key</code></em>, according to <em class="parameter"><code>key_comparator</code></em>, or NULL if no
+element is greater than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-INFIMUM--CAPS"></a><h3>GSK_RBTREE_INFIMUM()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_INFIMUM(tree, key, out)</pre>
+<p>
+Find the last node in the tree which is before or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the last node in the tree which is before or equal to
+<em class="parameter"><code>key</code></em>, according to the usual tree comparator, or NULL if no
+element is less than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBTREE-INFIMUM-COMPARATOR--CAPS"></a><h3>GSK_RBTREE_INFIMUM_COMPARATOR()</h3>
+<pre class="programlisting">#define             GSK_RBTREE_INFIMUM_COMPARATOR(tree, key, key_comparator, out)</pre>
+<p>
+Find the last node in the tree which is before or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_comparator</code></em> :</span></p></td>
+<td>A macro that takes three arguments: 
+the <em class="parameter"><code>key</code></em>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the last node in the tree which is before or equal to
+<em class="parameter"><code>key</code></em>, according to <em class="parameter"><code>key_comparator</code></em>, or NULL if no
+element is less than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-INSERT--CAPS"></a><h3>GSK_RBCTREE_INSERT()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_INSERT(tree, node, collision_node)</pre>
+<p>
+Add a new node into the rbtree, potentially removing another node of the same
+key, which will be returned in <em class="parameter"><code>collision_node</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>The node to insert.  It should not be in the tree initially.
+Its parent, left and right pointers will be initialized.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>collision_node</code></em> :</span></p></td>
+<td>A variable that will be set to NULL
+if there was no collision, or the node that was replaced
+if there was a collision.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-REMOVE--CAPS"></a><h3>GSK_RBCTREE_REMOVE()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_REMOVE(tree, node)</pre>
+<p>
+Remove a new from the tree.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>The node to remove from the tree.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-LOOKUP--CAPS"></a><h3>GSK_RBCTREE_LOOKUP()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_LOOKUP(tree, key, out)</pre>
+<p>
+Lookup a node in the tree.
+</p>
+<p>
+This will use the same comparator as the normal tree lookup,
+so the <em class="parameter"><code>key</code></em> should probably be something that looks like a node.
+See <a class="link" href="gsk-gskrbtreemacros.html#GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS" title="GSK_RBCTREE_LOOKUP_COMPARATOR()"><span class="type">GSK_RBCTREE_LOOKUP_COMPARATOR</span></a> for a method to do the lookup
+using a key that is in a different format.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>A node whose equivalent we are trying to find.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>The node that was found, or NULL if no node was found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS"></a><h3>GSK_RBCTREE_LOOKUP_COMPARATOR()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_LOOKUP_COMPARATOR(tree, key, key_comparator, out)</pre>
+<p>
+Lookup a node in the tree.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>A key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_comparator</code></em> :</span></p></td>
+<td>A macro that takes three arguments: 
+the <em class="parameter"><code>key</code></em>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>The node that was found, or NULL if no node was found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-FIRST--CAPS"></a><h3>GSK_RBCTREE_FIRST()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_FIRST(tree, out)</pre>
+<p>
+Get the first element of the tree.
+(The first element is the least element,
+as determined by the comparator)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the first element in the tree,
+or NULL if the tree is empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-LAST--CAPS"></a><h3>GSK_RBCTREE_LAST()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_LAST(tree, out)</pre>
+<p>
+Get the last element of the tree.
+(The last element is the greatest element,
+as determined by the comparator)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to eight arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the last element in the tree,
+or NULL if the tree is empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-NEXT--CAPS"></a><h3>GSK_RBCTREE_NEXT()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_NEXT(tree, in, out)</pre>
+<p>
+Get the next element in the tree,
+after a given element.
+</p>
+<p><em class="parameter"><code>in</code></em> and <em class="parameter"><code>out</code></em> may be the same variable.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to traverse.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>in</code></em> :</span></p></td>
+<td>The starting element (must be non-NULL)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the next element in the tree,
+or NULL if <em class="parameter"><code>in</code></em> was the last element.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-PREV--CAPS"></a><h3>GSK_RBCTREE_PREV()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_PREV(tree, in, out)</pre>
+<p>
+Get the previous element in the tree,
+after a given element.
+</p>
+<p><em class="parameter"><code>in</code></em> and <em class="parameter"><code>out</code></em> may be the same variable.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to traverse.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>in</code></em> :</span></p></td>
+<td>The starting element (must be non-NULL)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>A variable which will be set to the previous element in the tree,
+or NULL if <em class="parameter"><code>in</code></em> was the first element.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-SUPREMUM--CAPS"></a><h3>GSK_RBCTREE_SUPREMUM()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_SUPREMUM(tree, key, out)</pre>
+<p>
+Find the first node in the tree which is after or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the first node in the tree which is after or equal to
+<em class="parameter"><code>key</code></em>, according to the usual tree comparator, or NULL if no
+element is greater than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-SUPREMUM-COMPARATOR--CAPS"></a><h3>GSK_RBCTREE_SUPREMUM_COMPARATOR()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_SUPREMUM_COMPARATOR(tree, key, key_comparator, out)</pre>
+<p>
+Find the first node in the tree which is after or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_comparator</code></em> :</span></p></td>
+<td>A macro that takes three arguments: 
+the <em class="parameter"><code>key</code></em>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the first node in the tree which is after or equal to
+<em class="parameter"><code>key</code></em>, according to <em class="parameter"><code>key_comparator</code></em>, or NULL if no
+element is greater than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-INFIMUM--CAPS"></a><h3>GSK_RBCTREE_INFIMUM()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_INFIMUM(tree, key, out)</pre>
+<p>
+Find the last node in the tree which is before or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the last node in the tree which is before or equal to
+<em class="parameter"><code>key</code></em>, according to the usual tree comparator, or NULL if no
+element is less than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-INFIMUM-COMPARATOR--CAPS"></a><h3>GSK_RBCTREE_INFIMUM_COMPARATOR()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_INFIMUM_COMPARATOR(tree, key, key_comparator, out)</pre>
+<p>
+Find the last node in the tree which is before or equal to <em class="parameter"><code>key</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_comparator</code></em> :</span></p></td>
+<td>A macro that takes three arguments: 
+the <em class="parameter"><code>key</code></em>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>Set the the last node in the tree which is before or equal to
+<em class="parameter"><code>key</code></em>, according to <em class="parameter"><code>key_comparator</code></em>, or NULL if no
+element is less than or equal to <em class="parameter"><code>key</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-GET-BY-INDEX--CAPS"></a><h3>GSK_RBCTREE_GET_BY_INDEX()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_GET_BY_INDEX(tree, index, out)</pre>
+<p>
+Find the N-th node in the tree.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>index</code></em> :</span></p></td>
+<td>The index of the node which you want to find.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>variable to store the <em class="parameter"><code>index</code></em>-th node in,
+or NULL if <em class="parameter"><code>index</code></em> is out-of-range.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-GET-BY-INDEX-UNCHECKED--CAPS"></a><h3>GSK_RBCTREE_GET_BY_INDEX_UNCHECKED()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_GET_BY_INDEX_UNCHECKED(tree, index, out)</pre>
+<p>
+Find the N-th node in the tree, assuming that <em class="parameter"><code>index</code></em> is valid.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>index</code></em> :</span></p></td>
+<td>The index of the node which you want to find.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td>variable to store the <em class="parameter"><code>index</code></em>-th node in.
+This routine will crash if <em class="parameter"><code>index</code></em> is out-of-range.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-RBCTREE-GET-NODE-INDEX--CAPS"></a><h3>GSK_RBCTREE_GET_NODE_INDEX()</h3>
+<pre class="programlisting">#define             GSK_RBCTREE_GET_NODE_INDEX(tree, node, index_out)</pre>
+<p>
+Get the index of an arbitrary node.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td>The RBCTree (a macro that expands to ten arguments) to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>The node to obtain the index of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>index_out</code></em> :</span></p></td>
+<td>variable to store the index of <em class="parameter"><code>node</code></em> in.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskrbtreemacros.see-also"></a><h2>See Also</h2>
+<p>
+gskqsortmacro
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

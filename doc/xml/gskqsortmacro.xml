@@ -1,0 +1,260 @@
+<refentry id="gsk-gskqsortmacro">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskqsortmacro.top_of_page">gskqsortmacro</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskqsortmacro</refname>
+<refpurpose>inline qsort macro</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskqsortmacro.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-QSORT-STACK-MAX-SIZE--CAPS">GSK_QSORT_STACK_MAX_SIZE</link>
+#define             <link linkend="GSK-INSERTION-SORT-THRESHOLD--CAPS">GSK_INSERTION_SORT_THRESHOLD</link>
+#define             <link linkend="GSK-QSORT--CAPS">GSK_QSORT</link>                           (array, type, n_elements, compare)
+#define             <link linkend="GSK-QSORT-DEBUG--CAPS">GSK_QSORT_DEBUG</link>                     (array, type, n_elements, compare)
+#define             <link linkend="GSK-QSORT-FULL--CAPS">GSK_QSORT_FULL</link>                      (array, type, n_elements, compare, isort_threshold, stack_size, ss_assertion)
+#define             <link linkend="GSK-QSELECT-FULL--CAPS">GSK_QSELECT_FULL</link>                    (array, type, n_elements, n_select, compare, isort_threshold, stack_size, ss_assertion)
+#define             <link linkend="GSK-QSORT-ASSERT-STACK-SIZE--CAPS">GSK_QSORT_ASSERT_STACK_SIZE</link>         (stack_alloced)
+#define             <link linkend="GSK-INSERTION-SORT--CAPS">GSK_INSERTION_SORT</link>                  (array, type, length, compare)
+#define             <link linkend="GSK-QSORT-SIMPLE-COMPARATOR--CAPS">GSK_QSORT_SIMPLE_COMPARATOR</link>         (a,b,compare_rv)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskqsortmacro.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This is an implementation of qsort that avoids
+recursion and uses a fixed-length stack.
+As such, it is suitable for a macro implementation.
+</para>
+<para>
+Please note that usually <link linkend="qsort"><function>qsort()</function></link> or <link linkend="g-qsort-with-data"><function>g_qsort_with_data()</function></link>
+is nicer to use than the macro version: it will
+compile to less code, for example.
+However, the macro-based version is often faster,
+and can be more convenient to use than
+the other routines.  For example, since the macro
+is lexically inlined, the comparator can use local variables.
+</para>
+<para>
+Here is an example: this qsorts an array
+of integers, considering only the least n_bits bits:
+<programlisting>
+<![CDATA[
+ static void
+ qsort_least_significant_bits (guint  array_len,
+                               guint *array,
+			       guint  n_bits)
+ {
+   guint mask = (1 << n_bits) - 1;
+]]>&hash;<![CDATA[define COMPARE(a,b,rv)       \
+  { guint tmp_a = mask & a;   \
+    guint tmp_b = mask & b;   \
+    rv = (tmp_a < tmp_b) ? -1 \
+       : (tmp_a > tmp_b) ? +1 \
+       0; }
+  GSK_QSORT (array, guint, array_len, COMPARE);
+]]>&hash;<![CDATA[undef COMPARE
+ }
+]]>
+</programlisting>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskqsortmacro.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-QSORT-STACK-MAX-SIZE--CAPS" role="macro">
+<title>GSK_QSORT_STACK_MAX_SIZE</title>
+<indexterm zone="GSK-QSORT-STACK-MAX-SIZE--CAPS"><primary sortas="GSK_QSORT_STACK_MAX_SIZE">GSK_QSORT_STACK_MAX_SIZE</primary></indexterm><programlisting>#define             GSK_QSORT_STACK_MAX_SIZE</programlisting>
+<para>
+Maximum stack size to use for QSORT.
+Only should be changed if stack-space is very limited.
+</para></refsect2>
+<refsect2 id="GSK-INSERTION-SORT-THRESHOLD--CAPS" role="macro">
+<title>GSK_INSERTION_SORT_THRESHOLD</title>
+<indexterm zone="GSK-INSERTION-SORT-THRESHOLD--CAPS"><primary sortas="GSK_INSERTION_SORT_THRESHOLD">GSK_INSERTION_SORT_THRESHOLD</primary></indexterm><programlisting>#define             GSK_INSERTION_SORT_THRESHOLD</programlisting>
+<para>
+Maximum number of elements for which insertion sort
+is preferred to quicksort.
+</para></refsect2>
+<refsect2 id="GSK-QSORT--CAPS" role="macro">
+<title>GSK_QSORT()</title>
+<indexterm zone="GSK-QSORT--CAPS"><primary sortas="GSK_QSORT">GSK_QSORT</primary></indexterm><programlisting>#define             GSK_QSORT(array, type, n_elements, compare)</programlisting>
+<para>
+Sort an array.
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> The array of values to sort.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>The type of an element of the array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_elements</parameter>&#160;:</term>
+<listitem><simpara>The number of elements in <parameter>array</parameter> to sort.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compare</parameter>&#160;:</term>
+<listitem><simpara>A comparator macro.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QSORT-DEBUG--CAPS" role="macro">
+<title>GSK_QSORT_DEBUG()</title>
+<indexterm zone="GSK-QSORT-DEBUG--CAPS"><primary sortas="GSK_QSORT_DEBUG">GSK_QSORT_DEBUG</primary></indexterm><programlisting>#define             GSK_QSORT_DEBUG(array, type, n_elements, compare)</programlisting>
+<para>
+Quicksort, with stack-checking.
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> The array of values to sort.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>The type of an element of the array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_elements</parameter>&#160;:</term>
+<listitem><simpara>The number of elements in <parameter>array</parameter> to sort.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compare</parameter>&#160;:</term>
+<listitem><simpara>A comparator macro.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QSORT-FULL--CAPS" role="macro">
+<title>GSK_QSORT_FULL()</title>
+<indexterm zone="GSK-QSORT-FULL--CAPS"><primary sortas="GSK_QSORT_FULL">GSK_QSORT_FULL</primary></indexterm><programlisting>#define             GSK_QSORT_FULL(array, type, n_elements, compare, isort_threshold, stack_size, ss_assertion)</programlisting>
+<para>
+Quicksort, with a bit more configurability.
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara>the array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>the type of elements in the array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_elements</parameter>&#160;:</term>
+<listitem><simpara>the number of elements in the array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compare</parameter>&#160;:</term>
+<listitem><simpara>comparator macro
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>isort_threshold</parameter>&#160;:</term>
+<listitem><simpara>maximum size of array to insertion-sort
+instead of quicksort.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stack_size</parameter>&#160;:</term>
+<listitem><simpara>maximum number of stack required.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss_assertion</parameter>&#160;:</term>
+<listitem><simpara>a macro which can do the stack-guard assertion.
+Should be blank or GSK_QSORT_ASSERT_STACK_SIZE.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QSELECT-FULL--CAPS" role="macro">
+<title>GSK_QSELECT_FULL()</title>
+<indexterm zone="GSK-QSELECT-FULL--CAPS"><primary sortas="GSK_QSELECT_FULL">GSK_QSELECT_FULL</primary></indexterm><programlisting>#define             GSK_QSELECT_FULL(array, type, n_elements, n_select, compare, isort_threshold, stack_size, ss_assertion)</programlisting>
+<para>
+Computes the top <parameter>n_select</parameter> elements of an
+array which has <parameter>n_elements</parameter> elements in it.
+The top <parameter>n_select</parameter> elements will be sorted.
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara>the array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>the type of elements in the array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_elements</parameter>&#160;:</term>
+<listitem><simpara>the number of elements in the array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_select</parameter>&#160;:</term>
+<listitem><simpara>the number of elements to get in the sorted part.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compare</parameter>&#160;:</term>
+<listitem><simpara>comparator macro
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>isort_threshold</parameter>&#160;:</term>
+<listitem><simpara>maximum size of array to insertion-sort
+instead of quicksort.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stack_size</parameter>&#160;:</term>
+<listitem><simpara>maximum number of stack required.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss_assertion</parameter>&#160;:</term>
+<listitem><simpara>a macro which can do the stack-guard assertion.
+Should be blank or GSK_QSORT_ASSERT_STACK_SIZE.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QSORT-ASSERT-STACK-SIZE--CAPS" role="macro">
+<title>GSK_QSORT_ASSERT_STACK_SIZE()</title>
+<indexterm zone="GSK-QSORT-ASSERT-STACK-SIZE--CAPS"><primary sortas="GSK_QSORT_ASSERT_STACK_SIZE">GSK_QSORT_ASSERT_STACK_SIZE</primary></indexterm><programlisting>#define             GSK_QSORT_ASSERT_STACK_SIZE(stack_alloced)</programlisting>
+<para>
+Macro to verify that the stack is not overflowed.
+The stack can overflow if the comparator is invalid.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack_alloced</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-INSERTION-SORT--CAPS" role="macro">
+<title>GSK_INSERTION_SORT()</title>
+<indexterm zone="GSK-INSERTION-SORT--CAPS"><primary sortas="GSK_INSERTION_SORT">GSK_INSERTION_SORT</primary></indexterm><programlisting>#define             GSK_INSERTION_SORT(array, type, length, compare)</programlisting>
+<para>
+An insertion-sort implementation,
+which is used by the quicksort in the case
+of small arrays.
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> The array of values to sort.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>The type of an element of the array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara>The number elements in <parameter>array</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compare</parameter>&#160;:</term>
+<listitem><simpara>comparator macro
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QSORT-SIMPLE-COMPARATOR--CAPS" role="macro">
+<title>GSK_QSORT_SIMPLE_COMPARATOR()</title>
+<indexterm zone="GSK-QSORT-SIMPLE-COMPARATOR--CAPS"><primary sortas="GSK_QSORT_SIMPLE_COMPARATOR">GSK_QSORT_SIMPLE_COMPARATOR</primary></indexterm><programlisting>#define             GSK_QSORT_SIMPLE_COMPARATOR(a,b,compare_rv)</programlisting>
+<para>
+A comparator macro that just uses the normal operators &lt;,
+&gt; and ==.
+</para><variablelist role="params">
+<varlistentry><term><parameter>a</parameter>&#160;:</term>
+<listitem><simpara>the first element
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>b</parameter>&#160;:</term>
+<listitem><simpara>the second element
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compare_rv</parameter>&#160;:</term>
+<listitem><simpara>set to -1, 0, 1 if <parameter>a</parameter> is less than, equal to, or greater than <parameter>b</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskqsortmacro.see-also">
+<title>See Also</title>
+<para>
+The gskrbtreemacros, which can maintain a set in sorted order,
+so that the set can be walked in O(N) time, and each insert, delete or lookup
+is O(log N).
+</para>
+</refsect1>
+
+</refentry>

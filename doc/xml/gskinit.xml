@@ -1,0 +1,198 @@
+<refentry id="gsk-gskinit">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskinit.top_of_page">Library Initialization</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Library Initialization</refname>
+<refpurpose>Perform general initialization with limited argument parsing.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskinit.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskInitInfo">GskInitInfo</link>;
+<link linkend="void">void</link>                <link linkend="gsk-init-info-get-defaults">gsk_init_info_get_defaults</link>          (<link linkend="GskInitInfo">GskInitInfo</link> *info);
+<link linkend="void">void</link>                <link linkend="gsk-init">gsk_init</link>                            (<link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv,
+                                                         <link linkend="GskInitInfo">GskInitInfo</link> *info);
+<link linkend="void">void</link>                <link linkend="gsk-init-without-threads">gsk_init_without_threads</link>            (<link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv);
+#define             <link linkend="gsk-init-get-support-threads">gsk_init_get_support_threads</link>        ()
+<link linkend="void">void</link>                <link linkend="gsk-init-info-parse-args">gsk_init_info_parse_args</link>            (<link linkend="GskInitInfo">GskInitInfo</link> *in_out,
+                                                         <link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv);
+<link linkend="void">void</link>                <link linkend="gsk-init-raw">gsk_init_raw</link>                        (<link linkend="GskInitInfo">GskInitInfo</link> *info);
+extern              _GskInitFlags <link linkend="gsk-init-flags">gsk_init_flags</link>;
+extern              gpointer <link linkend="gsk-main-thread">gsk_main_thread</link>;
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskinit.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Almost always one run <link linkend="gsk-init"><function>gsk_init()</function></link> at the top of main and forgets about it.
+But sometimes you wish to separate the parsing and the initialization
+so these routines give you more fine-grained control,
+by separating the parsing into <link linkend="gsk-init-info-parse-args"><function>gsk_init_info_parse_args()</function></link> and
+the real initialization into <link linkend="gsk-init-raw"><function>gsk_init_raw()</function></link>.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskinit.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskInitInfo" role="struct">
+<title>GskInitInfo</title>
+<indexterm zone="GskInitInfo"><primary sortas="GskInitInfo">GskInitInfo</primary></indexterm><programlisting>typedef struct {
+  char *prgname;
+  guint needs_threads : 1;
+} GskInitInfo;
+</programlisting>
+<para>
+Information about how to initialize GSK.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>prgname</structfield>;</term>
+<listitem><simpara>The name of the program, may be NULL.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>needs_threads</structfield>&#160;:&#160;1;</term>
+<listitem><simpara>Whether the program needs threads.  True by default.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-init-info-get-defaults" role="function">
+<title>gsk_init_info_get_defaults ()</title>
+<indexterm zone="gsk-init-info-get-defaults"><primary sortas="gsk_init_info_get_defaults">gsk_init_info_get_defaults</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_init_info_get_defaults          (<link linkend="GskInitInfo">GskInitInfo</link> *info);</programlisting>
+<para>
+Obtain the default initialization information.
+This should be run before <link linkend="gsk-init"><function>gsk_init()</function></link> or <link linkend="gsk-init-info-parse-args"><function>gsk_init_info_parse_args()</function></link>.
+</para>
+<para>
+This API has been deprecated for public use,
+because it doesn't allow us to expand
+GskInitInfo without breaking binary-compatibility.
+</para>
+<para>
+Use <link linkend="gsk-init-info-new"><function>gsk_init_info_new()</function></link> instead.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>info</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="GskInitInfo"><type>GskInitInfo</type></link> to fill.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-init" role="function">
+<title>gsk_init ()</title>
+<indexterm zone="gsk-init"><primary sortas="gsk_init">gsk_init</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_init                            (<link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv,
+                                                         <link linkend="GskInitInfo">GskInitInfo</link> *info);</programlisting>
+<para>
+Initialize the GSK library.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>argc</parameter>&#160;:</term>
+<listitem><simpara> a reference to <link linkend="main"><function>main()</function></link>'s argc;
+this will be decreased if arguments are parsed
+out of the argument array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argv</parameter>&#160;:</term>
+<listitem><simpara> a reference to <link linkend="main"><function>main()</function></link>'s argc;
+this may have arguments removed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>info</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="GskInitInfo"><type>GskInitInfo</type></link> to use as hints,
+which will be filled with the
+actual initialization information used.
+If NULL, default initialization parameters
+will be used.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-init-without-threads" role="function">
+<title>gsk_init_without_threads ()</title>
+<indexterm zone="gsk-init-without-threads"><primary sortas="gsk_init_without_threads">gsk_init_without_threads</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_init_without_threads            (<link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv);</programlisting>
+<para>
+Initialize the GSK library indicating that you will not use threads.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>argc</parameter>&#160;:</term>
+<listitem><simpara> a reference to <link linkend="main"><function>main()</function></link>'s argc;
+this will be decreased if arguments are parsed
+out of the argument array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argv</parameter>&#160;:</term>
+<listitem><simpara> a reference to <link linkend="main"><function>main()</function></link>'s argc;
+this may have arguments removed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-init-get-support-threads" role="macro">
+<title>gsk_init_get_support_threads()</title>
+<indexterm zone="gsk-init-get-support-threads"><primary sortas="gsk_init_get_support_threads">gsk_init_get_support_threads</primary></indexterm><programlisting>#define             gsk_init_get_support_threads()</programlisting>
+<para>
+Ascertain whether thread support is necessary.
+</para></refsect2>
+<refsect2 id="gsk-init-info-parse-args" role="function">
+<title>gsk_init_info_parse_args ()</title>
+<indexterm zone="gsk-init-info-parse-args"><primary sortas="gsk_init_info_parse_args">gsk_init_info_parse_args</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_init_info_parse_args            (<link linkend="GskInitInfo">GskInitInfo</link> *in_out,
+                                                         <link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv);</programlisting>
+<para>
+Parse/modify arguments and return their values in <parameter>in_out</parameter>.
+</para>
+<para>
+The only currently supported argument is --gsk-debug=FLAGS.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>in_out</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="GskInitInfo"><type>GskInitInfo</type></link> to fill.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argc</parameter>&#160;:</term>
+<listitem><simpara> the argument count (may be modified)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argv</parameter>&#160;:</term>
+<listitem><simpara> the arguments (may be modified)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-init-raw" role="function">
+<title>gsk_init_raw ()</title>
+<indexterm zone="gsk-init-raw"><primary sortas="gsk_init_raw">gsk_init_raw</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_init_raw                        (<link linkend="GskInitInfo">GskInitInfo</link> *info);</programlisting>
+<para>
+Initialize GSK.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>info</parameter>&#160;:</term>
+<listitem><simpara> information to use for initializing.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-init-flags" role="variable">
+<title>gsk_init_flags</title>
+<indexterm zone="gsk-init-flags"><primary sortas="gsk_init_flags">gsk_init_flags</primary></indexterm><programlisting>extern _GskInitFlags gsk_init_flags;
+</programlisting>
+<para>
+Flags given to <link linkend="gsk-init"><function>gsk_init()</function></link>.
+</para></refsect2>
+<refsect2 id="gsk-main-thread" role="variable">
+<title>gsk_main_thread</title>
+<indexterm zone="gsk-main-thread"><primary sortas="gsk_main_thread">gsk_main_thread</primary></indexterm><programlisting>extern gpointer gsk_main_thread;
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

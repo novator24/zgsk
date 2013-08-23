@@ -1,0 +1,112 @@
+<refentry id="gsk-gsklogringbuffer">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gsklogringbuffer.top_of_page">gsklogringbuffer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gsklogringbuffer</refname>
+<refpurpose>a line-oriented fixed-length ring buffer</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gsklogringbuffer.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskLogRingBuffer">GskLogRingBuffer</link>;
+<link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *  <link linkend="gsk-log-ring-buffer-new">gsk_log_ring_buffer_new</link>             (<link linkend="gsize">gsize</link> size);
+<link linkend="void">void</link>                <link linkend="gsk-log-ring-buffer-add">gsk_log_ring_buffer_add</link>             (<link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *line);
+<link linkend="char">char</link> *              <link linkend="gsk-log-ring-buffer-get">gsk_log_ring_buffer_get</link>             (const <link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *buffer);
+<link linkend="void">void</link>                <link linkend="gsk-log-ring-buffer-free">gsk_log_ring_buffer_free</link>            (<link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *buffer);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gsklogringbuffer.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+GskLogRingBuffer provides a very efficient way
+to keep track of the last N bytes of text data.
+Typically, this is used for logs that change too fast
+to justify keeping them in a file,
+but which are useful for getting status and debugging.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gsklogringbuffer.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskLogRingBuffer" role="struct">
+<title>GskLogRingBuffer</title>
+<indexterm zone="GskLogRingBuffer"><primary sortas="GskLogRingBuffer">GskLogRingBuffer</primary></indexterm><programlisting>typedef struct _GskLogRingBuffer GskLogRingBuffer;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-log-ring-buffer-new" role="function">
+<title>gsk_log_ring_buffer_new ()</title>
+<indexterm zone="gsk-log-ring-buffer-new"><primary sortas="gsk_log_ring_buffer_new">gsk_log_ring_buffer_new</primary></indexterm><programlisting><link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *  gsk_log_ring_buffer_new             (<link linkend="gsize">gsize</link> size);</programlisting>
+<para>
+Create a new ring buffer.  It will never contain
+more that <parameter>size</parameter> bytes of data.
+</para><variablelist role="params">
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara>the maximum number of bytes of data to buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the newly allocated ring-buffer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-log-ring-buffer-add" role="function">
+<title>gsk_log_ring_buffer_add ()</title>
+<indexterm zone="gsk-log-ring-buffer-add"><primary sortas="gsk_log_ring_buffer_add">gsk_log_ring_buffer_add</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_log_ring_buffer_add             (<link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *line);</programlisting>
+<para>
+Append text to the ring-buffer.
+</para>
+<para>It the text is too long, earlier lines may be erased.
+The text should NOT end with a newline--
+one will be added by this function.<variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>the buffer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>line</parameter>&#160;:</term>
+<listitem><simpara>the line to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-log-ring-buffer-get" role="function">
+<title>gsk_log_ring_buffer_get ()</title>
+<indexterm zone="gsk-log-ring-buffer-get"><primary sortas="gsk_log_ring_buffer_get">gsk_log_ring_buffer_get</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_log_ring_buffer_get             (const <link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *buffer);</programlisting>
+<para>
+Get the entire ring-buffer as a newly allocated string.
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>the buffer to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the newly allocated NUL-terminated string
+of the last text added to the buffer,
+as whole lines.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-log-ring-buffer-free" role="function">
+<title>gsk_log_ring_buffer_free ()</title>
+<indexterm zone="gsk-log-ring-buffer-free"><primary sortas="gsk_log_ring_buffer_free">gsk_log_ring_buffer_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_log_ring_buffer_free            (<link linkend="GskLogRingBuffer">GskLogRingBuffer</link> *buffer);</programlisting>
+<para>
+Free the ring-buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>the buffer to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

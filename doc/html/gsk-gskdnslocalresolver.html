@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskdnslocalresolver</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch09.html" title="DNS library (client and server support)">
+<link rel="prev" href="gsk-gskdnsclient.html" title="gskdnsclient">
+<link rel="next" href="gsk-gskdnsresolver.html" title="gskdnsresolver">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskdnsclient.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch09.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskdnsresolver.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskdnslocalresolver.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskdnslocalresolver.description" class="shortcut">Description</a>
+                 | 
+                <a href="#gsk-gskdnslocalresolver.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#gsk-gskdnslocalresolver.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskdnslocalresolver"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskdnslocalresolver.top_of_page"></a>gskdnslocalresolver</span></h2>
+<p>gskdnslocalresolver — a DNS resolver which uses just a local resource-record cache.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskdnslocalresolver.synopsis"></a><h2>Synopsis</h2>
+<a name="GskDnsLocalResolver"></a><pre class="synopsis">
+                    <a class="link" href="gsk-gskdnslocalresolver.html#GskDnsLocalResolverClass" title="GskDnsLocalResolverClass">GskDnsLocalResolverClass</a>;
+                    <a class="link" href="gsk-gskdnslocalresolver.html#GskDnsLocalResolver-struct" title="GskDnsLocalResolver">GskDnsLocalResolver</a>;
+<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *    <a class="link" href="gsk-gskdnslocalresolver.html#gsk-dns-local-resolver-new" title="gsk_dns_local_resolver_new ()">gsk_dns_local_resolver_new</a>          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);
+enum                <a class="link" href="gsk-gskdnslocalresolver.html#GskDnsLocalResult" title="enum GskDnsLocalResult">GskDnsLocalResult</a>;
+<a class="link" href="gsk-gskdnslocalresolver.html#GskDnsLocalResult" title="enum GskDnsLocalResult">GskDnsLocalResult</a>   <a class="link" href="gsk-gskdnslocalresolver.html#gsk-dns-local-resolver-answer" title="gsk_dns_local_resolver_answer ()">gsk_dns_local_resolver_answer</a>       (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsQuestion" title="GskDnsQuestion">GskDnsQuestion</a> *question,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsMessage" title="GskDnsMessage">GskDnsMessage</a> *results);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnslocalresolver.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskDnsLocalResolver
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnslocalresolver.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="gsk-gskdnslocalresolver.html#GskDnsLocalResolver--resource-cache" title='The "resource-cache" property'>resource-cache</a>"           <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a>*        : Read / Write
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnslocalresolver.description"></a><h2>Description</h2>
+<p>
+A DNS resolver which uses nothing more than a <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache"><span class="type">GskDnsRRCache</span></a>.
+This can be used to provide a backend for a server.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnslocalresolver.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDnsLocalResolverClass"></a><h3>GskDnsLocalResolverClass</h3>
+<pre class="programlisting">typedef struct _GskDnsLocalResolverClass GskDnsLocalResolverClass;</pre>
+<p>
+Class for local DNS resolvers.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsLocalResolver-struct"></a><h3>GskDnsLocalResolver</h3>
+<pre class="programlisting">typedef struct _GskDnsLocalResolver GskDnsLocalResolver;</pre>
+<p>
+Instance for local DNS resolvers.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-local-resolver-new"></a><h3>gsk_dns_local_resolver_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *    gsk_dns_local_resolver_new          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);</pre>
+<p>
+Create a new local resolver based on an optional resource-record cache.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> resource-record cache to use.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated resolver.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsLocalResult"></a><h3>enum GskDnsLocalResult</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_DNS_LOCAL_NO_DATA,
+  GSK_DNS_LOCAL_PARTIAL_DATA,
+  GSK_DNS_LOCAL_NEGATIVE,
+  GSK_DNS_LOCAL_SUCCESS
+} GskDnsLocalResult;
+</pre>
+<p>
+Possible results from a local DNS query.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-DNS-LOCAL-NO-DATA--CAPS"></a><span class="term"><code class="literal">GSK_DNS_LOCAL_NO_DATA</code></span></p></td>
+<td>
+No relevant data was found.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DNS-LOCAL-PARTIAL-DATA--CAPS"></a><span class="term"><code class="literal">GSK_DNS_LOCAL_PARTIAL_DATA</code></span></p></td>
+<td>
+Some data was found, but not a complete answer.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DNS-LOCAL-NEGATIVE--CAPS"></a><span class="term"><code class="literal">GSK_DNS_LOCAL_NEGATIVE</code></span></p></td>
+<td>
+A definite negative answer was found.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DNS-LOCAL-SUCCESS--CAPS"></a><span class="term"><code class="literal">GSK_DNS_LOCAL_SUCCESS</code></span></p></td>
+<td>
+All requested data was found successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-local-resolver-answer"></a><h3>gsk_dns_local_resolver_answer ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnslocalresolver.html#GskDnsLocalResult" title="enum GskDnsLocalResult">GskDnsLocalResult</a>   gsk_dns_local_resolver_answer       (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsQuestion" title="GskDnsQuestion">GskDnsQuestion</a> *question,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsMessage" title="GskDnsMessage">GskDnsMessage</a> *results);</pre>
+<p>
+Attempt to compute an answer to a DNS question,
+using only information locally available in
+the resource-record cache.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> resource-record cache to use to derive the answer to the question.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>question</code></em> :</span></p></td>
+<td> question to answer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>results</code></em> :</span></p></td>
+<td> message to store results in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the result of the query.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnslocalresolver.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDnsLocalResolver--resource-cache"></a><h3>The <code class="literal">"resource-cache"</code> property</h3>
+<pre class="programlisting">  "resource-cache"           <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a>*        : Read / Write</pre>
+<p>cache of resource data used to answer queries.</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<refentry id="gsk-gskdate">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskdate.top_of_page">gskdate</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskdate</refname>
+<refpurpose>Date parsing and printing code.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskdate.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+enum                <link linkend="GskDateFormatMask">GskDateFormatMask</link>;
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-date-parse">gsk_date_parse</link>                      (const <link linkend="char">char</link> *date_str,
+                                                         <link linkend="struct-tm">struct tm</link> *tm_out,
+                                                         <link linkend="int">int</link> *tzoffset_out,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> formats_allowed);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-date-parse-timet">gsk_date_parse_timet</link>                (const <link linkend="char">char</link> *date_str,
+                                                         <link linkend="time-t">time_t</link> *out,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> formats_allowed);
+<link linkend="void">void</link>                <link linkend="gsk-date-print">gsk_date_print</link>                      (const <link linkend="struct-tm">struct tm</link> *tm,
+                                                         <link linkend="char">char</link> *date_str_out,
+                                                         <link linkend="int">int</link> date_str_max_len,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> format);
+<link linkend="void">void</link>                <link linkend="gsk-date-print-timet">gsk_date_print_timet</link>                (<link linkend="time-t">time_t</link> t,
+                                                         <link linkend="char">char</link> *date_str_out,
+                                                         <link linkend="int">int</link> date_str_max_len,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> format);
+#define             <link linkend="GSK-DATE-MAX-LENGTH--CAPS">GSK_DATE_MAX_LENGTH</link>
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskdate.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Code to parse and print dates in a number of standard documented
+formats.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskdate.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskDateFormatMask" role="enum">
+<title>enum GskDateFormatMask</title>
+<indexterm zone="GskDateFormatMask"><primary sortas="GskDateFormatMask">GskDateFormatMask</primary></indexterm><programlisting>typedef enum
+{
+  /* rfc 822, obsoleted by rfc 1123:
+   *     Sun, 06 Nov 1994 08:49:37 GMT
+   */
+  GSK_DATE_FORMAT_1123 = (1 &lt;&lt; 0),
+
+  /* rfc 850, obsoleted by rfc 1036:
+   *     Sunday, 06-Nov-94 08:49:37 GMT
+   */
+  GSK_DATE_FORMAT_1036 = (1 &lt;&lt; 1), /* rfc 850, obsoleted by rfc 1036 */
+
+  /* ansi c's asctime () format:
+   *     Sun Nov  6 08:49:37 1994
+   */
+  GSK_DATE_FORMAT_ANSI_C = (1 &lt;&lt; 2),
+
+  /* ISO 8601 defines a variety of timestamps:
+       2003-04-04  YYYY-MM-DD
+       2003-04
+       2003
+       2003-035    YYYY-DOY  [DOY=day-of-year]
+
+       NOTE: hyphens may be omitted.
+
+       plus optional time-of-day:
+
+       23:59:59.34  HH:MM:SS.SS
+       23:59:59     HH:MM:SS
+       23:59        HH:MM   
+       23           HH
+
+       NOTE: colons may be omitted.
+
+       Either a space or 'T' separate date/time.
+
+       Timezone:
+          Z suffix means UTC
+	  +hh:mm or +hhmm or +hh   [or - versions]
+     */
+
+  GSK_DATE_FORMAT_ISO8601 = (1 &lt;&lt; 3),
+
+
+  GSK_DATE_FORMAT_HTTP = (GSK_DATE_FORMAT_1123 
+                        | GSK_DATE_FORMAT_1036
+			| GSK_DATE_FORMAT_ANSI_C)
+} GskDateFormatMask;
+</programlisting>
+<para>
+Formats to accept when parsing with <link linkend="gsk-date-parse"><function>gsk_date_parse()</function></link>.
+</para><variablelist role="enum">
+<varlistentry id="GSK-DATE-FORMAT-1123--CAPS" role="constant">
+<term><literal>GSK_DATE_FORMAT_1123</literal></term>
+<listitem><simpara>
+As per RFC 1123.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DATE-FORMAT-1036--CAPS" role="constant">
+<term><literal>GSK_DATE_FORMAT_1036</literal></term>
+<listitem><simpara>
+As per RFC 1036.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DATE-FORMAT-ANSI-C--CAPS" role="constant">
+<term><literal>GSK_DATE_FORMAT_ANSI_C</literal></term>
+<listitem><simpara>
+As per the ANSI C standard.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DATE-FORMAT-ISO8601--CAPS" role="constant">
+<term><literal>GSK_DATE_FORMAT_ISO8601</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DATE-FORMAT-HTTP--CAPS" role="constant">
+<term><literal>GSK_DATE_FORMAT_HTTP</literal></term>
+<listitem><simpara>
+All formats permitted by the HTTP standard.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-date-parse" role="function">
+<title>gsk_date_parse ()</title>
+<indexterm zone="gsk-date-parse"><primary sortas="gsk_date_parse">gsk_date_parse</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_date_parse                      (const <link linkend="char">char</link> *date_str,
+                                                         <link linkend="struct-tm">struct tm</link> *tm_out,
+                                                         <link linkend="int">int</link> *tzoffset_out,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> formats_allowed);</programlisting>
+<para>
+Parse a date to a struct tm.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>date_str</parameter>&#160;:</term>
+<listitem><simpara> the string containing a date.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tm_out</parameter>&#160;:</term>
+<listitem><simpara> location to store the time, as a struct tm.
+(That is, all the fields are broken out).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tzoffset_out</parameter>&#160;:</term>
+<listitem><simpara> location to store the timezone offset.
+(offset stored in minutes)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>formats_allowed</parameter>&#160;:</term>
+<listitem><simpara> bitwise-OR of all the allowed date formats.
+The parser will try to find a date in any of the allowed formats.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the date was successfully parsed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-date-parse-timet" role="function">
+<title>gsk_date_parse_timet ()</title>
+<indexterm zone="gsk-date-parse-timet"><primary sortas="gsk_date_parse_timet">gsk_date_parse_timet</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_date_parse_timet                (const <link linkend="char">char</link> *date_str,
+                                                         <link linkend="time-t">time_t</link> *out,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> formats_allowed);</programlisting>
+<para>
+Parse a date to a unix time.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>date_str</parameter>&#160;:</term>
+<listitem><simpara> the string containing a date.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> location to store the time, as a unix time.
+That is, the time since the start of 1970 GMT.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>formats_allowed</parameter>&#160;:</term>
+<listitem><simpara> bitwise-OR of all the allowed date formats.
+The parser will try to find a date in any of the allowed formats.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the date was successfully parsed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-date-print" role="function">
+<title>gsk_date_print ()</title>
+<indexterm zone="gsk-date-print"><primary sortas="gsk_date_print">gsk_date_print</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_date_print                      (const <link linkend="struct-tm">struct tm</link> *tm,
+                                                         <link linkend="char">char</link> *date_str_out,
+                                                         <link linkend="int">int</link> date_str_max_len,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> format);</programlisting>
+<para>
+Print the date to a buffer, in the format requested.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tm</parameter>&#160;:</term>
+<listitem><simpara> the time, separated into pieces.
+(All fields, even derived fields like tm_wday, must be set.)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>date_str_out</parameter>&#160;:</term>
+<listitem><simpara> buffer to fill with the date as a string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>date_str_max_len</parameter>&#160;:</term>
+<listitem><simpara> the length of <parameter>date_str_out</parameter>.  This should be 80 or greater
+to prevent clipping.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>format</parameter>&#160;:</term>
+<listitem><simpara> which presentation of the date to use.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-date-print-timet" role="function">
+<title>gsk_date_print_timet ()</title>
+<indexterm zone="gsk-date-print-timet"><primary sortas="gsk_date_print_timet">gsk_date_print_timet</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_date_print_timet                (<link linkend="time-t">time_t</link> t,
+                                                         <link linkend="char">char</link> *date_str_out,
+                                                         <link linkend="int">int</link> date_str_max_len,
+                                                         <link linkend="GskDateFormatMask">GskDateFormatMask</link> format);</programlisting>
+<para>
+Print the date to a buffer, in the format requested.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>t</parameter>&#160;:</term>
+<listitem><simpara> the time, as per unix tradition.  That is, this is the
+time since the beginning of 1970 GMT.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>date_str_out</parameter>&#160;:</term>
+<listitem><simpara> buffer to fill with the date as a string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>date_str_max_len</parameter>&#160;:</term>
+<listitem><simpara> the length of <parameter>date_str_out</parameter>.  This should be 80 or greater
+to prevent clipping.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>format</parameter>&#160;:</term>
+<listitem><simpara> which presentation of the date to use.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-DATE-MAX-LENGTH--CAPS" role="macro">
+<title>GSK_DATE_MAX_LENGTH</title>
+<indexterm zone="GSK-DATE-MAX-LENGTH--CAPS"><primary sortas="GSK_DATE_MAX_LENGTH">GSK_DATE_MAX_LENGTH</primary></indexterm><programlisting>#define             GSK_DATE_MAX_LENGTH</programlisting>
+<para>
+Number of bytes required for any date format given in
+gsk-date, including the terminating NUL.
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

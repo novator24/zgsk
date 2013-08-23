@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Datagram I/O</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskghelpers.html" title="Glib Helper Routines">
+<link rel="next" href="gsk-gskpacket.html" title="Binary Packet">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskghelpers.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskpacket.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskPacketQueue.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskPacketQueue.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskPacketQueue.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskPacketQueue"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskPacketQueue.top_of_page"></a>Datagram I/O</span></h2>
+<p>Datagram I/O — base class for datagram I/O classes</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskPacketQueue.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskPacketQueue.html#GskPacketQueueClass" title="GskPacketQueueClass">GskPacketQueueClass</a>;
+                    <a class="link" href="GskPacketQueue.html#GskPacketQueue-struct" title="GskPacketQueue">GskPacketQueue</a>;
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskPacketQueue.html#gsk-packet-queue-bind" title="gsk_packet_queue_bind ()">gsk_packet_queue_bind</a>               (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         <a class="link" href="GskPacketQueue.html#gsk-packet-queue-read" title="gsk_packet_queue_read ()">gsk_packet_queue_read</a>               (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> save_address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskPacketQueue.html#gsk-packet-queue-write" title="gsk_packet_queue_write ()">gsk_packet_queue_write</a>              (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-get-allow-address" title="gsk_packet_queue_get_allow_address()">gsk_packet_queue_get_allow_address</a>  (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-get-allow-no-address" title="gsk_packet_queue_get_allow_no_address()">gsk_packet_queue_get_allow_no_address</a>(queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-get-misses-packets" title="gsk_packet_queue_get_misses_packets()">gsk_packet_queue_get_misses_packets</a> (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-get-is-readable" title="gsk_packet_queue_get_is_readable()">gsk_packet_queue_get_is_readable</a>    (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-get-is-writable" title="gsk_packet_queue_get_is_writable()">gsk_packet_queue_get_is_writable</a>    (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-peek-bound-address" title="gsk_packet_queue_peek_bound_address()">gsk_packet_queue_peek_bound_address</a> (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-mark-allow-address" title="gsk_packet_queue_mark_allow_address()">gsk_packet_queue_mark_allow_address</a> (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-mark-allow-no-address" title="gsk_packet_queue_mark_allow_no_address()">gsk_packet_queue_mark_allow_no_address</a>(queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-mark-misses-packets" title="gsk_packet_queue_mark_misses_packets()">gsk_packet_queue_mark_misses_packets</a>(queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-mark-is-readable" title="gsk_packet_queue_mark_is_readable()">gsk_packet_queue_mark_is_readable</a>   (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-mark-is-writable" title="gsk_packet_queue_mark_is_writable()">gsk_packet_queue_mark_is_writable</a>   (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-clear-allow-address" title="gsk_packet_queue_clear_allow_address()">gsk_packet_queue_clear_allow_address</a>(queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-clear-allow-no-address" title="gsk_packet_queue_clear_allow_no_address()">gsk_packet_queue_clear_allow_no_address</a>(queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-clear-misses-packets" title="gsk_packet_queue_clear_misses_packets()">gsk_packet_queue_clear_misses_packets</a>(queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-clear-is-readable" title="gsk_packet_queue_clear_is_readable()">gsk_packet_queue_clear_is_readable</a>  (queue)
+#define             <a class="link" href="GskPacketQueue.html#gsk-packet-queue-clear-is-writable" title="gsk_packet_queue_clear_is_writable()">gsk_packet_queue_clear_is_writable</a>  (queue)
+void                <a class="link" href="GskPacketQueue.html#gsk-packet-queue-set-bound-addresss" title="gsk_packet_queue_set_bound_addresss ()">gsk_packet_queue_set_bound_addresss</a> (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueue.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+         +----GskPacketQueue
+               +----<a class="link" href="GskPacketQueueFd.html" title="GskPacketQueueFd">GskPacketQueueFd</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueue.description"></a><h2>Description</h2>
+<p>
+Datagram I/O means binary packets of data are the transmission unit.
+You can bind to an address in the right family,
+and read and write packets.
+Unless the packet_queue is bound, it is unlikely to ever be readable.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueue.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskPacketQueueClass"></a><h3>GskPacketQueueClass</h3>
+<pre class="programlisting">typedef struct {
+  GskIOClass io_class;
+  gboolean   (*bind)  (GskPacketQueue    *queue,
+		       GskSocketAddress  *addr,
+		       GError           **error);
+  GskPacket *(*read)  (GskPacketQueue    *queue,
+		       gboolean           save_address,
+		       GError           **error);
+  gboolean   (*write) (GskPacketQueue    *queue,
+		       GskPacket         *out,
+		       GError           **error);
+} GskPacketQueueClass;
+</pre>
+<p>
+Base class for an object which can input and output packets.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskIO.html#GskIOClass" title="GskIOClass">GskIOClass</a> <em class="structfield"><code>io_class</code></em>;</span></p></td>
+<td>parent class.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>bind</code></em> ()</span></p></td>
+<td>bind to a particular socket-address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>read</code></em> ()</span></p></td>
+<td>read an incoming packet.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>write</code></em> ()</span></p></td>
+<td>write an outgoing packet.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskPacketQueue-struct"></a><h3>GskPacketQueue</h3>
+<pre class="programlisting">typedef struct _GskPacketQueue GskPacketQueue;</pre>
+<p>
+Abstract instance which can read and write packets.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-bind"></a><h3>gsk_packet_queue_bind ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_packet_queue_bind               (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Bind a packet queue to receive on a particular address.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> the packet queue to bind to a particular address.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the address to receive packets from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the bind call succeeded.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-read"></a><h3>gsk_packet_queue_read ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *         gsk_packet_queue_read               (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> save_address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Read a packet from the queue, optionally tracking whence it came.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> to try to read a packet from
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>save_address</code></em> :</span></p></td>
+<td> whether to create a remote address indication.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new packet, or NULL on error or if no packet was available.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-write"></a><h3>gsk_packet_queue_write ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_packet_queue_write              (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a class="link" href="gsk-gskpacket.html#GskPacket" title="GskPacket">GskPacket</a> *out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Try and write a packet to the queue.
+If the packet has no address, then the packet-queue must allow_no_address.
+If the packet has an address, then the packet-queue must allow_address.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> to try to write a packet to
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> outgoing packet.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the write succeeded.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-get-allow-address"></a><h3>gsk_packet_queue_get_allow_address()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_get_allow_address(queue)</pre>
+<p>
+Determine whether packets with remote addresses may be written to this packet queue.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-get-allow-no-address"></a><h3>gsk_packet_queue_get_allow_no_address()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_get_allow_no_address(queue)</pre>
+<p>
+Determine whether packets without a remote address may be written to this packet queue.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-get-misses-packets"></a><h3>gsk_packet_queue_get_misses_packets()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_get_misses_packets(queue)</pre>
+<p>
+Determine whether the packet-queue drops incoming packets.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-get-is-readable"></a><h3>gsk_packet_queue_get_is_readable()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_get_is_readable(queue)</pre>
+<p>
+Determine whether the packet-queue may have incoming packets.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-get-is-writable"></a><h3>gsk_packet_queue_get_is_writable()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_get_is_writable(queue)</pre>
+<p>
+Determine whether the packet-queue may have packets written to it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-peek-bound-address"></a><h3>gsk_packet_queue_peek_bound_address()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_peek_bound_address(queue)</pre>
+<p>
+Get the address this queue is bound to, or NULL.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-mark-allow-address"></a><h3>gsk_packet_queue_mark_allow_address()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_mark_allow_address(queue)</pre>
+<p>
+Indicate that this packet-queue can accept outgoing packets which have an address.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-mark-allow-no-address"></a><h3>gsk_packet_queue_mark_allow_no_address()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_mark_allow_no_address(queue)</pre>
+<p>
+Indicate that this packet-queue can accept outgoing packets which have an no address.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-mark-misses-packets"></a><h3>gsk_packet_queue_mark_misses_packets()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_mark_misses_packets(queue)</pre>
+<p>
+Indicate that this packet-queue may drop incoming packets.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-mark-is-readable"></a><h3>gsk_packet_queue_mark_is_readable()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_mark_is_readable(queue)</pre>
+<p>
+Indicate that this packet-queue may be read from.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-mark-is-writable"></a><h3>gsk_packet_queue_mark_is_writable()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_mark_is_writable(queue)</pre>
+<p>
+Indicate that this packet-queue may be written to.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-clear-allow-address"></a><h3>gsk_packet_queue_clear_allow_address()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_clear_allow_address(queue)</pre>
+<p>
+Indicate that this packet-queue cannot accept outgoing packets which have an address.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-clear-allow-no-address"></a><h3>gsk_packet_queue_clear_allow_no_address()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_clear_allow_no_address(queue)</pre>
+<p>
+Indicate that this packet-queue cannot accept outgoing packets which have no address.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-clear-misses-packets"></a><h3>gsk_packet_queue_clear_misses_packets()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_clear_misses_packets(queue)</pre>
+<p>
+Indicate that this packet-queue will not drop incoming packets.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-clear-is-readable"></a><h3>gsk_packet_queue_clear_is_readable()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_clear_is_readable(queue)</pre>
+<p>
+Indicate that this packet-queue may not be read from.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-clear-is-writable"></a><h3>gsk_packet_queue_clear_is_writable()</h3>
+<pre class="programlisting">#define             gsk_packet_queue_clear_is_writable(queue)</pre>
+<p>
+Indicate that this packet-queue may not be written to.
+</p>
+<p>
+This should only be used by derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the packet-queue to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-packet-queue-set-bound-addresss"></a><h3>gsk_packet_queue_set_bound_addresss ()</h3>
+<pre class="programlisting">void                gsk_packet_queue_set_bound_addresss (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *queue,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address);</pre>
+<p>
+Set the bound_address member of the packet-queue safely.
+</p>
+<p>
+This should only be called by implementations
+which automatically bind to certain addresses.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> queue to mark
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> address to which the queue has been bound.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskPacketQueue.see-also"></a><h2>See Also</h2>
+<p>
+GskIO
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

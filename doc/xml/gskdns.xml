@@ -1,0 +1,1613 @@
+<refentry id="gsk-gskdns">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskdns.top_of_page">gskdns</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskdns</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskdns.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-DNS-PORT--CAPS">GSK_DNS_PORT</link>
+                    <link linkend="GskDnsMessage">GskDnsMessage</link>;
+                    <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link>;
+                    <link linkend="GskDnsQuestion">GskDnsQuestion</link>;
+enum                <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link>;
+enum                <link linkend="GskDnsResourceClass">GskDnsResourceClass</link>;
+#define             <link linkend="GSK-DNS-SERIAL-LESS-THAN--CAPS">GSK_DNS_SERIAL_LESS_THAN</link>            (serial_1, serial_2)
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-generic">gsk_dns_rr_new_generic</link>           (<link linkend="GskDnsMessage">GskDnsMessage</link> *allocator,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-a">gsk_dns_rr_new_a</link>                 (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="guint8">guint8</link> *ip_address,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-aaaa">gsk_dns_rr_new_aaaa</link>              (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="guint8">guint8</link> *address,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-ns">gsk_dns_rr_new_ns</link>                (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *name_server,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-cname">gsk_dns_rr_new_cname</link>             (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *canonical_name,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-ptr">gsk_dns_rr_new_ptr</link>               (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *ptr,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-mx">gsk_dns_rr_new_mx</link>                (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         <link linkend="int">int</link> preference,
+                                                         const <link linkend="char">char</link> *mail_host,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-hinfo">gsk_dns_rr_new_hinfo</link>             (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *cpu,
+                                                         const <link linkend="char">char</link> *os,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-soa">gsk_dns_rr_new_soa</link>               (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *mname,
+                                                         const <link linkend="char">char</link> *rname,
+                                                         <link linkend="guint32">guint32</link> serial,
+                                                         <link linkend="guint32">guint32</link> refresh_time,
+                                                         <link linkend="guint32">guint32</link> retry_time,
+                                                         <link linkend="guint32">guint32</link> expire_time,
+                                                         <link linkend="guint32">guint32</link> minimum_time,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-txt">gsk_dns_rr_new_txt</link>               (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *text,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-free">gsk_dns_rr_free</link>                     (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-copy">gsk_dns_rr_copy</link>                  (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-new-wildcard">gsk_dns_rr_new_wildcard</link>          (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint">guint</link> ttl,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsQuestion">GskDnsQuestion</link> *    <link linkend="gsk-dns-question-new">gsk_dns_question_new</link>                (const <link linkend="char">char</link> *query_name,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="GskDnsQuestion">GskDnsQuestion</link> *    <link linkend="gsk-dns-question-copy">gsk_dns_question_copy</link>               (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="void">void</link>                <link linkend="gsk-dns-question-free">gsk_dns_question_free</link>               (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-text-parse">gsk_dns_rr_text_parse</link>            (const <link linkend="char">char</link> *record,
+                                                         const <link linkend="char">char</link> *last_owner,
+                                                         const <link linkend="char">char</link> *origin,
+                                                         <link linkend="char">char</link> **err_msg,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);
+<link linkend="char">char</link> *              <link linkend="gsk-dns-rr-text-to-str">gsk_dns_rr_text_to_str</link>              (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *rr,
+                                                         const <link linkend="char">char</link> *last_owner);
+<link linkend="char">char</link> *              <link linkend="gsk-dns-question-text-to-str">gsk_dns_question_text_to_str</link>        (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-text-write">gsk_dns_rr_text_write</link>               (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *rr,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *out_buffer,
+                                                         const <link linkend="char">char</link> *last_owner);
+enum                <link linkend="GskDnsResponseCode">GskDnsResponseCode</link>;
+<link linkend="GskDnsMessage">GskDnsMessage</link> *     <link linkend="gsk-dns-message-new">gsk_dns_message_new</link>                 (<link linkend="guint16">guint16</link> id,
+                                                         <link linkend="gboolean">gboolean</link> is_request);
+<link linkend="GskDnsMessage">GskDnsMessage</link> *     <link linkend="gsk-dns-message-parse-buffer">gsk_dns_message_parse_buffer</link>        (<link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="GskDnsMessage">GskDnsMessage</link> *     <link linkend="gsk-dns-message-parse-data">gsk_dns_message_parse_data</link>          (const <link linkend="guint8">guint8</link> *data,
+                                                         <link linkend="guint">guint</link> length,
+                                                         <link linkend="guint">guint</link> *bytes_used_out);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-write-buffer">gsk_dns_message_write_buffer</link>        (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gboolean">gboolean</link> compress);
+<link linkend="GskPacket">GskPacket</link> *         <link linkend="gsk-dns-message-to-packet">gsk_dns_message_to_packet</link>           (<link linkend="GskDnsMessage">GskDnsMessage</link> *message);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-append-question">gsk_dns_message_append_question</link>     (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-append-answer">gsk_dns_message_append_answer</link>       (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *answer);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-append-auth">gsk_dns_message_append_auth</link>         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *auth);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-append-addl">gsk_dns_message_append_addl</link>         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *addl);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-remove-question">gsk_dns_message_remove_question</link>     (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-remove-answer">gsk_dns_message_remove_answer</link>       (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *answer);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-remove-auth">gsk_dns_message_remove_auth</link>         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *auth);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-remove-addl">gsk_dns_message_remove_addl</link>         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *addl);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-unref">gsk_dns_message_unref</link>               (<link linkend="GskDnsMessage">GskDnsMessage</link> *message);
+<link linkend="void">void</link>                <link linkend="gsk-dns-message-ref">gsk_dns_message_ref</link>                 (<link linkend="GskDnsMessage">GskDnsMessage</link> *message);
+<link linkend="void">void</link>                <link linkend="gsk-dns-dump-message-fp">gsk_dns_dump_message_fp</link>             (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="FILE--CAPS">FILE</link> *fp);
+<link linkend="void">void</link>                <link linkend="gsk-dns-dump-question-fp">gsk_dns_dump_question_fp</link>            (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question,
+                                                         <link linkend="FILE--CAPS">FILE</link> *fp);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-dns-parse-ip-address">gsk_dns_parse_ip_address</link>            (const <link linkend="char">char</link> **pat,
+                                                         <link linkend="guint8">guint8</link> *ip_addr_out);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-test-domain-name-validity">gsk_test_domain_name_validity</link>       (const <link linkend="char">char</link> *domain_name);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskdns.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskdns.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-DNS-PORT--CAPS" role="macro">
+<title>GSK_DNS_PORT</title>
+<indexterm zone="GSK-DNS-PORT--CAPS"><primary sortas="GSK_DNS_PORT">GSK_DNS_PORT</primary></indexterm><programlisting>#define             GSK_DNS_PORT</programlisting>
+<para>
+The default TCP and UDP port on this DNS is transacted.
+Nameservers, unlike mots servers, basically must be on this port,
+since the protocol has no way to specify which port of a nameserver
+to try.
+</para></refsect2>
+<refsect2 id="GskDnsMessage" role="struct">
+<title>GskDnsMessage</title>
+<indexterm zone="GskDnsMessage"><primary sortas="GskDnsMessage">GskDnsMessage</primary></indexterm><programlisting>typedef struct {
+  /* Header: fixed data about all queries */
+  guint16       id;       /* used by requestor to match queries and replies */
+
+  /* Is this a query or a response? */
+  guint16       is_query : 1;
+
+  guint16       is_authoritative : 1;
+  guint16       is_truncated : 1;
+
+  /* [Responses only] the `RA bit': whether the server is willing to provide
+   *                                recursive services. (cf 1034, 4.3.1)
+   */
+  guint16       recursion_available : 1;
+
+  /* [Queries only] the `RD bit': whether the requester wants recursive
+   *                              service for this queries. (cf 1034, 4.3.1)
+   */
+  guint16       recursion_desired : 1;
+
+  /* Question: Carries the query name and other query parameters. */
+  /* `qtype' (names are from RFC 1034, section 3.7.1): the query type */
+  GSList       *questions;	/* of GskDnsQuestion */
+
+  /* Answer: Carries RRs which directly answer the query. */
+  GskDnsResponseCode error_code;
+  GSList       *answers;	/* of GskDnsResourceRecord */
+
+  /* Authority: Carries RRs which describe other authoritative servers.
+   *            May optionally carry the SOA RR for the authoritative
+   *            data in the answer section.
+   */
+  GSList       *authority;	/* of GskDnsResourceRecord */
+
+  /* Additional: Carries RRs which may be helpful in using the RRs in the
+   *             other sections.
+   */
+  GSList       *additional;	/* of GskDnsResourceRecord */
+} GskDnsMessage;
+</programlisting>
+<para>
+This structure encapsulates a DNS packet, either a query or a response.
+</para>
+<para>
+Many of the field descriptions are taken from RFC 1035, Section 4.1.1.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>id</structfield>;</term>
+<listitem><simpara>this number is used by the client to match together queries and responses.
+So a server's responses must set this to the same value as for the query.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>is_query</structfield>&#160;:&#160;1;</term>
+<listitem><simpara>whether the Message is a query.  Otherwise, it is a response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>is_authoritative</structfield>&#160;:&#160;1;</term>
+<listitem><simpara>only for responses.  Whether the DNS server sending the message
+is the authority for the first entry in the answer section which matches
+the query name, ie the owner of the first entry in the question section.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>is_truncated</structfield>&#160;:&#160;1;</term>
+<listitem><simpara>specifies that this message was truncated
+due to length greater than that permitted on the
+transmission channel.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>recursion_available</structfield>&#160;:&#160;1;</term>
+<listitem><simpara>
+Recursion Available - this be is set or cleared in a
+response, and denotes whether recursive query support is
+available in the name server.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>recursion_desired</structfield>&#160;:&#160;1;</term>
+<listitem><simpara>
+Recursion Desired - this bit may be set in a query and
+is copied into the response.  If RD is set, it directs
+the name server to pursue the query recursively.
+Recursive query support is optional.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>questions</structfield>;</term>
+<listitem><simpara>List of <link linkend="GskDnsQuestion"><type>GskDnsQuestion</type></link>  For a query, this is the most important section.
+Questions are often found in a response; they should just be copies of questions
+from the corresponding query.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskDnsResponseCode">GskDnsResponseCode</link>&#160;<structfield>error_code</structfield>;</term>
+<listitem><simpara>in a response, this is a <link linkend="GskDnsResponseCode"><type>GskDnsResponseCode</type></link> telling what went
+wrong, if anything.  0 means "no error".
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>answers</structfield>;</term>
+<listitem><simpara>In a response, this is a list of <link linkend="GskDnsResourceRecord"><type>GskDnsResourceRecord</type></link>'s.
+They should lead toward answering the question in the query.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>authority</structfield>;</term>
+<listitem><simpara>resource records which give information about 
+authority nameservers relevant to the <parameter>answers</parameter>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>additional</structfield>;</term>
+<listitem><simpara>resource records which give auxilliary useful information.
+For example, it is typical to give an address (an A record) for any
+nameservers (NS records) given in prior sections.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResourceRecord" role="struct">
+<title>GskDnsResourceRecord</title>
+<indexterm zone="GskDnsResourceRecord"><primary sortas="GskDnsResourceRecord">GskDnsResourceRecord</primary></indexterm><programlisting>typedef struct {
+  GskDnsResourceRecordType  type;
+  char                     *owner;     /* where the resource_record is found */
+  guint32                   time_to_live;
+  GskDnsResourceClass       record_class;
+
+  /* rdata: record type specific data */
+  union
+  {
+    /* For GSK_DNS_RR_HOST_ADDRESS and GSK_DNS_CLASS_INTERNET */
+    struct
+    {
+      guint8 ip_address[4];
+    } a;
+
+		/* unsupported */
+    /* For GSK_DNS_RR_HOST_ADDRESS and GSK_DNS_CLASS_CHAOS */
+    struct
+    {
+      char *chaos_name;
+      guint16 chaos_address;
+    } a_chaos;
+
+    /* For GSK_DNS_RR_CNAME, GSK_DNS_RR_POINTER, GSK_DNS_RR_NAME_SERVER */
+    char *domain_name;
+
+    /* For GSK_DNS_RR_MAIL_EXCHANGE */
+    struct
+    {
+      guint preference_value; /* "lower is better" */
+
+      char *mail_exchange_host_name;
+    } mx;
+
+    /* For GSK_DNS_RR_TEXT */
+    char *txt;
+
+    /* For GSK_DNS_RR_HOST_INFO */
+    struct
+    {
+      char *cpu;
+      char *os;
+    } hinfo;
+
+
+    /* SOA: Start Of a zone of Authority.
+     *
+     * Comments cut-n-pasted from RFC 1035, 3.3.13.
+     */
+    struct
+    {
+      /* The domain-name of the name server that was the
+	 original or primary source of data for this zone. */
+      char *mname;
+
+      /* specifies the mailbox of the
+	 person responsible for this zone. */
+      char *rname;
+
+      /* The unsigned 32 bit version number of the original copy
+	 of the zone.  Zone transfers preserve this value.  This
+	 value wraps and should be compared using sequence space
+	 arithmetic. */
+      guint32 serial;
+
+      /* A 32 bit time interval before the zone should be
+	 refreshed. (cf 1034, 4.3.5) [in seconds] */
+      guint32 refresh_time;
+
+      /* A 32 bit time interval that should elapse before a
+	 failed refresh should be retried. [in seconds] */
+      guint32 retry_time;
+
+      /* A 32 bit time value that specifies the upper limit on
+	 the time interval that can elapse before the zone is no
+	 longer authoritative. [in seconds] */
+      guint32 expire_time;
+
+      /* The unsigned 32 bit minimum TTL field that should be
+	 exported with any RR from this zone. [in seconds] */
+      guint32 minimum_time;
+    } soa;
+
+    struct {
+      guint8 address[16];
+    } aaaa;
+} GskDnsResourceRecord;
+</programlisting>
+<para>
+An atom of information about a host in the DNS system.
+The exact type of information depends on <parameter>type</parameter>,
+but it may be a pointer to another name (CNAME, PTR),
+a pointer to another nameserver to query (NS),
+information about the authoritativeness and timeouts of the
+response (SOA), or a host's address (A).  There are other, rarely used,
+types of record, too.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link>&#160;<structfield>type</structfield>;</term>
+<listitem><simpara>what type of information this record contains.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>owner</structfield>;</term>
+<listitem><simpara>what host or domain name this record pertains to.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint32">guint32</link>&#160;<structfield>time_to_live</structfield>;</term>
+<listitem><simpara>how long this record should be retained, in seconds.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskDnsResourceClass">GskDnsResourceClass</link>&#160;<structfield>record_class</structfield>;</term>
+<listitem><simpara>what address domain this record applies to.
+Almost always 'IN' meaning the internet, or IPv4.  (Other systems are
+now obsolete).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>domain_name</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>txt</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsQuestion" role="struct">
+<title>GskDnsQuestion</title>
+<indexterm zone="GskDnsQuestion"><primary sortas="GskDnsQuestion">GskDnsQuestion</primary></indexterm><programlisting>typedef struct {
+  /* The domain name for which information is being requested. */
+  char                     *query_name;
+
+  /* The type of query we are asking. */
+  GskDnsResourceRecordType  query_type;
+
+  /* The domain where the query applies. */
+  GskDnsResourceClass       query_class;
+} GskDnsQuestion;
+</programlisting>
+<para>
+A question, asked by a client resolver of a server.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>query_name</structfield>;</term>
+<listitem><simpara>what hostname or domainname is desired.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link>&#160;<structfield>query_type</structfield>;</term>
+<listitem><simpara>what information about the host is wanted.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskDnsResourceClass">GskDnsResourceClass</link>&#160;<structfield>query_class</structfield>;</term>
+<listitem><simpara>which address namespace this question is about.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResourceRecordType" role="enum">
+<title>enum GskDnsResourceRecordType</title>
+<indexterm zone="GskDnsResourceRecordType"><primary sortas="GskDnsResourceRecordType">GskDnsResourceRecordType</primary></indexterm><programlisting>typedef enum
+{
+  /* An `A' record:  the ip address of a host. */
+  GSK_DNS_RR_HOST_ADDRESS = 1,
+
+  /* A `NS' record:  the authoritative name server for the domain */
+  GSK_DNS_RR_NAME_SERVER = 2,
+
+  /* A `CNAME' record:  indicate another name for an alias. */
+  GSK_DNS_RR_CANONICAL_NAME = 5,
+
+  /* A `HINFO' record: identifies the CPU and OS used by a host */
+  GSK_DNS_RR_HOST_INFO = 13,
+
+  /* A `MX' record */
+  GSK_DNS_RR_MAIL_EXCHANGE = 15,
+
+  /* A `PTR' record:  a pointer to another part of the domain name space */
+  GSK_DNS_RR_POINTER = 12,
+
+  /* A `SOA' record:  identifies the start of a zone of authority [???] */
+  GSK_DNS_RR_START_OF_AUTHORITY = 6,
+
+  /* A `TXT' record:  miscellaneous text */
+  GSK_DNS_RR_TEXT = 16,
+
+  /* A `WKS' record:  description of a well-known service */
+  GSK_DNS_RR_WELL_KNOWN_SERVICE = 11,
+
+  /* A `AAAA' record: for IPv6 (see RFC 1886) */
+  GSK_DNS_RR_HOST_ADDRESS_IPV6 = 28,
+
+  /* --- only allowed for queries --- */
+
+  /* A `AXFR' record: `special zone transfer QTYPE' */
+  GSK_DNS_RR_ZONE_TRANSFER = 252,
+
+  /* A `MAILB' record: matches all mail box related RRs (e.g. MB and MG). */
+  GSK_DNS_RR_ZONE_MAILB = 253,
+
+  /* A `*' record:  matches anything. */
+  GSK_DNS_RR_WILDCARD = 255
+
+} GskDnsResourceRecordType;
+</programlisting>
+<para>
+This is a list of types of information that may be
+available about some domain names.
+</para>
+<para>
+This is the list of types of resource-records,
+and it doubles as a list of types of questions that can
+be asked.  (See GskDnsResourceRecord::type
+and GskDnsQuestion::query_type)
+</para><variablelist role="enum">
+<varlistentry id="GSK-DNS-RR-HOST-ADDRESS--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_HOST_ADDRESS</literal></term>
+<listitem><simpara>
+The numeric address of the host of the given name.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-NAME-SERVER--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_NAME_SERVER</literal></term>
+<listitem><simpara>
+A nameserver which can be used to find more information
+about the name.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-CANONICAL-NAME--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_CANONICAL_NAME</literal></term>
+<listitem><simpara>
+Another name for the domain.  The canonical name given by
+this record should be the preferred name.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-HOST-INFO--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_HOST_INFO</literal></term>
+<listitem><simpara>
+Host data, like CPU and OS.  Never used.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-MAIL-EXCHANGE--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_MAIL_EXCHANGE</literal></term>
+<listitem><simpara>
+A host which is responsible for mail for this domain.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-POINTER--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_POINTER</literal></term>
+<listitem><simpara>
+A pointer to another name.  This is almost always
+used for reverse dns lookups.  See <link linkend="gsk-dns-rr-new-ptr"><function>gsk_dns_rr_new_ptr()</function></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-START-OF-AUTHORITY--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_START_OF_AUTHORITY</literal></term>
+<listitem><simpara>
+Information about how quickly to time out records from this domain.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-TEXT--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_TEXT</literal></term>
+<listitem><simpara>
+Free form information about the domain.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-WELL-KNOWN-SERVICE--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_WELL_KNOWN_SERVICE</literal></term>
+<listitem><simpara>
+XXX
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-HOST-ADDRESS-IPV6--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_HOST_ADDRESS_IPV6</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-ZONE-TRANSFER--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_ZONE_TRANSFER</literal></term>
+<listitem><simpara>
+XXX
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-ZONE-MAILB--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_ZONE_MAILB</literal></term>
+<listitem><simpara>
+XXX
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RR-WILDCARD--CAPS" role="constant">
+<term><literal>GSK_DNS_RR_WILDCARD</literal></term>
+<listitem><simpara>
+If reforming a query, this can be used to obtain records of any
+type about the domain name.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResourceClass" role="enum">
+<title>enum GskDnsResourceClass</title>
+<indexterm zone="GskDnsResourceClass"><primary sortas="GskDnsResourceClass">GskDnsResourceClass</primary></indexterm><programlisting>typedef enum
+{
+  /* `IN': the Internet system */
+  GSK_DNS_CLASS_INTERNET = 1,
+
+  /* `CH': the Chaos system (rare) */
+  GSK_DNS_CLASS_CHAOS = 3,
+
+  /* `HS': Hesiod (rare) */
+  GSK_DNS_CLASS_HESIOD = 4,
+
+  /* --- only for queries --- */
+
+  /* `*': any system */
+  GSK_DNS_CLASS_WILDCARD = 255
+} GskDnsResourceClass;
+</programlisting>
+<para>
+What type of addresses are we considering.
+Almost always GSK_DNS_CLASS_INTERNET.
+</para><variablelist role="enum">
+<varlistentry id="GSK-DNS-CLASS-INTERNET--CAPS" role="constant">
+<term><literal>GSK_DNS_CLASS_INTERNET</literal></term>
+<listitem><simpara>the internet (IPv4).
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-CLASS-CHAOS--CAPS" role="constant">
+<term><literal>GSK_DNS_CLASS_CHAOS</literal></term>
+<listitem><simpara>obsolete network.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-CLASS-HESIOD--CAPS" role="constant">
+<term><literal>GSK_DNS_CLASS_HESIOD</literal></term>
+<listitem><simpara>obsolete network.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-CLASS-WILDCARD--CAPS" role="constant">
+<term><literal>GSK_DNS_CLASS_WILDCARD</literal></term>
+<listitem><simpara>when performing a query, this can
+be used to find records for any class.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-DNS-SERIAL-LESS-THAN--CAPS" role="macro">
+<title>GSK_DNS_SERIAL_LESS_THAN()</title>
+<indexterm zone="GSK-DNS-SERIAL-LESS-THAN--CAPS"><primary sortas="GSK_DNS_SERIAL_LESS_THAN">GSK_DNS_SERIAL_LESS_THAN</primary></indexterm><programlisting>#define             GSK_DNS_SERIAL_LESS_THAN(serial_1, serial_2)</programlisting>
+<para>
+Test whether <parameter>serial_1</parameter> is less that <parameter>serial_2</parameter>.  See RFC 1982.
+</para><variablelist role="params">
+<varlistentry><term><parameter>serial_1</parameter>&#160;:</term>
+<listitem><simpara>the first serial number.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>serial_2</parameter>&#160;:</term>
+<listitem><simpara>the second serial number.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-generic" role="function">
+<title>gsk_dns_rr_new_generic ()</title>
+<indexterm zone="gsk-dns-rr-new-generic"><primary sortas="gsk_dns_rr_new_generic">gsk_dns_rr_new_generic</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_generic           (<link linkend="GskDnsMessage">GskDnsMessage</link> *allocator,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl);</programlisting>
+<para>
+Allocate a new blank record of the given type.
+</para>
+<para>
+The returned resource-record will probably not be valid,
+since most records have non-optional type-specific fields
+that the caller must initialize.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> a message from which to draw the resource-records memory.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> the owner field, which is common to all types of resource-records.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-a" role="function">
+<title>gsk_dns_rr_new_a ()</title>
+<indexterm zone="gsk-dns-rr-new-a"><primary sortas="gsk_dns_rr_new_a">gsk_dns_rr_new_a</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_a                 (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="guint8">guint8</link> *ip_address,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new A record.  It is a mapping from domain name
+to IP address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname whose ip address is given.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+    This is maximum time for this record to be stored on a remote host,
+    in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ip_address</parameter>&#160;:</term>
+<listitem><simpara> 4-byte IP address to contact <parameter>owner</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-aaaa" role="function">
+<title>gsk_dns_rr_new_aaaa ()</title>
+<indexterm zone="gsk-dns-rr-new-aaaa"><primary sortas="gsk_dns_rr_new_aaaa">gsk_dns_rr_new_aaaa</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_aaaa              (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="guint8">guint8</link> *address,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new AAAA record.  It is a mapping from domain name
+to IP address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname whose IPv6 address is given.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+    This is maximum time for this record to be stored on a remote host,
+    in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-ns" role="function">
+<title>gsk_dns_rr_new_ns ()</title>
+<indexterm zone="gsk-dns-rr-new-ns"><primary sortas="gsk_dns_rr_new_ns">gsk_dns_rr_new_ns</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_ns                (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *name_server,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new NS record.  It gives the name of a nameserver that can provide information about
+<parameter>owner</parameter>.
+</para>
+<para>
+If you are encountering this in response to a query,
+you typically also get the address of a nameserver is given in an Additional
+record of the message as an A record; otherwise, you'd probably have to look up
+the nameserver in a separate query.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose nameserver is given by this record.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+   This is maximum time for this record to be stored on a remote host, in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name_server</parameter>&#160;:</term>
+<listitem><simpara> the name of a nameserver responsible for this hostname or domainname.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-cname" role="function">
+<title>gsk_dns_rr_new_cname ()</title>
+<indexterm zone="gsk-dns-rr-new-cname"><primary sortas="gsk_dns_rr_new_cname">gsk_dns_rr_new_cname</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_cname             (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *canonical_name,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new CNAME record.  It gives the canonical name of a record.
+<parameter>owner</parameter>.
+</para>
+<para>
+Information about the canonical host may be given in the Additional section.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose canonical name is given by this record.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+    This is maximum time for this record to be stored on a remote host, in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>canonical_name</parameter>&#160;:</term>
+<listitem><simpara> the canonical name of <parameter>owner</parameter>.  The canonical name in some sense should
+be the most preferred name for this host, but in practice it's no different than
+a way to alias one name for another.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-ptr" role="function">
+<title>gsk_dns_rr_new_ptr ()</title>
+<indexterm zone="gsk-dns-rr-new-ptr"><primary sortas="gsk_dns_rr_new_ptr">gsk_dns_rr_new_ptr</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_ptr               (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *ptr,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new PTR record.  It gives ``a pointer to another part of the domain name space''
+according to [RFC 1034, Section 3.6]
+</para>
+<para>
+In practice, it is almost always used to do reverse-DNS.
+That is because, by RFC 1034 and 1035, if you have an IP address aa.bb.cc.dd,
+then looking up a PTR record for dd.cc.bb.aa.IN-ADDR.ARPA
+should give the name for the host.
+</para>
+<para>
+Of course, reverse DNS is a bit flaky, and is principally for debugging information.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose PTR record is being looked up.
+   In practice, this name is almost always in the .arpa domain.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+   This is maximum time for this record to be stored on a remote host,
+   in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ptr</parameter>&#160;:</term>
+<listitem><simpara> a hostname which <parameter>owner</parameter> points to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-mx" role="function">
+<title>gsk_dns_rr_new_mx ()</title>
+<indexterm zone="gsk-dns-rr-new-mx"><primary sortas="gsk_dns_rr_new_mx">gsk_dns_rr_new_mx</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_mx                (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         <link linkend="int">int</link> preference,
+                                                         const <link linkend="char">char</link> *mail_host,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a mail-exchange record.
+This gives a hostname which is responsible for main for the <parameter>owner</parameter>
+of this record.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose PTR record is being looked up.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>preference</parameter>&#160;:</term>
+<listitem><simpara> ???
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mail_host</parameter>&#160;:</term>
+<listitem><simpara> host responsible for mail for this domain.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-hinfo" role="function">
+<title>gsk_dns_rr_new_hinfo ()</title>
+<indexterm zone="gsk-dns-rr-new-hinfo"><primary sortas="gsk_dns_rr_new_hinfo">gsk_dns_rr_new_hinfo</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_hinfo             (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *cpu,
+                                                         const <link linkend="char">char</link> *os,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new HINFO record.  It ``identifies the CPU and OS used by a host'',
+see [RFC 1034, Section 3.6]
+</para>
+<para>
+In practice, it is never used.
+It is provided for completeness, and also for experimental use.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose PTR record is being looked up.
+   In practice, this name is almost always in the .arpa domain.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+   This is maximum time for this record to be stored on a remote host,
+   in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cpu</parameter>&#160;:</term>
+<listitem><simpara> CPU name for the host.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>os</parameter>&#160;:</term>
+<listitem><simpara> OS for the host.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-soa" role="function">
+<title>gsk_dns_rr_new_soa ()</title>
+<indexterm zone="gsk-dns-rr-new-soa"><primary sortas="gsk_dns_rr_new_soa">gsk_dns_rr_new_soa</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_soa               (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *mname,
+                                                         const <link linkend="char">char</link> *rname,
+                                                         <link linkend="guint32">guint32</link> serial,
+                                                         <link linkend="guint32">guint32</link> refresh_time,
+                                                         <link linkend="guint32">guint32</link> retry_time,
+                                                         <link linkend="guint32">guint32</link> expire_time,
+                                                         <link linkend="guint32">guint32</link> minimum_time,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new SOA record.  It ``identifies the start of a zone of authority'',
+see [RFC 1034, Section 3.6]
+</para>
+<para>
+[The field descriptions come from RFC 1035, section 3.3.13]</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose authority is being stated.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+   This is maximum time for this record to be stored on a remote host, in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mname</parameter>&#160;:</term>
+<listitem><simpara>
+The domain-name of the name server that was the
+original or primary source of data for this zone.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rname</parameter>&#160;:</term>
+<listitem><simpara>
+A domain-name which specifies the mailbox of the
+person responsible for this zone.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>serial</parameter>&#160;:</term>
+<listitem><simpara>
+The unsigned 32 bit version number of the original copy
+of the zone.  Zone transfers preserve this value.  This
+value wraps and should be compared using sequence space
+arithmetic.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>refresh_time</parameter>&#160;:</term>
+<listitem><simpara>
+A 32 bit time interval before the zone should be
+refreshed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>retry_time</parameter>&#160;:</term>
+<listitem><simpara>
+A 32 bit time interval that should elapse before a
+failed refresh should be retried.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>expire_time</parameter>&#160;:</term>
+<listitem><simpara>
+A 32 bit time value that specifies the upper limit on
+the time interval that can elapse before the zone is no
+longer authoritative.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>minimum_time</parameter>&#160;:</term>
+<listitem><simpara>
+The unsigned 32 bit minimum TTL field that should be
+exported with any RR from this zone.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-txt" role="function">
+<title>gsk_dns_rr_new_txt ()</title>
+<indexterm zone="gsk-dns-rr-new-txt"><primary sortas="gsk_dns_rr_new_txt">gsk_dns_rr_new_txt</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_txt               (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint32">guint32</link> ttl,
+                                                         const <link linkend="char">char</link> *text,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+TXT RRs are used to hold descriptive text.  The semantics of the text
+depends on the domain where it is found.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose authority is being stated.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+   This is maximum time for this record to be stored on a remote host, in seconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text</parameter>&#160;:</term>
+<listitem><simpara> text about the owner.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-free" role="function">
+<title>gsk_dns_rr_free ()</title>
+<indexterm zone="gsk-dns-rr-free"><primary sortas="gsk_dns_rr_free">gsk_dns_rr_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_free                     (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);</programlisting>
+<para>
+De-allocate memory associated with a resource record.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> the record to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-copy" role="function">
+<title>gsk_dns_rr_copy ()</title>
+<indexterm zone="gsk-dns-rr-copy"><primary sortas="gsk_dns_rr_copy">gsk_dns_rr_copy</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_copy                  (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Make a copy of a resource record, possibly coming from a given <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>'s
+allocator.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> the record to copy.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new copy of the resource record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-new-wildcard" role="function">
+<title>gsk_dns_rr_new_wildcard ()</title>
+<indexterm zone="gsk-dns-rr-new-wildcard"><primary sortas="gsk_dns_rr_new_wildcard">gsk_dns_rr_new_wildcard</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_new_wildcard          (const <link linkend="char">char</link> *owner,
+                                                         <link linkend="guint">guint</link> ttl,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Create a new wildcard ("*") record.  This should never need to be done, I guess.
+</para>
+<para>
+TODO: delete this function</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> hostname or domain name whose information is given by this record.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara> the time-to-live for this record.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the record: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated Resource Record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-question-new" role="function">
+<title>gsk_dns_question_new ()</title>
+<indexterm zone="gsk-dns-question-new"><primary sortas="gsk_dns_question_new">gsk_dns_question_new</primary></indexterm><programlisting><link linkend="GskDnsQuestion">GskDnsQuestion</link> *    gsk_dns_question_new                (const <link linkend="char">char</link> *query_name,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Allocate a new question.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>query_name</parameter>&#160;:</term>
+<listitem><simpara> the name for which information is being saught.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_type</parameter>&#160;:</term>
+<listitem><simpara> the type of resource-record that is saught.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_class</parameter>&#160;:</term>
+<listitem><simpara> the address namespace for the query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from; this can prevent you
+   from having to destroy the question: it will automatically get freed as
+   part of the <link linkend="GskDnsMessage"><type>GskDnsMessage</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new question.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-question-copy" role="function">
+<title>gsk_dns_question_copy ()</title>
+<indexterm zone="gsk-dns-question-copy"><primary sortas="gsk_dns_question_copy">gsk_dns_question_copy</primary></indexterm><programlisting><link linkend="GskDnsQuestion">GskDnsQuestion</link> *    gsk_dns_question_copy               (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Make a copy of a question, optionally drawing its memory
+from the given message's pool.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>question</parameter>&#160;:</term>
+<listitem><simpara> the question to make a copy of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> an optional message to get memory from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new question.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-question-free" role="function">
+<title>gsk_dns_question_free ()</title>
+<indexterm zone="gsk-dns-question-free"><primary sortas="gsk_dns_question_free">gsk_dns_question_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_question_free               (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);</programlisting>
+<para>
+Deallocate a question (unless it was drawn from a GskDnsMessage,
+in which case it will be destroyed automatically when
+the message is destroyed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>question</parameter>&#160;:</term>
+<listitem><simpara> the question to deallocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-text-parse" role="function">
+<title>gsk_dns_rr_text_parse ()</title>
+<indexterm zone="gsk-dns-rr-text-parse"><primary sortas="gsk_dns_rr_text_parse">gsk_dns_rr_text_parse</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_text_parse            (const <link linkend="char">char</link> *record,
+                                                         const <link linkend="char">char</link> *last_owner,
+                                                         const <link linkend="char">char</link> *origin,
+                                                         <link linkend="char">char</link> **err_msg,
+                                                         <link linkend="GskDnsMessage">GskDnsMessage</link> *allocator);</programlisting>
+<para>
+Parse a text representation of a message,
+as from a zone file or 'dig'.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> the record as a string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>last_owner</parameter>&#160;:</term>
+<listitem><simpara> the last parsed resource-record's "owner"
+field.  Spaces at the beginning of the line are
+taken to represent the same owner.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>origin</parameter>&#160;:</term>
+<listitem><simpara> the origin server for this record.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>err_msg</parameter>&#160;:</term>
+<listitem><simpara> optional place to put an allocated error message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allocator</parameter>&#160;:</term>
+<listitem><simpara> a message from which to draw the resource-records memory.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new resource-record, or NULL if an error occurred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-text-to-str" role="function">
+<title>gsk_dns_rr_text_to_str ()</title>
+<indexterm zone="gsk-dns-rr-text-to-str"><primary sortas="gsk_dns_rr_text_to_str">gsk_dns_rr_text_to_str</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_dns_rr_text_to_str              (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *rr,
+                                                         const <link linkend="char">char</link> *last_owner);</programlisting>
+<para>
+Convert the resource record into a format which would be appropriate
+for a zone file.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr</parameter>&#160;:</term>
+<listitem><simpara> the resource record to convert to a text string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>last_owner</parameter>&#160;:</term>
+<listitem><simpara> if non-NULL, then this should be the owner
+of the last resource record printed out.
+For human-readability, zone files merely indent subsequent
+lines that refer to the same owner.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated string.  The text of the resource-record.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-question-text-to-str" role="function">
+<title>gsk_dns_question_text_to_str ()</title>
+<indexterm zone="gsk-dns-question-text-to-str"><primary sortas="gsk_dns_question_text_to_str">gsk_dns_question_text_to_str</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_dns_question_text_to_str        (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);</programlisting>
+<para>
+Convert a question to a newly allocated string
+containing the question roughly as it would be
+printed by the unix program 'dig'.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>question</parameter>&#160;:</term>
+<listitem><simpara> question to convert to text.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-text-write" role="function">
+<title>gsk_dns_rr_text_write ()</title>
+<indexterm zone="gsk-dns-rr-text-write"><primary sortas="gsk_dns_rr_text_write">gsk_dns_rr_text_write</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_text_write               (<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *rr,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *out_buffer,
+                                                         const <link linkend="char">char</link> *last_owner);</programlisting>
+<para>
+Print a resource-record to a buffer as text.
+This will look similar to a zone file.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr</parameter>&#160;:</term>
+<listitem><simpara> the resource record to write as text into the buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out_buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to which the text resource-record should be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>last_owner</parameter>&#160;:</term>
+<listitem><simpara> if non-NULL, then spaces will be printed instead
+of <parameter>rr</parameter>-&gt;owner, if it is the same as last_owner.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskDnsResponseCode" role="enum">
+<title>enum GskDnsResponseCode</title>
+<indexterm zone="GskDnsResponseCode"><primary sortas="GskDnsResponseCode">GskDnsResponseCode</primary></indexterm><programlisting>typedef enum
+{
+  GSK_DNS_RESPONSE_ERROR_NONE             =0,
+  GSK_DNS_RESPONSE_ERROR_FORMAT           =1,
+  GSK_DNS_RESPONSE_ERROR_SERVER_FAILURE   =2,
+  GSK_DNS_RESPONSE_ERROR_NAME_ERROR       =3,
+  GSK_DNS_RESPONSE_ERROR_NOT_IMPLEMENTED  =4,
+  GSK_DNS_RESPONSE_ERROR_REFUSED          =5
+} GskDnsResponseCode;
+</programlisting>
+<para>
+Types of errors that can be encountered from the DNS server.
+(From RFC 1035 Section 4.1.1)
+All other values are reserved for future use.
+</para><variablelist role="enum">
+<varlistentry id="GSK-DNS-RESPONSE-ERROR-NONE--CAPS" role="constant">
+<term><literal>GSK_DNS_RESPONSE_ERROR_NONE</literal></term>
+<listitem><simpara>
+No error condition
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RESPONSE-ERROR-FORMAT--CAPS" role="constant">
+<term><literal>GSK_DNS_RESPONSE_ERROR_FORMAT</literal></term>
+<listitem><simpara>
+Format error - The name server was unable to interpret the query.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RESPONSE-ERROR-SERVER-FAILURE--CAPS" role="constant">
+<term><literal>GSK_DNS_RESPONSE_ERROR_SERVER_FAILURE</literal></term>
+<listitem><simpara>
+Server failure - The name server was unable to process this query due
+to a problem with the name server.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RESPONSE-ERROR-NAME-ERROR--CAPS" role="constant">
+<term><literal>GSK_DNS_RESPONSE_ERROR_NAME_ERROR</literal></term>
+<listitem><simpara>
+Name Error - Meaningful only for responses from an authoritative name
+server, this code signifies that the domain name referenced in the query
+does not exist.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RESPONSE-ERROR-NOT-IMPLEMENTED--CAPS" role="constant">
+<term><literal>GSK_DNS_RESPONSE_ERROR_NOT_IMPLEMENTED</literal></term>
+<listitem><simpara>
+Not Implemented - The name server does
+not support the requested kind of query.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DNS-RESPONSE-ERROR-REFUSED--CAPS" role="constant">
+<term><literal>GSK_DNS_RESPONSE_ERROR_REFUSED</literal></term>
+<listitem><simpara>
+Refused - The name server refuses to perform the specified operation for
+policy reasons.  For example, a name server may not wish to provide the
+information to the particular requester, or a name server may not wish to
+perform a particular operation (e.g., zone transfer) for particular data.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-new" role="function">
+<title>gsk_dns_message_new ()</title>
+<indexterm zone="gsk-dns-message-new"><primary sortas="gsk_dns_message_new">gsk_dns_message_new</primary></indexterm><programlisting><link linkend="GskDnsMessage">GskDnsMessage</link> *     gsk_dns_message_new                 (<link linkend="guint16">guint16</link> id,
+                                                         <link linkend="gboolean">gboolean</link> is_request);</programlisting>
+<para>
+Allocate a new blank GskDnsMessage.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>id</parameter>&#160;:</term>
+<listitem><simpara> the identifier used to match client requests to server responses.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_request</parameter>&#160;:</term>
+<listitem><simpara> whether the message is a client request.
+If FALSE, then the message is a server response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-parse-buffer" role="function">
+<title>gsk_dns_message_parse_buffer ()</title>
+<indexterm zone="gsk-dns-message-parse-buffer"><primary sortas="gsk_dns_message_parse_buffer">gsk_dns_message_parse_buffer</primary></indexterm><programlisting><link linkend="GskDnsMessage">GskDnsMessage</link> *     gsk_dns_message_parse_buffer        (<link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Parse a GskDnsMessage from a buffer, removing the binary data
+from the buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to parse to get a binary DNS message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new DNS message, or NULL if a parse error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-parse-data" role="function">
+<title>gsk_dns_message_parse_data ()</title>
+<indexterm zone="gsk-dns-message-parse-data"><primary sortas="gsk_dns_message_parse_data">gsk_dns_message_parse_data</primary></indexterm><programlisting><link linkend="GskDnsMessage">GskDnsMessage</link> *     gsk_dns_message_parse_data          (const <link linkend="guint8">guint8</link> *data,
+                                                         <link linkend="guint">guint</link> length,
+                                                         <link linkend="guint">guint</link> *bytes_used_out);</programlisting>
+<para>
+Parse a GskDnsMessage from a buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> binary data to parse into a DNS message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara> length of <parameter>data</parameter> in bytes.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bytes_used_out</parameter>&#160;:</term>
+<listitem><simpara> number of bytes of <parameter>data</parameter> actually used to make the
+  returned message, or NULL if you don't care.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new DNS message, or NULL if a parse error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-write-buffer" role="function">
+<title>gsk_dns_message_write_buffer ()</title>
+<indexterm zone="gsk-dns-message-write-buffer"><primary sortas="gsk_dns_message_write_buffer">gsk_dns_message_write_buffer</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_write_buffer        (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gboolean">gboolean</link> compress);</programlisting>
+<para>
+Create a serialized message to send in a packet, or
+whatever transport.
+</para>
+<para>
+XXX:  technically, DNS is supposed to support really crappy
+transport media, which only allow a very short message.
+We have no real control over how long the message will be,
+a priori, and we just ignore the problem...
+We casually try to send whatever packet a caller wants,
+even if it probably won't work in the transport layer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the DNS message to serialize.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> where to write the message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compress</parameter>&#160;:</term>
+<listitem><simpara> whether to use compression.  always specify TRUE!
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-to-packet" role="function">
+<title>gsk_dns_message_to_packet ()</title>
+<indexterm zone="gsk-dns-message-to-packet"><primary sortas="gsk_dns_message_to_packet">gsk_dns_message_to_packet</primary></indexterm><programlisting><link linkend="GskPacket">GskPacket</link> *         gsk_dns_message_to_packet           (<link linkend="GskDnsMessage">GskDnsMessage</link> *message);</programlisting>
+<para>
+Convert a DNS message into a packet.
+Typically then the packet will be added to a packet queue.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> a DNS message which is going to be sent out.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new packet containing the binary data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-append-question" role="function">
+<title>gsk_dns_message_append_question ()</title>
+<indexterm zone="gsk-dns-message-append-question"><primary sortas="gsk_dns_message_append_question">gsk_dns_message_append_question</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_append_question     (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);</programlisting>
+<para>
+Add a question to the QUESTION section of a GskDnsMessage.
+For client requests, the message usually consists of
+just questions.  For server responses, the message will
+have copies the questions that the message deals with.
+</para>
+<para>
+The question will be free'd by the message.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the message to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>question</parameter>&#160;:</term>
+<listitem><simpara> a question to add to the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-append-answer" role="function">
+<title>gsk_dns_message_append_answer ()</title>
+<indexterm zone="gsk-dns-message-append-answer"><primary sortas="gsk_dns_message_append_answer">gsk_dns_message_append_answer</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_append_answer       (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *answer);</programlisting>
+<para>
+Add an answer to the DNS message.
+This is done by servers when they have a direct
+answer to a question (either a real answer or a reference to
+a nameserver which can answer it).
+</para>
+<para>
+<parameter>answer</parameter> will be freed when <parameter>message</parameter> is freed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the message to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>answer</parameter>&#160;:</term>
+<listitem><simpara> a resource-record to add to the answer section of the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-append-auth" role="function">
+<title>gsk_dns_message_append_auth ()</title>
+<indexterm zone="gsk-dns-message-append-auth"><primary sortas="gsk_dns_message_append_auth">gsk_dns_message_append_auth</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_append_auth         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *auth);</programlisting>
+<para>
+Add an authority-record to the DNS message.
+This is done by servers to indicate who
+is in charge of certain names and caching information.
+</para>
+<para>
+<parameter>auth</parameter> will be freed when <parameter>message</parameter> is freed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the message to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara> a resource-record to add to the authority section of the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-append-addl" role="function">
+<title>gsk_dns_message_append_addl ()</title>
+<indexterm zone="gsk-dns-message-append-addl"><primary sortas="gsk_dns_message_append_addl">gsk_dns_message_append_addl</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_append_addl         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *addl);</programlisting>
+<para>
+Add an additional record to the DNS message.
+This may be done by servers as a courtesy and optimization.
+The most common use is to give the numeric IP address 
+when a nameserver referenced in the answers section.
+</para>
+<para>
+<parameter>auth</parameter> will be freed when <parameter>message</parameter> is freed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the message to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>addl</parameter>&#160;:</term>
+<listitem><simpara> a resource-record to add to the additional section of the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-remove-question" role="function">
+<title>gsk_dns_message_remove_question ()</title>
+<indexterm zone="gsk-dns-message-remove-question"><primary sortas="gsk_dns_message_remove_question">gsk_dns_message_remove_question</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_remove_question     (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsQuestion">GskDnsQuestion</link> *question);</programlisting>
+<para>
+Remove the question from the message's list,
+and delete the question.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> a DNS message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>question</parameter>&#160;:</term>
+<listitem><simpara> a question in the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-remove-answer" role="function">
+<title>gsk_dns_message_remove_answer ()</title>
+<indexterm zone="gsk-dns-message-remove-answer"><primary sortas="gsk_dns_message_remove_answer">gsk_dns_message_remove_answer</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_remove_answer       (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *answer);</programlisting>
+<para>
+Remove the record from the message's answer list.
+This frees the record.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> a DNS message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>answer</parameter>&#160;:</term>
+<listitem><simpara> an answer in the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-remove-auth" role="function">
+<title>gsk_dns_message_remove_auth ()</title>
+<indexterm zone="gsk-dns-message-remove-auth"><primary sortas="gsk_dns_message_remove_auth">gsk_dns_message_remove_auth</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_remove_auth         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *auth);</programlisting>
+<para>
+Remove the record from the message's authority list.
+This frees the record.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> a DNS message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara> an authority record in the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-remove-addl" role="function">
+<title>gsk_dns_message_remove_addl ()</title>
+<indexterm zone="gsk-dns-message-remove-addl"><primary sortas="gsk_dns_message_remove_addl">gsk_dns_message_remove_addl</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_remove_addl         (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *addl);</programlisting>
+<para>
+Remove the record from the message's additional list.
+This frees the record.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> a DNS message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>addl</parameter>&#160;:</term>
+<listitem><simpara> an additional record in the message.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-unref" role="function">
+<title>gsk_dns_message_unref ()</title>
+<indexterm zone="gsk-dns-message-unref"><primary sortas="gsk_dns_message_unref">gsk_dns_message_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_unref               (<link linkend="GskDnsMessage">GskDnsMessage</link> *message);</programlisting>
+<para>
+Decrease the reference-count on the message.
+The message will be destroyed once its ref-count
+gets to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the message to stop referencing.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-message-ref" role="function">
+<title>gsk_dns_message_ref ()</title>
+<indexterm zone="gsk-dns-message-ref"><primary sortas="gsk_dns_message_ref">gsk_dns_message_ref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_message_ref                 (<link linkend="GskDnsMessage">GskDnsMessage</link> *message);</programlisting>
+<para>
+Increase the reference count on the message by one.
+The message will not be destroyed until its ref-count
+gets to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the message to add a reference to.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-dump-message-fp" role="function">
+<title>gsk_dns_dump_message_fp ()</title>
+<indexterm zone="gsk-dns-dump-message-fp"><primary sortas="gsk_dns_dump_message_fp">gsk_dns_dump_message_fp</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_dump_message_fp             (<link linkend="GskDnsMessage">GskDnsMessage</link> *message,
+                                                         <link linkend="FILE--CAPS">FILE</link> *fp);</programlisting>
+<para>
+Dump a message to a FILE*, for debugging.
+This output format is modelled after the somewhat
+obscure unix utility 'dig'.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the message to print out.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fp</parameter>&#160;:</term>
+<listitem><simpara> the file to write the message out to.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-dump-question-fp" role="function">
+<title>gsk_dns_dump_question_fp ()</title>
+<indexterm zone="gsk-dns-dump-question-fp"><primary sortas="gsk_dns_dump_question_fp">gsk_dns_dump_question_fp</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_dump_question_fp            (<link linkend="GskDnsQuestion">GskDnsQuestion</link> *question,
+                                                         <link linkend="FILE--CAPS">FILE</link> *fp);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>question</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fp</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-parse-ip-address" role="function">
+<title>gsk_dns_parse_ip_address ()</title>
+<indexterm zone="gsk-dns-parse-ip-address"><primary sortas="gsk_dns_parse_ip_address">gsk_dns_parse_ip_address</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_dns_parse_ip_address            (const <link linkend="char">char</link> **pat,
+                                                         <link linkend="guint8">guint8</link> *ip_addr_out);</programlisting>
+<para>
+Parse a numeric IP address, in the standard fashion (RFC 1034, 3.6.1).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pat</parameter>&#160;:</term>
+<listitem><simpara> pointer which starts at a numeric IP address.  *<parameter>pat</parameter>
+will be updated to past the IP address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ip_addr_out</parameter>&#160;:</term>
+<listitem><simpara> the 4-byte IP address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the address was parsed successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-test-domain-name-validity" role="function">
+<title>gsk_test_domain_name_validity ()</title>
+<indexterm zone="gsk-test-domain-name-validity"><primary sortas="gsk_test_domain_name_validity">gsk_test_domain_name_validity</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_test_domain_name_validity       (const <link linkend="char">char</link> *domain_name);</programlisting>
+<para>
+Verify that the domain_name meets certain required to be a hostname
+on the internet.  In particular, all domain names MUST have &lt;= 128 parts
+each with &lt;= 63 characters.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>domain_name</parameter>&#160;:</term>
+<listitem><simpara> a name which is supposed to be a domain name to test for validity.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the domain name was valid.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

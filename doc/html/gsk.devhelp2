@@ -1,0 +1,1373 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="GSK Reference Manual" link="index.html" author="" name="gsk" version="2" language="c">
+  <chapters>
+    <sub name="Core Library Support" link="ch01.html">
+      <sub name="Lightweight Hookable Events" link="gsk-gskhook.html"/>
+      <sub name="Library Initialization" link="gsk-gskinit.html"/>
+      <sub name="Helpful Macros" link="gsk-gskmacros.html"/>
+      <sub name="Base Input/Output Object" link="GskIO.html"/>
+      <sub name="Binary Input/Output Stream Base" link="GskStream.html"/>
+      <sub name="gskstreamconnection" link="gsk-gskstreamconnection.html"/>
+      <sub name="Main Loop (Generic Event Management)" link="GskMainLoop.html"/>
+      <sub name="Socket Address Lookup by Name" link="gsk-gsknameresolver.html"/>
+      <sub name="Useful GTypes" link="gsk-gsktypes.html"/>
+      <sub name="GskBuffer" link="gsk-gskbuffer.html"/>
+      <sub name="Old-Fashioned errno Handling" link="gsk-gskerrno.html"/>
+      <sub name="Error Codes" link="gsk-gskerror.html"/>
+      <sub name="Trivial Main Functions." link="gsk-gskmain.html"/>
+      <sub name="Glib Helper Routines" link="gsk-gskghelpers.html"/>
+      <sub name="Datagram I/O" link="GskPacketQueue.html"/>
+      <sub name="Binary Packet" link="gsk-gskpacket.html"/>
+      <sub name="Listening for Connections" link="GskStreamListener.html"/>
+      <sub name="Client Stream" link="gsk-gskstreamclient.html"/>
+      <sub name="Socket Addresses." link="GskSocketAddress.html"/>
+      <sub name="gsklog" link="gsk-gsklog.html"/>
+      <sub name="Debugging Hints" link="tutorial-debugging-hints.html"/>
+      <sub name="Runtime Toggled Debug Logging" link="gsk-gskdebug.html"/>
+      <sub name="gskutils" link="gsk-gskutils.html"/>
+    </sub>
+    <sub name="Object Hierarchy" link="ch02.html"/>
+    <sub name="Tutorials" link="ch03.html">
+      <sub name="Writing a Generic Server" link="tutorial-server.html"/>
+      <sub name="Writing a Generic Client" link="tutorial-client.html"/>
+      <sub name="Writing an HTTP Server" link="tutorial-httpserver.html"/>
+      <sub name="Writing a HTTP Client" link="tutorial-httpclient.html"/>
+    </sub>
+    <sub name="Standard Implementations" link="ch04.html">
+      <sub name="GskPacketQueueFd" link="GskPacketQueueFd.html"/>
+      <sub name="GskStreamFd" link="GskStreamFd.html"/>
+      <sub name="GskStreamExternal" link="gsk-GskStreamExternal.html"/>
+      <sub name="GskStreamListenerSocket" link="GskStreamListenerSocket.html"/>
+      <sub name="gskbufferstream" link="gsk-gskbufferstream.html"/>
+    </sub>
+    <sub name="Standard Objects: the URL class" link="ch05.html">
+      <sub name="GskUrl" link="GskUrl.html"/>
+      <sub name="GskUrlTransfer" link="GskUrlTransfer.html"/>
+      <sub name="GskUrlTransferHttp" link="GskUrlTransferHttp.html"/>
+    </sub>
+    <sub name="Standard Streams:  the HTTP client and server" link="ch06.html">
+      <sub name="GskHttpHeader" link="GskHttpHeader.html"/>
+      <sub name="GskHttpRequest" link="GskHttpRequest.html"/>
+      <sub name="GskHttpResponse" link="GskHttpResponse.html"/>
+      <sub name="GskHttpClient" link="GskHttpClient.html"/>
+      <sub name="GskHttpServer" link="GskHttpServer.html"/>
+    </sub>
+    <sub name="Standard Streams:  standard compression algorithms" link="ch07.html">
+      <sub name="GskZlibDeflator" link="gsk-GskZlibDeflator.html"/>
+      <sub name="GskZlibInflator" link="gsk-GskZlibInflator.html"/>
+      <sub name="gskzlib" link="gsk-gskzlib.html"/>
+    </sub>
+    <sub name="Standard Streams:  utility streams" link="ch08.html">
+      <sub name="GskStreamQueue" link="gsk-GskStreamQueue.html"/>
+      <sub name="memory-based streams" link="gsk-gskmemory.html"/>
+    </sub>
+    <sub name="DNS library (client and server support)" link="ch09.html">
+      <sub name="gskdns" link="gsk-gskdns.html"/>
+      <sub name="gskdnsrrcache" link="gsk-gskdnsrrcache.html"/>
+      <sub name="gskdnsclient" link="gsk-gskdnsclient.html"/>
+      <sub name="gskdnslocalresolver" link="gsk-gskdnslocalresolver.html"/>
+      <sub name="gskdnsresolver" link="gsk-gskdnsresolver.html"/>
+      <sub name="gskdnsserver" link="gsk-gskdnsserver.html"/>
+    </sub>
+    <sub name="SSL interface" link="ch10.html">
+      <sub name="GskStreamSsl" link="gsk-gskstreamssl.html"/>
+    </sub>
+    <sub name="MIME handling" link="ch11.html">
+      <sub name="gskmimemultipartpiece" link="gsk-gskmimemultipartpiece.html"/>
+      <sub name="GskMimeMultipartDecoder" link="gsk-GskMimeMultipartDecoder.html"/>
+    </sub>
+    <sub name="RPC protocols" link="ch12.html">
+      <sub name="gskxmlrpc" link="gsk-gskxmlrpc.html"/>
+      <sub name="GskXmlrpcStream" link="gsk-GskXmlrpcStream.html"/>
+    </sub>
+    <sub name="Main Loops" link="ch13.html">
+      <sub name="GskMainLoopDevPoll" link="GskMainLoopDevPoll.html"/>
+      <sub name="GskMainLoopKqueue" link="GskMainLoopKqueue.html"/>
+      <sub name="GskMainLoopPoll" link="GskMainLoopPoll.html"/>
+      <sub name="GskMainLoopPollBase" link="GskMainLoopPollBase.html"/>
+      <sub name="GskMainLoopSelect" link="GskMainLoopSelect.html"/>
+    </sub>
+    <sub name="Odds and Ends" link="ch14.html">
+      <sub name="Base-64" link="gsk-gskbase64.html"/>
+      <sub name="gskhash" link="gsk-gskhash.html"/>
+      <sub name="gskmempool" link="gsk-gskmempool.html"/>
+      <sub name="gsknetworkinterface" link="gsk-gsknetworkinterface.html"/>
+      <sub name="gskdate" link="gsk-gskdate.html"/>
+    </sub>
+    <sub name="Macro Madness" link="ch15.html">
+      <sub name="gsklistmacros" link="gsk-gsklistmacros.html"/>
+      <sub name="gskrbtreemacros" link="gsk-gskrbtreemacros.html"/>
+      <sub name="gskqsortmacro" link="gsk-gskqsortmacro.html"/>
+    </sub>
+    <sub name="Questionable ideas" link="ch16.html">
+      <sub name="gsktree" link="gsk-gsktree.html"/>
+      <sub name="gskfork" link="gsk-gskfork.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <keyword type="struct" name="GskHook" link="gsk-gskhook.html#GskHook"/>
+    <keyword type="function" name="GskHookFunc ()" link="gsk-gskhook.html#GskHookFunc"/>
+    <keyword type="function" name="GskHookSetPollFunc ()" link="gsk-gskhook.html#GskHookSetPollFunc"/>
+    <keyword type="function" name="GskHookShutdownFunc ()" link="gsk-gskhook.html#GskHookShutdownFunc"/>
+    <keyword type="function" name="GskHookShutdownErrorFunc ()" link="gsk-gskhook.html#GskHookShutdownErrorFunc"/>
+    <keyword type="enum" name="enum GskHookFlags" link="gsk-gskhook.html#GskHookFlags"/>
+    <keyword type="macro" name="GSK_HOOK_GET_OBJECT()" link="gsk-gskhook.html#GSK-HOOK-GET-OBJECT--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_TEST_FLAG()" link="gsk-gskhook.html#GSK-HOOK-TEST-FLAG--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_SET_FLAG" link="gsk-gskhook.html#GSK-HOOK-SET-FLAG--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_CLEAR_FLAG()" link="gsk-gskhook.html#GSK-HOOK-CLEAR-FLAG--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_TEST_USER_FLAG()" link="gsk-gskhook.html#GSK-HOOK-TEST-USER-FLAG--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_MARK_USER_FLAG()" link="gsk-gskhook.html#GSK-HOOK-MARK-USER-FLAG--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_CLEAR_USER_FLAG()" link="gsk-gskhook.html#GSK-HOOK-CLEAR-USER-FLAG--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_TEST_SHUTTING_DOWN()" link="gsk-gskhook.html#GSK-HOOK-TEST-SHUTTING-DOWN--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_TEST_NEVER_BLOCKS()" link="gsk-gskhook.html#GSK-HOOK-TEST-NEVER-BLOCKS--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_TEST_IS_AVAILABLE()" link="gsk-gskhook.html#GSK-HOOK-TEST-IS-AVAILABLE--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_TEST_IDLE_NOTIFY()" link="gsk-gskhook.html#GSK-HOOK-TEST-IDLE-NOTIFY--CAPS"/>
+    <keyword type="function" name="gsk_hook_trap ()" link="gsk-gskhook.html#gsk-hook-trap"/>
+    <keyword type="function" name="gsk_hook_untrap ()" link="gsk-gskhook.html#gsk-hook-untrap"/>
+    <keyword type="macro" name="gsk_hook_is_trapped()" link="gsk-gskhook.html#gsk-hook-is-trapped"/>
+    <keyword type="function" name="gsk_hook_block ()" link="gsk-gskhook.html#gsk-hook-block"/>
+    <keyword type="function" name="gsk_hook_unblock ()" link="gsk-gskhook.html#gsk-hook-unblock"/>
+    <keyword type="function" name="gsk_hook_shutdown ()" link="gsk-gskhook.html#gsk-hook-shutdown"/>
+    <keyword type="function" name="gsk_hook_init ()" link="gsk-gskhook.html#gsk-hook-init"/>
+    <keyword type="function" name="gsk_hook_class_init ()" link="gsk-gskhook.html#gsk-hook-class-init"/>
+    <keyword type="function" name="gsk_hook_notify ()" link="gsk-gskhook.html#gsk-hook-notify"/>
+    <keyword type="function" name="gsk_hook_notify_shutdown ()" link="gsk-gskhook.html#gsk-hook-notify-shutdown"/>
+    <keyword type="function" name="gsk_hook_destruct ()" link="gsk-gskhook.html#gsk-hook-destruct"/>
+    <keyword type="function" name="gsk_hook_set_idle_notify ()" link="gsk-gskhook.html#gsk-hook-set-idle-notify"/>
+    <keyword type="function" name="gsk_hook_mark_idle_notify ()" link="gsk-gskhook.html#gsk-hook-mark-idle-notify"/>
+    <keyword type="function" name="gsk_hook_clear_idle_notify ()" link="gsk-gskhook.html#gsk-hook-clear-idle-notify"/>
+    <keyword type="function" name="gsk_hook_mark_never_blocks ()" link="gsk-gskhook.html#gsk-hook-mark-never-blocks"/>
+    <keyword type="function" name="gsk_hook_get_last_poll_state ()" link="gsk-gskhook.html#gsk-hook-get-last-poll-state"/>
+    <keyword type="macro" name="GSK_HOOK_INIT()" link="gsk-gskhook.html#GSK-HOOK-INIT--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_INIT_NO_SHUTDOWN()" link="gsk-gskhook.html#GSK-HOOK-INIT-NO-SHUTDOWN--CAPS"/>
+    <keyword type="macro" name="GSK_HOOK_CLASS_INIT()" link="gsk-gskhook.html#GSK-HOOK-CLASS-INIT--CAPS"/>
+    <keyword type="struct" name="GskInitInfo" link="gsk-gskinit.html#GskInitInfo"/>
+    <keyword type="function" name="gsk_init_info_get_defaults ()" link="gsk-gskinit.html#gsk-init-info-get-defaults"/>
+    <keyword type="function" name="gsk_init ()" link="gsk-gskinit.html#gsk-init"/>
+    <keyword type="function" name="gsk_init_without_threads ()" link="gsk-gskinit.html#gsk-init-without-threads"/>
+    <keyword type="macro" name="gsk_init_get_support_threads()" link="gsk-gskinit.html#gsk-init-get-support-threads"/>
+    <keyword type="function" name="gsk_init_info_parse_args ()" link="gsk-gskinit.html#gsk-init-info-parse-args"/>
+    <keyword type="function" name="gsk_init_raw ()" link="gsk-gskinit.html#gsk-init-raw"/>
+    <keyword type="variable" name="gsk_init_flags" link="gsk-gskinit.html#gsk-init-flags"/>
+    <keyword type="variable" name="gsk_main_thread" link="gsk-gskinit.html#gsk-main-thread"/>
+    <keyword type="macro" name="GSK_DECLARE_POOL_ALLOCATORS()" link="gsk-gskmacros.html#GSK-DECLARE-POOL-ALLOCATORS--CAPS"/>
+    <keyword type="macro" name="GSK_STRUCT_MEMBER_SIZE()" link="gsk-gskmacros.html#GSK-STRUCT-MEMBER-SIZE--CAPS"/>
+    <keyword type="macro" name="GSK_STRUCT_MEMBER_END_OFFSET()" link="gsk-gskmacros.html#GSK-STRUCT-MEMBER-END-OFFSET--CAPS"/>
+    <keyword type="macro" name="_()" link="gsk-gskmacros.html#gettext-macro"/>
+    <keyword type="macro" name="GSK_SKIP_CHAR_TYPE()" link="gsk-gskmacros.html#GSK-SKIP-CHAR-TYPE--CAPS"/>
+    <keyword type="macro" name="GSK_SKIP_WHITESPACE()" link="gsk-gskmacros.html#GSK-SKIP-WHITESPACE--CAPS"/>
+    <keyword type="macro" name="GSK_SKIP_NONWHITESPACE()" link="gsk-gskmacros.html#GSK-SKIP-NONWHITESPACE--CAPS"/>
+    <keyword type="struct" name="GskIOClass" link="GskIO.html#GskIOClass"/>
+    <keyword type="struct" name="GskIO" link="GskIO.html#GskIO-struct"/>
+    <keyword type="function" name="GskIOHookFunc ()" link="GskIO.html#GskIOHookFunc"/>
+    <keyword type="enum" name="enum GskIOErrorCause" link="GskIO.html#GskIOErrorCause"/>
+    <keyword type="macro" name="GSK_IO_READ_HOOK()" link="GskIO.html#GSK-IO-READ-HOOK--CAPS"/>
+    <keyword type="macro" name="GSK_IO_WRITE_HOOK()" link="GskIO.html#GSK-IO-WRITE-HOOK--CAPS"/>
+    <keyword type="macro" name="gsk_io_block_read()" link="GskIO.html#gsk-io-block-read"/>
+    <keyword type="macro" name="gsk_io_block_write()" link="GskIO.html#gsk-io-block-write"/>
+    <keyword type="macro" name="gsk_io_unblock_read()" link="GskIO.html#gsk-io-unblock-read"/>
+    <keyword type="macro" name="gsk_io_unblock_write()" link="GskIO.html#gsk-io-unblock-write"/>
+    <keyword type="macro" name="gsk_io_has_read_hook()" link="GskIO.html#gsk-io-has-read-hook"/>
+    <keyword type="macro" name="gsk_io_has_write_hook()" link="GskIO.html#gsk-io-has-write-hook"/>
+    <keyword type="macro" name="gsk_io_trap_readable()" link="GskIO.html#gsk-io-trap-readable"/>
+    <keyword type="macro" name="gsk_io_trap_writable()" link="GskIO.html#gsk-io-trap-writable"/>
+    <keyword type="macro" name="gsk_io_untrap_readable()" link="GskIO.html#gsk-io-untrap-readable"/>
+    <keyword type="macro" name="gsk_io_untrap_writable()" link="GskIO.html#gsk-io-untrap-writable"/>
+    <keyword type="function" name="gsk_io_shutdown ()" link="GskIO.html#gsk-io-shutdown"/>
+    <keyword type="macro" name="gsk_io_read_shutdown()" link="GskIO.html#gsk-io-read-shutdown"/>
+    <keyword type="macro" name="gsk_io_write_shutdown()" link="GskIO.html#gsk-io-write-shutdown"/>
+    <keyword type="function" name="gsk_io_close ()" link="GskIO.html#gsk-io-close"/>
+    <keyword type="macro" name="gsk_io_notify_ready_to_read()" link="GskIO.html#gsk-io-notify-ready-to-read"/>
+    <keyword type="macro" name="gsk_io_notify_ready_to_write()" link="GskIO.html#gsk-io-notify-ready-to-write"/>
+    <keyword type="macro" name="gsk_io_notify_read_shutdown()" link="GskIO.html#gsk-io-notify-read-shutdown"/>
+    <keyword type="macro" name="gsk_io_notify_write_shutdown()" link="GskIO.html#gsk-io-notify-write-shutdown"/>
+    <keyword type="function" name="gsk_io_notify_shutdown ()" link="GskIO.html#gsk-io-notify-shutdown"/>
+    <keyword type="function" name="gsk_io_notify_connected ()" link="GskIO.html#gsk-io-notify-connected"/>
+    <keyword type="macro" name="gsk_io_is_polling_for_read()" link="GskIO.html#gsk-io-is-polling-for-read"/>
+    <keyword type="macro" name="gsk_io_is_polling_for_write()" link="GskIO.html#gsk-io-is-polling-for-write"/>
+    <keyword type="macro" name="gsk_io_get_is_connecting()" link="GskIO.html#gsk-io-get-is-connecting"/>
+    <keyword type="macro" name="gsk_io_get_is_readable()" link="GskIO.html#gsk-io-get-is-readable"/>
+    <keyword type="macro" name="gsk_io_get_is_writable()" link="GskIO.html#gsk-io-get-is-writable"/>
+    <keyword type="macro" name="gsk_io_get_never_partial_reads()" link="GskIO.html#gsk-io-get-never-partial-reads"/>
+    <keyword type="macro" name="gsk_io_get_never_partial_writes()" link="GskIO.html#gsk-io-get-never-partial-writes"/>
+    <keyword type="macro" name="gsk_io_get_never_blocks_write()" link="GskIO.html#gsk-io-get-never-blocks-write"/>
+    <keyword type="macro" name="gsk_io_get_never_blocks_read()" link="GskIO.html#gsk-io-get-never-blocks-read"/>
+    <keyword type="macro" name="gsk_io_get_idle_notify_write()" link="GskIO.html#gsk-io-get-idle-notify-write"/>
+    <keyword type="macro" name="gsk_io_get_idle_notify_read()" link="GskIO.html#gsk-io-get-idle-notify-read"/>
+    <keyword type="macro" name="gsk_io_get_is_open()" link="GskIO.html#gsk-io-get-is-open"/>
+    <keyword type="macro" name="gsk_io_get_is_read_shutting_down()" link="GskIO.html#gsk-io-get-is-read-shutting-down"/>
+    <keyword type="macro" name="gsk_io_get_is_write_shutting_down()" link="GskIO.html#gsk-io-get-is-write-shutting-down"/>
+    <keyword type="macro" name="gsk_io_get_shutdown_on_error()" link="GskIO.html#gsk-io-get-shutdown-on-error"/>
+    <keyword type="macro" name="gsk_io_mark_is_connecting()" link="GskIO.html#gsk-io-mark-is-connecting"/>
+    <keyword type="macro" name="gsk_io_mark_is_readable()" link="GskIO.html#gsk-io-mark-is-readable"/>
+    <keyword type="macro" name="gsk_io_mark_is_writable()" link="GskIO.html#gsk-io-mark-is-writable"/>
+    <keyword type="macro" name="gsk_io_mark_never_partial_reads()" link="GskIO.html#gsk-io-mark-never-partial-reads"/>
+    <keyword type="macro" name="gsk_io_mark_never_partial_writes()" link="GskIO.html#gsk-io-mark-never-partial-writes"/>
+    <keyword type="macro" name="gsk_io_mark_never_blocks_write()" link="GskIO.html#gsk-io-mark-never-blocks-write"/>
+    <keyword type="macro" name="gsk_io_mark_never_blocks_read()" link="GskIO.html#gsk-io-mark-never-blocks-read"/>
+    <keyword type="macro" name="gsk_io_mark_idle_notify_write()" link="GskIO.html#gsk-io-mark-idle-notify-write"/>
+    <keyword type="macro" name="gsk_io_mark_idle_notify_read()" link="GskIO.html#gsk-io-mark-idle-notify-read"/>
+    <keyword type="macro" name="gsk_io_mark_is_open()" link="GskIO.html#gsk-io-mark-is-open"/>
+    <keyword type="macro" name="gsk_io_mark_shutdown_on_error()" link="GskIO.html#gsk-io-mark-shutdown-on-error"/>
+    <keyword type="macro" name="gsk_io_clear_is_readable()" link="GskIO.html#gsk-io-clear-is-readable"/>
+    <keyword type="macro" name="gsk_io_clear_is_writable()" link="GskIO.html#gsk-io-clear-is-writable"/>
+    <keyword type="macro" name="gsk_io_clear_never_partial_reads()" link="GskIO.html#gsk-io-clear-never-partial-reads"/>
+    <keyword type="macro" name="gsk_io_clear_never_partial_writes()" link="GskIO.html#gsk-io-clear-never-partial-writes"/>
+    <keyword type="macro" name="gsk_io_clear_idle_notify_write()" link="GskIO.html#gsk-io-clear-idle-notify-write"/>
+    <keyword type="macro" name="gsk_io_clear_idle_notify_read()" link="GskIO.html#gsk-io-clear-idle-notify-read"/>
+    <keyword type="macro" name="gsk_io_clear_is_open()" link="GskIO.html#gsk-io-clear-is-open"/>
+    <keyword type="macro" name="gsk_io_clear_shutdown_on_error()" link="GskIO.html#gsk-io-clear-shutdown-on-error"/>
+    <keyword type="macro" name="gsk_io_set_idle_notify_write()" link="GskIO.html#gsk-io-set-idle-notify-write"/>
+    <keyword type="macro" name="gsk_io_set_idle_notify_read()" link="GskIO.html#gsk-io-set-idle-notify-read"/>
+    <keyword type="function" name="gsk_io_set_error ()" link="GskIO.html#gsk-io-set-error"/>
+    <keyword type="function" name="gsk_io_set_gerror ()" link="GskIO.html#gsk-io-set-gerror"/>
+    <keyword type="function" name="gsk_io_error_cause_to_string ()" link="GskIO.html#gsk-io-error-cause-to-string"/>
+    <keyword type="signal" name="The &quot;on-connect&quot; signal" link="GskIO.html#GskIO-on-connect"/>
+    <keyword type="signal" name="The &quot;on-error&quot; signal" link="GskIO.html#GskIO-on-error"/>
+    <keyword type="struct" name="GskStreamClass" link="GskStream.html#GskStreamClass"/>
+    <keyword type="struct" name="GskStream" link="GskStream.html#GskStream-struct"/>
+    <keyword type="function" name="gsk_stream_read ()" link="GskStream.html#gsk-stream-read"/>
+    <keyword type="function" name="gsk_stream_write ()" link="GskStream.html#gsk-stream-write"/>
+    <keyword type="function" name="gsk_stream_read_buffer ()" link="GskStream.html#gsk-stream-read-buffer"/>
+    <keyword type="function" name="gsk_stream_write_buffer ()" link="GskStream.html#gsk-stream-write-buffer"/>
+    <keyword type="function" name="gsk_stream_attach ()" link="GskStream.html#gsk-stream-attach"/>
+    <keyword type="function" name="gsk_stream_attach_pair ()" link="GskStream.html#gsk-stream-attach-pair"/>
+    <keyword type="macro" name="gsk_stream_get_is_connecting()" link="GskStream.html#gsk-stream-get-is-connecting"/>
+    <keyword type="macro" name="gsk_stream_get_is_readable()" link="GskStream.html#gsk-stream-get-is-readable"/>
+    <keyword type="macro" name="gsk_stream_get_is_writable()" link="GskStream.html#gsk-stream-get-is-writable"/>
+    <keyword type="macro" name="gsk_stream_get_never_blocks_write()" link="GskStream.html#gsk-stream-get-never-blocks-write"/>
+    <keyword type="macro" name="gsk_stream_get_never_blocks_read()" link="GskStream.html#gsk-stream-get-never-blocks-read"/>
+    <keyword type="macro" name="gsk_stream_get_idle_notify_write()" link="GskStream.html#gsk-stream-get-idle-notify-write"/>
+    <keyword type="macro" name="gsk_stream_get_idle_notify_read()" link="GskStream.html#gsk-stream-get-idle-notify-read"/>
+    <keyword type="macro" name="gsk_stream_get_is_open()" link="GskStream.html#gsk-stream-get-is-open"/>
+    <keyword type="macro" name="gsk_stream_get_never_partial_reads()" link="GskStream.html#gsk-stream-get-never-partial-reads"/>
+    <keyword type="macro" name="gsk_stream_get_never_partial_writes()" link="GskStream.html#gsk-stream-get-never-partial-writes"/>
+    <keyword type="macro" name="gsk_stream_mark_is_connecting()" link="GskStream.html#gsk-stream-mark-is-connecting"/>
+    <keyword type="macro" name="gsk_stream_mark_is_readable()" link="GskStream.html#gsk-stream-mark-is-readable"/>
+    <keyword type="macro" name="gsk_stream_mark_is_writable()" link="GskStream.html#gsk-stream-mark-is-writable"/>
+    <keyword type="macro" name="gsk_stream_mark_never_blocks_write()" link="GskStream.html#gsk-stream-mark-never-blocks-write"/>
+    <keyword type="macro" name="gsk_stream_mark_never_blocks_read()" link="GskStream.html#gsk-stream-mark-never-blocks-read"/>
+    <keyword type="macro" name="gsk_stream_mark_idle_notify_write()" link="GskStream.html#gsk-stream-mark-idle-notify-write"/>
+    <keyword type="macro" name="gsk_stream_mark_idle_notify_read()" link="GskStream.html#gsk-stream-mark-idle-notify-read"/>
+    <keyword type="macro" name="gsk_stream_mark_is_open()" link="GskStream.html#gsk-stream-mark-is-open"/>
+    <keyword type="macro" name="gsk_stream_mark_never_partial_reads()" link="GskStream.html#gsk-stream-mark-never-partial-reads"/>
+    <keyword type="macro" name="gsk_stream_mark_never_partial_writes()" link="GskStream.html#gsk-stream-mark-never-partial-writes"/>
+    <keyword type="macro" name="gsk_stream_clear_is_readable()" link="GskStream.html#gsk-stream-clear-is-readable"/>
+    <keyword type="macro" name="gsk_stream_clear_is_writable()" link="GskStream.html#gsk-stream-clear-is-writable"/>
+    <keyword type="macro" name="gsk_stream_clear_is_open()" link="GskStream.html#gsk-stream-clear-is-open"/>
+    <keyword type="macro" name="gsk_stream_clear_idle_notify_write()" link="GskStream.html#gsk-stream-clear-idle-notify-write"/>
+    <keyword type="macro" name="gsk_stream_clear_idle_notify_read()" link="GskStream.html#gsk-stream-clear-idle-notify-read"/>
+    <keyword type="macro" name="gsk_stream_clear_never_partial_reads()" link="GskStream.html#gsk-stream-clear-never-partial-reads"/>
+    <keyword type="macro" name="gsk_stream_clear_never_partial_writes()" link="GskStream.html#gsk-stream-clear-never-partial-writes"/>
+    <keyword type="macro" name="gsk_stream_trap_readable" link="GskStream.html#gsk-stream-trap-readable"/>
+    <keyword type="macro" name="gsk_stream_trap_writable" link="GskStream.html#gsk-stream-trap-writable"/>
+    <keyword type="macro" name="gsk_stream_untrap_readable" link="GskStream.html#gsk-stream-untrap-readable"/>
+    <keyword type="macro" name="gsk_stream_untrap_writable" link="GskStream.html#gsk-stream-untrap-writable"/>
+    <keyword type="struct" name="GskStreamConnection" link="gsk-gskstreamconnection.html#GskStreamConnection"/>
+    <keyword type="function" name="gsk_stream_connection_new ()" link="gsk-gskstreamconnection.html#gsk-stream-connection-new"/>
+    <keyword type="function" name="gsk_stream_connection_get_atomic_read_size ()" link="gsk-gskstreamconnection.html#gsk-stream-connection-get-atomic-read-size"/>
+    <keyword type="function" name="gsk_stream_connection_set_atomic_read_size ()" link="gsk-gskstreamconnection.html#gsk-stream-connection-set-atomic-read-size"/>
+    <keyword type="function" name="gsk_stream_connection_get_max_buffered ()" link="gsk-gskstreamconnection.html#gsk-stream-connection-get-max-buffered"/>
+    <keyword type="function" name="gsk_stream_connection_set_max_buffered ()" link="gsk-gskstreamconnection.html#gsk-stream-connection-set-max-buffered"/>
+    <keyword type="function" name="gsk_stream_connection_shutdown ()" link="gsk-gskstreamconnection.html#gsk-stream-connection-shutdown"/>
+    <keyword type="function" name="gsk_stream_connection_detach ()" link="gsk-gskstreamconnection.html#gsk-stream-connection-detach"/>
+    <keyword type="struct" name="GskMainLoopChange" link="GskMainLoop.html#GskMainLoopChange"/>
+    <keyword type="struct" name="GskMainLoopEvent" link="GskMainLoop.html#GskMainLoopEvent"/>
+    <keyword type="struct" name="GskMainLoopWaitInfo" link="GskMainLoop.html#GskMainLoopWaitInfo"/>
+    <keyword type="struct" name="GskSource" link="GskMainLoop.html#GskSource"/>
+    <keyword type="struct" name="GskMainLoopContextList" link="GskMainLoop.html#GskMainLoopContextList"/>
+    <keyword type="enum" name="enum GskMainLoopEventType" link="GskMainLoop.html#GskMainLoopEventType"/>
+    <keyword type="struct" name="GskMainLoopClass" link="GskMainLoop.html#GskMainLoopClass"/>
+    <keyword type="struct" name="GskMainLoop" link="GskMainLoop.html#GskMainLoop-struct"/>
+    <keyword type="function" name="GskMainLoopWaitPidFunc ()" link="GskMainLoop.html#GskMainLoopWaitPidFunc"/>
+    <keyword type="function" name="GskMainLoopIdleFunc ()" link="GskMainLoop.html#GskMainLoopIdleFunc"/>
+    <keyword type="function" name="GskMainLoopSignalFunc ()" link="GskMainLoop.html#GskMainLoopSignalFunc"/>
+    <keyword type="function" name="GskMainLoopTimeoutFunc ()" link="GskMainLoop.html#GskMainLoopTimeoutFunc"/>
+    <keyword type="function" name="GskMainLoopIOFunc ()" link="GskMainLoop.html#GskMainLoopIOFunc"/>
+    <keyword type="enum" name="enum GskMainLoopCreateFlags" link="GskMainLoop.html#GskMainLoopCreateFlags"/>
+    <keyword type="function" name="gsk_main_loop_new ()" link="GskMainLoop.html#gsk-main-loop-new"/>
+    <keyword type="function" name="gsk_main_loop_default ()" link="GskMainLoop.html#gsk-main-loop-default"/>
+    <keyword type="function" name="gsk_main_loop_run ()" link="GskMainLoop.html#gsk-main-loop-run"/>
+    <keyword type="function" name="gsk_main_loop_add_idle ()" link="GskMainLoop.html#gsk-main-loop-add-idle"/>
+    <keyword type="function" name="gsk_main_loop_add_signal ()" link="GskMainLoop.html#gsk-main-loop-add-signal"/>
+    <keyword type="function" name="gsk_main_loop_add_waitpid ()" link="GskMainLoop.html#gsk-main-loop-add-waitpid"/>
+    <keyword type="function" name="gsk_main_loop_add_io ()" link="GskMainLoop.html#gsk-main-loop-add-io"/>
+    <keyword type="function" name="gsk_source_adjust_io ()" link="GskMainLoop.html#gsk-source-adjust-io"/>
+    <keyword type="function" name="gsk_source_remove_io_events ()" link="GskMainLoop.html#gsk-source-remove-io-events"/>
+    <keyword type="function" name="gsk_source_add_io_events ()" link="GskMainLoop.html#gsk-source-add-io-events"/>
+    <keyword type="function" name="gsk_main_loop_add_timer ()" link="GskMainLoop.html#gsk-main-loop-add-timer"/>
+    <keyword type="function" name="gsk_main_loop_add_timer_absolute ()" link="GskMainLoop.html#gsk-main-loop-add-timer-absolute"/>
+    <keyword type="function" name="gsk_source_adjust_timer ()" link="GskMainLoop.html#gsk-source-adjust-timer"/>
+    <keyword type="function" name="gsk_source_remove ()" link="GskMainLoop.html#gsk-source-remove"/>
+    <keyword type="function" name="gsk_main_loop_add_context ()" link="GskMainLoop.html#gsk-main-loop-add-context"/>
+    <keyword type="function" name="gsk_main_loop_quit ()" link="GskMainLoop.html#gsk-main-loop-quit"/>
+    <keyword type="function" name="gsk_main_loop_should_continue ()" link="GskMainLoop.html#gsk-main-loop-should-continue"/>
+    <keyword type="function" name="gsk_source_peek_main_loop ()" link="GskMainLoop.html#gsk-source-peek-main-loop"/>
+    <keyword type="function" name="gsk_main_loop_destroy_all_sources ()" link="GskMainLoop.html#gsk-main-loop-destroy-all-sources"/>
+    <keyword type="function" name="gsk_main_loop_do_waitpid ()" link="GskMainLoop.html#gsk-main-loop-do-waitpid"/>
+    <keyword type="struct" name="GskNameResolver" link="gsk-gsknameresolver.html#GskNameResolver-struct"/>
+    <keyword type="struct" name="GskNameResolverIface" link="gsk-gsknameresolver.html#GskNameResolverIface"/>
+    <keyword type="struct" name="GskNameResolverTask" link="gsk-gsknameresolver.html#GskNameResolverTask"/>
+    <keyword type="function" name="GskNameResolverSuccessFunc ()" link="gsk-gsknameresolver.html#GskNameResolverSuccessFunc"/>
+    <keyword type="function" name="GskNameResolverFailureFunc ()" link="gsk-gsknameresolver.html#GskNameResolverFailureFunc"/>
+    <keyword type="enum" name="enum GskNameResolverFamily" link="gsk-gsknameresolver.html#GskNameResolverFamily"/>
+    <keyword type="function" name="gsk_name_resolver_family_get_by_name ()" link="gsk-gsknameresolver.html#gsk-name-resolver-family-get-by-name"/>
+    <keyword type="function" name="gsk_name_resolver_family_get_name ()" link="gsk-gsknameresolver.html#gsk-name-resolver-family-get-name"/>
+    <keyword type="function" name="gsk_name_resolver_lookup ()" link="gsk-gsknameresolver.html#gsk-name-resolver-lookup"/>
+    <keyword type="function" name="gsk_name_resolver_task_new ()" link="gsk-gsknameresolver.html#gsk-name-resolver-task-new"/>
+    <keyword type="function" name="gsk_name_resolver_task_cancel ()" link="gsk-gsknameresolver.html#gsk-name-resolver-task-cancel"/>
+    <keyword type="function" name="gsk_name_resolver_task_ref ()" link="gsk-gsknameresolver.html#gsk-name-resolver-task-ref"/>
+    <keyword type="function" name="gsk_name_resolver_task_unref ()" link="gsk-gsknameresolver.html#gsk-name-resolver-task-unref"/>
+    <keyword type="function" name="gsk_name_resolver_family_unique ()" link="gsk-gsknameresolver.html#gsk-name-resolver-family-unique"/>
+    <keyword type="function" name="gsk_name_resolver_add_family_name ()" link="gsk-gsknameresolver.html#gsk-name-resolver-add-family-name"/>
+    <keyword type="function" name="GskNameResolverFamilyHandler ()" link="gsk-gsknameresolver.html#GskNameResolverFamilyHandler"/>
+    <keyword type="function" name="gsk_name_resolver_add_family_resolver ()" link="gsk-gsknameresolver.html#gsk-name-resolver-add-family-resolver"/>
+    <keyword type="function" name="gsk_name_resolver_add_family_handler ()" link="gsk-gsknameresolver.html#gsk-name-resolver-add-family-handler"/>
+    <keyword type="function" name="gsk_fd_get_type ()" link="gsk-gsktypes.html#gsk-fd-get-type"/>
+    <keyword type="function" name="gsk_param_fd_get_type ()" link="gsk-gsktypes.html#gsk-param-fd-get-type"/>
+    <keyword type="macro" name="GSK_TYPE_FD" link="gsk-gsktypes.html#GSK-TYPE-FD--CAPS"/>
+    <keyword type="macro" name="GSK_TYPE_PARAM_FD" link="gsk-gsktypes.html#GSK-TYPE-PARAM-FD--CAPS"/>
+    <keyword type="function" name="gsk_param_spec_fd ()" link="gsk-gsktypes.html#gsk-param-spec-fd"/>
+    <keyword type="struct" name="GskBuffer" link="gsk-gskbuffer.html#GskBuffer"/>
+    <keyword type="struct" name="GskBufferFragment" link="gsk-gskbuffer.html#GskBufferFragment"/>
+    <keyword type="function" name="gsk_buffer_construct ()" link="gsk-gskbuffer.html#gsk-buffer-construct"/>
+    <keyword type="function" name="gsk_buffer_read ()" link="gsk-gskbuffer.html#gsk-buffer-read"/>
+    <keyword type="function" name="gsk_buffer_peek ()" link="gsk-gskbuffer.html#gsk-buffer-peek"/>
+    <keyword type="function" name="gsk_buffer_discard ()" link="gsk-gskbuffer.html#gsk-buffer-discard"/>
+    <keyword type="function" name="gsk_buffer_read_line ()" link="gsk-gskbuffer.html#gsk-buffer-read-line"/>
+    <keyword type="function" name="gsk_buffer_parse_string0 ()" link="gsk-gskbuffer.html#gsk-buffer-parse-string0"/>
+    <keyword type="function" name="gsk_buffer_peek_char ()" link="gsk-gskbuffer.html#gsk-buffer-peek-char"/>
+    <keyword type="function" name="gsk_buffer_read_char ()" link="gsk-gskbuffer.html#gsk-buffer-read-char"/>
+    <keyword type="function" name="gsk_buffer_append ()" link="gsk-gskbuffer.html#gsk-buffer-append"/>
+    <keyword type="function" name="gsk_buffer_append_string ()" link="gsk-gskbuffer.html#gsk-buffer-append-string"/>
+    <keyword type="function" name="gsk_buffer_append_char ()" link="gsk-gskbuffer.html#gsk-buffer-append-char"/>
+    <keyword type="function" name="gsk_buffer_append_string0 ()" link="gsk-gskbuffer.html#gsk-buffer-append-string0"/>
+    <keyword type="function" name="gsk_buffer_append_foreign ()" link="gsk-gskbuffer.html#gsk-buffer-append-foreign"/>
+    <keyword type="function" name="gsk_buffer_printf ()" link="gsk-gskbuffer.html#gsk-buffer-printf"/>
+    <keyword type="function" name="gsk_buffer_vprintf ()" link="gsk-gskbuffer.html#gsk-buffer-vprintf"/>
+    <keyword type="function" name="gsk_buffer_drain ()" link="gsk-gskbuffer.html#gsk-buffer-drain"/>
+    <keyword type="function" name="gsk_buffer_transfer ()" link="gsk-gskbuffer.html#gsk-buffer-transfer"/>
+    <keyword type="function" name="gsk_buffer_writev ()" link="gsk-gskbuffer.html#gsk-buffer-writev"/>
+    <keyword type="function" name="gsk_buffer_read_in_fd ()" link="gsk-gskbuffer.html#gsk-buffer-read-in-fd"/>
+    <keyword type="function" name="gsk_buffer_index_of ()" link="gsk-gskbuffer.html#gsk-buffer-index-of"/>
+    <keyword type="function" name="gsk_buffer_polystr_index_of ()" link="gsk-gskbuffer.html#gsk-buffer-polystr-index-of"/>
+    <keyword type="function" name="gsk_buffer_destruct ()" link="gsk-gskbuffer.html#gsk-buffer-destruct"/>
+    <keyword type="function" name="gsk_buffer_cleanup_recycling_bin ()" link="gsk-gskbuffer.html#gsk-buffer-cleanup-recycling-bin"/>
+    <keyword type="struct" name="GskBufferIterator" link="gsk-gskbuffer.html#GskBufferIterator"/>
+    <keyword type="macro" name="gsk_buffer_iterator_offset()" link="gsk-gskbuffer.html#gsk-buffer-iterator-offset"/>
+    <keyword type="function" name="gsk_buffer_iterator_construct ()" link="gsk-gskbuffer.html#gsk-buffer-iterator-construct"/>
+    <keyword type="function" name="gsk_buffer_iterator_peek ()" link="gsk-gskbuffer.html#gsk-buffer-iterator-peek"/>
+    <keyword type="function" name="gsk_buffer_iterator_read ()" link="gsk-gskbuffer.html#gsk-buffer-iterator-read"/>
+    <keyword type="function" name="gsk_buffer_iterator_skip ()" link="gsk-gskbuffer.html#gsk-buffer-iterator-skip"/>
+    <keyword type="function" name="gsk_buffer_iterator_find_char ()" link="gsk-gskbuffer.html#gsk-buffer-iterator-find-char"/>
+    <keyword type="macro" name="GSK_BUFFER_STATIC_INIT" link="gsk-gskbuffer.html#GSK-BUFFER-STATIC-INIT--CAPS"/>
+    <keyword type="function" name="gsk_errno_is_ignorable ()" link="gsk-gskerrno.html#gsk-errno-is-ignorable"/>
+    <keyword type="function" name="gsk_errno_from_fd ()" link="gsk-gskerrno.html#gsk-errno-from-fd"/>
+    <keyword type="variable" name="gsk_g_error_domain_quark" link="gsk-gskerror.html#gsk-g-error-domain-quark"/>
+    <keyword type="variable" name="gsk_error_code_type" link="gsk-gskerror.html#gsk-error-code-type"/>
+    <keyword type="macro" name="GSK_G_ERROR_DOMAIN" link="gsk-gskerror.html#GSK-G-ERROR-DOMAIN--CAPS"/>
+    <keyword type="macro" name="GSK_TYPE_ERROR_CODE" link="gsk-gskerror.html#GSK-TYPE-ERROR-CODE--CAPS"/>
+    <keyword type="enum" name="enum GskErrorCode" link="gsk-gskerror.html#GskErrorCode"/>
+    <keyword type="function" name="gsk_error_code_from_errno ()" link="gsk-gskerror.html#gsk-error-code-from-errno"/>
+    <keyword type="function" name="gsk_g_error_add_prefix ()" link="gsk-gskerror.html#gsk-g-error-add-prefix"/>
+    <keyword type="function" name="gsk_fatal_user_error ()" link="gsk-gskerror.html#gsk-fatal-user-error"/>
+    <keyword type="function" name="gsk_main_run ()" link="gsk-gskmain.html#gsk-main-run"/>
+    <keyword type="function" name="gsk_main_quit ()" link="gsk-gskmain.html#gsk-main-quit"/>
+    <keyword type="function" name="gsk_main_exit ()" link="gsk-gskmain.html#gsk-main-exit"/>
+    <keyword type="function" name="gsk_g_ptr_array_foreach ()" link="gsk-gskghelpers.html#gsk-g-ptr-array-foreach"/>
+    <keyword type="function" name="gsk_g_tree_min ()" link="gsk-gskghelpers.html#gsk-g-tree-min"/>
+    <keyword type="function" name="gsk_g_tree_max ()" link="gsk-gskghelpers.html#gsk-g-tree-max"/>
+    <keyword type="function" name="gsk_g_tree_key_slist ()" link="gsk-gskghelpers.html#gsk-g-tree-key-slist"/>
+    <keyword type="function" name="gsk_g_tree_value_slist ()" link="gsk-gskghelpers.html#gsk-g-tree-value-slist"/>
+    <keyword type="function" name="gsk_g_hash_table_key_slist ()" link="gsk-gskghelpers.html#gsk-g-hash-table-key-slist"/>
+    <keyword type="function" name="gsk_g_hash_table_value_slist ()" link="gsk-gskghelpers.html#gsk-g-hash-table-value-slist"/>
+    <keyword type="function" name="gsk_strtoll ()" link="gsk-gskghelpers.html#gsk-strtoll"/>
+    <keyword type="function" name="gsk_strtoull ()" link="gsk-gskghelpers.html#gsk-strtoull"/>
+    <keyword type="function" name="gsk_strnlen ()" link="gsk-gskghelpers.html#gsk-strnlen"/>
+    <keyword type="function" name="gsk_fd_set_nonblocking ()" link="gsk-gskghelpers.html#gsk-fd-set-nonblocking"/>
+    <keyword type="struct" name="GskPacketQueueClass" link="GskPacketQueue.html#GskPacketQueueClass"/>
+    <keyword type="struct" name="GskPacketQueue" link="GskPacketQueue.html#GskPacketQueue-struct"/>
+    <keyword type="function" name="gsk_packet_queue_bind ()" link="GskPacketQueue.html#gsk-packet-queue-bind"/>
+    <keyword type="function" name="gsk_packet_queue_read ()" link="GskPacketQueue.html#gsk-packet-queue-read"/>
+    <keyword type="function" name="gsk_packet_queue_write ()" link="GskPacketQueue.html#gsk-packet-queue-write"/>
+    <keyword type="macro" name="gsk_packet_queue_get_allow_address()" link="GskPacketQueue.html#gsk-packet-queue-get-allow-address"/>
+    <keyword type="macro" name="gsk_packet_queue_get_allow_no_address()" link="GskPacketQueue.html#gsk-packet-queue-get-allow-no-address"/>
+    <keyword type="macro" name="gsk_packet_queue_get_misses_packets()" link="GskPacketQueue.html#gsk-packet-queue-get-misses-packets"/>
+    <keyword type="macro" name="gsk_packet_queue_get_is_readable()" link="GskPacketQueue.html#gsk-packet-queue-get-is-readable"/>
+    <keyword type="macro" name="gsk_packet_queue_get_is_writable()" link="GskPacketQueue.html#gsk-packet-queue-get-is-writable"/>
+    <keyword type="macro" name="gsk_packet_queue_peek_bound_address()" link="GskPacketQueue.html#gsk-packet-queue-peek-bound-address"/>
+    <keyword type="macro" name="gsk_packet_queue_mark_allow_address()" link="GskPacketQueue.html#gsk-packet-queue-mark-allow-address"/>
+    <keyword type="macro" name="gsk_packet_queue_mark_allow_no_address()" link="GskPacketQueue.html#gsk-packet-queue-mark-allow-no-address"/>
+    <keyword type="macro" name="gsk_packet_queue_mark_misses_packets()" link="GskPacketQueue.html#gsk-packet-queue-mark-misses-packets"/>
+    <keyword type="macro" name="gsk_packet_queue_mark_is_readable()" link="GskPacketQueue.html#gsk-packet-queue-mark-is-readable"/>
+    <keyword type="macro" name="gsk_packet_queue_mark_is_writable()" link="GskPacketQueue.html#gsk-packet-queue-mark-is-writable"/>
+    <keyword type="macro" name="gsk_packet_queue_clear_allow_address()" link="GskPacketQueue.html#gsk-packet-queue-clear-allow-address"/>
+    <keyword type="macro" name="gsk_packet_queue_clear_allow_no_address()" link="GskPacketQueue.html#gsk-packet-queue-clear-allow-no-address"/>
+    <keyword type="macro" name="gsk_packet_queue_clear_misses_packets()" link="GskPacketQueue.html#gsk-packet-queue-clear-misses-packets"/>
+    <keyword type="macro" name="gsk_packet_queue_clear_is_readable()" link="GskPacketQueue.html#gsk-packet-queue-clear-is-readable"/>
+    <keyword type="macro" name="gsk_packet_queue_clear_is_writable()" link="GskPacketQueue.html#gsk-packet-queue-clear-is-writable"/>
+    <keyword type="function" name="gsk_packet_queue_set_bound_addresss ()" link="GskPacketQueue.html#gsk-packet-queue-set-bound-addresss"/>
+    <keyword type="struct" name="GskPacket" link="gsk-gskpacket.html#GskPacket"/>
+    <keyword type="function" name="GskPacketDestroyFunc ()" link="gsk-gskpacket.html#GskPacketDestroyFunc"/>
+    <keyword type="function" name="gsk_packet_new ()" link="gsk-gskpacket.html#gsk-packet-new"/>
+    <keyword type="function" name="gsk_packet_new_copy ()" link="gsk-gskpacket.html#gsk-packet-new-copy"/>
+    <keyword type="function" name="gsk_packet_set_src_address ()" link="gsk-gskpacket.html#gsk-packet-set-src-address"/>
+    <keyword type="function" name="gsk_packet_set_dst_address ()" link="gsk-gskpacket.html#gsk-packet-set-dst-address"/>
+    <keyword type="function" name="gsk_packet_unref ()" link="gsk-gskpacket.html#gsk-packet-unref"/>
+    <keyword type="function" name="gsk_packet_ref ()" link="gsk-gskpacket.html#gsk-packet-ref"/>
+    <keyword type="function" name="GskStreamListenerAcceptFunc ()" link="GskStreamListener.html#GskStreamListenerAcceptFunc"/>
+    <keyword type="function" name="GskStreamListenerErrorFunc ()" link="GskStreamListener.html#GskStreamListenerErrorFunc"/>
+    <keyword type="struct" name="GskStreamListenerClass" link="GskStreamListener.html#GskStreamListenerClass"/>
+    <keyword type="struct" name="GskStreamListener" link="GskStreamListener.html#GskStreamListener-struct"/>
+    <keyword type="function" name="gsk_stream_listener_handle_accept ()" link="GskStreamListener.html#gsk-stream-listener-handle-accept"/>
+    <keyword type="function" name="gsk_stream_listener_notify_accepted ()" link="GskStreamListener.html#gsk-stream-listener-notify-accepted"/>
+    <keyword type="function" name="gsk_stream_listener_notify_error ()" link="GskStreamListener.html#gsk-stream-listener-notify-error"/>
+    <keyword type="function" name="gsk_stream_new_connecting ()" link="gsk-gskstreamclient.html#gsk-stream-new-connecting"/>
+    <keyword type="struct" name="GskSocketAddressClass" link="GskSocketAddress.html#GskSocketAddressClass"/>
+    <keyword type="struct" name="GskSocketAddress" link="GskSocketAddress.html#GskSocketAddress-struct"/>
+    <keyword type="struct" name="GskSocketAddressIpv4" link="GskSocketAddress.html#GskSocketAddressIpv4-struct"/>
+    <keyword type="struct" name="GskSocketAddressLocal" link="GskSocketAddress.html#GskSocketAddressLocal-struct"/>
+    <keyword type="struct" name="GskSocketAddressIpv6" link="GskSocketAddress.html#GskSocketAddressIpv6-struct"/>
+    <keyword type="struct" name="GskSocketAddressEthernet" link="GskSocketAddress.html#GskSocketAddressEthernet"/>
+    <keyword type="function" name="gsk_socket_address_from_native ()" link="GskSocketAddress.html#gsk-socket-address-from-native"/>
+    <keyword type="function" name="gsk_socket_address_protocol_family ()" link="GskSocketAddress.html#gsk-socket-address-protocol-family"/>
+    <keyword type="function" name="gsk_socket_address_address_family ()" link="GskSocketAddress.html#gsk-socket-address-address-family"/>
+    <keyword type="function" name="gsk_socket_address_sizeof_native ()" link="GskSocketAddress.html#gsk-socket-address-sizeof-native"/>
+    <keyword type="function" name="gsk_socket_address_to_native ()" link="GskSocketAddress.html#gsk-socket-address-to-native"/>
+    <keyword type="function" name="gsk_socket_address_to_string ()" link="GskSocketAddress.html#gsk-socket-address-to-string"/>
+    <keyword type="macro" name="gsk_socket_address_ipv4_localhost()" link="GskSocketAddress.html#gsk-socket-address-ipv4-localhost"/>
+    <keyword type="function" name="gsk_socket_address_ipv4_new ()" link="GskSocketAddress.html#gsk-socket-address-ipv4-new"/>
+    <keyword type="function" name="gsk_socket_address_ipv6_new ()" link="GskSocketAddress.html#gsk-socket-address-ipv6-new"/>
+    <keyword type="function" name="gsk_socket_address_ethernet_new ()" link="GskSocketAddress.html#gsk-socket-address-ethernet-new"/>
+    <keyword type="function" name="gsk_socket_address_local_new ()" link="GskSocketAddress.html#gsk-socket-address-local-new"/>
+    <keyword type="function" name="gsk_socket_address_system_supports_ipv6 ()" link="GskSocketAddress.html#gsk-socket-address-system-supports-ipv6"/>
+    <keyword type="function" name="gsk_socket_address_register_subclass ()" link="GskSocketAddress.html#gsk-socket-address-register-subclass"/>
+    <keyword type="function" name="gsk_socket_address_connect_fd ()" link="GskSocketAddress.html#gsk-socket-address-connect-fd"/>
+    <keyword type="function" name="gsk_socket_address_finish_fd ()" link="GskSocketAddress.html#gsk-socket-address-finish-fd"/>
+    <keyword type="function" name="gsk_socket_address_equals ()" link="GskSocketAddress.html#gsk-socket-address-equals"/>
+    <keyword type="function" name="gsk_socket_address_hash ()" link="GskSocketAddress.html#gsk-socket-address-hash"/>
+    <keyword type="macro" name="GSK_SOCKET_ADDRESS_REMOTE_QUARK" link="GskSocketAddress.html#GSK-SOCKET-ADDRESS-REMOTE-QUARK--CAPS"/>
+    <keyword type="macro" name="GSK_SOCKET_ADDRESS_LOCAL_QUARK" link="GskSocketAddress.html#GSK-SOCKET-ADDRESS-LOCAL-QUARK--CAPS"/>
+    <keyword type="function" name="gsk_log_init ()" link="gsk-gsklog.html#gsk-log-init"/>
+    <keyword type="function" name="gsk_log_trap_domain_to_file ()" link="gsk-gsklog.html#gsk-log-trap-domain-to-file"/>
+    <keyword type="macro" name="gsk_debug()" link="gsk-gsklog.html#gsk-debug"/>
+    <keyword type="macro" name="gsk_warning()" link="gsk-gsklog.html#gsk-warning"/>
+    <keyword type="macro" name="gsk_error()" link="gsk-gsklog.html#gsk-error"/>
+    <keyword type="macro" name="gsk_critical()" link="gsk-gsklog.html#gsk-critical"/>
+    <keyword type="enum" name="enum GskDebugFlags" link="gsk-gskdebug.html#GskDebugFlags"/>
+    <keyword type="variable" name="gsk_debugging_on" link="gsk-gskdebug.html#gsk-debugging-on"/>
+    <keyword type="function" name="gsk_debug_set_flags ()" link="gsk-gskdebug.html#gsk-debug-set-flags"/>
+    <keyword type="function" name="gsk_debug_add_flags ()" link="gsk-gskdebug.html#gsk-debug-add-flags"/>
+    <keyword type="variable" name="gsk_debug_flags" link="gsk-gskdebug.html#gsk-debug-flags"/>
+    <keyword type="function" name="gsk_mkdir_p ()" link="gsk-gskutils.html#gsk-mkdir-p"/>
+    <keyword type="function" name="gsk_rm_rf ()" link="gsk-gskutils.html#gsk-rm-rf"/>
+    <keyword type="function" name="gsk_escape_memory ()" link="gsk-gskutils.html#gsk-escape-memory"/>
+    <keyword type="function" name="gsk_unescape_memory ()" link="gsk-gskutils.html#gsk-unescape-memory"/>
+    <keyword type="function" name="gsk_escape_memory_hex ()" link="gsk-gskutils.html#gsk-escape-memory-hex"/>
+    <keyword type="function" name="gsk_unescape_memory_hex ()" link="gsk-gskutils.html#gsk-unescape-memory-hex"/>
+    <keyword type="function" name="gsk_fd_set_close_on_exec ()" link="gsk-gskutils.html#gsk-fd-set-close-on-exec"/>
+    <keyword type="function" name="gsk_fd_clear_nonblocking ()" link="gsk-gskutils.html#gsk-fd-clear-nonblocking"/>
+    <keyword type="function" name="gsk_fd_is_nonblocking ()" link="gsk-gskutils.html#gsk-fd-is-nonblocking"/>
+    <keyword type="function" name="gsk_readn ()" link="gsk-gskutils.html#gsk-readn"/>
+    <keyword type="function" name="gsk_writen ()" link="gsk-gskutils.html#gsk-writen"/>
+    <keyword type="" name="Implementing the accept handler with a custom stream" link="tutorial-server.html#id2635583"/>
+    <keyword type="" name="Implementing the accept handler by trapping the stream" link="tutorial-server.html#id2635704"/>
+    <keyword type="" name="Sample Use of API" link="tutorial-client.html#id2635479"/>
+    <keyword type="" name="Using GskHttpContent" link="tutorial-httpserver.html#id2636092"/>
+    <keyword type="" name="Using GskHttpServer" link="tutorial-httpserver.html#id2636645"/>
+    <keyword type="" name="Using GskUrlTransfer" link="tutorial-httpclient.html#id2636260"/>
+    <keyword type="" name="Using GskHttpClient" link="tutorial-httpclient.html#id2637192"/>
+    <keyword type="struct" name="GskPacketQueueFd" link="GskPacketQueueFd.html#GskPacketQueueFd-struct"/>
+    <keyword type="function" name="gsk_packet_queue_fd_new ()" link="GskPacketQueueFd.html#gsk-packet-queue-fd-new"/>
+    <keyword type="function" name="gsk_packet_queue_fd_new_by_family ()" link="GskPacketQueueFd.html#gsk-packet-queue-fd-new-by-family"/>
+    <keyword type="function" name="gsk_packet_queue_fd_new_bound ()" link="GskPacketQueueFd.html#gsk-packet-queue-fd-new-bound"/>
+    <keyword type="function" name="gsk_packet_queue_fd_set_broadcast ()" link="GskPacketQueueFd.html#gsk-packet-queue-fd-set-broadcast"/>
+    <keyword type="property" name="The &quot;file-descriptor&quot; property" link="GskPacketQueueFd.html#GskPacketQueueFd--file-descriptor"/>
+    <keyword type="macro" name="GSK_STREAM_FD_GET_FD()" link="GskStreamFd.html#GSK-STREAM-FD-GET-FD--CAPS"/>
+    <keyword type="struct" name="GskStreamFd" link="GskStreamFd.html#GskStreamFd-struct"/>
+    <keyword type="enum" name="enum GskStreamFdFlags" link="GskStreamFd.html#GskStreamFdFlags"/>
+    <keyword type="function" name="gsk_stream_fd_new ()" link="GskStreamFd.html#gsk-stream-fd-new"/>
+    <keyword type="function" name="gsk_stream_fd_new_auto ()" link="GskStreamFd.html#gsk-stream-fd-new-auto"/>
+    <keyword type="function" name="gsk_stream_fd_flags_guess ()" link="GskStreamFd.html#gsk-stream-fd-flags-guess"/>
+    <keyword type="function" name="gsk_stream_fd_pipe ()" link="GskStreamFd.html#gsk-stream-fd-pipe"/>
+    <keyword type="function" name="gsk_stream_fd_new_connecting ()" link="GskStreamFd.html#gsk-stream-fd-new-connecting"/>
+    <keyword type="function" name="gsk_stream_fd_new_read_file ()" link="GskStreamFd.html#gsk-stream-fd-new-read-file"/>
+    <keyword type="function" name="gsk_stream_fd_new_write_file ()" link="GskStreamFd.html#gsk-stream-fd-new-write-file"/>
+    <keyword type="function" name="gsk_stream_fd_new_create_file ()" link="GskStreamFd.html#gsk-stream-fd-new-create-file"/>
+    <keyword type="function" name="gsk_stream_fd_new_open ()" link="GskStreamFd.html#gsk-stream-fd-new-open"/>
+    <keyword type="function" name="gsk_stream_fd_duplex_pipe ()" link="GskStreamFd.html#gsk-stream-fd-duplex-pipe"/>
+    <keyword type="function" name="gsk_stream_fd_duplex_pipe_fd ()" link="GskStreamFd.html#gsk-stream-fd-duplex-pipe-fd"/>
+    <keyword type="function" name="gsk_stream_fd_new_from_symbolic_address ()" link="GskStreamFd.html#gsk-stream-fd-new-from-symbolic-address"/>
+    <keyword type="property" name="The &quot;file-descriptor&quot; property" link="GskStreamFd.html#GskStreamFd--file-descriptor"/>
+    <keyword type="property" name="The &quot;is-pollable&quot; property" link="GskStreamFd.html#GskStreamFd--is-pollable"/>
+    <keyword type="property" name="The &quot;is-readable&quot; property" link="GskStreamFd.html#GskStreamFd--is-readable"/>
+    <keyword type="property" name="The &quot;is-writable&quot; property" link="GskStreamFd.html#GskStreamFd--is-writable"/>
+    <keyword type="function" name="GskStreamExternalTerminated ()" link="gsk-GskStreamExternal.html#GskStreamExternalTerminated"/>
+    <keyword type="function" name="GskStreamExternalStderr ()" link="gsk-GskStreamExternal.html#GskStreamExternalStderr"/>
+    <keyword type="struct" name="GskStreamExternal" link="gsk-GskStreamExternal.html#GskStreamExternal"/>
+    <keyword type="enum" name="enum GskStreamExternalFlags" link="gsk-GskStreamExternal.html#GskStreamExternalFlags"/>
+    <keyword type="function" name="gsk_stream_external_new ()" link="gsk-GskStreamExternal.html#gsk-stream-external-new"/>
+    <keyword type="struct" name="GskStreamListenerSocket" link="GskStreamListenerSocket.html#GskStreamListenerSocket-struct"/>
+    <keyword type="function" name="gsk_stream_listener_socket_new_bind ()" link="GskStreamListenerSocket.html#gsk-stream-listener-socket-new-bind"/>
+    <keyword type="function" name="gsk_stream_listener_socket_new_bind_full ()" link="GskStreamListenerSocket.html#gsk-stream-listener-socket-new-bind-full"/>
+    <keyword type="function" name="gsk_stream_listener_socket_set_backlog ()" link="GskStreamListenerSocket.html#gsk-stream-listener-socket-set-backlog"/>
+    <keyword type="function" name="gsk_stream_listener_socket_new_from_fd ()" link="GskStreamListenerSocket.html#gsk-stream-listener-socket-new-from-fd"/>
+    <keyword type="macro" name="GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP" link="GskStreamListenerSocket.html#GSK-STREAM-LISTENER-SOCKET-USE-GLIB-MAIN-LOOP--CAPS"/>
+    <keyword type="property" name="The &quot;file-descriptor&quot; property" link="GskStreamListenerSocket.html#GskStreamListenerSocket--file-descriptor"/>
+    <keyword type="property" name="The &quot;listening-address&quot; property" link="GskStreamListenerSocket.html#GskStreamListenerSocket--listening-address"/>
+    <keyword type="property" name="The &quot;may-reuse-address&quot; property" link="GskStreamListenerSocket.html#GskStreamListenerSocket--may-reuse-address"/>
+    <keyword type="property" name="The &quot;unlink-when-done&quot; property" link="GskStreamListenerSocket.html#GskStreamListenerSocket--unlink-when-done"/>
+    <keyword type="struct" name="GskBufferStreamClass" link="gsk-gskbufferstream.html#GskBufferStreamClass"/>
+    <keyword type="struct" name="GskBufferStream" link="gsk-gskbufferstream.html#GskBufferStream-struct"/>
+    <keyword type="function" name="gsk_buffer_stream_new ()" link="gsk-gskbufferstream.html#gsk-buffer-stream-new"/>
+    <keyword type="macro" name="gsk_buffer_stream_read_hook()" link="gsk-gskbufferstream.html#gsk-buffer-stream-read-hook"/>
+    <keyword type="macro" name="gsk_buffer_stream_write_hook()" link="gsk-gskbufferstream.html#gsk-buffer-stream-write-hook"/>
+    <keyword type="function" name="gsk_buffer_stream_read_buffer_changed ()" link="gsk-gskbufferstream.html#gsk-buffer-stream-read-buffer-changed"/>
+    <keyword type="function" name="gsk_buffer_stream_write_buffer_changed ()" link="gsk-gskbufferstream.html#gsk-buffer-stream-write-buffer-changed"/>
+    <keyword type="function" name="gsk_buffer_stream_read_shutdown ()" link="gsk-gskbufferstream.html#gsk-buffer-stream-read-shutdown"/>
+    <keyword type="function" name="gsk_buffer_stream_changed ()" link="gsk-gskbufferstream.html#gsk-buffer-stream-changed"/>
+    <keyword type="macro" name="gsk_buffer_stream_clear_strict_max_write()" link="gsk-gskbufferstream.html#gsk-buffer-stream-clear-strict-max-write"/>
+    <keyword type="macro" name="gsk_buffer_stream_has_strict_max_write()" link="gsk-gskbufferstream.html#gsk-buffer-stream-has-strict-max-write"/>
+    <keyword type="macro" name="gsk_buffer_stream_get_max_write_buffer()" link="gsk-gskbufferstream.html#gsk-buffer-stream-get-max-write-buffer"/>
+    <keyword type="macro" name="gsk_buffer_stream_peek_write_buffer()" link="gsk-gskbufferstream.html#gsk-buffer-stream-peek-write-buffer"/>
+    <keyword type="macro" name="gsk_buffer_stream_peek_read_buffer()" link="gsk-gskbufferstream.html#gsk-buffer-stream-peek-read-buffer"/>
+    <keyword type="macro" name="gsk_buffer_stream_mark_strict_max_write()" link="gsk-gskbufferstream.html#gsk-buffer-stream-mark-strict-max-write"/>
+    <keyword type="struct" name="GskUrl" link="GskUrl.html#GskUrl-struct"/>
+    <keyword type="enum" name="enum GskUrlScheme" link="GskUrl.html#GskUrlScheme"/>
+    <keyword type="macro" name="GSK_URL_RESERVED_CHARSET" link="GskUrl.html#GSK-URL-RESERVED-CHARSET--CAPS"/>
+    <keyword type="macro" name="GSK_URL_UNRESERVED_CHARSET" link="GskUrl.html#GSK-URL-UNRESERVED-CHARSET--CAPS"/>
+    <keyword type="function" name="gsk_url_new ()" link="GskUrl.html#gsk-url-new"/>
+    <keyword type="function" name="gsk_url_new_in_context ()" link="GskUrl.html#gsk-url-new-in-context"/>
+    <keyword type="function" name="gsk_url_new_from_parts ()" link="GskUrl.html#gsk-url-new-from-parts"/>
+    <keyword type="function" name="gsk_url_new_relative ()" link="GskUrl.html#gsk-url-new-relative"/>
+    <keyword type="function" name="gsk_url_get_relative_path ()" link="GskUrl.html#gsk-url-get-relative-path"/>
+    <keyword type="function" name="gsk_url_get_port ()" link="GskUrl.html#gsk-url-get-port"/>
+    <keyword type="function" name="gsk_url_decode ()" link="GskUrl.html#gsk-url-decode"/>
+    <keyword type="function" name="gsk_url_decode_http ()" link="GskUrl.html#gsk-url-decode-http"/>
+    <keyword type="function" name="gsk_url_encode ()" link="GskUrl.html#gsk-url-encode"/>
+    <keyword type="function" name="gsk_url_encode_http ()" link="GskUrl.html#gsk-url-encode-http"/>
+    <keyword type="macro" name="gsk_url_is_valid_fragment()" link="GskUrl.html#gsk-url-is-valid-fragment"/>
+    <keyword type="function" name="gsk_url_is_valid_generic_component ()" link="GskUrl.html#gsk-url-is-valid-generic-component"/>
+    <keyword type="function" name="gsk_url_is_valid_hostname ()" link="GskUrl.html#gsk-url-is-valid-hostname"/>
+    <keyword type="macro" name="gsk_url_is_valid_path()" link="GskUrl.html#gsk-url-is-valid-path"/>
+    <keyword type="macro" name="gsk_url_is_valid_query()" link="GskUrl.html#gsk-url-is-valid-query"/>
+    <keyword type="function" name="gsk_url_split_form_urlencoded ()" link="GskUrl.html#gsk-url-split-form-urlencoded"/>
+    <keyword type="function" name="gsk_url_to_string ()" link="GskUrl.html#gsk-url-to-string"/>
+    <keyword type="function" name="GskUrlSuccess ()" link="GskUrl.html#GskUrlSuccess"/>
+    <keyword type="function" name="GskUrlFailure ()" link="GskUrl.html#GskUrlFailure"/>
+    <keyword type="function" name="gsk_url_download ()" link="GskUrl.html#gsk-url-download"/>
+    <keyword type="function" name="GskUrlParser ()" link="GskUrl.html#GskUrlParser"/>
+    <keyword type="function" name="GskUrlToString ()" link="GskUrl.html#GskUrlToString"/>
+    <keyword type="function" name="gsk_url_scheme_get_unique ()" link="GskUrl.html#gsk-url-scheme-get-unique"/>
+    <keyword type="function" name="gsk_url_hash ()" link="GskUrl.html#gsk-url-hash"/>
+    <keyword type="function" name="gsk_url_equal ()" link="GskUrl.html#gsk-url-equal"/>
+    <keyword type="struct" name="GskUrlDownload" link="GskUrl.html#GskUrlDownload"/>
+    <keyword type="function" name="GskUrlDownloadMethod ()" link="GskUrl.html#GskUrlDownloadMethod"/>
+    <keyword type="function" name="gsk_url_scheme_add_dl_method ()" link="GskUrl.html#gsk-url-scheme-add-dl-method"/>
+    <keyword type="function" name="gsk_url_download_success ()" link="GskUrl.html#gsk-url-download-success"/>
+    <keyword type="function" name="gsk_url_download_fail ()" link="GskUrl.html#gsk-url-download-fail"/>
+    <keyword type="function" name="gsk_url_download_peek_url ()" link="GskUrl.html#gsk-url-download-peek-url"/>
+    <keyword type="function" name="gsk_url_download_redirect ()" link="GskUrl.html#gsk-url-download-redirect"/>
+    <keyword type="property" name="The &quot;fragment&quot; property" link="GskUrl.html#GskUrl--fragment"/>
+    <keyword type="property" name="The &quot;host&quot; property" link="GskUrl.html#GskUrl--host"/>
+    <keyword type="property" name="The &quot;password&quot; property" link="GskUrl.html#GskUrl--password"/>
+    <keyword type="property" name="The &quot;path&quot; property" link="GskUrl.html#GskUrl--path"/>
+    <keyword type="property" name="The &quot;port&quot; property" link="GskUrl.html#GskUrl--port"/>
+    <keyword type="property" name="The &quot;query&quot; property" link="GskUrl.html#GskUrl--query"/>
+    <keyword type="property" name="The &quot;user-name&quot; property" link="GskUrl.html#GskUrl--user-name"/>
+    <keyword type="struct" name="GskUrlTransferRedirect" link="GskUrlTransfer.html#GskUrlTransferRedirect"/>
+    <keyword type="enum" name="enum GskUrlTransferResult" link="GskUrlTransfer.html#GskUrlTransferResult"/>
+    <keyword type="macro" name="GSK_URL_TRANSFER_N_RESULTS" link="GskUrlTransfer.html#GSK-URL-TRANSFER-N-RESULTS--CAPS"/>
+    <keyword type="function" name="gsk_url_transfer_result_name ()" link="GskUrlTransfer.html#gsk-url-transfer-result-name"/>
+    <keyword type="function" name="GskUrlTransferFunc ()" link="GskUrlTransfer.html#GskUrlTransferFunc"/>
+    <keyword type="function" name="GskUrlUploadFunc ()" link="GskUrlTransfer.html#GskUrlUploadFunc"/>
+    <keyword type="struct" name="GskUrlTransfer" link="GskUrlTransfer.html#GskUrlTransfer-struct"/>
+    <keyword type="function" name="gsk_url_transfer ()" link="GskUrlTransfer.html#gsk-url-transfer"/>
+    <keyword type="function" name="gsk_url_transfer_new ()" link="GskUrlTransfer.html#gsk-url-transfer-new"/>
+    <keyword type="function" name="gsk_url_transfer_set_handler ()" link="GskUrlTransfer.html#gsk-url-transfer-set-handler"/>
+    <keyword type="function" name="gsk_url_transfer_set_url ()" link="GskUrlTransfer.html#gsk-url-transfer-set-url"/>
+    <keyword type="function" name="gsk_url_transfer_set_upload ()" link="GskUrlTransfer.html#gsk-url-transfer-set-upload"/>
+    <keyword type="function" name="gsk_url_transfer_set_upload_packet ()" link="GskUrlTransfer.html#gsk-url-transfer-set-upload-packet"/>
+    <keyword type="function" name="gsk_url_transfer_set_oneshot_upload ()" link="GskUrlTransfer.html#gsk-url-transfer-set-oneshot-upload"/>
+    <keyword type="function" name="gsk_url_transfer_set_timeout ()" link="GskUrlTransfer.html#gsk-url-transfer-set-timeout"/>
+    <keyword type="function" name="gsk_url_transfer_clear_timeout ()" link="GskUrlTransfer.html#gsk-url-transfer-clear-timeout"/>
+    <keyword type="function" name="gsk_url_transfer_set_follow_redirects ()" link="GskUrlTransfer.html#gsk-url-transfer-set-follow-redirects"/>
+    <keyword type="function" name="gsk_url_transfer_set_address_hint ()" link="GskUrlTransfer.html#gsk-url-transfer-set-address-hint"/>
+    <keyword type="function" name="gsk_url_transfer_start ()" link="GskUrlTransfer.html#gsk-url-transfer-start"/>
+    <keyword type="function" name="gsk_url_transfer_cancel ()" link="GskUrlTransfer.html#gsk-url-transfer-cancel"/>
+    <keyword type="function" name="gsk_url_transfer_has_upload ()" link="GskUrlTransfer.html#gsk-url-transfer-has-upload"/>
+    <keyword type="function" name="gsk_url_transfer_create_upload ()" link="GskUrlTransfer.html#gsk-url-transfer-create-upload"/>
+    <keyword type="function" name="gsk_url_transfer_peek_expects_download_stream ()" link="GskUrlTransfer.html#gsk-url-transfer-peek-expects-download-stream"/>
+    <keyword type="function" name="gsk_url_transfer_is_done ()" link="GskUrlTransfer.html#gsk-url-transfer-is-done"/>
+    <keyword type="function" name="gsk_url_transfer_set_address ()" link="GskUrlTransfer.html#gsk-url-transfer-set-address"/>
+    <keyword type="function" name="gsk_url_transfer_add_redirect ()" link="GskUrlTransfer.html#gsk-url-transfer-add-redirect"/>
+    <keyword type="function" name="gsk_url_transfer_set_download ()" link="GskUrlTransfer.html#gsk-url-transfer-set-download"/>
+    <keyword type="function" name="gsk_url_transfer_set_request ()" link="GskUrlTransfer.html#gsk-url-transfer-set-request"/>
+    <keyword type="function" name="gsk_url_transfer_set_response ()" link="GskUrlTransfer.html#gsk-url-transfer-set-response"/>
+    <keyword type="function" name="gsk_url_transfer_set_error ()" link="GskUrlTransfer.html#gsk-url-transfer-set-error"/>
+    <keyword type="function" name="gsk_url_transfer_take_error ()" link="GskUrlTransfer.html#gsk-url-transfer-take-error"/>
+    <keyword type="function" name="gsk_url_transfer_notify_done ()" link="GskUrlTransfer.html#gsk-url-transfer-notify-done"/>
+    <keyword type="function" name="gsk_url_transfer_class_register ()" link="GskUrlTransfer.html#gsk-url-transfer-class-register"/>
+    <keyword type="function" name="gsk_url_transfer_get_state_string ()" link="GskUrlTransfer.html#gsk-url-transfer-get-state-string"/>
+    <keyword type="function" name="gsk_url_transfer_stream_new ()" link="GskUrlTransfer.html#gsk-url-transfer-stream-new"/>
+    <keyword type="struct" name="GskUrlTransferHttp" link="GskUrlTransferHttp.html#GskUrlTransferHttp-struct"/>
+    <keyword type="function" name="gsk_url_transfer_http_set_ssl_cert ()" link="GskUrlTransferHttp.html#gsk-url-transfer-http-set-ssl-cert"/>
+    <keyword type="function" name="gsk_url_transfer_http_set_ssl_key ()" link="GskUrlTransferHttp.html#gsk-url-transfer-http-set-ssl-key"/>
+    <keyword type="function" name="gsk_url_transfer_http_set_ssl_password ()" link="GskUrlTransferHttp.html#gsk-url-transfer-http-set-ssl-password"/>
+    <keyword type="function" name="gsk_url_transfer_http_set_user_agent ()" link="GskUrlTransferHttp.html#gsk-url-transfer-http-set-user-agent"/>
+    <keyword type="function" name="gsk_url_transfer_http_add_extra_header ()" link="GskUrlTransferHttp.html#gsk-url-transfer-http-add-extra-header"/>
+    <keyword type="function" name="gsk_url_transfer_http_set_proxy_address ()" link="GskUrlTransferHttp.html#gsk-url-transfer-http-set-proxy-address"/>
+    <keyword type="function" name="GskUrlTransferHttpRequestModifierFunc ()" link="GskUrlTransferHttp.html#GskUrlTransferHttpRequestModifierFunc"/>
+    <keyword type="function" name="gsk_url_transfer_http_add_modifier ()" link="GskUrlTransferHttp.html#gsk-url-transfer-http-add-modifier"/>
+    <keyword type="struct" name="GskHttpAuthorization" link="GskHttpHeader.html#GskHttpAuthorization"/>
+    <keyword type="struct" name="GskHttpAuthenticate" link="GskHttpHeader.html#GskHttpAuthenticate"/>
+    <keyword type="struct" name="GskHttpCharSet" link="GskHttpHeader.html#GskHttpCharSet"/>
+    <keyword type="struct" name="GskHttpCookie" link="GskHttpHeader.html#GskHttpCookie"/>
+    <keyword type="struct" name="GskHttpLanguageSet" link="GskHttpHeader.html#GskHttpLanguageSet"/>
+    <keyword type="struct" name="GskHttpMediaTypeSet" link="GskHttpHeader.html#GskHttpMediaTypeSet"/>
+    <keyword type="struct" name="GskHttpContentEncodingSet" link="GskHttpHeader.html#GskHttpContentEncodingSet"/>
+    <keyword type="struct" name="GskHttpTransferEncodingSet" link="GskHttpHeader.html#GskHttpTransferEncodingSet"/>
+    <keyword type="struct" name="GskHttpRangeSet" link="GskHttpHeader.html#GskHttpRangeSet"/>
+    <keyword type="enum" name="enum GskHttpStatus" link="GskHttpHeader.html#GskHttpStatus"/>
+    <keyword type="enum" name="enum GskHttpVerb" link="GskHttpHeader.html#GskHttpVerb"/>
+    <keyword type="enum" name="enum GskHttpRange" link="GskHttpHeader.html#GskHttpRange"/>
+    <keyword type="enum" name="enum GskHttpContentEncoding" link="GskHttpHeader.html#GskHttpContentEncoding"/>
+    <keyword type="enum" name="enum GskHttpTransferEncoding" link="GskHttpHeader.html#GskHttpTransferEncoding"/>
+    <keyword type="enum" name="enum GskHttpConnection" link="GskHttpHeader.html#GskHttpConnection"/>
+    <keyword type="function" name="gsk_http_media_type_set_new ()" link="GskHttpHeader.html#gsk-http-media-type-set-new"/>
+    <keyword type="function" name="gsk_http_media_type_set_free ()" link="GskHttpHeader.html#gsk-http-media-type-set-free"/>
+    <keyword type="function" name="gsk_http_char_set_new ()" link="GskHttpHeader.html#gsk-http-char-set-new"/>
+    <keyword type="function" name="gsk_http_char_set_free ()" link="GskHttpHeader.html#gsk-http-char-set-free"/>
+    <keyword type="function" name="gsk_http_content_encoding_set_new ()" link="GskHttpHeader.html#gsk-http-content-encoding-set-new"/>
+    <keyword type="function" name="gsk_http_content_encoding_set_free ()" link="GskHttpHeader.html#gsk-http-content-encoding-set-free"/>
+    <keyword type="function" name="gsk_http_transfer_encoding_set_new ()" link="GskHttpHeader.html#gsk-http-transfer-encoding-set-new"/>
+    <keyword type="function" name="gsk_http_transfer_encoding_set_free ()" link="GskHttpHeader.html#gsk-http-transfer-encoding-set-free"/>
+    <keyword type="function" name="gsk_http_range_set_new ()" link="GskHttpHeader.html#gsk-http-range-set-new"/>
+    <keyword type="function" name="gsk_http_range_set_free ()" link="GskHttpHeader.html#gsk-http-range-set-free"/>
+    <keyword type="function" name="gsk_http_language_set_new ()" link="GskHttpHeader.html#gsk-http-language-set-new"/>
+    <keyword type="function" name="gsk_http_language_set_free ()" link="GskHttpHeader.html#gsk-http-language-set-free"/>
+    <keyword type="function" name="gsk_http_authenticate_new_basic ()" link="GskHttpHeader.html#gsk-http-authenticate-new-basic"/>
+    <keyword type="function" name="gsk_http_authenticate_new_digest ()" link="GskHttpHeader.html#gsk-http-authenticate-new-digest"/>
+    <keyword type="function" name="gsk_http_authenticate_new_unknown ()" link="GskHttpHeader.html#gsk-http-authenticate-new-unknown"/>
+    <keyword type="function" name="gsk_http_authorization_new_basic ()" link="GskHttpHeader.html#gsk-http-authorization-new-basic"/>
+    <keyword type="function" name="gsk_http_authorization_new_respond_post ()" link="GskHttpHeader.html#gsk-http-authorization-new-respond-post"/>
+    <keyword type="function" name="gsk_http_authorization_new_unknown ()" link="GskHttpHeader.html#gsk-http-authorization-new-unknown"/>
+    <keyword type="function" name="gsk_http_authorization_peek_response_digest ()" link="GskHttpHeader.html#gsk-http-authorization-peek-response-digest"/>
+    <keyword type="function" name="gsk_http_authorization_copy ()" link="GskHttpHeader.html#gsk-http-authorization-copy"/>
+    <keyword type="function" name="gsk_http_authorization_new_digest ()" link="GskHttpHeader.html#gsk-http-authorization-new-digest"/>
+    <keyword type="function" name="gsk_http_authorization_new_respond ()" link="GskHttpHeader.html#gsk-http-authorization-new-respond"/>
+    <keyword type="function" name="gsk_http_authorization_set_nonce ()" link="GskHttpHeader.html#gsk-http-authorization-set-nonce"/>
+    <keyword type="function" name="gsk_http_cookie_new ()" link="GskHttpHeader.html#gsk-http-cookie-new"/>
+    <keyword type="function" name="gsk_http_cookie_copy ()" link="GskHttpHeader.html#gsk-http-cookie-copy"/>
+    <keyword type="function" name="gsk_http_cookie_free ()" link="GskHttpHeader.html#gsk-http-cookie-free"/>
+    <keyword type="struct" name="GskHttpHeaderClass" link="GskHttpHeader.html#GskHttpHeaderClass"/>
+    <keyword type="struct" name="GskHttpHeader" link="GskHttpHeader.html#GskHttpHeader-struct"/>
+    <keyword type="enum" name="enum GskHttpParseFlags" link="GskHttpHeader.html#GskHttpParseFlags"/>
+    <keyword type="function" name="gsk_http_header_get_connection ()" link="GskHttpHeader.html#gsk-http-header-get-connection"/>
+    <keyword type="function" name="gsk_http_header_from_buffer ()" link="GskHttpHeader.html#gsk-http-header-from-buffer"/>
+    <keyword type="function" name="gsk_http_header_to_buffer ()" link="GskHttpHeader.html#gsk-http-header-to-buffer"/>
+    <keyword type="function" name="gsk_http_header_set_content_encoding ()" link="GskHttpHeader.html#gsk-http-header-set-content-encoding"/>
+    <keyword type="macro" name="gsk_http_header_get_content_encoding()" link="GskHttpHeader.html#gsk-http-header-get-content-encoding"/>
+    <keyword type="macro" name="gsk_http_header_set_date()" link="GskHttpHeader.html#gsk-http-header-set-date"/>
+    <keyword type="macro" name="gsk_http_header_get_date()" link="GskHttpHeader.html#gsk-http-header-get-date"/>
+    <keyword type="function" name="gsk_http_header_add_misc ()" link="GskHttpHeader.html#gsk-http-header-add-misc"/>
+    <keyword type="function" name="gsk_http_header_lookup_misc ()" link="GskHttpHeader.html#gsk-http-header-lookup-misc"/>
+    <keyword type="function" name="gsk_http_header_remove_misc ()" link="GskHttpHeader.html#gsk-http-header-remove-misc"/>
+    <keyword type="struct" name="GskHttpHeaderLineParser" link="GskHttpHeader.html#GskHttpHeaderLineParser"/>
+    <keyword type="function" name="GskHttpHeaderLineParserFunc ()" link="GskHttpHeader.html#GskHttpHeaderLineParserFunc"/>
+    <keyword type="function" name="gsk_http_header_get_parser_table ()" link="GskHttpHeader.html#gsk-http-header-get-parser-table"/>
+    <keyword type="function" name="GskHttpHeaderPrintFunc ()" link="GskHttpHeader.html#GskHttpHeaderPrintFunc"/>
+    <keyword type="function" name="gsk_http_header_print ()" link="GskHttpHeader.html#gsk-http-header-print"/>
+    <keyword type="macro" name="gsk_http_header_set_connection_type()" link="GskHttpHeader.html#gsk-http-header-set-connection-type"/>
+    <keyword type="macro" name="gsk_http_header_get_connection_type()" link="GskHttpHeader.html#gsk-http-header-get-connection-type"/>
+    <keyword type="macro" name="gsk_http_header_set_transfer_encoding()" link="GskHttpHeader.html#gsk-http-header-set-transfer-encoding"/>
+    <keyword type="macro" name="gsk_http_header_get_transfer_encoding()" link="GskHttpHeader.html#gsk-http-header-get-transfer-encoding"/>
+    <keyword type="macro" name="gsk_http_header_get_content_type()" link="GskHttpHeader.html#gsk-http-header-get-content-type"/>
+    <keyword type="macro" name="gsk_http_header_set_content_type()" link="GskHttpHeader.html#gsk-http-header-set-content-type"/>
+    <keyword type="macro" name="gsk_http_header_get_content_subtype()" link="GskHttpHeader.html#gsk-http-header-get-content-subtype"/>
+    <keyword type="macro" name="gsk_http_header_set_content_subtype()" link="GskHttpHeader.html#gsk-http-header-set-content-subtype"/>
+    <keyword type="macro" name="gsk_http_header_set_content_length()" link="GskHttpHeader.html#gsk-http-header-set-content-length"/>
+    <keyword type="macro" name="gsk_http_header_get_content_length()" link="GskHttpHeader.html#gsk-http-header-get-content-length"/>
+    <keyword type="macro" name="gsk_http_header_get_content_charset()" link="GskHttpHeader.html#gsk-http-header-get-content-charset"/>
+    <keyword type="function" name="gsk_http_header_add_accepted_range ()" link="GskHttpHeader.html#gsk-http-header-add-accepted-range"/>
+    <keyword type="function" name="gsk_http_header_add_pragma ()" link="GskHttpHeader.html#gsk-http-header-add-pragma"/>
+    <keyword type="macro" name="gsk_http_header_set_content_charset()" link="GskHttpHeader.html#gsk-http-header-set-content-charset"/>
+    <keyword type="macro" name="gsk_http_header_set_range()" link="GskHttpHeader.html#gsk-http-header-set-range"/>
+    <keyword type="macro" name="gsk_http_header_get_range_start()" link="GskHttpHeader.html#gsk-http-header-get-range-start"/>
+    <keyword type="macro" name="gsk_http_header_get_range_end()" link="GskHttpHeader.html#gsk-http-header-get-range-end"/>
+    <keyword type="function" name="gsk_http_header_set_string ()" link="GskHttpHeader.html#gsk-http-header-set-string"/>
+    <keyword type="function" name="gsk_http_header_set_string_val ()" link="GskHttpHeader.html#gsk-http-header-set-string-val"/>
+    <keyword type="function" name="gsk_http_header_cut_string ()" link="GskHttpHeader.html#gsk-http-header-cut-string"/>
+    <keyword type="function" name="gsk_http_header_free_string ()" link="GskHttpHeader.html#gsk-http-header-free-string"/>
+    <keyword type="function" name="gsk_http_header_set_connection_string ()" link="GskHttpHeader.html#gsk-http-header-set-connection-string"/>
+    <keyword type="function" name="gsk_http_header_set_content_encoding_string ()" link="GskHttpHeader.html#gsk-http-header-set-content-encoding-string"/>
+    <keyword type="function" name="gsk_http_header_set_transfer_encoding_string ()" link="GskHttpHeader.html#gsk-http-header-set-transfer-encoding-string"/>
+    <keyword type="function" name="gsk_http_header_set_version ()" link="GskHttpHeader.html#gsk-http-header-set-version"/>
+    <keyword type="property" name="The &quot;connection&quot; property" link="GskHttpHeader.html#GskHttpHeader--connection"/>
+    <keyword type="property" name="The &quot;connection-string&quot; property" link="GskHttpHeader.html#GskHttpHeader--connection-string"/>
+    <keyword type="property" name="The &quot;content-charset&quot; property" link="GskHttpHeader.html#GskHttpHeader--content-charset"/>
+    <keyword type="property" name="The &quot;content-encoding&quot; property" link="GskHttpHeader.html#GskHttpHeader--content-encoding"/>
+    <keyword type="property" name="The &quot;content-encoding-string&quot; property" link="GskHttpHeader.html#GskHttpHeader--content-encoding-string"/>
+    <keyword type="property" name="The &quot;content-length&quot; property" link="GskHttpHeader.html#GskHttpHeader--content-length"/>
+    <keyword type="property" name="The &quot;content-subtype&quot; property" link="GskHttpHeader.html#GskHttpHeader--content-subtype"/>
+    <keyword type="property" name="The &quot;content-type&quot; property" link="GskHttpHeader.html#GskHttpHeader--content-type"/>
+    <keyword type="property" name="The &quot;date&quot; property" link="GskHttpHeader.html#GskHttpHeader--date"/>
+    <keyword type="property" name="The &quot;major-version&quot; property" link="GskHttpHeader.html#GskHttpHeader--major-version"/>
+    <keyword type="property" name="The &quot;minor-version&quot; property" link="GskHttpHeader.html#GskHttpHeader--minor-version"/>
+    <keyword type="property" name="The &quot;range-end&quot; property" link="GskHttpHeader.html#GskHttpHeader--range-end"/>
+    <keyword type="property" name="The &quot;range-start&quot; property" link="GskHttpHeader.html#GskHttpHeader--range-start"/>
+    <keyword type="property" name="The &quot;transfer-encoding&quot; property" link="GskHttpHeader.html#GskHttpHeader--transfer-encoding"/>
+    <keyword type="property" name="The &quot;transfer-encoding-string&quot; property" link="GskHttpHeader.html#GskHttpHeader--transfer-encoding-string"/>
+    <keyword type="struct" name="GskHttpRequest" link="GskHttpRequest.html#GskHttpRequest-struct"/>
+    <keyword type="function" name="gsk_http_request_add_cookie ()" link="GskHttpRequest.html#gsk-http-request-add-cookie"/>
+    <keyword type="function" name="gsk_http_request_remove_cookie ()" link="GskHttpRequest.html#gsk-http-request-remove-cookie"/>
+    <keyword type="function" name="gsk_http_request_find_cookie ()" link="GskHttpRequest.html#gsk-http-request-find-cookie"/>
+    <keyword type="function" name="gsk_http_request_add_charsets ()" link="GskHttpRequest.html#gsk-http-request-add-charsets"/>
+    <keyword type="function" name="gsk_http_request_clear_charsets ()" link="GskHttpRequest.html#gsk-http-request-clear-charsets"/>
+    <keyword type="function" name="gsk_http_request_add_content_encodings ()" link="GskHttpRequest.html#gsk-http-request-add-content-encodings"/>
+    <keyword type="function" name="gsk_http_request_clear_content_encodings ()" link="GskHttpRequest.html#gsk-http-request-clear-content-encodings"/>
+    <keyword type="function" name="gsk_http_request_add_transfer_encodings ()" link="GskHttpRequest.html#gsk-http-request-add-transfer-encodings"/>
+    <keyword type="function" name="gsk_http_request_clear_transfer_encodings ()" link="GskHttpRequest.html#gsk-http-request-clear-transfer-encodings"/>
+    <keyword type="function" name="gsk_http_request_add_media ()" link="GskHttpRequest.html#gsk-http-request-add-media"/>
+    <keyword type="function" name="gsk_http_request_clear_media ()" link="GskHttpRequest.html#gsk-http-request-clear-media"/>
+    <keyword type="function" name="gsk_http_request_new_blank ()" link="GskHttpRequest.html#gsk-http-request-new-blank"/>
+    <keyword type="function" name="gsk_http_request_new ()" link="GskHttpRequest.html#gsk-http-request-new"/>
+    <keyword type="macro" name="gsk_http_request_set_verb()" link="GskHttpRequest.html#gsk-http-request-set-verb"/>
+    <keyword type="macro" name="gsk_http_request_get_verb()" link="GskHttpRequest.html#gsk-http-request-get-verb"/>
+    <keyword type="macro" name="gsk_http_request_peek_from()" link="GskHttpRequest.html#gsk-http-request-peek-from"/>
+    <keyword type="macro" name="gsk_http_request_set_from()" link="GskHttpRequest.html#gsk-http-request-set-from"/>
+    <keyword type="macro" name="gsk_http_request_set_if_modified_since()" link="GskHttpRequest.html#gsk-http-request-set-if-modified-since"/>
+    <keyword type="macro" name="gsk_http_request_get_if_modified_since()" link="GskHttpRequest.html#gsk-http-request-get-if-modified-since"/>
+    <keyword type="function" name="gsk_http_request_set_authorization ()" link="GskHttpRequest.html#gsk-http-request-set-authorization"/>
+    <keyword type="macro" name="gsk_http_request_set_host()" link="GskHttpRequest.html#gsk-http-request-set-host"/>
+    <keyword type="macro" name="gsk_http_request_set_user_agent()" link="GskHttpRequest.html#gsk-http-request-set-user-agent"/>
+    <keyword type="macro" name="gsk_http_request_peek_user_agent()" link="GskHttpRequest.html#gsk-http-request-peek-user-agent"/>
+    <keyword type="function" name="gsk_http_request_peek_authorization ()" link="GskHttpRequest.html#gsk-http-request-peek-authorization"/>
+    <keyword type="function" name="gsk_http_request_cache_directive_free ()" link="GskHttpRequest.html#gsk-http-request-cache-directive-free"/>
+    <keyword type="function" name="gsk_http_request_cache_directive_new ()" link="GskHttpRequest.html#gsk-http-request-cache-directive-new"/>
+    <keyword type="function" name="gsk_http_request_parse_first_line ()" link="GskHttpRequest.html#gsk-http-request-parse-first-line"/>
+    <keyword type="function" name="gsk_http_request_set_cache_control ()" link="GskHttpRequest.html#gsk-http-request-set-cache-control"/>
+    <keyword type="function" name="gsk_http_request_has_content_body ()" link="GskHttpRequest.html#gsk-http-request-has-content-body"/>
+    <keyword type="function" name="gsk_http_parse_cgi_query_string ()" link="GskHttpRequest.html#gsk-http-parse-cgi-query-string"/>
+    <keyword type="function" name="gsk_http_request_parse_cgi_query_string ()" link="GskHttpRequest.html#gsk-http-request-parse-cgi-query-string"/>
+    <keyword type="property" name="The &quot;host&quot; property" link="GskHttpRequest.html#GskHttpRequest--host"/>
+    <keyword type="property" name="The &quot;if-modified-since&quot; property" link="GskHttpRequest.html#GskHttpRequest--if-modified-since"/>
+    <keyword type="property" name="The &quot;max-forwards&quot; property" link="GskHttpRequest.html#GskHttpRequest--max-forwards"/>
+    <keyword type="property" name="The &quot;path&quot; property" link="GskHttpRequest.html#GskHttpRequest--path"/>
+    <keyword type="property" name="The &quot;referrer&quot; property" link="GskHttpRequest.html#GskHttpRequest--referrer"/>
+    <keyword type="property" name="The &quot;user-agent&quot; property" link="GskHttpRequest.html#GskHttpRequest--user-agent"/>
+    <keyword type="property" name="The &quot;verb&quot; property" link="GskHttpRequest.html#GskHttpRequest--verb"/>
+    <keyword type="struct" name="GskHttpResponse" link="GskHttpResponse.html#GskHttpResponse-struct"/>
+    <keyword type="function" name="gsk_http_response_new_blank ()" link="GskHttpResponse.html#gsk-http-response-new-blank"/>
+    <keyword type="function" name="gsk_http_response_new_redirect ()" link="GskHttpResponse.html#gsk-http-response-new-redirect"/>
+    <keyword type="function" name="gsk_http_response_from_request ()" link="GskHttpResponse.html#gsk-http-response-from-request"/>
+    <keyword type="function" name="gsk_http_response_process_first_line ()" link="GskHttpResponse.html#gsk-http-response-process-first-line"/>
+    <keyword type="macro" name="gsk_http_response_set_status_code()" link="GskHttpResponse.html#gsk-http-response-set-status-code"/>
+    <keyword type="macro" name="gsk_http_response_get_status_code()" link="GskHttpResponse.html#gsk-http-response-get-status-code"/>
+    <keyword type="function" name="gsk_http_response_set_allowed_verbs ()" link="GskHttpResponse.html#gsk-http-response-set-allowed-verbs"/>
+    <keyword type="macro" name="gsk_http_response_get_allowed_verbs()" link="GskHttpResponse.html#gsk-http-response-get-allowed-verbs"/>
+    <keyword type="macro" name="gsk_http_response_set_age()" link="GskHttpResponse.html#gsk-http-response-set-age"/>
+    <keyword type="macro" name="gsk_http_response_get_age()" link="GskHttpResponse.html#gsk-http-response-get-age"/>
+    <keyword type="macro" name="gsk_http_response_set_location()" link="GskHttpResponse.html#gsk-http-response-set-location"/>
+    <keyword type="macro" name="gsk_http_response_peek_location()" link="GskHttpResponse.html#gsk-http-response-peek-location"/>
+    <keyword type="macro" name="gsk_http_response_set_etag()" link="GskHttpResponse.html#gsk-http-response-set-etag"/>
+    <keyword type="macro" name="gsk_http_response_peek_etag()" link="GskHttpResponse.html#gsk-http-response-peek-etag"/>
+    <keyword type="function" name="gsk_http_response_set_cache_control ()" link="GskHttpResponse.html#gsk-http-response-set-cache-control"/>
+    <keyword type="macro" name="gsk_http_response_peek_cache_control()" link="GskHttpResponse.html#gsk-http-response-peek-cache-control"/>
+    <keyword type="macro" name="gsk_http_response_set_last_modified()" link="GskHttpResponse.html#gsk-http-response-set-last-modified"/>
+    <keyword type="macro" name="gsk_http_response_get_last_modified()" link="GskHttpResponse.html#gsk-http-response-get-last-modified"/>
+    <keyword type="macro" name="gsk_http_response_set_expires()" link="GskHttpResponse.html#gsk-http-response-set-expires"/>
+    <keyword type="macro" name="gsk_http_response_get_expires()" link="GskHttpResponse.html#gsk-http-response-get-expires"/>
+    <keyword type="function" name="gsk_http_response_set_md5 ()" link="GskHttpResponse.html#gsk-http-response-set-md5"/>
+    <keyword type="function" name="gsk_http_response_peek_md5 ()" link="GskHttpResponse.html#gsk-http-response-peek-md5"/>
+    <keyword type="macro" name="gsk_http_response_set_server()" link="GskHttpResponse.html#gsk-http-response-set-server"/>
+    <keyword type="macro" name="gsk_http_response_peek_server()" link="GskHttpResponse.html#gsk-http-response-peek-server"/>
+    <keyword type="function" name="gsk_http_response_set_retry_after ()" link="GskHttpResponse.html#gsk-http-response-set-retry-after"/>
+    <keyword type="function" name="gsk_http_response_set_no_retry_after ()" link="GskHttpResponse.html#gsk-http-response-set-no-retry-after"/>
+    <keyword type="function" name="gsk_http_response_set_authenticate ()" link="GskHttpResponse.html#gsk-http-response-set-authenticate"/>
+    <keyword type="function" name="gsk_http_response_peek_authenticate ()" link="GskHttpResponse.html#gsk-http-response-peek-authenticate"/>
+    <keyword type="function" name="gsk_http_response_has_content_body ()" link="GskHttpResponse.html#gsk-http-response-has-content-body"/>
+    <keyword type="function" name="gsk_http_response_cache_directive_free ()" link="GskHttpResponse.html#gsk-http-response-cache-directive-free"/>
+    <keyword type="function" name="gsk_http_response_cache_directive_new ()" link="GskHttpResponse.html#gsk-http-response-cache-directive-new"/>
+    <keyword type="function" name="gsk_http_response_cache_directive_set_no_cache_name ()" link="GskHttpResponse.html#gsk-http-response-cache-directive-set-no-cache-name"/>
+    <keyword type="function" name="gsk_http_response_cache_directive_set_private_name ()" link="GskHttpResponse.html#gsk-http-response-cache-directive-set-private-name"/>
+    <keyword type="macro" name="gsk_http_response_get_content_subtype" link="GskHttpResponse.html#gsk-http-response-get-content-subtype"/>
+    <keyword type="macro" name="gsk_http_response_get_content_type" link="GskHttpResponse.html#gsk-http-response-get-content-type"/>
+    <keyword type="macro" name="gsk_http_response_set_content_subtype" link="GskHttpResponse.html#gsk-http-response-set-content-subtype"/>
+    <keyword type="macro" name="gsk_http_response_set_content_type" link="GskHttpResponse.html#gsk-http-response-set-content-type"/>
+    <keyword type="property" name="The &quot;age&quot; property" link="GskHttpResponse.html#GskHttpResponse--age"/>
+    <keyword type="property" name="The &quot;e-tag&quot; property" link="GskHttpResponse.html#GskHttpResponse--e-tag"/>
+    <keyword type="property" name="The &quot;expires&quot; property" link="GskHttpResponse.html#GskHttpResponse--expires"/>
+    <keyword type="property" name="The &quot;last-modified&quot; property" link="GskHttpResponse.html#GskHttpResponse--last-modified"/>
+    <keyword type="property" name="The &quot;location&quot; property" link="GskHttpResponse.html#GskHttpResponse--location"/>
+    <keyword type="property" name="The &quot;server&quot; property" link="GskHttpResponse.html#GskHttpResponse--server"/>
+    <keyword type="property" name="The &quot;status-code&quot; property" link="GskHttpResponse.html#GskHttpResponse--status-code"/>
+    <keyword type="struct" name="GskHttpClientRequest" link="GskHttpClient.html#GskHttpClientRequest"/>
+    <keyword type="function" name="GskHttpClientResponse ()" link="GskHttpClient.html#GskHttpClientResponse"/>
+    <keyword type="function" name="GskHttpClientTrap ()" link="GskHttpClient.html#GskHttpClientTrap"/>
+    <keyword type="struct" name="GskHttpClientClass" link="GskHttpClient.html#GskHttpClientClass"/>
+    <keyword type="struct" name="GskHttpClient" link="GskHttpClient.html#GskHttpClient-struct"/>
+    <keyword type="macro" name="GSK_HTTP_CLIENT_FAST_NOTIFY" link="GskHttpClient.html#GSK-HTTP-CLIENT-FAST-NOTIFY--CAPS"/>
+    <keyword type="macro" name="GSK_HTTP_CLIENT_DEFERRED_SHUTDOWN" link="GskHttpClient.html#GSK-HTTP-CLIENT-DEFERRED-SHUTDOWN--CAPS"/>
+    <keyword type="macro" name="GSK_HTTP_CLIENT_HOOK()" link="GskHttpClient.html#GSK-HTTP-CLIENT-HOOK--CAPS"/>
+    <keyword type="macro" name="GSK_HTTP_CLIENT_IS_FAST()" link="GskHttpClient.html#GSK-HTTP-CLIENT-IS-FAST--CAPS"/>
+    <keyword type="macro" name="gsk_http_client_trap_requestable()" link="GskHttpClient.html#gsk-http-client-trap-requestable"/>
+    <keyword type="macro" name="gsk_http_client_untrap_requestable()" link="GskHttpClient.html#gsk-http-client-untrap-requestable"/>
+    <keyword type="macro" name="gsk_http_client_is_requestable()" link="GskHttpClient.html#gsk-http-client-is-requestable"/>
+    <keyword type="function" name="gsk_http_client_new ()" link="GskHttpClient.html#gsk-http-client-new"/>
+    <keyword type="function" name="gsk_http_client_notify_fast ()" link="GskHttpClient.html#gsk-http-client-notify-fast"/>
+    <keyword type="function" name="gsk_http_client_request ()" link="GskHttpClient.html#gsk-http-client-request"/>
+    <keyword type="function" name="gsk_http_client_shutdown_when_done ()" link="GskHttpClient.html#gsk-http-client-shutdown-when-done"/>
+    <keyword type="function" name="gsk_http_client_propagate_content_read_shutdown ()" link="GskHttpClient.html#gsk-http-client-propagate-content-read-shutdown"/>
+    <keyword type="function" name="GskHttpServerTrap ()" link="GskHttpServer.html#GskHttpServerTrap"/>
+    <keyword type="struct" name="GskHttpServerClass" link="GskHttpServer.html#GskHttpServerClass"/>
+    <keyword type="struct" name="GskHttpServer" link="GskHttpServer.html#GskHttpServer-struct"/>
+    <keyword type="macro" name="GSK_HTTP_SERVER_HOOK()" link="GskHttpServer.html#GSK-HTTP-SERVER-HOOK--CAPS"/>
+    <keyword type="macro" name="gsk_http_server_trap()" link="GskHttpServer.html#gsk-http-server-trap"/>
+    <keyword type="macro" name="gsk_http_server_untrap()" link="GskHttpServer.html#gsk-http-server-untrap"/>
+    <keyword type="function" name="gsk_http_server_new ()" link="GskHttpServer.html#gsk-http-server-new"/>
+    <keyword type="function" name="gsk_http_server_get_request ()" link="GskHttpServer.html#gsk-http-server-get-request"/>
+    <keyword type="function" name="gsk_http_server_respond ()" link="GskHttpServer.html#gsk-http-server-respond"/>
+    <keyword type="struct" name="GskZlibDeflator" link="gsk-GskZlibDeflator.html#GskZlibDeflator"/>
+    <keyword type="function" name="gsk_zlib_deflator_new ()" link="gsk-GskZlibDeflator.html#gsk-zlib-deflator-new"/>
+    <keyword type="struct" name="GskZlibInflator" link="gsk-GskZlibInflator.html#GskZlibInflator"/>
+    <keyword type="function" name="gsk_zlib_inflator_new ()" link="gsk-GskZlibInflator.html#gsk-zlib-inflator-new"/>
+    <keyword type="function" name="gsk_zlib_error_to_gsk_error ()" link="gsk-gskzlib.html#gsk-zlib-error-to-gsk-error"/>
+    <keyword type="function" name="gsk_zlib_error_to_message ()" link="gsk-gskzlib.html#gsk-zlib-error-to-message"/>
+    <keyword type="function" name="gsk_stream_queue_new ()" link="gsk-GskStreamQueue.html#gsk-stream-queue-new"/>
+    <keyword type="function" name="gsk_stream_queue_append_read_stream ()" link="gsk-GskStreamQueue.html#gsk-stream-queue-append-read-stream"/>
+    <keyword type="function" name="gsk_stream_queue_append_write_stream ()" link="gsk-GskStreamQueue.html#gsk-stream-queue-append-write-stream"/>
+    <keyword type="function" name="gsk_stream_queue_no_more_read_streams ()" link="gsk-GskStreamQueue.html#gsk-stream-queue-no-more-read-streams"/>
+    <keyword type="function" name="gsk_stream_queue_no_more_write_streams ()" link="gsk-GskStreamQueue.html#gsk-stream-queue-no-more-write-streams"/>
+    <keyword type="macro" name="GSK_STREAM_QUEUE_READ_EMPTY_HOOK()" link="gsk-GskStreamQueue.html#GSK-STREAM-QUEUE-READ-EMPTY-HOOK--CAPS"/>
+    <keyword type="macro" name="gsk_stream_queue_trap_read_empty()" link="gsk-GskStreamQueue.html#gsk-stream-queue-trap-read-empty"/>
+    <keyword type="macro" name="gsk_stream_queue_untrap_read_empty()" link="gsk-GskStreamQueue.html#gsk-stream-queue-untrap-read-empty"/>
+    <keyword type="macro" name="GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK()" link="gsk-GskStreamQueue.html#GSK-STREAM-QUEUE-WRITE-EMPTY-HOOK--CAPS"/>
+    <keyword type="macro" name="gsk_stream_queue_trap_write_empty()" link="gsk-GskStreamQueue.html#gsk-stream-queue-trap-write-empty"/>
+    <keyword type="macro" name="gsk_stream_queue_untrap_write_empty()" link="gsk-GskStreamQueue.html#gsk-stream-queue-untrap-write-empty"/>
+    <keyword type="function" name="gsk_memory_buffer_source_new ()" link="gsk-gskmemory.html#gsk-memory-buffer-source-new"/>
+    <keyword type="function" name="gsk_memory_slab_source_new ()" link="gsk-gskmemory.html#gsk-memory-slab-source-new"/>
+    <keyword type="function" name="gsk_memory_source_new_printf ()" link="gsk-gskmemory.html#gsk-memory-source-new-printf"/>
+    <keyword type="function" name="gsk_memory_source_new_vprintf ()" link="gsk-gskmemory.html#gsk-memory-source-new-vprintf"/>
+    <keyword type="function" name="gsk_memory_source_static_string ()" link="gsk-gskmemory.html#gsk-memory-source-static-string"/>
+    <keyword type="function" name="gsk_memory_source_static_string_n ()" link="gsk-gskmemory.html#gsk-memory-source-static-string-n"/>
+    <keyword type="function" name="GskMemoryBufferCallback ()" link="gsk-gskmemory.html#GskMemoryBufferCallback"/>
+    <keyword type="function" name="gsk_memory_buffer_sink_new ()" link="gsk-gskmemory.html#gsk-memory-buffer-sink-new"/>
+    <keyword type="macro" name="GSK_DNS_PORT" link="gsk-gskdns.html#GSK-DNS-PORT--CAPS"/>
+    <keyword type="struct" name="GskDnsMessage" link="gsk-gskdns.html#GskDnsMessage"/>
+    <keyword type="struct" name="GskDnsResourceRecord" link="gsk-gskdns.html#GskDnsResourceRecord"/>
+    <keyword type="struct" name="GskDnsQuestion" link="gsk-gskdns.html#GskDnsQuestion"/>
+    <keyword type="enum" name="enum GskDnsResourceRecordType" link="gsk-gskdns.html#GskDnsResourceRecordType"/>
+    <keyword type="enum" name="enum GskDnsResourceClass" link="gsk-gskdns.html#GskDnsResourceClass"/>
+    <keyword type="macro" name="GSK_DNS_SERIAL_LESS_THAN()" link="gsk-gskdns.html#GSK-DNS-SERIAL-LESS-THAN--CAPS"/>
+    <keyword type="function" name="gsk_dns_rr_new_generic ()" link="gsk-gskdns.html#gsk-dns-rr-new-generic"/>
+    <keyword type="function" name="gsk_dns_rr_new_a ()" link="gsk-gskdns.html#gsk-dns-rr-new-a"/>
+    <keyword type="function" name="gsk_dns_rr_new_aaaa ()" link="gsk-gskdns.html#gsk-dns-rr-new-aaaa"/>
+    <keyword type="function" name="gsk_dns_rr_new_ns ()" link="gsk-gskdns.html#gsk-dns-rr-new-ns"/>
+    <keyword type="function" name="gsk_dns_rr_new_cname ()" link="gsk-gskdns.html#gsk-dns-rr-new-cname"/>
+    <keyword type="function" name="gsk_dns_rr_new_ptr ()" link="gsk-gskdns.html#gsk-dns-rr-new-ptr"/>
+    <keyword type="function" name="gsk_dns_rr_new_mx ()" link="gsk-gskdns.html#gsk-dns-rr-new-mx"/>
+    <keyword type="function" name="gsk_dns_rr_new_hinfo ()" link="gsk-gskdns.html#gsk-dns-rr-new-hinfo"/>
+    <keyword type="function" name="gsk_dns_rr_new_soa ()" link="gsk-gskdns.html#gsk-dns-rr-new-soa"/>
+    <keyword type="function" name="gsk_dns_rr_new_txt ()" link="gsk-gskdns.html#gsk-dns-rr-new-txt"/>
+    <keyword type="function" name="gsk_dns_rr_free ()" link="gsk-gskdns.html#gsk-dns-rr-free"/>
+    <keyword type="function" name="gsk_dns_rr_copy ()" link="gsk-gskdns.html#gsk-dns-rr-copy"/>
+    <keyword type="function" name="gsk_dns_rr_new_wildcard ()" link="gsk-gskdns.html#gsk-dns-rr-new-wildcard"/>
+    <keyword type="function" name="gsk_dns_question_new ()" link="gsk-gskdns.html#gsk-dns-question-new"/>
+    <keyword type="function" name="gsk_dns_question_copy ()" link="gsk-gskdns.html#gsk-dns-question-copy"/>
+    <keyword type="function" name="gsk_dns_question_free ()" link="gsk-gskdns.html#gsk-dns-question-free"/>
+    <keyword type="function" name="gsk_dns_rr_text_parse ()" link="gsk-gskdns.html#gsk-dns-rr-text-parse"/>
+    <keyword type="function" name="gsk_dns_rr_text_to_str ()" link="gsk-gskdns.html#gsk-dns-rr-text-to-str"/>
+    <keyword type="function" name="gsk_dns_question_text_to_str ()" link="gsk-gskdns.html#gsk-dns-question-text-to-str"/>
+    <keyword type="function" name="gsk_dns_rr_text_write ()" link="gsk-gskdns.html#gsk-dns-rr-text-write"/>
+    <keyword type="enum" name="enum GskDnsResponseCode" link="gsk-gskdns.html#GskDnsResponseCode"/>
+    <keyword type="function" name="gsk_dns_message_new ()" link="gsk-gskdns.html#gsk-dns-message-new"/>
+    <keyword type="function" name="gsk_dns_message_parse_buffer ()" link="gsk-gskdns.html#gsk-dns-message-parse-buffer"/>
+    <keyword type="function" name="gsk_dns_message_parse_data ()" link="gsk-gskdns.html#gsk-dns-message-parse-data"/>
+    <keyword type="function" name="gsk_dns_message_write_buffer ()" link="gsk-gskdns.html#gsk-dns-message-write-buffer"/>
+    <keyword type="function" name="gsk_dns_message_to_packet ()" link="gsk-gskdns.html#gsk-dns-message-to-packet"/>
+    <keyword type="function" name="gsk_dns_message_append_question ()" link="gsk-gskdns.html#gsk-dns-message-append-question"/>
+    <keyword type="function" name="gsk_dns_message_append_answer ()" link="gsk-gskdns.html#gsk-dns-message-append-answer"/>
+    <keyword type="function" name="gsk_dns_message_append_auth ()" link="gsk-gskdns.html#gsk-dns-message-append-auth"/>
+    <keyword type="function" name="gsk_dns_message_append_addl ()" link="gsk-gskdns.html#gsk-dns-message-append-addl"/>
+    <keyword type="function" name="gsk_dns_message_remove_question ()" link="gsk-gskdns.html#gsk-dns-message-remove-question"/>
+    <keyword type="function" name="gsk_dns_message_remove_answer ()" link="gsk-gskdns.html#gsk-dns-message-remove-answer"/>
+    <keyword type="function" name="gsk_dns_message_remove_auth ()" link="gsk-gskdns.html#gsk-dns-message-remove-auth"/>
+    <keyword type="function" name="gsk_dns_message_remove_addl ()" link="gsk-gskdns.html#gsk-dns-message-remove-addl"/>
+    <keyword type="function" name="gsk_dns_message_unref ()" link="gsk-gskdns.html#gsk-dns-message-unref"/>
+    <keyword type="function" name="gsk_dns_message_ref ()" link="gsk-gskdns.html#gsk-dns-message-ref"/>
+    <keyword type="function" name="gsk_dns_dump_message_fp ()" link="gsk-gskdns.html#gsk-dns-dump-message-fp"/>
+    <keyword type="function" name="gsk_dns_dump_question_fp ()" link="gsk-gskdns.html#gsk-dns-dump-question-fp"/>
+    <keyword type="function" name="gsk_dns_parse_ip_address ()" link="gsk-gskdns.html#gsk-dns-parse-ip-address"/>
+    <keyword type="function" name="gsk_test_domain_name_validity ()" link="gsk-gskdns.html#gsk-test-domain-name-validity"/>
+    <keyword type="struct" name="GskDnsRRCache" link="gsk-gskdnsrrcache.html#GskDnsRRCache"/>
+    <keyword type="macro" name="GSK_TYPE_DNS_RR_CACHE" link="gsk-gskdnsrrcache.html#GSK-TYPE-DNS-RR-CACHE--CAPS"/>
+    <keyword type="function" name="gsk_dns_rr_cache_new ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-new"/>
+    <keyword type="function" name="gsk_dns_rr_cache_insert ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-insert"/>
+    <keyword type="function" name="gsk_dns_rr_cache_lookup_list ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-list"/>
+    <keyword type="function" name="gsk_dns_rr_cache_lookup_one ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-one"/>
+    <keyword type="function" name="gsk_dns_rr_cache_is_negative ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-is-negative"/>
+    <keyword type="function" name="gsk_dns_rr_cache_unlock ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-unlock"/>
+    <keyword type="function" name="gsk_dns_rr_cache_lock ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lock"/>
+    <keyword type="function" name="gsk_dns_rr_cache_mark_user ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-mark-user"/>
+    <keyword type="function" name="gsk_dns_rr_cache_unmark_user ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-unmark-user"/>
+    <keyword type="function" name="gsk_dns_rr_cache_add_negative ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-add-negative"/>
+    <keyword type="function" name="gsk_dns_rr_cache_load_zone ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-load-zone"/>
+    <keyword type="function" name="gsk_dns_rr_cache_get_ns_addr ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-get-ns-addr"/>
+    <keyword type="function" name="gsk_dns_rr_cache_get_addr ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-get-addr"/>
+    <keyword type="function" name="gsk_dns_rr_cache_ref ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-ref"/>
+    <keyword type="function" name="gsk_dns_rr_cache_unref ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-unref"/>
+    <keyword type="function" name="gsk_dns_rr_cache_flush ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-flush"/>
+    <keyword type="function" name="gsk_dns_rr_cache_parse_etc_hosts_line ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-parse-etc-hosts-line"/>
+    <keyword type="function" name="gsk_dns_rr_cache_parse_etc_hosts ()" link="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-parse-etc-hosts"/>
+    <keyword type="struct" name="GskDnsClient" link="gsk-gskdnsclient.html#GskDnsClient-struct"/>
+    <keyword type="struct" name="GskDnsClientClass" link="gsk-gskdnsclient.html#GskDnsClientClass"/>
+    <keyword type="enum" name="enum GskDnsClientFlags" link="gsk-gskdnsclient.html#GskDnsClientFlags"/>
+    <keyword type="function" name="gsk_dns_client_new ()" link="gsk-gskdnsclient.html#gsk-dns-client-new"/>
+    <keyword type="function" name="gsk_dns_client_add_searchpath ()" link="gsk-gskdnsclient.html#gsk-dns-client-add-searchpath"/>
+    <keyword type="function" name="gsk_dns_client_add_ns ()" link="gsk-gskdnsclient.html#gsk-dns-client-add-ns"/>
+    <keyword type="function" name="gsk_dns_client_set_cache ()" link="gsk-gskdnsclient.html#gsk-dns-client-set-cache"/>
+    <keyword type="function" name="gsk_dns_client_set_flags ()" link="gsk-gskdnsclient.html#gsk-dns-client-set-flags"/>
+    <keyword type="function" name="gsk_dns_client_get_flags ()" link="gsk-gskdnsclient.html#gsk-dns-client-get-flags"/>
+    <keyword type="function" name="gsk_dns_client_parse_system_files ()" link="gsk-gskdnsclient.html#gsk-dns-client-parse-system-files"/>
+    <keyword type="struct" name="GskDnsLocalResolverClass" link="gsk-gskdnslocalresolver.html#GskDnsLocalResolverClass"/>
+    <keyword type="struct" name="GskDnsLocalResolver" link="gsk-gskdnslocalresolver.html#GskDnsLocalResolver-struct"/>
+    <keyword type="function" name="gsk_dns_local_resolver_new ()" link="gsk-gskdnslocalresolver.html#gsk-dns-local-resolver-new"/>
+    <keyword type="enum" name="enum GskDnsLocalResult" link="gsk-gskdnslocalresolver.html#GskDnsLocalResult"/>
+    <keyword type="function" name="gsk_dns_local_resolver_answer ()" link="gsk-gskdnslocalresolver.html#gsk-dns-local-resolver-answer"/>
+    <keyword type="property" name="The &quot;resource-cache&quot; property" link="gsk-gskdnslocalresolver.html#GskDnsLocalResolver--resource-cache"/>
+    <keyword type="struct" name="GskDnsResolverHints" link="gsk-gskdnsresolver.html#GskDnsResolverHints"/>
+    <keyword type="struct" name="GskDnsResolverIface" link="gsk-gskdnsresolver.html#GskDnsResolverIface"/>
+    <keyword type="struct" name="GskDnsResolver" link="gsk-gskdnsresolver.html#GskDnsResolver-struct"/>
+    <keyword type="struct" name="GskDnsResolverTask" link="gsk-gskdnsresolver.html#GskDnsResolverTask"/>
+    <keyword type="function" name="GskDnsResolverLookupFunc ()" link="gsk-gskdnsresolver.html#GskDnsResolverLookupFunc"/>
+    <keyword type="function" name="GskDnsResolverRevLookupFunc ()" link="gsk-gskdnsresolver.html#GskDnsResolverRevLookupFunc"/>
+    <keyword type="function" name="GskDnsResolverResponseFunc ()" link="gsk-gskdnsresolver.html#GskDnsResolverResponseFunc"/>
+    <keyword type="function" name="GskDnsResolverFailFunc ()" link="gsk-gskdnsresolver.html#GskDnsResolverFailFunc"/>
+    <keyword type="function" name="gsk_dns_resolver_resolve ()" link="gsk-gskdnsresolver.html#gsk-dns-resolver-resolve"/>
+    <keyword type="function" name="gsk_dns_resolver_cancel ()" link="gsk-gskdnsresolver.html#gsk-dns-resolver-cancel"/>
+    <keyword type="function" name="gsk_dns_resolver_lookup ()" link="gsk-gskdnsresolver.html#gsk-dns-resolver-lookup"/>
+    <keyword type="function" name="gsk_dns_resolver_rev_lookup ()" link="gsk-gskdnsresolver.html#gsk-dns-resolver-rev-lookup"/>
+    <keyword type="function" name="gsk_dns_resolver_add_name_resolver_iface ()" link="gsk-gskdnsresolver.html#gsk-dns-resolver-add-name-resolver-iface"/>
+    <keyword type="struct" name="GskDnsServerClass" link="gsk-gskdnsserver.html#GskDnsServerClass"/>
+    <keyword type="struct" name="GskDnsServer" link="gsk-gskdnsserver.html#GskDnsServer-struct"/>
+    <keyword type="function" name="gsk_dns_server_new ()" link="gsk-gskdnsserver.html#gsk-dns-server-new"/>
+    <keyword type="function" name="gsk_dns_server_peek_resolver ()" link="gsk-gskdnsserver.html#gsk-dns-server-peek-resolver"/>
+    <keyword type="function" name="gsk_dns_server_set_resolver ()" link="gsk-gskdnsserver.html#gsk-dns-server-set-resolver"/>
+    <keyword type="property" name="The &quot;packet-queue&quot; property" link="gsk-gskdnsserver.html#GskDnsServer--packet-queue"/>
+    <keyword type="property" name="The &quot;resolver&quot; property" link="gsk-gskdnsserver.html#GskDnsServer--resolver"/>
+    <keyword type="struct" name="GskStreamSsl" link="gsk-gskstreamssl.html#GskStreamSsl-struct"/>
+    <keyword type="function" name="gsk_stream_ssl_new_client ()" link="gsk-gskstreamssl.html#gsk-stream-ssl-new-client"/>
+    <keyword type="function" name="gsk_stream_ssl_new_server ()" link="gsk-gskstreamssl.html#gsk-stream-ssl-new-server"/>
+    <keyword type="function" name="gsk_stream_ssl_peek_backend ()" link="gsk-gskstreamssl.html#gsk-stream-ssl-peek-backend"/>
+    <keyword type="property" name="The &quot;cert-file&quot; property" link="gsk-gskstreamssl.html#GskStreamSsl--cert-file"/>
+    <keyword type="property" name="The &quot;is-client&quot; property" link="gsk-gskstreamssl.html#GskStreamSsl--is-client"/>
+    <keyword type="property" name="The &quot;key-file&quot; property" link="gsk-gskstreamssl.html#GskStreamSsl--key-file"/>
+    <keyword type="property" name="The &quot;password&quot; property" link="gsk-gskstreamssl.html#GskStreamSsl--password"/>
+    <keyword type="struct" name="GskMimeMultipartPiece" link="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_ref ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-ref"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_unref ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-unref"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_alloc ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-alloc"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_set_description ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-description"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_set_stream ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-stream"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_set_type ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-type"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_set_data ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-data"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_set_transfer_encoding ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-transfer-encoding"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_set_location ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-location"/>
+    <keyword type="function" name="gsk_mime_multipart_piece_set_id ()" link="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-id"/>
+    <keyword type="function" name="GskMimeMultipartDecoderHook ()" link="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderHook"/>
+    <keyword type="enum" name="enum GskMimeMultipartDecoderMode" link="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderMode"/>
+    <keyword type="struct" name="GskMimeMultipartDecoderClass" link="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderClass"/>
+    <keyword type="struct" name="GskMimeMultipartDecoder" link="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder"/>
+    <keyword type="function" name="gsk_mime_multipart_decoder_new ()" link="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-new"/>
+    <keyword type="function" name="gsk_mime_multipart_decoder_set_mode ()" link="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-set-mode"/>
+    <keyword type="function" name="gsk_mime_multipart_decoder_get_piece ()" link="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-get-piece"/>
+    <keyword type="macro" name="gsk_mime_multipart_decoder_trap()" link="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-trap"/>
+    <keyword type="macro" name="gsk_mime_multipart_decoder_untrap()" link="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-untrap"/>
+    <keyword type="macro" name="gsk_mime_multipart_decoder_block()" link="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-block"/>
+    <keyword type="macro" name="gsk_mime_multipart_decoder_unblock()" link="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-unblock"/>
+    <keyword type="struct" name="GskXmlrpcArray" link="gsk-gskxmlrpc.html#GskXmlrpcArray"/>
+    <keyword type="struct" name="GskXmlrpcStruct" link="gsk-gskxmlrpc.html#GskXmlrpcStruct"/>
+    <keyword type="struct" name="GskXmlrpcValue" link="gsk-gskxmlrpc.html#GskXmlrpcValue"/>
+    <keyword type="struct" name="GskXmlrpcNamedValue" link="gsk-gskxmlrpc.html#GskXmlrpcNamedValue"/>
+    <keyword type="struct" name="GskXmlrpcRequest" link="gsk-gskxmlrpc.html#GskXmlrpcRequest"/>
+    <keyword type="struct" name="GskXmlrpcResponse" link="gsk-gskxmlrpc.html#GskXmlrpcResponse"/>
+    <keyword type="struct" name="GskXmlrpcParser" link="gsk-gskxmlrpc.html#GskXmlrpcParser"/>
+    <keyword type="enum" name="enum GskXmlrpcType" link="gsk-gskxmlrpc.html#GskXmlrpcType"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_new ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-new"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_free ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-free"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_int32 ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-int32"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_boolean ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-boolean"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_double ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-double"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_string ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-string"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_date ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-date"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_data ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-data"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_struct ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-struct"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_add_array ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-array"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_date ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-date"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_boolean ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-boolean"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_double ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-double"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_struct ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-struct"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_data ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-data"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_array ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-array"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_string ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-string"/>
+    <keyword type="function" name="gsk_xmlrpc_struct_peek_int32 ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-int32"/>
+    <keyword type="function" name="gsk_xmlrpc_array_new ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-new"/>
+    <keyword type="function" name="gsk_xmlrpc_array_free ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-free"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_int32 ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-int32"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_boolean ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-boolean"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_double ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-double"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_string ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-string"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_date ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-date"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_data ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-data"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_struct ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-struct"/>
+    <keyword type="function" name="gsk_xmlrpc_array_add_array ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-array"/>
+    <keyword type="function" name="gsk_xmlrpc_request_new ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-new"/>
+    <keyword type="function" name="gsk_xmlrpc_request_ref ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-ref"/>
+    <keyword type="function" name="gsk_xmlrpc_request_unref ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-unref"/>
+    <keyword type="function" name="gsk_xmlrpc_request_set_name ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-set-name"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_int32 ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-int32"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_boolean ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-boolean"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_double ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-double"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_string ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-string"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_date ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-date"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_data ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-data"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_struct ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-struct"/>
+    <keyword type="function" name="gsk_xmlrpc_request_add_array ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-array"/>
+    <keyword type="function" name="gsk_xmlrpc_response_new ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-new"/>
+    <keyword type="function" name="gsk_xmlrpc_response_ref ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-ref"/>
+    <keyword type="function" name="gsk_xmlrpc_response_unref ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-unref"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_int32 ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-int32"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_boolean ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-boolean"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_double ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-double"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_string ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-string"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_date ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-date"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_data ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-data"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_struct ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-struct"/>
+    <keyword type="function" name="gsk_xmlrpc_response_add_array ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-array"/>
+    <keyword type="function" name="gsk_xmlrpc_response_fault ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-fault"/>
+    <keyword type="function" name="gsk_xmlrpc_parser_new ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-new"/>
+    <keyword type="function" name="gsk_xmlrpc_parser_feed ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-feed"/>
+    <keyword type="function" name="gsk_xmlrpc_parser_get_request ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-get-request"/>
+    <keyword type="function" name="gsk_xmlrpc_parser_get_response ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-get-response"/>
+    <keyword type="function" name="gsk_xmlrpc_parser_free ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-free"/>
+    <keyword type="function" name="gsk_xmlrpc_request_to_buffer ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-request-to-buffer"/>
+    <keyword type="function" name="gsk_xmlrpc_response_to_buffer ()" link="gsk-gskxmlrpc.html#gsk-xmlrpc-response-to-buffer"/>
+    <keyword type="struct" name="GskXmlrpcStreamClass" link="gsk-GskXmlrpcStream.html#GskXmlrpcStreamClass"/>
+    <keyword type="struct" name="GskXmlrpcStream" link="gsk-GskXmlrpcStream.html#GskXmlrpcStream"/>
+    <keyword type="macro" name="GSK_XMLRPC_STREAM_REQUEST_HOOK()" link="gsk-GskXmlrpcStream.html#GSK-XMLRPC-STREAM-REQUEST-HOOK--CAPS"/>
+    <keyword type="function" name="gsk_xmlrpc_stream_get_request ()" link="gsk-GskXmlrpcStream.html#gsk-xmlrpc-stream-get-request"/>
+    <keyword type="function" name="gsk_xmlrpc_stream_respond ()" link="gsk-GskXmlrpcStream.html#gsk-xmlrpc-stream-respond"/>
+    <keyword type="function" name="GskXmlrpcResponseNotify ()" link="gsk-GskXmlrpcStream.html#GskXmlrpcResponseNotify"/>
+    <keyword type="function" name="gsk_xmlrpc_stream_make_request ()" link="gsk-GskXmlrpcStream.html#gsk-xmlrpc-stream-make-request"/>
+    <keyword type="struct" name="GskMainLoopDevPoll" link="GskMainLoopDevPoll.html#GskMainLoopDevPoll-struct"/>
+    <keyword type="struct" name="GskMainLoopKqueue" link="GskMainLoopKqueue.html#GskMainLoopKqueue-struct"/>
+    <keyword type="struct" name="GskMainLoopPoll" link="GskMainLoopPoll.html#GskMainLoopPoll-struct"/>
+    <keyword type="struct" name="GskMainLoopPollBaseClass" link="GskMainLoopPollBase.html#GskMainLoopPollBaseClass"/>
+    <keyword type="struct" name="GskMainLoopPollBase" link="GskMainLoopPollBase.html#GskMainLoopPollBase-struct"/>
+    <keyword type="function" name="gsk_main_loop_poll_base_wakeup ()" link="GskMainLoopPollBase.html#gsk-main-loop-poll-base-wakeup"/>
+    <keyword type="struct" name="GskMainLoopSelect" link="GskMainLoopSelect.html#GskMainLoopSelect-struct"/>
+    <keyword type="macro" name="GSK_BASE64_GET_ENCODED_LEN()" link="gsk-gskbase64.html#GSK-BASE64-GET-ENCODED-LEN--CAPS"/>
+    <keyword type="macro" name="GSK_BASE64_GET_MAX_DECODED_LEN()" link="gsk-gskbase64.html#GSK-BASE64-GET-MAX-DECODED-LEN--CAPS"/>
+    <keyword type="function" name="gsk_base64_decode ()" link="gsk-gskbase64.html#gsk-base64-decode"/>
+    <keyword type="function" name="gsk_base64_decode_alloc ()" link="gsk-gskbase64.html#gsk-base64-decode-alloc"/>
+    <keyword type="function" name="gsk_base64_encode ()" link="gsk-gskbase64.html#gsk-base64-encode"/>
+    <keyword type="function" name="gsk_base64_encode_alloc ()" link="gsk-gskbase64.html#gsk-base64-encode-alloc"/>
+    <keyword type="struct" name="GskHash" link="gsk-gskhash.html#GskHash"/>
+    <keyword type="function" name="gsk_hash_new_md5 ()" link="gsk-gskhash.html#gsk-hash-new-md5"/>
+    <keyword type="function" name="gsk_hash_new_sha1 ()" link="gsk-gskhash.html#gsk-hash-new-sha1"/>
+    <keyword type="function" name="gsk_hash_new_crc32 ()" link="gsk-gskhash.html#gsk-hash-new-crc32"/>
+    <keyword type="function" name="gsk_hash_feed ()" link="gsk-gskhash.html#gsk-hash-feed"/>
+    <keyword type="function" name="gsk_hash_feed_str ()" link="gsk-gskhash.html#gsk-hash-feed-str"/>
+    <keyword type="function" name="gsk_hash_done ()" link="gsk-gskhash.html#gsk-hash-done"/>
+    <keyword type="function" name="gsk_hash_get_size ()" link="gsk-gskhash.html#gsk-hash-get-size"/>
+    <keyword type="function" name="gsk_hash_get ()" link="gsk-gskhash.html#gsk-hash-get"/>
+    <keyword type="function" name="gsk_hash_get_hex ()" link="gsk-gskhash.html#gsk-hash-get-hex"/>
+    <keyword type="function" name="gsk_hash_destroy ()" link="gsk-gskhash.html#gsk-hash-destroy"/>
+    <keyword type="macro" name="GSK_MEM_POOL_FIXED_STATIC_INIT()" link="gsk-gskmempool.html#GSK-MEM-POOL-FIXED-STATIC-INIT--CAPS"/>
+    <keyword type="macro" name="GSK_MEM_POOL_STATIC_INIT" link="gsk-gskmempool.html#GSK-MEM-POOL-STATIC-INIT--CAPS"/>
+    <keyword type="struct" name="GskMemPool" link="gsk-gskmempool.html#GskMemPool"/>
+    <keyword type="struct" name="GskMemPoolFixed" link="gsk-gskmempool.html#GskMemPoolFixed"/>
+    <keyword type="function" name="gsk_mem_pool_construct ()" link="gsk-gskmempool.html#gsk-mem-pool-construct"/>
+    <keyword type="function" name="gsk_mem_pool_construct_with_scratch_buf ()" link="gsk-gskmempool.html#gsk-mem-pool-construct-with-scratch-buf"/>
+    <keyword type="function" name="gsk_mem_pool_alloc ()" link="gsk-gskmempool.html#gsk-mem-pool-alloc"/>
+    <keyword type="function" name="gsk_mem_pool_alloc0 ()" link="gsk-gskmempool.html#gsk-mem-pool-alloc0"/>
+    <keyword type="function" name="gsk_mem_pool_strdup ()" link="gsk-gskmempool.html#gsk-mem-pool-strdup"/>
+    <keyword type="function" name="gsk_mem_pool_destruct ()" link="gsk-gskmempool.html#gsk-mem-pool-destruct"/>
+    <keyword type="function" name="gsk_mem_pool_fixed_construct ()" link="gsk-gskmempool.html#gsk-mem-pool-fixed-construct"/>
+    <keyword type="function" name="gsk_mem_pool_fixed_alloc ()" link="gsk-gskmempool.html#gsk-mem-pool-fixed-alloc"/>
+    <keyword type="function" name="gsk_mem_pool_fixed_alloc0 ()" link="gsk-gskmempool.html#gsk-mem-pool-fixed-alloc0"/>
+    <keyword type="function" name="gsk_mem_pool_fixed_free ()" link="gsk-gskmempool.html#gsk-mem-pool-fixed-free"/>
+    <keyword type="function" name="gsk_mem_pool_fixed_destruct ()" link="gsk-gskmempool.html#gsk-mem-pool-fixed-destruct"/>
+    <keyword type="struct" name="GskNetworkInterface" link="gsk-gsknetworkinterface.html#GskNetworkInterface"/>
+    <keyword type="struct" name="GskNetworkInterfaceSet" link="gsk-gsknetworkinterface.html#GskNetworkInterfaceSet"/>
+    <keyword type="enum" name="enum GskNetworkInterfaceFlags" link="gsk-gsknetworkinterface.html#GskNetworkInterfaceFlags"/>
+    <keyword type="function" name="gsk_network_interface_set_new ()" link="gsk-gsknetworkinterface.html#gsk-network-interface-set-new"/>
+    <keyword type="function" name="gsk_network_interface_set_destroy ()" link="gsk-gsknetworkinterface.html#gsk-network-interface-set-destroy"/>
+    <keyword type="enum" name="enum GskDateFormatMask" link="gsk-gskdate.html#GskDateFormatMask"/>
+    <keyword type="function" name="gsk_date_parse ()" link="gsk-gskdate.html#gsk-date-parse"/>
+    <keyword type="function" name="gsk_date_parse_timet ()" link="gsk-gskdate.html#gsk-date-parse-timet"/>
+    <keyword type="function" name="gsk_date_print ()" link="gsk-gskdate.html#gsk-date-print"/>
+    <keyword type="function" name="gsk_date_print_timet ()" link="gsk-gskdate.html#gsk-date-print-timet"/>
+    <keyword type="macro" name="GSK_DATE_MAX_LENGTH" link="gsk-gskdate.html#GSK-DATE-MAX-LENGTH--CAPS"/>
+    <keyword type="macro" name="GSK_LOG2_MAX_LIST_SIZE" link="gsk-gsklistmacros.html#GSK-LOG2-MAX-LIST-SIZE--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_PUSH()" link="gsk-gsklistmacros.html#GSK-STACK-PUSH--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_POP()" link="gsk-gsklistmacros.html#GSK-STACK-POP--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_INSERT_AFTER()" link="gsk-gsklistmacros.html#GSK-STACK-INSERT-AFTER--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_REVERSE()" link="gsk-gsklistmacros.html#GSK-STACK-REVERSE--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_FOREACH()" link="gsk-gsklistmacros.html#GSK-STACK-FOREACH--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_SORT()" link="gsk-gsklistmacros.html#GSK-STACK-SORT--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_GET_BOTTOM()" link="gsk-gsklistmacros.html#GSK-STACK-GET-BOTTOM--CAPS"/>
+    <keyword type="macro" name="GSK_STACK_IS_EMPTY()" link="gsk-gsklistmacros.html#GSK-STACK-IS-EMPTY--CAPS"/>
+    <keyword type="macro" name="GSK_QUEUE_ENQUEUE()" link="gsk-gsklistmacros.html#GSK-QUEUE-ENQUEUE--CAPS"/>
+    <keyword type="macro" name="GSK_QUEUE_DEQUEUE()" link="gsk-gsklistmacros.html#GSK-QUEUE-DEQUEUE--CAPS"/>
+    <keyword type="macro" name="GSK_QUEUE_PREPEND()" link="gsk-gsklistmacros.html#GSK-QUEUE-PREPEND--CAPS"/>
+    <keyword type="macro" name="GSK_QUEUE_REVERSE()" link="gsk-gsklistmacros.html#GSK-QUEUE-REVERSE--CAPS"/>
+    <keyword type="macro" name="GSK_QUEUE_SORT()" link="gsk-gsklistmacros.html#GSK-QUEUE-SORT--CAPS"/>
+    <keyword type="macro" name="GSK_QUEUE_IS_EMPTY()" link="gsk-gsklistmacros.html#GSK-QUEUE-IS-EMPTY--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_PREPEND()" link="gsk-gsklistmacros.html#GSK-LIST-PREPEND--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_APPEND()" link="gsk-gsklistmacros.html#GSK-LIST-APPEND--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_REMOVE_FIRST()" link="gsk-gsklistmacros.html#GSK-LIST-REMOVE-FIRST--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_REMOVE_LAST()" link="gsk-gsklistmacros.html#GSK-LIST-REMOVE-LAST--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_REMOVE()" link="gsk-gsklistmacros.html#GSK-LIST-REMOVE--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_INSERT_AFTER()" link="gsk-gsklistmacros.html#GSK-LIST-INSERT-AFTER--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_INSERT_BEFORE()" link="gsk-gsklistmacros.html#GSK-LIST-INSERT-BEFORE--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_IS_EMPTY()" link="gsk-gsklistmacros.html#GSK-LIST-IS-EMPTY--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_REVERSE()" link="gsk-gsklistmacros.html#GSK-LIST-REVERSE--CAPS"/>
+    <keyword type="macro" name="GSK_LIST_SORT()" link="gsk-gsklistmacros.html#GSK-LIST-SORT--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_INSERT()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-INSERT--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_REMOVE()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-REMOVE--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_LOOKUP()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-LOOKUP--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_LOOKUP_COMPARATOR()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-LOOKUP-COMPARATOR--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_FIRST()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-FIRST--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_LAST()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-LAST--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_NEXT()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-NEXT--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_PREV()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-PREV--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_SUPREMUM()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-SUPREMUM--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_SUPREMUM_COMPARATOR()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-SUPREMUM-COMPARATOR--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_INFIMUM()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-INFIMUM--CAPS"/>
+    <keyword type="macro" name="GSK_RBTREE_INFIMUM_COMPARATOR()" link="gsk-gskrbtreemacros.html#GSK-RBTREE-INFIMUM-COMPARATOR--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_INSERT()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-INSERT--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_REMOVE()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-REMOVE--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_LOOKUP()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-LOOKUP--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_LOOKUP_COMPARATOR()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_FIRST()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-FIRST--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_LAST()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-LAST--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_NEXT()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-NEXT--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_PREV()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-PREV--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_SUPREMUM()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-SUPREMUM--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_SUPREMUM_COMPARATOR()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-SUPREMUM-COMPARATOR--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_INFIMUM()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-INFIMUM--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_INFIMUM_COMPARATOR()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-INFIMUM-COMPARATOR--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_GET_BY_INDEX()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-GET-BY-INDEX--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_GET_BY_INDEX_UNCHECKED()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-GET-BY-INDEX-UNCHECKED--CAPS"/>
+    <keyword type="macro" name="GSK_RBCTREE_GET_NODE_INDEX()" link="gsk-gskrbtreemacros.html#GSK-RBCTREE-GET-NODE-INDEX--CAPS"/>
+    <keyword type="macro" name="GSK_QSORT_STACK_MAX_SIZE" link="gsk-gskqsortmacro.html#GSK-QSORT-STACK-MAX-SIZE--CAPS"/>
+    <keyword type="macro" name="GSK_INSERTION_SORT_THRESHOLD" link="gsk-gskqsortmacro.html#GSK-INSERTION-SORT-THRESHOLD--CAPS"/>
+    <keyword type="macro" name="GSK_QSORT()" link="gsk-gskqsortmacro.html#GSK-QSORT--CAPS"/>
+    <keyword type="macro" name="GSK_QSORT_DEBUG()" link="gsk-gskqsortmacro.html#GSK-QSORT-DEBUG--CAPS"/>
+    <keyword type="macro" name="GSK_QSORT_FULL()" link="gsk-gskqsortmacro.html#GSK-QSORT-FULL--CAPS"/>
+    <keyword type="macro" name="GSK_QSELECT_FULL()" link="gsk-gskqsortmacro.html#GSK-QSELECT-FULL--CAPS"/>
+    <keyword type="macro" name="GSK_QSORT_ASSERT_STACK_SIZE()" link="gsk-gskqsortmacro.html#GSK-QSORT-ASSERT-STACK-SIZE--CAPS"/>
+    <keyword type="macro" name="GSK_INSERTION_SORT()" link="gsk-gskqsortmacro.html#GSK-INSERTION-SORT--CAPS"/>
+    <keyword type="macro" name="GSK_QSORT_SIMPLE_COMPARATOR()" link="gsk-gskqsortmacro.html#GSK-QSORT-SIMPLE-COMPARATOR--CAPS"/>
+    <keyword type="struct" name="GskTreeNode" link="gsk-gsktree.html#GskTreeNode"/>
+    <keyword type="struct" name="GskTree" link="gsk-gsktree.html#GskTree"/>
+    <keyword type="function" name="gsk_tree_new ()" link="gsk-gsktree.html#gsk-tree-new"/>
+    <keyword type="function" name="gsk_tree_ref ()" link="gsk-gsktree.html#gsk-tree-ref"/>
+    <keyword type="function" name="gsk_tree_unref ()" link="gsk-gsktree.html#gsk-tree-unref"/>
+    <keyword type="function" name="gsk_tree_new_full ()" link="gsk-gsktree.html#gsk-tree-new-full"/>
+    <keyword type="function" name="gsk_tree_insert ()" link="gsk-gsktree.html#gsk-tree-insert"/>
+    <keyword type="function" name="gsk_tree_replace ()" link="gsk-gsktree.html#gsk-tree-replace"/>
+    <keyword type="function" name="gsk_tree_lookup ()" link="gsk-gsktree.html#gsk-tree-lookup"/>
+    <keyword type="function" name="gsk_tree_remove ()" link="gsk-gsktree.html#gsk-tree-remove"/>
+    <keyword type="function" name="gsk_tree_n_nodes ()" link="gsk-gsktree.html#gsk-tree-n-nodes"/>
+    <keyword type="function" name="gsk_tree_node_first ()" link="gsk-gsktree.html#gsk-tree-node-first"/>
+    <keyword type="function" name="gsk_tree_node_last ()" link="gsk-gsktree.html#gsk-tree-node-last"/>
+    <keyword type="function" name="gsk_tree_node_find ()" link="gsk-gsktree.html#gsk-tree-node-find"/>
+    <keyword type="function" name="gsk_tree_node_next ()" link="gsk-gsktree.html#gsk-tree-node-next"/>
+    <keyword type="function" name="gsk_tree_node_prev ()" link="gsk-gsktree.html#gsk-tree-node-prev"/>
+    <keyword type="function" name="gsk_tree_node_peek_key ()" link="gsk-gsktree.html#gsk-tree-node-peek-key"/>
+    <keyword type="function" name="gsk_tree_node_peek_value ()" link="gsk-gsktree.html#gsk-tree-node-peek-value"/>
+    <keyword type="function" name="gsk_tree_node_is_removed ()" link="gsk-gsktree.html#gsk-tree-node-is-removed"/>
+    <keyword type="function" name="gsk_tree_node_visit ()" link="gsk-gsktree.html#gsk-tree-node-visit"/>
+    <keyword type="function" name="gsk_tree_node_unvisit ()" link="gsk-gsktree.html#gsk-tree-node-unvisit"/>
+    <keyword type="function" name="gsk_tree_validate ()" link="gsk-gsktree.html#gsk-tree-validate"/>
+    <keyword type="function" name="GskForkFunc ()" link="gsk-gskfork.html#GskForkFunc"/>
+    <keyword type="function" name="gsk_fork ()" link="gsk-gskfork.html#gsk-fork"/>
+    <keyword type="function" name="gsk_fork_add_cleanup_fd ()" link="gsk-gskfork.html#gsk-fork-add-cleanup-fd"/>
+    <keyword type="function" name="gsk_fork_remove_cleanup_fd ()" link="gsk-gskfork.html#gsk-fork-remove-cleanup-fd"/>
+    <keyword type="function" name="gsk_fork_child_cleanup ()" link="gsk-gskfork.html#gsk-fork-child-cleanup"/>
+    <keyword type="constant" name="GSK_HOOK_IS_AVAILABLE" link="gsk-gskhook.html#GSK-HOOK-IS-AVAILABLE--CAPS"/>
+    <keyword type="constant" name="GSK_HOOK_NEVER_AUTO_SHUTS_DOWN" link="gsk-gskhook.html#GSK-HOOK-NEVER-AUTO-SHUTS-DOWN--CAPS"/>
+    <keyword type="constant" name="GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR" link="gsk-gskhook.html#GSK-HOOK-CAN-HAVE-SHUTDOWN-ERROR--CAPS"/>
+    <keyword type="constant" name="GSK_HOOK_private_IDLE_NOTIFY" link="gsk-gskhook.html#GSK-HOOK-private-IDLE-NOTIFY"/>
+    <keyword type="constant" name="GSK_HOOK_private_JUST_NEVER_BLOCKS" link="gsk-gskhook.html#GSK-HOOK-private-JUST-NEVER-BLOCKS"/>
+    <keyword type="constant" name="GSK_HOOK_private_NEVER_BLOCKS" link="gsk-gskhook.html#GSK-HOOK-private-NEVER-BLOCKS"/>
+    <keyword type="constant" name="GSK_HOOK_private_CAN_DEFER_SHUTDOWN" link="gsk-gskhook.html#GSK-HOOK-private-CAN-DEFER-SHUTDOWN"/>
+    <keyword type="constant" name="GSK_HOOK_private_SHUTTING_DOWN" link="gsk-gskhook.html#GSK-HOOK-private-SHUTTING-DOWN"/>
+    <keyword type="constant" name="_GSK_HOOK_FLAGS_RESERVED" link="gsk-gskhook.html#GSK-HOOK-FLAGS-RESERVED--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_NONE" link="GskIO.html#GSK-IO-ERROR-NONE--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_INIT" link="GskIO.html#GSK-IO-ERROR-INIT--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_CONNECT" link="GskIO.html#GSK-IO-ERROR-CONNECT--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_OPEN" link="GskIO.html#GSK-IO-ERROR-OPEN--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_READ" link="GskIO.html#GSK-IO-ERROR-READ--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_WRITE" link="GskIO.html#GSK-IO-ERROR-WRITE--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_POLL_READ" link="GskIO.html#GSK-IO-ERROR-POLL-READ--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_POLL_WRITE" link="GskIO.html#GSK-IO-ERROR-POLL-WRITE--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_SHUTDOWN_READ" link="GskIO.html#GSK-IO-ERROR-SHUTDOWN-READ--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_SHUTDOWN_WRITE" link="GskIO.html#GSK-IO-ERROR-SHUTDOWN-WRITE--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_CLOSE" link="GskIO.html#GSK-IO-ERROR-CLOSE--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_SYNC" link="GskIO.html#GSK-IO-ERROR-SYNC--CAPS"/>
+    <keyword type="constant" name="GSK_IO_ERROR_POLL" link="GskIO.html#GSK-IO-ERROR-POLL--CAPS"/>
+    <keyword type="constant" name="GSK_MAIN_LOOP_EVENT_IO" link="GskMainLoop.html#GSK-MAIN-LOOP-EVENT-IO--CAPS"/>
+    <keyword type="constant" name="GSK_MAIN_LOOP_EVENT_SIGNAL" link="GskMainLoop.html#GSK-MAIN-LOOP-EVENT-SIGNAL--CAPS"/>
+    <keyword type="constant" name="GSK_MAIN_LOOP_EVENT_PROCESS" link="GskMainLoop.html#GSK-MAIN-LOOP-EVENT-PROCESS--CAPS"/>
+    <keyword type="constant" name="GSK_MAIN_LOOP_NEEDS_THREADS" link="GskMainLoop.html#GSK-MAIN-LOOP-NEEDS-THREADS--CAPS"/>
+    <keyword type="constant" name="GSK_NAME_RESOLVER_FAMILY_NONE" link="gsk-gsknameresolver.html#GSK-NAME-RESOLVER-FAMILY-NONE--CAPS"/>
+    <keyword type="constant" name="GSK_NAME_RESOLVER_FAMILY_IPV4" link="gsk-gsknameresolver.html#GSK-NAME-RESOLVER-FAMILY-IPV4--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_IO" link="gsk-gskdebug.html#GSK-DEBUG-IO--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_STREAM" link="gsk-gskdebug.html#GSK-DEBUG-STREAM--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_STREAM_LISTENER" link="gsk-gskdebug.html#GSK-DEBUG-STREAM-LISTENER--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_STREAM_DATA" link="gsk-gskdebug.html#GSK-DEBUG-STREAM-DATA--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_LIFETIME" link="gsk-gskdebug.html#GSK-DEBUG-LIFETIME--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_MAIN_LOOP" link="gsk-gskdebug.html#GSK-DEBUG-MAIN-LOOP--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_DNS" link="gsk-gskdebug.html#GSK-DEBUG-DNS--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_HOOK" link="gsk-gskdebug.html#GSK-DEBUG-HOOK--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_SSL" link="gsk-gskdebug.html#GSK-DEBUG-SSL--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_HTTP" link="gsk-gskdebug.html#GSK-DEBUG-HTTP--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_FTP" link="gsk-gskdebug.html#GSK-DEBUG-FTP--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_REQUEST" link="gsk-gskdebug.html#GSK-DEBUG-REQUEST--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_FD" link="gsk-gskdebug.html#GSK-DEBUG-FD--CAPS"/>
+    <keyword type="constant" name="GSK_DEBUG_ALL" link="gsk-gskdebug.html#GSK-DEBUG-ALL--CAPS"/>
+    <keyword type="constant" name="GSK_STREAM_EXTERNAL_ALLOCATE_PSEUDOTTY" link="gsk-GskStreamExternal.html#GSK-STREAM-EXTERNAL-ALLOCATE-PSEUDOTTY--CAPS"/>
+    <keyword type="constant" name="GSK_STREAM_EXTERNAL_SEARCH_PATH" link="gsk-GskStreamExternal.html#GSK-STREAM-EXTERNAL-SEARCH-PATH--CAPS"/>
+    <keyword type="constant" name="GSK_URL_SCHEME_FILE" link="GskUrl.html#GSK-URL-SCHEME-FILE--CAPS"/>
+    <keyword type="constant" name="GSK_URL_SCHEME_HTTP" link="GskUrl.html#GSK-URL-SCHEME-HTTP--CAPS"/>
+    <keyword type="constant" name="GSK_URL_SCHEME_HTTPS" link="GskUrl.html#GSK-URL-SCHEME-HTTPS--CAPS"/>
+    <keyword type="constant" name="GSK_URL_SCHEME_FTP" link="GskUrl.html#GSK-URL-SCHEME-FTP--CAPS"/>
+    <keyword type="constant" name="GSK_URL_SCHEME_OTHER" link="GskUrl.html#GSK-URL-SCHEME-OTHER--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_BAD_REQUEST" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-BAD-REQUEST--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_BAD_NAME" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-BAD-NAME--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_NO_SERVER" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-NO-SERVER--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_NOT_FOUND" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-NOT-FOUND--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_SERVER_ERROR" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-SERVER-ERROR--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_UNSUPPORTED" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-UNSUPPORTED--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_TIMED_OUT" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-TIMED-OUT--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_ERROR_REDIRECT_LOOP" link="GskUrlTransfer.html#GSK-URL-TRANSFER-ERROR-REDIRECT-LOOP--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_REDIRECT" link="GskUrlTransfer.html#GSK-URL-TRANSFER-REDIRECT--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_CANCELLED" link="GskUrlTransfer.html#GSK-URL-TRANSFER-CANCELLED--CAPS"/>
+    <keyword type="constant" name="GSK_URL_TRANSFER_SUCCESS" link="GskUrlTransfer.html#GSK-URL-TRANSFER-SUCCESS--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_CONTINUE" link="GskHttpHeader.html#GSK-HTTP-STATUS-CONTINUE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_SWITCHING_PROTOCOLS" link="GskHttpHeader.html#GSK-HTTP-STATUS-SWITCHING-PROTOCOLS--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_OK" link="GskHttpHeader.html#GSK-HTTP-STATUS-OK--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_CREATED" link="GskHttpHeader.html#GSK-HTTP-STATUS-CREATED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_ACCEPTED" link="GskHttpHeader.html#GSK-HTTP-STATUS-ACCEPTED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_NONAUTHORITATIVE_INFO" link="GskHttpHeader.html#GSK-HTTP-STATUS-NONAUTHORITATIVE-INFO--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_NO_CONTENT" link="GskHttpHeader.html#GSK-HTTP-STATUS-NO-CONTENT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_RESET_CONTENT" link="GskHttpHeader.html#GSK-HTTP-STATUS-RESET-CONTENT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_PARTIAL_CONTENT" link="GskHttpHeader.html#GSK-HTTP-STATUS-PARTIAL-CONTENT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_MULTIPLE_CHOICES" link="GskHttpHeader.html#GSK-HTTP-STATUS-MULTIPLE-CHOICES--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_MOVED_PERMANENTLY" link="GskHttpHeader.html#GSK-HTTP-STATUS-MOVED-PERMANENTLY--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_FOUND" link="GskHttpHeader.html#GSK-HTTP-STATUS-FOUND--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_SEE_OTHER" link="GskHttpHeader.html#GSK-HTTP-STATUS-SEE-OTHER--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_NOT_MODIFIED" link="GskHttpHeader.html#GSK-HTTP-STATUS-NOT-MODIFIED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_USE_PROXY" link="GskHttpHeader.html#GSK-HTTP-STATUS-USE-PROXY--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_TEMPORARY_REDIRECT" link="GskHttpHeader.html#GSK-HTTP-STATUS-TEMPORARY-REDIRECT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_BAD_REQUEST" link="GskHttpHeader.html#GSK-HTTP-STATUS-BAD-REQUEST--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_UNAUTHORIZED" link="GskHttpHeader.html#GSK-HTTP-STATUS-UNAUTHORIZED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_PAYMENT_REQUIRED" link="GskHttpHeader.html#GSK-HTTP-STATUS-PAYMENT-REQUIRED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_FORBIDDEN" link="GskHttpHeader.html#GSK-HTTP-STATUS-FORBIDDEN--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_NOT_FOUND" link="GskHttpHeader.html#GSK-HTTP-STATUS-NOT-FOUND--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_METHOD_NOT_ALLOWED" link="GskHttpHeader.html#GSK-HTTP-STATUS-METHOD-NOT-ALLOWED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_NOT_ACCEPTABLE" link="GskHttpHeader.html#GSK-HTTP-STATUS-NOT-ACCEPTABLE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_PROXY_AUTH_REQUIRED" link="GskHttpHeader.html#GSK-HTTP-STATUS-PROXY-AUTH-REQUIRED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_REQUEST_TIMEOUT" link="GskHttpHeader.html#GSK-HTTP-STATUS-REQUEST-TIMEOUT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_CONFLICT" link="GskHttpHeader.html#GSK-HTTP-STATUS-CONFLICT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_GONE" link="GskHttpHeader.html#GSK-HTTP-STATUS-GONE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_LENGTH_REQUIRED" link="GskHttpHeader.html#GSK-HTTP-STATUS-LENGTH-REQUIRED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_PRECONDITION_FAILED" link="GskHttpHeader.html#GSK-HTTP-STATUS-PRECONDITION-FAILED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_ENTITY_TOO_LARGE" link="GskHttpHeader.html#GSK-HTTP-STATUS-ENTITY-TOO-LARGE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_URI_TOO_LARGE" link="GskHttpHeader.html#GSK-HTTP-STATUS-URI-TOO-LARGE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_UNSUPPORTED_MEDIA" link="GskHttpHeader.html#GSK-HTTP-STATUS-UNSUPPORTED-MEDIA--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_BAD_RANGE" link="GskHttpHeader.html#GSK-HTTP-STATUS-BAD-RANGE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_EXPECTATION_FAILED" link="GskHttpHeader.html#GSK-HTTP-STATUS-EXPECTATION-FAILED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_INTERNAL_SERVER_ERROR" link="GskHttpHeader.html#GSK-HTTP-STATUS-INTERNAL-SERVER-ERROR--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_NOT_IMPLEMENTED" link="GskHttpHeader.html#GSK-HTTP-STATUS-NOT-IMPLEMENTED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_BAD_GATEWAY" link="GskHttpHeader.html#GSK-HTTP-STATUS-BAD-GATEWAY--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_SERVICE_UNAVAILABLE" link="GskHttpHeader.html#GSK-HTTP-STATUS-SERVICE-UNAVAILABLE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_GATEWAY_TIMEOUT" link="GskHttpHeader.html#GSK-HTTP-STATUS-GATEWAY-TIMEOUT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_STATUS_UNSUPPORTED_VERSION" link="GskHttpHeader.html#GSK-HTTP-STATUS-UNSUPPORTED-VERSION--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_GET" link="GskHttpHeader.html#GSK-HTTP-VERB-GET--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_POST" link="GskHttpHeader.html#GSK-HTTP-VERB-POST--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_PUT" link="GskHttpHeader.html#GSK-HTTP-VERB-PUT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_HEAD" link="GskHttpHeader.html#GSK-HTTP-VERB-HEAD--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_OPTIONS" link="GskHttpHeader.html#GSK-HTTP-VERB-OPTIONS--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_DELETE" link="GskHttpHeader.html#GSK-HTTP-VERB-DELETE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_TRACE" link="GskHttpHeader.html#GSK-HTTP-VERB-TRACE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_VERB_CONNECT" link="GskHttpHeader.html#GSK-HTTP-VERB-CONNECT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_RANGE_BYTES" link="GskHttpHeader.html#GSK-HTTP-RANGE-BYTES--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_CONTENT_ENCODING_IDENTITY" link="GskHttpHeader.html#GSK-HTTP-CONTENT-ENCODING-IDENTITY--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_CONTENT_ENCODING_GZIP" link="GskHttpHeader.html#GSK-HTTP-CONTENT-ENCODING-GZIP--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_CONTENT_ENCODING_COMPRESS" link="GskHttpHeader.html#GSK-HTTP-CONTENT-ENCODING-COMPRESS--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_CONTENT_ENCODING_UNRECOGNIZED" link="GskHttpHeader.html#GSK-HTTP-CONTENT-ENCODING-UNRECOGNIZED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_TRANSFER_ENCODING_NONE" link="GskHttpHeader.html#GSK-HTTP-TRANSFER-ENCODING-NONE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_TRANSFER_ENCODING_CHUNKED" link="GskHttpHeader.html#GSK-HTTP-TRANSFER-ENCODING-CHUNKED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_TRANSFER_ENCODING_UNRECOGNIZED" link="GskHttpHeader.html#GSK-HTTP-TRANSFER-ENCODING-UNRECOGNIZED--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_CONNECTION_NONE" link="GskHttpHeader.html#GSK-HTTP-CONNECTION-NONE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_CONNECTION_CLOSE" link="GskHttpHeader.html#GSK-HTTP-CONNECTION-CLOSE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_CONNECTION_KEEPALIVE" link="GskHttpHeader.html#GSK-HTTP-CONNECTION-KEEPALIVE--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_PARSE_STRICT" link="GskHttpHeader.html#GSK-HTTP-PARSE-STRICT--CAPS"/>
+    <keyword type="constant" name="GSK_HTTP_PARSE_SAVE_ERRORS" link="GskHttpHeader.html#GSK-HTTP-PARSE-SAVE-ERRORS--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_HOST_ADDRESS" link="gsk-gskdns.html#GSK-DNS-RR-HOST-ADDRESS--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_NAME_SERVER" link="gsk-gskdns.html#GSK-DNS-RR-NAME-SERVER--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_CANONICAL_NAME" link="gsk-gskdns.html#GSK-DNS-RR-CANONICAL-NAME--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_HOST_INFO" link="gsk-gskdns.html#GSK-DNS-RR-HOST-INFO--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_MAIL_EXCHANGE" link="gsk-gskdns.html#GSK-DNS-RR-MAIL-EXCHANGE--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_POINTER" link="gsk-gskdns.html#GSK-DNS-RR-POINTER--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_START_OF_AUTHORITY" link="gsk-gskdns.html#GSK-DNS-RR-START-OF-AUTHORITY--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_TEXT" link="gsk-gskdns.html#GSK-DNS-RR-TEXT--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_WELL_KNOWN_SERVICE" link="gsk-gskdns.html#GSK-DNS-RR-WELL-KNOWN-SERVICE--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_HOST_ADDRESS_IPV6" link="gsk-gskdns.html#GSK-DNS-RR-HOST-ADDRESS-IPV6--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_ZONE_TRANSFER" link="gsk-gskdns.html#GSK-DNS-RR-ZONE-TRANSFER--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_ZONE_MAILB" link="gsk-gskdns.html#GSK-DNS-RR-ZONE-MAILB--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RR_WILDCARD" link="gsk-gskdns.html#GSK-DNS-RR-WILDCARD--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_CLASS_INTERNET" link="gsk-gskdns.html#GSK-DNS-CLASS-INTERNET--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_CLASS_CHAOS" link="gsk-gskdns.html#GSK-DNS-CLASS-CHAOS--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_CLASS_HESIOD" link="gsk-gskdns.html#GSK-DNS-CLASS-HESIOD--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_CLASS_WILDCARD" link="gsk-gskdns.html#GSK-DNS-CLASS-WILDCARD--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RESPONSE_ERROR_NONE" link="gsk-gskdns.html#GSK-DNS-RESPONSE-ERROR-NONE--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RESPONSE_ERROR_FORMAT" link="gsk-gskdns.html#GSK-DNS-RESPONSE-ERROR-FORMAT--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RESPONSE_ERROR_SERVER_FAILURE" link="gsk-gskdns.html#GSK-DNS-RESPONSE-ERROR-SERVER-FAILURE--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RESPONSE_ERROR_NAME_ERROR" link="gsk-gskdns.html#GSK-DNS-RESPONSE-ERROR-NAME-ERROR--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RESPONSE_ERROR_NOT_IMPLEMENTED" link="gsk-gskdns.html#GSK-DNS-RESPONSE-ERROR-NOT-IMPLEMENTED--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_RESPONSE_ERROR_REFUSED" link="gsk-gskdns.html#GSK-DNS-RESPONSE-ERROR-REFUSED--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_CLIENT_STUB_RESOLVER" link="gsk-gskdnsclient.html#GSK-DNS-CLIENT-STUB-RESOLVER--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_LOCAL_NO_DATA" link="gsk-gskdnslocalresolver.html#GSK-DNS-LOCAL-NO-DATA--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_LOCAL_PARTIAL_DATA" link="gsk-gskdnslocalresolver.html#GSK-DNS-LOCAL-PARTIAL-DATA--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_LOCAL_NEGATIVE" link="gsk-gskdnslocalresolver.html#GSK-DNS-LOCAL-NEGATIVE--CAPS"/>
+    <keyword type="constant" name="GSK_DNS_LOCAL_SUCCESS" link="gsk-gskdnslocalresolver.html#GSK-DNS-LOCAL-SUCCESS--CAPS"/>
+    <keyword type="constant" name="GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT" link="gsk-GskMimeMultipartDecoder.html#GSK-MIME-MULTIPART-DECODER-MODE-DEFAULT--CAPS"/>
+    <keyword type="constant" name="GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_MEMORY" link="gsk-GskMimeMultipartDecoder.html#GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-MEMORY--CAPS"/>
+    <keyword type="constant" name="GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM" link="gsk-GskMimeMultipartDecoder.html#GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-STREAM--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_INT32" link="gsk-gskxmlrpc.html#GSK-XMLRPC-INT32--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_BOOLEAN" link="gsk-gskxmlrpc.html#GSK-XMLRPC-BOOLEAN--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_DOUBLE" link="gsk-gskxmlrpc.html#GSK-XMLRPC-DOUBLE--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_STRING" link="gsk-gskxmlrpc.html#GSK-XMLRPC-STRING--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_DATE" link="gsk-gskxmlrpc.html#GSK-XMLRPC-DATE--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_BINARY_DATA" link="gsk-gskxmlrpc.html#GSK-XMLRPC-BINARY-DATA--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_STRUCT" link="gsk-gskxmlrpc.html#GSK-XMLRPC-STRUCT--CAPS"/>
+    <keyword type="constant" name="GSK_XMLRPC_ARRAY" link="gsk-gskxmlrpc.html#GSK-XMLRPC-ARRAY--CAPS"/>
+    <keyword type="constant" name="GSK_NETWORK_INTERFACE_UP" link="gsk-gsknetworkinterface.html#GSK-NETWORK-INTERFACE-UP--CAPS"/>
+    <keyword type="constant" name="GSK_NETWORK_INTERFACE_LOOPBACK" link="gsk-gsknetworkinterface.html#GSK-NETWORK-INTERFACE-LOOPBACK--CAPS"/>
+    <keyword type="constant" name="GSK_NETWORK_INTERFACE_NON_LOOPBACK" link="gsk-gsknetworkinterface.html#GSK-NETWORK-INTERFACE-NON-LOOPBACK--CAPS"/>
+    <keyword type="constant" name="GSK_NETWORK_INTERFACE_HAS_BROADCAST" link="gsk-gsknetworkinterface.html#GSK-NETWORK-INTERFACE-HAS-BROADCAST--CAPS"/>
+    <keyword type="constant" name="GSK_NETWORK_INTERFACE_HAS_MULTICAST" link="gsk-gsknetworkinterface.html#GSK-NETWORK-INTERFACE-HAS-MULTICAST--CAPS"/>
+    <keyword type="constant" name="GSK_DATE_FORMAT_1123" link="gsk-gskdate.html#GSK-DATE-FORMAT-1123--CAPS"/>
+    <keyword type="constant" name="GSK_DATE_FORMAT_1036" link="gsk-gskdate.html#GSK-DATE-FORMAT-1036--CAPS"/>
+    <keyword type="constant" name="GSK_DATE_FORMAT_ANSI_C" link="gsk-gskdate.html#GSK-DATE-FORMAT-ANSI-C--CAPS"/>
+    <keyword type="constant" name="GSK_DATE_FORMAT_ISO8601" link="gsk-gskdate.html#GSK-DATE-FORMAT-ISO8601--CAPS"/>
+    <keyword type="constant" name="GSK_DATE_FORMAT_HTTP" link="gsk-gskdate.html#GSK-DATE-FORMAT-HTTP--CAPS"/>
+  </functions>
+</book>

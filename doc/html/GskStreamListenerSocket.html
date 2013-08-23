@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskStreamListenerSocket</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch04.html" title="Standard Implementations">
+<link rel="prev" href="gsk-GskStreamExternal.html" title="GskStreamExternal">
+<link rel="next" href="gsk-gskbufferstream.html" title="gskbufferstream">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-GskStreamExternal.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskbufferstream.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskStreamListenerSocket.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskStreamListenerSocket.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskStreamListenerSocket.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#GskStreamListenerSocket.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskStreamListenerSocket"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskStreamListenerSocket.top_of_page"></a>GskStreamListenerSocket</span></h2>
+<p>GskStreamListenerSocket — socket-based stream-listener.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskStreamListenerSocket.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskStreamListenerSocket.html#GskStreamListenerSocket-struct" title="GskStreamListenerSocket">GskStreamListenerSocket</a>;
+<a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a> * <a class="link" href="GskStreamListenerSocket.html#gsk-stream-listener-socket-new-bind" title="gsk_stream_listener_socket_new_bind ()">gsk_stream_listener_socket_new_bind</a> (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a> * <a class="link" href="GskStreamListenerSocket.html#gsk-stream-listener-socket-new-bind-full" title="gsk_stream_listener_socket_new_bind_full ()">gsk_stream_listener_socket_new_bind_full</a>
+                                                        (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         GskStreamListenerSocketFlags flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+void                <a class="link" href="GskStreamListenerSocket.html#gsk-stream-listener-socket-set-backlog" title="gsk_stream_listener_socket_set_backlog ()">gsk_stream_listener_socket_set_backlog</a>
+                                                        (<a class="link" href="GskStreamListenerSocket.html" title="GskStreamListenerSocket">GskStreamListenerSocket</a> *lis,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> backlog);
+<a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a> * <a class="link" href="GskStreamListenerSocket.html#gsk-stream-listener-socket-new-from-fd" title="gsk_stream_listener_socket_new_from_fd ()">gsk_stream_listener_socket_new_from_fd</a>
+                                                        (int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+#define             <a class="link" href="GskStreamListenerSocket.html#GSK-STREAM-LISTENER-SOCKET-USE-GLIB-MAIN-LOOP--CAPS" title="GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP">GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamListenerSocket.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a>
+         +----GskStreamListenerSocket
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamListenerSocket.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GskStreamListenerSocket.html#GskStreamListenerSocket--file-descriptor" title='The "file-descriptor" property'>file-descriptor</a>"          GskFd                 : Read / Write / Construct Only
+  "<a class="link" href="GskStreamListenerSocket.html#GskStreamListenerSocket--listening-address" title='The "listening-address" property'>listening-address</a>"        <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a>*     : Read / Write / Construct Only
+  "<a class="link" href="GskStreamListenerSocket.html#GskStreamListenerSocket--may-reuse-address" title='The "may-reuse-address" property'>may-reuse-address</a>"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only
+  "<a class="link" href="GskStreamListenerSocket.html#GskStreamListenerSocket--unlink-when-done" title='The "unlink-when-done" property'>unlink-when-done</a>"         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamListenerSocket.description"></a><h2>Description</h2>
+<p>
+This is a <a class="link" href="GskStreamListener.html" title="Listening for Connections"><span class="type">GskStreamListener</span></a> that takes new input streams
+from a raw socket.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamListenerSocket.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamListenerSocket-struct"></a><h3>GskStreamListenerSocket</h3>
+<pre class="programlisting">typedef struct _GskStreamListenerSocket GskStreamListenerSocket;</pre>
+<p>
+An instance of a socket-based <a class="link" href="GskStreamListener.html" title="Listening for Connections"><span class="type">GskStreamListener</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-listener-socket-new-bind"></a><h3>gsk_stream_listener_socket_new_bind ()</h3>
+<pre class="programlisting"><a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a> * gsk_stream_listener_socket_new_bind (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a new listener bound to a specific socket-address.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the address that the listener should be bound to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional location to store error at.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly created stream-listener.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-listener-socket-new-bind-full"></a><h3>gsk_stream_listener_socket_new_bind_full ()</h3>
+<pre class="programlisting"><a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a> * gsk_stream_listener_socket_new_bind_full
+                                                        (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         GskStreamListenerSocketFlags flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a new listener bound to a specific socket-address.
+</p>
+<p>
+If <em class="parameter"><code>flags</code></em> suggests <em class="parameter"><code>GSK_SOCKET_LISTENER_STREAM_DONT_REUSE_ADDRESS</code></em>,
+then the usual timeout rules about how often a port
+may be bound are ignored.  This only really affects
+TCP/IP socket listeners.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the address that the listener should be bound to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> flags controlling the operation of the listener.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional location to store error at.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly created stream-listener.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-listener-socket-set-backlog"></a><h3>gsk_stream_listener_socket_set_backlog ()</h3>
+<pre class="programlisting">void                gsk_stream_listener_socket_set_backlog
+                                                        (<a class="link" href="GskStreamListenerSocket.html" title="GskStreamListenerSocket">GskStreamListenerSocket</a> *lis,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> backlog);</pre>
+<p>
+Set the number of incoming connections that can
+be accepted before they are rejected outright.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>lis</code></em> :</span></p></td>
+<td> the listener whose backlog quota should be affected.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>backlog</code></em> :</span></p></td>
+<td> the number of incoming connections to accept before
+refusing them.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-listener-socket-new-from-fd"></a><h3>gsk_stream_listener_socket_new_from_fd ()</h3>
+<pre class="programlisting"><a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a> * gsk_stream_listener_socket_new_from_fd
+                                                        (int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+<em class="parameter"><code>fd</code></em>: The bound socket.
+<em class="parameter"><code>error</code></em>: optional location to store error at.
+<em class="parameter"><code>returns</code></em>: The newly created stream-listener.
+</p>
+<p>
+Create a new listener for an already bound socket.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STREAM-LISTENER-SOCKET-USE-GLIB-MAIN-LOOP--CAPS"></a><h3>GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP</h3>
+<pre class="programlisting">#define             GSK_STREAM_LISTENER_SOCKET_USE_GLIB_MAIN_LOOP</pre>
+<p>
+</p>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamListenerSocket.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamListenerSocket--file-descriptor"></a><h3>The <code class="literal">"file-descriptor"</code> property</h3>
+<pre class="programlisting">  "file-descriptor"          GskFd                 : Read / Write / Construct Only</pre>
+<p>whence to accept new connections on.</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamListenerSocket--listening-address"></a><h3>The <code class="literal">"listening-address"</code> property</h3>
+<pre class="programlisting">  "listening-address"        <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a>*     : Read / Write / Construct Only</pre>
+<p>The name others will use to connect.</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamListenerSocket--may-reuse-address"></a><h3>The <code class="literal">"may-reuse-address"</code> property</h3>
+<pre class="programlisting">  "may-reuse-address"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only</pre>
+<p>Whether a listening address may be reused as soon as it's closed.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamListenerSocket--unlink-when-done"></a><h3>The <code class="literal">"unlink-when-done"</code> property</h3>
+<pre class="programlisting">  "unlink-when-done"         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write</pre>
+<p>Unlink the file from the file-system (only for local socket-listeners).</p>
+<p>Default value: FALSE</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

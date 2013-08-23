@@ -1,0 +1,77 @@
+<refentry id="gsk-gskipv4">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskipv4.top_of_page">gskipv4</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskipv4</refname>
+<refpurpose>functions for handling IPv4 addresses</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskipv4.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-ipv4-parse">gsk_ipv4_parse</link>                      (const <link linkend="char">char</link> *str,
+                                                         <link linkend="guint8">guint8</link> *ip_addr_out);
+#define             <link linkend="gsk-ipv4-ip-address-localhost">gsk_ipv4_ip_address_localhost</link>
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskipv4.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This file contains IPv4-specific raw constants
+and functions.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskipv4.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-ipv4-parse" role="function">
+<title>gsk_ipv4_parse ()</title>
+<indexterm zone="gsk-ipv4-parse"><primary sortas="gsk_ipv4_parse">gsk_ipv4_parse</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_ipv4_parse                      (const <link linkend="char">char</link> *str,
+                                                         <link linkend="guint8">guint8</link> *ip_addr_out);</programlisting>
+<para>
+Parse a numeric IP address, in the standard fashion (RFC 1034, 3.6.1).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> string containing dotted decimal IPv4 address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ip_addr_out</parameter>&#160;:</term>
+<listitem><simpara> the 4-byte IPv4 address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the address was parsed successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ipv4-ip-address-localhost" role="macro">
+<title>gsk_ipv4_ip_address_localhost</title>
+<indexterm zone="gsk-ipv4-ip-address-localhost"><primary sortas="gsk_ipv4_ip_address_localhost">gsk_ipv4_ip_address_localhost</primary></indexterm><programlisting>#define             gsk_ipv4_ip_address_localhost</programlisting>
+<para>
+The IP address of localhost: always <tt>127.0.0.1</tt>.
+For full generality, see <link linkend="GskNetworkInterfaceSet"><type>GskNetworkInterfaceSet</type></link>.
+</para></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskipv4.see-also">
+<title>See Also</title>
+<para>
+<link linkend="GskSocketAddress"><type>GskSocketAddress</type></link>, <link linkend="gsk-socket-address-ipv4-new"><function>gsk_socket_address_ipv4_new()</function></link>
+</para>
+</refsect1>
+
+</refentry>

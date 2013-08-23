@@ -1,0 +1,97 @@
+<refentry id="gsk-GskZlibInflator">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskZlibInflator.top_of_page">GskZlibInflator</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskZlibInflator</refname>
+<refpurpose>a zlib decompressor</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskZlibInflator.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskZlibInflator">GskZlibInflator</link>;
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-zlib-inflator-new">gsk_zlib_inflator_new</link>               (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskZlibInflator.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A stream which decompresses data on its input to decompressed data on its output.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskZlibInflator.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskZlibInflator" role="struct">
+<title>GskZlibInflator</title>
+<indexterm zone="GskZlibInflator"><primary sortas="GskZlibInflator">GskZlibInflator</primary></indexterm><programlisting>typedef struct {
+  GskStream      stream;
+  gpointer       private_stream;
+  GskBuffer      decompressed;
+  gboolean       use_gzip;
+} GskZlibInflator;
+</programlisting>
+<para>
+The instance of a zlib inflator stream (a decompressor).
+One writes deflated input to it, and then
+raw (decompressed) data can be read from it.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskStream">GskStream</link>&#160;<structfield>stream</structfield>;</term>
+<listitem><simpara>parent instance.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gpointer">gpointer</link>&#160;<structfield>private_stream</structfield>;</term>
+<listitem><simpara>private zlib object.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskBuffer">GskBuffer</link>&#160;<structfield>decompressed</structfield>;</term>
+<listitem><simpara>buffer of decompressed data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gboolean">gboolean</link>&#160;<structfield>use_gzip</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-zlib-inflator-new" role="function">
+<title>gsk_zlib_inflator_new ()</title>
+<indexterm zone="gsk-zlib-inflator-new"><primary sortas="gsk_zlib_inflator_new">gsk_zlib_inflator_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_zlib_inflator_new               (void);</programlisting>
+<para>
+Create a new zlib inflator: this takes deflated (compressed) input
+which is written into it, and uncompressed data can be read from it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-GskZlibInflator.see-also">
+<title>See Also</title>
+<para>
+GskZlibDeflator
+</para>
+</refsect1>
+
+</refentry>

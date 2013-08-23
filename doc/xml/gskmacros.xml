@@ -1,0 +1,138 @@
+<refentry id="gsk-gskmacros">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskmacros.top_of_page">Helpful Macros</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Helpful Macros</refname>
+<refpurpose>Various macros to eliminate tedious typing,
+beyond those provided by glib.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskmacros.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-DECLARE-POOL-ALLOCATORS--CAPS">GSK_DECLARE_POOL_ALLOCATORS</link>         (Type, type, pool_count)
+#define             <link linkend="GSK-STRUCT-MEMBER-SIZE--CAPS">GSK_STRUCT_MEMBER_SIZE</link>              (type, member)
+#define             <link linkend="GSK-STRUCT-MEMBER-END-OFFSET--CAPS">GSK_STRUCT_MEMBER_END_OFFSET</link>        (struct, member)
+#define             <link linkend="gettext-macro">_</link>                                   (s)
+#define             <link linkend="GSK-SKIP-CHAR-TYPE--CAPS">GSK_SKIP_CHAR_TYPE</link>                  (ptr, condition)
+#define             <link linkend="GSK-SKIP-WHITESPACE--CAPS">GSK_SKIP_WHITESPACE</link>                 (char_ptr)
+#define             <link linkend="GSK-SKIP-NONWHITESPACE--CAPS">GSK_SKIP_NONWHITESPACE</link>              (char_ptr)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskmacros.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskmacros.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-DECLARE-POOL-ALLOCATORS--CAPS" role="macro">
+<title>GSK_DECLARE_POOL_ALLOCATORS()</title>
+<indexterm zone="GSK-DECLARE-POOL-ALLOCATORS--CAPS"><primary sortas="GSK_DECLARE_POOL_ALLOCATORS">GSK_DECLARE_POOL_ALLOCATORS</primary></indexterm><programlisting>#define             GSK_DECLARE_POOL_ALLOCATORS(Type, type, pool_count)</programlisting>
+<para>
+Declare static inline functions type_free and type_alloc,
+(where type is the second parameter to this macro)
+which use GMemChunks to implement fast allocation.
+<parameter>Type</parameter> is the name of the name of structure to allocate;
+and <parameter>pool_count</parameter> is the number to allocate at once.
+</para><variablelist role="params">
+<varlistentry><term><parameter>Type</parameter>&#160;:</term>
+<listitem><simpara>Real type of the things to allocate.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>Lowercased type name, for mangling into the function name.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pool_count</parameter>&#160;:</term>
+<listitem><simpara>Number of things to allocate at once.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STRUCT-MEMBER-SIZE--CAPS" role="macro">
+<title>GSK_STRUCT_MEMBER_SIZE()</title>
+<indexterm zone="GSK-STRUCT-MEMBER-SIZE--CAPS"><primary sortas="GSK_STRUCT_MEMBER_SIZE">GSK_STRUCT_MEMBER_SIZE</primary></indexterm><programlisting>#define             GSK_STRUCT_MEMBER_SIZE(type, member)</programlisting>
+<para>
+Find size in bytes of a structure member.
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STRUCT-MEMBER-END-OFFSET--CAPS" role="macro">
+<title>GSK_STRUCT_MEMBER_END_OFFSET()</title>
+<indexterm zone="GSK-STRUCT-MEMBER-END-OFFSET--CAPS"><primary sortas="GSK_STRUCT_MEMBER_END_OFFSET">GSK_STRUCT_MEMBER_END_OFFSET</primary></indexterm><programlisting>#define             GSK_STRUCT_MEMBER_END_OFFSET(struct, member)</programlisting>
+<para>
+Find offset of a member's end in bytes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>struct</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gettext-macro" role="macro">
+<title>_()</title>
+<indexterm zone="gettext-macro"><primary sortas="">_</primary></indexterm><programlisting>#define             _(s)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-SKIP-CHAR-TYPE--CAPS" role="macro">
+<title>GSK_SKIP_CHAR_TYPE()</title>
+<indexterm zone="GSK-SKIP-CHAR-TYPE--CAPS"><primary sortas="GSK_SKIP_CHAR_TYPE">GSK_SKIP_CHAR_TYPE</primary></indexterm><programlisting>#define             GSK_SKIP_CHAR_TYPE(ptr, condition)</programlisting>
+<para>
+Skip <parameter>ptr</parameter> along until it fails the <parameter>condition</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>ptr</parameter>&#160;:</term>
+<listitem><simpara>pointer to a NUL-terminated string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>condition</parameter>&#160;:</term>
+<listitem><simpara>function predicate to test characters with.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-SKIP-WHITESPACE--CAPS" role="macro">
+<title>GSK_SKIP_WHITESPACE()</title>
+<indexterm zone="GSK-SKIP-WHITESPACE--CAPS"><primary sortas="GSK_SKIP_WHITESPACE">GSK_SKIP_WHITESPACE</primary></indexterm><programlisting>#define             GSK_SKIP_WHITESPACE(char_ptr)</programlisting>
+<para>
+Skip <parameter>char_ptr</parameter> along until it gets to a non-whitespace character, or the end of the string.
+</para><variablelist role="params">
+<varlistentry><term><parameter>char_ptr</parameter>&#160;:</term>
+<listitem><simpara>the pointer to advance.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-SKIP-NONWHITESPACE--CAPS" role="macro">
+<title>GSK_SKIP_NONWHITESPACE()</title>
+<indexterm zone="GSK-SKIP-NONWHITESPACE--CAPS"><primary sortas="GSK_SKIP_NONWHITESPACE">GSK_SKIP_NONWHITESPACE</primary></indexterm><programlisting>#define             GSK_SKIP_NONWHITESPACE(char_ptr)</programlisting>
+<para>
+Skip <parameter>char_ptr</parameter> along until it gets to a whitespace character, or the end of the string.
+</para><variablelist role="params">
+<varlistentry><term><parameter>char_ptr</parameter>&#160;:</term>
+<listitem><simpara>the pointer to advance.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

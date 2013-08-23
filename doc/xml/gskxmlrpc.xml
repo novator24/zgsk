@@ -1,0 +1,1293 @@
+<refentry id="gsk-gskxmlrpc">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskxmlrpc.top_of_page">gskxmlrpc</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskxmlrpc</refname>
+<refpurpose>XMLRPC definitions</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskxmlrpc.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskXmlrpcArray">GskXmlrpcArray</link>;
+                    <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link>;
+                    <link linkend="GskXmlrpcValue">GskXmlrpcValue</link>;
+                    <link linkend="GskXmlrpcNamedValue">GskXmlrpcNamedValue</link>;
+                    <link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link>;
+                    <link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link>;
+                    <link linkend="GskXmlrpcParser">GskXmlrpcParser</link>;
+enum                <link linkend="GskXmlrpcType">GskXmlrpcType</link>;
+<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *   <link linkend="gsk-xmlrpc-struct-new">gsk_xmlrpc_struct_new</link>               (void);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-free">gsk_xmlrpc_struct_free</link>              (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-int32">gsk_xmlrpc_struct_add_int32</link>         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gint32">gint32</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-boolean">gsk_xmlrpc_struct_add_boolean</link>       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gboolean">gboolean</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-double">gsk_xmlrpc_struct_add_double</link>        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gdouble">gdouble</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-string">gsk_xmlrpc_struct_add_string</link>        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         const <link linkend="char">char</link> *value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-date">gsk_xmlrpc_struct_add_date</link>          (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gulong">gulong</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-data">gsk_xmlrpc_struct_add_data</link>          (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-struct">gsk_xmlrpc_struct_add_struct</link>        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-struct-add-array">gsk_xmlrpc_struct_add_array</link>         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-xmlrpc-struct-peek-date">gsk_xmlrpc_struct_peek_date</link>         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gulong">gulong</link> *out);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-xmlrpc-struct-peek-boolean">gsk_xmlrpc_struct_peek_boolean</link>      (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gboolean">gboolean</link> *out);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-xmlrpc-struct-peek-double">gsk_xmlrpc_struct_peek_double</link>       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="double">double</link> *out);
+<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *   <link linkend="gsk-xmlrpc-struct-peek-struct">gsk_xmlrpc_struct_peek_struct</link>       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);
+const <link linkend="GByteArray">GByteArray</link>*   <link linkend="gsk-xmlrpc-struct-peek-data">gsk_xmlrpc_struct_peek_data</link>         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);
+<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *    <link linkend="gsk-xmlrpc-struct-peek-array">gsk_xmlrpc_struct_peek_array</link>        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);
+const <link linkend="char">char</link> *        <link linkend="gsk-xmlrpc-struct-peek-string">gsk_xmlrpc_struct_peek_string</link>       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-xmlrpc-struct-peek-int32">gsk_xmlrpc_struct_peek_int32</link>        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gint32">gint32</link> *out);
+<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *    <link linkend="gsk-xmlrpc-array-new">gsk_xmlrpc_array_new</link>                (void);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-free">gsk_xmlrpc_array_free</link>               (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-int32">gsk_xmlrpc_array_add_int32</link>          (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gint32">gint32</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-boolean">gsk_xmlrpc_array_add_boolean</link>        (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gboolean">gboolean</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-double">gsk_xmlrpc_array_add_double</link>         (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gdouble">gdouble</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-string">gsk_xmlrpc_array_add_string</link>         (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         const <link linkend="char">char</link> *value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-date">gsk_xmlrpc_array_add_date</link>           (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gulong">gulong</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-data">gsk_xmlrpc_array_add_data</link>           (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-struct">gsk_xmlrpc_array_add_struct</link>         (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-array-add-array">gsk_xmlrpc_array_add_array</link>          (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *subarray);
+<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link>*   <link linkend="gsk-xmlrpc-request-new">gsk_xmlrpc_request_new</link>              (<link linkend="GskXmlrpcStream">GskXmlrpcStream</link> *xmlrpc_stream);
+<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link>*   <link linkend="gsk-xmlrpc-request-ref">gsk_xmlrpc_request_ref</link>              (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-unref">gsk_xmlrpc_request_unref</link>            (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-set-name">gsk_xmlrpc_request_set_name</link>         (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         const <link linkend="char">char</link> *name);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-int32">gsk_xmlrpc_request_add_int32</link>        (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gint32">gint32</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-boolean">gsk_xmlrpc_request_add_boolean</link>      (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gboolean">gboolean</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-double">gsk_xmlrpc_request_add_double</link>       (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gdouble">gdouble</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-string">gsk_xmlrpc_request_add_string</link>       (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         const <link linkend="char">char</link> *value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-date">gsk_xmlrpc_request_add_date</link>         (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gulong">gulong</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-data">gsk_xmlrpc_request_add_data</link>         (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-struct">gsk_xmlrpc_request_add_struct</link>       (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-add-array">gsk_xmlrpc_request_add_array</link>        (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);
+<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> * <link linkend="gsk-xmlrpc-response-new">gsk_xmlrpc_response_new</link>             (void);
+<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> * <link linkend="gsk-xmlrpc-response-ref">gsk_xmlrpc_response_ref</link>             (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-unref">gsk_xmlrpc_response_unref</link>           (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-int32">gsk_xmlrpc_response_add_int32</link>       (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gint32">gint32</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-boolean">gsk_xmlrpc_response_add_boolean</link>     (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-double">gsk_xmlrpc_response_add_double</link>      (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gdouble">gdouble</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-string">gsk_xmlrpc_response_add_string</link>      (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         const <link linkend="char">char</link> *value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-date">gsk_xmlrpc_response_add_date</link>        (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gulong">gulong</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-data">gsk_xmlrpc_response_add_data</link>        (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-struct">gsk_xmlrpc_response_add_struct</link>      (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-add-array">gsk_xmlrpc_response_add_array</link>       (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-fault">gsk_xmlrpc_response_fault</link>           (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure);
+<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *   <link linkend="gsk-xmlrpc-parser-new">gsk_xmlrpc_parser_new</link>               (<link linkend="GskXmlrpcStream">GskXmlrpcStream</link> *stream);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-xmlrpc-parser-feed">gsk_xmlrpc_parser_feed</link>              (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser,
+                                                         const <link linkend="char">char</link> *text,
+                                                         <link linkend="gssize">gssize</link> len,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *  <link linkend="gsk-xmlrpc-parser-get-request">gsk_xmlrpc_parser_get_request</link>       (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser);
+<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> * <link linkend="gsk-xmlrpc-parser-get-response">gsk_xmlrpc_parser_get_response</link>      (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-parser-free">gsk_xmlrpc_parser_free</link>              (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-request-to-buffer">gsk_xmlrpc_request_to_buffer</link>        (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="void">void</link>                <link linkend="gsk-xmlrpc-response-to-buffer">gsk_xmlrpc_response_to_buffer</link>       (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskxmlrpc.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This file contains types mapping to the XMLRPC
+standard fundamental types, structures, arrays and faults.
+It contains a generic parser that has no I/O dependencies.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskxmlrpc.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskXmlrpcArray" role="struct">
+<title>GskXmlrpcArray</title>
+<indexterm zone="GskXmlrpcArray"><primary sortas="GskXmlrpcArray">GskXmlrpcArray</primary></indexterm><programlisting>typedef struct {
+  unsigned len;
+  GskXmlrpcValue *values;
+} GskXmlrpcArray;
+</programlisting>
+<para>
+An array of XMLRPC values.
+Each may have a different type.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskXmlrpcValue">GskXmlrpcValue</link>&#160;*<structfield>values</structfield>;</term>
+<listitem><simpara>the values in the array.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskXmlrpcStruct" role="struct">
+<title>GskXmlrpcStruct</title>
+<indexterm zone="GskXmlrpcStruct"><primary sortas="GskXmlrpcStruct">GskXmlrpcStruct</primary></indexterm><programlisting>typedef struct {
+  unsigned n_members;
+  GskXmlrpcNamedValue *members;
+} GskXmlrpcStruct;
+</programlisting>
+<para>
+A structure, which is a set of named members.
+</para></refsect2>
+<refsect2 id="GskXmlrpcValue" role="struct">
+<title>GskXmlrpcValue</title>
+<indexterm zone="GskXmlrpcValue"><primary sortas="GskXmlrpcValue">GskXmlrpcValue</primary></indexterm><programlisting>typedef struct {
+  GskXmlrpcType type;
+  union
+  {
+    int v_int32;
+    gboolean v_boolean;
+    double v_double;
+    char *v_string;
+    gulong v_date;
+    GByteArray *v_binary_data;
+    GskXmlrpcStruct *v_struct;
+    GskXmlrpcArray *v_array;
+  } data;
+} GskXmlrpcValue;
+</programlisting>
+<para>
+A XMLRPC value that may be of any of the XMLRPC types.
+The type is included with the value.
+</para></refsect2>
+<refsect2 id="GskXmlrpcNamedValue" role="struct">
+<title>GskXmlrpcNamedValue</title>
+<indexterm zone="GskXmlrpcNamedValue"><primary sortas="GskXmlrpcNamedValue">GskXmlrpcNamedValue</primary></indexterm><programlisting>typedef struct {
+  char *name;
+  GskXmlrpcValue value;
+} GskXmlrpcNamedValue;
+</programlisting>
+<para>
+A name/value pair, appropriate as a structure member.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>name</structfield>;</term>
+<listitem><simpara>the string, name, label.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskXmlrpcValue">GskXmlrpcValue</link>&#160;<structfield>value</structfield>;</term>
+<listitem><simpara>the typed value.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskXmlrpcRequest" role="struct">
+<title>GskXmlrpcRequest</title>
+<indexterm zone="GskXmlrpcRequest"><primary sortas="GskXmlrpcRequest">GskXmlrpcRequest</primary></indexterm><programlisting>typedef struct {
+  unsigned magic;		/* private, must be first */
+  char *method_name;
+  GskXmlrpcArray *params;
+  GskXmlrpcStream *xmlrpc_stream;
+} GskXmlrpcRequest;
+</programlisting>
+<para>
+An XMLRPC request (invocation).
+</para></refsect2>
+<refsect2 id="GskXmlrpcResponse" role="struct">
+<title>GskXmlrpcResponse</title>
+<indexterm zone="GskXmlrpcResponse"><primary sortas="GskXmlrpcResponse">GskXmlrpcResponse</primary></indexterm><programlisting>typedef struct {
+  unsigned magic;		/* private, must be first */
+
+  GskXmlrpcArray *params;
+  gboolean has_fault;
+  GskXmlrpcValue fault;
+} GskXmlrpcResponse;
+</programlisting>
+<para>
+An XMLRPC response (return).
+</para></refsect2>
+<refsect2 id="GskXmlrpcParser" role="struct">
+<title>GskXmlrpcParser</title>
+<indexterm zone="GskXmlrpcParser"><primary sortas="GskXmlrpcParser">GskXmlrpcParser</primary></indexterm><programlisting>typedef struct _GskXmlrpcParser GskXmlrpcParser;</programlisting>
+<para>
+An object which can parse XMLRPC requests and responses,
+in any order.  It does no interpretation of the requests or responses.
+</para></refsect2>
+<refsect2 id="GskXmlrpcType" role="enum">
+<title>enum GskXmlrpcType</title>
+<indexterm zone="GskXmlrpcType"><primary sortas="GskXmlrpcType">GskXmlrpcType</primary></indexterm><programlisting>typedef enum
+{
+  GSK_XMLRPC_INT32,
+  GSK_XMLRPC_BOOLEAN,
+  GSK_XMLRPC_DOUBLE,
+  GSK_XMLRPC_STRING,
+  GSK_XMLRPC_DATE,
+  GSK_XMLRPC_BINARY_DATA,
+  GSK_XMLRPC_STRUCT,
+  GSK_XMLRPC_ARRAY
+} GskXmlrpcType;
+</programlisting>
+<para>
+The type of a XMLRPC value.
+</para><variablelist role="enum">
+<varlistentry id="GSK-XMLRPC-INT32--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_INT32</literal></term>
+<listitem><simpara>a 32-bit integer.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-XMLRPC-BOOLEAN--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_BOOLEAN</literal></term>
+<listitem><simpara>a boolean value, written as 0 or 1.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-XMLRPC-DOUBLE--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_DOUBLE</literal></term>
+<listitem><simpara>a double-precission floating-point value.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-XMLRPC-STRING--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_STRING</literal></term>
+<listitem><simpara>a string value, NUL-terminated.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-XMLRPC-DATE--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_DATE</literal></term>
+<listitem><simpara>a date and time.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-XMLRPC-BINARY-DATA--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_BINARY_DATA</literal></term>
+<listitem><simpara>binary data, which will be transmitted as base64,
+but is always presented to the user as raw bytes.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-XMLRPC-STRUCT--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_STRUCT</literal></term>
+<listitem><simpara>a set of named values.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-XMLRPC-ARRAY--CAPS" role="constant">
+<term><literal>GSK_XMLRPC_ARRAY</literal></term>
+<listitem><simpara>an array of values.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-new" role="function">
+<title>gsk_xmlrpc_struct_new ()</title>
+<indexterm zone="gsk-xmlrpc-struct-new"><primary sortas="gsk_xmlrpc_struct_new">gsk_xmlrpc_struct_new</primary></indexterm><programlisting><link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *   gsk_xmlrpc_struct_new               (void);</programlisting>
+<para>
+Allocate a new structure, with no members.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated structure.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-free" role="function">
+<title>gsk_xmlrpc_struct_free ()</title>
+<indexterm zone="gsk-xmlrpc-struct-free"><primary sortas="gsk_xmlrpc_struct_free">gsk_xmlrpc_struct_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_free              (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure);</programlisting>
+<para>
+Free memory associated with an XMLRPC struct.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-int32" role="function">
+<title>gsk_xmlrpc_struct_add_int32 ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-int32"><primary sortas="gsk_xmlrpc_struct_add_int32">gsk_xmlrpc_struct_add_int32</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_int32         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gint32">gint32</link> value);</programlisting>
+<para>
+Add a single int32 member to the given struct.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new int32 member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> value of the new int32 member.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-boolean" role="function">
+<title>gsk_xmlrpc_struct_add_boolean ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-boolean"><primary sortas="gsk_xmlrpc_struct_add_boolean">gsk_xmlrpc_struct_add_boolean</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_boolean       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gboolean">gboolean</link> value);</programlisting>
+<para>
+Add a single boolean member to the given struct.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new boolean member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> value of the new boolean member.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-double" role="function">
+<title>gsk_xmlrpc_struct_add_double ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-double"><primary sortas="gsk_xmlrpc_struct_add_double">gsk_xmlrpc_struct_add_double</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_double        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gdouble">gdouble</link> value);</programlisting>
+<para>
+Add a single double member to the given struct.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new double member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> value of the new double member.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-string" role="function">
+<title>gsk_xmlrpc_struct_add_string ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-string"><primary sortas="gsk_xmlrpc_struct_add_string">gsk_xmlrpc_struct_add_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_string        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         const <link linkend="char">char</link> *value);</programlisting>
+<para>
+Add a single string member to the given struct.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new string member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> value of the new string member.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-date" role="function">
+<title>gsk_xmlrpc_struct_add_date ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-date"><primary sortas="gsk_xmlrpc_struct_add_date">gsk_xmlrpc_struct_add_date</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_date          (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gulong">gulong</link> value);</programlisting>
+<para>
+Add a single date member to the given struct.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new date member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> value of the new date member.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-data" role="function">
+<title>gsk_xmlrpc_struct_add_data ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-data"><primary sortas="gsk_xmlrpc_struct_add_data">gsk_xmlrpc_struct_add_data</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_data          (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);</programlisting>
+<para>
+Add a single data member to the given struct.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new date member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> binary data to add, which will be freed by the structure when
+it is freed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-struct" role="function">
+<title>gsk_xmlrpc_struct_add_struct ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-struct"><primary sortas="gsk_xmlrpc_struct_add_struct">gsk_xmlrpc_struct_add_struct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_struct        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);</programlisting>
+<para>
+Add a structure as a member of another structure.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new struct member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>substructure</parameter>&#160;:</term>
+<listitem><simpara> substructure to add, which will be freed by <parameter>structure</parameter> when
+it is freed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-add-array" role="function">
+<title>gsk_xmlrpc_struct_add_array ()</title>
+<indexterm zone="gsk-xmlrpc-struct-add-array"><primary sortas="gsk_xmlrpc_struct_add_array">gsk_xmlrpc_struct_add_array</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_struct_add_array         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);</programlisting>
+<para>
+Add an array as a member of a structure.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> name of the new struct member.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> subarray to add, which will be freed by <parameter>structure</parameter> when
+it is freed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-date" role="function">
+<title>gsk_xmlrpc_struct_peek_date ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-date"><primary sortas="gsk_xmlrpc_struct_peek_date">gsk_xmlrpc_struct_peek_date</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_xmlrpc_struct_peek_date         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gulong">gulong</link> *out);</programlisting>
+<para>
+Lookup a named date member of a structure,
+storing the result, if any, in <parameter>out</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> place to store the result.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether there was an date member named <parameter>member_name</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-boolean" role="function">
+<title>gsk_xmlrpc_struct_peek_boolean ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-boolean"><primary sortas="gsk_xmlrpc_struct_peek_boolean">gsk_xmlrpc_struct_peek_boolean</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_xmlrpc_struct_peek_boolean      (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gboolean">gboolean</link> *out);</programlisting>
+<para>
+Lookup a named boolean member of a structure,
+storing the result, if any, in <parameter>out</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> place to store the result.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether there was an boolean member named <parameter>member_name</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-double" role="function">
+<title>gsk_xmlrpc_struct_peek_double ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-double"><primary sortas="gsk_xmlrpc_struct_peek_double">gsk_xmlrpc_struct_peek_double</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_xmlrpc_struct_peek_double       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="double">double</link> *out);</programlisting>
+<para>
+Lookup a named double member of a structure,
+storing the result, if any, in <parameter>out</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> place to store the result.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether there was an double member named <parameter>member_name</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-struct" role="function">
+<title>gsk_xmlrpc_struct_peek_struct ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-struct"><primary sortas="gsk_xmlrpc_struct_peek_struct">gsk_xmlrpc_struct_peek_struct</primary></indexterm><programlisting><link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *   gsk_xmlrpc_struct_peek_struct       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);</programlisting>
+<para>
+Lookup a named substructure member of a structure,
+returning a reference to the <link linkend="GskXmlrpcStruct"><type>GskXmlrpcStruct</type></link> result, or <link linkend="NULL--CAPS"><type>NULL</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference (not a copy!) to the struct, or <link linkend="NULL--CAPS"><type>NULL</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-data" role="function">
+<title>gsk_xmlrpc_struct_peek_data ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-data"><primary sortas="gsk_xmlrpc_struct_peek_data">gsk_xmlrpc_struct_peek_data</primary></indexterm><programlisting>const <link linkend="GByteArray">GByteArray</link>*   gsk_xmlrpc_struct_peek_data         (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);</programlisting>
+<para>
+Lookup a named binary-data member of a structure,
+returning a reference to the <link linkend="GByteArray"><type>GByteArray</type></link> result, or <link linkend="NULL--CAPS"><type>NULL</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference (not a copy!) to the binary data, or <link linkend="NULL--CAPS"><type>NULL</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-array" role="function">
+<title>gsk_xmlrpc_struct_peek_array ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-array"><primary sortas="gsk_xmlrpc_struct_peek_array">gsk_xmlrpc_struct_peek_array</primary></indexterm><programlisting><link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *    gsk_xmlrpc_struct_peek_array        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);</programlisting>
+<para>
+Lookup a named subarray member of a structure,
+returning a reference to the <link linkend="GskXmlrpcArray"><type>GskXmlrpcArray</type></link> result, or <link linkend="NULL--CAPS"><type>NULL</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference (not a copy!) to the array, or <link linkend="NULL--CAPS"><type>NULL</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-string" role="function">
+<title>gsk_xmlrpc_struct_peek_string ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-string"><primary sortas="gsk_xmlrpc_struct_peek_string">gsk_xmlrpc_struct_peek_string</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_xmlrpc_struct_peek_string       (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name);</programlisting>
+<para>
+Lookup a named string member of a structure,
+returning the result, or <link linkend="NULL--CAPS"><type>NULL</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the string value, or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-struct-peek-int32" role="function">
+<title>gsk_xmlrpc_struct_peek_int32 ()</title>
+<indexterm zone="gsk-xmlrpc-struct-peek-int32"><primary sortas="gsk_xmlrpc_struct_peek_int32">gsk_xmlrpc_struct_peek_int32</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_xmlrpc_struct_peek_int32        (<link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure,
+                                                         const <link linkend="char">char</link> *member_name,
+                                                         <link linkend="gint32">gint32</link> *out);</programlisting>
+<para>
+Lookup a named int32 member of a structure,
+storing the result, if any, in <parameter>out</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the structure to lookup the member of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member_name</parameter>&#160;:</term>
+<listitem><simpara> the value to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> place to store the result.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether there was an int32 member named <parameter>member_name</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-new" role="function">
+<title>gsk_xmlrpc_array_new ()</title>
+<indexterm zone="gsk-xmlrpc-array-new"><primary sortas="gsk_xmlrpc_array_new">gsk_xmlrpc_array_new</primary></indexterm><programlisting><link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *    gsk_xmlrpc_array_new                (void);</programlisting>
+<para>
+Allocate a new, empty array.*</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated arrays.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-free" role="function">
+<title>gsk_xmlrpc_array_free ()</title>
+<indexterm zone="gsk-xmlrpc-array-free"><primary sortas="gsk_xmlrpc_array_free">gsk_xmlrpc_array_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_free               (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);</programlisting>
+<para>
+Free the array and all its values.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> the array to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-int32" role="function">
+<title>gsk_xmlrpc_array_add_int32 ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-int32"><primary sortas="gsk_xmlrpc_array_add_int32">gsk_xmlrpc_array_add_int32</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_int32          (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gint32">gint32</link> value);</programlisting>
+<para>
+Append an integer to an XMLRPC array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> integer value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-boolean" role="function">
+<title>gsk_xmlrpc_array_add_boolean ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-boolean"><primary sortas="gsk_xmlrpc_array_add_boolean">gsk_xmlrpc_array_add_boolean</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_boolean        (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gboolean">gboolean</link> value);</programlisting>
+<para>
+Append a boolean to an XMLRPC array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> boolean value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-double" role="function">
+<title>gsk_xmlrpc_array_add_double ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-double"><primary sortas="gsk_xmlrpc_array_add_double">gsk_xmlrpc_array_add_double</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_double         (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gdouble">gdouble</link> value);</programlisting>
+<para>
+Append a double-precision floating-pointer value to an XMLRPC array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> double value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-string" role="function">
+<title>gsk_xmlrpc_array_add_string ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-string"><primary sortas="gsk_xmlrpc_array_add_string">gsk_xmlrpc_array_add_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_string         (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         const <link linkend="char">char</link> *value);</programlisting>
+<para>
+Append a string to an XMLRPC array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> string value to append.
+This value is copied: we do not take ownership.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-date" role="function">
+<title>gsk_xmlrpc_array_add_date ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-date"><primary sortas="gsk_xmlrpc_array_add_date">gsk_xmlrpc_array_add_date</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_date           (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="gulong">gulong</link> value);</programlisting>
+<para>
+Append a string to an XMLRPC array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> date/time value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-data" role="function">
+<title>gsk_xmlrpc_array_add_data ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-data"><primary sortas="gsk_xmlrpc_array_add_data">gsk_xmlrpc_array_add_data</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_data           (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);</programlisting>
+<para>
+Append a binary-data element to an XMLRPC array.
+This take ownership of <parameter>data</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> a byte array containing arbitrary binary-data.
+The XMLRPC array takes ownership of the data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-struct" role="function">
+<title>gsk_xmlrpc_array_add_struct ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-struct"><primary sortas="gsk_xmlrpc_array_add_struct">gsk_xmlrpc_array_add_struct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_struct         (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);</programlisting>
+<para>
+Append a binary-data element to an XMLRPC array.
+This take ownership of <parameter>substructure</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>substructure</parameter>&#160;:</term>
+<listitem><simpara> structure to append to <parameter>array</parameter>.
+It will be freed by the <parameter>array</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-array-add-array" role="function">
+<title>gsk_xmlrpc_array_add_array ()</title>
+<indexterm zone="gsk-xmlrpc-array-add-array"><primary sortas="gsk_xmlrpc_array_add_array">gsk_xmlrpc_array_add_array</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_array_add_array          (<link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *subarray);</programlisting>
+<para>
+Append a binary-data element to an XMLRPC array.
+This take ownership of <parameter>subarray</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to which to append a value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subarray</parameter>&#160;:</term>
+<listitem><simpara> array to append to <parameter>array</parameter>.
+It will be freed by the <parameter>array</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-new" role="function">
+<title>gsk_xmlrpc_request_new ()</title>
+<indexterm zone="gsk-xmlrpc-request-new"><primary sortas="gsk_xmlrpc_request_new">gsk_xmlrpc_request_new</primary></indexterm><programlisting><link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link>*   gsk_xmlrpc_request_new              (<link linkend="GskXmlrpcStream">GskXmlrpcStream</link> *xmlrpc_stream);</programlisting>
+<para>
+Allocate a new request.
+At a very minimum, it should have a method name set with
+<link linkend="gsk-xmlrpc-request-set-name"><function>gsk_xmlrpc_request_set_name()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>xmlrpc_stream</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-ref" role="function">
+<title>gsk_xmlrpc_request_ref ()</title>
+<indexterm zone="gsk-xmlrpc-request-ref"><primary sortas="gsk_xmlrpc_request_ref">gsk_xmlrpc_request_ref</primary></indexterm><programlisting><link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link>*   gsk_xmlrpc_request_ref              (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request);</programlisting>
+<para>
+Increase the reference count on <parameter>request</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request to reference.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <parameter>request</parameter>, for convenience.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-unref" role="function">
+<title>gsk_xmlrpc_request_unref ()</title>
+<indexterm zone="gsk-xmlrpc-request-unref"><primary sortas="gsk_xmlrpc_request_unref">gsk_xmlrpc_request_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_unref            (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request);</programlisting>
+<para>
+Decrease the reference count on <parameter>request</parameter>,
+and free it if the count reached 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request to stop referencing.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-set-name" role="function">
+<title>gsk_xmlrpc_request_set_name ()</title>
+<indexterm zone="gsk-xmlrpc-request-set-name"><primary sortas="gsk_xmlrpc_request_set_name">gsk_xmlrpc_request_set_name</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_set_name         (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         const <link linkend="char">char</link> *name);</programlisting>
+<para>
+Set the method name for this request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request whose method-name should be set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> the name of the method to invoke.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-int32" role="function">
+<title>gsk_xmlrpc_request_add_int32 ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-int32"><primary sortas="gsk_xmlrpc_request_add_int32">gsk_xmlrpc_request_add_int32</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_int32        (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gint32">gint32</link> value);</programlisting>
+<para>
+Append an integer to an XMLRPC request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> integer value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-boolean" role="function">
+<title>gsk_xmlrpc_request_add_boolean ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-boolean"><primary sortas="gsk_xmlrpc_request_add_boolean">gsk_xmlrpc_request_add_boolean</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_boolean      (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gboolean">gboolean</link> value);</programlisting>
+<para>
+Append a boolean to an XMLRPC request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> integer value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-double" role="function">
+<title>gsk_xmlrpc_request_add_double ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-double"><primary sortas="gsk_xmlrpc_request_add_double">gsk_xmlrpc_request_add_double</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_double       (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gdouble">gdouble</link> value);</programlisting>
+<para>
+Append a double to an XMLRPC request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> double value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-string" role="function">
+<title>gsk_xmlrpc_request_add_string ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-string"><primary sortas="gsk_xmlrpc_request_add_string">gsk_xmlrpc_request_add_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_string       (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         const <link linkend="char">char</link> *value);</programlisting>
+<para>
+Append a string to an XMLRPC request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> string value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-date" role="function">
+<title>gsk_xmlrpc_request_add_date ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-date"><primary sortas="gsk_xmlrpc_request_add_date">gsk_xmlrpc_request_add_date</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_date         (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="gulong">gulong</link> value);</programlisting>
+<para>
+Append a date to an XMLRPC request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> date value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-data" role="function">
+<title>gsk_xmlrpc_request_add_data ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-data"><primary sortas="gsk_xmlrpc_request_add_data">gsk_xmlrpc_request_add_data</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_data         (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);</programlisting>
+<para>
+Append binary data to an XMLRPC request (it will be base64 encoded transparently).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> GByteArray to append: it shall be freed by the request,
+that is, there is a transfer of ownership.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-struct" role="function">
+<title>gsk_xmlrpc_request_add_struct ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-struct"><primary sortas="gsk_xmlrpc_request_add_struct">gsk_xmlrpc_request_add_struct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_struct       (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);</programlisting>
+<para>
+Add a structure as a parameter to the request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>substructure</parameter>&#160;:</term>
+<listitem><simpara> structure to append to <parameter>array</parameter>.
+This will be freed by the <parameter>request</parameter> automatically: a transfer of ownership
+occurs in this function.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-add-array" role="function">
+<title>gsk_xmlrpc_request_add_array ()</title>
+<indexterm zone="gsk-xmlrpc-request-add-array"><primary sortas="gsk_xmlrpc_request_add_array">gsk_xmlrpc_request_add_array</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_add_array        (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);</programlisting>
+<para>
+Add a structure as a parameter to the request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to append to <parameter>request</parameter>'s parmeter list.
+This will be freed by the <parameter>request</parameter> automatically: a transfer of ownership
+occurs in this function.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-new" role="function">
+<title>gsk_xmlrpc_response_new ()</title>
+<indexterm zone="gsk-xmlrpc-response-new"><primary sortas="gsk_xmlrpc_response_new">gsk_xmlrpc_response_new</primary></indexterm><programlisting><link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> * gsk_xmlrpc_response_new             (void);</programlisting>
+<para>
+Allocate a new response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated response which has no parameters
+and no fault.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-ref" role="function">
+<title>gsk_xmlrpc_response_ref ()</title>
+<indexterm zone="gsk-xmlrpc-response-ref"><primary sortas="gsk_xmlrpc_response_ref">gsk_xmlrpc_response_ref</primary></indexterm><programlisting><link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> * gsk_xmlrpc_response_ref             (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response);</programlisting>
+<para>
+Increase the reference count on <parameter>response</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to reference.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <parameter>response</parameter>, for convenience.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-unref" role="function">
+<title>gsk_xmlrpc_response_unref ()</title>
+<indexterm zone="gsk-xmlrpc-response-unref"><primary sortas="gsk_xmlrpc_response_unref">gsk_xmlrpc_response_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_unref           (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response);</programlisting>
+<para>
+Decrease the reference count on <parameter>response</parameter>,
+and free it if the count reached 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to stop referencing.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-int32" role="function">
+<title>gsk_xmlrpc_response_add_int32 ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-int32"><primary sortas="gsk_xmlrpc_response_add_int32">gsk_xmlrpc_response_add_int32</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_int32       (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gint32">gint32</link> value);</programlisting>
+<para>
+Append an integer to an XMLRPC response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> integer value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-boolean" role="function">
+<title>gsk_xmlrpc_response_add_boolean ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-boolean"><primary sortas="gsk_xmlrpc_response_add_boolean">gsk_xmlrpc_response_add_boolean</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_boolean     (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> value);</programlisting>
+<para>
+Append a boolean to an XMLRPC response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> integer value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-double" role="function">
+<title>gsk_xmlrpc_response_add_double ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-double"><primary sortas="gsk_xmlrpc_response_add_double">gsk_xmlrpc_response_add_double</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_double      (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gdouble">gdouble</link> value);</programlisting>
+<para>
+Append a double to an XMLRPC response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> double value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-string" role="function">
+<title>gsk_xmlrpc_response_add_string ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-string"><primary sortas="gsk_xmlrpc_response_add_string">gsk_xmlrpc_response_add_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_string      (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         const <link linkend="char">char</link> *value);</programlisting>
+<para>
+Append a string to an XMLRPC response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> string value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-date" role="function">
+<title>gsk_xmlrpc_response_add_date ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-date"><primary sortas="gsk_xmlrpc_response_add_date">gsk_xmlrpc_response_add_date</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_date        (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="gulong">gulong</link> value);</programlisting>
+<para>
+Append a date to an XMLRPC response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> date value to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-data" role="function">
+<title>gsk_xmlrpc_response_add_data ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-data"><primary sortas="gsk_xmlrpc_response_add_data">gsk_xmlrpc_response_add_data</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_data        (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GByteArray">GByteArray</link> *data);</programlisting>
+<para>
+Append binary data to an XMLRPC response (it will be base64 encoded transparently).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> GByteArray to append: it shall be freed by the response,
+that is, there is a transfer of ownership.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-struct" role="function">
+<title>gsk_xmlrpc_response_add_struct ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-struct"><primary sortas="gsk_xmlrpc_response_add_struct">gsk_xmlrpc_response_add_struct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_struct      (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *substructure);</programlisting>
+<para>
+Add a structure as a parameter to the response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>substructure</parameter>&#160;:</term>
+<listitem><simpara> structure to append to <parameter>array</parameter>.
+This will be freed by the <parameter>response</parameter> automatically: a transfer of ownership
+occurs in this function.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-add-array" role="function">
+<title>gsk_xmlrpc_response_add_array ()</title>
+<indexterm zone="gsk-xmlrpc-response-add-array"><primary sortas="gsk_xmlrpc_response_add_array">gsk_xmlrpc_response_add_array</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_add_array       (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskXmlrpcArray">GskXmlrpcArray</link> *array);</programlisting>
+<para>
+Add a structure as a parameter to the response.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response to whose parameters a value shall be appended.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>array</parameter>&#160;:</term>
+<listitem><simpara> array to append to <parameter>response</parameter>'s parmeter list.
+This will be freed by the <parameter>response</parameter> automatically: a transfer of ownership
+occurs in this function.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-fault" role="function">
+<title>gsk_xmlrpc_response_fault ()</title>
+<indexterm zone="gsk-xmlrpc-response-fault"><primary sortas="gsk_xmlrpc_response_fault">gsk_xmlrpc_response_fault</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_fault           (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskXmlrpcStruct">GskXmlrpcStruct</link> *structure);</programlisting>
+<para>
+Indicate that an error occurred trying to
+process the XMLRPC request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>structure</parameter>&#160;:</term>
+<listitem><simpara> the fault information.
+This should be a struct with
+at most an integer 'faultCode'
+and a string 'faultString'.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-parser-new" role="function">
+<title>gsk_xmlrpc_parser_new ()</title>
+<indexterm zone="gsk-xmlrpc-parser-new"><primary sortas="gsk_xmlrpc_parser_new">gsk_xmlrpc_parser_new</primary></indexterm><programlisting><link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *   gsk_xmlrpc_parser_new               (<link linkend="GskXmlrpcStream">GskXmlrpcStream</link> *stream);</programlisting>
+<para>
+Allocate a new XMLRPC parser. A parser can parse both requests and responses.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated parser.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-parser-feed" role="function">
+<title>gsk_xmlrpc_parser_feed ()</title>
+<indexterm zone="gsk-xmlrpc-parser-feed"><primary sortas="gsk_xmlrpc_parser_feed">gsk_xmlrpc_parser_feed</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_xmlrpc_parser_feed              (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser,
+                                                         const <link linkend="char">char</link> *text,
+                                                         <link linkend="gssize">gssize</link> len,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Pass data into the XMLRPC parser.
+</para>
+<para>
+If this works, <link linkend="gsk-xmlrpc-parser-get-request"><function>gsk_xmlrpc_parser_get_request()</function></link> and/or
+<link linkend="gsk-xmlrpc-parser-get-response"><function>gsk_xmlrpc_parser_get_response()</function></link> should be called as appropriate
+until there are no more messages to dequeue.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> the parser to give data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text</parameter>&#160;:</term>
+<listitem><simpara> the data to parse (it may just be a partial request).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara> the length of <parameter>text</parameter>, or -1 to use NUL-termination.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to put the error object if the parsing has a problem.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> TRUE if processing did not encounter an error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-parser-get-request" role="function">
+<title>gsk_xmlrpc_parser_get_request ()</title>
+<indexterm zone="gsk-xmlrpc-parser-get-request"><primary sortas="gsk_xmlrpc_parser_get_request">gsk_xmlrpc_parser_get_request</primary></indexterm><programlisting><link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *  gsk_xmlrpc_parser_get_request       (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser);</programlisting>
+<para>
+Get a parsed request from the list maintained by
+the parser.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> parser to try and get a parsed request from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference to the request; the caller
+must call <link linkend="gsk-xmlrpc-request-unref"><function>gsk_xmlrpc_request_unref()</function></link> eventually.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-parser-get-response" role="function">
+<title>gsk_xmlrpc_parser_get_response ()</title>
+<indexterm zone="gsk-xmlrpc-parser-get-response"><primary sortas="gsk_xmlrpc_parser_get_response">gsk_xmlrpc_parser_get_response</primary></indexterm><programlisting><link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> * gsk_xmlrpc_parser_get_response      (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser);</programlisting>
+<para>
+Get a parsed response from the list maintained by
+the parser.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> parser to try and get a parsed response from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference to the response; the caller
+must call <link linkend="gsk-xmlrpc-response-unref"><function>gsk_xmlrpc_response_unref()</function></link> eventually.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-parser-free" role="function">
+<title>gsk_xmlrpc_parser_free ()</title>
+<indexterm zone="gsk-xmlrpc-parser-free"><primary sortas="gsk_xmlrpc_parser_free">gsk_xmlrpc_parser_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_parser_free              (<link linkend="GskXmlrpcParser">GskXmlrpcParser</link> *parser);</programlisting>
+<para>
+Free the memory associated with the parser.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> the parser to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-request-to-buffer" role="function">
+<title>gsk_xmlrpc_request_to_buffer ()</title>
+<indexterm zone="gsk-xmlrpc-request-to-buffer"><primary sortas="gsk_xmlrpc_request_to_buffer">gsk_xmlrpc_request_to_buffer</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_request_to_buffer        (<link linkend="GskXmlrpcRequest">GskXmlrpcRequest</link> *request,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-xmlrpc-response-to-buffer" role="function">
+<title>gsk_xmlrpc_response_to_buffer ()</title>
+<indexterm zone="gsk-xmlrpc-response-to-buffer"><primary sortas="gsk_xmlrpc_response_to_buffer">gsk_xmlrpc_response_to_buffer</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_xmlrpc_response_to_buffer       (<link linkend="GskXmlrpcResponse">GskXmlrpcResponse</link> *response,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Write the XML corresponding to this response to the buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the XMLRPC response to serialize.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to append to.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskxmlrpc.see-also">
+<title>See Also</title>
+<para>
+GskXmlrpcStream
+</para>
+</refsect1>
+
+</refentry>

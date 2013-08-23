@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Helpful Macros</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskinit.html" title="Library Initialization">
+<link rel="next" href="GskIO.html" title="Base Input/Output Object">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskinit.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskIO.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskmacros.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskmacros.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskmacros"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskmacros.top_of_page"></a>Helpful Macros</span></h2>
+<p>Helpful Macros — Various macros to eliminate tedious typing,
+beyond those provided by glib.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskmacros.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="gsk-gskmacros.html#GSK-DECLARE-POOL-ALLOCATORS--CAPS" title="GSK_DECLARE_POOL_ALLOCATORS()">GSK_DECLARE_POOL_ALLOCATORS</a>         (Type, type, pool_count)
+#define             <a class="link" href="gsk-gskmacros.html#GSK-STRUCT-MEMBER-SIZE--CAPS" title="GSK_STRUCT_MEMBER_SIZE()">GSK_STRUCT_MEMBER_SIZE</a>              (type, member)
+#define             <a class="link" href="gsk-gskmacros.html#GSK-STRUCT-MEMBER-END-OFFSET--CAPS" title="GSK_STRUCT_MEMBER_END_OFFSET()">GSK_STRUCT_MEMBER_END_OFFSET</a>        (struct, member)
+#define             <a class="link" href="gsk-gskmacros.html#gettext-macro" title="_()">_</a>                                   (s)
+#define             <a class="link" href="gsk-gskmacros.html#GSK-SKIP-CHAR-TYPE--CAPS" title="GSK_SKIP_CHAR_TYPE()">GSK_SKIP_CHAR_TYPE</a>                  (ptr, condition)
+#define             <a class="link" href="gsk-gskmacros.html#GSK-SKIP-WHITESPACE--CAPS" title="GSK_SKIP_WHITESPACE()">GSK_SKIP_WHITESPACE</a>                 (char_ptr)
+#define             <a class="link" href="gsk-gskmacros.html#GSK-SKIP-NONWHITESPACE--CAPS" title="GSK_SKIP_NONWHITESPACE()">GSK_SKIP_NONWHITESPACE</a>              (char_ptr)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmacros.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmacros.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GSK-DECLARE-POOL-ALLOCATORS--CAPS"></a><h3>GSK_DECLARE_POOL_ALLOCATORS()</h3>
+<pre class="programlisting">#define             GSK_DECLARE_POOL_ALLOCATORS(Type, type, pool_count)</pre>
+<p>
+Declare static inline functions type_free and type_alloc,
+(where type is the second parameter to this macro)
+which use GMemChunks to implement fast allocation.
+<em class="parameter"><code>Type</code></em> is the name of the name of structure to allocate;
+and <em class="parameter"><code>pool_count</code></em> is the number to allocate at once.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Type</code></em> :</span></p></td>
+<td>Real type of the things to allocate.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>Lowercased type name, for mangling into the function name.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool_count</code></em> :</span></p></td>
+<td>Number of things to allocate at once.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STRUCT-MEMBER-SIZE--CAPS"></a><h3>GSK_STRUCT_MEMBER_SIZE()</h3>
+<pre class="programlisting">#define             GSK_STRUCT_MEMBER_SIZE(type, member)</pre>
+<p>
+Find size in bytes of a structure member.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STRUCT-MEMBER-END-OFFSET--CAPS"></a><h3>GSK_STRUCT_MEMBER_END_OFFSET()</h3>
+<pre class="programlisting">#define             GSK_STRUCT_MEMBER_END_OFFSET(struct, member)</pre>
+<p>
+Find offset of a member's end in bytes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>struct</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gettext-macro"></a><h3>_()</h3>
+<pre class="programlisting">#define             _(s)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>s</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-SKIP-CHAR-TYPE--CAPS"></a><h3>GSK_SKIP_CHAR_TYPE()</h3>
+<pre class="programlisting">#define             GSK_SKIP_CHAR_TYPE(ptr, condition)</pre>
+<p>
+Skip <em class="parameter"><code>ptr</code></em> along until it fails the <em class="parameter"><code>condition</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ptr</code></em> :</span></p></td>
+<td>pointer to a NUL-terminated string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>condition</code></em> :</span></p></td>
+<td>function predicate to test characters with.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-SKIP-WHITESPACE--CAPS"></a><h3>GSK_SKIP_WHITESPACE()</h3>
+<pre class="programlisting">#define             GSK_SKIP_WHITESPACE(char_ptr)</pre>
+<p>
+Skip <em class="parameter"><code>char_ptr</code></em> along until it gets to a non-whitespace character, or the end of the string.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>char_ptr</code></em> :</span></p></td>
+<td>the pointer to advance.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-SKIP-NONWHITESPACE--CAPS"></a><h3>GSK_SKIP_NONWHITESPACE()</h3>
+<pre class="programlisting">#define             GSK_SKIP_NONWHITESPACE(char_ptr)</pre>
+<p>
+Skip <em class="parameter"><code>char_ptr</code></em> along until it gets to a whitespace character, or the end of the string.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>char_ptr</code></em> :</span></p></td>
+<td>the pointer to advance.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

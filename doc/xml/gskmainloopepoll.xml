@@ -1,0 +1,56 @@
+<refentry id="gsk-GskMainLoopEpoll">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskMainLoopEpoll.top_of_page">GskMainLoopEpoll</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskMainLoopEpoll</refname>
+<refpurpose>a libepoll-based event loop.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskMainLoopEpoll.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskMainLoopEpoll">GskMainLoopEpoll</link>;
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskMainLoopEpoll.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A main-loop which uses libepoll as its underlying
+multiplexing method.
+(This is an interesting example of an edge-triggered main-loop)
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskMainLoopEpoll.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMainLoopEpoll" role="struct">
+<title>GskMainLoopEpoll</title>
+<indexterm zone="GskMainLoopEpoll"><primary sortas="GskMainLoopEpoll">GskMainLoopEpoll</primary></indexterm><programlisting>typedef struct {
+  GskMainLoopPollBase      main_loop_poll_base;
+  int                      fd;
+  gpointer                 epoll_events;
+} GskMainLoopEpoll;
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

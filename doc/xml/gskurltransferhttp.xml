@@ -1,0 +1,220 @@
+<refentry id="GskUrlTransferHttp">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskUrlTransferHttp.top_of_page">GskUrlTransferHttp</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskUrlTransferHttp</refname>
+<refpurpose>An HTTP- or HTTPS-based transfer.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskUrlTransferHttp.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskUrlTransferHttp-struct">GskUrlTransferHttp</link>;
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-http-set-ssl-cert">gsk_url_transfer_http_set_ssl_cert</link>  (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *cert_fname);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-http-set-ssl-key">gsk_url_transfer_http_set_ssl_key</link>   (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *key_fname);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-http-set-ssl-password">gsk_url_transfer_http_set_ssl_password</link>
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *password);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-http-set-user-agent">gsk_url_transfer_http_set_user_agent</link>
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *user_agent);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-http-add-extra-header">gsk_url_transfer_http_add_extra_header</link>
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *key,
+                                                         const <link linkend="char">char</link> *value);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-http-set-proxy-address">gsk_url_transfer_http_set_proxy_address</link>
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *proxy_address);
+<link linkend="void">void</link>                (<link linkend="GskUrlTransferHttpRequestModifierFunc">*GskUrlTransferHttpRequestModifierFunc</link>)
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="gpointer">gpointer</link> mod_data);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-http-add-modifier">gsk_url_transfer_http_add_modifier</link>  (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         <link linkend="GskUrlTransferHttpRequestModifierFunc">GskUrlTransferHttpRequestModifierFunc</link> modifier,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskUrlTransferHttp.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskUrlTransfer">GskUrlTransfer</link>
+         +----GskUrlTransferHttp
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskUrlTransferHttp.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A transfer with an HTTP-based URL.
+In particular, this class defines many HTTP specific configurations.
+</para>
+</refsect1>
+
+<refsect1 id="GskUrlTransferHttp.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskUrlTransferHttp-struct" role="struct">
+<title>GskUrlTransferHttp</title>
+<indexterm zone="GskUrlTransferHttp-struct"><primary sortas="GskUrlTransferHttp">GskUrlTransferHttp</primary></indexterm><programlisting>typedef struct _GskUrlTransferHttp GskUrlTransferHttp;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-url-transfer-http-set-ssl-cert" role="function">
+<title>gsk_url_transfer_http_set_ssl_cert ()</title>
+<indexterm zone="gsk-url-transfer-http-set-ssl-cert"><primary sortas="gsk_url_transfer_http_set_ssl_cert">gsk_url_transfer_http_set_ssl_cert</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_http_set_ssl_cert  (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *cert_fname);</programlisting>
+<para>
+Set the SSL certificate file for this connection.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http</parameter>&#160;:</term>
+<listitem><simpara> the transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cert_fname</parameter>&#160;:</term>
+<listitem><simpara> the certificate filename.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-http-set-ssl-key" role="function">
+<title>gsk_url_transfer_http_set_ssl_key ()</title>
+<indexterm zone="gsk-url-transfer-http-set-ssl-key"><primary sortas="gsk_url_transfer_http_set_ssl_key">gsk_url_transfer_http_set_ssl_key</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_http_set_ssl_key   (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *key_fname);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_fname</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-http-set-ssl-password" role="function">
+<title>gsk_url_transfer_http_set_ssl_password ()</title>
+<indexterm zone="gsk-url-transfer-http-set-ssl-password"><primary sortas="gsk_url_transfer_http_set_ssl_password">gsk_url_transfer_http_set_ssl_password</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_http_set_ssl_password
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *password);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-http-set-user-agent" role="function">
+<title>gsk_url_transfer_http_set_user_agent ()</title>
+<indexterm zone="gsk-url-transfer-http-set-user-agent"><primary sortas="gsk_url_transfer_http_set_user_agent">gsk_url_transfer_http_set_user_agent</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_http_set_user_agent
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *user_agent);</programlisting>
+<para>
+Set the User-Agent to use for this HTTP transaction.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http</parameter>&#160;:</term>
+<listitem><simpara> the transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_agent</parameter>&#160;:</term>
+<listitem><simpara> the User-Agent: header's value for this transfer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-http-add-extra-header" role="function">
+<title>gsk_url_transfer_http_add_extra_header ()</title>
+<indexterm zone="gsk-url-transfer-http-add-extra-header"><primary sortas="gsk_url_transfer_http_add_extra_header">gsk_url_transfer_http_add_extra_header</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_http_add_extra_header
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         const <link linkend="char">char</link> *key,
+                                                         const <link linkend="char">char</link> *value);</programlisting>
+<para>
+Add an arbitrary header to the HTTP request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http</parameter>&#160;:</term>
+<listitem><simpara> the transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> a HTTP header name
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> the value of that HTTP header.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-http-set-proxy-address" role="function">
+<title>gsk_url_transfer_http_set_proxy_address ()</title>
+<indexterm zone="gsk-url-transfer-http-set-proxy-address"><primary sortas="gsk_url_transfer_http_set_proxy_address">gsk_url_transfer_http_set_proxy_address</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_http_set_proxy_address
+                                                        (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *proxy_address);</programlisting>
+<para>
+Set an HTTP proxy for this transfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http</parameter>&#160;:</term>
+<listitem><simpara> the transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>proxy_address</parameter>&#160;:</term>
+<listitem><simpara> the socket-address to 
+really connect to.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlTransferHttpRequestModifierFunc" role="function">
+<title>GskUrlTransferHttpRequestModifierFunc ()</title>
+<indexterm zone="GskUrlTransferHttpRequestModifierFunc"><primary sortas="GskUrlTransferHttpRequestModifierFunc">GskUrlTransferHttpRequestModifierFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskUrlTransferHttpRequestModifierFunc)
+                                                        (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="gpointer">gpointer</link> mod_data);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mod_data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-http-add-modifier" role="function">
+<title>gsk_url_transfer_http_add_modifier ()</title>
+<indexterm zone="gsk-url-transfer-http-add-modifier"><primary sortas="gsk_url_transfer_http_add_modifier">gsk_url_transfer_http_add_modifier</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_http_add_modifier  (<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link> *http,
+                                                         <link linkend="GskUrlTransferHttpRequestModifierFunc">GskUrlTransferHttpRequestModifierFunc</link> modifier,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Add a generic transformation to do to the HTTP request header.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http</parameter>&#160;:</term>
+<listitem><simpara> the transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>modifier</parameter>&#160;:</term>
+<listitem><simpara> function to call to modify the HTTP request header.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to modifier.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> called with data when the modifier is destroyed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="GskUrlTransferHttp.see-also">
+<title>See Also</title>
+<para>
+<link linkend="GskUrlTransfer"><type>GskUrlTransfer</type></link>.
+</para>
+</refsect1>
+
+</refentry>

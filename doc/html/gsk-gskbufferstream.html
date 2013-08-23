@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskbufferstream</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch04.html" title="Standard Implementations">
+<link rel="prev" href="GskStreamListenerSocket.html" title="GskStreamListenerSocket">
+<link rel="next" href="ch05.html" title="Standard Objects: the URL class">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskStreamListenerSocket.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch05.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskbufferstream.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskbufferstream.description" class="shortcut">Description</a>
+                 | 
+                <a href="#gsk-gskbufferstream.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskbufferstream"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskbufferstream.top_of_page"></a>gskbufferstream</span></h2>
+<p>gskbufferstream — Simple Buffering Stream</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskbufferstream.synopsis"></a><h2>Synopsis</h2>
+<a name="GskBufferStream"></a><pre class="synopsis">
+                    <a class="link" href="gsk-gskbufferstream.html#GskBufferStreamClass" title="GskBufferStreamClass">GskBufferStreamClass</a>;
+                    <a class="link" href="gsk-gskbufferstream.html#GskBufferStream-struct" title="GskBufferStream">GskBufferStream</a>;
+<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *   <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-new" title="gsk_buffer_stream_new ()">gsk_buffer_stream_new</a>               (void);
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-read-hook" title="gsk_buffer_stream_read_hook()">gsk_buffer_stream_read_hook</a>         (stream)
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-write-hook" title="gsk_buffer_stream_write_hook()">gsk_buffer_stream_write_hook</a>        (stream)
+void                <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-read-buffer-changed" title="gsk_buffer_stream_read_buffer_changed ()">gsk_buffer_stream_read_buffer_changed</a>
+                                                        (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);
+void                <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-write-buffer-changed" title="gsk_buffer_stream_write_buffer_changed ()">gsk_buffer_stream_write_buffer_changed</a>
+                                                        (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);
+void                <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-read-shutdown" title="gsk_buffer_stream_read_shutdown ()">gsk_buffer_stream_read_shutdown</a>     (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);
+void                <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-changed" title="gsk_buffer_stream_changed ()">gsk_buffer_stream_changed</a>           (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-clear-strict-max-write" title="gsk_buffer_stream_clear_strict_max_write()">gsk_buffer_stream_clear_strict_max_write</a>(stream)
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-has-strict-max-write" title="gsk_buffer_stream_has_strict_max_write()">gsk_buffer_stream_has_strict_max_write</a>(stream)
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-get-max-write-buffer" title="gsk_buffer_stream_get_max_write_buffer()">gsk_buffer_stream_get_max_write_buffer</a>(stream)
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-peek-write-buffer" title="gsk_buffer_stream_peek_write_buffer()">gsk_buffer_stream_peek_write_buffer</a> (stream)
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-peek-read-buffer" title="gsk_buffer_stream_peek_read_buffer()">gsk_buffer_stream_peek_read_buffer</a>  (stream)
+#define             <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-mark-strict-max-write" title="gsk_buffer_stream_mark_strict_max_write()">gsk_buffer_stream_mark_strict_max_write</a>(stream)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbufferstream.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+         +----<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a>
+               +----GskBufferStream
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbufferstream.description"></a><h2>Description</h2>
+<p>
+This class provides trivial buffering, and additional
+hooks to be notified of buffer events.
+</p>
+<p>
+This class can be used for simple sources where there is
+minimal need for input/output monitoring.
+For example, it can be used to proxy for a foreign source.
+We use it for this purpose in gskopensslbufferstream.c
+to make a connected pair of a BIO (the SSL i/o abstraction)
+and a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> (which is really a GskBufferStream).
+</p>
+<p>
+Most functions in the API are intended only for
+"implementors", that is, users who are using a <a class="link" href="gsk-gskbufferstream.html#GskBufferStream"><span class="type">GskBufferStream</span></a>
+as an internal stream.  Most users who are given a <a class="link" href="gsk-gskbufferstream.html#GskBufferStream"><span class="type">GskBufferStream</span></a>
+which is returned as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> should not use this API,
+because it may conflict with the way the implementor of
+the function which returned it expects it to be used.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbufferstream.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskBufferStreamClass"></a><h3>GskBufferStreamClass</h3>
+<pre class="programlisting">typedef struct {
+  GskStreamClass stream_class;
+
+  void (*buffered_read_set_poll) (GskBufferStream *bs, gboolean);
+  void (*buffered_write_set_poll) (GskBufferStream *bs, gboolean);
+  void (*buffered_read_shutdown) (GskBufferStream *bs);
+  void (*buffered_write_shutdown) (GskBufferStream *bs);
+} GskBufferStreamClass;
+</pre>
+<p>
+The class which has the buffer methods.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskBufferStream-struct"></a><h3>GskBufferStream</h3>
+<pre class="programlisting">typedef struct _GskBufferStream GskBufferStream;</pre>
+<p>
+The buffered stream.  All of its members are private
+and should be accessed through the methods below only.
+</p>
+<p>
+However, for debugging purposes, ....
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-new"></a><h3>gsk_buffer_stream_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *   gsk_buffer_stream_new               (void);</pre>
+<p>
+Create a new <a class="link" href="gsk-gskbufferstream.html#GskBufferStream"><span class="type">GskBufferStream</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated GskBufferStream.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-read-hook"></a><h3>gsk_buffer_stream_read_hook()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_read_hook(stream)</pre>
+<p>
+Get a pointer to a hook on the buffered-read method.
+This hook will be triggered as long as the stream's read-hook
+wants data and the buffer is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="gsk-gskbufferstream.html#GskBufferStream"><span class="type">GskBufferStream</span></a> to get the read-hook for.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-write-hook"></a><h3>gsk_buffer_stream_write_hook()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_write_hook(stream)</pre>
+<p>
+Get a pointer to a hook of the buffered-write method.
+This will be triggered as long as the write-buffer
+is non-empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="gsk-gskbufferstream.html#GskBufferStream"><span class="type">GskBufferStream</span></a> to get the write-hook for.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-read-buffer-changed"></a><h3>gsk_buffer_stream_read_buffer_changed ()</h3>
+<pre class="programlisting">void                gsk_buffer_stream_read_buffer_changed
+                                                        (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);</pre>
+<p>
+Called to notify the buffer stream that its
+read-size has been changed, usually because
+an implementor has appended data into it
+for the attached stream to read.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> stream whose read buffer has been modified.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-write-buffer-changed"></a><h3>gsk_buffer_stream_write_buffer_changed ()</h3>
+<pre class="programlisting">void                gsk_buffer_stream_write_buffer_changed
+                                                        (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);</pre>
+<p>
+Called to notify the buffer stream that its
+write-buffer has been changed, usually because
+an implementor has read data from it.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> stream whose write buffer has been modified.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-read-shutdown"></a><h3>gsk_buffer_stream_read_shutdown ()</h3>
+<pre class="programlisting">void                gsk_buffer_stream_read_shutdown     (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);</pre>
+<p>
+Shutdown the read-end of the buffer-stream,
+waiting for the buffer to be drained first.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to gracefully shut-down.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-changed"></a><h3>gsk_buffer_stream_changed ()</h3>
+<pre class="programlisting">void                gsk_buffer_stream_changed           (<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a> *stream);</pre>
+<p>
+Do all updates needed to compensate for
+any user changes to: read_buffer, write_buffer,
+max_write_buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream whose internals have been modified.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-clear-strict-max-write"></a><h3>gsk_buffer_stream_clear_strict_max_write()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_clear_strict_max_write(stream)</pre>
+<p>
+Stop forcing the buffer-writer to be in strict-compliance
+with the max-write-buffer quantity.  In this case,
+max-write-buffer just used for polling purposes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-has-strict-max-write"></a><h3>gsk_buffer_stream_has_strict_max_write()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_has_strict_max_write(stream)</pre>
+<p>
+Whether the <a class="link" href="gsk-gskbufferstream.html#GskBufferStream"><span class="type">GskBufferStream</span></a> will strictly enforce
+the maximum write-buffer threshold by
+forcing writes beyond the maximum to get
+clipped (possibly to 0).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-get-max-write-buffer"></a><h3>gsk_buffer_stream_get_max_write_buffer()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_get_max_write_buffer(stream)</pre>
+<p>
+Get the maximum number of bytes in the write buffer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-peek-write-buffer"></a><h3>gsk_buffer_stream_peek_write_buffer()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_peek_write_buffer(stream)</pre>
+<p>
+Peek at the write-buffer (the buffer where the input <a class="link" href="GskStream.html#gsk-stream-write" title="gsk_stream_write ()"><code class="function">gsk_stream_write()</code></a>
+is appended).  Note that you must call <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-write-buffer-changed" title="gsk_buffer_stream_write_buffer_changed ()"><code class="function">gsk_buffer_stream_write_buffer_changed()</code></a>
+if you change the returned buffer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream whose write-buffer is returned.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-peek-read-buffer"></a><h3>gsk_buffer_stream_peek_read_buffer()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_peek_read_buffer(stream)</pre>
+<p>
+Peek at the read-buffer (the buffer where the output <a class="link" href="GskStream.html#gsk-stream-read" title="gsk_stream_read ()"><code class="function">gsk_stream_read()</code></a>
+is drain from).
+Note that you must call <a class="link" href="gsk-gskbufferstream.html#gsk-buffer-stream-read-buffer-changed" title="gsk_buffer_stream_read_buffer_changed ()"><code class="function">gsk_buffer_stream_read_buffer_changed()</code></a>
+if you change the returned buffer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream whose read-buffer is returned.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-stream-mark-strict-max-write"></a><h3>gsk_buffer_stream_mark_strict_max_write()</h3>
+<pre class="programlisting">#define             gsk_buffer_stream_mark_strict_max_write(stream)</pre>
+<p>
+Indicate that strict enforcement of the maximum-write buffer size
+is desired.
+</p>
+<p>
+Note that this only affect the write implementation:
+existing buffered data is retained, and also
+the implementor can always <a class="link" href="gsk-gskbuffer.html#gsk-buffer-append" title="gsk_buffer_append ()"><code class="function">gsk_buffer_append()</code></a> to cram
+extra data in.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream where the max-write-buffer should be strictly enforced.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbufferstream.see-also"></a><h2>See Also</h2>
+<p>
+GskStream.
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,748 @@
+<refentry id="gsk-gskrbtreemacros">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskrbtreemacros.top_of_page">gskrbtreemacros</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskrbtreemacros</refname>
+<refpurpose>Flexible Red-Black Trees implemented as macros</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskrbtreemacros.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-RBTREE-INSERT--CAPS">GSK_RBTREE_INSERT</link>                   (tree, node, collision_node)
+#define             <link linkend="GSK-RBTREE-REMOVE--CAPS">GSK_RBTREE_REMOVE</link>                   (tree, node)
+#define             <link linkend="GSK-RBTREE-LOOKUP--CAPS">GSK_RBTREE_LOOKUP</link>                   (tree, key, out)
+#define             <link linkend="GSK-RBTREE-LOOKUP-COMPARATOR--CAPS">GSK_RBTREE_LOOKUP_COMPARATOR</link>        (tree, key, key_comparator, out)
+#define             <link linkend="GSK-RBTREE-FIRST--CAPS">GSK_RBTREE_FIRST</link>                    (tree, out)
+#define             <link linkend="GSK-RBTREE-LAST--CAPS">GSK_RBTREE_LAST</link>                     (tree, out)
+#define             <link linkend="GSK-RBTREE-NEXT--CAPS">GSK_RBTREE_NEXT</link>                     (tree, in, out)
+#define             <link linkend="GSK-RBTREE-PREV--CAPS">GSK_RBTREE_PREV</link>                     (tree, in, out)
+#define             <link linkend="GSK-RBTREE-SUPREMUM--CAPS">GSK_RBTREE_SUPREMUM</link>                 (tree, key, out)
+#define             <link linkend="GSK-RBTREE-SUPREMUM-COMPARATOR--CAPS">GSK_RBTREE_SUPREMUM_COMPARATOR</link>      (tree, key, key_comparator, out)
+#define             <link linkend="GSK-RBTREE-INFIMUM--CAPS">GSK_RBTREE_INFIMUM</link>                  (tree, key, out)
+#define             <link linkend="GSK-RBTREE-INFIMUM-COMPARATOR--CAPS">GSK_RBTREE_INFIMUM_COMPARATOR</link>       (tree, key, key_comparator, out)
+#define             <link linkend="GSK-RBCTREE-INSERT--CAPS">GSK_RBCTREE_INSERT</link>                  (tree, node, collision_node)
+#define             <link linkend="GSK-RBCTREE-REMOVE--CAPS">GSK_RBCTREE_REMOVE</link>                  (tree, node)
+#define             <link linkend="GSK-RBCTREE-LOOKUP--CAPS">GSK_RBCTREE_LOOKUP</link>                  (tree, key, out)
+#define             <link linkend="GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS">GSK_RBCTREE_LOOKUP_COMPARATOR</link>       (tree, key, key_comparator, out)
+#define             <link linkend="GSK-RBCTREE-FIRST--CAPS">GSK_RBCTREE_FIRST</link>                   (tree, out)
+#define             <link linkend="GSK-RBCTREE-LAST--CAPS">GSK_RBCTREE_LAST</link>                    (tree, out)
+#define             <link linkend="GSK-RBCTREE-NEXT--CAPS">GSK_RBCTREE_NEXT</link>                    (tree, in, out)
+#define             <link linkend="GSK-RBCTREE-PREV--CAPS">GSK_RBCTREE_PREV</link>                    (tree, in, out)
+#define             <link linkend="GSK-RBCTREE-SUPREMUM--CAPS">GSK_RBCTREE_SUPREMUM</link>                (tree, key, out)
+#define             <link linkend="GSK-RBCTREE-SUPREMUM-COMPARATOR--CAPS">GSK_RBCTREE_SUPREMUM_COMPARATOR</link>     (tree, key, key_comparator, out)
+#define             <link linkend="GSK-RBCTREE-INFIMUM--CAPS">GSK_RBCTREE_INFIMUM</link>                 (tree, key, out)
+#define             <link linkend="GSK-RBCTREE-INFIMUM-COMPARATOR--CAPS">GSK_RBCTREE_INFIMUM_COMPARATOR</link>      (tree, key, key_comparator, out)
+#define             <link linkend="GSK-RBCTREE-GET-BY-INDEX--CAPS">GSK_RBCTREE_GET_BY_INDEX</link>            (tree, index, out)
+#define             <link linkend="GSK-RBCTREE-GET-BY-INDEX-UNCHECKED--CAPS">GSK_RBCTREE_GET_BY_INDEX_UNCHECKED</link>  (tree, index, out)
+#define             <link linkend="GSK-RBCTREE-GET-NODE-INDEX--CAPS">GSK_RBCTREE_GET_NODE_INDEX</link>          (tree, node, index_out)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskrbtreemacros.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The macros defined here allow you to implement
+efficient red-black trees which put their data
+in existing node structures.
+Besides efficiency, this can be much more convenient
+because the same node may be a member of multiple trees.
+It shares these characteristics in
+common with the gsklistmacros,
+so that a member of a rbtree may be a member of a gsk-list,
+etc etc. all simultanteously.
+</para>
+<para>
+ TODO: Description of what an rbtree is.
+</para>
+<para>
+ The actual rbtree consists of a macro with eight arguments:
+ <variablelist>
+  <varlistentry>
+   <term>top</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>type*</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>set_is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>parent</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>left</term>
+   <term>right</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>comparator</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</para>
+<para>
+ TODO: Description of what an rbctree is.
+</para>
+<para>
+ The actual rbctree consists of a macro with ten arguments:
+ <variablelist>
+  <varlistentry>
+   <term>top</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>type*</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>set_is_red</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>get_count</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>set_count</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>parent</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>left</term>
+   <term>right</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>comparator</term>
+   <listitem>
+    <para>
+    ...
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</para>
+<para>
+ TODO: example use cases.
+</para>
+<para>
+ TODO: Some example programs.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskrbtreemacros.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-RBTREE-INSERT--CAPS" role="macro">
+<title>GSK_RBTREE_INSERT()</title>
+<indexterm zone="GSK-RBTREE-INSERT--CAPS"><primary sortas="GSK_RBTREE_INSERT">GSK_RBTREE_INSERT</primary></indexterm><programlisting>#define             GSK_RBTREE_INSERT(tree, node, collision_node)</programlisting>
+<para>
+Add a new node into the rbtree, potentially removing another node of the same
+key, which will be returned in <parameter>collision_node</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>The node to insert.  It should not be in the tree initially.
+Its parent, left and right pointers will be initialized.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>collision_node</parameter>&#160;:</term>
+<listitem><simpara>A variable that will be set to NULL
+if there was no collision, or the node that was replaced
+if there was a collision.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-REMOVE--CAPS" role="macro">
+<title>GSK_RBTREE_REMOVE()</title>
+<indexterm zone="GSK-RBTREE-REMOVE--CAPS"><primary sortas="GSK_RBTREE_REMOVE">GSK_RBTREE_REMOVE</primary></indexterm><programlisting>#define             GSK_RBTREE_REMOVE(tree, node)</programlisting>
+<para>
+Remove a new from the tree.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>The node to remove from the tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-LOOKUP--CAPS" role="macro">
+<title>GSK_RBTREE_LOOKUP()</title>
+<indexterm zone="GSK-RBTREE-LOOKUP--CAPS"><primary sortas="GSK_RBTREE_LOOKUP">GSK_RBTREE_LOOKUP</primary></indexterm><programlisting>#define             GSK_RBTREE_LOOKUP(tree, key, out)</programlisting>
+<para>
+Lookup a node in the tree.
+</para>
+<para>
+This will use the same comparator as the normal tree lookup,
+so the <parameter>key</parameter> should probably be something that looks like a node.
+See <link linkend="GSK-RBTREE-LOOKUP-COMPARATOR--CAPS"><type>GSK_RBTREE_LOOKUP_COMPARATOR</type></link> for a method to do the lookup
+using a key that is in a different format.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>A node whose equivalent we are trying to find.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>The node that was found, or NULL if no node was found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-LOOKUP-COMPARATOR--CAPS" role="macro">
+<title>GSK_RBTREE_LOOKUP_COMPARATOR()</title>
+<indexterm zone="GSK-RBTREE-LOOKUP-COMPARATOR--CAPS"><primary sortas="GSK_RBTREE_LOOKUP_COMPARATOR">GSK_RBTREE_LOOKUP_COMPARATOR</primary></indexterm><programlisting>#define             GSK_RBTREE_LOOKUP_COMPARATOR(tree, key, key_comparator, out)</programlisting>
+<para>
+Lookup a node in the tree.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>A key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_comparator</parameter>&#160;:</term>
+<listitem><simpara>A macro that takes three arguments: 
+the <parameter>key</parameter>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>The node that was found, or NULL if no node was found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-FIRST--CAPS" role="macro">
+<title>GSK_RBTREE_FIRST()</title>
+<indexterm zone="GSK-RBTREE-FIRST--CAPS"><primary sortas="GSK_RBTREE_FIRST">GSK_RBTREE_FIRST</primary></indexterm><programlisting>#define             GSK_RBTREE_FIRST(tree, out)</programlisting>
+<para>
+Get the first element of the tree.
+(The first element is the least element,
+as determined by the comparator)
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the first element in the tree,
+or NULL if the tree is empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-LAST--CAPS" role="macro">
+<title>GSK_RBTREE_LAST()</title>
+<indexterm zone="GSK-RBTREE-LAST--CAPS"><primary sortas="GSK_RBTREE_LAST">GSK_RBTREE_LAST</primary></indexterm><programlisting>#define             GSK_RBTREE_LAST(tree, out)</programlisting>
+<para>
+Get the last element of the tree.
+(The last element is the greatest element,
+as determined by the comparator)
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the last element in the tree,
+or NULL if the tree is empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-NEXT--CAPS" role="macro">
+<title>GSK_RBTREE_NEXT()</title>
+<indexterm zone="GSK-RBTREE-NEXT--CAPS"><primary sortas="GSK_RBTREE_NEXT">GSK_RBTREE_NEXT</primary></indexterm><programlisting>#define             GSK_RBTREE_NEXT(tree, in, out)</programlisting>
+<para>
+Get the next element in the tree,
+after a given element.
+</para>
+<para><parameter>in</parameter> and <parameter>out</parameter> may be the same variable.</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to traverse.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>in</parameter>&#160;:</term>
+<listitem><simpara>The starting element (must be non-NULL)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the next element in the tree,
+or NULL if <parameter>in</parameter> was the last element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-PREV--CAPS" role="macro">
+<title>GSK_RBTREE_PREV()</title>
+<indexterm zone="GSK-RBTREE-PREV--CAPS"><primary sortas="GSK_RBTREE_PREV">GSK_RBTREE_PREV</primary></indexterm><programlisting>#define             GSK_RBTREE_PREV(tree, in, out)</programlisting>
+<para>
+Get the previous element in the tree,
+after a given element.
+</para>
+<para><parameter>in</parameter> and <parameter>out</parameter> may be the same variable.</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to traverse.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>in</parameter>&#160;:</term>
+<listitem><simpara>The starting element (must be non-NULL)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the previous element in the tree,
+or NULL if <parameter>in</parameter> was the first element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-SUPREMUM--CAPS" role="macro">
+<title>GSK_RBTREE_SUPREMUM()</title>
+<indexterm zone="GSK-RBTREE-SUPREMUM--CAPS"><primary sortas="GSK_RBTREE_SUPREMUM">GSK_RBTREE_SUPREMUM</primary></indexterm><programlisting>#define             GSK_RBTREE_SUPREMUM(tree, key, out)</programlisting>
+<para>
+Find the first node in the tree which is after or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the first node in the tree which is after or equal to
+<parameter>key</parameter>, according to the usual tree comparator, or NULL if no
+element is greater than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-SUPREMUM-COMPARATOR--CAPS" role="macro">
+<title>GSK_RBTREE_SUPREMUM_COMPARATOR()</title>
+<indexterm zone="GSK-RBTREE-SUPREMUM-COMPARATOR--CAPS"><primary sortas="GSK_RBTREE_SUPREMUM_COMPARATOR">GSK_RBTREE_SUPREMUM_COMPARATOR</primary></indexterm><programlisting>#define             GSK_RBTREE_SUPREMUM_COMPARATOR(tree, key, key_comparator, out)</programlisting>
+<para>
+Find the first node in the tree which is after or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_comparator</parameter>&#160;:</term>
+<listitem><simpara>A macro that takes three arguments: 
+the <parameter>key</parameter>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the first node in the tree which is after or equal to
+<parameter>key</parameter>, according to <parameter>key_comparator</parameter>, or NULL if no
+element is greater than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-INFIMUM--CAPS" role="macro">
+<title>GSK_RBTREE_INFIMUM()</title>
+<indexterm zone="GSK-RBTREE-INFIMUM--CAPS"><primary sortas="GSK_RBTREE_INFIMUM">GSK_RBTREE_INFIMUM</primary></indexterm><programlisting>#define             GSK_RBTREE_INFIMUM(tree, key, out)</programlisting>
+<para>
+Find the last node in the tree which is before or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the last node in the tree which is before or equal to
+<parameter>key</parameter>, according to the usual tree comparator, or NULL if no
+element is less than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBTREE-INFIMUM-COMPARATOR--CAPS" role="macro">
+<title>GSK_RBTREE_INFIMUM_COMPARATOR()</title>
+<indexterm zone="GSK-RBTREE-INFIMUM-COMPARATOR--CAPS"><primary sortas="GSK_RBTREE_INFIMUM_COMPARATOR">GSK_RBTREE_INFIMUM_COMPARATOR</primary></indexterm><programlisting>#define             GSK_RBTREE_INFIMUM_COMPARATOR(tree, key, key_comparator, out)</programlisting>
+<para>
+Find the last node in the tree which is before or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_comparator</parameter>&#160;:</term>
+<listitem><simpara>A macro that takes three arguments: 
+the <parameter>key</parameter>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the last node in the tree which is before or equal to
+<parameter>key</parameter>, according to <parameter>key_comparator</parameter>, or NULL if no
+element is less than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-INSERT--CAPS" role="macro">
+<title>GSK_RBCTREE_INSERT()</title>
+<indexterm zone="GSK-RBCTREE-INSERT--CAPS"><primary sortas="GSK_RBCTREE_INSERT">GSK_RBCTREE_INSERT</primary></indexterm><programlisting>#define             GSK_RBCTREE_INSERT(tree, node, collision_node)</programlisting>
+<para>
+Add a new node into the rbtree, potentially removing another node of the same
+key, which will be returned in <parameter>collision_node</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>The node to insert.  It should not be in the tree initially.
+Its parent, left and right pointers will be initialized.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>collision_node</parameter>&#160;:</term>
+<listitem><simpara>A variable that will be set to NULL
+if there was no collision, or the node that was replaced
+if there was a collision.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-REMOVE--CAPS" role="macro">
+<title>GSK_RBCTREE_REMOVE()</title>
+<indexterm zone="GSK-RBCTREE-REMOVE--CAPS"><primary sortas="GSK_RBCTREE_REMOVE">GSK_RBCTREE_REMOVE</primary></indexterm><programlisting>#define             GSK_RBCTREE_REMOVE(tree, node)</programlisting>
+<para>
+Remove a new from the tree.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>The node to remove from the tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-LOOKUP--CAPS" role="macro">
+<title>GSK_RBCTREE_LOOKUP()</title>
+<indexterm zone="GSK-RBCTREE-LOOKUP--CAPS"><primary sortas="GSK_RBCTREE_LOOKUP">GSK_RBCTREE_LOOKUP</primary></indexterm><programlisting>#define             GSK_RBCTREE_LOOKUP(tree, key, out)</programlisting>
+<para>
+Lookup a node in the tree.
+</para>
+<para>
+This will use the same comparator as the normal tree lookup,
+so the <parameter>key</parameter> should probably be something that looks like a node.
+See <link linkend="GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS"><type>GSK_RBCTREE_LOOKUP_COMPARATOR</type></link> for a method to do the lookup
+using a key that is in a different format.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>A node whose equivalent we are trying to find.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>The node that was found, or NULL if no node was found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS" role="macro">
+<title>GSK_RBCTREE_LOOKUP_COMPARATOR()</title>
+<indexterm zone="GSK-RBCTREE-LOOKUP-COMPARATOR--CAPS"><primary sortas="GSK_RBCTREE_LOOKUP_COMPARATOR">GSK_RBCTREE_LOOKUP_COMPARATOR</primary></indexterm><programlisting>#define             GSK_RBCTREE_LOOKUP_COMPARATOR(tree, key, key_comparator, out)</programlisting>
+<para>
+Lookup a node in the tree.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>A key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_comparator</parameter>&#160;:</term>
+<listitem><simpara>A macro that takes three arguments: 
+the <parameter>key</parameter>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>The node that was found, or NULL if no node was found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-FIRST--CAPS" role="macro">
+<title>GSK_RBCTREE_FIRST()</title>
+<indexterm zone="GSK-RBCTREE-FIRST--CAPS"><primary sortas="GSK_RBCTREE_FIRST">GSK_RBCTREE_FIRST</primary></indexterm><programlisting>#define             GSK_RBCTREE_FIRST(tree, out)</programlisting>
+<para>
+Get the first element of the tree.
+(The first element is the least element,
+as determined by the comparator)
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the first element in the tree,
+or NULL if the tree is empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-LAST--CAPS" role="macro">
+<title>GSK_RBCTREE_LAST()</title>
+<indexterm zone="GSK-RBCTREE-LAST--CAPS"><primary sortas="GSK_RBCTREE_LAST">GSK_RBCTREE_LAST</primary></indexterm><programlisting>#define             GSK_RBCTREE_LAST(tree, out)</programlisting>
+<para>
+Get the last element of the tree.
+(The last element is the greatest element,
+as determined by the comparator)
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to eight arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the last element in the tree,
+or NULL if the tree is empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-NEXT--CAPS" role="macro">
+<title>GSK_RBCTREE_NEXT()</title>
+<indexterm zone="GSK-RBCTREE-NEXT--CAPS"><primary sortas="GSK_RBCTREE_NEXT">GSK_RBCTREE_NEXT</primary></indexterm><programlisting>#define             GSK_RBCTREE_NEXT(tree, in, out)</programlisting>
+<para>
+Get the next element in the tree,
+after a given element.
+</para>
+<para><parameter>in</parameter> and <parameter>out</parameter> may be the same variable.</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to traverse.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>in</parameter>&#160;:</term>
+<listitem><simpara>The starting element (must be non-NULL)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the next element in the tree,
+or NULL if <parameter>in</parameter> was the last element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-PREV--CAPS" role="macro">
+<title>GSK_RBCTREE_PREV()</title>
+<indexterm zone="GSK-RBCTREE-PREV--CAPS"><primary sortas="GSK_RBCTREE_PREV">GSK_RBCTREE_PREV</primary></indexterm><programlisting>#define             GSK_RBCTREE_PREV(tree, in, out)</programlisting>
+<para>
+Get the previous element in the tree,
+after a given element.
+</para>
+<para><parameter>in</parameter> and <parameter>out</parameter> may be the same variable.</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to traverse.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>in</parameter>&#160;:</term>
+<listitem><simpara>The starting element (must be non-NULL)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>A variable which will be set to the previous element in the tree,
+or NULL if <parameter>in</parameter> was the first element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-SUPREMUM--CAPS" role="macro">
+<title>GSK_RBCTREE_SUPREMUM()</title>
+<indexterm zone="GSK-RBCTREE-SUPREMUM--CAPS"><primary sortas="GSK_RBCTREE_SUPREMUM">GSK_RBCTREE_SUPREMUM</primary></indexterm><programlisting>#define             GSK_RBCTREE_SUPREMUM(tree, key, out)</programlisting>
+<para>
+Find the first node in the tree which is after or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the first node in the tree which is after or equal to
+<parameter>key</parameter>, according to the usual tree comparator, or NULL if no
+element is greater than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-SUPREMUM-COMPARATOR--CAPS" role="macro">
+<title>GSK_RBCTREE_SUPREMUM_COMPARATOR()</title>
+<indexterm zone="GSK-RBCTREE-SUPREMUM-COMPARATOR--CAPS"><primary sortas="GSK_RBCTREE_SUPREMUM_COMPARATOR">GSK_RBCTREE_SUPREMUM_COMPARATOR</primary></indexterm><programlisting>#define             GSK_RBCTREE_SUPREMUM_COMPARATOR(tree, key, key_comparator, out)</programlisting>
+<para>
+Find the first node in the tree which is after or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_comparator</parameter>&#160;:</term>
+<listitem><simpara>A macro that takes three arguments: 
+the <parameter>key</parameter>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the first node in the tree which is after or equal to
+<parameter>key</parameter>, according to <parameter>key_comparator</parameter>, or NULL if no
+element is greater than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-INFIMUM--CAPS" role="macro">
+<title>GSK_RBCTREE_INFIMUM()</title>
+<indexterm zone="GSK-RBCTREE-INFIMUM--CAPS"><primary sortas="GSK_RBCTREE_INFIMUM">GSK_RBCTREE_INFIMUM</primary></indexterm><programlisting>#define             GSK_RBCTREE_INFIMUM(tree, key, out)</programlisting>
+<para>
+Find the last node in the tree which is before or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the last node in the tree which is before or equal to
+<parameter>key</parameter>, according to the usual tree comparator, or NULL if no
+element is less than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-INFIMUM-COMPARATOR--CAPS" role="macro">
+<title>GSK_RBCTREE_INFIMUM_COMPARATOR()</title>
+<indexterm zone="GSK-RBCTREE-INFIMUM-COMPARATOR--CAPS"><primary sortas="GSK_RBCTREE_INFIMUM_COMPARATOR">GSK_RBCTREE_INFIMUM_COMPARATOR</primary></indexterm><programlisting>#define             GSK_RBCTREE_INFIMUM_COMPARATOR(tree, key, key_comparator, out)</programlisting>
+<para>
+Find the last node in the tree which is before or equal to <parameter>key</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara>The key to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_comparator</parameter>&#160;:</term>
+<listitem><simpara>A macro that takes three arguments: 
+the <parameter>key</parameter>, a node from the tree, and a variable which should
+be set to -1,0,1 if the key is less than, equal to or greater than
+the node, respectively.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>Set the the last node in the tree which is before or equal to
+<parameter>key</parameter>, according to <parameter>key_comparator</parameter>, or NULL if no
+element is less than or equal to <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-GET-BY-INDEX--CAPS" role="macro">
+<title>GSK_RBCTREE_GET_BY_INDEX()</title>
+<indexterm zone="GSK-RBCTREE-GET-BY-INDEX--CAPS"><primary sortas="GSK_RBCTREE_GET_BY_INDEX">GSK_RBCTREE_GET_BY_INDEX</primary></indexterm><programlisting>#define             GSK_RBCTREE_GET_BY_INDEX(tree, index, out)</programlisting>
+<para>
+Find the N-th node in the tree.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter>&#160;:</term>
+<listitem><simpara>The index of the node which you want to find.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>variable to store the <parameter>index</parameter>-th node in,
+or NULL if <parameter>index</parameter> is out-of-range.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-GET-BY-INDEX-UNCHECKED--CAPS" role="macro">
+<title>GSK_RBCTREE_GET_BY_INDEX_UNCHECKED()</title>
+<indexterm zone="GSK-RBCTREE-GET-BY-INDEX-UNCHECKED--CAPS"><primary sortas="GSK_RBCTREE_GET_BY_INDEX_UNCHECKED">GSK_RBCTREE_GET_BY_INDEX_UNCHECKED</primary></indexterm><programlisting>#define             GSK_RBCTREE_GET_BY_INDEX_UNCHECKED(tree, index, out)</programlisting>
+<para>
+Find the N-th node in the tree, assuming that <parameter>index</parameter> is valid.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter>&#160;:</term>
+<listitem><simpara>The index of the node which you want to find.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara>variable to store the <parameter>index</parameter>-th node in.
+This routine will crash if <parameter>index</parameter> is out-of-range.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-RBCTREE-GET-NODE-INDEX--CAPS" role="macro">
+<title>GSK_RBCTREE_GET_NODE_INDEX()</title>
+<indexterm zone="GSK-RBCTREE-GET-NODE-INDEX--CAPS"><primary sortas="GSK_RBCTREE_GET_NODE_INDEX">GSK_RBCTREE_GET_NODE_INDEX</primary></indexterm><programlisting>#define             GSK_RBCTREE_GET_NODE_INDEX(tree, node, index_out)</programlisting>
+<para>
+Get the index of an arbitrary node.
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara>The RBCTree (a macro that expands to ten arguments) to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>The node to obtain the index of.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index_out</parameter>&#160;:</term>
+<listitem><simpara>variable to store the index of <parameter>node</parameter> in.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskrbtreemacros.see-also">
+<title>See Also</title>
+<para>
+gskqsortmacro
+</para>
+</refsect1>
+
+</refentry>

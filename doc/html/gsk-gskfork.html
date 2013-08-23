@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskfork</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch16.html" title="Questionable ideas">
+<link rel="prev" href="gsk-gsktree.html" title="gsktree">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gsktree.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch16.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td> </td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskfork.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskfork.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskfork"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskfork.top_of_page"></a>gskfork</span></h2>
+<p>gskfork — Functions to call to clean up after forking.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskfork.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+int                 (<a class="link" href="gsk-gskfork.html#GskForkFunc" title="GskForkFunc ()">*GskForkFunc</a>)                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                <a class="link" href="gsk-gskfork.html#gsk-fork" title="gsk_fork ()">gsk_fork</a>                            (<a class="link" href="gsk-gskfork.html#GskForkFunc" title="GskForkFunc ()">GskForkFunc</a> action,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+void                <a class="link" href="gsk-gskfork.html#gsk-fork-add-cleanup-fd" title="gsk_fork_add_cleanup_fd ()">gsk_fork_add_cleanup_fd</a>             (int fd);
+void                <a class="link" href="gsk-gskfork.html#gsk-fork-remove-cleanup-fd" title="gsk_fork_remove_cleanup_fd ()">gsk_fork_remove_cleanup_fd</a>          (int fd);
+void                <a class="link" href="gsk-gskfork.html#gsk-fork-child-cleanup" title="gsk_fork_child_cleanup ()">gsk_fork_child_cleanup</a>              (void);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskfork.description"></a><h2>Description</h2>
+<p>
+This provides a way to register file descriptors that
+should be closed by the background thread.
+It also contains a gsk-like wrapper to fork.. that is,
+a callback oriented fork interface.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskfork.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskForkFunc"></a><h3>GskForkFunc ()</h3>
+<pre class="programlisting">int                 (*GskForkFunc)                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+Function to call from the background process.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>data passed through <a class="link" href="gsk-gskfork.html#gsk-fork" title="gsk_fork ()"><code class="function">gsk_fork()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the exit status of this process.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-fork"></a><h3>gsk_fork ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>                gsk_fork                            (<a class="link" href="gsk-gskfork.html#GskForkFunc" title="GskForkFunc ()">GskForkFunc</a> action,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Fork a new thread, cleaning up loose file-descriptors,
+then running the background function,
+and exiting with the return value of the background function.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>action</code></em> :</span></p></td>
+<td> function to call from the background process.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> user-data to pass to <em class="parameter"><code>action</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional place to errors to be put.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the process-id of the background thread,
+or -1 on error.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-fork-add-cleanup-fd"></a><h3>gsk_fork_add_cleanup_fd ()</h3>
+<pre class="programlisting">void                gsk_fork_add_cleanup_fd             (int fd);</pre>
+<p>
+Add a file-descriptor to the list that should be closed
+when <code class="function">fork()</code> is run.
+</p>
+<p>
+A file-descriptor must only be added once.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> a file descriptor that should be closed from a background thread.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-fork-remove-cleanup-fd"></a><h3>gsk_fork_remove_cleanup_fd ()</h3>
+<pre class="programlisting">void                gsk_fork_remove_cleanup_fd          (int fd);</pre>
+<p>
+Remove a file-descriptor from the list that should be closed
+when <code class="function">fork()</code> is run.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> remove a file descriptor that was previously registered
+to be closed on fork with <a class="link" href="gsk-gskfork.html#gsk-fork-add-cleanup-fd" title="gsk_fork_add_cleanup_fd ()"><code class="function">gsk_fork_add_cleanup_fd()</code></a>.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-fork-child-cleanup"></a><h3>gsk_fork_child_cleanup ()</h3>
+<pre class="programlisting">void                gsk_fork_child_cleanup              (void);</pre>
+<p>
+Do all cleanup that should follow a fork(2) system call
+from the child process.</p>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

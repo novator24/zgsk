@@ -1,0 +1,56 @@
+<refentry id="GskUrlTransferFile">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskUrlTransferFile.top_of_page">GskUrlTransferFile</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskUrlTransferFile</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskUrlTransferFile.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskUrlTransferFile-struct">GskUrlTransferFile</link>;
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskUrlTransferFile.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskUrlTransfer">GskUrlTransfer</link>
+         +----GskUrlTransferFile
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskUrlTransferFile.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="GskUrlTransferFile.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskUrlTransferFile-struct" role="struct">
+<title>GskUrlTransferFile</title>
+<indexterm zone="GskUrlTransferFile-struct"><primary sortas="GskUrlTransferFile">GskUrlTransferFile</primary></indexterm><programlisting>typedef struct _GskUrlTransferFile GskUrlTransferFile;</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

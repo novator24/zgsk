@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>memory-based streams</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="prev" href="gsk-GskStreamQueue.html" title="GskStreamQueue">
+<link rel="next" href="ch09.html" title="DNS library (client and server support)">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-GskStreamQueue.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch08.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch09.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskmemory.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskmemory.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskmemory"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskmemory.top_of_page"></a>memory-based streams</span></h2>
+<p>memory-based streams — streams whose data is "memory", inside pointer-accessed data.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskmemory.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskmemory.html#gsk-memory-buffer-source-new" title="gsk_memory_buffer_source_new ()">gsk_memory_buffer_source_new</a>        (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskmemory.html#gsk-memory-slab-source-new" title="gsk_memory_slab_source_new ()">gsk_memory_slab_source_new</a>          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> data_len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskmemory.html#gsk-memory-source-new-printf" title="gsk_memory_source_new_printf ()">gsk_memory_source_new_printf</a>        (const char *format,
+                                                         ...);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskmemory.html#gsk-memory-source-new-vprintf" title="gsk_memory_source_new_vprintf ()">gsk_memory_source_new_vprintf</a>       (const char *format,
+                                                         va_list args);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskmemory.html#gsk-memory-source-static-string" title="gsk_memory_source_static_string ()">gsk_memory_source_static_string</a>     (const char *str);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskmemory.html#gsk-memory-source-static-string-n" title="gsk_memory_source_static_string_n ()">gsk_memory_source_static_string_n</a>   (const char *str,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);
+void                (<a class="link" href="gsk-gskmemory.html#GskMemoryBufferCallback" title="GskMemoryBufferCallback ()">*GskMemoryBufferCallback</a>)          (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-gskmemory.html#gsk-memory-buffer-sink-new" title="gsk_memory_buffer_sink_new ()">gsk_memory_buffer_sink_new</a>          (<a class="link" href="gsk-gskmemory.html#GskMemoryBufferCallback" title="GskMemoryBufferCallback ()">GskMemoryBufferCallback</a> callback,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmemory.description"></a><h2>Description</h2>
+<p>
+These are sources and sinks which use memory to store output
+and input.  Because of system-architectures, memory never blocks.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmemory.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="gsk-memory-buffer-source-new"></a><h3>gsk_memory_buffer_source_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_memory_buffer_source_new        (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+Create a read-only <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> that will drain the 
+data from <em class="parameter"><code>buffer</code></em> and may it available for reading on the stream.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer whose contents should be readable from the new stream.
+It will be immediately (before the function returns) drained of all
+data, and will not be used any more by the stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new read-only stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-memory-slab-source-new"></a><h3>gsk_memory_slab_source_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_memory_slab_source_new          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> data_len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);</pre>
+<p>
+Create a read-only stream which has certain, given data available for reading.
+</p>
+<p>
+For efficiency, this code does not copy the data, but rather calls
+a user-supplied destroy method when we are done.  
+</p>
+<p>
+One possibility if you need the data copied, is to call
+g_memdup on data, then pass in g_free for <em class="parameter"><code>destroy</code></em> and the copy of the data
+as <em class="parameter"><code>destroy_data</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> binary data which will be readable from the returned stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data_len</code></em> :</span></p></td>
+<td> length of the returned stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> method called by the stream once <em class="parameter"><code>data</code></em> is completely used
+(ie, the user has read all the data or shutdown the stream)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy_data</code></em> :</span></p></td>
+<td> data passed to <em class="parameter"><code>destroy</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new read-only stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-memory-source-new-printf"></a><h3>gsk_memory_source_new_printf ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_memory_source_new_printf        (const char *format,
+                                                         ...);</pre>
+<p>
+Create a read-only stream which has the result of doing the
+sprintf available for reading.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> a printf(3) format string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td> arguments, as used by printf(3).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new read-only stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-memory-source-new-vprintf"></a><h3>gsk_memory_source_new_vprintf ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_memory_source_new_vprintf       (const char *format,
+                                                         va_list args);</pre>
+<p>
+Create a read-only stream which has the result of doing the
+vsprintf available for reading.  This is useful for
+chaining from other printf-like functions.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> a printf(3) format string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>args</code></em> :</span></p></td>
+<td> arguments, as used by vprintf(3).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new read-only stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-memory-source-static-string"></a><h3>gsk_memory_source_static_string ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_memory_source_static_string     (const char *str);</pre>
+<p>
+Create a read-only stream which has <em class="parameter"><code>str</code></em> available
+for reading.
+</p>
+<p>
+Note that the NUL will not be read from the stream.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> the static string which is the content of the stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new read-only stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-memory-source-static-string-n"></a><h3>gsk_memory_source_static_string_n ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_memory_source_static_string_n   (const char *str,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);</pre>
+<p>
+Create a read-only stream which has <em class="parameter"><code>length</code></em> bytes starting at <em class="parameter"><code>str</code></em> available
+for reading.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> the static string or binary-data which is the content of the stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td> length of the stream in bytes.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new read-only stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMemoryBufferCallback"></a><h3>GskMemoryBufferCallback ()</h3>
+<pre class="programlisting">void                (*GskMemoryBufferCallback)          (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+Function to call when a memory-buffer-sink (as created
+with <a class="link" href="gsk-gskmemory.html#gsk-memory-buffer-sink-new" title="gsk_memory_buffer_sink_new ()"><code class="function">gsk_memory_buffer_sink_new()</code></a>) is finished.
+This takes the buffer, which is full of data,
+and the data argument to <a class="link" href="gsk-gskmemory.html#gsk-memory-buffer-sink-new" title="gsk_memory_buffer_sink_new ()"><code class="function">gsk_memory_buffer_sink_new()</code></a>
+as well.
+</p>
+<p>
+The buffer will be destroyed immediately after this
+call, so it does not matter if you read or peek from this
+buffer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td>the buffer which has been filled.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user-data to pass through to this function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-memory-buffer-sink-new"></a><h3>gsk_memory_buffer_sink_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_memory_buffer_sink_new          (<a class="link" href="gsk-gskmemory.html#GskMemoryBufferCallback" title="GskMemoryBufferCallback ()">GskMemoryBufferCallback</a> callback,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Create a sink for binary data which just fills
+a binary buffer.  When the stream is done,
+the <em class="parameter"><code>callback</code></em> will be run with the full buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td> function to call when the buffer has been filled.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> user-data to pass to the <em class="parameter"><code>callback</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to call when we are done with the data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the writable stream whose destination is a <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer"><span class="type">GskBuffer</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

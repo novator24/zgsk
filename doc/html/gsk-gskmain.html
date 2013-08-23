@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Trivial Main Functions.</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskerror.html" title="Error Codes">
+<link rel="next" href="gsk-gskghelpers.html" title="Glib Helper Routines">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskerror.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskghelpers.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskmain.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskmain.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskmain"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskmain.top_of_page"></a>Trivial Main Functions.</span></h2>
+<p>Trivial Main Functions. — These are trivial interfaces to the main-loop.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskmain.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+int                 <a class="link" href="gsk-gskmain.html#gsk-main-run" title="gsk_main_run ()">gsk_main_run</a>                        ();
+void                <a class="link" href="gsk-gskmain.html#gsk-main-quit" title="gsk_main_quit ()">gsk_main_quit</a>                       ();
+void                <a class="link" href="gsk-gskmain.html#gsk-main-exit" title="gsk_main_exit ()">gsk_main_exit</a>                       (int exit_status);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmain.description"></a><h2>Description</h2>
+<p>
+These function can be used to run the main loop
+for a fixed duration, or to quit / exit the program.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmain.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="gsk-main-run"></a><h3>gsk_main_run ()</h3>
+<pre class="programlisting">int                 gsk_main_run                        ();</pre>
+<p>
+Run the main loop until it terminates, returning the value which 
+should be returned by <code class="function">main()</code>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the exit code for this process.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-quit"></a><h3>gsk_main_quit ()</h3>
+<pre class="programlisting">void                gsk_main_quit                       ();</pre>
+<p>
+Quit the program by stopping <a class="link" href="gsk-gskmain.html#gsk-main-run" title="gsk_main_run ()"><code class="function">gsk_main_run()</code></a>.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-exit"></a><h3>gsk_main_exit ()</h3>
+<pre class="programlisting">void                gsk_main_exit                       (int exit_status);</pre>
+<p>
+Exit the program by stopping <a class="link" href="gsk-gskmain.html#gsk-main-run" title="gsk_main_run ()"><code class="function">gsk_main_run()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>exit_status</code></em> :</span></p></td>
+<td> desired exit-status code for this process.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

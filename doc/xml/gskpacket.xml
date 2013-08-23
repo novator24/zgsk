@@ -1,0 +1,231 @@
+<refentry id="gsk-gskpacket">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskpacket.top_of_page">Binary Packet</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Binary Packet</refname>
+<refpurpose>A binary data packet.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskpacket.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskPacket">GskPacket</link>;
+<link linkend="void">void</link>                (<link linkend="GskPacketDestroyFunc">*GskPacketDestroyFunc</link>)             (<link linkend="gpointer">gpointer</link> destroy_data,
+                                                         <link linkend="GskPacket">GskPacket</link> *packet);
+<link linkend="GskPacket">GskPacket</link> *         <link linkend="gsk-packet-new">gsk_packet_new</link>                      (<link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="guint">guint</link> length,
+                                                         <link linkend="GskPacketDestroyFunc">GskPacketDestroyFunc</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);
+<link linkend="GskPacket">GskPacket</link> *         <link linkend="gsk-packet-new-copy">gsk_packet_new_copy</link>                 (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> length);
+<link linkend="void">void</link>                <link linkend="gsk-packet-set-src-address">gsk_packet_set_src_address</link>          (<link linkend="GskPacket">GskPacket</link> *packet,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+<link linkend="void">void</link>                <link linkend="gsk-packet-set-dst-address">gsk_packet_set_dst_address</link>          (<link linkend="GskPacket">GskPacket</link> *packet,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+<link linkend="void">void</link>                <link linkend="gsk-packet-unref">gsk_packet_unref</link>                    (<link linkend="GskPacket">GskPacket</link> *packet);
+<link linkend="GskPacket">GskPacket</link> *         <link linkend="gsk-packet-ref">gsk_packet_ref</link>                      (<link linkend="GskPacket">GskPacket</link> *packet);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskpacket.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A reference-counted binary piece of data with a destroy-notify
+to allow arbitrary memory management.
+</para>
+<para>
+It may optionally have two <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link> to denote the source
+and destination of the packet.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskpacket.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskPacket" role="struct">
+<title>GskPacket</title>
+<indexterm zone="GskPacket"><primary sortas="GskPacket">GskPacket</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: readonly &gt;*/
+  gpointer data;
+  guint len;
+  GskSocketAddress *src_address;
+  GskSocketAddress *dst_address;
+  GskPacketDestroyFunc destroy;
+  gpointer destroy_data;
+} GskPacket;
+</programlisting>
+<para>
+A packet of binary data, optionally associated with
+a particular host.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="gpointer">gpointer</link>&#160;<structfield>data</structfield>;</term>
+<listitem><simpara>the raw binary data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>len</structfield>;</term>
+<listitem><simpara>length of the raw data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;*<structfield>src_address</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;*<structfield>dst_address</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskPacketDestroyFunc">GskPacketDestroyFunc</link>&#160;<structfield>destroy</structfield>;</term>
+<listitem><simpara>destroy notification.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gpointer">gpointer</link>&#160;<structfield>destroy_data</structfield>;</term>
+<listitem><simpara>data to invoke destroy on.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskPacketDestroyFunc" role="function">
+<title>GskPacketDestroyFunc ()</title>
+<indexterm zone="GskPacketDestroyFunc"><primary sortas="GskPacketDestroyFunc">GskPacketDestroyFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskPacketDestroyFunc)             (<link linkend="gpointer">gpointer</link> destroy_data,
+                                                         <link linkend="GskPacket">GskPacket</link> *packet);</programlisting>
+<para>
+The actual function prototype of destroy.
+This is only useful if you want to examine the whole
+GskPacket from your destroy function.
+</para><variablelist role="params">
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara>as passed to <link linkend="gsk-packet-new"><function>gsk_packet_new()</function></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>packet</parameter>&#160;:</term>
+<listitem><simpara>the whole packet.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-new" role="function">
+<title>gsk_packet_new ()</title>
+<indexterm zone="gsk-packet-new"><primary sortas="gsk_packet_new">gsk_packet_new</primary></indexterm><programlisting><link linkend="GskPacket">GskPacket</link> *         gsk_packet_new                      (<link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="guint">guint</link> length,
+                                                         <link linkend="GskPacketDestroyFunc">GskPacketDestroyFunc</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);</programlisting>
+<para>
+Creates a new packet with the given data.
+The packet's ref-count is 1; it will be destroyed
+when it gets to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> binary data in the packet
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara> length of binary data
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> method to destroy the data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara> the argument to the <parameter>destroy</parameter> method.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskPacket
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-new-copy" role="function">
+<title>gsk_packet_new_copy ()</title>
+<indexterm zone="gsk-packet-new-copy"><primary sortas="gsk_packet_new_copy">gsk_packet_new_copy</primary></indexterm><programlisting><link linkend="GskPacket">GskPacket</link> *         gsk_packet_new_copy                 (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> length);</programlisting>
+<para>
+Creates a new packet with a copy of the given data.
+The packet's ref-count is 1; it will be destroyed
+when it gets to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> binary data to be copied into the packet
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara> length of binary data
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskPacket
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-set-src-address" role="function">
+<title>gsk_packet_set_src_address ()</title>
+<indexterm zone="gsk-packet-set-src-address"><primary sortas="gsk_packet_set_src_address">gsk_packet_set_src_address</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_packet_set_src_address          (<link linkend="GskPacket">GskPacket</link> *packet,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+Change the source address associated with a packet.
+This should be the address of the interface
+the packet was sent from.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet</parameter>&#160;:</term>
+<listitem><simpara> a packet whose source address should be changed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the new address.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-set-dst-address" role="function">
+<title>gsk_packet_set_dst_address ()</title>
+<indexterm zone="gsk-packet-set-dst-address"><primary sortas="gsk_packet_set_dst_address">gsk_packet_set_dst_address</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_packet_set_dst_address          (<link linkend="GskPacket">GskPacket</link> *packet,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+Change the destination address associated with a packet.
+This should be the address of the interface
+the packet was sent to.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet</parameter>&#160;:</term>
+<listitem><simpara> a packet whose destination address should be changed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the new address.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-unref" role="function">
+<title>gsk_packet_unref ()</title>
+<indexterm zone="gsk-packet-unref"><primary sortas="gsk_packet_unref">gsk_packet_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_packet_unref                    (<link linkend="GskPacket">GskPacket</link> *packet);</programlisting>
+<para>
+Remove a reference-count from the packet, deleting the packet 
+if it gets to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet</parameter>&#160;:</term>
+<listitem><simpara> a packet to remove a reference from.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-ref" role="function">
+<title>gsk_packet_ref ()</title>
+<indexterm zone="gsk-packet-ref"><primary sortas="gsk_packet_ref">gsk_packet_ref</primary></indexterm><programlisting><link linkend="GskPacket">GskPacket</link> *         gsk_packet_ref                      (<link linkend="GskPacket">GskPacket</link> *packet);</programlisting>
+<para>
+Add a reference-count to the packet.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet</parameter>&#160;:</term>
+<listitem><simpara> a packet to add a reference to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <parameter>packet</parameter>, for convenience.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

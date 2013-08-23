@@ -1,0 +1,1303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskHttpRequest</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="prev" href="GskHttpHeader.html" title="GskHttpHeader">
+<link rel="next" href="GskHttpResponse.html" title="GskHttpResponse">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskHttpHeader.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch06.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskHttpResponse.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskHttpRequest.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskHttpRequest.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskHttpRequest.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#GskHttpRequest.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskHttpRequest"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskHttpRequest.top_of_page"></a>GskHttpRequest</span></h2>
+<p>GskHttpRequest — An HTTP header that is sent from client to server.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskHttpRequest.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskHttpRequest.html#GskHttpRequest-struct" title="GskHttpRequest">GskHttpRequest</a>;
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-add-cookie" title="gsk_http_request_add_cookie ()">gsk_http_request_add_cookie</a>         (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *cookie);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-remove-cookie" title="gsk_http_request_remove_cookie ()">gsk_http_request_remove_cookie</a>      (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *cookie);
+<a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *     <a class="link" href="GskHttpRequest.html#gsk-http-request-find-cookie" title="gsk_http_request_find_cookie ()">gsk_http_request_find_cookie</a>        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         const char *key);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-add-charsets" title="gsk_http_request_add_charsets ()">gsk_http_request_add_charsets</a>       (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a> *char_sets);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-clear-charsets" title="gsk_http_request_clear_charsets ()">gsk_http_request_clear_charsets</a>     (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-add-content-encodings" title="gsk_http_request_add_content_encodings ()">gsk_http_request_add_content_encodings</a>
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a> *set);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-clear-content-encodings" title="gsk_http_request_clear_content_encodings ()">gsk_http_request_clear_content_encodings</a>
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-add-transfer-encodings" title="gsk_http_request_add_transfer_encodings ()">gsk_http_request_add_transfer_encodings</a>
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a> *set);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-clear-transfer-encodings" title="gsk_http_request_clear_transfer_encodings ()">gsk_http_request_clear_transfer_encodings</a>
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-add-media" title="gsk_http_request_add_media ()">gsk_http_request_add_media</a>          (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a> *set);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-clear-media" title="gsk_http_request_clear_media ()">gsk_http_request_clear_media</a>        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);
+<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *    <a class="link" href="GskHttpRequest.html#gsk-http-request-new-blank" title="gsk_http_request_new_blank ()">gsk_http_request_new_blank</a>          (void);
+<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *    <a class="link" href="GskHttpRequest.html#gsk-http-request-new" title="gsk_http_request_new ()">gsk_http_request_new</a>                (<a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb">GskHttpVerb</a> verb,
+                                                         const char *path);
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-set-verb" title="gsk_http_request_set_verb()">gsk_http_request_set_verb</a>           (request, verb)
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-get-verb" title="gsk_http_request_get_verb()">gsk_http_request_get_verb</a>           (request)
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-peek-from" title="gsk_http_request_peek_from()">gsk_http_request_peek_from</a>          (request)
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-set-from" title="gsk_http_request_set_from()">gsk_http_request_set_from</a>           (request, from)
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-set-if-modified-since" title="gsk_http_request_set_if_modified_since()">gsk_http_request_set_if_modified_since</a>(request, t)
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-get-if-modified-since" title="gsk_http_request_get_if_modified_since()">gsk_http_request_get_if_modified_since</a>(request)
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-set-authorization" title="gsk_http_request_set_authorization ()">gsk_http_request_set_authorization</a>  (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *auth);
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-set-host" title="gsk_http_request_set_host()">gsk_http_request_set_host</a>           (request, host)
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-set-user-agent" title="gsk_http_request_set_user_agent()">gsk_http_request_set_user_agent</a>     (request, user_agent)
+#define             <a class="link" href="GskHttpRequest.html#gsk-http-request-peek-user-agent" title="gsk_http_request_peek_user_agent()">gsk_http_request_peek_user_agent</a>    (request)
+<a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * <a class="link" href="GskHttpRequest.html#gsk-http-request-peek-authorization" title="gsk_http_request_peek_authorization ()">gsk_http_request_peek_authorization</a>
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-cache-directive-free" title="gsk_http_request_cache_directive_free ()">gsk_http_request_cache_directive_free</a>
+                                                        (GskHttpRequestCacheDirective *directive);
+GskHttpRequestCacheDirective * <a class="link" href="GskHttpRequest.html#gsk-http-request-cache-directive-new" title="gsk_http_request_cache_directive_new ()">gsk_http_request_cache_directive_new</a>
+                                                        (void);
+GskHttpRequestFirstLineStatus  <a class="link" href="GskHttpRequest.html#gsk-http-request-parse-first-line" title="gsk_http_request_parse_first_line ()">gsk_http_request_parse_first_line</a>
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         const char *line,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+void                <a class="link" href="GskHttpRequest.html#gsk-http-request-set-cache-control" title="gsk_http_request_set_cache_control ()">gsk_http_request_set_cache_control</a>  (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         GskHttpRequestCacheDirective *directive);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskHttpRequest.html#gsk-http-request-has-content-body" title="gsk_http_request_has_content_body ()">gsk_http_request_has_content_body</a>   (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request);
+char **             <a class="link" href="GskHttpRequest.html#gsk-http-parse-cgi-query-string" title="gsk_http_parse_cgi_query_string ()">gsk_http_parse_cgi_query_string</a>     (const char *query_string,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *        <a class="link" href="GskHttpRequest.html#gsk-http-request-parse-cgi-query-string" title="gsk_http_request_parse_cgi_query_string ()">gsk_http_request_parse_cgi_query_string</a>
+                                                        (const char *query_string);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpRequest.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a>
+         +----GskHttpRequest
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpRequest.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GskHttpRequest.html#GskHttpRequest--host" title='The "host" property'>host</a>"                     <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpRequest.html#GskHttpRequest--if-modified-since" title='The "if-modified-since" property'>if-modified-since</a>"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write
+  "<a class="link" href="GskHttpRequest.html#GskHttpRequest--max-forwards" title='The "max-forwards" property'>max-forwards</a>"             <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write
+  "<a class="link" href="GskHttpRequest.html#GskHttpRequest--path" title='The "path" property'>path</a>"                     <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpRequest.html#GskHttpRequest--referrer" title='The "referrer" property'>referrer</a>"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpRequest.html#GskHttpRequest--user-agent" title='The "user-agent" property'>user-agent</a>"               <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpRequest.html#GskHttpRequest--verb" title='The "verb" property'>verb</a>"                     <a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb">GskHttpVerb</a>           : Read / Write
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpRequest.description"></a><h2>Description</h2>
+<p>
+A request is the first of two messages in an HTTP transaction.
+It indicates the type of transaction, usually GET or POST,
+and the desired path, and other assorted flags.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpRequest.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest-struct"></a><h3>GskHttpRequest</h3>
+<pre class="programlisting">typedef struct {
+  /* the command: GET, PUT, POST, HEAD, etc */
+  GskHttpVerb                   verb;
+
+  /* Note that HTTP/1.1 servers must accept the entire
+   * URL being included in `path'! (maybe including http:// ... */
+  char                         *path;
+
+  GskHttpCharSet           *accept_charsets;              /* Accept-CharSet */
+  GskHttpContentEncodingSet*accept_content_encodings;     /* Accept-Encoding */
+  GskHttpTransferEncodingSet*accept_transfer_encodings;   /* TE */
+  GskHttpMediaTypeSet      *accept_media_types;           /* Accept */
+  GskHttpAuthorization     *authorization;                /* Authorization */
+  GskHttpLanguageSet       *accept_languages;             /* Accept-Languages */
+  char                     *host;                         /* Host */
+
+  gboolean                  had_if_match;
+  char                    **if_match;             /* If-Match */
+  glong                     if_modified_since;    /* If-Modified-Since */
+  char                     *user_agent;           /* User-Agent */
+
+  char                     *referrer;             /* Referer */
+
+  char                     *from;      /* The From: header (sect 14.22) */
+
+  /* List of Cookie: headers. */
+  GSList                   *cookies;
+
+  GskHttpAuthorization     *proxy_authorization;
+
+  int                       keep_alive_seconds;   /* -1 if not used */
+
+  /* rarely used: */
+  int                       max_forwards;         /* -1 if not used */
+
+  /* Nonstandard User-Agent information.
+     Many browsers provide this data to allow
+     dynamic content to take advantage of the
+     client configuration.  (0 indicated "not supplied").  */
+  unsigned                  ua_width, ua_height;
+  char                     *ua_color;
+  char                     *ua_os;
+  char                     *ua_cpu;
+  char                     *ua_language;
+
+  GskHttpRequestCacheDirective *cache_control;        /* Cache-Control */
+} GskHttpRequest;
+</pre>
+<p>
+An instance of a HTTP request header.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb">GskHttpVerb</a> <em class="structfield"><code>verb</code></em>;</span></p></td>
+<td>type of request (the intended action).
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>path</code></em>;</span></p></td>
+<td>the location of the resource to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a> *<em class="structfield"><code>accept_charsets</code></em>;</span></p></td>
+<td>list of character-sets acceptable to the client.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a> *<em class="structfield"><code>accept_content_encodings</code></em>;</span></p></td>
+<td>list of content-encodings acceptable to the client.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a> *<em class="structfield"><code>accept_transfer_encodings</code></em>;</span></p></td>
+<td>list of transfer-encodings acceptable to the client.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a> *<em class="structfield"><code>accept_media_types</code></em>;</span></p></td>
+<td>list of media-types acceptable to the client.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *<em class="structfield"><code>authorization</code></em>;</span></p></td>
+<td>optional authorization information.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpLanguageSet" title="GskHttpLanguageSet">GskHttpLanguageSet</a> *<em class="structfield"><code>accept_languages</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>host</code></em>;</span></p></td>
+<td>optional host header, required principally on machines which do
+virtual hosting.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> <em class="structfield"><code>had_if_match</code></em>;</span></p></td>
+<td>whether an If-Match header is present.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char **<em class="structfield"><code>if_match</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a> <em class="structfield"><code>if_modified_since</code></em>;</span></p></td>
+<td>unix time or -1 if no such header present.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>user_agent</code></em>;</span></p></td>
+<td>program or agent making the request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>referrer</code></em>;</span></p></td>
+<td>URL which led us to this resource.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>from</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *<em class="structfield"><code>cookies</code></em>;</span></p></td>
+<td>list of cookies.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *<em class="structfield"><code>proxy_authorization</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>keep_alive_seconds</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>max_forwards</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">unsigned                  ua_width <em class="structfield"><code>ua_height</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>ua_color</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>ua_os</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>ua_cpu</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>ua_language</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">GskHttpRequestCacheDirective *<em class="structfield"><code>cache_control</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-add-cookie"></a><h3>gsk_http_request_add_cookie ()</h3>
+<pre class="programlisting">void                gsk_http_request_add_cookie         (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *cookie);</pre>
+<p>
+Add a Cookie header line to a request.
+</p>
+<p>
+Cookies are defined in RFC 2965, a draft standard.
+</p>
+<p>
+[Section 3.3.4]  Sending Cookies to the Origin Server.
+When [the user-agent] sends a request
+to an origin server, the user agent includes a Cookie request header
+if it has stored cookies that are applicable to the request, based on
+(1) the request-host and request-port;
+(2) the request-URI;
+(3) the cookie's age.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cookie</code></em> :</span></p></td>
+<td> the cookie to add to the request.
+It will be freed when the request is freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-remove-cookie"></a><h3>gsk_http_request_remove_cookie ()</h3>
+<pre class="programlisting">void                gsk_http_request_remove_cookie      (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *cookie);</pre>
+<p>
+Remove a cookie from the request's list and delete it.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cookie</code></em> :</span></p></td>
+<td> the cookie to remove from the request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-find-cookie"></a><h3>gsk_http_request_find_cookie ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpCookie" title="GskHttpCookie">GskHttpCookie</a> *     gsk_http_request_find_cookie        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         const char *key);</pre>
+<p>
+Find a cookie provided in the request by key.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> the key field of the cookie to return.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a pointer to the cookie, or NULL if not found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-add-charsets"></a><h3>gsk_http_request_add_charsets ()</h3>
+<pre class="programlisting">void                gsk_http_request_add_charsets       (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet">GskHttpCharSet</a> *char_sets);</pre>
+<p>
+Add Accept-CharSet headers to the header.
+The char-sets will be freed when <em class="parameter"><code>header</code></em>
+is destroyed.
+</p>
+<p>
+A CharSet is a string representing a Character Set,
+and an optional real quality factor for that particular Character Set.
+(The default is 1.0)
+</p>
+<p>
+The CharSet "*" matches all other Character Sets.
+If no "*" is given, then it is as though all other character sets
+were given a quality of 0.0.
+</p>
+<p>
+If no Accept-CharSet header is given, then all character sets
+are equally acceptable.
+</p>
+<p>
+If a server cannot meet character set requirements,
+it SHOULD response with an error (<a class="link" href="GskHttpHeader.html#GSK-HTTP-STATUS-NOT-ACCEPTABLE--CAPS"><span class="type">GSK_HTTP_STATUS_NOT_ACCEPTABLE</span></a>)
+but it may also ignore it, and send output in a character-set
+the client has not suggested.
+</p>
+<p>
+See RFC 2616, Section 14.2.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>char_sets</code></em> :</span></p></td>
+<td> list of a <a class="link" href="GskHttpHeader.html#GskHttpCharSet" title="GskHttpCharSet"><span class="type">GskHttpCharSet</span></a>'s to indicate are accepted.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-clear-charsets"></a><h3>gsk_http_request_clear_charsets ()</h3>
+<pre class="programlisting">void                gsk_http_request_clear_charsets     (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);</pre>
+<p>
+Delete all accepted char-sets from the HTTP request.
+</p>
+<p>
+This has the effect of leaving a server free to use any
+character set.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-add-content-encodings"></a><h3>gsk_http_request_add_content_encodings ()</h3>
+<pre class="programlisting">void                gsk_http_request_add_content_encodings
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet">GskHttpContentEncodingSet</a> *set);</pre>
+<p>
+Add Accept-Encoding lines to the header.
+Each GskHttpContentEncodingSet represents a single
+possible encoding and an optional associated
+quality factor.
+</p>
+<p>
+The rules for conduct are the same as for character set,
+with the exception that if no Accept-Encoding line
+is given then the 'identity' encoding should be preferred.
+</p>
+<p>
+Note that the GSK http server and client handle content
+encoding automatically, and will do the correct thing
+without your intervention.
+</p>
+<p>
+See RFC 2616, Section 14.3.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>set</code></em> :</span></p></td>
+<td> list of a <a class="link" href="GskHttpHeader.html#GskHttpContentEncodingSet" title="GskHttpContentEncodingSet"><span class="type">GskHttpContentEncodingSet</span></a>'s to indicate are acceptable.
+  The list is taken over by the header;
+  you must not free it or use it further.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-clear-content-encodings"></a><h3>gsk_http_request_clear_content_encodings ()</h3>
+<pre class="programlisting">void                gsk_http_request_clear_content_encodings
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);</pre>
+<p>
+Delete all accepted encodings from the HTTP request.
+</p>
+<p>
+This has the effect of leaving a server free to use any
+content encoding.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-add-transfer-encodings"></a><h3>gsk_http_request_add_transfer_encodings ()</h3>
+<pre class="programlisting">void                gsk_http_request_add_transfer_encodings
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</a> *set);</pre>
+<p>
+The rules for conduct are the same as for character set,
+with the exception that the defaults are
+'none' for HTTP 1.0 clients,
+and 'none' and 'chunked' for HTTP 1.1 clients.
+</p>
+<p>
+Note that the GSK http server and client handle content
+encoding automatically, and will do the correct thing
+without your intervention.
+</p>
+<p>
+This corresponds to the TE: header.
+See RFC 2616, Section 14.39.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>set</code></em> :</span></p></td>
+<td> list of a <a class="link" href="GskHttpHeader.html#GskHttpTransferEncodingSet" title="GskHttpTransferEncodingSet"><span class="type">GskHttpTransferEncodingSet</span></a>'s to indicate are acceptable.
+  The list is taken over by the header;
+  you must not free it or use it further.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-clear-transfer-encodings"></a><h3>gsk_http_request_clear_transfer_encodings ()</h3>
+<pre class="programlisting">void                gsk_http_request_clear_transfer_encodings
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);</pre>
+<p>
+Delete all accepted transfer encodings from the HTTP request.
+</p>
+<p>
+This has the effect of leaving a server free to use just
+no encoding for HTTP 1.0 clients and also 'chunked' for HTTP 1.1 clients.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-add-media"></a><h3>gsk_http_request_add_media ()</h3>
+<pre class="programlisting">void                gsk_http_request_add_media          (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet">GskHttpMediaTypeSet</a> *set);</pre>
+<p>
+Add Accept: headers to the header.
+The media-type-sets will be freed when <em class="parameter"><code>header</code></em>
+is destroyed.
+</p>
+<p>
+A MediaSet is a range of media accepted,
+with quality factors as for <a class="link" href="GskHttpRequest.html#gsk-http-request-add-charsets" title="gsk_http_request_add_charsets ()"><code class="function">gsk_http_request_add_charsets()</code></a>.
+</p>
+<p>
+Note that '*' in a subtype applies to all
+media with that major type, but
+if a specific subtype matches, then it's
+quality is given priority.
+</p>
+<p>
+XXX: Also, there is an accept-extension 'level='...
+find out what it does!
+</p>
+<p>
+See RFC 2616, Section 14.1.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>set</code></em> :</span></p></td>
+<td> list of a <a class="link" href="GskHttpHeader.html#GskHttpMediaTypeSet" title="GskHttpMediaTypeSet"><span class="type">GskHttpMediaTypeSet</span></a>'s to indicate are acceptable.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-clear-media"></a><h3>gsk_http_request_clear_media ()</h3>
+<pre class="programlisting">void                gsk_http_request_clear_media        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *header);</pre>
+<p>
+Delete all accepted media-type-sets from the HTTP request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td> the request to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-new-blank"></a><h3>gsk_http_request_new_blank ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *    gsk_http_request_new_blank          (void);</pre>
+<p>
+Create a new empty HTTP request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new request.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-new"></a><h3>gsk_http_request_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *    gsk_http_request_new                (<a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb">GskHttpVerb</a> verb,
+                                                         const char *path);</pre>
+<p>
+Create a new simple HTTP request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>verb</code></em> :</span></p></td>
+<td> what type of request to make.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td> path requested.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-set-verb"></a><h3>gsk_http_request_set_verb()</h3>
+<pre class="programlisting">#define             gsk_http_request_set_verb(request, verb)</pre>
+<p>
+The verb is GSK's name for the type of action being requested.
+It is the very first word of the HTTP transaction.
+See <a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb"><span class="type">GskHttpVerb</span></a> for a list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>verb</code></em> :</span></p></td>
+<td>the new HTTP request verb.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-get-verb"></a><h3>gsk_http_request_get_verb()</h3>
+<pre class="programlisting">#define             gsk_http_request_get_verb(request)</pre>
+<p>
+Get the type of action being requested.
+See <a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb"><span class="type">GskHttpVerb</span></a> for a list.
+</p>
+<p>
+Every HTTP server should know GET and HEAD requested;
+other requests might not be allowed unless the
+server had indicated that they are with a "Allow" response header.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>the request to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-peek-from"></a><h3>gsk_http_request_peek_from()</h3>
+<pre class="programlisting">#define             gsk_http_request_peek_from(request)</pre>
+<p>
+Get the From field, if any, from the HTTP header.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>the request to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-set-from"></a><h3>gsk_http_request_set_from()</h3>
+<pre class="programlisting">#define             gsk_http_request_set_from(request, from)</pre>
+<p>
+   [From RFC 2616, Section 14.22]
+   The From request-header field, if given, SHOULD contain an Internet
+   e-mail address for the human user who controls the requesting user
+   agent. The address SHOULD be machine-usable, as defined by "mailbox"
+   in RFC 822 as updated by RFC 1123.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>the request to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>from</code></em> :</span></p></td>
+<td>the email of the user making the request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-set-if-modified-since"></a><h3>gsk_http_request_set_if_modified_since()</h3>
+<pre class="programlisting">#define             gsk_http_request_set_if_modified_since(request, t)</pre>
+<p>
+[From RFC 2616, Section 14.25]
+The If-Modified-Since request-header field is used with a method to
+make it conditional: if the requested variant has not been modified
+since the time specified in this field, an entity will not be
+returned from the server; instead, a 304 (not modified) response will
+be returned without any message-body.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>t</code></em> :</span></p></td>
+<td>the time to compare the content's modification time with.
+The content should only be transmitted if its modification time
+is later than <em class="parameter"><code>t</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-get-if-modified-since"></a><h3>gsk_http_request_get_if_modified_since()</h3>
+<pre class="programlisting">#define             gsk_http_request_get_if_modified_since(request)</pre>
+<p>
+Get the time which will be compared with the content's modification
+time by the server to eliminate unnecessary content transfers.
+If this returns (time_t)-1 then there is no If-Modified-Since header.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>the request to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-set-authorization"></a><h3>gsk_http_request_set_authorization ()</h3>
+<pre class="programlisting">void                gsk_http_request_set_authorization  (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> *auth);</pre>
+<p>
+Set the authorization for this request.
+This is like a key to get access to certain entities.
+</p>
+<p>
+Proxy-Authorization is intended to provide access control to the proxy.
+Normal Authorization is passed through a proxy.
+See sections 14.8 for normal Authorization and 14.34.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request to adjust the authorization for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_proxy_auth</code></em> :</span></p></td>
+<td> whether to set the Proxy-Authorization or the Authorization field.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>auth</code></em> :</span></p></td>
+<td> the new authorization to use in this request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-set-host"></a><h3>gsk_http_request_set_host()</h3>
+<pre class="programlisting">#define             gsk_http_request_set_host(request, host)</pre>
+<p>
+Set the Host: header for the HTTP request.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>the HTTP Request object to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>host</code></em> :</span></p></td>
+<td>the hostname as a string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-set-user-agent"></a><h3>gsk_http_request_set_user_agent()</h3>
+<pre class="programlisting">#define             gsk_http_request_set_user_agent(request, user_agent)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_agent</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-peek-user-agent"></a><h3>gsk_http_request_peek_user_agent()</h3>
+<pre class="programlisting">#define             gsk_http_request_peek_user_agent(request)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-peek-authorization"></a><h3>gsk_http_request_peek_authorization ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthorization" title="GskHttpAuthorization">GskHttpAuthorization</a> * gsk_http_request_peek_authorization
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth);</pre>
+<p>
+Get the requested authorization information.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_proxy_auth</code></em> :</span></p></td>
+<td> whether to query information about proxy authorization,
+or normal server authorization.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the authorization information, or NULL if none exists (default).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-cache-directive-free"></a><h3>gsk_http_request_cache_directive_free ()</h3>
+<pre class="programlisting">void                gsk_http_request_cache_directive_free
+                                                        (GskHttpRequestCacheDirective *directive);</pre>
+<p>
+Deallocate a GskHttpRequestCacheDirective.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>directive</code></em> :</span></p></td>
+<td> cache-directive to de-allocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-cache-directive-new"></a><h3>gsk_http_request_cache_directive_new ()</h3>
+<pre class="programlisting">GskHttpRequestCacheDirective * gsk_http_request_cache_directive_new
+                                                        (void);</pre>
+<p>
+</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-parse-first-line"></a><h3>gsk_http_request_parse_first_line ()</h3>
+<pre class="programlisting">GskHttpRequestFirstLineStatus  gsk_http_request_parse_first_line
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         const char *line,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Parse the first line of an HTTP request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to initialize
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em> :</span></p></td>
+<td> first line of request header, e.g. GET / HTTP/1.0
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the line was the start of a valid HTTP-request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-set-cache-control"></a><h3>gsk_http_request_set_cache_control ()</h3>
+<pre class="programlisting">void                gsk_http_request_set_cache_control  (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         GskHttpRequestCacheDirective *directive);</pre>
+<p>
+Set the cache-control flags in the header.
+Note that <em class="parameter"><code>directive</code></em> will be freed by the HTTP header when
+it is destroyed.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the HTTP request header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>directive</code></em> :</span></p></td>
+<td> the new cache control directive, stolen by the HTTP header.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-has-content-body"></a><h3>gsk_http_request_has_content_body ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_http_request_has_content_body   (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request);</pre>
+<p>
+Get whether this header should be accompanied by
+a content-body.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-parse-cgi-query-string"></a><h3>gsk_http_parse_cgi_query_string ()</h3>
+<pre class="programlisting">char **             gsk_http_parse_cgi_query_string     (const char *query_string,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Parse the CGI key-value pairs from a query.
+The keys are normal alphanumeric strings;
+the values are de-escaped.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_string</code></em> :</span></p></td>
+<td> the full path from the HttpRequest.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> the place to put the error if something goes wrong.
+returns: the key-value pairs of CGI data, NULL-terminated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-request-parse-cgi-query-string"></a><h3>gsk_http_request_parse_cgi_query_string ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *        gsk_http_request_parse_cgi_query_string
+                                                        (const char *query_string);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_string</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpRequest.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest--host"></a><h3>The <code class="literal">"host"</code> property</h3>
+<pre class="programlisting">  "host"                     <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>Hostname.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest--if-modified-since"></a><h3>The <code class="literal">"if-modified-since"</code> property</h3>
+<pre class="programlisting">  "if-modified-since"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write</pre>
+<p>IMS tag.</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest--max-forwards"></a><h3>The <code class="literal">"max-forwards"</code> property</h3>
+<pre class="programlisting">  "max-forwards"             <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write</pre>
+<p>IMax-Forwards.</p>
+<p>Allowed values: [-1,32]</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest--path"></a><h3>The <code class="literal">"path"</code> property</h3>
+<pre class="programlisting">  "path"                     <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>Path.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest--referrer"></a><h3>The <code class="literal">"referrer"</code> property</h3>
+<pre class="programlisting">  "referrer"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>Referrer.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest--user-agent"></a><h3>The <code class="literal">"user-agent"</code> property</h3>
+<pre class="programlisting">  "user-agent"               <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>User Agent.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpRequest--verb"></a><h3>The <code class="literal">"verb"</code> property</h3>
+<pre class="programlisting">  "verb"                     <a class="link" href="GskHttpHeader.html#GskHttpVerb" title="enum GskHttpVerb">GskHttpVerb</a>           : Read / Write</pre>
+<p>verb.</p>
+<p>Default value: GSK_HTTP_VERB_GET</p>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpRequest.see-also"></a><h2>See Also</h2>
+<p>
+GskHttpHeader, GskHttpResponse
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

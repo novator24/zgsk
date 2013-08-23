@@ -1,0 +1,1105 @@
+<refentry id="GskUrlTransfer">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskUrlTransfer.top_of_page">GskUrlTransfer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskUrlTransfer</refname>
+<refpurpose>Transfer data with a location by URL.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskUrlTransfer.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskUrlTransferRedirect">GskUrlTransferRedirect</link>;
+enum                <link linkend="GskUrlTransferResult">GskUrlTransferResult</link>;
+#define             <link linkend="GSK-URL-TRANSFER-N-RESULTS--CAPS">GSK_URL_TRANSFER_N_RESULTS</link>
+const <link linkend="char">char</link> *        <link linkend="gsk-url-transfer-result-name">gsk_url_transfer_result_name</link>        (<link linkend="GskUrlTransferResult">GskUrlTransferResult</link> result);
+<link linkend="void">void</link>                (<link linkend="GskUrlTransferFunc">*GskUrlTransferFunc</link>)               (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *info,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="GskStream">GskStream</link> *         (<link linkend="GskUrlUploadFunc">*GskUrlUploadFunc</link>)                 (<link linkend="gpointer">gpointer</link> upload_data,
+                                                         <link linkend="gssize">gssize</link> *size_out,
+                                                         <link linkend="GError">GError</link> **error);
+                    <link linkend="GskUrlTransfer-struct">GskUrlTransfer</link>;
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-transfer">gsk_url_transfer</link>                    (<link linkend="GskUrl">GskUrl</link> *url,
+                                                         <link linkend="GskUrlUploadFunc">GskUrlUploadFunc</link> upload_func,
+                                                         <link linkend="gpointer">gpointer</link> upload_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> upload_destroy,
+                                                         <link linkend="GskUrlTransferFunc">GskUrlTransferFunc</link> handler,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskUrlTransfer">GskUrlTransfer</link> *    <link linkend="gsk-url-transfer-new">gsk_url_transfer_new</link>                (<link linkend="GskUrl">GskUrl</link> *url);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-handler">gsk_url_transfer_set_handler</link>        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrlTransferFunc">GskUrlTransferFunc</link> handler,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-url">gsk_url_transfer_set_url</link>            (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrl">GskUrl</link> *url);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-upload">gsk_url_transfer_set_upload</link>         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrlUploadFunc">GskUrlUploadFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-upload-packet">gsk_url_transfer_set_upload_packet</link>  (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskPacket">GskPacket</link> *packet);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-oneshot-upload">gsk_url_transfer_set_oneshot_upload</link> (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gssize">gssize</link> size);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-timeout">gsk_url_transfer_set_timeout</link>        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="guint">guint</link> millis);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-clear-timeout">gsk_url_transfer_clear_timeout</link>      (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-follow-redirects">gsk_url_transfer_set_follow_redirects</link>
+                                                        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="gboolean">gboolean</link> follow_redirs);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-address-hint">gsk_url_transfer_set_address_hint</link>   (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-transfer-start">gsk_url_transfer_start</link>              (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-cancel">gsk_url_transfer_cancel</link>             (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-transfer-has-upload">gsk_url_transfer_has_upload</link>         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-url-transfer-create-upload">gsk_url_transfer_create_upload</link>      (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="gssize">gssize</link> *size_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-transfer-peek-expects-download-stream">gsk_url_transfer_peek_expects_download_stream</link>
+                                                        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-transfer-is-done">gsk_url_transfer_is_done</link>            (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-address">gsk_url_transfer_set_address</link>        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *addr);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-transfer-add-redirect">gsk_url_transfer_add_redirect</link>       (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GObject">GObject</link> *request,
+                                                         <link linkend="GObject">GObject</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_permanent,
+                                                         <link linkend="GskUrl">GskUrl</link> *dest_url);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-download">gsk_url_transfer_set_download</link>       (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskStream">GskStream</link> *content);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-request">gsk_url_transfer_set_request</link>        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GObject">GObject</link> *request);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-response">gsk_url_transfer_set_response</link>       (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GObject">GObject</link> *response);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-set-error">gsk_url_transfer_set_error</link>          (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         const <link linkend="GError">GError</link> *error);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-take-error">gsk_url_transfer_take_error</link>         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GError">GError</link> *error);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-notify-done">gsk_url_transfer_notify_done</link>        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrlTransferResult">GskUrlTransferResult</link> result);
+<link linkend="void">void</link>                <link linkend="gsk-url-transfer-class-register">gsk_url_transfer_class_register</link>     (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         <link linkend="GskUrlTransferClass">GskUrlTransferClass</link> *transfer_class);
+<link linkend="char">char</link> *              <link linkend="gsk-url-transfer-get-state-string">gsk_url_transfer_get_state_string</link>   (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-url-transfer-stream-new">gsk_url_transfer_stream_new</link>         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskUrlTransfer.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskUrlTransfer
+         +----<link linkend="GskUrlTransferHttp">GskUrlTransferHttp</link>
+         +----<link linkend="GskUrlTransferFile">GskUrlTransferFile</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskUrlTransfer.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A GskUrlTransfer represents a single upload and/or download with
+a resource designed by a URL.  Although most of the interface
+is URL-scheme independent, for convenience we allow users to see
+the URL-specific portions as well.
+</para>
+<para>
+Some types of URLs are download only,
+and others support upload, but possibly not at the same time.
+</para>
+<para>
+The basic plan is to make a <link linkend="GskUrlTransfer"><type>GskUrlTransfer</type></link>
+object.  If you wish to upload, provide a way of constructing
+an upload content-stream.  If you wish to download, provide a function
+that will be called with the downloading content-stream.
+Additional configuration may be done: for example, whether to follow redirections.
+</para>
+<para>
+The transfer which is returned from <link linkend="gsk-url-transfer-new"><function>gsk_url_transfer_new()</function></link>
+is in an "unstarted" state.  After you are done configuring it,
+you should invoke <link linkend="gsk-url-transfer-start"><function>gsk_url_transfer_start()</function></link> to begin doing
+actual work.
+</para>
+<para>
+You should at least connect a handler to it
+before you start it using <link linkend="gsk-url-transfer-set-handler"><function>gsk_url_transfer_set_handler()</function></link>.
+</para>
+<para>
+Your handler is guaranteed to be called
+exactly once, after or during the invocation of <link linkend="gsk-url-transfer-start"><function>gsk_url_transfer_start()</function></link>.
+</para>
+<para>
+Internally, the URL-transfer code maintains a mapping from url-scheme to
+a list of GskUrlTransferClasses responsible for that type of URL.
+When gsk_url_transfer_new(url) is called, each handler for the url's scheme is tried in
+sequence until one is found that accepts the URL, or NULL will returned
+if no suitable class is found.
+</para>
+</refsect1>
+
+<refsect1 id="GskUrlTransfer.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskUrlTransferRedirect" role="struct">
+<title>GskUrlTransferRedirect</title>
+<indexterm zone="GskUrlTransferRedirect"><primary sortas="GskUrlTransferRedirect">GskUrlTransferRedirect</primary></indexterm><programlisting>typedef struct {
+  gboolean is_permanent;
+  GskUrl *url;
+  GObject *request;
+  GObject *response;
+  GskUrlTransferRedirect *next;
+} GskUrlTransferRedirect;
+</programlisting>
+<para>
+A node in the linked-list of redirections we have receieved.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="gboolean">gboolean</link>&#160;<structfield>is_permanent</structfield>;</term>
+<listitem><simpara>whether the redirect is permanent (versus temporary).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskUrl">GskUrl</link>&#160;*<structfield>url</structfield>;</term>
+<listitem><simpara>the location that we have been redirected to.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GObject">GObject</link>&#160;*<structfield>request</structfield>;</term>
+<listitem><simpara>the request object.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GObject">GObject</link>&#160;*<structfield>response</structfield>;</term>
+<listitem><simpara>the response object.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskUrlTransferRedirect">GskUrlTransferRedirect</link>&#160;*<structfield>next</structfield>;</term>
+<listitem><simpara>next redirect chronologically.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlTransferResult" role="enum">
+<title>enum GskUrlTransferResult</title>
+<indexterm zone="GskUrlTransferResult"><primary sortas="GskUrlTransferResult">GskUrlTransferResult</primary></indexterm><programlisting>typedef enum
+{
+  GSK_URL_TRANSFER_ERROR_BAD_REQUEST,
+  GSK_URL_TRANSFER_ERROR_BAD_NAME,
+  GSK_URL_TRANSFER_ERROR_NO_SERVER,
+  GSK_URL_TRANSFER_ERROR_NOT_FOUND,
+  GSK_URL_TRANSFER_ERROR_SERVER_ERROR,
+  GSK_URL_TRANSFER_ERROR_UNSUPPORTED,
+  GSK_URL_TRANSFER_ERROR_TIMED_OUT,
+  GSK_URL_TRANSFER_ERROR_REDIRECT_LOOP,
+  GSK_URL_TRANSFER_REDIRECT,
+  GSK_URL_TRANSFER_CANCELLED,
+  GSK_URL_TRANSFER_SUCCESS
+} GskUrlTransferResult;
+</programlisting>
+<para>
+The result element of transfer is prepared before
+the user's done-handler is invoked and is a general indicator
+of the result of the transfer.
+</para>
+<para>
+This enumeration therefore lists all possible ways
+that a Url-transfer can conclude.
+</para>
+<para>
+For error values, the "error" member of transfer should be set.
+</para><variablelist role="enum">
+<varlistentry id="GSK-URL-TRANSFER-ERROR-BAD-REQUEST--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_BAD_REQUEST</literal></term>
+<listitem><simpara>
+Some aspect request was invalidly formed:
+for example, the user provided a bad SSL certificate
+or upload-function.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-ERROR-BAD-NAME--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_BAD_NAME</literal></term>
+<listitem><simpara>
+DNS failed on the hostname.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-ERROR-NO-SERVER--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_NO_SERVER</literal></term>
+<listitem><simpara>
+Problem connecting to the server.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-ERROR-NOT-FOUND--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_NOT_FOUND</literal></term>
+<listitem><simpara>
+Server indicated the entity was not found.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-ERROR-SERVER-ERROR--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_SERVER_ERROR</literal></term>
+<listitem><simpara>
+Server indicated another error.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-ERROR-UNSUPPORTED--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_UNSUPPORTED</literal></term>
+<listitem><simpara>
+Request was not supported (either by the server,
+the protocol, or the url-transfer-code).
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-ERROR-TIMED-OUT--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_TIMED_OUT</literal></term>
+<listitem><simpara>
+Request timed out.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-ERROR-REDIRECT-LOOP--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_ERROR_REDIRECT_LOOP</literal></term>
+<listitem><simpara>
+Request redirection looped circulurly.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-REDIRECT--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_REDIRECT</literal></term>
+<listitem><simpara>
+The URL transfer code was not instructed to follow
+redirects, but a redirect was encountered.
+See the transfer's redirect_url member.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-CANCELLED--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_CANCELLED</literal></term>
+<listitem><simpara>
+The transfer was aborted because
+<link linkend="gsk-url-transfer-cancel"><function>gsk_url_transfer_cancel()</function></link> was called on it.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-TRANSFER-SUCCESS--CAPS" role="constant">
+<term><literal>GSK_URL_TRANSFER_SUCCESS</literal></term>
+<listitem><simpara>
+The transfer initiated successfully
+(the data may not be transferred yet, though)
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-URL-TRANSFER-N-RESULTS--CAPS" role="macro">
+<title>GSK_URL_TRANSFER_N_RESULTS</title>
+<indexterm zone="GSK-URL-TRANSFER-N-RESULTS--CAPS"><primary sortas="GSK_URL_TRANSFER_N_RESULTS">GSK_URL_TRANSFER_N_RESULTS</primary></indexterm><programlisting>#define             GSK_URL_TRANSFER_N_RESULTS</programlisting>
+<para>
+Number of result-codes, seldom needed.
+</para></refsect2>
+<refsect2 id="gsk-url-transfer-result-name" role="function">
+<title>gsk_url_transfer_result_name ()</title>
+<indexterm zone="gsk-url-transfer-result-name"><primary sortas="gsk_url_transfer_result_name">gsk_url_transfer_result_name</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_url_transfer_result_name        (<link linkend="GskUrlTransferResult">GskUrlTransferResult</link> result);</programlisting>
+<para>
+<parameter>result</parameter>: the enumeration value.
+</para>
+<para>
+Convert a GskUrlTransferResult value
+into a human-readable string.</para>
+<para>
+Get a mixed-case human-readable name for the Transfer-Result.
+</para><variablelist role="params">
+<varlistentry><term><parameter>result</parameter>&#160;:</term>
+<listitem><simpara>the result code.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the constant string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlTransferFunc" role="function">
+<title>GskUrlTransferFunc ()</title>
+<indexterm zone="GskUrlTransferFunc"><primary sortas="GskUrlTransferFunc">GskUrlTransferFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskUrlTransferFunc)               (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *info,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+A function that is called when the transfer is "done".
+This function is called if the transfer is successful,
+or has an error, or times out, or is cancelled.
+</para>
+<para>
+It will only be called after <link linkend="gsk-url-transfer-start"><function>gsk_url_transfer_start()</function></link> returns TRUE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>info</parameter>&#160;:</term>
+<listitem><simpara>the object that contains information about the transfer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data registered with <link linkend="gsk-url-transfer"><function>gsk_url_transfer()</function></link>
+or <link linkend="gsk-url-transfer-set-handler"><function>gsk_url_transfer_set_handler()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlUploadFunc" role="function">
+<title>GskUrlUploadFunc ()</title>
+<indexterm zone="GskUrlUploadFunc"><primary sortas="GskUrlUploadFunc">GskUrlUploadFunc</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         (*GskUrlUploadFunc)                 (<link linkend="gpointer">gpointer</link> upload_data,
+                                                         <link linkend="gssize">gssize</link> *size_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+In order to upload content and still follow redirects,
+we need to be able to make any number of upload streams.
+Therefore, in order to upload data, you may wish to provide
+a function like this.
+</para>
+<para>
+If you don't care about POST-redirects,
+as you probably don't,
+you can just use <link linkend="gsk-url-transfer-set-oneshot-upload"><function>gsk_url_transfer_set_oneshot_upload()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>upload_data</parameter>&#160;:</term>
+<listitem><simpara>data passed into <link linkend="gsk-url-transfer"><function>gsk_url_transfer()</function></link>
+or <link linkend="gsk-url-transfer-set-upload"><function>gsk_url_transfer_set_upload()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size_out</parameter>&#160;:</term>
+<listitem><simpara>optionally set the length of the stream in bytes.
+Setting it to -1 is equivalent to not setting it,
+and indicates that the length is not known in advance.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>if you cannot make a stream, the error should be set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a newly allocated stream, or NULL if an error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlTransfer-struct" role="struct">
+<title>GskUrlTransfer</title>
+<indexterm zone="GskUrlTransfer-struct"><primary sortas="GskUrlTransfer">GskUrlTransfer</primary></indexterm><programlisting>typedef struct {
+  /* --- information prepared for the handler --- */
+  GskUrlTransferResult result;
+  GskUrl *url;
+  GSList *redirect_urls;        // XXX: unused
+  GskUrlTransferRedirect *first_redirect, *last_redirect;
+  GskSocketAddress *address;
+
+  /* may be available: protocol-specific headers */
+  GObject *request;     /* a GskHttpRequest probably */
+  GObject *response;    /* a GskHttpResponse probably */
+
+  GskStream *content;   /* the downloading content */
+
+  /* the last redirect (if any) */
+  GskUrl *redirect_url; /* [just a peeked version of last_redirect-&gt;url, not a ref] */
+  gboolean redirect_is_permanent;
+
+  /* ERROR status codes */
+  GError *error;
+} GskUrlTransfer;
+</programlisting>
+<para>
+A GObject that represents a transfer of data with the entity responsible
+for that type of URL.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskUrlTransferResult">GskUrlTransferResult</link>&#160;<structfield>result</structfield>;</term>
+<listitem><simpara>code indicating final status of the transfer.
+(only valid in the "done" state)
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskUrl">GskUrl</link>&#160;*<structfield>url</structfield>;</term>
+<listitem><simpara>the url of the initial request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>redirect_urls</structfield>;</term>
+<listitem><simpara>XXX: UNUSED
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;*<structfield>address</structfield>;</term>
+<listitem><simpara>socket-address of the server for this url.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GObject">GObject</link>&#160;*<structfield>request</structfield>;</term>
+<listitem><simpara>request header.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GObject">GObject</link>&#160;*<structfield>response</structfield>;</term>
+<listitem><simpara>response header.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskStream">GskStream</link>&#160;*<structfield>content</structfield>;</term>
+<listitem><simpara>downloading data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskUrl">GskUrl</link>&#160;*<structfield>redirect_url</structfield>;</term>
+<listitem><simpara>target of first redirect.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gboolean">gboolean</link>&#160;<structfield>redirect_is_permanent</structfield>;</term>
+<listitem><simpara>whether the redirection was permenant (versus temporary)
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GError">GError</link>&#160;*<structfield>error</structfield>;</term>
+<listitem><simpara>the error, if something went wrong.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer" role="function">
+<title>gsk_url_transfer ()</title>
+<indexterm zone="gsk-url-transfer"><primary sortas="gsk_url_transfer">gsk_url_transfer</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_transfer                    (<link linkend="GskUrl">GskUrl</link> *url,
+                                                         <link linkend="GskUrlUploadFunc">GskUrlUploadFunc</link> upload_func,
+                                                         <link linkend="gpointer">gpointer</link> upload_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> upload_destroy,
+                                                         <link linkend="GskUrlTransferFunc">GskUrlTransferFunc</link> handler,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Begin a upload and/or download with a URL.
+There is no way to cancel this transfer.
+</para>
+<para>
+If you wish to perform an upload,
+provide a function that can create the stream of content to
+upload on demand.  Note that the <link linkend="upload-destroy"><function>upload_destroy()</function></link> method
+is called only once the transfer is done and all the upload streams
+are finalized.  Therefore, you can assume that the upload_data
+will be available for all your upload-streams.
+</para>
+<para>
+The handler/data/destroy triple is used for result notification.
+<link linkend="handler"><function>handler()</function></link> is always invoked exactly once.  To find out how things
+went, the <link linkend="handler"><function>handler()</function></link> should almost always start by
+examining transfer-&gt;result.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> the URL to which to upload or from which to download data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>upload_func</parameter>&#160;:</term>
+<listitem><simpara> optional function that can create the upload's content
+as a <link linkend="GskStream"><type>GskStream</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>upload_data</parameter>&#160;:</term>
+<listitem><simpara> data which can be used by the upload function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>upload_destroy</parameter>&#160;:</term>
+<listitem><simpara> optional function that will be notified when <link linkend="upload"><function>upload()</function></link>
+will no longer be called (note that the streams it created may
+still be extant though).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara> function to be called with the transfer request is
+done.  (The transfer content itself is just provided as a stream
+though-- only after reading the stream is the transfer truly done)
+This function may also be called in a number of error cases.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to the handler function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call when you are done with data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to put the error if anything goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the transfer began.
+Unsupported URL schemes and malformed URLs are the
+most common ways for this function to fail.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-new" role="function">
+<title>gsk_url_transfer_new ()</title>
+<indexterm zone="gsk-url-transfer-new"><primary sortas="gsk_url_transfer_new">gsk_url_transfer_new</primary></indexterm><programlisting><link linkend="GskUrlTransfer">GskUrlTransfer</link> *    gsk_url_transfer_new                (<link linkend="GskUrl">GskUrl</link> *url);</programlisting>
+<para>
+Create a URL transfer of the appropriate type for the given URL.
+We try the registered classes, in order.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> the URL to create a transfer object for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated Transfer object, or NULL if no transfer-class
+could handle the URL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-handler" role="function">
+<title>gsk_url_transfer_set_handler ()</title>
+<indexterm zone="gsk-url-transfer-set-handler"><primary sortas="gsk_url_transfer_set_handler">gsk_url_transfer_set_handler</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_handler        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrlTransferFunc">GskUrlTransferFunc</link> handler,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+The handler/data/destroy triple is used for result notification.
+<link linkend="handler"><function>handler()</function></link> is always invoked exactly once.  To find out how things
+went, the <link linkend="handler"><function>handler()</function></link> should almost always start by
+examining transfer-&gt;result.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara> function to be called with the transfer request is
+done.  (The transfer content itself is just provided as a stream
+though-- only after reading the stream is the transfer truly done)
+This function may also be called in a number of error cases.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to the handler function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call when you are done with data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-url" role="function">
+<title>gsk_url_transfer_set_url ()</title>
+<indexterm zone="gsk-url-transfer-set-url"><primary sortas="gsk_url_transfer_set_url">gsk_url_transfer_set_url</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_url            (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrl">GskUrl</link> *url);</programlisting>
+<para>
+Set the URL that is the target of this transfer.
+This can only be done once, before the transfer
+is started.
+</para>
+<para>
+You seldom need to use this function, as it
+is called by <link linkend="gsk-url-transfer-new"><function>gsk_url_transfer_new()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> the URL to which to upload or from which to download data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-upload" role="function">
+<title>gsk_url_transfer_set_upload ()</title>
+<indexterm zone="gsk-url-transfer-set-upload"><primary sortas="gsk_url_transfer_set_upload">gsk_url_transfer_set_upload</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_upload         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrlUploadFunc">GskUrlUploadFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Set the upload stream as generally as possible.
+Actually you must provide a function
+that can make an upload stream on demand--
+this is necessary to get redirects right.
+</para>
+<para>
+The <link linkend="destroy"><function>destroy()</function></link> function will be called after no more upload-streams
+need to be created-- it is quite possible that not all upload-streams
+have been finalized by the time the <link linkend="destroy"><function>destroy()</function></link> is invoked.
+</para>
+<para>
+If you don't care about redirects, you can
+use <link linkend="gsk-url-transfer-set-oneshot-upload"><function>gsk_url_transfer_set_oneshot_upload()</function></link>.
+</para>
+<para>
+If you have a slab of memory that you want to use as the upload stream,
+consider using <link linkend="gsk-url-transfer-set-upload-packet"><function>gsk_url_transfer_set_upload_packet()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function that can create the upload's content
+as a <link linkend="GskStream"><type>GskStream</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data which can be used by the upload function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> optional function that will be notified when <link linkend="upload"><function>upload()</function></link>
+will no longer be called (note that the streams it created may
+still be extant though).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-upload-packet" role="function">
+<title>gsk_url_transfer_set_upload_packet ()</title>
+<indexterm zone="gsk-url-transfer-set-upload-packet"><primary sortas="gsk_url_transfer_set_upload_packet">gsk_url_transfer_set_upload_packet</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_upload_packet  (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskPacket">GskPacket</link> *packet);</programlisting>
+<para>
+Set the upload stream in an easy, reliable way using a GskPacket.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>packet</parameter>&#160;:</term>
+<listitem><simpara> the GskPacket containing the upload content as data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-oneshot-upload" role="function">
+<title>gsk_url_transfer_set_oneshot_upload ()</title>
+<indexterm zone="gsk-url-transfer-set-oneshot-upload"><primary sortas="gsk_url_transfer_set_oneshot_upload">gsk_url_transfer_set_oneshot_upload</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_oneshot_upload (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gssize">gssize</link> size);</programlisting>
+<para>
+Set the content to upload to the remote URL,
+as a <link linkend="GskStream"><type>GskStream</type></link>.
+</para>
+<para>
+Since streams can only be read once,
+this method only works on URLs that do not require
+redirection.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the upload content stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara> the length of the stream in bytes, or -1 if you don't know.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-timeout" role="function">
+<title>gsk_url_transfer_set_timeout ()</title>
+<indexterm zone="gsk-url-transfer-set-timeout"><primary sortas="gsk_url_transfer_set_timeout">gsk_url_transfer_set_timeout</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_timeout        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="guint">guint</link> millis);</programlisting>
+<para>
+Set the timeout on the download.
+</para>
+<para>
+This can be used to avoid hanging on slow servers.
+</para>
+<para>
+This must be called before the transfer is started
+(with gsk_url_transfer_start).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>millis</parameter>&#160;:</term>
+<listitem><simpara> milliseconds to wait before aborting the transfer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-clear-timeout" role="function">
+<title>gsk_url_transfer_clear_timeout ()</title>
+<indexterm zone="gsk-url-transfer-clear-timeout"><primary sortas="gsk_url_transfer_clear_timeout">gsk_url_transfer_clear_timeout</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_clear_timeout      (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);</programlisting>
+<para>
+Clear the timeout on the download.
+</para>
+<para>
+This must be called before the transfer is started
+(with gsk_url_transfer_start).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-follow-redirects" role="function">
+<title>gsk_url_transfer_set_follow_redirects ()</title>
+<indexterm zone="gsk-url-transfer-set-follow-redirects"><primary sortas="gsk_url_transfer_set_follow_redirects">gsk_url_transfer_set_follow_redirects</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_follow_redirects
+                                                        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="gboolean">gboolean</link> follow_redirs);</programlisting>
+<para>
+Configure how the transfer will behave when it encounters
+redirection responses.
+</para>
+<para>
+The default behavior is to follow redirects,
+adding them to the list of redirects, but not notifying the
+user until we reach a real page (or error).
+</para>
+<para>
+If follow_redirects is FALSE, then we are done
+even if the download led to a redirect.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>follow_redirs</parameter>&#160;:</term>
+<listitem><simpara> whether to follow redirect responses.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-address-hint" role="function">
+<title>gsk_url_transfer_set_address_hint ()</title>
+<indexterm zone="gsk-url-transfer-set-address-hint"><primary sortas="gsk_url_transfer_set_address_hint">gsk_url_transfer_set_address_hint</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_address_hint   (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+To avoid DNS lookups in very bulky transfer situations,
+DNS may be bypassed and replaced with this address.
+</para>
+<para>
+Chances are, you want to suppress redirects to:
+otherwise, DNS may be used on the redirected URLs.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the socket-address to use for connecting,
+possibly with the wrong port (the port will be overridden by
+the URL's port).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-start" role="function">
+<title>gsk_url_transfer_start ()</title>
+<indexterm zone="gsk-url-transfer-start"><primary sortas="gsk_url_transfer_start">gsk_url_transfer_start</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_transfer_start              (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Begin the upload and/or download.  (Maybe start with name-lookup).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to put the error if anything goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the transfer started successfully.
+If it returns TRUE, you are guaranteed to receive your
+done-notification.  If is returns FALSE, you will definitely not
+receive done-notification.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-cancel" role="function">
+<title>gsk_url_transfer_cancel ()</title>
+<indexterm zone="gsk-url-transfer-cancel"><primary sortas="gsk_url_transfer_cancel">gsk_url_transfer_cancel</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_cancel             (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);</programlisting>
+<para>
+Abort a running transfer.
+</para>
+<para>
+If you registered a handler, it will be called with 
+result GSK_URL_TRANSFER_CANCELLED.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-has-upload" role="function">
+<title>gsk_url_transfer_has_upload ()</title>
+<indexterm zone="gsk-url-transfer-has-upload"><primary sortas="gsk_url_transfer_has_upload">gsk_url_transfer_has_upload</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_transfer_has_upload         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);</programlisting>
+<para>
+Figure out whether this transfer has upload data.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the transfer has upload data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-create-upload" role="function">
+<title>gsk_url_transfer_create_upload ()</title>
+<indexterm zone="gsk-url-transfer-create-upload"><primary sortas="gsk_url_transfer_create_upload">gsk_url_transfer_create_upload</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_url_transfer_create_upload      (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="gssize">gssize</link> *size_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a upload stream for this transfer based on the user's creator
+function.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to use.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size_out</parameter>&#160;:</term>
+<listitem><simpara> the size of the stream in bytes, or -1 if the size is unknown.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional location to store the <link linkend="GError"><type>GError</type></link> if there is a problem.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated <link linkend="GskStream"><type>GskStream</type></link>, or NULL if an error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-peek-expects-download-stream" role="function">
+<title>gsk_url_transfer_peek_expects_download_stream ()</title>
+<indexterm zone="gsk-url-transfer-peek-expects-download-stream"><primary sortas="gsk_url_transfer_peek_expects_download_stream">gsk_url_transfer_peek_expects_download_stream</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_transfer_peek_expects_download_stream
+                                                        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);</programlisting>
+<para>
+This function can be used to see if download-content is expected.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to use.
+returns: whether this transfer has a download handler.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-is-done" role="function">
+<title>gsk_url_transfer_is_done ()</title>
+<indexterm zone="gsk-url-transfer-is-done"><primary sortas="gsk_url_transfer_is_done">gsk_url_transfer_is_done</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_transfer_is_done            (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);</programlisting>
+<para>
+Find out whether the transfer is done.
+The transfer is done iff the callback has been invoked.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the function is done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-address" role="function">
+<title>gsk_url_transfer_set_address ()</title>
+<indexterm zone="gsk-url-transfer-set-address"><primary sortas="gsk_url_transfer_set_address">gsk_url_transfer_set_address</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_address        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *addr);</programlisting>
+<para>
+Set the socket-address for informational purposes.
+This is occasionally interesting to the user of the Transfer.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>addr</parameter>&#160;:</term>
+<listitem><simpara> the address of the host whose lookup was completed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-add-redirect" role="function">
+<title>gsk_url_transfer_add_redirect ()</title>
+<indexterm zone="gsk-url-transfer-add-redirect"><primary sortas="gsk_url_transfer_add_redirect">gsk_url_transfer_add_redirect</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_transfer_add_redirect       (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GObject">GObject</link> *request,
+                                                         <link linkend="GObject">GObject</link> *response,
+                                                         <link linkend="gboolean">gboolean</link> is_permanent,
+                                                         <link linkend="GskUrl">GskUrl</link> *dest_url);</programlisting>
+<para>
+Add an entry to the list of redirects
+that we have encountered while trying to
+service this request.
+</para>
+<para>
+Most users of GskUrlTransfer won't care about these redirects--
+they are provided to the rare client that cares about the redirect-path.
+More commonly, users merely wish to suppress redirect handling: that can be done
+more easily by <link linkend="gsk-url-transfer-set-follow-redirects"><function>gsk_url_transfer_set_follow_redirects()</function></link>.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> request object for this segment of the transfer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> response object for this segment of the transfer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_permanent</parameter>&#160;:</term>
+<listitem><simpara> whether the content is permanently relocated to this address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest_url</parameter>&#160;:</term>
+<listitem><simpara> the URL to which we have been redirected.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the redirect was allowed (it is disallowed if
+it is a circular redirect. In that case, we will set 'transfer-&gt;error',
+and call <link linkend="gsk-url-transfer-notify-done"><function>gsk_url_transfer_notify_done()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-download" role="function">
+<title>gsk_url_transfer_set_download ()</title>
+<indexterm zone="gsk-url-transfer-set-download"><primary sortas="gsk_url_transfer_set_download">gsk_url_transfer_set_download</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_download       (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskStream">GskStream</link> *content);</programlisting>
+<para>
+Set the incoming-content that is associated with this transfer.
+This will used by the user of the Transfer.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the content-stream for the downloaded data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-request" role="function">
+<title>gsk_url_transfer_set_request ()</title>
+<indexterm zone="gsk-url-transfer-set-request"><primary sortas="gsk_url_transfer_set_request">gsk_url_transfer_set_request</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_request        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GObject">GObject</link> *request);</programlisting>
+<para>
+Set the outgoing-request header data for this transaction.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request object to store in the transfer information.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-response" role="function">
+<title>gsk_url_transfer_set_response ()</title>
+<indexterm zone="gsk-url-transfer-set-response"><primary sortas="gsk_url_transfer_set_response">gsk_url_transfer_set_response</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_response       (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GObject">GObject</link> *response);</programlisting>
+<para>
+Set the incoming-response header data for this transaction.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response object to store in the transfer information.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-set-error" role="function">
+<title>gsk_url_transfer_set_error ()</title>
+<indexterm zone="gsk-url-transfer-set-error"><primary sortas="gsk_url_transfer_set_error">gsk_url_transfer_set_error</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_set_error          (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         const <link linkend="GError">GError</link> *error);</programlisting>
+<para>
+Set the error field for this transaction.
+A copy of the error parameter is made.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> the error to associate with the transfer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-take-error" role="function">
+<title>gsk_url_transfer_take_error ()</title>
+<indexterm zone="gsk-url-transfer-take-error"><primary sortas="gsk_url_transfer_take_error">gsk_url_transfer_take_error</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_take_error         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GError">GError</link> *error);</programlisting>
+<para>
+Set the error field for this transaction.
+The error parameter will be freed eventually by the
+<link linkend="GskUrlTransfer"><type>GskUrlTransfer</type></link>.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> the error to associate with the transfer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-notify-done" role="function">
+<title>gsk_url_transfer_notify_done ()</title>
+<indexterm zone="gsk-url-transfer-notify-done"><primary sortas="gsk_url_transfer_notify_done">gsk_url_transfer_notify_done</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_notify_done        (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GskUrlTransferResult">GskUrlTransferResult</link> result);</programlisting>
+<para>
+Transition the transfer to the DONE state,
+and invoke the user's callback (if any).
+This function may only be invoked once per transfer.
+</para>
+<para>
+This function should only be needed by implementors
+of types of GskUrlTransfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the Transfer to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>result</parameter>&#160;:</term>
+<listitem><simpara> the transfer's result status code.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-class-register" role="function">
+<title>gsk_url_transfer_class_register ()</title>
+<indexterm zone="gsk-url-transfer-class-register"><primary sortas="gsk_url_transfer_class_register">gsk_url_transfer_class_register</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_transfer_class_register     (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         <link linkend="GskUrlTransferClass">GskUrlTransferClass</link> *transfer_class);</programlisting>
+<para>
+Register a class of URL transfer that can
+handle a given scheme.
+It will only be instantiated if the class' test method</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>scheme</parameter>&#160;:</term>
+<listitem><simpara> the URL scheme that this class of transfer can handle.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>transfer_class</parameter>&#160;:</term>
+<listitem><simpara> the class that can handle the URL type.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-get-state-string" role="function">
+<title>gsk_url_transfer_get_state_string ()</title>
+<indexterm zone="gsk-url-transfer-get-state-string"><primary sortas="gsk_url_transfer_get_state_string">gsk_url_transfer_get_state_string</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_url_transfer_get_state_string   (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer);</programlisting>
+<para>
+Get a newly allocated, human-readable description
+of the state of the transfer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the transfer to describe.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly-allocated string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-transfer-stream-new" role="function">
+<title>gsk_url_transfer_stream_new ()</title>
+<indexterm zone="gsk-url-transfer-stream-new"><primary sortas="gsk_url_transfer_stream_new">gsk_url_transfer_stream_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_url_transfer_stream_new         (<link linkend="GskUrlTransfer">GskUrlTransfer</link> *transfer,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+This code will start the transfer,
+and return a stream that you can trap immediately.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer</parameter>&#160;:</term>
+<listitem><simpara> the transfer.  must not be started.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional location to store the <link linkend="GError"><type>GError</type></link> if there is a problem.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new stream, or NULL if an error occurred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="GskUrlTransfer.see-also">
+<title>See Also</title>
+<para>
+<link linkend="GskUrlTransferHttp"><type>GskUrlTransferHttp</type></link>.
+</para>
+</refsect1>
+
+</refentry>

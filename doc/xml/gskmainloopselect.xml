@@ -1,0 +1,60 @@
+<refentry id="GskMainLoopSelect">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskMainLoopSelect.top_of_page">GskMainLoopSelect</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskMainLoopSelect</refname>
+<refpurpose>a select(2)-based event loop.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskMainLoopSelect.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskMainLoopSelect-struct">GskMainLoopSelect</link>;
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskMainLoopSelect.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskMainLoop">GskMainLoop</link>
+         +----<link linkend="GskMainLoopPollBase">GskMainLoopPollBase</link>
+               +----GskMainLoopSelect
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskMainLoopSelect.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A main-loop where the underlying multiplexing mechanism
+is select(2).
+</para>
+</refsect1>
+
+<refsect1 id="GskMainLoopSelect.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMainLoopSelect-struct" role="struct">
+<title>GskMainLoopSelect</title>
+<indexterm zone="GskMainLoopSelect-struct"><primary sortas="GskMainLoopSelect">GskMainLoopSelect</primary></indexterm><programlisting>typedef struct _GskMainLoopSelect GskMainLoopSelect;</programlisting>
+<para>
+The main loop which uses select(2).
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

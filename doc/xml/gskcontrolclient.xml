@@ -1,0 +1,250 @@
+<refentry id="gsk-GskControlClient">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskControlClient.top_of_page">GskControlClient</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskControlClient</refname>
+<refpurpose>a client for manipulating an implementation of GskControlServer.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskControlClient.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskControlClient">GskControlClient</link>;
+<link linkend="void">void</link>                (<link linkend="GskControlClientErrorFunc">*GskControlClientErrorFunc</link>)        (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> data);
+enum                <link linkend="GskControlClientFlag">GskControlClientFlag</link>;
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-control-client-get-flag">gsk_control_client_get_flag</link>         (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         <link linkend="GskControlClientFlag">GskControlClientFlag</link> flag);
+<link linkend="char">char</link> *              <link linkend="gsk-control-client-get-prompt-string">gsk_control_client_get_prompt_string</link>
+                                                        (<link linkend="GskControlClient">GskControlClient</link> *cc);
+<link linkend="GskControlClient">GskControlClient</link> *  <link linkend="gsk-control-client-new">gsk_control_client_new</link>              (<link linkend="GskSocketAddress">GskSocketAddress</link> *server);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-control-client-parse-command-line-args">gsk_control_client_parse_command_line_args</link>
+                                                        (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         <link linkend="int">int</link> *argc_inout,
+                                                         <link linkend="char">char</link> ***argv_inout,
+                                                         <link linkend="GskControlClientOptionFlags">GskControlClientOptionFlags</link> flags);
+<link linkend="void">void</link>                <link linkend="gsk-control-client-print-command-line-usage">gsk_control_client_print_command_line_usage</link>
+                                                        (<link linkend="GskControlClientOptionFlags">GskControlClientOptionFlags</link> flags);
+<link linkend="void">void</link>                <link linkend="gsk-control-client-run-command">gsk_control_client_run_command</link>      (<link linkend="GskControlClient">GskControlClient</link> *,
+                                                         <link linkend="char">char</link> **command_and_args,
+                                                         const <link linkend="char">char</link> *input_file,
+                                                         const <link linkend="char">char</link> *output_file);
+<link linkend="void">void</link>                <link linkend="gsk-control-client-set-flag">gsk_control_client_set_flag</link>         (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         <link linkend="GskControlClientFlag">GskControlClientFlag</link> flag,
+                                                         <link linkend="gboolean">gboolean</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-control-client-set-prompt">gsk_control_client_set_prompt</link>       (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         const <link linkend="char">char</link> *prompt_format);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskControlClient.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This provides the client end of the server control code.
+</para>
+<para>
+This class is rarely needed, because the gsk-control-client
+that comes with Gsk can manipulate any control server.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskControlClient.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskControlClient" role="struct">
+<title>GskControlClient</title>
+<indexterm zone="GskControlClient"><primary sortas="GskControlClient">GskControlClient</primary></indexterm><programlisting>typedef struct _GskControlClient GskControlClient;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskControlClientErrorFunc" role="function">
+<title>GskControlClientErrorFunc ()</title>
+<indexterm zone="GskControlClientErrorFunc"><primary sortas="GskControlClientErrorFunc">GskControlClientErrorFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskControlClientErrorFunc)        (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskControlClientFlag" role="enum">
+<title>enum GskControlClientFlag</title>
+<indexterm zone="GskControlClientFlag"><primary sortas="GskControlClientFlag">GskControlClientFlag</primary></indexterm><programlisting>typedef enum
+{
+  GSK_CONTROL_CLIENT_ADD_NEWLINES_AS_NEEDED
+} GskControlClientFlag;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-control-client-get-flag" role="function">
+<title>gsk_control_client_get_flag ()</title>
+<indexterm zone="gsk-control-client-get-flag"><primary sortas="gsk_control_client_get_flag">gsk_control_client_get_flag</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_control_client_get_flag         (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         <link linkend="GskControlClientFlag">GskControlClientFlag</link> flag);</programlisting>
+<para>
+not used yet.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cc</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flag</parameter>&#160;:</term>
+<listitem><simpara>
+returns:
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-client-get-prompt-string" role="function">
+<title>gsk_control_client_get_prompt_string ()</title>
+<indexterm zone="gsk-control-client-get-prompt-string"><primary sortas="gsk_control_client_get_prompt_string">gsk_control_client_get_prompt_string</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_control_client_get_prompt_string
+                                                        (<link linkend="GskControlClient">GskControlClient</link> *cc);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cc</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-client-new" role="function">
+<title>gsk_control_client_new ()</title>
+<indexterm zone="gsk-control-client-new"><primary sortas="gsk_control_client_new">gsk_control_client_new</primary></indexterm><programlisting><link linkend="GskControlClient">GskControlClient</link> *  gsk_control_client_new              (<link linkend="GskSocketAddress">GskSocketAddress</link> *server);</programlisting>
+<para>
+Allocates a new control client.
+</para>
+<para>
+This may invoke the main-loop to answer a few questions.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the location of the server to contact.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated control client.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-client-parse-command-line-args" role="function">
+<title>gsk_control_client_parse_command_line_args ()</title>
+<indexterm zone="gsk-control-client-parse-command-line-args"><primary sortas="gsk_control_client_parse_command_line_args">gsk_control_client_parse_command_line_args</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_control_client_parse_command_line_args
+                                                        (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         <link linkend="int">int</link> *argc_inout,
+                                                         <link linkend="char">char</link> ***argv_inout,
+                                                         <link linkend="GskControlClientOptionFlags">GskControlClientOptionFlags</link> flags);</programlisting>
+<para>
+Parse standard command-line options.
+</para>
+<para>
+During this parsing, some remote commands may be run.
+For example -e flags cause instructions to be executed.
+Therefore, this may reinvoke the mainloop.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cc</parameter>&#160;:</term>
+<listitem><simpara> the control client to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argc_inout</parameter>&#160;:</term>
+<listitem><simpara> a reference to the 'argc' which was passed into main.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argv_inout</parameter>&#160;:</term>
+<listitem><simpara> a reference to the 'argv' which was passed into main.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> bitwise-OR'd flags telling which command-line arguments to parse.
+returns: whether to parse commands from stdin.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-client-print-command-line-usage" role="function">
+<title>gsk_control_client_print_command_line_usage ()</title>
+<indexterm zone="gsk-control-client-print-command-line-usage"><primary sortas="gsk_control_client_print_command_line_usage">gsk_control_client_print_command_line_usage</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_control_client_print_command_line_usage
+                                                        (<link linkend="GskControlClientOptionFlags">GskControlClientOptionFlags</link> flags);</programlisting>
+<para>
+Prints the command-line usage that the control-client class defines.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> bitwise-OR'd flags telling which command-line arguments to parse.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-client-run-command" role="function">
+<title>gsk_control_client_run_command ()</title>
+<indexterm zone="gsk-control-client-run-command"><primary sortas="gsk_control_client_run_command">gsk_control_client_run_command</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_control_client_run_command      (<link linkend="GskControlClient">GskControlClient</link> *,
+                                                         <link linkend="char">char</link> **command_and_args,
+                                                         const <link linkend="char">char</link> *input_file,
+                                                         const <link linkend="char">char</link> *output_file);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>Param1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>command_and_args</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>input_file</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output_file</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-client-set-flag" role="function">
+<title>gsk_control_client_set_flag ()</title>
+<indexterm zone="gsk-control-client-set-flag"><primary sortas="gsk_control_client_set_flag">gsk_control_client_set_flag</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_control_client_set_flag         (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         <link linkend="GskControlClientFlag">GskControlClientFlag</link> flag,
+                                                         <link linkend="gboolean">gboolean</link> value);</programlisting>
+<para>
+not used yet.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cc</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flag</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-control-client-set-prompt" role="function">
+<title>gsk_control_client_set_prompt ()</title>
+<indexterm zone="gsk-control-client-set-prompt"><primary sortas="gsk_control_client_set_prompt">gsk_control_client_set_prompt</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_control_client_set_prompt       (<link linkend="GskControlClient">GskControlClient</link> *cc,
+                                                         const <link linkend="char">char</link> *prompt_format);</programlisting>
+<para>
+Set the prompt format string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cc</parameter>&#160;:</term>
+<listitem><simpara> the control client to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>prompt_format</parameter>&#160;:</term>
+<listitem><simpara> format string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-GskControlClient.see-also">
+<title>See Also</title>
+<para>
+GskControlServer.
+</para>
+</refsect1>
+
+</refentry>

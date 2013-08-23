@@ -1,0 +1,73 @@
+<refentry id="gsk-gskzlib">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskzlib.top_of_page">gskzlib</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskzlib</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskzlib.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="GskErrorCode">GskErrorCode</link>        <link linkend="gsk-zlib-error-to-gsk-error">gsk_zlib_error_to_gsk_error</link>         (<link linkend="gint">gint</link> zlib_error_rv);
+const <link linkend="char">char</link> *        <link linkend="gsk-zlib-error-to-message">gsk_zlib_error_to_message</link>           (<link linkend="gint">gint</link> zlib_error_rv);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskzlib.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskzlib.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-zlib-error-to-gsk-error" role="function">
+<title>gsk_zlib_error_to_gsk_error ()</title>
+<indexterm zone="gsk-zlib-error-to-gsk-error"><primary sortas="gsk_zlib_error_to_gsk_error">gsk_zlib_error_to_gsk_error</primary></indexterm><programlisting><link linkend="GskErrorCode">GskErrorCode</link>        gsk_zlib_error_to_gsk_error         (<link linkend="gint">gint</link> zlib_error_rv);</programlisting>
+<para>
+Converts a zlib error code to a <link linkend="GskErrorCode"><type>GskErrorCode</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>zlib_error_rv</parameter>&#160;:</term>
+<listitem><simpara> error code returned by zlib.
+These are Z_OK, Z_STREAM_END, Z_NEED_DICT,
+Z_ERRNO, Z_STREAM_ERROR, Z_DATA_ERROR, etc.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the best approximation for the zlib error
+in GSK's list.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-zlib-error-to-message" role="function">
+<title>gsk_zlib_error_to_message ()</title>
+<indexterm zone="gsk-zlib-error-to-message"><primary sortas="gsk_zlib_error_to_message">gsk_zlib_error_to_message</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_zlib_error_to_message           (<link linkend="gint">gint</link> zlib_error_rv);</programlisting>
+<para>
+Find a string which corresponds to the given zlib error code.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>zlib_error_rv</parameter>&#160;:</term>
+<listitem><simpara> the error code to convert to a string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the error message string text.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

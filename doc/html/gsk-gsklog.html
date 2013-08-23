@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gsklog</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="GskSocketAddress.html" title="Socket Addresses.">
+<link rel="next" href="tutorial-debugging-hints.html" title="Debugging Hints">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskSocketAddress.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="tutorial-debugging-hints.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gsklog.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gsklog.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gsklog"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gsklog.top_of_page"></a>gsklog</span></h2>
+<p>gsklog — convenient logging methods around the glib mechanism</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gsklog.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+void                <a class="link" href="gsk-gsklog.html#gsk-log-init" title="gsk_log_init ()">gsk_log_init</a>                        (void);
+GskLogTrap *        <a class="link" href="gsk-gsklog.html#gsk-log-trap-domain-to-file" title="gsk_log_trap_domain_to_file ()">gsk_log_trap_domain_to_file</a>         (const char *domain,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Message-Logging.html#GLogLevelFlags"
+>GLogLevelFlags</a> level_mask,
+                                                         const char *filename,
+                                                         const char *output_format);
+#define             <a class="link" href="gsk-gsklog.html#gsk-debug" title="gsk_debug()">gsk_debug</a>                           (domain, ...)
+#define             <a class="link" href="gsk-gsklog.html#gsk-warning" title="gsk_warning()">gsk_warning</a>                         (domain, ...)
+#define             <a class="link" href="gsk-gsklog.html#gsk-error" title="gsk_error()">gsk_error</a>                           (domain, ...)
+#define             <a class="link" href="gsk-gsklog.html#gsk-critical" title="gsk_critical()">gsk_critical</a>                        (domain, ...)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsklog.description"></a><h2>Description</h2>
+<p>
+This file provide macros to allow logging to go to selected
+domains from a single compilation unit.
+</p>
+<p>
+Also, it contains methods to conveniently trap the logs to
+given files.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsklog.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="gsk-log-init"></a><h3>gsk_log_init ()</h3>
+<pre class="programlisting">void                gsk_log_init                        (void);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-log-trap-domain-to-file"></a><h3>gsk_log_trap_domain_to_file ()</h3>
+<pre class="programlisting">GskLogTrap *        gsk_log_trap_domain_to_file         (const char *domain,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Message-Logging.html#GLogLevelFlags"
+>GLogLevelFlags</a> level_mask,
+                                                         const char *filename,
+                                                         const char *output_format);</pre>
+<p>
+<em class="parameter"><code>domain</code></em>: the log-domain to trap, as passed to g_log
+or the gsk_ family of log functions.
+<em class="parameter"><code>filename</code></em>: the filename to write the log to.
+<em class="parameter"><code>output_format</code></em>: a string giving the formatting
+to be used with the given trap.
+It may contain any of the following strings:
+   %{message}       the message itself.
+   %{NNNmessage}    the first NNN characters of message.
+   %{localtime:FMT} the time/date in local timezone, formatted as per FMT.
+   %{gmtime:FMT}    the time/date in gm, formatted as per FMT.
+                    (If :FMT is omitted, a default format string is used)
+   %{domain}        the log domain.
+   %{level}         the log level, as 'error', 'message', etc.
+   %{glevel}        approximately how glib does the level:
+                    'Debug', 'Info', '*Message*', '***Warning***',
+                    '***Critical***', '***ERROR***'.
+   %{Level}, %{LEVEL}  like %{level} with casing differences.
+   %{levelsuffix}   '.', '!', '!!!' depending on the severity.
+   %%               a percent symbol.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>level_mask</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>output_format</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-debug"></a><h3>gsk_debug()</h3>
+<pre class="programlisting">#define             gsk_debug(domain, ...)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-warning"></a><h3>gsk_warning()</h3>
+<pre class="programlisting">#define             gsk_warning(domain, ...)</pre>
+<p>
+Log a message at the WARNING priority level.
+Messages logged at this level can be fatal in debugging mode.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td>the log-domain to use to categorize the message.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-error"></a><h3>gsk_error()</h3>
+<pre class="programlisting">#define             gsk_error(domain, ...)</pre>
+<p>
+Log a message at the WARNING priority level.
+Messages logged at this level are always fatal.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td> the log-domain to use to categorize the message.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td>printf-style format and arguments.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-critical"></a><h3>gsk_critical()</h3>
+<pre class="programlisting">#define             gsk_critical(domain, ...)</pre>
+<p>
+Log a message at the CRITICAL priority level.
+Messages logged at this level can be fatal in debugging mode.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td> the log-domain to use to categorize the message.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td>printf-style format and arguments.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

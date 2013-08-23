@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Writing a Generic Server</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch03.html" title="Tutorials">
+<link rel="prev" href="ch03.html" title="Tutorials">
+<link rel="next" href="tutorial-client.html" title="Writing a Generic Client">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="ch03.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch03.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="tutorial-client.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="tutorial-server"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">Writing a Generic Server</span></h2>
+<p>Tutorial: Writing a server — How to write a server</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" lang="en">
+<a name="id2634501"></a><h2>Writing a Server</h2>
+<p>
+This section of the tutorial describes how to write a server.
+</p>
+<p>
+Most servers bind to a #GskSocketAddress using a #GskStreamListenerSocket.
+They call gsk_stream_listener_handle_accept()
+to receive notification when new clients have connected.
+</p>
+<p>
+The easiest way to handle incoming client connections is 
+to make a #GskStream that can handle the protocol.
+If you do not have an appropriate protocol stream,
+and don't wish to make one,
+use a #GskBufferStream to get simple I/O buffering,
+or one can directly call gsk_stream_trap_readable()
+and gsk_stream_trap_writable() to get notification when
+the stream can be written or read.
+</p>
+<p>
+If the server/client communication is unidirectional,
+you should probably call gsk_stream_read_shutdown()
+or gsk_stream_write_shutdown() to terminate whichever
+direction you don't plan on using.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2635513"></a><h2>Example: A NUL-Separated Server</h2>
+<p>
+This gives a simple server where each request is terminated by
+a NUL (the 0 byte).  Each request has a single NUL-terminated response.
+This matches an example in the client tutorial.
+</p>
+<p>
+Such a server merely creates a listener on the appropriate
+address and waits for connections:
+</p>
+<pre class="programlisting">
+int main(int argc, char **argv)
+{
+  int port;
+  gsk_init (&amp;argc, &amp;argv, NULL);
+  if (argc != 2)
+    g_error ("usage: %s PORT", argv[0]);
+  port = atoi (argv[1]);
+  if (port &lt;= 0)
+    g_error ("port must be a positive integer");
+  address = gsk_socket_address_ipv4_new (gsk_ipv4_ip_address_any, port);
+  listener = gsk_stream_listener_socket_new_bind (address, &amp;error);
+  if (listener == NULL)
+    g_error ("error binding to port %u: %s", port, error-&gt;message);
+  gsk_stream_listener_handle_accept (listener,
+                                     handle_connection,
+				     handle_error,
+				     NULL, NULL);
+  return gsk_main_run ();
+}
+</pre>
+<p>
+</p>
+<p>The error handling is easy, at least for our purposes:
+</p>
+<pre class="programlisting">
+static void
+handle_error (GError  *error, gpointer data)
+{
+  g_error ("error listening: %s", error-&gt;message);
+}
+</pre>
+<p>
+</p>
+<p>Accepting a new connection is more complicated,
+because that is where all the protocol logic begins.
+There are really two ways to handle the protocols.
+You can directly trapp the streams read and write events,
+or you can implement a stream that speaks the protocol and
+use <code class="function">gsk_stream_attach_pair</code>.
+We recommend the latter, because it is more flexible and modular,
+but you should know both techniques.
+</p>
+<p>
+Both implementations should a common function that
+computes the response given the request.  For demonstration purposes,
+we just reverse the string:
+</p>
+<pre class="programlisting">
+static char *
+compute_response (const char *request)
+{
+  return g_strreverse (g_strdup (request));
+}
+</pre>
+<p>
+</p>
+<div class="refsect2" lang="en">
+<a name="id2635583"></a><h3>Implementing the accept handler with a custom stream</h3>
+<p>
+To implement this the handler we must make a GObject that derives
+from GskStream.  Here is, once again the boilerplate GObject code:
+</p>
+<pre class="programlisting">
+typedef struct _MyStream MyStream;
+typedef struct _MyStreamClass MyStreamClass;
+GType my_stream_get_type(void) G_GNUC_CONST;
+#define MY_TYPE_STREAM			(my_stream_get_type ())
+#define MY_STREAM(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), MY_TYPE_STREAM, MyStream))
+#define MY_STREAM_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MY_TYPE_STREAM, MyStreamClass))
+#define MY_STREAM_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MY_TYPE_STREAM, MyStreamClass))
+#define MY_IS_STREAM(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), MY_TYPE_STREAM))
+#define MY_IS_STREAM_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MY_TYPE_STREAM))
+
+struct _MyStreamClass 
+{
+  GskStreamClass base_class;
+};
+struct _MyStream 
+{
+  GskStream      base_instance;
+  GskBuffer      incoming;
+  GskBuffer      outgoing;
+};
+G_DEFINE_TYPE (MyStream, my_stream, GSK_TYPE_STREAM);
+
+/* --- functions --- */
+static void
+my_stream_init (MyStream *stream)
+{
+  gsk_stream_mark_is_readable (stream);
+  gsk_stream_mark_is_writable (stream);
+}
+static void
+my_stream_class_init (MyStreamClass *class)
+{
+  GskStreamClass *stream_class = GSK_STREAM_CLASS (class);
+  GskIOClass *io_class = GSK_IO_CLASS (class);
+  GObjectclass *object_class = G_OBJECT_CLASS (class);
+  stream_class-&gt;raw_read = my_stream_raw_read;
+  stream_class-&gt;raw_write = my_stream_raw_write;
+  io_class-&gt;shutdown_read = my_stream_shutdown_read;
+  io_class-&gt;shutdown_write = my_stream_shutdown_write;
+  object_class-&gt;finalize = my_stream_finalize;
+}
+</pre>
+<p>
+</p>
+<p>
+ Now we just need to implement this functions.
+ One thing we need to be careful of is that streams
+ are obligated to give notification when they are ready to be read from or written to.
+ The easiest way to do that for virtual streams is to use
+ gsk_stream_{mark,clear}_idle_notify_{read,write}().
+ Here is a function that calls those as needed, after checking the buffer state:
+</p>
+<pre class="programlisting">
+  #define MAX_OUTGOING_DATA	16384
+  static void
+  update_idle_notification (MyStream *stream)
+  {
+    if (stream-&gt;outgoing.size &gt; 0)
+      gsk_stream_mark_idle_notify_read (stream);
+    else
+      gsk_stream_clear_idle_notify_read (stream);
+
+    if (stream-&gt;outgoing.size &gt; MAX_OUTGOING_DATA)
+      gsk_stream_clear_idle_notify_write (stream);
+    else
+      gsk_stream_mark_idle_notify_write (stream);
+  }
+</pre>
+<p>
+ This will be used by the read and write implementations, which are now mostly trivial:
+</p>
+<pre class="programlisting">
+  static guint
+  my_stream_raw_read        (GskStream     *stream,
+			     gpointer       data,
+			     guint          length,
+			     GError       **error)
+  {
+    MyStream *my_stream = MY_STREAM (stream);
+    guint rv = gsk_buffer_read (&amp;my_stream-&gt;outgoing, data, length);
+
+    /* Handle the case if we've gotten a write-shutdown already. */
+    if (my_stream.outgoing.size == 0
+     &amp;&amp; !gsk_stream_get_is_writable (my_stream))
+      {
+        gsk_io_notify_read_shutdown (GSK_IO (stream));
+	return rv;
+      }
+    update_idle_notification (my_stream);
+    return rv;
+  }
+
+  static guint
+  my_stream_raw_write       (GskStream     *stream,
+			     gconstpointer  data,
+			     guint          length,
+			     GError       **error)
+  {
+    MyStream *my_stream = MY_STREAM (stream);
+    char *request;
+    gsk_buffer_append (&amp;my_stream-&gt;incoming, data, length);
+    while ((request=gsk_buffer_parse_string0 (&amp;my_stream-&gt;incoming)))
+      {
+        char *response = compute_response (request);
+	gsk_buffer_append_string0 (&amp;my_stream-&gt;outgoing, response);
+	g_free (request);
+	g_free (response);
+      }
+    update_idle_notification (my_stream);
+  }
+</pre>
+<p>
+</p>
+<p>Shutdown handling is always a bit sticky,
+since it is easy to have one side waiting for the other.
+</p>
+<pre class="programlisting">
+  static gboolean
+  my_stream_shutdown_read   (GskIO      *io,
+			     GError    **error)
+  {
+    gsk_io_notify_write_shutdown (io);
+    return TRUE;
+  }
+  static gboolean
+  my_stream_shutdown_write  (GskIO      *io,
+		    	     GError    **error)
+  {
+    MyStream *my_stream = MY_STREAM (io);
+    if (my_stream-&gt;outgoing.size == 0)
+      gsk_io_notify_read_shutdown (io);
+    return TRUE;
+  }
+</pre>
+<p>
+</p>
+<p>Once you've written all that,
+at least handle_connection is easy to implement:
+</p>
+<pre class="programlisting">
+static gboolean
+handle_connection (GskStream *stream,
+                   gpointer   data,
+		   GError   **error)
+{
+  GskStream *my_stream = g_object_new (MY_TYPE_STREAM, NULL);
+  gboolean rv = gsk_stream_attach_pair (my_stream, stream, error);
+  g_object_unref (my_stream);
+  return rv;
+}
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2635704"></a><h3>Implementing the accept handler by trapping the stream</h3>
+<p>
+...
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

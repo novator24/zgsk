@@ -1,0 +1,270 @@
+<refentry id="gsk-gskmimemultipartpiece">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskmimemultipartpiece.top_of_page">gskmimemultipartpiece</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskmimemultipartpiece</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskmimemultipartpiece.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link>;
+<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> * <link linkend="gsk-mime-multipart-piece-ref">gsk_mime_multipart_piece_ref</link>    (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-unref">gsk_mime_multipart_piece_unref</link>      (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece);
+<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> * <link linkend="gsk-mime-multipart-piece-alloc">gsk_mime_multipart_piece_alloc</link>  (void);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-set-description">gsk_mime_multipart_piece_set_description</link>
+                                                        (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *description);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-set-stream">gsk_mime_multipart_piece_set_stream</link> (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         <link linkend="GskStream">GskStream</link> *stream);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-set-type">gsk_mime_multipart_piece_set_type</link>   (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype,
+                                                         const <link linkend="char">char</link> *charset,
+                                                         const <link linkend="char">char</link> * const *kv_pairs);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-set-data">gsk_mime_multipart_piece_set_data</link>   (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> len,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-set-transfer-encoding">gsk_mime_multipart_piece_set_transfer_encoding</link>
+                                                        (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *encoding);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-set-location">gsk_mime_multipart_piece_set_location</link>
+                                                        (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *location);
+<link linkend="void">void</link>                <link linkend="gsk-mime-multipart-piece-set-id">gsk_mime_multipart_piece_set_id</link>     (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *id);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskmimemultipartpiece.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskmimemultipartpiece.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMimeMultipartPiece" role="struct">
+<title>GskMimeMultipartPiece</title>
+<indexterm zone="GskMimeMultipartPiece"><primary sortas="GskMimeMultipartPiece">GskMimeMultipartPiece</primary></indexterm><programlisting>typedef struct {
+  char *type;
+  char *subtype;
+  char *id;
+  char *description;
+  char *charset;
+  char *location;
+  char *transfer_encoding;
+  char *disposition;
+  char **other_fields;
+
+  /* if is_memory */
+  guint content_length;
+  gconstpointer content_data;
+} GskMimeMultipartPiece;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-ref" role="function">
+<title>gsk_mime_multipart_piece_ref ()</title>
+<indexterm zone="gsk-mime-multipart-piece-ref"><primary sortas="gsk_mime_multipart_piece_ref">gsk_mime_multipart_piece_ref</primary></indexterm><programlisting><link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> * gsk_mime_multipart_piece_ref    (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece);</programlisting>
+<para>
+Reference the piece.  This piece will only be destroyed
+when its reference-count hits 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> a piece whose reference count should be increased by 1.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <parameter>piece</parameter>, for convenience.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-unref" role="function">
+<title>gsk_mime_multipart_piece_unref ()</title>
+<indexterm zone="gsk-mime-multipart-piece-unref"><primary sortas="gsk_mime_multipart_piece_unref">gsk_mime_multipart_piece_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_unref      (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece);</programlisting>
+<para>
+Unreference the piece.  This piece will be destroyed
+when its reference-count hits 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> a piece whose reference count should be decreased by 1.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-alloc" role="function">
+<title>gsk_mime_multipart_piece_alloc ()</title>
+<indexterm zone="gsk-mime-multipart-piece-alloc"><primary sortas="gsk_mime_multipart_piece_alloc">gsk_mime_multipart_piece_alloc</primary></indexterm><programlisting><link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> * gsk_mime_multipart_piece_alloc  (void);</programlisting>
+<para>
+Allocate a new MIME piece.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated MIME piece.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-set-description" role="function">
+<title>gsk_mime_multipart_piece_set_description ()</title>
+<indexterm zone="gsk-mime-multipart-piece-set-description"><primary sortas="gsk_mime_multipart_piece_set_description">gsk_mime_multipart_piece_set_description</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_set_description
+                                                        (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *description);</programlisting>
+<para>
+Set the Content-Description tag for this MIME piece.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> the piece to describe.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>description</parameter>&#160;:</term>
+<listitem><simpara> the text description.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-set-stream" role="function">
+<title>gsk_mime_multipart_piece_set_stream ()</title>
+<indexterm zone="gsk-mime-multipart-piece-set-stream"><primary sortas="gsk_mime_multipart_piece_set_stream">gsk_mime_multipart_piece_set_stream</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_set_stream (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         <link linkend="GskStream">GskStream</link> *stream);</programlisting>
+<para>
+Set the content of a MIME piece to the <parameter>stream</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> the piece whose content-stream should be set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the stream to associate with <parameter>piece</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-set-type" role="function">
+<title>gsk_mime_multipart_piece_set_type ()</title>
+<indexterm zone="gsk-mime-multipart-piece-set-type"><primary sortas="gsk_mime_multipart_piece_set_type">gsk_mime_multipart_piece_set_type</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_set_type   (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype,
+                                                         const <link linkend="char">char</link> *charset,
+                                                         const <link linkend="char">char</link> * const *kv_pairs);</programlisting>
+<para>
+Set the content-type for the given MIME piece.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> the piece whose Content-Type header should be affected.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the major type of this content, eg 'text' or 'image'.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtype</parameter>&#160;:</term>
+<listitem><simpara> the minor type of this content, if type=='text',
+then 'plain', 'html', 'wml' are common examples of subtypes.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>charset</parameter>&#160;:</term>
+<listitem><simpara> the character set to use for text encodings.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>kv_pairs</parameter>&#160;:</term>
+<listitem><simpara> any other key-value pairs are a NULL-terminated
+array of strings, the even strings are keys, and the odd
+strings are their values.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-set-data" role="function">
+<title>gsk_mime_multipart_piece_set_data ()</title>
+<indexterm zone="gsk-mime-multipart-piece-set-data"><primary sortas="gsk_mime_multipart_piece_set_data">gsk_mime_multipart_piece_set_data</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_set_data   (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> len,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);</programlisting>
+<para>
+Set the binary data for a piece of a multipart stream,
+with destroy notification.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> the piece whose memory content should be set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> the slab of memory to associate with this part.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara> the length of the data in this part.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to invoke when this piece is destroyed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>destroy</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-set-transfer-encoding" role="function">
+<title>gsk_mime_multipart_piece_set_transfer_encoding ()</title>
+<indexterm zone="gsk-mime-multipart-piece-set-transfer-encoding"><primary sortas="gsk_mime_multipart_piece_set_transfer_encoding">gsk_mime_multipart_piece_set_transfer_encoding</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_set_transfer_encoding
+                                                        (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *encoding);</programlisting>
+<para>
+Set the Content-Encoding tag for this MIME piece.
+</para>
+<para>
+Only three content-encodings are recognized:
+"identity" (data transfered as binary data;
+not safe for some mail gateways),
+"base64" (binary data in 'base-64' encoding);
+"quoted-printable" uses '=' to escape funny
+characters as hex.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> the piece to describe.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>encoding</parameter>&#160;:</term>
+<listitem><simpara> the transfer-encoding
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-set-location" role="function">
+<title>gsk_mime_multipart_piece_set_location ()</title>
+<indexterm zone="gsk-mime-multipart-piece-set-location"><primary sortas="gsk_mime_multipart_piece_set_location">gsk_mime_multipart_piece_set_location</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_set_location
+                                                        (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *location);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>location</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-piece-set-id" role="function">
+<title>gsk_mime_multipart_piece_set_id ()</title>
+<indexterm zone="gsk-mime-multipart-piece-set-id"><primary sortas="gsk_mime_multipart_piece_set_id">gsk_mime_multipart_piece_set_id</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mime_multipart_piece_set_id     (<link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         const <link linkend="char">char</link> *id);</programlisting>
+<para>
+Set the Content-ID tag for this MIME piece.
+</para>
+<para>
+See: XXX?</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> the piece to describe.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>id</parameter>&#160;:</term>
+<listitem><simpara> the content-id.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,689 @@
+<refentry id="gsk-GskHttpContent">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskHttpContent.top_of_page">GskHttpContent</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskHttpContent</refname>
+<refpurpose>content database often useful for implementing http servers.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskHttpContent.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-HTTP-CONTENT-ID-INIT--CAPS">GSK_HTTP_CONTENT_ID_INIT</link>
+                    <link linkend="GskHttpContent">GskHttpContent</link>;
+enum                <link linkend="GskHttpContentAction">GskHttpContentAction</link>;
+<link linkend="void">void</link>                (<link linkend="GskHttpContentCGIFunc">*GskHttpContentCGIFunc</link>)            (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="guint">guint</link> n_vars,
+                                                         <link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> **vars,
+                                                         <link linkend="gpointer">gpointer</link> data);
+enum                <link linkend="GskHttpContentFileType">GskHttpContentFileType</link>;
+<link linkend="GskHttpContentResult">GskHttpContentResult</link>  (<link linkend="GskHttpContentFunc">*GskHttpContentFunc</link>)             (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskStream">GskStream</link> *post_data,
+                                                         <link linkend="gpointer">gpointer</link> data);
+                    <link linkend="GskHttpContentHandler">GskHttpContentHandler</link>;
+                    <link linkend="GskHttpContentId">GskHttpContentId</link>;
+enum                <link linkend="GskHttpContentResult">GskHttpContentResult</link>;
+<link linkend="void">void</link>                <link linkend="gsk-http-content-add-data">gsk_http_content_add_data</link>           (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="GskHttpContentId">GskHttpContentId</link> *id,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> data_len,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-add-data-by-path">gsk_http_content_add_data_by_path</link>   (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *path,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> data_len,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-add-file">gsk_http_content_add_file</link>           (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *fs_path,
+                                                         <link linkend="GskHttpContentFileType">GskHttpContentFileType</link> type);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-add-handler">gsk_http_content_add_handler</link>        (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="GskHttpContentId">GskHttpContentId</link> *id,
+                                                         <link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler,
+                                                         <link linkend="GskHttpContentAction">GskHttpContentAction</link> action);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-http-content-get-mime-type">gsk_http_content_get_mime_type</link>      (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> **type_out,
+                                                         const <link linkend="char">char</link> **subtype_out);
+<link linkend="GskHttpContentHandler">GskHttpContentHandler</link> * <link linkend="gsk-http-content-handler-new">gsk_http_content_handler_new</link>    (<link linkend="GskHttpContentFunc">GskHttpContentFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="GskHttpContentHandler">GskHttpContentHandler</link> * <link linkend="gsk-http-content-handler-new-cgi">gsk_http_content_handler_new_cgi</link>
+                                                        (<link linkend="GskHttpContentCGIFunc">GskHttpContentCGIFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-handler-ref">gsk_http_content_handler_ref</link>        (<link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-handler-unref">gsk_http_content_handler_unref</link>      (<link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-http-content-listen">gsk_http_content_listen</link>             (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-manage-server">gsk_http_content_manage_server</link>      (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server);
+<link linkend="GskHttpContent">GskHttpContent</link> *    <link linkend="gsk-http-content-new">gsk_http_content_new</link>                (void);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-respond">gsk_http_content_respond</link>            (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskStream">GskStream</link> *post_data);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-set-default-mime-type">gsk_http_content_set_default_mime_type</link>
+                                                        (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-set-mime-type">gsk_http_content_set_mime_type</link>      (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *prefix,
+                                                         const <link linkend="char">char</link> *suffix,
+                                                         const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskHttpContent.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This class provides a convenient way to provide handlers
+that carve of the HTTP-server namespace.
+</para>
+<para>
+You may register handlers specifically for
+any subset user-agent-prefix, path, path-prefix, path-suffix,
+and host.
+</para>
+<para>
+It also provides mime-type registration.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskHttpContent.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-HTTP-CONTENT-ID-INIT--CAPS" role="macro">
+<title>GSK_HTTP_CONTENT_ID_INIT</title>
+<indexterm zone="GSK-HTTP-CONTENT-ID-INIT--CAPS"><primary sortas="GSK_HTTP_CONTENT_ID_INIT">GSK_HTTP_CONTENT_ID_INIT</primary></indexterm><programlisting>#define             GSK_HTTP_CONTENT_ID_INIT</programlisting>
+<para>
+Initialize a blank <link linkend="GskHttpContentId"><type>GskHttpContentId</type></link>.
+(Alternately, use memset)
+</para></refsect2>
+<refsect2 id="GskHttpContent" role="struct">
+<title>GskHttpContent</title>
+<indexterm zone="GskHttpContent"><primary sortas="GskHttpContent">GskHttpContent</primary></indexterm><programlisting>typedef struct _GskHttpContent GskHttpContent;</programlisting>
+<para>
+An opaque type that keeps all the content hooks for the database.
+</para></refsect2>
+<refsect2 id="GskHttpContentAction" role="enum">
+<title>enum GskHttpContentAction</title>
+<indexterm zone="GskHttpContentAction"><primary sortas="GskHttpContentAction">GskHttpContentAction</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_CONTENT_PREPEND,
+  GSK_HTTP_CONTENT_APPEND,
+  GSK_HTTP_CONTENT_REPLACE
+} GskHttpContentAction;
+</programlisting>
+<para>
+How to affect existing handlers, if your content-id
+exactly matches their content-id.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-CONTENT-PREPEND--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_PREPEND</literal></term>
+<listitem><simpara>
+Replace all the given handlers.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-APPEND--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_APPEND</literal></term>
+<listitem><simpara>
+Try this handler after the others have passed.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-REPLACE--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_REPLACE</literal></term>
+<listitem><simpara>
+Try this handler first, before the others have tried.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpContentCGIFunc" role="function">
+<title>GskHttpContentCGIFunc ()</title>
+<indexterm zone="GskHttpContentCGIFunc"><primary sortas="GskHttpContentCGIFunc">GskHttpContentCGIFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskHttpContentCGIFunc)            (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="guint">guint</link> n_vars,
+                                                         <link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> **vars,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function that decides how to process a CGI request.
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara>the content database that had this handler.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara>the content handler.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara>the GskHttpServer that got the request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the request we parsed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_vars</parameter>&#160;:</term>
+<listitem><simpara>the number of CGI variables.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>vars</parameter>&#160;:</term>
+<listitem><simpara>the CGI variables.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>instance-specific data that was registered
+when the handler was created.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpContentFileType" role="enum">
+<title>enum GskHttpContentFileType</title>
+<indexterm zone="GskHttpContentFileType"><primary sortas="GskHttpContentFileType">GskHttpContentFileType</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_CONTENT_FILE_EXACT,
+  GSK_HTTP_CONTENT_FILE_DIR,
+  GSK_HTTP_CONTENT_FILE_DIR_TREE
+} GskHttpContentFileType;
+</programlisting>
+<para>
+What type of file structure is being mapped.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-CONTENT-FILE-EXACT--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_FILE_EXACT</literal></term>
+<listitem><simpara>
+A specific file is mapped.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-FILE-DIR--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_FILE_DIR</literal></term>
+<listitem><simpara>
+A shallow directory is mapped.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-FILE-DIR-TREE--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_FILE_DIR_TREE</literal></term>
+<listitem><simpara>
+A deep directory is mapped.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpContentFunc" role="function">
+<title>GskHttpContentFunc ()</title>
+<indexterm zone="GskHttpContentFunc"><primary sortas="GskHttpContentFunc">GskHttpContentFunc</primary></indexterm><programlisting><link linkend="GskHttpContentResult">GskHttpContentResult</link>  (*GskHttpContentFunc)             (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskStream">GskStream</link> *post_data,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function that decides how to process a generic request.
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara>the content database that had this handler.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara>the content handler.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara>the GskHttpServer that got the request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the request we parsed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>post_data</parameter>&#160;:</term>
+<listitem><simpara>raw binary data that came with this request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>instance-specific data that was registered
+when the handler was created.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to succeed, continue to the next handler,
+or fail.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpContentHandler" role="struct">
+<title>GskHttpContentHandler</title>
+<indexterm zone="GskHttpContentHandler"><primary sortas="GskHttpContentHandler">GskHttpContentHandler</primary></indexterm><programlisting>typedef struct _GskHttpContentHandler GskHttpContentHandler;</programlisting>
+<para>
+An opaque type that houses either a generic HTTP handler,
+or a CGI handler.
+</para></refsect2>
+<refsect2 id="GskHttpContentId" role="struct">
+<title>GskHttpContentId</title>
+<indexterm zone="GskHttpContentId"><primary sortas="GskHttpContentId">GskHttpContentId</primary></indexterm><programlisting>typedef struct {
+  const char *host;
+  const char *user_agent_prefix;
+  const char *path;
+  const char *path_prefix;
+  const char *path_suffix;
+} GskHttpContentId;
+</programlisting>
+<para>
+Match information:  describes which requests will try this handler.
+</para><variablelist role="struct">
+<varlistentry>
+<term>const&#160;<link linkend="char">char</link>&#160;*<structfield>host</structfield>;</term>
+<listitem><simpara>only try requests that match this host, if non-NULL.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term>const&#160;<link linkend="char">char</link>&#160;*<structfield>user_agent_prefix</structfield>;</term>
+<listitem><simpara>only try requests that begin with this user-agent string, if non-NULL.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term>const&#160;<link linkend="char">char</link>&#160;*<structfield>path</structfield>;</term>
+<listitem><simpara>only try requests that match this uri, if non-NULL.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term>const&#160;<link linkend="char">char</link>&#160;*<structfield>path_prefix</structfield>;</term>
+<listitem><simpara>only try requests that begin with this uri, if non-NULL.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term>const&#160;<link linkend="char">char</link>&#160;*<structfield>path_suffix</structfield>;</term>
+<listitem><simpara>only try requests that end with this uri, if non-NULL.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpContentResult" role="enum">
+<title>enum GskHttpContentResult</title>
+<indexterm zone="GskHttpContentResult"><primary sortas="GskHttpContentResult">GskHttpContentResult</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_CONTENT_OK,
+  GSK_HTTP_CONTENT_CHAIN,
+  GSK_HTTP_CONTENT_ERROR        /* causes a 500 error to result */
+} GskHttpContentResult;
+</programlisting>
+<para>
+Possible results from trying an http handler.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-CONTENT-OK--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_OK</literal></term>
+<listitem><simpara>the handler processed (or will process) the request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-CHAIN--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_CHAIN</literal></term>
+<listitem><simpara>the handler passed on the request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-ERROR--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_ERROR</literal></term>
+<listitem><simpara>the handler had a problem.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-add-data" role="function">
+<title>gsk_http_content_add_data ()</title>
+<indexterm zone="gsk-http-content-add-data"><primary sortas="gsk_http_content_add_data">gsk_http_content_add_data</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_add_data           (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="GskHttpContentId">GskHttpContentId</link> *id,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> data_len,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Add fixed data to the HTTP content database.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the content database to add data to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>id</parameter>&#160;:</term>
+<listitem><simpara> constraints on the query that will get this request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> the binary data to serve to the client.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data_len</parameter>&#160;:</term>
+<listitem><simpara> length of the data to serve to the client.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara> function that will be passed to the destroy-notify function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to be called when this content is unregistered.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-add-data-by-path" role="function">
+<title>gsk_http_content_add_data_by_path ()</title>
+<indexterm zone="gsk-http-content-add-data-by-path"><primary sortas="gsk_http_content_add_data_by_path">gsk_http_content_add_data_by_path</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_add_data_by_path   (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *path,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> data_len,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Add fixed data to the HTTP content database.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the content database to add data to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> raw URI location of the content.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> the binary data to serve to the client.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data_len</parameter>&#160;:</term>
+<listitem><simpara> length of the data to serve to the client.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara> function that will be passed to the destroy-notify function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to be called when this content is unregistered.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-add-file" role="function">
+<title>gsk_http_content_add_file ()</title>
+<indexterm zone="gsk-http-content-add-file"><primary sortas="gsk_http_content_add_file">gsk_http_content_add_file</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_add_file           (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *fs_path,
+                                                         <link linkend="GskHttpContentFileType">GskHttpContentFileType</link> type);</programlisting>
+<para>
+Add data from files from the native filesystem.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the content database to add data to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> raw URI location of the content.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fs_path</parameter>&#160;:</term>
+<listitem><simpara> location of the data source in the file-system.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> type of file service:  this may be an exact file,
+or a directory, or a directory tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-add-handler" role="function">
+<title>gsk_http_content_add_handler ()</title>
+<indexterm zone="gsk-http-content-add-handler"><primary sortas="gsk_http_content_add_handler">gsk_http_content_add_handler</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_add_handler        (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="GskHttpContentId">GskHttpContentId</link> *id,
+                                                         <link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler,
+                                                         <link linkend="GskHttpContentAction">GskHttpContentAction</link> action);</programlisting>
+<para>
+Add the handler to the content database.
+This increases the ref-count on the handler,
+so you must also unref it.
+</para>
+<para>
+You cannot add a handler to more than
+one database.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> database to add the content to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>id</parameter>&#160;:</term>
+<listitem><simpara> location within the server to add the entry to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara> a handler to process the data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>action</parameter>&#160;:</term>
+<listitem><simpara> how this handler relates to other handlers.
+It may be a pre-filter, or a post-filter, or replace
+the currently registered handlers.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-get-mime-type" role="function">
+<title>gsk_http_content_get_mime_type ()</title>
+<indexterm zone="gsk-http-content-get-mime-type"><primary sortas="gsk_http_content_get_mime_type">gsk_http_content_get_mime_type</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_http_content_get_mime_type      (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> **type_out,
+                                                         const <link linkend="char">char</link> **subtype_out);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtype_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-handler-new" role="function">
+<title>gsk_http_content_handler_new ()</title>
+<indexterm zone="gsk-http-content-handler-new"><primary sortas="gsk_http_content_handler_new">gsk_http_content_handler_new</primary></indexterm><programlisting><link linkend="GskHttpContentHandler">GskHttpContentHandler</link> * gsk_http_content_handler_new    (<link linkend="GskHttpContentFunc">GskHttpContentFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Allocate a new content handler.
+</para>
+<para>
+This should be added to a GskHttpContent
+using <link linkend="gsk-http-content-add-handler"><function>gsk_http_content_add_handler()</function></link>
+and then unrefed with <link linkend="gsk-http-content-handler-unref"><function>gsk_http_content_handler_unref()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function to call that will try and
+handle the HTTP request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call when the handler is destroyed.
+(after all requests are done).
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated handler.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-handler-new-cgi" role="function">
+<title>gsk_http_content_handler_new_cgi ()</title>
+<indexterm zone="gsk-http-content-handler-new-cgi"><primary sortas="gsk_http_content_handler_new_cgi">gsk_http_content_handler_new_cgi</primary></indexterm><programlisting><link linkend="GskHttpContentHandler">GskHttpContentHandler</link> * gsk_http_content_handler_new_cgi
+                                                        (<link linkend="GskHttpContentCGIFunc">GskHttpContentCGIFunc</link> func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Allocate a new content handler.
+</para>
+<para>
+This should be added to a GskHttpContent
+using <link linkend="gsk-http-content-add-handler"><function>gsk_http_content_add_handler()</function></link>
+and then unrefed with <link linkend="gsk-http-content-handler-unref"><function>gsk_http_content_handler_unref()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function to call that will try and
+handle the CGI request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call when the handler is destroyed.
+(after all requests are done).
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated handler.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-handler-ref" role="function">
+<title>gsk_http_content_handler_ref ()</title>
+<indexterm zone="gsk-http-content-handler-ref"><primary sortas="gsk_http_content_handler_ref">gsk_http_content_handler_ref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_handler_ref        (<link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-handler-unref" role="function">
+<title>gsk_http_content_handler_unref ()</title>
+<indexterm zone="gsk-http-content-handler-unref"><primary sortas="gsk_http_content_handler_unref">gsk_http_content_handler_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_handler_unref      (<link linkend="GskHttpContentHandler">GskHttpContentHandler</link> *handler);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-listen" role="function">
+<title>gsk_http_content_listen ()</title>
+<indexterm zone="gsk-http-content-listen"><primary sortas="gsk_http_content_listen">gsk_http_content_listen</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_http_content_listen             (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Start an HTTP server listening on the given port,
+using content from the given content database.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the content database which will handle requests.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the address to bind to, typically in the TCP or Unix namespaces.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> where to put the error if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the listen call succeeded.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-manage-server" role="function">
+<title>gsk_http_content_manage_server ()</title>
+<indexterm zone="gsk-http-content-manage-server"><primary sortas="gsk_http_content_manage_server">gsk_http_content_manage_server</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_manage_server      (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server);</programlisting>
+<para>
+Handle requests on the given server, using the GskHttpContent.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the content database which will handle requests.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> a GskHttpServer to manage.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-new" role="function">
+<title>gsk_http_content_new ()</title>
+<indexterm zone="gsk-http-content-new"><primary sortas="gsk_http_content_new">gsk_http_content_new</primary></indexterm><programlisting><link linkend="GskHttpContent">GskHttpContent</link> *    gsk_http_content_new                (void);</programlisting>
+<para>
+Allocate a new, empty content set.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated content database.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-respond" role="function">
+<title>gsk_http_content_respond ()</title>
+<indexterm zone="gsk-http-content-respond"><primary sortas="gsk_http_content_respond">gsk_http_content_respond</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_respond            (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         <link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskStream">GskStream</link> *post_data);</programlisting>
+<para>
+Respond to the given HTTP query,
+using the registered content in the GskHttpContent.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> the content database that will define the response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server which received the request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the server's request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>post_data</parameter>&#160;:</term>
+<listitem><simpara> the server's post data, or NULL if none.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-set-default-mime-type" role="function">
+<title>gsk_http_content_set_default_mime_type ()</title>
+<indexterm zone="gsk-http-content-set-default-mime-type"><primary sortas="gsk_http_content_set_default_mime_type">gsk_http_content_set_default_mime_type</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_set_default_mime_type
+                                                        (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype);</programlisting>
+<para>
+If no other more specific path is found,
+this will be the assigned type.
+</para>
+<para>
+You should always call this function if you plan
+on serving files or data.
+</para>
+<para>
+This is equivalent to calling <link linkend="gsk-http-content-set-mime-type"><function>gsk_http_content_set_mime_type()</function></link>
+with prefix==suffix==NULL.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> content-database to register this mime information with.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> default mime type.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtype</parameter>&#160;:</term>
+<listitem><simpara> default mime subtype.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-set-mime-type" role="function">
+<title>gsk_http_content_set_mime_type ()</title>
+<indexterm zone="gsk-http-content-set-mime-type"><primary sortas="gsk_http_content_set_mime_type">gsk_http_content_set_mime_type</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_set_mime_type      (<link linkend="GskHttpContent">GskHttpContent</link> *content,
+                                                         const <link linkend="char">char</link> *prefix,
+                                                         const <link linkend="char">char</link> *suffix,
+                                                         const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype);</programlisting>
+<para>
+Register information about which paths are associated with
+which mime types.  This is used for data and file serving,
+or you can explicitly use it from a custom handler.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> content-database to register this mime information with.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>prefix</parameter>&#160;:</term>
+<listitem><simpara> path prefix that maps to this type/subtype pair.
+(may be NULL for an empty prefix test).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>suffix</parameter>&#160;:</term>
+<listitem><simpara> path suffix that maps to this type/subtype pair. 
+(may be NULL for an empty suffix test).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> main type associated with this portion of the URI space.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtype</parameter>&#160;:</term>
+<listitem><simpara> subtype associated with this portion of the URI space.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

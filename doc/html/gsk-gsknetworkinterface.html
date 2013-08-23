@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gsknetworkinterface</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch14.html" title="Odds and Ends">
+<link rel="prev" href="gsk-gskmempool.html" title="gskmempool">
+<link rel="next" href="gsk-gskdate.html" title="gskdate">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskmempool.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch14.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskdate.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gsknetworkinterface.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gsknetworkinterface.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gsknetworkinterface"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gsknetworkinterface.top_of_page"></a>gsknetworkinterface</span></h2>
+<p>gsknetworkinterface — Obtain information about your local network interfaces.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gsknetworkinterface.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterface" title="GskNetworkInterface">GskNetworkInterface</a>;
+                    <a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceSet" title="GskNetworkInterfaceSet">GskNetworkInterfaceSet</a>;
+enum                <a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceFlags" title="enum GskNetworkInterfaceFlags">GskNetworkInterfaceFlags</a>;
+<a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceSet" title="GskNetworkInterfaceSet">GskNetworkInterfaceSet</a> * <a class="link" href="gsk-gsknetworkinterface.html#gsk-network-interface-set-new" title="gsk_network_interface_set_new ()">gsk_network_interface_set_new</a>  (<a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceFlags" title="enum GskNetworkInterfaceFlags">GskNetworkInterfaceFlags</a> flags);
+void                <a class="link" href="gsk-gsknetworkinterface.html#gsk-network-interface-set-destroy" title="gsk_network_interface_set_destroy ()">gsk_network_interface_set_destroy</a>   (<a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceSet" title="GskNetworkInterfaceSet">GskNetworkInterfaceSet</a> *set);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsknetworkinterface.description"></a><h2>Description</h2>
+<p>
+These methods allow you to obtain information about the
+local network interfaces.
+</p>
+<p>
+A network interface is abstract jargon for an ethernet card,
+that is, it's a device that transmits and receives packets.
+Or, it can be a virtual interface, like the loopback interface is.
+One other possibility is that the interface is an alias:
+this sort of trick is done to make a computer listen
+on two IP addresses.
+</p>
+<p>
+The information returned by this function is a name
+for each interface (the same name as returned by <span class="command"><strong>ifconfig</strong></span>)
+and addresses, mostly the address used to connect to this device,
+ie your IP address (with port set to 0).
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsknetworkinterface.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskNetworkInterface"></a><h3>GskNetworkInterface</h3>
+<pre class="programlisting">typedef struct {
+  const char *ifname;
+
+  /* whether this interface is "virtual" -- just connects back to this host */
+  unsigned is_loopback : 1;
+
+  /* whether this interface supports broadcasting. */
+  unsigned supports_multicast : 1;
+
+  /* whether this interface is receiving packets not intended for it. */
+  unsigned is_promiscuous : 1;
+
+  /* ip-address if the interface is up. */
+  GskSocketAddress *address;
+
+  /* if !is_loopback, this is the device's MAC address. */
+  GskSocketAddress *hw_address;
+
+  /* if is_point_to_point, this is the address of the other end of
+   * the connection.
+   */
+  GskSocketAddress *p2p_address;
+
+  /* if supports_broadcast, this is the broadcast address. */
+  GskSocketAddress *broadcast;
+} GskNetworkInterface;
+</pre>
+<p>
+Information about a single network interface.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">const char *<em class="structfield"><code>ifname</code></em>;</span></p></td>
+<td>the name of the interface.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *<em class="structfield"><code>address</code></em>;</span></p></td>
+<td>the IP address of the interface (with port set to 0).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *<em class="structfield"><code>hw_address</code></em>;</span></p></td>
+<td>the ethernet address of the interface.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *<em class="structfield"><code>p2p_address</code></em>;</span></p></td>
+<td>the remote IP address of a point-to-point connection.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *<em class="structfield"><code>broadcast</code></em>;</span></p></td>
+<td>the broadcast IP address.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNetworkInterfaceSet"></a><h3>GskNetworkInterfaceSet</h3>
+<pre class="programlisting">typedef struct {
+  guint num_interfaces;
+  GskNetworkInterface *interfaces;
+} GskNetworkInterfaceSet;
+</pre>
+<p>
+Information about a number of network interfaces.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>num_interfaces</code></em>;</span></p></td>
+<td>the number of interfaces.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterface" title="GskNetworkInterface">GskNetworkInterface</a> *<em class="structfield"><code>interfaces</code></em>;</span></p></td>
+<td>the interfaces.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNetworkInterfaceFlags"></a><h3>enum GskNetworkInterfaceFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_NETWORK_INTERFACE_UP			= (1&lt;&lt;0),
+  GSK_NETWORK_INTERFACE_LOOPBACK		= (1&lt;&lt;1),
+  GSK_NETWORK_INTERFACE_NON_LOOPBACK		= (1&lt;&lt;2),
+  GSK_NETWORK_INTERFACE_HAS_BROADCAST		= (1&lt;&lt;3),
+  GSK_NETWORK_INTERFACE_HAS_MULTICAST		= (1&lt;&lt;4)
+} GskNetworkInterfaceFlags;
+</pre>
+<p>
+Constraints governing which interfaces to return.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-NETWORK-INTERFACE-UP--CAPS"></a><span class="term"><code class="literal">GSK_NETWORK_INTERFACE_UP</code></span></p></td>
+<td>The interface must be up, ready to transmit
+and receive packets.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-NETWORK-INTERFACE-LOOPBACK--CAPS"></a><span class="term"><code class="literal">GSK_NETWORK_INTERFACE_LOOPBACK</code></span></p></td>
+<td>The interface must be a loopback interface,
+a virtual interface, as opposed to a piece of hardware.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-NETWORK-INTERFACE-NON-LOOPBACK--CAPS"></a><span class="term"><code class="literal">GSK_NETWORK_INTERFACE_NON_LOOPBACK</code></span></p></td>
+<td>The interface must be a non-loopback interface,
+an actual piece of hardware.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-NETWORK-INTERFACE-HAS-BROADCAST--CAPS"></a><span class="term"><code class="literal">GSK_NETWORK_INTERFACE_HAS_BROADCAST</code></span></p></td>
+<td>The interface must have a broadcast address.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-NETWORK-INTERFACE-HAS-MULTICAST--CAPS"></a><span class="term"><code class="literal">GSK_NETWORK_INTERFACE_HAS_MULTICAST</code></span></p></td>
+<td>The interface must have a multicast support.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-network-interface-set-new"></a><h3>gsk_network_interface_set_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceSet" title="GskNetworkInterfaceSet">GskNetworkInterfaceSet</a> * gsk_network_interface_set_new  (<a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceFlags" title="enum GskNetworkInterfaceFlags">GskNetworkInterfaceFlags</a> flags);</pre>
+<p>
+Create a new list of interfaces, subject to the constraints given.
+</p>
+<p>
+Note that the constraints must all be satified, so
+using GSK_NETWORK_INTERFACE_NO_LOOKBACK and GSK_NETWORK_INTERFACE_LOOKBACK
+will always return an empty set.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> constraints on the interfaces to return.  All the constraints
+must be satisfied.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly allocated list of interfaces that
+must be freed with <a class="link" href="gsk-gsknetworkinterface.html#gsk-network-interface-set-destroy" title="gsk_network_interface_set_destroy ()"><code class="function">gsk_network_interface_set_destroy()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-network-interface-set-destroy"></a><h3>gsk_network_interface_set_destroy ()</h3>
+<pre class="programlisting">void                gsk_network_interface_set_destroy   (<a class="link" href="gsk-gsknetworkinterface.html#GskNetworkInterfaceSet" title="GskNetworkInterfaceSet">GskNetworkInterfaceSet</a> *set);</pre>
+<p>
+Free the memory used by the list of interfaces.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>set</code></em> :</span></p></td>
+<td> the list of interfaces to destroy.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

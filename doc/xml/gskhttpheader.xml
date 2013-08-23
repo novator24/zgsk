@@ -1,0 +1,3161 @@
+<refentry id="GskHttpHeader">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskHttpHeader.top_of_page">GskHttpHeader</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskHttpHeader</refname>
+<refpurpose>Base class for HTTP headers.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskHttpHeader.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskHttpAuthorization">GskHttpAuthorization</link>;
+                    <link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link>;
+                    <link linkend="GskHttpCharSet">GskHttpCharSet</link>;
+                    <link linkend="GskHttpCookie">GskHttpCookie</link>;
+                    <link linkend="GskHttpLanguageSet">GskHttpLanguageSet</link>;
+                    <link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link>;
+                    <link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link>;
+                    <link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link>;
+                    <link linkend="GskHttpRangeSet">GskHttpRangeSet</link>;
+enum                <link linkend="GskHttpStatus">GskHttpStatus</link>;
+enum                <link linkend="GskHttpVerb">GskHttpVerb</link>;
+enum                <link linkend="GskHttpRange">GskHttpRange</link>;
+enum                <link linkend="GskHttpContentEncoding">GskHttpContentEncoding</link>;
+enum                <link linkend="GskHttpTransferEncoding">GskHttpTransferEncoding</link>;
+enum                <link linkend="GskHttpConnection">GskHttpConnection</link>;
+<link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link> * <link linkend="gsk-http-media-type-set-new">gsk_http_media_type_set_new</link>       (const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype,
+                                                         <link linkend="gfloat">gfloat</link> quality);
+<link linkend="void">void</link>                <link linkend="gsk-http-media-type-set-free">gsk_http_media_type_set_free</link>        (<link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link> *set);
+<link linkend="GskHttpCharSet">GskHttpCharSet</link> *    <link linkend="gsk-http-char-set-new">gsk_http_char_set_new</link>               (const <link linkend="char">char</link> *charset_name,
+                                                         <link linkend="gfloat">gfloat</link> quality);
+<link linkend="void">void</link>                <link linkend="gsk-http-char-set-free">gsk_http_char_set_free</link>              (<link linkend="GskHttpCharSet">GskHttpCharSet</link> *char_set);
+<link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link> * <link linkend="gsk-http-content-encoding-set-new">gsk_http_content_encoding_set_new</link>
+                                                        (<link linkend="GskHttpContentEncoding">GskHttpContentEncoding</link> encoding,
+                                                         <link linkend="gfloat">gfloat</link> quality);
+<link linkend="void">void</link>                <link linkend="gsk-http-content-encoding-set-free">gsk_http_content_encoding_set_free</link>  (<link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link> *encoding_set);
+<link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link> * <link linkend="gsk-http-transfer-encoding-set-new">gsk_http_transfer_encoding_set_new</link>
+                                                        (<link linkend="GskHttpTransferEncoding">GskHttpTransferEncoding</link> encoding,
+                                                         <link linkend="gfloat">gfloat</link> quality);
+<link linkend="void">void</link>                <link linkend="gsk-http-transfer-encoding-set-free">gsk_http_transfer_encoding_set_free</link> (<link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link> *encoding_set);
+<link linkend="GskHttpRangeSet">GskHttpRangeSet</link> *   <link linkend="gsk-http-range-set-new">gsk_http_range_set_new</link>              (<link linkend="GskHttpRange">GskHttpRange</link> range_type);
+<link linkend="void">void</link>                <link linkend="gsk-http-range-set-free">gsk_http_range_set_free</link>             (<link linkend="GskHttpRangeSet">GskHttpRangeSet</link> *set);
+<link linkend="GskHttpLanguageSet">GskHttpLanguageSet</link> * <link linkend="gsk-http-language-set-new">gsk_http_language_set_new</link>          (const <link linkend="char">char</link> *language,
+                                                         <link linkend="gfloat">gfloat</link> quality);
+<link linkend="void">void</link>                <link linkend="gsk-http-language-set-free">gsk_http_language_set_free</link>          (<link linkend="GskHttpLanguageSet">GskHttpLanguageSet</link> *set);
+<link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * <link linkend="gsk-http-authenticate-new-basic">gsk_http_authenticate_new_basic</link>   (const <link linkend="char">char</link> *realm);
+<link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * <link linkend="gsk-http-authenticate-new-digest">gsk_http_authenticate_new_digest</link>  (const <link linkend="char">char</link> *realm,
+                                                         const <link linkend="char">char</link> *domain,
+                                                         const <link linkend="char">char</link> *nonce,
+                                                         const <link linkend="char">char</link> *opaque,
+                                                         const <link linkend="char">char</link> *algorithm);
+<link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * <link linkend="gsk-http-authenticate-new-unknown">gsk_http_authenticate_new_unknown</link> (const <link linkend="char">char</link> *auth_scheme_name,
+                                                         const <link linkend="char">char</link> *realm,
+                                                         const <link linkend="char">char</link> *options);
+<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * <link linkend="gsk-http-authorization-new-basic">gsk_http_authorization_new_basic</link> (const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password);
+<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * <link linkend="gsk-http-authorization-new-respond-post">gsk_http_authorization_new_respond_post</link>
+                                                        (const <link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> *,
+                                                         const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="guint">guint</link> post_data_len,
+                                                         <link linkend="gconstpointer">gconstpointer</link> post_data,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * <link linkend="gsk-http-authorization-new-unknown">gsk_http_authorization_new_unknown</link>
+                                                        (const <link linkend="char">char</link> *auth_scheme_name,
+                                                         const <link linkend="char">char</link> *response);
+const <link linkend="char">char</link> *        <link linkend="gsk-http-authorization-peek-response-digest">gsk_http_authorization_peek_response_digest</link>
+                                                        (<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *);
+<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * <link linkend="gsk-http-authorization-copy">gsk_http_authorization_copy</link>      (const <link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *);
+<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * <link linkend="gsk-http-authorization-new-digest">gsk_http_authorization_new_digest</link>
+                                                        (const <link linkend="char">char</link> *realm,
+                                                         const <link linkend="char">char</link> *domain,
+                                                         const <link linkend="char">char</link> *nonce,
+                                                         const <link linkend="char">char</link> *opaque,
+                                                         const <link linkend="char">char</link> *algorithm,
+                                                         const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password,
+                                                         const <link linkend="char">char</link> *response_digest,
+                                                         const <link linkend="char">char</link> *entity_digest);
+<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * <link linkend="gsk-http-authorization-new-respond">gsk_http_authorization_new_respond</link>
+                                                        (const <link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> *,
+                                                         const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-http-authorization-set-nonce">gsk_http_authorization_set_nonce</link>    (<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *,
+                                                         const <link linkend="char">char</link> *nonce);
+<link linkend="GskHttpCookie">GskHttpCookie</link> *     <link linkend="gsk-http-cookie-new">gsk_http_cookie_new</link>                 (const <link linkend="char">char</link> *key,
+                                                         const <link linkend="char">char</link> *value,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *domain,
+                                                         const <link linkend="char">char</link> *expire_date,
+                                                         const <link linkend="char">char</link> *comment,
+                                                         <link linkend="int">int</link> max_age);
+<link linkend="GskHttpCookie">GskHttpCookie</link> *     <link linkend="gsk-http-cookie-copy">gsk_http_cookie_copy</link>                (const <link linkend="GskHttpCookie">GskHttpCookie</link> *orig);
+<link linkend="void">void</link>                <link linkend="gsk-http-cookie-free">gsk_http_cookie_free</link>                (<link linkend="GskHttpCookie">GskHttpCookie</link> *orig);
+                    <link linkend="GskHttpHeaderClass">GskHttpHeaderClass</link>;
+                    <link linkend="GskHttpHeader-struct">GskHttpHeader</link>;
+enum                <link linkend="GskHttpParseFlags">GskHttpParseFlags</link>;
+<link linkend="GskHttpConnection">GskHttpConnection</link>   <link linkend="gsk-http-header-get-connection">gsk_http_header_get_connection</link>      (<link linkend="GskHttpHeader">GskHttpHeader</link> *header);
+<link linkend="GskHttpHeader">GskHttpHeader</link> *     <link linkend="gsk-http-header-from-buffer">gsk_http_header_from_buffer</link>         (<link linkend="GskBuffer">GskBuffer</link> *input,
+                                                         <link linkend="gboolean">gboolean</link> is_request,
+                                                         <link linkend="GskHttpParseFlags">GskHttpParseFlags</link> flags,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-to-buffer">gsk_http_header_to_buffer</link>           (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *output);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-set-content-encoding">gsk_http_header_set_content_encoding</link>
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *encoding);
+#define             <link linkend="gsk-http-header-get-content-encoding">gsk_http_header_get_content_encoding</link>(header)
+#define             <link linkend="gsk-http-header-set-date">gsk_http_header_set_date</link>            (header, date)
+#define             <link linkend="gsk-http-header-get-date">gsk_http_header_get_date</link>            (header)
+<link linkend="void">void</link>                <link linkend="gsk-http-header-add-misc">gsk_http_header_add_misc</link>            (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *key,
+                                                         const <link linkend="char">char</link> *value);
+const <link linkend="char">char</link> *        <link linkend="gsk-http-header-lookup-misc">gsk_http_header_lookup_misc</link>         (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *key);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-remove-misc">gsk_http_header_remove_misc</link>         (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *key);
+                    <link linkend="GskHttpHeaderLineParser">GskHttpHeaderLineParser</link>;
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskHttpHeaderLineParserFunc">*GskHttpHeaderLineParserFunc</link>)      (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *text,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="GHashTable">GHashTable</link> *        <link linkend="gsk-http-header-get-parser-table">gsk_http_header_get_parser_table</link>    (<link linkend="gboolean">gboolean</link> is_request);
+<link linkend="void">void</link>                (<link linkend="GskHttpHeaderPrintFunc">*GskHttpHeaderPrintFunc</link>)           (const <link linkend="char">char</link> *text,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-print">gsk_http_header_print</link>               (<link linkend="GskHttpHeader">GskHttpHeader</link> *http_header,
+                                                         <link linkend="GskHttpHeaderPrintFunc">GskHttpHeaderPrintFunc</link> print_func,
+                                                         <link linkend="gpointer">gpointer</link> print_data);
+#define             <link linkend="gsk-http-header-set-connection-type">gsk_http_header_set_connection_type</link> (header, connection_type)
+#define             <link linkend="gsk-http-header-get-connection-type">gsk_http_header_get_connection_type</link> (header)
+#define             <link linkend="gsk-http-header-set-transfer-encoding">gsk_http_header_set_transfer_encoding</link>(header, enc)
+#define             <link linkend="gsk-http-header-get-transfer-encoding">gsk_http_header_get_transfer_encoding</link>(header)
+#define             <link linkend="gsk-http-header-get-content-type">gsk_http_header_get_content_type</link>    (header)
+#define             <link linkend="gsk-http-header-set-content-type">gsk_http_header_set_content_type</link>    (header, content_type)
+#define             <link linkend="gsk-http-header-get-content-subtype">gsk_http_header_get_content_subtype</link> (header)
+#define             <link linkend="gsk-http-header-set-content-subtype">gsk_http_header_set_content_subtype</link> (header, content_type)
+#define             <link linkend="gsk-http-header-set-content-length">gsk_http_header_set_content_length</link>  (header, len)
+#define             <link linkend="gsk-http-header-get-content-length">gsk_http_header_get_content_length</link>  (header)
+#define             <link linkend="gsk-http-header-get-content-charset">gsk_http_header_get_content_charset</link> (header)
+<link linkend="void">void</link>                <link linkend="gsk-http-header-add-accepted-range">gsk_http_header_add_accepted_range</link>  (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         <link linkend="GskHttpRange">GskHttpRange</link> range);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-add-pragma">gsk_http_header_add_pragma</link>          (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *pragma);
+#define             <link linkend="gsk-http-header-set-content-charset">gsk_http_header_set_content_charset</link> (header, content_type)
+#define             <link linkend="gsk-http-header-set-range">gsk_http_header_set_range</link>           (header, start, end)
+#define             <link linkend="gsk-http-header-get-range-start">gsk_http_header_get_range_start</link>     (header)
+#define             <link linkend="gsk-http-header-get-range-end">gsk_http_header_get_range_end</link>       (header)
+<link linkend="void">void</link>                <link linkend="gsk-http-header-set-string">gsk_http_header_set_string</link>          (<link linkend="gpointer">gpointer</link> http_header,
+                                                         <link linkend="char">char</link> **p_str,
+                                                         const <link linkend="char">char</link> *str);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-set-string-val">gsk_http_header_set_string_val</link>      (<link linkend="gpointer">gpointer</link> http_header,
+                                                         <link linkend="char">char</link> **p_str,
+                                                         const <link linkend="GValue">GValue</link> *value);
+<link linkend="char">char</link> *              <link linkend="gsk-http-header-cut-string">gsk_http_header_cut_string</link>          (<link linkend="gpointer">gpointer</link> http_header,
+                                                         const <link linkend="char">char</link> *start,
+                                                         const <link linkend="char">char</link> *end);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-free-string">gsk_http_header_free_string</link>         (<link linkend="gpointer">gpointer</link> http_header,
+                                                         <link linkend="char">char</link> *str);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-set-connection-string">gsk_http_header_set_connection_string</link>
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *str);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-set-content-encoding-string">gsk_http_header_set_content_encoding_string</link>
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *str);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-set-transfer-encoding-string">gsk_http_header_set_transfer_encoding_string</link>
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *str);
+<link linkend="void">void</link>                <link linkend="gsk-http-header-set-version">gsk_http_header_set_version</link>         (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         <link linkend="gint">gint</link> major,
+                                                         <link linkend="gint">gint</link> minor);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskHttpHeader.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskHttpHeader
+         +----<link linkend="GskHttpRequest">GskHttpRequest</link>
+         +----<link linkend="GskHttpResponse">GskHttpResponse</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="GskHttpHeader.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskHttpHeader--connection">connection</link>&quot;               <link linkend="GskHttpConnection">GskHttpConnection</link>     : Read / Write
+  &quot;<link linkend="GskHttpHeader--connection-string">connection-string</link>&quot;        <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpHeader--content-charset">content-charset</link>&quot;          <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpHeader--content-encoding">content-encoding</link>&quot;         <link linkend="GskHttpContentEncoding">GskHttpContentEncoding</link>  : Read / Write
+  &quot;<link linkend="GskHttpHeader--content-encoding-string">content-encoding-string</link>&quot;  <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpHeader--content-length">content-length</link>&quot;           <link linkend="gint">gint</link>                  : Read / Write
+  &quot;<link linkend="GskHttpHeader--content-subtype">content-subtype</link>&quot;          <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpHeader--content-type">content-type</link>&quot;             <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskHttpHeader--date">date</link>&quot;                     <link linkend="gint">gint</link>                  : Read / Write
+  &quot;<link linkend="GskHttpHeader--major-version">major-version</link>&quot;            <link linkend="guint">guint</link>                 : Read / Write
+  &quot;<link linkend="GskHttpHeader--minor-version">minor-version</link>&quot;            <link linkend="guint">guint</link>                 : Read / Write
+  &quot;<link linkend="GskHttpHeader--range-end">range-end</link>&quot;                <link linkend="gint">gint</link>                  : Read / Write
+  &quot;<link linkend="GskHttpHeader--range-start">range-start</link>&quot;              <link linkend="gint">gint</link>                  : Read / Write
+  &quot;<link linkend="GskHttpHeader--transfer-encoding">transfer-encoding</link>&quot;        <link linkend="GskHttpTransferEncoding">GskHttpTransferEncoding</link>  : Read / Write
+  &quot;<link linkend="GskHttpHeader--transfer-encoding-string">transfer-encoding-string</link>&quot; <link linkend="gchar">gchar</link>*                : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="GskHttpHeader.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The class provides methods and structure to parse and
+examime HTTP requests and responses.
+</para>
+</refsect1>
+
+<refsect1 id="GskHttpHeader.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskHttpAuthorization" role="struct">
+<title>GskHttpAuthorization</title>
+<indexterm zone="GskHttpAuthorization"><primary sortas="GskHttpAuthorization">GskHttpAuthorization</primary></indexterm><programlisting>typedef struct {
+  GskHttpAuthMode mode;
+  char           *auth_scheme_name;
+  union
+  {
+    struct {
+      char                   *response;
+    } unknown;
+    struct {
+      char                   *user;
+      char                   *password;
+    } basic;
+    struct {
+      char                   *realm;
+      char                   *domain;
+      char                   *nonce;
+      char                   *opaque;
+      char                   *algorithm;
+      char                   *user;
+      char                   *password;
+      char                   *response_digest;
+      char                   *entity_digest;
+    } digest;
+  } info;
+} GskHttpAuthorization;
+</programlisting>
+<para>
+  A response to a Authenticate: challenge.
+  This string may provide a cryptographic proof that the
+  client-side has access to a secret key.
+</para>
+<para>
+      From RFC 2616, Section 14.8: If a request is
+      authenticated and a realm specified, the same credentials SHOULD
+      be valid for all other requests within this realm (assuming that
+      the authentication scheme itself does not require otherwise, such
+      as credentials that vary according to a challenge value or using
+      synchronized clocks).
+</para>
+<para>
+    The details of authentification are in a sister RFC,
+    namely RFC 2617, "HTTP Authentication: Basic and Digest Access Authentication",
+    by J Franks, et al.
+</para></refsect2>
+<refsect2 id="GskHttpAuthenticate" role="struct">
+<title>GskHttpAuthenticate</title>
+<indexterm zone="GskHttpAuthenticate"><primary sortas="GskHttpAuthenticate">GskHttpAuthenticate</primary></indexterm><programlisting>typedef struct {
+  GskHttpAuthMode mode;
+  char           *auth_scheme_name;
+  char           *realm;
+  union
+  {
+    struct {
+      char                   *options;
+    } unknown;
+    /* no members:
+    struct {
+    } basic;
+    */
+    struct {
+      char                   *domain;
+      char                   *nonce;
+      char                   *opaque;
+      gboolean                is_stale;
+      char                   *algorithm;
+    } digest;
+  } info;
+} GskHttpAuthenticate;
+</programlisting>
+<para>
+XXX: should be a list of possible authenification strategies.
+</para>
+<para>
+The WWW-Authenticate response-header field MUST be included in 401
+(Unauthorized) response messages. The field value consists of at
+least one challenge that indicates the authentication scheme(s) and
+parameters applicable to the Request-URI.
+</para></refsect2>
+<refsect2 id="GskHttpCharSet" role="struct">
+<title>GskHttpCharSet</title>
+<indexterm zone="GskHttpCharSet"><primary sortas="GskHttpCharSet">GskHttpCharSet</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: read-only &gt;*/
+  char                 *charset_name;
+  gfloat                quality;                /* -1 if not present */
+} GskHttpCharSet;
+</programlisting>
+<para>
+A character set, along with optional quality factor.
+The default quality is 1.0.  See also <link linkend="gsk-http-request-add-charsets"><function>gsk_http_request_add_charsets()</function></link>
+and <link linkend="gsk-http-response-set-charset"><function>gsk_http_response_set_charset()</function></link>.  The HTTP standard does not concretely
+define the Character Set strings that are mentioned in RFC 2616, Section 3.4.
+But it recommends the documents
+RFC 2279 "UTF-8, a transformation format of Unicode and ISO-10646"; and
+RFC 2277 "IETF Policy on Character Sets and Languages".
+</para>
+<para>
+...
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>charset_name</structfield>;</term>
+<listitem><simpara>the name of the character set, as recommended by IETF policy.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gfloat">gfloat</link>&#160;<structfield>quality</structfield>;</term>
+<listitem><simpara>ranking of the character set, on a range from 0 to 1.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpCookie" role="struct">
+<title>GskHttpCookie</title>
+<indexterm zone="GskHttpCookie"><primary sortas="GskHttpCookie">GskHttpCookie</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: read-only &gt;*/
+  char                   *key;
+  char                   *value;
+  char                   *domain;
+  char                   *path;
+  char                   *expire_date;
+  char                   *comment;
+  int                     max_age;
+  gboolean                secure;               /* default is FALSE */
+  guint                   version;              /* default is 0, unspecified */
+} GskHttpCookie;
+</programlisting>
+<para>
+See RFC 2964 "Use of HTTP State Management"
+and RFC 2965 "HTTP State Management Mechanism".
+</para></refsect2>
+<refsect2 id="GskHttpLanguageSet" role="struct">
+<title>GskHttpLanguageSet</title>
+<indexterm zone="GskHttpLanguageSet"><primary sortas="GskHttpLanguageSet">GskHttpLanguageSet</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: read-only &gt;*/
+
+  /* these give a language (with optional dialect specifier) */
+  char                 *language;
+  gfloat                quality;                /* -1 if not present */
+} GskHttpLanguageSet;
+</programlisting>
+<para>
+A list of natural languages that may be acceptable
+to the client.  Examples: en, en-US, en-cockney, i-cherokee, x-pig-latin.
+</para>
+<para>
+This is intended for human languages - computer languages are specifically prohibited.
+</para>
+<para>
+Any two-letter primary tag ('en') must be an ISO-639 language abbreviation.
+Any two-letter subtag ('US') must be an ISO-3166 country abbreviation.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>language</structfield>;</term>
+<listitem><simpara>the ASCII text of the language name.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gfloat">gfloat</link>&#160;<structfield>quality</structfield>;</term>
+<listitem><simpara>quality from 0 to 1, or -1 for unspecified.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpMediaTypeSet" role="struct">
+<title>GskHttpMediaTypeSet</title>
+<indexterm zone="GskHttpMediaTypeSet"><primary sortas="GskHttpMediaTypeSet">GskHttpMediaTypeSet</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: read-only &gt;*/
+  char                 *type;
+  char                 *subtype;
+  gfloat                quality;                /* -1 if not present */
+} GskHttpMediaTypeSet;
+</programlisting>
+<para>
+A list of media types that the client can handle, and
+some quality factors to break ties.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>type</structfield>;</term>
+<listitem><simpara>standard types like "image" or "text", or "x-"-prefixed types which are not well standardized.
+May be "*" to mean any major type.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>subtype</structfield>;</term>
+<listitem><simpara>specific format of data: "html" or "jpeg".
+May be "*" to mean any subtype.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gfloat">gfloat</link>&#160;<structfield>quality</structfield>;</term>
+<listitem><simpara>quality from 0 to 1, or -1 for unspecified.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpContentEncodingSet" role="struct">
+<title>GskHttpContentEncodingSet</title>
+<indexterm zone="GskHttpContentEncodingSet"><primary sortas="GskHttpContentEncodingSet">GskHttpContentEncodingSet</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: read-only &gt;*/
+  GskHttpContentEncoding       encoding;
+  gfloat                       quality;       /* -1 if not present */
+} GskHttpContentEncodingSet;
+</programlisting>
+<para>
+A node in a list of content-encodings allowed by the server.
+Each element may have an associated quality.
+If the quality is -1, then it is implicit, but for
+comparison purposes it should be treated at +1.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskHttpContentEncoding">GskHttpContentEncoding</link>&#160;<structfield>encoding</structfield>;</term>
+<listitem><simpara>the encoding being rated.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gfloat">gfloat</link>&#160;<structfield>quality</structfield>;</term>
+<listitem><simpara>quality from 0 to 1, or -1 for unspecified.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpTransferEncodingSet" role="struct">
+<title>GskHttpTransferEncodingSet</title>
+<indexterm zone="GskHttpTransferEncodingSet"><primary sortas="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: read-only &gt;*/
+  GskHttpTransferEncoding      encoding;
+  gfloat                       quality;       /* -1 if not present */
+} GskHttpTransferEncodingSet;
+</programlisting>
+<para>
+A node in a list of transfer-encodings allowed by the server.
+Each element may have an associated quality.
+If the quality is -1, then it is implicit, but for
+comparison purposes it should be treated at +1.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskHttpTransferEncoding">GskHttpTransferEncoding</link>&#160;<structfield>encoding</structfield>;</term>
+<listitem><simpara>the encoding being rated.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gfloat">gfloat</link>&#160;<structfield>quality</structfield>;</term>
+<listitem><simpara>quality from 0 to 1, or -1 for unspecified.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpRangeSet" role="struct">
+<title>GskHttpRangeSet</title>
+<indexterm zone="GskHttpRangeSet"><primary sortas="GskHttpRangeSet">GskHttpRangeSet</primary></indexterm><programlisting>typedef struct {
+  /*&lt; public: read-only &gt;*/
+  GskHttpRange          range_type;
+} GskHttpRangeSet;
+</programlisting>
+<para>
+A node in a list of range-specifiers allowed by the server.
+Each element may have an associated quality.
+If the quality is -1, then it is implicit, but for
+comparison purposes it should be treated at +1.
+</para>
+<para>
+This mechanism is rather pointless, as there is only
+one valid unit allowed, 'bytes'.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskHttpRange">GskHttpRange</link>&#160;<structfield>range_type</structfield>;</term>
+<listitem><simpara>the units permitted for partial content requests.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpStatus" role="enum">
+<title>enum GskHttpStatus</title>
+<indexterm zone="GskHttpStatus"><primary sortas="GskHttpStatus">GskHttpStatus</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_STATUS_CONTINUE                      = 100,
+  GSK_HTTP_STATUS_SWITCHING_PROTOCOLS           = 101,
+  GSK_HTTP_STATUS_OK                            = 200,
+  GSK_HTTP_STATUS_CREATED                       = 201,
+  GSK_HTTP_STATUS_ACCEPTED                      = 202,
+  GSK_HTTP_STATUS_NONAUTHORITATIVE_INFO         = 203,
+  GSK_HTTP_STATUS_NO_CONTENT                    = 204,
+  GSK_HTTP_STATUS_RESET_CONTENT                 = 205,
+  GSK_HTTP_STATUS_PARTIAL_CONTENT               = 206,
+  GSK_HTTP_STATUS_MULTIPLE_CHOICES              = 300,
+  GSK_HTTP_STATUS_MOVED_PERMANENTLY             = 301,
+  GSK_HTTP_STATUS_FOUND                         = 302,
+  GSK_HTTP_STATUS_SEE_OTHER                     = 303,
+  GSK_HTTP_STATUS_NOT_MODIFIED                  = 304,
+  GSK_HTTP_STATUS_USE_PROXY                     = 305,
+  GSK_HTTP_STATUS_TEMPORARY_REDIRECT            = 306,
+  GSK_HTTP_STATUS_BAD_REQUEST                   = 400,
+  GSK_HTTP_STATUS_UNAUTHORIZED                  = 401,
+  GSK_HTTP_STATUS_PAYMENT_REQUIRED              = 402,
+  GSK_HTTP_STATUS_FORBIDDEN                     = 403,
+  GSK_HTTP_STATUS_NOT_FOUND                     = 404,
+  GSK_HTTP_STATUS_METHOD_NOT_ALLOWED            = 405,
+  GSK_HTTP_STATUS_NOT_ACCEPTABLE                = 406,
+  GSK_HTTP_STATUS_PROXY_AUTH_REQUIRED           = 407,
+  GSK_HTTP_STATUS_REQUEST_TIMEOUT               = 408,
+  GSK_HTTP_STATUS_CONFLICT                      = 409,
+  GSK_HTTP_STATUS_GONE                          = 410,
+  GSK_HTTP_STATUS_LENGTH_REQUIRED               = 411,
+  GSK_HTTP_STATUS_PRECONDITION_FAILED           = 412,
+  GSK_HTTP_STATUS_ENTITY_TOO_LARGE              = 413,
+  GSK_HTTP_STATUS_URI_TOO_LARGE                 = 414,
+  GSK_HTTP_STATUS_UNSUPPORTED_MEDIA             = 415,
+  GSK_HTTP_STATUS_BAD_RANGE                     = 416,
+  GSK_HTTP_STATUS_EXPECTATION_FAILED            = 417,
+  GSK_HTTP_STATUS_INTERNAL_SERVER_ERROR         = 500,
+  GSK_HTTP_STATUS_NOT_IMPLEMENTED               = 501,
+  GSK_HTTP_STATUS_BAD_GATEWAY                   = 502,
+  GSK_HTTP_STATUS_SERVICE_UNAVAILABLE           = 503,
+  GSK_HTTP_STATUS_GATEWAY_TIMEOUT               = 504,
+  GSK_HTTP_STATUS_UNSUPPORTED_VERSION           = 505
+} GskHttpStatus;
+</programlisting>
+<para>
+Status code corresponding to the number on the
+first line of an HTTP response. This enum
+takes on the same numerical value.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-STATUS-CONTINUE--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_CONTINUE</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 8.2.3; see also Section 10.1.1]
+   The purpose of the 100 (Continue) status (see section 10.1.1) is to
+   allow a client that is sending a request message with a request body
+   to determine if the origin server is willing to accept the request
+   (based on the request headers) before the client sends the request
+   body. In some cases, it might either be inappropriate or highly
+   inefficient for the client to send the body if the server will reject
+   the message without looking at the body.
+   Currently, GSK has only very limited support for this protocol.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-SWITCHING-PROTOCOLS--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_SWITCHING_PROTOCOLS</literal></term>
+<listitem><simpara>
+   Rarely used.
+   [From RFC 2616, Section 10.1.2]
+   The server understands and is willing to comply with the client's
+   request, via the Upgrade message header field (section 14.42), for a
+   change in the application protocol being used on this connection. The
+   server will switch protocols to those defined by the response's
+   Upgrade header field immediately after the empty line which
+   terminates the 101 response.
+   The protocol SHOULD be switched only when it is advantageous to do
+   so. For example, switching to a newer version of HTTP is advantageous
+   over older versions, and switching to a real-time, synchronous
+   protocol might be advantageous when delivering resources that use
+   such features.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-OK--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_OK</literal></term>
+<listitem><simpara>
+   The standard response to indicate that the request is about
+   to be successfully executed.
+   Section 10.2.1 states what content will be available (it depends
+   on the request's verb.)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-CREATED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_CREATED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.2.2]
+   The request has been fulfilled and resulted in a new resource being
+   created. The newly created resource can be referenced by the URI(s)
+   returned in the entity of the response, with the most specific URI
+   for the resource given by a Location header field. The response
+   SHOULD include an entity containing a list of resource
+   characteristics and location(s) from which the user or user agent can
+   choose the one most appropriate. The entity format is specified by
+   the media type given in the Content-Type header field. The origin
+   server MUST create the resource before returning the 201 status code.
+   If the action cannot be carried out immediately, the server SHOULD
+   respond with 202 (Accepted) response instead.
+   A 201 response MAY contain an ETag response header field indicating
+   the current value of the entity tag for the requested variant just
+   created, see section 14.19.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-ACCEPTED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_ACCEPTED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.2.3]
+   The request has been accepted for processing, but the processing has
+   not been completed.  The request might or might not eventually be
+   acted upon, as it might be disallowed when processing actually takes
+   place. There is no facility for re-sending a status code from an
+   asynchronous operation such as this.
+   The 202 response is intentionally non-committal. Its purpose is to
+   allow a server to accept a request for some other process (perhaps a
+   batch-oriented process that is only run once per day) without
+   requiring that the user agent's connection to the server persist
+   until the process is completed. The entity returned with this
+   response SHOULD include an indication of the request's current status
+   and either a pointer to a status monitor or some estimate of when the
+   user can expect the request to be fulfilled.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-NONAUTHORITATIVE-INFO--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_NONAUTHORITATIVE_INFO</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.2.4]
+   The returned metainformation in the entity-header is not the
+   definitive set as available from the origin server, but is gathered
+   from a local or a third-party copy. The set presented MAY be a subset
+   or superset of the original version. For example, including local
+   annotation information about the resource might result in a superset
+   of the metainformation known by the origin server. Use of this
+   response code is not required and is only appropriate when the
+   response would otherwise be 200 (OK).
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-NO-CONTENT--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_NO_CONTENT</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.2.5]
+   The server has fulfilled the request but does not need to return an
+   entity-body, and might want to return updated metainformation. The
+   response MAY include new or updated metainformation in the form of
+   entity-headers, which if present SHOULD be associated with the
+   requested variant.
+   If the client is a user agent, it SHOULD NOT change its document view
+   from that which caused the request to be sent. This response is
+   primarily intended to allow input for actions to take place without
+   causing a change to the user agent's active document view, although
+   any new or updated metainformation SHOULD be applied to the document
+   currently in the user agent's active view.
+   The 204 response MUST NOT include a message-body, and thus is always
+   terminated by the first empty line after the header fields.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-RESET-CONTENT--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_RESET_CONTENT</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.2.6]
+   The server has fulfilled the request and the user agent SHOULD reset
+   the document view which caused the request to be sent. This response
+   is primarily intended to allow input for actions to take place via
+   user input, followed by a clearing of the form in which the input is
+   given so that the user can easily initiate another input action. The
+   response MUST NOT include an entity.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-PARTIAL-CONTENT--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_PARTIAL_CONTENT</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.2.7]
+   The server has fulfilled the partial GET request for the resource.
+   The request MUST have included a Range header field (section 14.35)
+   indicating the desired range, and MAY have included an If-Range
+   header field (section 14.27) to make the request conditional.
+   [by daveb]
+   In addition, the response must contain several normally optional
+   fields, namely Content-Range, Date, and either ETag or Content-Location.
+   Furthermore if must have cache-info, i.e.  Expires, Cache-Control, and/or Vary.
+   See the RFC for the painful details.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-MULTIPLE-CHOICES--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_MULTIPLE_CHOICES</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.3.1]
+   The requested resource corresponds to any one of a set of
+   representations, each with its own specific location, and agent-
+   driven negotiation information (section 12) is being provided so that
+   the user (or user agent) can select a preferred representation and
+   redirect its request to that location.
+   Unless it was a HEAD request, the response SHOULD include an entity
+   containing a list of resource characteristics and location(s) from
+   which the user or user agent can choose the one most appropriate. The
+   entity format is specified by the media type given in the Content-
+   Type header field. Depending upon the format and the capabilities of
+   the user agent, selection of the most appropriate choice MAY be
+   performed automatically. However, this specification does not define
+   any standard for such automatic selection.
+   If the server has a preferred choice of representation, it SHOULD
+   include the specific URI for that representation in the Location
+   field; user agents MAY use the Location field value for automatic
+   redirection. This response is cacheable unless indicated otherwise.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-MOVED-PERMANENTLY--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_MOVED_PERMANENTLY</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.3.2]
+   The requested resource has been assigned a new permanent URI and any
+   future references to this resource SHOULD use one of the returned
+   URIs.  Clients with link editing capabilities ought to automatically
+   re-link references to the Request-URI to one or more of the new
+   references returned by the server, where possible. This response is
+   cacheable unless indicated otherwise.
+   The new permanent URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s).
+   If the 301 status code is received in response to a request other
+   than GET or HEAD, the user agent MUST NOT automatically redirect the
+   request unless it can be confirmed by the user, since this might
+   change the conditions under which the request was issued.
+      Note: When automatically redirecting a POST request after
+      receiving a 301 status code, some existing HTTP/1.0 user agents
+      will erroneously change it into a GET request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-FOUND--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_FOUND</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.3.3]
+   The requested resource resides temporarily under a different URI.
+   Since the redirection might be altered on occasion, the client SHOULD
+   continue to use the Request-URI for future requests.  This response
+   is only cacheable if indicated by a Cache-Control or Expires header
+   field.
+   The temporary URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s).
+   [There's more detail in the RFC]
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-SEE-OTHER--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_SEE_OTHER</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.3.4]
+   The response to the request can be found under a different URI and
+   SHOULD be retrieved using a GET method on that resource. This method
+   exists primarily to allow the output of a POST-activated script to
+   redirect the user agent to a selected resource. The new URI is not a
+   substitute reference for the originally requested resource. The 303
+   response MUST NOT be cached, but the response to the second
+   (redirected) request might be cacheable.
+   The different URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s).
+      Note: Many pre-HTTP/1.1 user agents do not understand the 303
+      status. When interoperability with such clients is a concern, the
+      302 status code may be used instead, since most user agents react
+      to a 302 response as described here for 303.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-NOT-MODIFIED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_NOT_MODIFIED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.3.5]
+   If the client has performed a conditional GET request and access is
+   allowed, but the document has not been modified, the server SHOULD
+   respond with this status code. The 304 response MUST NOT contain a
+   message-body, and thus is always terminated by the first empty line
+   after the header fields.
+   The response MUST include the following header fields:
+      - Date, unless its omission is required by section 14.18.1
+   If a clockless origin server obeys these rules, and proxies and
+   clients add their own Date to any response received without one (as
+   already specified by [RFC 2068], section 14.19), caches will operate
+   correctly.
+      - ETag and/or Content-Location, if the header would have been sent
+        in a 200 response to the same request
+      - Expires, Cache-Control, and/or Vary, if the field-value might
+        differ from that sent in any previous response for the same
+        variant
+   If the conditional GET used a strong cache validator (see section
+   13.3.3), the response SHOULD NOT include other entity-headers.
+   Otherwise (i.e., the conditional GET used a weak validator), the
+   response MUST NOT include other entity-headers; this prevents
+   inconsistencies between cached entity-bodies and updated headers.
+   If a 304 response indicates an entity not currently cached, then the
+   cache MUST disregard the response and repeat the request without the
+   conditional.
+   If a cache uses a received 304 response to update a cache entry, the
+   cache MUST update the entry to reflect any new field values given in
+   the response.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-USE-PROXY--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_USE_PROXY</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.3.6]
+   The requested resource MUST be accessed through the proxy given by
+   the Location field. The Location field gives the URI of the proxy.
+   The recipient is expected to repeat this single request via the
+   proxy. 305 responses MUST only be generated by origin servers.
+      Note: RFC 2068 was not clear that 305 was intended to redirect a
+      single request, and to be generated by origin servers only.  Not
+      observing these limitations has significant security consequences.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-TEMPORARY-REDIRECT--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_TEMPORARY_REDIRECT</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.3.8]
+   The requested resource resides temporarily under a different URI.
+   Since the redirection MAY be altered on occasion, the client SHOULD
+   continue to use the Request-URI for future requests.  This response
+   is only cacheable if indicated by a Cache-Control or Expires header
+   field.
+   The temporary URI SHOULD be given by the Location field in the
+   response. Unless the request method was HEAD, the entity of the
+   response SHOULD contain a short hypertext note with a hyperlink to
+   the new URI(s) , since many pre-HTTP/1.1 user agents do not
+   understand the 307 status. Therefore, the note SHOULD contain the
+   information necessary for a user to repeat the original request on
+   the new URI.
+   If the 307 status code is received in response to a request other
+   than GET or HEAD, the user agent MUST NOT automatically redirect the
+   request unless it can be confirmed by the user, since this might
+   change the conditions under which the request was issued.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-BAD-REQUEST--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_BAD_REQUEST</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.1]
+   The request could not be understood by the server due to malformed
+   syntax. The client SHOULD NOT repeat the request without
+   modifications.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-UNAUTHORIZED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_UNAUTHORIZED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.2]
+   The request requires user authentication. The response MUST include a
+   WWW-Authenticate header field (section 14.47) containing a challenge
+   applicable to the requested resource. The client MAY repeat the
+   request with a suitable Authorization header field (section 14.8). If
+   the request already included Authorization credentials, then the 401
+   response indicates that authorization has been refused for those
+   credentials. If the 401 response contains the same challenge as the
+   prior response, and the user agent has already attempted
+   authentication at least once, then the user SHOULD be presented the
+   entity that was given in the response, since that entity might
+   include relevant diagnostic information. HTTP access authentication
+   is explained in "HTTP Authentication: Basic and Digest Access
+   Authentication" [43].
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-PAYMENT-REQUIRED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_PAYMENT_REQUIRED</literal></term>
+<listitem><simpara>
+   Gotta love this one.
+   [From RFC 2616, Section 10.4.3]
+   This code is reserved for future use.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-FORBIDDEN--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_FORBIDDEN</literal></term>
+<listitem><simpara>
+[From RFC 2616, Section 10.4.4]
+   The server understood the request, but is refusing to fulfill it.
+   Authorization will not help and the request SHOULD NOT be repeated.
+   If the request method was not HEAD and the server wishes to make
+   public why the request has not been fulfilled, it SHOULD describe the
+   reason for the refusal in the entity.  If the server does not wish to
+   make this information available to the client, the status code 404
+   (Not Found) can be used instead.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-NOT-FOUND--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_NOT_FOUND</literal></term>
+<listitem><simpara>
+[From RFC 2616, Section 10.4.5]
+   The server has not found anything matching the Request-URI. No
+   indication is given of whether the condition is temporary or
+   permanent. The 410 (Gone) status code SHOULD be used if the server
+   knows, through some internally configurable mechanism, that an old
+   resource is permanently unavailable and has no forwarding address.
+   This status code is commonly used when the server does not wish to
+   reveal exactly why the request has been refused, or when no other
+   response is applicable.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-METHOD-NOT-ALLOWED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_METHOD_NOT_ALLOWED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.6]
+   The method specified in the Request-Line is not allowed for the
+   resource identified by the Request-URI. The response MUST include an
+   Allow header containing a list of valid methods for the requested
+   resource.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-NOT-ACCEPTABLE--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_NOT_ACCEPTABLE</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.7]
+   The resource identified by the request is only capable of generating
+   response entities which have content characteristics not acceptable
+   according to the accept headers sent in the request.
+   Unless it was a HEAD request, the response SHOULD include an entity
+   containing a list of available entity characteristics and location(s)
+   from which the user or user agent can choose the one most
+   appropriate. The entity format is specified by the media type given
+   in the Content-Type header field. Depending upon the format and the
+   capabilities of the user agent, selection of the most appropriate
+   choice MAY be performed automatically. However, this specification
+   does not define any standard for such automatic selection.
+      Note: HTTP/1.1 servers are allowed to return responses which are
+      not acceptable according to the accept headers sent in the
+      request. In some cases, this may even be preferable to sending a
+      406 response. User agents are encouraged to inspect the headers of
+      an incoming response to determine if it is acceptable.
+   If the response could be unacceptable, a user agent SHOULD
+   temporarily stop receipt of more data and query the user for a
+   decision on further actions.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-PROXY-AUTH-REQUIRED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_PROXY_AUTH_REQUIRED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.8]
+   This code is similar to 401 (Unauthorized), but indicates that the
+   client must first authenticate itself with the proxy. The proxy MUST
+   return a Proxy-Authenticate header field (section 14.33) containing a
+   challenge applicable to the proxy for the requested resource. The
+   client MAY repeat the request with a suitable Proxy-Authorization
+   header field (section 14.34). HTTP access authentication is explained
+   in "HTTP Authentication: Basic and Digest Access Authentication".
+   RFC 2617.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-REQUEST-TIMEOUT--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_REQUEST_TIMEOUT</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.9]
+   The client did not produce a request within the time that the server
+   was prepared to wait. The client MAY repeat the request without
+   modifications at any later time.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-CONFLICT--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_CONFLICT</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.10]
+   The request could not be completed due to a conflict with the current
+   state of the resource. This code is only allowed in situations where
+   it is expected that the user might be able to resolve the conflict
+   and resubmit the request. The response body SHOULD include enough
+   information for the user to recognize the source of the conflict.
+   Ideally, the response entity would include enough information for the
+   user or user agent to fix the problem; however, that might not be
+   possible and is not required.
+   Conflicts are most likely to occur in response to a PUT request. For
+   example, if versioning were being used and the entity being PUT
+   included changes to a resource which conflict with those made by an
+   earlier (third-party) request, the server might use the 409 response
+   to indicate that it can't complete the request. In this case, the
+   response entity would likely contain a list of the differences
+   between the two versions in a format defined by the response
+   Content-Type.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-GONE--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_GONE</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.11]
+   The requested resource is no longer available at the server and no
+   forwarding address is known. This condition is expected to be
+   considered permanent. Clients with link editing capabilities SHOULD
+   delete references to the Request-URI after user approval. If the
+   server does not know, or has no facility to determine, whether or not
+   the condition is permanent, the status code 404 (Not Found) SHOULD be
+   used instead. This response is cacheable unless indicated otherwise.
+   The 410 response is primarily intended to assist the task of web
+   maintenance by notifying the recipient that the resource is
+   intentionally unavailable and that the server owners desire that
+   remote links to that resource be removed. Such an event is common for
+   limited-time, promotional services and for resources belonging to
+   individuals no longer working at the server's site. It is not
+   necessary to mark all permanently unavailable resources as "gone" or
+   to keep the mark for any length of time -- that is left to the
+   discretion of the server owner.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-LENGTH-REQUIRED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_LENGTH_REQUIRED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.12]
+   The server refuses to accept the request without a defined Content-
+   Length. The client MAY repeat the request if it adds a valid
+   Content-Length header field containing the length of the message-body
+   in the request message.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-PRECONDITION-FAILED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_PRECONDITION_FAILED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.13]
+   The precondition given in one or more of the request-header fields
+   evaluated to false when it was tested on the server. This response
+   code allows the client to place preconditions on the current resource
+   metainformation (header field data) and thus prevent the requested
+   method from being applied to a resource other than the one intended.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-ENTITY-TOO-LARGE--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_ENTITY_TOO_LARGE</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.14]
+   The server is refusing to process a request because the request
+   entity is larger than the server is willing or able to process. The
+   server MAY close the connection to prevent the client from continuing
+   the request.
+   If the condition is temporary, the server SHOULD include a Retry-
+   After header field to indicate that it is temporary and after what
+   time the client MAY try again.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-URI-TOO-LARGE--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_URI_TOO_LARGE</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.15]
+   The server is refusing to service the request because the Request-URI
+   is longer than the server is willing to interpret. This rare
+   condition is only likely to occur when a client has improperly
+   converted a POST request to a GET request with long query
+   information, when the client has descended into a URI "black hole" of
+   redirection (e.g., a redirected URI prefix that points to a suffix of
+   itself), or when the server is under attack by a client attempting to
+   exploit security holes present in some servers using fixed-length
+   buffers for reading or manipulating the Request-URI.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-UNSUPPORTED-MEDIA--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_UNSUPPORTED_MEDIA</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.16]
+   The server is refusing to service the request because the entity of
+   the request is in a format not supported by the requested resource
+   for the requested method.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-BAD-RANGE--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_BAD_RANGE</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.17]
+   A server SHOULD return a response with this status code if a request
+   included a Range request-header field (section 14.35), and none of
+   the range-specifier values in this field overlap the current extent
+   of the selected resource, and the request did not include an If-Range
+   request-header field. (For byte-ranges, this means that the first-
+   byte-pos of all of the byte-range-spec values were greater than the
+   current length of the selected resource.)
+   When this status code is returned for a byte-range request, the
+   response SHOULD include a Content-Range entity-header field
+   specifying the current length of the selected resource (see section
+   14.16). This response MUST NOT use the multipart/byteranges content-
+   type.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-EXPECTATION-FAILED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_EXPECTATION_FAILED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.4.18]
+   The expectation given in an Expect request-header field (see section
+   14.20) could not be met by this server, or, if the server is a proxy,
+   the server has unambiguous evidence that the request could not be met
+   by the next-hop server.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-INTERNAL-SERVER-ERROR--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_INTERNAL_SERVER_ERROR</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.5.1]
+   The server encountered an unexpected condition which prevented it
+   from fulfilling the request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-NOT-IMPLEMENTED--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_NOT_IMPLEMENTED</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.5.2]
+   The server does not support the functionality required to fulfill the
+   request. This is the appropriate response when the server does not
+   recognize the request method and is not capable of supporting it for
+   any resource.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-BAD-GATEWAY--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_BAD_GATEWAY</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.5.3]
+   The server, while acting as a gateway or proxy, received an invalid
+   response from the upstream server it accessed in attempting to
+   fulfill the request.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-SERVICE-UNAVAILABLE--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_SERVICE_UNAVAILABLE</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.5.4]
+   The server is currently unable to handle the request due to a
+   temporary overloading or maintenance of the server. The implication
+   is that this is a temporary condition which will be alleviated after
+   some delay. If known, the length of the delay MAY be indicated in a
+   Retry-After header. If no Retry-After is given, the client SHOULD
+   handle the response as it would for a 500 response.
+      Note: The existence of the 503 status code does not imply that a
+      server must use it when becoming overloaded. Some servers may wish
+      to simply refuse the connection.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-GATEWAY-TIMEOUT--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_GATEWAY_TIMEOUT</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.5.5]
+   The server, while acting as a gateway or proxy, did not receive a
+   timely response from the upstream server specified by the URI (e.g.
+   HTTP, FTP, LDAP) or some other auxiliary server (e.g. DNS) it needed
+   to access in attempting to complete the request.
+      Note: Note to implementors: some deployed proxies are known to
+      return 400 or 500 when DNS lookups time out.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-STATUS-UNSUPPORTED-VERSION--CAPS" role="constant">
+<term><literal>GSK_HTTP_STATUS_UNSUPPORTED_VERSION</literal></term>
+<listitem><simpara>
+   [From RFC 2616, Section 10.5.6]
+   The server does not support, or refuses to support, the HTTP protocol
+   version that was used in the request message. The server is
+   indicating that it is unable or unwilling to complete the request
+   using the same major version as the client, as described in section
+   3.1, other than with this error message. The response SHOULD contain
+   an entity describing why that version is not supported and what other
+   protocols are supported by that server.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpVerb" role="enum">
+<title>enum GskHttpVerb</title>
+<indexterm zone="GskHttpVerb"><primary sortas="GskHttpVerb">GskHttpVerb</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_VERB_GET,
+  GSK_HTTP_VERB_POST,
+  GSK_HTTP_VERB_PUT,
+  GSK_HTTP_VERB_HEAD,
+  GSK_HTTP_VERB_OPTIONS,
+  GSK_HTTP_VERB_DELETE,
+  GSK_HTTP_VERB_TRACE,
+  GSK_HTTP_VERB_CONNECT
+} GskHttpVerb;
+</programlisting>
+<para>
+The type of action requested by the User or User-Agent.
+It is common practice that GET and HEAD requests
+are "safe"-- they are intended for information retrieval
+are should never have harmful side-effects.
+</para>
+<para>
+Some additional methods are idempotent, meaning that running
+the command more than once SHOULD have no effect.
+In particular, PUT, DELETE, OPTIONS, and TRACE
+have this property, as well as the safe methods GET and HEAD.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-VERB-GET--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_GET</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.3]
+   The GET method means retrieve whatever information (in the form of an
+   entity) is identified by the Request-URI. If the Request-URI refers
+   to a data-producing process, it is the produced data which shall be
+   returned as the entity in the response and not the source text of the
+   process, unless that text happens to be the output of the process.
+   The semantics of the GET method change to a "conditional GET" if the
+   request message includes an If-Modified-Since, If-Unmodified-Since,
+   If-Match, If-None-Match, or If-Range header field. A conditional GET
+   method requests that the entity be transferred only under the
+   circumstances described by the conditional header field(s). The
+   conditional GET method is intended to reduce unnecessary network
+   usage by allowing cached entities to be refreshed without requiring
+   multiple requests or transferring data already held by the client.
+   The semantics of the GET method change to a "partial GET" if the
+   request message includes a Range header field. A partial GET requests
+   that only part of the entity be transferred, as described in section
+   14.35. The partial GET method is intended to reduce unnecessary
+   network usage by allowing partially-retrieved entities to be
+   completed without transferring data already held by the client.
+   The response to a GET request is cacheable if and only if it meets
+   the requirements for HTTP caching described in section 13.
+   See section 15.1.3 for security considerations when used for forms.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-VERB-POST--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_POST</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.5]
+   The POST method is used to request that the origin server accept the
+   entity enclosed in the request as a new subordinate of the resource
+   identified by the Request-URI in the Request-Line. POST is designed
+   to allow a uniform method to cover the following functions:
+      - Annotation of existing resources;
+      - Posting a message to a bulletin board, newsgroup, mailing list,
+        or similar group of articles;
+      - Providing a block of data, such as the result of submitting a
+        form, to a data-handling process;
+      - Extending a database through an append operation.
+   The actual function performed by the POST method is determined by the
+   server and is usually dependent on the Request-URI. The posted entity
+   is subordinate to that URI in the same way that a file is subordinate
+   to a directory containing it, a news article is subordinate to a
+   newsgroup to which it is posted, or a record is subordinate to a
+   database.
+   The action performed by the POST method might not result in a
+   resource that can be identified by a URI. In this case, either 200
+   (OK) or 204 (No Content) is the appropriate response status,
+   depending on whether or not the response includes an entity that
+   describes the result.
+   If a resource has been created on the origin server, the response
+   SHOULD be 201 (Created) and contain an entity which describes the
+   status of the request and refers to the new resource, and a Location
+   header (see section 14.30).
+   Responses to this method are not cacheable, unless the response
+   includes appropriate Cache-Control or Expires header fields. However,
+   the 303 (See Other) response can be used to direct the user agent to
+   retrieve a cacheable resource.
+   POST requests MUST obey the message transmission requirements set out
+   in section 8.2.
+   See section 15.1.3 for security considerations.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-VERB-PUT--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_PUT</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.6]
+   The PUT method requests that the enclosed entity be stored under the
+   supplied Request-URI. If the Request-URI refers to an already
+   existing resource, the enclosed entity SHOULD be considered as a
+   modified version of the one residing on the origin server. If the
+   Request-URI does not point to an existing resource, and that URI is
+   capable of being defined as a new resource by the requesting user
+   agent, the origin server can create the resource with that URI. If a
+   new resource is created, the origin server MUST inform the user agent
+   via the 201 (Created) response. If an existing resource is modified,
+   either the 200 (OK) or 204 (No Content) response codes SHOULD be sent
+   to indicate successful completion of the request. If the resource
+   could not be created or modified with the Request-URI, an appropriate
+   error response SHOULD be given that reflects the nature of the
+   problem. The recipient of the entity MUST NOT ignore any Content-*
+   (e.g. Content-Range) headers that it does not understand or implement
+   and MUST return a 501 (Not Implemented) response in such cases.
+   If the request passes through a cache and the Request-URI identifies
+   one or more currently cached entities, those entries SHOULD be
+   treated as stale. Responses to this method are not cacheable.
+   The fundamental difference between the POST and PUT requests is
+   reflected in the different meaning of the Request-URI. The URI in a
+   POST request identifies the resource that will handle the enclosed
+   entity. That resource might be a data-accepting process, a gateway to
+   some other protocol, or a separate entity that accepts annotations.
+   In contrast, the URI in a PUT request identifies the entity enclosed
+   with the request -- the user agent knows what URI is intended and the
+   server MUST NOT attempt to apply the request to some other resource.
+   If the server desires that the request be applied to a different URI,
+   it MUST send a 301 (Moved Permanently) response; the user agent MAY
+   then make its own decision regarding whether or not to redirect the
+   request.
+   A single resource MAY be identified by many different URIs. For
+   example, an article might have a URI for identifying "the current
+   version" which is separate from the URI identifying each particular
+   version. In this case, a PUT request on a general URI might result in
+   several other URIs being defined by the origin server.
+   HTTP/1.1 does not define how a PUT method affects the state of an
+   origin server.
+   PUT requests MUST obey the message transmission requirements set out
+   in section 8.2.
+   Unless otherwise specified for a particular entity-header, the
+   entity-headers in the PUT request SHOULD be applied to the resource
+   created or modified by the PUT.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-VERB-HEAD--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_HEAD</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.4]
+   The HEAD method is identical to GET except that the server MUST NOT
+   return a message-body in the response. The metainformation contained
+   in the HTTP headers in response to a HEAD request SHOULD be identical
+   to the information sent in response to a GET request. This method can
+   be used for obtaining metainformation about the entity implied by the
+   request without transferring the entity-body itself. This method is
+   often used for testing hypertext links for validity, accessibility,
+   and recent modification.
+   The response to a HEAD request MAY be cacheable in the sense that the
+   information contained in the response MAY be used to update a
+   previously cached entity from that resource. If the new field values
+   indicate that the cached entity differs from the current entity (as
+   would be indicated by a change in Content-Length, Content-MD5, ETag
+   or Last-Modified), then the cache MUST treat the cache entry as
+   stale.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-VERB-OPTIONS--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_OPTIONS</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.2]
+   The OPTIONS method represents a request for information about the
+   communication options available on the request/response chain
+   identified by the Request-URI. This method allows the client to
+   determine the options and/or requirements associated with a resource,
+   or the capabilities of a server, without implying a resource action
+   or initiating a resource retrieval.
+   Responses to this method are not cacheable.
+   If the OPTIONS request includes an entity-body (as indicated by the
+   presence of Content-Length or Transfer-Encoding), then the media type
+   MUST be indicated by a Content-Type field. Although this
+   specification does not define any use for such a body, future
+   extensions to HTTP might use the OPTIONS body to make more detailed
+   queries on the server. A server that does not support such an
+   extension MAY discard the request body.
+   If the Request-URI is an asterisk ("*"), the OPTIONS request is
+   intended to apply to the server in general rather than to a specific
+   resource. Since a server's communication options typically depend on
+   the resource, the "*" request is only useful as a "ping" or "no-op"
+   type of method; it does nothing beyond allowing the client to test
+   the capabilities of the server. For example, this can be used to test
+   a proxy for HTTP/1.1 compliance (or lack thereof).
+   If the Request-URI is not an asterisk, the OPTIONS request applies
+   only to the options that are available when communicating with that
+   resource.
+   A 200 response SHOULD include any header fields that indicate
+   optional features implemented by the server and applicable to that
+   resource (e.g., Allow), possibly including extensions not defined by
+   this specification. The response body, if any, SHOULD also include
+   information about the communication options. The format for such a
+   body is not defined by this specification, but might be defined by
+   future extensions to HTTP. Content negotiation MAY be used to select
+   the appropriate response format. If no response body is included, the
+   response MUST include a Content-Length field with a field-value of
+   "0".
+   The Max-Forwards request-header field MAY be used to target a
+   specific proxy in the request chain. When a proxy receives an OPTIONS
+   request on an absoluteURI for which request forwarding is permitted,
+   the proxy MUST check for a Max-Forwards field. If the Max-Forwards
+   field-value is zero ("0"), the proxy MUST NOT forward the message;
+   instead, the proxy SHOULD respond with its own communication options.
+   If the Max-Forwards field-value is an integer greater than zero, the
+   proxy MUST decrement the field-value when it forwards the request. If
+   no Max-Forwards field is present in the request, then the forwarded
+   request MUST NOT include a Max-Forwards field.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-VERB-DELETE--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_DELETE</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.7]
+   The DELETE method requests that the origin server delete the resource
+   identified by the Request-URI. This method MAY be overridden by human
+   intervention (or other means) on the origin server. The client cannot
+   be guaranteed that the operation has been carried out, even if the
+   status code returned from the origin server indicates that the action
+   has been completed successfully. However, the server SHOULD NOT
+   indicate success unless, at the time the response is given, it
+   intends to delete the resource or move it to an inaccessible
+   location.
+   A successful response SHOULD be 200 (OK) if the response includes an
+   entity describing the status, 202 (Accepted) if the action has not
+   yet been enacted, or 204 (No Content) if the action has been enacted
+   but the response does not include an entity.
+   If the request passes through a cache and the Request-URI identifies
+   one or more currently cached entities, those entries SHOULD be
+   treated as stale. Responses to this method are not cacheable.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-VERB-TRACE--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_TRACE</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.8]
+   The TRACE method is used to invoke a remote, application-layer loop-
+   back of the request message. The final recipient of the request
+   SHOULD reflect the message received back to the client as the
+   entity-body of a 200 (OK) response. The final recipient is either the
+   origin server or the first proxy or gateway to receive a Max-Forwards
+   value of zero (0) in the request (see section 14.31). A TRACE request
+   MUST NOT include an entity.
+   TRACE allows the client to see what is being received at the other
+   end of the request chain and use that data for testing or diagnostic
+   information. The value of the Via header field (section 14.45) is of
+   particular interest, since it acts as a trace of the request chain.
+   Use of the Max-Forwards header field allows the client to limit the
+   length of the request chain, which is useful for testing a chain of
+   proxies forwarding messages in an infinite loop.
+   If the request is valid, the response SHOULD contain the entire
+   request message in the entity-body, with a Content-Type of
+   "message/http". Responses to this method MUST NOT be cached.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-VERB-CONNECT--CAPS" role="constant">
+<term><literal>GSK_HTTP_VERB_CONNECT</literal></term>
+<listitem><simpara>
+   [RFC 2616; 9.9]
+   This specification reserves the method name CONNECT for use with a
+   proxy that can dynamically switch to being a tunnel (e.g. SSL
+   tunneling [44]).
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpRange" role="enum">
+<title>enum GskHttpRange</title>
+<indexterm zone="GskHttpRange"><primary sortas="GskHttpRange">GskHttpRange</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_RANGE_BYTES
+} GskHttpRange;
+</programlisting>
+<para>
+This gives units, or allowed units, for the Content-Range.
+This is used when you want to retreive part of a document.
+(Not all servers support that, of course.)
+</para>
+<para>
+Currently, only bytes are allowed.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-RANGE-BYTES--CAPS" role="constant">
+<term><literal>GSK_HTTP_RANGE_BYTES</literal></term>
+<listitem><simpara>
+Indicate that the range of the partial content will be given in
+bytes.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpContentEncoding" role="enum">
+<title>enum GskHttpContentEncoding</title>
+<indexterm zone="GskHttpContentEncoding"><primary sortas="GskHttpContentEncoding">GskHttpContentEncoding</primary></indexterm><programlisting>typedef enum {
+  GSK_HTTP_CONTENT_ENCODING_IDENTITY,
+  GSK_HTTP_CONTENT_ENCODING_GZIP,
+  GSK_HTTP_CONTENT_ENCODING_COMPRESS,
+  GSK_HTTP_CONTENT_ENCODING_UNRECOGNIZED = 0x100
+} GskHttpContentEncoding;
+</programlisting>
+<para>
+This gives ways in which content can be encoded.
+The default encoding is "identity", which means that the
+data is not re-encoded as all: it is sent as itself.
+</para>
+<para>
+Currently, all non-identity encodings are compression schemes.
+</para>
+<para>
+XXX: the spec says that multiple content-encodings are allowed,
+and that they are applied left-to-right.
+But we won't even parse such a line, due to the limited types
+of content-encoding we are aware of.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-CONTENT-ENCODING-IDENTITY--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_ENCODING_IDENTITY</literal></term>
+<listitem><simpara>
+Transfer the data without any special encoding.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-ENCODING-GZIP--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_ENCODING_GZIP</literal></term>
+<listitem><simpara>
+Transfer the data after compressing it with gzip.
+RFC 1952.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-ENCODING-COMPRESS--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_ENCODING_COMPRESS</literal></term>
+<listitem><simpara>
+Transfer the data after compressing it with compress,
+the classic unix program.
+There is no RFC corresponding to this format.
+(See RFC 2616, Section 3.5 for an apologetic explanation).
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONTENT-ENCODING-UNRECOGNIZED--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONTENT_ENCODING_UNRECOGNIZED</literal></term>
+<listitem><simpara>
+An unrecognized type of content-encoding was requested.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpTransferEncoding" role="enum">
+<title>enum GskHttpTransferEncoding</title>
+<indexterm zone="GskHttpTransferEncoding"><primary sortas="GskHttpTransferEncoding">GskHttpTransferEncoding</primary></indexterm><programlisting>typedef enum {
+  GSK_HTTP_TRANSFER_ENCODING_NONE    = 0,
+  GSK_HTTP_TRANSFER_ENCODING_CHUNKED = 1,
+  GSK_HTTP_TRANSFER_ENCODING_UNRECOGNIZED = 0x100
+} GskHttpTransferEncoding;
+</programlisting>
+<para>
+   [RFC 2616, Section 3.6]
+   Transfer-coding values are used to indicate an encoding
+   transformation that has been, can be, or may need to be applied to an
+   entity-body in order to ensure "safe transport" through the network.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-TRANSFER-ENCODING-NONE--CAPS" role="constant">
+<term><literal>GSK_HTTP_TRANSFER_ENCODING_NONE</literal></term>
+<listitem><simpara>
+The data is transferred unmodified.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-TRANSFER-ENCODING-CHUNKED--CAPS" role="constant">
+<term><literal>GSK_HTTP_TRANSFER_ENCODING_CHUNKED</literal></term>
+<listitem><simpara>
+The data is transferred in length-prefixed packets.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-TRANSFER-ENCODING-UNRECOGNIZED--CAPS" role="constant">
+<term><literal>GSK_HTTP_TRANSFER_ENCODING_UNRECOGNIZED</literal></term>
+<listitem><simpara>
+An unrecognized transfer encoding was received.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpConnection" role="enum">
+<title>enum GskHttpConnection</title>
+<indexterm zone="GskHttpConnection"><primary sortas="GskHttpConnection">GskHttpConnection</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_CONNECTION_NONE       = 0,
+  GSK_HTTP_CONNECTION_CLOSE      = 1,
+  GSK_HTTP_CONNECTION_KEEPALIVE  = 2,
+} GskHttpConnection;
+</programlisting>
+<para>
+Specify what should happen once the transaction is done.
+</para>
+<para>
+This is used to support persistent connections,
+which can be more efficient than making a new connection
+for each transaction.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-CONNECTION-NONE--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONNECTION_NONE</literal></term>
+<listitem><simpara>
+The default behavior applies:  HTTP/1.0 clients treat this
+as CLOSE; HTTP/1.1 clients treat this as KEEPALIVE.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONNECTION-CLOSE--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONNECTION_CLOSE</literal></term>
+<listitem><simpara>
+Close the connection after this transaction.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-CONNECTION-KEEPALIVE--CAPS" role="constant">
+<term><literal>GSK_HTTP_CONNECTION_KEEPALIVE</literal></term>
+<listitem><simpara>
+Try to keep the connection alive after this transaction.
+This is not always possible:  for example, if Transfer-Encoding
+chunked is not supported but the server doesn't know the
+length in advance.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-media-type-set-new" role="function">
+<title>gsk_http_media_type_set_new ()</title>
+<indexterm zone="gsk-http-media-type-set-new"><primary sortas="gsk_http_media_type_set_new">gsk_http_media_type_set_new</primary></indexterm><programlisting><link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link> * gsk_http_media_type_set_new       (const <link linkend="char">char</link> *type,
+                                                         const <link linkend="char">char</link> *subtype,
+                                                         <link linkend="gfloat">gfloat</link> quality);</programlisting>
+<para>
+Allocate a new node in a GskHttpMediaTypeSet list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> major type of the media to allow, like "text" or "image".
+     An asterisk can be used to allow any major type.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtype</parameter>&#160;:</term>
+<listitem><simpara> format of the media to allow, like "html", "plain" or "jpeg".
+     An asterisk can be used to allow any format.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>quality</parameter>&#160;:</term>
+<listitem><simpara> relative preference for this encoding. -1 means "not specified", which has a default of 1.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-media-type-set-free" role="function">
+<title>gsk_http_media_type_set_free ()</title>
+<indexterm zone="gsk-http-media-type-set-free"><primary sortas="gsk_http_media_type_set_free">gsk_http_media_type_set_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_media_type_set_free        (<link linkend="GskHttpMediaTypeSet">GskHttpMediaTypeSet</link> *set);</programlisting>
+<para>
+Free the memory associated with the media-type-set node.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>set</parameter>&#160;:</term>
+<listitem><simpara> the media type set to deallocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-char-set-new" role="function">
+<title>gsk_http_char_set_new ()</title>
+<indexterm zone="gsk-http-char-set-new"><primary sortas="gsk_http_char_set_new">gsk_http_char_set_new</primary></indexterm><programlisting><link linkend="GskHttpCharSet">GskHttpCharSet</link> *    gsk_http_char_set_new               (const <link linkend="char">char</link> *charset_name,
+                                                         <link linkend="gfloat">gfloat</link> quality);</programlisting>
+<para>
+Allocate a single GskHttpCharSet preference.
+You may wish to build a list of these.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>charset_name</parameter>&#160;:</term>
+<listitem><simpara> name of the character set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>quality</parameter>&#160;:</term>
+<listitem><simpara> quality from 0 to 1, or -1 if no quality flag was given.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new character-set.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-char-set-free" role="function">
+<title>gsk_http_char_set_free ()</title>
+<indexterm zone="gsk-http-char-set-free"><primary sortas="gsk_http_char_set_free">gsk_http_char_set_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_char_set_free              (<link linkend="GskHttpCharSet">GskHttpCharSet</link> *char_set);</programlisting>
+<para>
+Deallocate a GskHttpCharSet.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>char_set</parameter>&#160;:</term>
+<listitem><simpara> character set to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-encoding-set-new" role="function">
+<title>gsk_http_content_encoding_set_new ()</title>
+<indexterm zone="gsk-http-content-encoding-set-new"><primary sortas="gsk_http_content_encoding_set_new">gsk_http_content_encoding_set_new</primary></indexterm><programlisting><link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link> * gsk_http_content_encoding_set_new
+                                                        (<link linkend="GskHttpContentEncoding">GskHttpContentEncoding</link> encoding,
+                                                         <link linkend="gfloat">gfloat</link> quality);</programlisting>
+<para>
+Allocate a new node in a GskHttpContentEncodingSet list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoding</parameter>&#160;:</term>
+<listitem><simpara> the encoding to list a preference for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>quality</parameter>&#160;:</term>
+<listitem><simpara> relative preference for this encoding.
+A value of -1 means that the quality was omitted,
+which means it should be treated as 1.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new encoding node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-content-encoding-set-free" role="function">
+<title>gsk_http_content_encoding_set_free ()</title>
+<indexterm zone="gsk-http-content-encoding-set-free"><primary sortas="gsk_http_content_encoding_set_free">gsk_http_content_encoding_set_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_content_encoding_set_free  (<link linkend="GskHttpContentEncodingSet">GskHttpContentEncodingSet</link> *encoding_set);</programlisting>
+<para>
+Deallocate the encoding.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoding_set</parameter>&#160;:</term>
+<listitem><simpara> the encoding set to deallocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-transfer-encoding-set-new" role="function">
+<title>gsk_http_transfer_encoding_set_new ()</title>
+<indexterm zone="gsk-http-transfer-encoding-set-new"><primary sortas="gsk_http_transfer_encoding_set_new">gsk_http_transfer_encoding_set_new</primary></indexterm><programlisting><link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link> * gsk_http_transfer_encoding_set_new
+                                                        (<link linkend="GskHttpTransferEncoding">GskHttpTransferEncoding</link> encoding,
+                                                         <link linkend="gfloat">gfloat</link> quality);</programlisting>
+<para>
+Allocate a new node in a GskHttpTransferEncodingSet list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoding</parameter>&#160;:</term>
+<listitem><simpara> the encoding to list a preference for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>quality</parameter>&#160;:</term>
+<listitem><simpara> relative preference for this encoding.
+A value of -1 means that the quality was omitted,
+which means it should be treated as 1.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new encoding node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-transfer-encoding-set-free" role="function">
+<title>gsk_http_transfer_encoding_set_free ()</title>
+<indexterm zone="gsk-http-transfer-encoding-set-free"><primary sortas="gsk_http_transfer_encoding_set_free">gsk_http_transfer_encoding_set_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_transfer_encoding_set_free (<link linkend="GskHttpTransferEncodingSet">GskHttpTransferEncodingSet</link> *encoding_set);</programlisting>
+<para>
+Deallocate the encoding (a single node in the list).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoding_set</parameter>&#160;:</term>
+<listitem><simpara> the encoding set to deallocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-range-set-new" role="function">
+<title>gsk_http_range_set_new ()</title>
+<indexterm zone="gsk-http-range-set-new"><primary sortas="gsk_http_range_set_new">gsk_http_range_set_new</primary></indexterm><programlisting><link linkend="GskHttpRangeSet">GskHttpRangeSet</link> *   gsk_http_range_set_new              (<link linkend="GskHttpRange">GskHttpRange</link> range_type);</programlisting>
+<para>
+Allocate a node telling what units are available for
+specifying partial content.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>range_type</parameter>&#160;:</term>
+<listitem><simpara> allocate a new node in a allowable range units list.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-range-set-free" role="function">
+<title>gsk_http_range_set_free ()</title>
+<indexterm zone="gsk-http-range-set-free"><primary sortas="gsk_http_range_set_free">gsk_http_range_set_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_range_set_free             (<link linkend="GskHttpRangeSet">GskHttpRangeSet</link> *set);</programlisting>
+<para>
+Free the memory associated with the node in the range-set.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>set</parameter>&#160;:</term>
+<listitem><simpara> range-unit node to deallocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-language-set-new" role="function">
+<title>gsk_http_language_set_new ()</title>
+<indexterm zone="gsk-http-language-set-new"><primary sortas="gsk_http_language_set_new">gsk_http_language_set_new</primary></indexterm><programlisting><link linkend="GskHttpLanguageSet">GskHttpLanguageSet</link> * gsk_http_language_set_new          (const <link linkend="char">char</link> *language,
+                                                         <link linkend="gfloat">gfloat</link> quality);</programlisting>
+<para>
+Allocate a new node in a GskHttpLanguageSet list.
+Though any ASCII string is basically allowed,
+a two letter language code (en, de, pl, it, etc)
+is the usual start of the language name;
+a two letter country code (US, UK, DE, etc)
+is the second more optional part, like "en-US".</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>language</parameter>&#160;:</term>
+<listitem><simpara> the human language code to list a preference for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>quality</parameter>&#160;:</term>
+<listitem><simpara> relative preference for this encoding.
+A value of -1 means that the quality was omitted,
+which means it should be treated as 1.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new language node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-language-set-free" role="function">
+<title>gsk_http_language_set_free ()</title>
+<indexterm zone="gsk-http-language-set-free"><primary sortas="gsk_http_language_set_free">gsk_http_language_set_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_language_set_free          (<link linkend="GskHttpLanguageSet">GskHttpLanguageSet</link> *set);</programlisting>
+<para>
+Deallocate the node in the language-set.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>set</parameter>&#160;:</term>
+<listitem><simpara> the language set node to deallocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authenticate-new-basic" role="function">
+<title>gsk_http_authenticate_new_basic ()</title>
+<indexterm zone="gsk-http-authenticate-new-basic"><primary sortas="gsk_http_authenticate_new_basic">gsk_http_authenticate_new_basic</primary></indexterm><programlisting><link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * gsk_http_authenticate_new_basic   (const <link linkend="char">char</link> *realm);</programlisting>
+<para>
+Create an <link linkend="GskHttpAuthenticate"><type>GskHttpAuthenticate</type></link> for basic authentication.
+Basic authentication is very insecure: the password
+is merely transmitted base64 encoded.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>realm</parameter>&#160;:</term>
+<listitem><simpara> the area on the site to authenticate for.
+This is the name used by the RFC.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new challenge.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authenticate-new-digest" role="function">
+<title>gsk_http_authenticate_new_digest ()</title>
+<indexterm zone="gsk-http-authenticate-new-digest"><primary sortas="gsk_http_authenticate_new_digest">gsk_http_authenticate_new_digest</primary></indexterm><programlisting><link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * gsk_http_authenticate_new_digest  (const <link linkend="char">char</link> *realm,
+                                                         const <link linkend="char">char</link> *domain,
+                                                         const <link linkend="char">char</link> *nonce,
+                                                         const <link linkend="char">char</link> *opaque,
+                                                         const <link linkend="char">char</link> *algorithm);</programlisting>
+<para>
+Create an <link linkend="GskHttpAuthenticate"><type>GskHttpAuthenticate</type></link> for Digest authentication.
+Digest authentication improves Basic authentication by
+using a hash of the password.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>realm</parameter>&#160;:</term>
+<listitem><simpara> the area on the site to authenticate for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>nonce</parameter>&#160;:</term>
+<listitem><simpara> value hashed into the digest to keep it secure against replay attacks.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>opaque</parameter>&#160;:</term>
+<listitem><simpara> value which must be sent back to the server,
+which the client does not interpret.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>algorithm</parameter>&#160;:</term>
+<listitem><simpara> digest algorithm.  Only MD5 is supported for now,
+and is equivalent to specifying NULL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new challenge.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authenticate-new-unknown" role="function">
+<title>gsk_http_authenticate_new_unknown ()</title>
+<indexterm zone="gsk-http-authenticate-new-unknown"><primary sortas="gsk_http_authenticate_new_unknown">gsk_http_authenticate_new_unknown</primary></indexterm><programlisting><link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> * gsk_http_authenticate_new_unknown (const <link linkend="char">char</link> *auth_scheme_name,
+                                                         const <link linkend="char">char</link> *realm,
+                                                         const <link linkend="char">char</link> *options);</programlisting>
+<para>
+Handling your special purpose authenticator.
+Note that Basic and Digest authenticator parsers
+are built-in to GSK, this is only for other types.
+</para>
+<para>
+It is given from the server to the client.
+The client must response (in another message) with
+an authorization.
+</para>
+<para>
+The purpose of a challenge in cryptographic systems
+is to randomize the transaction so that an attacker cannot
+use the same Authorization lines to get access to a machine.
+</para>
+<para>
+Of course, if you use an insecure transport layer, it is MUCH
+harder to make things secure -- using SSL is recommended.
+</para>
+<para>
+Some WWW-Authenticate header is required
+in a GSK_HTTP_STATUS_UNAUTHORIZED response message.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth_scheme_name</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>realm</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>options</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new challenge.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-new-basic" role="function">
+<title>gsk_http_authorization_new_basic ()</title>
+<indexterm zone="gsk-http-authorization-new-basic"><primary sortas="gsk_http_authorization_new_basic">gsk_http_authorization_new_basic</primary></indexterm><programlisting><link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * gsk_http_authorization_new_basic (const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password);</programlisting>
+<para>
+Basic HTTP authentication response.
+Not very secure because your password is provided plain-text.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>user</parameter>&#160;:</term>
+<listitem><simpara> name of the account to authenticate for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara> password of the account to authenticate for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the response to the authentication request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-new-respond-post" role="function">
+<title>gsk_http_authorization_new_respond_post ()</title>
+<indexterm zone="gsk-http-authorization-new-respond-post"><primary sortas="gsk_http_authorization_new_respond_post">gsk_http_authorization_new_respond_post</primary></indexterm><programlisting><link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * gsk_http_authorization_new_respond_post
+                                                        (const <link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> *,
+                                                         const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="guint">guint</link> post_data_len,
+                                                         <link linkend="gconstpointer">gconstpointer</link> post_data,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>Param1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>post_data_len</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>post_data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-new-unknown" role="function">
+<title>gsk_http_authorization_new_unknown ()</title>
+<indexterm zone="gsk-http-authorization-new-unknown"><primary sortas="gsk_http_authorization_new_unknown">gsk_http_authorization_new_unknown</primary></indexterm><programlisting><link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * gsk_http_authorization_new_unknown
+                                                        (const <link linkend="char">char</link> *auth_scheme_name,
+                                                         const <link linkend="char">char</link> *response);</programlisting>
+<para>
+Arbitrary authorization response.
+</para>
+<para>
+We recommend you use <link linkend="gsk-http-authorization-new-digest"><function>gsk_http_authorization_new_digest()</function></link>
+instead, or <link linkend="gsk-http-authorization-new-basic"><function>gsk_http_authorization_new_basic()</function></link> if that's all
+the server can do.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth_scheme_name</parameter>&#160;:</term>
+<listitem><simpara> name of the authentification scheme.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the response to the authentication request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-peek-response-digest" role="function">
+<title>gsk_http_authorization_peek_response_digest ()</title>
+<indexterm zone="gsk-http-authorization-peek-response-digest"><primary sortas="gsk_http_authorization_peek_response_digest">gsk_http_authorization_peek_response_digest</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_http_authorization_peek_response_digest
+                                                        (<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>Param1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-copy" role="function">
+<title>gsk_http_authorization_copy ()</title>
+<indexterm zone="gsk-http-authorization-copy"><primary sortas="gsk_http_authorization_copy">gsk_http_authorization_copy</primary></indexterm><programlisting><link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * gsk_http_authorization_copy      (const <link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>Param1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-new-digest" role="function">
+<title>gsk_http_authorization_new_digest ()</title>
+<indexterm zone="gsk-http-authorization-new-digest"><primary sortas="gsk_http_authorization_new_digest">gsk_http_authorization_new_digest</primary></indexterm><programlisting><link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * gsk_http_authorization_new_digest
+                                                        (const <link linkend="char">char</link> *realm,
+                                                         const <link linkend="char">char</link> *domain,
+                                                         const <link linkend="char">char</link> *nonce,
+                                                         const <link linkend="char">char</link> *opaque,
+                                                         const <link linkend="char">char</link> *algorithm,
+                                                         const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password,
+                                                         const <link linkend="char">char</link> *response_digest,
+                                                         const <link linkend="char">char</link> *entity_digest);</programlisting>
+<para>
+Create a new Digest-based authentication response.
+Many of the parameters must match the Authenticate header.
+</para>
+<para>
+The response_digest is a value computed from nonce, user, and password.
+The security of Digest authentication derives from the difficulty of
+computing the password from the digest, since the password itself is
+not transmitted cleartext.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>realm</parameter>&#160;:</term>
+<listitem><simpara> the area on the site to authenticate for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>nonce</parameter>&#160;:</term>
+<listitem><simpara> value hashed into the digest to keep it secure against replay attacks.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>opaque</parameter>&#160;:</term>
+<listitem><simpara> value which must be sent back to the server,
+which the client does not interpret.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>algorithm</parameter>&#160;:</term>
+<listitem><simpara> digest algorithm.  Only MD5 is supported for now,
+and is equivalent to specifying NULL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user</parameter>&#160;:</term>
+<listitem><simpara> name of the account to authenticate for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara> password of the account to authenticate for. [unnecessary if you have the response digest]
+This value is NOT transmitted to the remote host.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>response_digest</parameter>&#160;:</term>
+<listitem><simpara> the securely-hashed response.   If NULL, Gsk will compute the response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>entity_digest</parameter>&#160;:</term>
+<listitem><simpara> the securely-hashed information about your POST content.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the response to the authentication request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-new-respond" role="function">
+<title>gsk_http_authorization_new_respond ()</title>
+<indexterm zone="gsk-http-authorization-new-respond"><primary sortas="gsk_http_authorization_new_respond">gsk_http_authorization_new_respond</primary></indexterm><programlisting><link linkend="GskHttpAuthorization">GskHttpAuthorization</link> * gsk_http_authorization_new_respond
+                                                        (const <link linkend="GskHttpAuthenticate">GskHttpAuthenticate</link> *,
+                                                         const <link linkend="char">char</link> *user,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Attempt to use the given user/password pair as authentication information for
+the given request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>Param1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user</parameter>&#160;:</term>
+<listitem><simpara> the username of the account (or whatever) to use.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara> password of the account to authenticate for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional place to put the error if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new response, or NULL if something goes wrong.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-authorization-set-nonce" role="function">
+<title>gsk_http_authorization_set_nonce ()</title>
+<indexterm zone="gsk-http-authorization-set-nonce"><primary sortas="gsk_http_authorization_set_nonce">gsk_http_authorization_set_nonce</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_authorization_set_nonce    (<link linkend="GskHttpAuthorization">GskHttpAuthorization</link> *,
+                                                         const <link linkend="char">char</link> *nonce);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>Param1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>nonce</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-cookie-new" role="function">
+<title>gsk_http_cookie_new ()</title>
+<indexterm zone="gsk-http-cookie-new"><primary sortas="gsk_http_cookie_new">gsk_http_cookie_new</primary></indexterm><programlisting><link linkend="GskHttpCookie">GskHttpCookie</link> *     gsk_http_cookie_new                 (const <link linkend="char">char</link> *key,
+                                                         const <link linkend="char">char</link> *value,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *domain,
+                                                         const <link linkend="char">char</link> *expire_date,
+                                                         const <link linkend="char">char</link> *comment,
+                                                         <link linkend="int">int</link> max_age);</programlisting>
+<para>
+Allocate a cookie.  Once allocated, it cannot be changed.
+</para>
+<para>
+Cookies are a mechanism for tracking users.
+The remote host sends a Set-Cookie directive which,
+should be client choose to accept it, may be sent with
+subsequent relevant requests.
+</para>
+<para>
+NOTE: GSK does not automatically handle cookies.
+That is up to the application.
+</para>
+<para>
+TODO: GSK should have a cookie database mechanism.
+</para>
+<para>
+See RFC 2964 and 2965.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> token used to identify the cookie.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> information associated with the cookie.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> applicable area in server directory structure for this cookie.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara> domain names this cookie applies to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>expire_date</parameter>&#160;:</term>
+<listitem><simpara> when this cookie should be discarded.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>comment</parameter>&#160;:</term>
+<listitem><simpara> miscellaneous information about this cookie.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_age</parameter>&#160;:</term>
+<listitem><simpara> maximum number of seconds that this cookie should be retained.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated cookie.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-cookie-copy" role="function">
+<title>gsk_http_cookie_copy ()</title>
+<indexterm zone="gsk-http-cookie-copy"><primary sortas="gsk_http_cookie_copy">gsk_http_cookie_copy</primary></indexterm><programlisting><link linkend="GskHttpCookie">GskHttpCookie</link> *     gsk_http_cookie_copy                (const <link linkend="GskHttpCookie">GskHttpCookie</link> *orig);</programlisting>
+<para>
+Copy a cookie.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>orig</parameter>&#160;:</term>
+<listitem><simpara> the cookie to copy.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new cookie.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-cookie-free" role="function">
+<title>gsk_http_cookie_free ()</title>
+<indexterm zone="gsk-http-cookie-free"><primary sortas="gsk_http_cookie_free">gsk_http_cookie_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_cookie_free                (<link linkend="GskHttpCookie">GskHttpCookie</link> *orig);</programlisting>
+<para>
+Free the memory associated with the cookie.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>orig</parameter>&#160;:</term>
+<listitem><simpara> the cookie to deallocate.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpHeaderClass" role="struct">
+<title>GskHttpHeaderClass</title>
+<indexterm zone="GskHttpHeaderClass"><primary sortas="GskHttpHeaderClass">GskHttpHeaderClass</primary></indexterm><programlisting>typedef struct {
+  GObjectClass                  base_class;
+} GskHttpHeaderClass;
+</programlisting>
+<para>
+Virtual functions of HTTP headers (none, for now).
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>base_class</structfield>;</term>
+<listitem><simpara>object system.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpHeader-struct" role="struct">
+<title>GskHttpHeader</title>
+<indexterm zone="GskHttpHeader-struct"><primary sortas="GskHttpHeader">GskHttpHeader</primary></indexterm><programlisting>typedef struct {
+  guint16                       http_major_version;             /* always 1 */
+  guint16                       http_minor_version;
+
+  GskHttpConnection             connection_type;
+
+  GskHttpTransferEncoding       transfer_encoding_type;
+  GskHttpContentEncoding        content_encoding_type;
+  GskHttpRangeSet              *accepted_range_units;  /* Accept-Ranges */
+
+  char                         *unrecognized_transfer_encoding;
+  char                         *unrecognized_content_encoding;
+
+  char                     *content_encoding;     /* Content-Encoding */
+
+  unsigned                  has_content_type : 1;
+
+  char                     *content_type;             /* Content-Type */
+  char                     *content_subtype;
+  char                     *content_charset;
+  GSList                   *content_additional;
+
+  /* NULL-terminated array of language tags from the Content-Language
+   * header, or NULL if header not present. */
+  char                    **content_languages;
+
+  /* Bytes ranges. Both with be == -1 if there is no Range tag. */
+  int                           range_start;
+  int                           range_end;
+
+  /* may be set to ((time_t) -1) to omit them. */
+  glong                         date;
+
+  /* From the Content-Length header. */
+  gint64                        content_length;
+
+
+  /* Key/value searchable header lines. */
+  GHashTable                   *header_lines;
+
+  /* Error messages.  */
+  GSList                       *errors;		      /* list of char* Error: directives */
+
+  /* General headers.  */
+  GSList                       *pragmas;
+
+  /* and actual accumulated parse error (a bit of a hack) */
+  GError                       *g_error;
+} GskHttpHeader;
+</programlisting>
+<para>
+Base class for all HTTP headers.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>http_major_version</structfield>;</term>
+<listitem><simpara>
+The major version of the HTTP protocol, according to the header.
+This must always by '1'.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>http_minor_version</structfield>;</term>
+<listitem><simpara>
+The minor version of the HTTP protocol, according to the header.
+This must always by '0' or '1'.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpConnection">GskHttpConnection</link>&#160;<structfield>connection_type</structfield>;</term>
+<listitem><simpara>
+Whether to close or keep alive the connection at the
+end of the current transaction.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpTransferEncoding">GskHttpTransferEncoding</link>&#160;<structfield>transfer_encoding_type</structfield>;</term>
+<listitem><simpara>
+Type of encoding used to package the header for transmission
+across the transport.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpContentEncoding">GskHttpContentEncoding</link>&#160;<structfield>content_encoding_type</structfield>;</term>
+<listitem><simpara>
+Type of encoding used encode the content.  This is mostly
+used to support compressed transactions.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpRangeSet">GskHttpRangeSet</link>&#160;*<structfield>accepted_range_units</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>unrecognized_transfer_encoding</structfield>;</term>
+<listitem><simpara>
+A string, if the header has an unknown transfer encoding.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>unrecognized_content_encoding</structfield>;</term>
+<listitem><simpara>
+A string, if the header has an unknown content encoding.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>content_encoding</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>content_type</structfield>;</term>
+<listitem><simpara>major type of the content.
+Typical examples are 'text' or 'image'.
+Types beginning with 'x-' are for unstandardized extensions.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>content_subtype</structfield>;</term>
+<listitem><simpara>minor type of the content.
+Typical examples depend on the major type.
+For 'text', one encounters 'plain' and 'html'.
+For 'image', one encounters 'jpeg', 'png', 'gif' etc.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>content_charset</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>content_additional</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;**<structfield>content_languages</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>range_start</structfield>;</term>
+<listitem><simpara>
+First byte to transmit, or -1 if not using partial ranges.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>range_end</structfield>;</term>
+<listitem><simpara>
+Immediately after the last byte to transport,
+or -1 if no end range given.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="glong">glong</link>&#160;<structfield>date</structfield>;</term>
+<listitem><simpara>
+The date of the transaction, in UNIX time, or -1 if not specified.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gint64">gint64</link>&#160;<structfield>content_length</structfield>;</term>
+<listitem><simpara>
+The length of the content associated with this side of this
+transaction.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GHashTable">GHashTable</link>&#160;*<structfield>header_lines</structfield>;</term>
+<listitem><simpara>
+Hash-table of key->value mappings, for headers which
+are not handled directly by this implementation.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>errors</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GSList">GSList</link>&#160;*<structfield>pragmas</structfield>;</term>
+<listitem><simpara>
+A list of strings from Pragma: header lines.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GError">GError</link>&#160;*<structfield>g_error</structfield>;</term>
+<listitem><simpara>
+A <link linkend="GError"><type>GError</type></link> that indicates what last went wrong with
+this header.  Usually NULL.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpParseFlags" role="enum">
+<title>enum GskHttpParseFlags</title>
+<indexterm zone="GskHttpParseFlags"><primary sortas="GskHttpParseFlags">GskHttpParseFlags</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HTTP_PARSE_STRICT = (1 &lt;&lt; 0),
+
+  /* instead of giving up on unknown headers, just 
+   * add them as misc-headers */
+  GSK_HTTP_PARSE_SAVE_ERRORS = (1 &lt;&lt; 1)
+} GskHttpParseFlags;
+</programlisting>
+<para>
+Flags which affect how headers are parsed.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HTTP-PARSE-STRICT--CAPS" role="constant">
+<term><literal>GSK_HTTP_PARSE_STRICT</literal></term>
+<listitem><simpara>
+Require the header to be in strict(er) HTTP conformance
+when parsing.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HTTP-PARSE-SAVE-ERRORS--CAPS" role="constant">
+<term><literal>GSK_HTTP_PARSE_SAVE_ERRORS</literal></term>
+<listitem><simpara>
+Add headers that don't parse correctly into
+the misc-headers hashtable.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-connection" role="function">
+<title>gsk_http_header_get_connection ()</title>
+<indexterm zone="gsk-http-header-get-connection"><primary sortas="gsk_http_header_get_connection">gsk_http_header_get_connection</primary></indexterm><programlisting><link linkend="GskHttpConnection">GskHttpConnection</link>   gsk_http_header_get_connection      (<link linkend="GskHttpHeader">GskHttpHeader</link> *header);</programlisting>
+<para>
+Returns the connection semantics.
+Note that this will never return <link linkend="GSK-HTTP-CONNECTION-NONE--CAPS"><type>GSK_HTTP_CONNECTION_NONE</type></link>;
+it will figure out if the default is keep-alive or close.
+</para>
+<para>
+Use <link linkend="gsk-http-header-get-connection-type"><function>gsk_http_header_get_connection_type()</function></link> to get the 
+actual connection-type that will be transmitted over the
+wire (with NONE meaning that there is no Connection: header).
+</para>
+<para>
+Note that the client can make Connection: requests,
+but the server is allowed to ignore keep-alive directives.
+So calling this on the request gets the client's suggestions,
+and calling this on the response gets the server's intentions.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the HTTP header to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the connection semantics.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-from-buffer" role="function">
+<title>gsk_http_header_from_buffer ()</title>
+<indexterm zone="gsk-http-header-from-buffer"><primary sortas="gsk_http_header_from_buffer">gsk_http_header_from_buffer</primary></indexterm><programlisting><link linkend="GskHttpHeader">GskHttpHeader</link> *     gsk_http_header_from_buffer         (<link linkend="GskBuffer">GskBuffer</link> *input,
+                                                         <link linkend="gboolean">gboolean</link> is_request,
+                                                         <link linkend="GskHttpParseFlags">GskHttpParseFlags</link> flags,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Parse the HTTP header from the buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>input</parameter>&#160;:</term>
+<listitem><simpara> the buffer from which to parse the request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_request</parameter>&#160;:</term>
+<listitem><simpara> whether this is a request; otherwise, it is a response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> preferences for parsing.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new reference to the header.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-to-buffer" role="function">
+<title>gsk_http_header_to_buffer ()</title>
+<indexterm zone="gsk-http-header-to-buffer"><primary sortas="gsk_http_header_to_buffer">gsk_http_header_to_buffer</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_to_buffer           (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *output);</programlisting>
+<para>
+Appends an HTTP header into a buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the HTTP header to write into the buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output</parameter>&#160;:</term>
+<listitem><simpara> the buffer to store the header in, as text.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-content-encoding" role="function">
+<title>gsk_http_header_set_content_encoding ()</title>
+<indexterm zone="gsk-http-header-set-content-encoding"><primary sortas="gsk_http_header_set_content_encoding">gsk_http_header_set_content_encoding</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_set_content_encoding
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *encoding);</programlisting>
+<para>
+Set encoding method for the content.
+The actual encoding is done transparently by <link linkend="GskHttpClient"><type>GskHttpClient</type></link> and <link linkend="GskHttpServer"><type>GskHttpServer</type></link> usually.
+Encoding is only used for POST and PUT requests
+and any response that has a body (most do).
+The default is the identity encoding.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>encoding</parameter>&#160;:</term>
+<listitem><simpara>the new content encoding method.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-content-encoding" role="macro">
+<title>gsk_http_header_get_content_encoding()</title>
+<indexterm zone="gsk-http-header-get-content-encoding"><primary sortas="gsk_http_header_get_content_encoding">gsk_http_header_get_content_encoding</primary></indexterm><programlisting>#define             gsk_http_header_get_content_encoding(header)</programlisting>
+<para>
+Get encoding method for the content.
+(The actual encoding is done transparently by <link linkend="GskHttpClient"><type>GskHttpClient</type></link> and <link linkend="GskHttpServer"><type>GskHttpServer</type></link> usually.)
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-date" role="macro">
+<title>gsk_http_header_set_date()</title>
+<indexterm zone="gsk-http-header-set-date"><primary sortas="gsk_http_header_set_date">gsk_http_header_set_date</primary></indexterm><programlisting>#define             gsk_http_header_set_date(header, date)</programlisting>
+<para>
+The date of the request.
+Defines as the same as "orig-date in RFC 822".
+Basically, clients should only send dates with POST or PUT data,
+and even then it is optional.  Servers should usually send dates, but if there is no content
+then the date is optional.  The precise rules are set out
+in [RFC 2616, Section 14.18].
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> The HTTP header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>date</parameter>&#160;:</term>
+<listitem><simpara>The date, as a unix time number.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-date" role="macro">
+<title>gsk_http_header_get_date()</title>
+<indexterm zone="gsk-http-header-get-date"><primary sortas="gsk_http_header_get_date">gsk_http_header_get_date</primary></indexterm><programlisting>#define             gsk_http_header_get_date(header)</programlisting>
+<para>
+  Get the Date on the request, or -1 if not set.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>The HTTP header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-add-misc" role="function">
+<title>gsk_http_header_add_misc ()</title>
+<indexterm zone="gsk-http-header-add-misc"><primary sortas="gsk_http_header_add_misc">gsk_http_header_add_misc</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_add_misc            (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *key,
+                                                         const <link linkend="char">char</link> *value);</programlisting>
+<para>
+Add a raw header line to the header, with an associated value.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> a case-insensitive ASCII string for the key for this foreign header.
+  This key should not be a standard HTTP tag.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> a case-sensitive value for that key.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-lookup-misc" role="function">
+<title>gsk_http_header_lookup_misc ()</title>
+<indexterm zone="gsk-http-header-lookup-misc"><primary sortas="gsk_http_header_lookup_misc">gsk_http_header_lookup_misc</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_http_header_lookup_misc         (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *key);</programlisting>
+<para>
+Lookup a miscellaneous HTTP header.  All headers that begin with X-
+are stored in here.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the header to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> a case-insensitive ASCII string for the key for this foreign header.
+  This key should not be a standard HTTP tag.
+returns: value of the key.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-remove-misc" role="function">
+<title>gsk_http_header_remove_misc ()</title>
+<indexterm zone="gsk-http-header-remove-misc"><primary sortas="gsk_http_header_remove_misc">gsk_http_header_remove_misc</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_remove_misc         (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *key);</programlisting>
+<para>
+Remove a raw header line from the header.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> a case-insensitive ASCII string for the key for this foreign header.
+  This key should not be a standard HTTP tag.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpHeaderLineParser" role="struct">
+<title>GskHttpHeaderLineParser</title>
+<indexterm zone="GskHttpHeaderLineParser"><primary sortas="GskHttpHeaderLineParser">GskHttpHeaderLineParser</primary></indexterm><programlisting>typedef struct {
+  const char *name;
+  GskHttpHeaderLineParserFunc func;
+  gpointer data;
+} GskHttpHeaderLineParser;
+</programlisting>
+<para>
+A structure giving a HTTP header line field-name,
+and a function to parse the value of that kind of field.
+</para><variablelist role="struct">
+<varlistentry>
+<term>const&#160;<link linkend="char">char</link>&#160;*<structfield>name</structfield>;</term>
+<listitem><simpara>the name of the field in lowercase, i.e. "date" or "content-length".
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskHttpHeaderLineParserFunc">GskHttpHeaderLineParserFunc</link>&#160;<structfield>func</structfield>;</term>
+<listitem><simpara>function to call to parse the value of that field.
+So if a "Date: Thu Jun  5 06:27:39 PDT 2003" line comes in,
+then this function will be called with "Thu Jun  5 06:27:39 PDT 2003",
+and a header to add that information to.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gpointer">gpointer</link>&#160;<structfield>data</structfield>;</term>
+<listitem><simpara>data to pass to function.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpHeaderLineParserFunc" role="function">
+<title>GskHttpHeaderLineParserFunc ()</title>
+<indexterm zone="GskHttpHeaderLineParserFunc"><primary sortas="GskHttpHeaderLineParserFunc">GskHttpHeaderLineParserFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskHttpHeaderLineParserFunc)      (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *text,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+A function to be invoked with the value of a specific type of header-line.
+This will add information to <parameter>header</parameter> frequently.
+If it encounters a parse error, it can indicate that by returning FALSE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>header to affect by this line.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text</parameter>&#160;:</term>
+<listitem><simpara>value of the header line.  That is, everything that follows
+the initial colon and space(s).  So for the header line "Content-Length: 42",
+the <parameter>text</parameter> should merely be "42".
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>pointer from the <link linkend="GskHttpHeaderLineParser"><type>GskHttpHeaderLineParser</type></link> to give auxilliary info.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether it was able to process the value.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-parser-table" role="function">
+<title>gsk_http_header_get_parser_table ()</title>
+<indexterm zone="gsk-http-header-get-parser-table"><primary sortas="gsk_http_header_get_parser_table">gsk_http_header_get_parser_table</primary></indexterm><programlisting><link linkend="GHashTable">GHashTable</link> *        gsk_http_header_get_parser_table    (<link linkend="gboolean">gboolean</link> is_request);</programlisting>
+<para>
+Obtain a hash-table which maps lowercased HTTP header keys
+to <link linkend="GskHttpHeaderLineParser"><type>GskHttpHeaderLineParser</type></link>'s.  There are different maps
+for requests and responses.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>is_request</parameter>&#160;:</term>
+<listitem><simpara> whether to get the parse table for request (versus for responses).
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the hash-table mapping, which is global and should not be freed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpHeaderPrintFunc" role="function">
+<title>GskHttpHeaderPrintFunc ()</title>
+<indexterm zone="GskHttpHeaderPrintFunc"><primary sortas="GskHttpHeaderPrintFunc">GskHttpHeaderPrintFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskHttpHeaderPrintFunc)           (const <link linkend="char">char</link> *text,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function to print a line of HTTP header data.
+</para><variablelist role="params">
+<varlistentry><term><parameter>text</parameter>&#160;:</term>
+<listitem><simpara>NUL-terminated line of HTTP header.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>print_data argument of <link linkend="gsk-http-header-print"><function>gsk_http_header_print()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-print" role="function">
+<title>gsk_http_header_print ()</title>
+<indexterm zone="gsk-http-header-print"><primary sortas="gsk_http_header_print">gsk_http_header_print</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_print               (<link linkend="GskHttpHeader">GskHttpHeader</link> *http_header,
+                                                         <link linkend="GskHttpHeaderPrintFunc">GskHttpHeaderPrintFunc</link> print_func,
+                                                         <link linkend="gpointer">gpointer</link> print_data);</programlisting>
+<para>
+Print the HTTP header line-by-line, through a generic
+printing function.  This could conceivable save memory
+and allow better streaming.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http_header</parameter>&#160;:</term>
+<listitem><simpara> the header to output, line-by-line.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>print_func</parameter>&#160;:</term>
+<listitem><simpara> a function to call on each line of output.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>print_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>print_func</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-connection-type" role="macro">
+<title>gsk_http_header_set_connection_type()</title>
+<indexterm zone="gsk-http-header-set-connection-type"><primary sortas="gsk_http_header_set_connection_type">gsk_http_header_set_connection_type</primary></indexterm><programlisting>#define             gsk_http_header_set_connection_type(header, connection_type)</programlisting>
+<para>
+Change the Connection type reflected in this header.
+</para>
+<para>
+   [From RFC 2616, Section 14.10]
+   The Connection general-header field allows the sender to specify
+   options that are desired for that particular connection and MUST NOT
+   be communicated by proxies over further connections.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>connection_type</parameter>&#160;:</term>
+<listitem><simpara>the new Connection type.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-connection-type" role="macro">
+<title>gsk_http_header_get_connection_type()</title>
+<indexterm zone="gsk-http-header-get-connection-type"><primary sortas="gsk_http_header_get_connection_type">gsk_http_header_get_connection_type</primary></indexterm><programlisting>#define             gsk_http_header_get_connection_type(header)</programlisting>
+<para>
+Get the Connection type reflected in this header.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-transfer-encoding" role="macro">
+<title>gsk_http_header_set_transfer_encoding()</title>
+<indexterm zone="gsk-http-header-set-transfer-encoding"><primary sortas="gsk_http_header_set_transfer_encoding">gsk_http_header_set_transfer_encoding</primary></indexterm><programlisting>#define             gsk_http_header_set_transfer_encoding(header, enc)</programlisting>
+<para>
+   [From RFC 2616, Section 14.41]
+   The Transfer-Encoding general-header field indicates what (if any)
+   type of transformation has been applied to the message body in order
+   to safely transfer it between the sender and the recipient. This
+   differs from the content-coding in that the transfer-coding is a
+   property of the message, not of the entity.
+</para>
+<para>
+   If multiple encodings have been applied to an entity, the transfer-
+   codings MUST be listed in the order in which they were applied.
+   Additional information about the encoding parameters MAY be provided
+   by other entity-header fields not defined by this specification.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>enc</parameter>&#160;:</term>
+<listitem><simpara>the new encoding.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-transfer-encoding" role="macro">
+<title>gsk_http_header_get_transfer_encoding()</title>
+<indexterm zone="gsk-http-header-get-transfer-encoding"><primary sortas="gsk_http_header_get_transfer_encoding">gsk_http_header_get_transfer_encoding</primary></indexterm><programlisting>#define             gsk_http_header_get_transfer_encoding(header)</programlisting>
+<para>
+   Get the transfer encoding of this message.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-content-type" role="macro">
+<title>gsk_http_header_get_content_type()</title>
+<indexterm zone="gsk-http-header-get-content-type"><primary sortas="gsk_http_header_get_content_type">gsk_http_header_get_content_type</primary></indexterm><programlisting>#define             gsk_http_header_get_content_type(header)</programlisting>
+<para>
+Get the major type of the content.
+Any header which has content SHOULD have a content-type.
+Typical examples are 'text' and 'image'.
+</para>
+<para>
+XXX: need a reference to a list of content types!!!!
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-content-type" role="macro">
+<title>gsk_http_header_set_content_type()</title>
+<indexterm zone="gsk-http-header-set-content-type"><primary sortas="gsk_http_header_set_content_type">gsk_http_header_set_content_type</primary></indexterm><programlisting>#define             gsk_http_header_set_content_type(header, content_type)</programlisting>
+<para>
+Set the major type of the content.
+Any header which has content SHOULD have a content-type.
+Typical examples are 'text' and 'image'.
+</para>
+<para>
+XXX: need a reference to a list of content types!!!!
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>content_type</parameter>&#160;:</term>
+<listitem><simpara>the new major type of the header.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-content-subtype" role="macro">
+<title>gsk_http_header_get_content_subtype()</title>
+<indexterm zone="gsk-http-header-get-content-subtype"><primary sortas="gsk_http_header_get_content_subtype">gsk_http_header_get_content_subtype</primary></indexterm><programlisting>#define             gsk_http_header_get_content_subtype(header)</programlisting>
+<para>
+Get the minor subtype of the content.
+Any header which has content SHOULD have a content-subtype.
+</para>
+<para>
+XXX: need a reference to a list of content types!!!!
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-content-subtype" role="macro">
+<title>gsk_http_header_set_content_subtype()</title>
+<indexterm zone="gsk-http-header-set-content-subtype"><primary sortas="gsk_http_header_set_content_subtype">gsk_http_header_set_content_subtype</primary></indexterm><programlisting>#define             gsk_http_header_set_content_subtype(header, content_type)</programlisting>
+<para>
+Set the minor type of the content.
+Any header which has content SHOULD have a content-subtype.
+</para>
+<para>
+XXX: need a reference to a list of content types!!!!
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>content_type</parameter>&#160;:</term>
+<listitem><simpara>the new content subtype.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-content-length" role="macro">
+<title>gsk_http_header_set_content_length()</title>
+<indexterm zone="gsk-http-header-set-content-length"><primary sortas="gsk_http_header_set_content_length">gsk_http_header_set_content_length</primary></indexterm><programlisting>#define             gsk_http_header_set_content_length(header, len)</programlisting>
+<para>
+  Set the indicated length of the content.  This may be used
+  for POST and PUT requests as well as most responses.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara>the exact length of the content, in bytes, or -1 if the length
+cannot be predetermined.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-content-length" role="macro">
+<title>gsk_http_header_get_content_length()</title>
+<indexterm zone="gsk-http-header-get-content-length"><primary sortas="gsk_http_header_get_content_length">gsk_http_header_get_content_length</primary></indexterm><programlisting>#define             gsk_http_header_get_content_length(header)</programlisting>
+<para>
+  Get the indicated length of the content.  This may be used
+  in POST and PUT requests as well as most responses.
+  If the content has no specified length, or no length is allowed,
+  then -1 is returned.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-content-charset" role="macro">
+<title>gsk_http_header_get_content_charset()</title>
+<indexterm zone="gsk-http-header-get-content-charset"><primary sortas="gsk_http_header_get_content_charset">gsk_http_header_get_content_charset</primary></indexterm><programlisting>#define             gsk_http_header_get_content_charset(header)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-add-accepted-range" role="function">
+<title>gsk_http_header_add_accepted_range ()</title>
+<indexterm zone="gsk-http-header-add-accepted-range"><primary sortas="gsk_http_header_add_accepted_range">gsk_http_header_add_accepted_range</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_add_accepted_range  (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         <link linkend="GskHttpRange">GskHttpRange</link> range);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>range</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-add-pragma" role="function">
+<title>gsk_http_header_add_pragma ()</title>
+<indexterm zone="gsk-http-header-add-pragma"><primary sortas="gsk_http_header_add_pragma">gsk_http_header_add_pragma</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_add_pragma          (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *pragma);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pragma</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-content-charset" role="macro">
+<title>gsk_http_header_set_content_charset()</title>
+<indexterm zone="gsk-http-header-set-content-charset"><primary sortas="gsk_http_header_set_content_charset">gsk_http_header_set_content_charset</primary></indexterm><programlisting>#define             gsk_http_header_set_content_charset(header, content_type)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>content_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-range" role="macro">
+<title>gsk_http_header_set_range()</title>
+<indexterm zone="gsk-http-header-set-range"><primary sortas="gsk_http_header_set_range">gsk_http_header_set_range</primary></indexterm><programlisting>#define             gsk_http_header_set_range(header, start, end)</programlisting>
+<para>
+If retrieving partial content, set the range in bytes of that content.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>start</parameter>&#160;:</term>
+<listitem><simpara>start of the range in bytes.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>end</parameter>&#160;:</term>
+<listitem><simpara>end of the range in bytes.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-range-start" role="macro">
+<title>gsk_http_header_get_range_start()</title>
+<indexterm zone="gsk-http-header-get-range-start"><primary sortas="gsk_http_header_get_range_start">gsk_http_header_get_range_start</primary></indexterm><programlisting>#define             gsk_http_header_get_range_start(header)</programlisting>
+<para>
+If retrieving partial content, get the offset of the first byte to receive.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-get-range-end" role="macro">
+<title>gsk_http_header_get_range_end()</title>
+<indexterm zone="gsk-http-header-get-range-end"><primary sortas="gsk_http_header_get_range_end">gsk_http_header_get_range_end</primary></indexterm><programlisting>#define             gsk_http_header_get_range_end(header)</programlisting>
+<para>
+If retrieving partial content, get the offset of the last byte to receive.
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara>the header to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-string" role="function">
+<title>gsk_http_header_set_string ()</title>
+<indexterm zone="gsk-http-header-set-string"><primary sortas="gsk_http_header_set_string">gsk_http_header_set_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_set_string          (<link linkend="gpointer">gpointer</link> http_header,
+                                                         <link linkend="char">char</link> **p_str,
+                                                         const <link linkend="char">char</link> *str);</programlisting>
+<para>
+Private function to set a string in a HTTP header.
+(Currently this uses strdup, but we may eventually switch
+allocation strategies).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http_header</parameter>&#160;:</term>
+<listitem><simpara> HTTP header which owns the string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>p_str</parameter>&#160;:</term>
+<listitem><simpara> pointer to the string's location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> string to copy and assign to *<parameter>p_str</parameter>.
+(May be NULL)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-string-val" role="function">
+<title>gsk_http_header_set_string_val ()</title>
+<indexterm zone="gsk-http-header-set-string-val"><primary sortas="gsk_http_header_set_string_val">gsk_http_header_set_string_val</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_set_string_val      (<link linkend="gpointer">gpointer</link> http_header,
+                                                         <link linkend="char">char</link> **p_str,
+                                                         const <link linkend="GValue">GValue</link> *value);</programlisting>
+<para>
+Private function to set a string in a HTTP header from a value.
+This is used from the set_property methods in the various HTTP header
+class implementations.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http_header</parameter>&#160;:</term>
+<listitem><simpara> HTTP header which owns the string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>p_str</parameter>&#160;:</term>
+<listitem><simpara> pointer to the string's location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> a value which holds a string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-cut-string" role="function">
+<title>gsk_http_header_cut_string ()</title>
+<indexterm zone="gsk-http-header-cut-string"><primary sortas="gsk_http_header_cut_string">gsk_http_header_cut_string</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_http_header_cut_string          (<link linkend="gpointer">gpointer</link> http_header,
+                                                         const <link linkend="char">char</link> *start,
+                                                         const <link linkend="char">char</link> *end);</programlisting>
+<para>
+private.
+Copy a substring assuming that http_header is responsible
+for it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http_header</parameter>&#160;:</term>
+<listitem><simpara> HTTP header which owns the string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>start</parameter>&#160;:</term>
+<listitem><simpara> the start of the string
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>end</parameter>&#160;:</term>
+<listitem><simpara> immediately past the input string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the NUL-terminated copy of the string between <parameter>start</parameter>
+and <parameter>end</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-free-string" role="function">
+<title>gsk_http_header_free_string ()</title>
+<indexterm zone="gsk-http-header-free-string"><primary sortas="gsk_http_header_free_string">gsk_http_header_free_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_free_string         (<link linkend="gpointer">gpointer</link> http_header,
+                                                         <link linkend="char">char</link> *str);</programlisting>
+<para>
+Deallocate a string allocated with 
+<link linkend="gsk-http-header-set-string"><function>gsk_http_header_set_string()</function></link>,
+<link linkend="gsk-http-header-set-string-val"><function>gsk_http_header_set_string_val()</function></link>,
+<link linkend="gsk-http-header-cut-string"><function>gsk_http_header_cut_string()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>http_header</parameter>&#160;:</term>
+<listitem><simpara> HTTP header which owns the string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> the string to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-connection-string" role="function">
+<title>gsk_http_header_set_connection_string ()</title>
+<indexterm zone="gsk-http-header-set-connection-string"><primary sortas="gsk_http_header_set_connection_string">gsk_http_header_set_connection_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_set_connection_string
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *str);</programlisting>
+<para>
+Change the Connection type reflected in this header.
+</para>
+<para>
+[From RFC 2616, Section 14.10]
+The Connection general-header field allows the sender to specify
+options that are desired for that particular connection and MUST NOT
+be communicated by proxies over further connections.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the HTTP header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> connection type, as a string.  (The string is exactly
+the same as that which is found literally in the header.)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-content-encoding-string" role="function">
+<title>gsk_http_header_set_content_encoding_string ()</title>
+<indexterm zone="gsk-http-header-set-content-encoding-string"><primary sortas="gsk_http_header_set_content_encoding_string">gsk_http_header_set_content_encoding_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_set_content_encoding_string
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *str);</programlisting>
+<para>
+Change the Content-Encoding type reflected in this header.
+</para>
+<para>
+The actual encoding is done transparently by <link linkend="GskHttpClient"><type>GskHttpClient</type></link> and <link linkend="GskHttpServer"><type>GskHttpServer</type></link> usually.
+Encoding is only used for POST and PUT requests
+and any response that has a body (most do).
+The default is the identity encoding.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the HTTP header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> content-encoding type, as a string.  (The string is exactly
+the same as that which is found literally in the header.)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-transfer-encoding-string" role="function">
+<title>gsk_http_header_set_transfer_encoding_string ()</title>
+<indexterm zone="gsk-http-header-set-transfer-encoding-string"><primary sortas="gsk_http_header_set_transfer_encoding_string">gsk_http_header_set_transfer_encoding_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_set_transfer_encoding_string
+                                                        (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         const <link linkend="char">char</link> *str);</programlisting>
+<para>
+Set the Transfer-Encoding type, as a string.
+</para>
+<para>
+[From RFC 2616, Section 14.41]
+The Transfer-Encoding general-header field indicates what (if any)
+type of transformation has been applied to the message body in order
+to safely transfer it between the sender and the recipient. This
+differs from the content-coding in that the transfer-coding is a
+property of the message, not of the entity.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the HTTP header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> transfer-encoding type, as a string.  (The string is exactly
+the same as that which is found literally in the header.)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-header-set-version" role="function">
+<title>gsk_http_header_set_version ()</title>
+<indexterm zone="gsk-http-header-set-version"><primary sortas="gsk_http_header_set_version">gsk_http_header_set_version</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_header_set_version         (<link linkend="GskHttpHeader">GskHttpHeader</link> *header,
+                                                         <link linkend="gint">gint</link> major,
+                                                         <link linkend="gint">gint</link> minor);</programlisting>
+<para>
+Set the major and minor versions;
+for example, to use HTTP 1.0, one would set <parameter>major</parameter> to 1,
+and <parameter>minor</parameter> to 0.
+</para>
+<para>
+In addition to setting the version numbers,
+this function suppresses features not available in
+the respective http implementations.
+</para>
+<para>
+Only HTTP 1.0 and 1.1 are supported.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>header</parameter>&#160;:</term>
+<listitem><simpara> the HTTP header to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>major</parameter>&#160;:</term>
+<listitem><simpara> the major HTTP version number.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>minor</parameter>&#160;:</term>
+<listitem><simpara> the minor HTTP version number.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GskHttpHeader.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskHttpHeader--connection" role="property"><title>The <literal>&quot;connection&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--connection"><primary sortas="GskHttpHeader:connection">GskHttpHeader:connection</primary></indexterm><programlisting>  &quot;connection&quot;               <link linkend="GskHttpConnection">GskHttpConnection</link>     : Read / Write</programlisting>
+<para>
+The type of connection.  See <link linkend="gsk-http-header-set-connection-type"><function>gsk_http_header_set_connection_type()</function></link>
+for more documentation.
+</para><para>Default value: GSK_HTTP_CONNECTION_NONE</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--connection-string" role="property"><title>The <literal>&quot;connection-string&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--connection-string"><primary sortas="GskHttpHeader:connection-string">GskHttpHeader:connection-string</primary></indexterm><programlisting>  &quot;connection-string&quot;        <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>
+The type of connection as a string.
+</para><para>Default value: "close"</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--content-charset" role="property"><title>The <literal>&quot;content-charset&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--content-charset"><primary sortas="GskHttpHeader:content-charset">GskHttpHeader:content-charset</primary></indexterm><programlisting>  &quot;content-charset&quot;          <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>The character set used for text content.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--content-encoding" role="property"><title>The <literal>&quot;content-encoding&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--content-encoding"><primary sortas="GskHttpHeader:content-encoding">GskHttpHeader:content-encoding</primary></indexterm><programlisting>  &quot;content-encoding&quot;         <link linkend="GskHttpContentEncoding">GskHttpContentEncoding</link>  : Read / Write</programlisting>
+<para>
+The way the content is encoded, see <link linkend="GskHttpConnection"><type>GskHttpConnection</type></link>
+for more documentation.
+</para><para>Default value: GSK_HTTP_CONTENT_ENCODING_IDENTITY</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--content-encoding-string" role="property"><title>The <literal>&quot;content-encoding-string&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--content-encoding-string"><primary sortas="GskHttpHeader:content-encoding-string">GskHttpHeader:content-encoding-string</primary></indexterm><programlisting>  &quot;content-encoding-string&quot;  <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>
+The way the content is encoded, as a string.  Typical
+values are "identity", "gzip" and "compress".
+</para><para>Default value: "identity"</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--content-length" role="property"><title>The <literal>&quot;content-length&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--content-length"><primary sortas="GskHttpHeader:content-length">GskHttpHeader:content-length</primary></indexterm><programlisting>  &quot;content-length&quot;           <link linkend="gint">gint</link>                  : Read / Write</programlisting>
+<para>
+Length of content associated with this header.
+</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--content-subtype" role="property"><title>The <literal>&quot;content-subtype&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--content-subtype"><primary sortas="GskHttpHeader:content-subtype">GskHttpHeader:content-subtype</primary></indexterm><programlisting>  &quot;content-subtype&quot;          <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>The minor type of content.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--content-type" role="property"><title>The <literal>&quot;content-type&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--content-type"><primary sortas="GskHttpHeader:content-type">GskHttpHeader:content-type</primary></indexterm><programlisting>  &quot;content-type&quot;             <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>The major type of content.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--date" role="property"><title>The <literal>&quot;date&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--date"><primary sortas="GskHttpHeader:date">GskHttpHeader:date</primary></indexterm><programlisting>  &quot;date&quot;                     <link linkend="gint">gint</link>                  : Read / Write</programlisting>
+<para>
+the date of the content of this response.
+</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--major-version" role="property"><title>The <literal>&quot;major-version&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--major-version"><primary sortas="GskHttpHeader:major-version">GskHttpHeader:major-version</primary></indexterm><programlisting>  &quot;major-version&quot;            <link linkend="guint">guint</link>                 : Read / Write</programlisting>
+<para>
+major version number of the HTTP protocol.
+Always 1.
+</para><para>Allowed values: &lt;= 2</para>
+<para>Default value: 1</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--minor-version" role="property"><title>The <literal>&quot;minor-version&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--minor-version"><primary sortas="GskHttpHeader:minor-version">GskHttpHeader:minor-version</primary></indexterm><programlisting>  &quot;minor-version&quot;            <link linkend="guint">guint</link>                 : Read / Write</programlisting>
+<para>
+minor version number of the HTTP protocol.
+Always 0 or 1, usually 1, indicating HTTP/1.1.
+</para><para>Allowed values: &lt;= 10</para>
+<para>Default value: 1</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--range-end" role="property"><title>The <literal>&quot;range-end&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--range-end"><primary sortas="GskHttpHeader:range-end">GskHttpHeader:range-end</primary></indexterm><programlisting>  &quot;range-end&quot;                <link linkend="gint">gint</link>                  : Read / Write</programlisting>
+<para>end of the data.</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--range-start" role="property"><title>The <literal>&quot;range-start&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--range-start"><primary sortas="GskHttpHeader:range-start">GskHttpHeader:range-start</primary></indexterm><programlisting>  &quot;range-start&quot;              <link linkend="gint">gint</link>                  : Read / Write</programlisting>
+<para>beginning of the data.</para><para>Allowed values: &gt;= -1</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--transfer-encoding" role="property"><title>The <literal>&quot;transfer-encoding&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--transfer-encoding"><primary sortas="GskHttpHeader:transfer-encoding">GskHttpHeader:transfer-encoding</primary></indexterm><programlisting>  &quot;transfer-encoding&quot;        <link linkend="GskHttpTransferEncoding">GskHttpTransferEncoding</link>  : Read / Write</programlisting>
+<para>type of transfer encoding.</para><para>Default value: GSK_HTTP_TRANSFER_ENCODING_NONE</para>
+</refsect2>
+<refsect2 id="GskHttpHeader--transfer-encoding-string" role="property"><title>The <literal>&quot;transfer-encoding-string&quot;</literal> property</title>
+<indexterm zone="GskHttpHeader--transfer-encoding-string"><primary sortas="GskHttpHeader:transfer-encoding-string">GskHttpHeader:transfer-encoding-string</primary></indexterm><programlisting>  &quot;transfer-encoding-string&quot; <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>type of transfer encoding as string.</para><para>Default value: "none"</para>
+</refsect2>
+</refsect1>
+
+
+
+<refsect1 id="GskHttpHeader.see-also">
+<title>See Also</title>
+<para>
+GskHttpRequest, GskHttpResponse
+</para>
+</refsect1>
+
+</refentry>

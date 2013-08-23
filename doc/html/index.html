@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GSK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="next" href="ch01.html" title="Core Library Support">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="book" lang="en">
+<div class="titlepage">
+<div><div><table class="navigation" id="top" width="100%" cellpadding="2" cellspacing="0"><tr><th valign="middle"><p class="title">GSK Reference Manual</p></th></tr></table></div></div>
+<hr>
+</div>
+<div class="toc"><dl>
+<dt><span class="chapter"><a href="ch01.html">Core Library Support</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskhook.html">Lightweight Hookable Events</a></span><span class="refpurpose"> — a blockable, optionally shutdown-able, trap-able
+structure inside a GObject.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskinit.html">Library Initialization</a></span><span class="refpurpose"> — Perform general initialization with limited argument parsing.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskmacros.html">Helpful Macros</a></span><span class="refpurpose"> — Various macros to eliminate tedious typing,
+beyond those provided by glib.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskIO.html">Base Input/Output Object</a></span><span class="refpurpose"> — A base class with input and output triggers,
+but no actual read or write methods.
+Those are left for derived classes to support.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskStream.html">Binary Input/Output Stream Base</a></span><span class="refpurpose"> — A byte stream.  This has methods to read and write data,
+and it inherits read/write notification from <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskstreamconnection.html">gskstreamconnection</a></span><span class="refpurpose"> — Connection between the input of one stream
+and the output of another.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskMainLoop.html">Main Loop (Generic Event Management)</a></span><span class="refpurpose"> — Convenient way to be notified when certain types of event occur.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gsknameresolver.html">Socket Address Lookup by Name</a></span><span class="refpurpose"> — A way to lookup addresses from names.
+(Like a generic DNS.)</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gsktypes.html">Useful GTypes</a></span><span class="refpurpose"> — some types useful to servers</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskbuffer.html">GskBuffer</a></span><span class="refpurpose"> — a fast, flexible in-memory data buffer</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskerrno.html">Old-Fashioned errno Handling</a></span><span class="refpurpose"> — A few tricks which operate on the same type as errno, an int.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskerror.html">Error Codes</a></span><span class="refpurpose"> — An exhaustive composite list of error codes.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskmain.html">Trivial Main Functions.</a></span><span class="refpurpose"> — These are trivial interfaces to the main-loop.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskghelpers.html">Glib Helper Routines</a></span><span class="refpurpose"> — Miscellaneous helper routines that could conceivably be moved to glib someday.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskPacketQueue.html">Datagram I/O</a></span><span class="refpurpose"> — base class for datagram I/O classes</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskpacket.html">Binary Packet</a></span><span class="refpurpose"> — A binary data packet.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskStreamListener.html">Listening for Connections</a></span><span class="refpurpose"> — Base class for server-type objects.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskstreamclient.html">Client Stream</a></span><span class="refpurpose"> — Create a GskStream which is connecting to a remote address.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskSocketAddress.html">Socket Addresses.</a></span><span class="refpurpose"> — The location of a socket endpoint, in some domain.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gsklog.html">gsklog</a></span><span class="refpurpose"> — convenient logging methods around the glib mechanism</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="tutorial-debugging-hints.html">Debugging Hints</a></span><span class="refpurpose"> — How to debug your program</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdebug.html">Runtime Toggled Debug Logging</a></span><span class="refpurpose"> — methods to quickly turn logging on and off for portions of GSK.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskutils.html">gskutils</a></span><span class="refpurpose"></span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch02.html">Object Hierarchy</a></span></dt>
+<dt><span class="chapter"><a href="ch03.html">Tutorials</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="tutorial-server.html">Writing a Generic Server</a></span><span class="refpurpose"> — How to write a server</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="tutorial-client.html">Writing a Generic Client</a></span><span class="refpurpose"> — How to write a client</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="tutorial-httpserver.html">Writing an HTTP Server</a></span><span class="refpurpose"> — How to write a webserver</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="tutorial-httpclient.html">Writing a HTTP Client</a></span><span class="refpurpose"> — How to write a web client</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch04.html">Standard Implementations</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GskPacketQueueFd.html">GskPacketQueueFd</a></span><span class="refpurpose"> — A PacketQueue based on a file descriptor.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskStreamFd.html">GskStreamFd</a></span><span class="refpurpose"> — a file-descriptor based GskStream</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-GskStreamExternal.html">GskStreamExternal</a></span><span class="refpurpose"> — streams which connect to another process.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskStreamListenerSocket.html">GskStreamListenerSocket</a></span><span class="refpurpose"> — socket-based stream-listener.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskbufferstream.html">gskbufferstream</a></span><span class="refpurpose"> — Simple Buffering Stream</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch05.html">Standard Objects: the URL class</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GskUrl.html">GskUrl</a></span><span class="refpurpose"> — A Universal Resource Locator (or Identifier)
+object.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskUrlTransfer.html">GskUrlTransfer</a></span><span class="refpurpose"> — Transfer data with a location by URL.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskUrlTransferHttp.html">GskUrlTransferHttp</a></span><span class="refpurpose"> — An HTTP- or HTTPS-based transfer.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch06.html">Standard Streams:  the HTTP client and server</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GskHttpHeader.html">GskHttpHeader</a></span><span class="refpurpose"> — Base class for HTTP headers.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskHttpRequest.html">GskHttpRequest</a></span><span class="refpurpose"> — An HTTP header that is sent from client to server.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskHttpResponse.html">GskHttpResponse</a></span><span class="refpurpose"> — An HTTP header that is sent from server to client.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskHttpClient.html">GskHttpClient</a></span><span class="refpurpose"> — The client end of an HTTP connection.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskHttpServer.html">GskHttpServer</a></span><span class="refpurpose"> — The server end of an HTTP connection.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch07.html">Standard Streams:  standard compression algorithms</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-GskZlibDeflator.html">GskZlibDeflator</a></span><span class="refpurpose"> — a zlib compressor.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-GskZlibInflator.html">GskZlibInflator</a></span><span class="refpurpose"> — a zlib decompressor</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskzlib.html">gskzlib</a></span><span class="refpurpose"></span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch08.html">Standard Streams:  utility streams</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-GskStreamQueue.html">GskStreamQueue</a></span><span class="refpurpose"></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskmemory.html">memory-based streams</a></span><span class="refpurpose"> — streams whose data is "memory", inside pointer-accessed data.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch09.html">DNS library (client and server support)</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdns.html">gskdns</a></span><span class="refpurpose"></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdnsrrcache.html">gskdnsrrcache</a></span><span class="refpurpose"> — A cache of Resource Record data.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdnsclient.html">gskdnsclient</a></span><span class="refpurpose"> — This is a DNS client.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdnslocalresolver.html">gskdnslocalresolver</a></span><span class="refpurpose"> — a DNS resolver which uses just a local resource-record cache.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdnsresolver.html">gskdnsresolver</a></span><span class="refpurpose"> — An interface that DNS resolvers provide.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdnsserver.html">gskdnsserver</a></span><span class="refpurpose"> — base class for a DNS server.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch10.html">SSL interface</a></span></dt>
+<dd><dl><dt>
+<span class="refentrytitle"><a href="gsk-gskstreamssl.html">GskStreamSsl</a></span><span class="refpurpose"></span>
+</dt></dl></dd>
+<dt><span class="chapter"><a href="ch11.html">MIME handling</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskmimemultipartpiece.html">gskmimemultipartpiece</a></span><span class="refpurpose"></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-GskMimeMultipartDecoder.html">GskMimeMultipartDecoder</a></span><span class="refpurpose"> — read Content-Type multipart/*.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch12.html">RPC protocols</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskxmlrpc.html">gskxmlrpc</a></span><span class="refpurpose"> — XMLRPC definitions</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-GskXmlrpcStream.html">GskXmlrpcStream</a></span><span class="refpurpose"> — a stream of XMLRPC method calls and responses.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch13.html">Main Loops</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="GskMainLoopDevPoll.html">GskMainLoopDevPoll</a></span><span class="refpurpose"> — /dev/poll based event loop.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskMainLoopKqueue.html">GskMainLoopKqueue</a></span><span class="refpurpose"> — a kqueue-based event loop.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskMainLoopPoll.html">GskMainLoopPoll</a></span><span class="refpurpose"> — a poll(2)-based main-loop.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskMainLoopPollBase.html">GskMainLoopPollBase</a></span><span class="refpurpose"> — a base class for file-descriptor-only polling mechanisms.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="GskMainLoopSelect.html">GskMainLoopSelect</a></span><span class="refpurpose"> — a select(2)-based event loop.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch14.html">Odds and Ends</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskbase64.html">Base-64</a></span><span class="refpurpose"> — Base-64 Encoding and Decoding</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskhash.html">gskhash</a></span><span class="refpurpose"> — hash computing objects</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskmempool.html">gskmempool</a></span><span class="refpurpose"> — pooling memory allocators.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gsknetworkinterface.html">gsknetworkinterface</a></span><span class="refpurpose"> — Obtain information about your local network interfaces.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskdate.html">gskdate</a></span><span class="refpurpose"> — Date parsing and printing code.</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch15.html">Macro Madness</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-gsklistmacros.html">gsklistmacros</a></span><span class="refpurpose"> — macro-based list macros</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskrbtreemacros.html">gskrbtreemacros</a></span><span class="refpurpose"> — Flexible Red-Black Trees implemented as macros</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskqsortmacro.html">gskqsortmacro</a></span><span class="refpurpose"> — inline qsort macro</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ch16.html">Questionable ideas</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="gsk-gsktree.html">gsktree</a></span><span class="refpurpose"> — A robustly iterateable tree.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gsk-gskfork.html">gskfork</a></span><span class="refpurpose"> — Functions to call to clean up after forking.</span>
+</dt>
+</dl></dd>
+</dl></div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

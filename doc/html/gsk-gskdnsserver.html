@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskdnsserver</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch09.html" title="DNS library (client and server support)">
+<link rel="prev" href="gsk-gskdnsresolver.html" title="gskdnsresolver">
+<link rel="next" href="ch10.html" title="SSL interface">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskdnsresolver.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch09.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch10.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskdnsserver.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskdnsserver.description" class="shortcut">Description</a>
+                 | 
+                <a href="#gsk-gskdnsserver.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#gsk-gskdnsserver.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskdnsserver"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskdnsserver.top_of_page"></a>gskdnsserver</span></h2>
+<p>gskdnsserver — base class for a DNS server.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskdnsserver.synopsis"></a><h2>Synopsis</h2>
+<a name="GskDnsServer"></a><pre class="synopsis">
+                    <a class="link" href="gsk-gskdnsserver.html#GskDnsServerClass" title="GskDnsServerClass">GskDnsServerClass</a>;
+                    <a class="link" href="gsk-gskdnsserver.html#GskDnsServer-struct" title="GskDnsServer">GskDnsServer</a>;
+<a class="link" href="gsk-gskdnsserver.html#GskDnsServer">GskDnsServer</a> *      <a class="link" href="gsk-gskdnsserver.html#gsk-dns-server-new" title="gsk_dns_server_new ()">gsk_dns_server_new</a>                  (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         <a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *packet_queue);
+<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *    <a class="link" href="gsk-gskdnsserver.html#gsk-dns-server-peek-resolver" title="gsk_dns_server_peek_resolver ()">gsk_dns_server_peek_resolver</a>        (<a class="link" href="gsk-gskdnsserver.html#GskDnsServer">GskDnsServer</a> *server);
+void                <a class="link" href="gsk-gskdnsserver.html#gsk-dns-server-set-resolver" title="gsk_dns_server_set_resolver ()">gsk_dns_server_set_resolver</a>         (<a class="link" href="gsk-gskdnsserver.html#GskDnsServer">GskDnsServer</a> *server,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsserver.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskDnsServer
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsserver.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="gsk-gskdnsserver.html#GskDnsServer--packet-queue" title='The "packet-queue" property'>packet-queue</a>"             <a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a>*       : Read / Write / Construct Only
+  "<a class="link" href="gsk-gskdnsserver.html#GskDnsServer--resolver" title='The "resolver" property'>resolver</a>"                 <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a>*       : Read / Write / Construct Only
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsserver.description"></a><h2>Description</h2>
+<p>
+A generic DNS server.
+This can be made to answer questions through
+a sensible resolver, or it can be used to implement wacky DNS hacks.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsserver.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDnsServerClass"></a><h3>GskDnsServerClass</h3>
+<pre class="programlisting">typedef struct _GskDnsServerClass GskDnsServerClass;</pre>
+<p>
+Base class for DNS servers.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsServer-struct"></a><h3>GskDnsServer</h3>
+<pre class="programlisting">typedef struct _GskDnsServer GskDnsServer;</pre>
+<p>
+Base instance for DNS servers.
+A DNS server is packet-based and must handle an arbitrary
+number of requests.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-server-new"></a><h3>gsk_dns_server_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsserver.html#GskDnsServer">GskDnsServer</a> *      gsk_dns_server_new                  (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         <a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *packet_queue);</pre>
+<p>
+Allocate a DNS server using the optional <em class="parameter"><code>resolver</code></em> to answer questions.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>resolver</code></em> :</span></p></td>
+<td> the resolver to query for answers to incoming questions.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet_queue</code></em> :</span></p></td>
+<td> transport for incoming DNS requests and outgoing responses.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated DNS server.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-server-peek-resolver"></a><h3>gsk_dns_server_peek_resolver ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *    gsk_dns_server_peek_resolver        (<a class="link" href="gsk-gskdnsserver.html#GskDnsServer">GskDnsServer</a> *server);</pre>
+<p>
+Obtain a peeked reference at the resolver which this server is using to
+answer questions.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the server to inspect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a GskDnsResolver if one is being used, or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-server-set-resolver"></a><h3>gsk_dns_server_set_resolver ()</h3>
+<pre class="programlisting">void                gsk_dns_server_set_resolver         (<a class="link" href="gsk-gskdnsserver.html#GskDnsServer">GskDnsServer</a> *server,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver);</pre>
+<p>
+Set the DNS server's resolver.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the server to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>resolver</code></em> :</span></p></td>
+<td> the DNS resolver to use, or NULL to stop using any resolver.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsserver.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDnsServer--packet-queue"></a><h3>The <code class="literal">"packet-queue"</code> property</h3>
+<pre class="programlisting">  "packet-queue"             <a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a>*       : Read / Write / Construct Only</pre>
+<p>raw i/o handle to use for requests/responses.</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsServer--resolver"></a><h3>The <code class="literal">"resolver"</code> property</h3>
+<pre class="programlisting">  "resolver"                 <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a>*       : Read / Write / Construct Only</pre>
+<p>DNS resolver to obtain responses from.</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

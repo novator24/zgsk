@@ -1,0 +1,514 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskmempool</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch14.html" title="Odds and Ends">
+<link rel="prev" href="gsk-gskhash.html" title="gskhash">
+<link rel="next" href="gsk-gsknetworkinterface.html" title="gsknetworkinterface">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskhash.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch14.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gsknetworkinterface.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskmempool.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskmempool.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskmempool"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskmempool.top_of_page"></a>gskmempool</span></h2>
+<p>gskmempool — pooling memory allocators.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskmempool.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="gsk-gskmempool.html#GSK-MEM-POOL-FIXED-STATIC-INIT--CAPS" title="GSK_MEM_POOL_FIXED_STATIC_INIT()">GSK_MEM_POOL_FIXED_STATIC_INIT</a>      (size)
+#define             <a class="link" href="gsk-gskmempool.html#GSK-MEM-POOL-STATIC-INIT--CAPS" title="GSK_MEM_POOL_STATIC_INIT">GSK_MEM_POOL_STATIC_INIT</a>
+                    <a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a>;
+                    <a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a>;
+void                <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-construct" title="gsk_mem_pool_construct ()">gsk_mem_pool_construct</a>              (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool);
+void                <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-construct-with-scratch-buf" title="gsk_mem_pool_construct_with_scratch_buf ()">gsk_mem_pool_construct_with_scratch_buf</a>
+                                                        (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> buffer_size);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-alloc" title="gsk_mem_pool_alloc ()">gsk_mem_pool_alloc</a>                  (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> size);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-alloc0" title="gsk_mem_pool_alloc0 ()">gsk_mem_pool_alloc0</a>                 (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> size);
+char *              <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-strdup" title="gsk_mem_pool_strdup ()">gsk_mem_pool_strdup</a>                 (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         const char *str);
+void                <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-destruct" title="gsk_mem_pool_destruct ()">gsk_mem_pool_destruct</a>               (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool);
+void                <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-fixed-construct" title="gsk_mem_pool_fixed_construct ()">gsk_mem_pool_fixed_construct</a>        (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> size);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-fixed-alloc" title="gsk_mem_pool_fixed_alloc ()">gsk_mem_pool_fixed_alloc</a>            (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-fixed-alloc0" title="gsk_mem_pool_fixed_alloc0 ()">gsk_mem_pool_fixed_alloc0</a>           (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool);
+void                <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-fixed-free" title="gsk_mem_pool_fixed_free ()">gsk_mem_pool_fixed_free</a>             (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> from_pool);
+void                <a class="link" href="gsk-gskmempool.html#gsk-mem-pool-fixed-destruct" title="gsk_mem_pool_fixed_destruct ()">gsk_mem_pool_fixed_destruct</a>         (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmempool.description"></a><h2>Description</h2>
+<p>
+GSK provides two pooling memory allocators.
+The first allocator is allocate-only,
+and can allocate blocks of variable size.
+The second allocator is alloc-and-free,
+but must allocate blocks of a fixed-size,
+which must be chosen when you construct the pool.
+</p>
+<p>
+Both of these classes use the global allocator (g_new and g_free)
+as their underlying store.
+</p>
+<p>These may only be accessed by
+one thread at a time: you should make sure to have a mutex to lock
+if multiple threads have access to the same mempool.
+I suspect the majority of use cases already must be mutex-protected for
+other reasons, but stronger evidence is welcome.</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmempool.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GSK-MEM-POOL-FIXED-STATIC-INIT--CAPS"></a><h3>GSK_MEM_POOL_FIXED_STATIC_INIT()</h3>
+<pre class="programlisting">#define             GSK_MEM_POOL_FIXED_STATIC_INIT(size)</pre>
+<p>
+Initialize a fixed-length static mem-pool
+member-wise given its elements' size.
+</p>
+<p>
+Example:
+</p>
+<pre class="programlisting">
+static GskMemPoolFixed request_pool = GSK_MEM_POOL_FIXED_STATIC_INIT(sizeof (Request));
+...
+Request *request = gsk_mem_pool_fixed_alloc (&amp;request_pool);
+...
+gsk_mem_pool_fixed_free (request);
+</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td>the size of the mem-pool's elements.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-MEM-POOL-STATIC-INIT--CAPS"></a><h3>GSK_MEM_POOL_STATIC_INIT</h3>
+<pre class="programlisting">#define             GSK_MEM_POOL_STATIC_INIT</pre>
+<p>
+Initialize a fixed-length static mem-pool
+member-wise.
+</p>
+<p>
+Example:
+</p>
+<pre class="programlisting">
+void foo ()
+{
+  GskMemPool mem_pool = GSK_MEM_POOL_STATIC_INIT;
+  void *garbage = gsk_mem_pool_alloc (&amp;mem_pool, 20);
+  ...
+  gsk_mem_pool_destruct (&amp;mem_pool);
+}
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMemPool"></a><h3>GskMemPool</h3>
+<pre class="programlisting">typedef struct {
+} GskMemPool;
+</pre>
+<p>
+A memory pool.
+It should be created on the stack or inside another
+object.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMemPoolFixed"></a><h3>GskMemPoolFixed</h3>
+<pre class="programlisting">typedef struct {
+} GskMemPoolFixed;
+</pre>
+<p>
+A fixed-size memory pool.
+It should be created on the stack or inside another
+object.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-construct"></a><h3>gsk_mem_pool_construct ()</h3>
+<pre class="programlisting">void                gsk_mem_pool_construct              (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool);</pre>
+<p>
+Initialize the members of a mem-pool.
+(The memory for the mem-pool structure itself
+must be provided: either as a part of another
+structure or on the stack.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the mem-pool to initialize.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-construct-with-scratch-buf"></a><h3>gsk_mem_pool_construct_with_scratch_buf ()</h3>
+<pre class="programlisting">void                gsk_mem_pool_construct_with_scratch_buf
+                                                        (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> buffer_size);</pre>
+<p>
+Initialize the members of a mem-pool,
+using a scratch-buffer that the user provides.
+(The caller is responsible for ensuring that
+the buffer exists long enough)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the mem-pool to initialize.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to use.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer_size</code></em> :</span></p></td>
+<td> the number of bytes in buffer
+to use as storage.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-alloc"></a><h3>gsk_mem_pool_alloc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_mem_pool_alloc                  (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> size);</pre>
+<p>
+Allocate memory from a pool,
+This function terminates the program if there is an
+out-of-memory condition.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> area to allocate memory from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td> number of bytes to allocate.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the slab of memory allocated from the pool.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-alloc0"></a><h3>gsk_mem_pool_alloc0 ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_mem_pool_alloc0                 (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> size);</pre>
+<p>
+Allocate memory from a pool, and initializes it to 0.
+This function terminates the program if there is an
+out-of-memory condition.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> area to allocate memory from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td> number of bytes to allocate.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the slab of memory allocated from the pool.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-strdup"></a><h3>gsk_mem_pool_strdup ()</h3>
+<pre class="programlisting">char *              gsk_mem_pool_strdup                 (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool,
+                                                         const char *str);</pre>
+<p>
+Allocated space from the mem-pool to store
+the given string (including its terminal
+NUL character) and copy the string onto that buffer.
+</p>
+<p>
+If <em class="parameter"><code>str</code></em> is NULL, then NULL is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> area to allocate memory from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> a string to duplicate, or NULL.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a copy of <em class="parameter"><code>str</code></em>, allocated from <em class="parameter"><code>pool</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-destruct"></a><h3>gsk_mem_pool_destruct ()</h3>
+<pre class="programlisting">void                gsk_mem_pool_destruct               (<a class="link" href="gsk-gskmempool.html#GskMemPool" title="GskMemPool">GskMemPool</a> *pool);</pre>
+<p>
+Destroy all chunk associated with the given mem-pool.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the pool to destroy.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-fixed-construct"></a><h3>gsk_mem_pool_fixed_construct ()</h3>
+<pre class="programlisting">void                gsk_mem_pool_fixed_construct        (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> size);</pre>
+<p>
+Set up a fixed-size memory allocator for use.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the fixed-size memory pool to construct.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td> size of the allocation to take from the mem-pool.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-fixed-alloc"></a><h3>gsk_mem_pool_fixed_alloc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_mem_pool_fixed_alloc            (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool);</pre>
+<p>
+Allocate a block of the Fixed-Pool's size.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the pool to allocate a block from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the allocated memory.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-fixed-alloc0"></a><h3>gsk_mem_pool_fixed_alloc0 ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_mem_pool_fixed_alloc0           (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool);</pre>
+<p>
+Allocate a block of the Fixed-Pool's size.
+Set its contents to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the pool to allocate a block from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the allocated, zeroed memory.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-fixed-free"></a><h3>gsk_mem_pool_fixed_free ()</h3>
+<pre class="programlisting">void                gsk_mem_pool_fixed_free             (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> from_pool);</pre>
+<p>
+Recycle some of the pool's memory back to it.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the pool to return memory to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>from_pool</code></em> :</span></p></td>
+<td> the memory to return to this pool.
+It must have been allocated from this pool.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mem-pool-fixed-destruct"></a><h3>gsk_mem_pool_fixed_destruct ()</h3>
+<pre class="programlisting">void                gsk_mem_pool_fixed_destruct         (<a class="link" href="gsk-gskmempool.html#GskMemPoolFixed" title="GskMemPoolFixed">GskMemPoolFixed</a> *pool);</pre>
+<p>
+Free all memory associated with this pool.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td> the pool to destroy.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

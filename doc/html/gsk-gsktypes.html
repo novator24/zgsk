@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Useful GTypes</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gsknameresolver.html" title="Socket Address Lookup by Name">
+<link rel="next" href="gsk-gskbuffer.html" title="GskBuffer">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gsknameresolver.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskbuffer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gsktypes.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gsktypes.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gsktypes"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gsktypes.top_of_page"></a>Useful GTypes</span></h2>
+<p>Useful GTypes — some types useful to servers</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gsktypes.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"
+>GType</a>               <a class="link" href="gsk-gsktypes.html#gsk-fd-get-type" title="gsk_fd_get_type ()">gsk_fd_get_type</a>                     ();
+<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"
+>GType</a>               <a class="link" href="gsk-gsktypes.html#gsk-param-fd-get-type" title="gsk_param_fd_get_type ()">gsk_param_fd_get_type</a>               ();
+#define             <a class="link" href="gsk-gsktypes.html#GSK-TYPE-FD--CAPS" title="GSK_TYPE_FD">GSK_TYPE_FD</a>
+#define             <a class="link" href="gsk-gsktypes.html#GSK-TYPE-PARAM-FD--CAPS" title="GSK_TYPE_PARAM_FD">GSK_TYPE_PARAM_FD</a>
+<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"
+>GParamSpec</a> *        <a class="link" href="gsk-gsktypes.html#gsk-param-spec-fd" title="gsk_param_spec_fd ()">gsk_param_spec_fd</a>                   (const char *name,
+                                                         const char *nick,
+                                                         const char *blurb,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamFlags"
+>GParamFlags</a> flags);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsktypes.description"></a><h2>Description</h2>
+<p>
+The only types available so far is a file-descriptor,
+and its corresponding GParamSpec.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsktypes.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="gsk-fd-get-type"></a><h3>gsk_fd_get_type ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"
+>GType</a>               gsk_fd_get_type                     ();</pre>
+<p>
+GType of a file-descriptor. (private)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-param-fd-get-type"></a><h3>gsk_param_fd_get_type ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"
+>GType</a>               gsk_param_fd_get_type               ();</pre>
+<p>
+GType of a GParamSpec which indicates a file-descriptor. (private)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-TYPE-FD--CAPS"></a><h3>GSK_TYPE_FD</h3>
+<pre class="programlisting">#define             GSK_TYPE_FD</pre>
+<p>
+GType of a file-descriptor.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-TYPE-PARAM-FD--CAPS"></a><h3>GSK_TYPE_PARAM_FD</h3>
+<pre class="programlisting">#define             GSK_TYPE_PARAM_FD</pre>
+<p>
+GType of a GParamSpec which indicates a file-descriptor.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-param-spec-fd"></a><h3>gsk_param_spec_fd ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"
+>GParamSpec</a> *        gsk_param_spec_fd                   (const char *name,
+                                                         const char *nick,
+                                                         const char *blurb,
+                                                         <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamFlags"
+>GParamFlags</a> flags);</pre>
+<p>
+Make a GParamSpec to indicate a file-descriptor.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>name of parameter.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>nick</code></em> :</span></p></td>
+<td>nickname of parameter.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>blurb</code></em> :</span></p></td>
+<td>description of parameter.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>GParamFlags.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a parameter specification.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

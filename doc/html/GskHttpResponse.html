@@ -1,0 +1,1200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskHttpResponse</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="prev" href="GskHttpRequest.html" title="GskHttpRequest">
+<link rel="next" href="GskHttpClient.html" title="GskHttpClient">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskHttpRequest.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch06.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskHttpClient.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskHttpResponse.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskHttpResponse.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskHttpResponse.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#GskHttpResponse.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskHttpResponse"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskHttpResponse.top_of_page"></a>GskHttpResponse</span></h2>
+<p>GskHttpResponse — An HTTP header that is sent from server to client.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskHttpResponse.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskHttpResponse.html#GskHttpResponse-struct" title="GskHttpResponse">GskHttpResponse</a>;
+<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *   <a class="link" href="GskHttpResponse.html#gsk-http-response-new-blank" title="gsk_http_response_new_blank ()">gsk_http_response_new_blank</a>         (void);
+<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *   <a class="link" href="GskHttpResponse.html#gsk-http-response-new-redirect" title="gsk_http_response_new_redirect ()">gsk_http_response_new_redirect</a>      (const char *location);
+<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *   <a class="link" href="GskHttpResponse.html#gsk-http-response-from-request" title="gsk_http_response_from_request ()">gsk_http_response_from_request</a>      (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpStatus" title="enum GskHttpStatus">GskHttpStatus</a> status_code,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> length);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskHttpResponse.html#gsk-http-response-process-first-line" title="gsk_http_response_process_first_line ()">gsk_http_response_process_first_line</a>
+                                                        (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         const char *line);
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-status-code" title="gsk_http_response_set_status_code()">gsk_http_response_set_status_code</a>   (response, status)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-get-status-code" title="gsk_http_response_get_status_code()">gsk_http_response_get_status_code</a>   (response)
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-set-allowed-verbs" title="gsk_http_response_set_allowed_verbs ()">gsk_http_response_set_allowed_verbs</a> (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> allowed);
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-get-allowed-verbs" title="gsk_http_response_get_allowed_verbs()">gsk_http_response_get_allowed_verbs</a> (header)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-age" title="gsk_http_response_set_age()">gsk_http_response_set_age</a>           (response, age)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-get-age" title="gsk_http_response_get_age()">gsk_http_response_get_age</a>           (response)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-location" title="gsk_http_response_set_location()">gsk_http_response_set_location</a>      (response, location)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-peek-location" title="gsk_http_response_peek_location()">gsk_http_response_peek_location</a>     (response)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-etag" title="gsk_http_response_set_etag()">gsk_http_response_set_etag</a>          (response, etag)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-peek-etag" title="gsk_http_response_peek_etag()">gsk_http_response_peek_etag</a>         (response)
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-set-cache-control" title="gsk_http_response_set_cache_control ()">gsk_http_response_set_cache_control</a> (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         GskHttpResponseCacheDirective *directive);
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-peek-cache-control" title="gsk_http_response_peek_cache_control()">gsk_http_response_peek_cache_control</a>(response)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-last-modified" title="gsk_http_response_set_last_modified()">gsk_http_response_set_last_modified</a> (response, last_modified)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-get-last-modified" title="gsk_http_response_get_last_modified()">gsk_http_response_get_last_modified</a> (response)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-expires" title="gsk_http_response_set_expires()">gsk_http_response_set_expires</a>       (response, expires)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-get-expires" title="gsk_http_response_get_expires()">gsk_http_response_get_expires</a>       (response)
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-set-md5" title="gsk_http_response_set_md5 ()">gsk_http_response_set_md5</a>           (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *md5sum);
+const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *      <a class="link" href="GskHttpResponse.html#gsk-http-response-peek-md5" title="gsk_http_response_peek_md5 ()">gsk_http_response_peek_md5</a>          (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response);
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-server" title="gsk_http_response_set_server()">gsk_http_response_set_server</a>        (response, server)
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-peek-server" title="gsk_http_response_peek_server()">gsk_http_response_peek_server</a>       (response)
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-set-retry-after" title="gsk_http_response_set_retry_after ()">gsk_http_response_set_retry_after</a>   (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_relative,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a> time);
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-set-no-retry-after" title="gsk_http_response_set_no_retry_after ()">gsk_http_response_set_no_retry_after</a>
+                                                        (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response);
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-set-authenticate" title="gsk_http_response_set_authenticate ()">gsk_http_response_set_authenticate</a>  (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> *auth);
+<a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * <a class="link" href="GskHttpResponse.html#gsk-http-response-peek-authenticate" title="gsk_http_response_peek_authenticate ()">gsk_http_response_peek_authenticate</a>
+                                                        (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskHttpResponse.html#gsk-http-response-has-content-body" title="gsk_http_response_has_content_body ()">gsk_http_response_has_content_body</a>  (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request);
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-cache-directive-free" title="gsk_http_response_cache_directive_free ()">gsk_http_response_cache_directive_free</a>
+                                                        (GskHttpResponseCacheDirective *directive);
+GskHttpResponseCacheDirective * <a class="link" href="GskHttpResponse.html#gsk-http-response-cache-directive-new" title="gsk_http_response_cache_directive_new ()">gsk_http_response_cache_directive_new</a>
+                                                        (void);
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-cache-directive-set-no-cache-name" title="gsk_http_response_cache_directive_set_no_cache_name ()">gsk_http_response_cache_directive_set_no_cache_name</a>
+                                                        (GskHttpResponseCacheDirective *directive,
+                                                         const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> name_len);
+void                <a class="link" href="GskHttpResponse.html#gsk-http-response-cache-directive-set-private-name" title="gsk_http_response_cache_directive_set_private_name ()">gsk_http_response_cache_directive_set_private_name</a>
+                                                        (GskHttpResponseCacheDirective *directive,
+                                                         const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> name_len);
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-get-content-subtype" title="gsk_http_response_get_content_subtype">gsk_http_response_get_content_subtype</a>
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-get-content-type" title="gsk_http_response_get_content_type">gsk_http_response_get_content_type</a>
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-content-subtype" title="gsk_http_response_set_content_subtype">gsk_http_response_set_content_subtype</a>
+#define             <a class="link" href="GskHttpResponse.html#gsk-http-response-set-content-type" title="gsk_http_response_set_content_type">gsk_http_response_set_content_type</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpResponse.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a>
+         +----GskHttpResponse
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpResponse.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GskHttpResponse.html#GskHttpResponse--age" title='The "age" property'>age</a>"                      <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write
+  "<a class="link" href="GskHttpResponse.html#GskHttpResponse--e-tag" title='The "e-tag" property'>e-tag</a>"                    <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpResponse.html#GskHttpResponse--expires" title='The "expires" property'>expires</a>"                  <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write
+  "<a class="link" href="GskHttpResponse.html#GskHttpResponse--last-modified" title='The "last-modified" property'>last-modified</a>"            <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write
+  "<a class="link" href="GskHttpResponse.html#GskHttpResponse--location" title='The "location" property'>location</a>"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpResponse.html#GskHttpResponse--server" title='The "server" property'>server</a>"                   <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write
+  "<a class="link" href="GskHttpResponse.html#GskHttpResponse--status-code" title='The "status-code" property'>status-code</a>"              <a class="link" href="GskHttpHeader.html#GskHttpStatus" title="enum GskHttpStatus">GskHttpStatus</a>         : Read / Write
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpResponse.description"></a><h2>Description</h2>
+<p>
+A response is the last of two messages in an HTTP transaction.
+It indicates whether the request succeeded, or what went wrong.
+It may also include often information about the content.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpResponse.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse-struct"></a><h3>GskHttpResponse</h3>
+<pre class="programlisting">typedef struct _GskHttpResponse GskHttpResponse;</pre>
+<p>
+An instance of a HTTP response header.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-new-blank"></a><h3>gsk_http_response_new_blank ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *   gsk_http_response_new_blank         (void);</pre>
+<p>
+Create a new, empty default response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated response.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-new-redirect"></a><h3>gsk_http_response_new_redirect ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *   gsk_http_response_new_redirect      (const char *location);</pre>
+<p>
+Create a redirection HTTP response header.
+</p>
+<p>
+We use the 302 ("Found") status code.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>location</code></em> :</span></p></td>
+<td> the URL to redirect the client to, as a string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated header.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-from-request"></a><h3>gsk_http_response_from_request ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *   gsk_http_response_from_request      (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpStatus" title="enum GskHttpStatus">GskHttpStatus</a> status_code,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> length);</pre>
+<p>
+Create a response which macthes the request,
+with a caller-supplied status code and optional length.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the client's request to match.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>status_code</code></em> :</span></p></td>
+<td> the return status of the request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td> the length of the message, or -1 for unknown.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new, matching response.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-process-first-line"></a><h3>gsk_http_response_process_first_line ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_http_response_process_first_line
+                                                        (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         const char *line);</pre>
+<p>
+Parse the first line of an HTTP response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to initialize
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em> :</span></p></td>
+<td> first line of response header.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the line was the start of a valid HTTP-response.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-status-code"></a><h3>gsk_http_response_set_status_code()</h3>
+<pre class="programlisting">#define             gsk_http_response_set_status_code(response, status)</pre>
+<p>
+Set what kind of response is going to be given.
+See <a class="link" href="GskHttpHeader.html#GskHttpStatus" title="enum GskHttpStatus"><span class="type">GskHttpStatus</span></a> for a description of all the status codes
+defined in HTTP/1.1 (RFC 2616).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
+<td>the new status code.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-get-status-code"></a><h3>gsk_http_response_get_status_code()</h3>
+<pre class="programlisting">#define             gsk_http_response_get_status_code(response)</pre>
+<p>
+Query the status code from a response.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-allowed-verbs"></a><h3>gsk_http_response_set_allowed_verbs ()</h3>
+<pre class="programlisting">void                gsk_http_response_set_allowed_verbs (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> allowed);</pre>
+<p>
+Set the Allow: header to indicate a particular set of HTTP verbs
+are allowed from the client.  If you give a request with
+a verb which is not allowed, you should get a GSK_HTTP_STATUS_METHOD_NOT_ALLOWED response.
+That response MUST have an Allow: header.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>allowed</code></em> :</span></p></td>
+<td> bits telling which type of requests this server allows.
+The bit for a verb 'Q' is (1 &amp;lt;&amp;lt; GSK_HTTP_VERB_Q);
+the default allowed bits are (1&amp;lt;&amp;lt;GSK_HTTP_VERB_GET) | (1&amp;lt;&amp;lt;GSK_HTTP_VERB_HEAD).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-get-allowed-verbs"></a><h3>gsk_http_response_get_allowed_verbs()</h3>
+<pre class="programlisting">#define             gsk_http_response_get_allowed_verbs(header)</pre>
+<p>
+Get the bitmask of verbs allowed by the server, according
+to the Allow: header line.
+</p>
+<p>
+XXX: what should happen in the absence of an Allow header????
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>header</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-age"></a><h3>gsk_http_response_set_age()</h3>
+<pre class="programlisting">#define             gsk_http_response_set_age(response, age)</pre>
+<p>
+Set the age of a response.  This is only used for cached responses.
+It tells the length of time that the data has been
+sitting in the cache.  [See RFC 2616, Section 14.6]
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to indicate the age of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>age</code></em> :</span></p></td>
+<td>the indicated age, or -1 to unset the age indication.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-get-age"></a><h3>gsk_http_response_get_age()</h3>
+<pre class="programlisting">#define             gsk_http_response_get_age(response)</pre>
+<p>
+Get the age of a response.  This is only used for cached responses.
+It tells the length of time that the data has been
+sitting in the cache.  [See RFC 2616, Section 14.6]
+</p>
+<p>
+If there is no Age field, -1 is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-location"></a><h3>gsk_http_response_set_location()</h3>
+<pre class="programlisting">#define             gsk_http_response_set_location(response, location)</pre>
+<p>
+   [RFC 2616, 14.30]
+   The Location response-header field is used to redirect the recipient
+   to a location other than the Request-URI for completion of the
+   request or identification of a new resource. For 201 (Created)
+   responses, the Location is that of the new resource which was created
+   by the request. For 3xx responses, the location SHOULD indicate the
+   server's preferred URI for automatic redirection to the resource. The
+   field value consists of a single absolute URI.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>location</code></em> :</span></p></td>
+<td>the absolute URI for the content the user is probably really interested in.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-peek-location"></a><h3>gsk_http_response_peek_location()</h3>
+<pre class="programlisting">#define             gsk_http_response_peek_location(response)</pre>
+<p>
+  Peek at the destination for a redirect.
+  May return NULL if there is no redirect planned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-etag"></a><h3>gsk_http_response_set_etag()</h3>
+<pre class="programlisting">#define             gsk_http_response_set_etag(response, etag)</pre>
+<p>
+   Provide a unique tag for the content- this may be used
+   by caches and proxy servers.
+</p>
+<p>
+   [RFC 2616, 14.19]
+   The ETag response-header field provides the current value of the
+   entity tag for the requested variant. The headers used with entity
+</p>
+<p>
+   This is typically used in conjunction with the If-Match,
+   If-None-Match, and Vary.
+   14.24, 14.26 and 14.44, 13.3.3.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>etag</code></em> :</span></p></td>
+<td>the entity-tag for the associated conetnt.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-peek-etag"></a><h3>gsk_http_response_peek_etag()</h3>
+<pre class="programlisting">#define             gsk_http_response_peek_etag(response)</pre>
+<p>
+Get the entity-tag for this content from the header.
+This is NULL by default, to indicate that there is no
+ETag field.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-cache-control"></a><h3>gsk_http_response_set_cache_control ()</h3>
+<pre class="programlisting">void                gsk_http_response_set_cache_control (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         GskHttpResponseCacheDirective *directive);</pre>
+<p>
+Set the cache-control flags in the header.
+Note that <em class="parameter"><code>directive</code></em> will be freed by the HTTP header when
+it is destroyed.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the HTTP response header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>directive</code></em> :</span></p></td>
+<td> the new cache control directive, stolen by the HTTP header.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-peek-cache-control"></a><h3>gsk_http_response_peek_cache_control()</h3>
+<pre class="programlisting">#define             gsk_http_response_peek_cache_control(response)</pre>
+<p>
+Obtain the <span class="type">GskHttpCacheDirective</span> associated with the
+response.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the HTTP response whose cache-directive should be returned.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-last-modified"></a><h3>gsk_http_response_set_last_modified()</h3>
+<pre class="programlisting">#define             gsk_http_response_set_last_modified(response, last_modified)</pre>
+<p>
+   [RFC 2616, Section 14.29]
+   The Last-Modified entity-header field indicates the date and time at
+   which the origin server believes the variant was last modified.
+</p>
+<p>
+   If the time is -1, then there will be no Last-Modified header printed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>last_modified</code></em> :</span></p></td>
+<td>the unix time the content was last modified.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-get-last-modified"></a><h3>gsk_http_response_get_last_modified()</h3>
+<pre class="programlisting">#define             gsk_http_response_get_last_modified(response)</pre>
+<p>
+Get the time that the response advertises that the content
+was last modified.  It returns -1 if there will be no
+such indication.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-expires"></a><h3>gsk_http_response_set_expires()</h3>
+<pre class="programlisting">#define             gsk_http_response_set_expires(response, expires)</pre>
+<p>
+   [From RFC 2616, Section 14.21]
+   The Expires entity-header field gives the date/time after which the
+   response is considered stale. A stale cache entry may not normally be
+   returned by a cache (either a proxy cache or a user agent cache)
+   unless it is first validated with the origin server (or with an
+   intermediate cache that has a fresh copy of the entity). See section
+   13.2 for further discussion of the expiration model.
+</p>
+<p>
+   The presence of an Expires field does not imply that the original
+   resource will change or cease to exist at, before, or after that
+   time.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the header to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>expires</code></em> :</span></p></td>
+<td>the expiration time in standard unix notation, ie. seconds from 1Jan1970 GMT.
+Or -1 may be used to indicate that there is no Expires header.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-get-expires"></a><h3>gsk_http_response_get_expires()</h3>
+<pre class="programlisting">#define             gsk_http_response_get_expires(response)</pre>
+<p>
+Get the expiration time for this content, or -1 if no expiration time given.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the header to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-md5"></a><h3>gsk_http_response_set_md5 ()</h3>
+<pre class="programlisting">void                gsk_http_response_set_md5           (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *md5sum);</pre>
+<p>
+Set the MD5 field of the HTTP response to the given <em class="parameter"><code>md5sum</code></em>.
+GSK does not attempt to verify the MD5 sum;
+the caller should be sure they have the right MD5 sum.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the HTTP response whose content MD5 sum is being given.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>md5sum</code></em> :</span></p></td>
+<td> the 16-byte binary value of the MD5 hash of the content.
+If this is NULL, unset the MD5 field.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-peek-md5"></a><h3>gsk_http_response_peek_md5 ()</h3>
+<pre class="programlisting">const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *      gsk_http_response_peek_md5          (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response);</pre>
+<p>
+Get the MD5 sum associated with this response.
+(It should be the MD5 sum of the content stream).
+</p>
+<p>
+It will return NULL if there is no associated content MD5 sum.
+This is the default state.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the MD5 checksum (as 16 binary bytes) or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-server"></a><h3>gsk_http_response_set_server()</h3>
+<pre class="programlisting">#define             gsk_http_response_set_server(response, server)</pre>
+<p>
+Set the server name of this HTTP header.
+This may be any ASCII string.
+</p>
+<p>
+See RFC 2616, Section 14.38.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>the name of the server, which will be copied.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-peek-server"></a><h3>gsk_http_response_peek_server()</h3>
+<pre class="programlisting">#define             gsk_http_response_peek_server(response)</pre>
+<p>
+Obtain a reference to the type of server from which this response
+came, as a C string.
+This field is optional, but is helpful for debugging, etc.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>the response to look for a server in
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-retry-after"></a><h3>gsk_http_response_set_retry_after ()</h3>
+<pre class="programlisting">void                gsk_http_response_set_retry_after   (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_relative,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a> time);</pre>
+<p>
+Set the Retry-After header for this response.
+</p>
+<p>
+[From RFC 2616, Section 14.37]
+The Retry-After response-header field can be used with a 503 (Service
+Unavailable) response to indicate how long the service is expected to
+be unavailable to the requesting client. This field MAY also be used
+with any 3xx (Redirection) response to indicate the minimum time the
+user-agent is asked wait before issuing the redirected request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to set a Retry-After line in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_relative</code></em> :</span></p></td>
+<td> whether the time should be relative to the current time (in which case it is
+printed as a raw integer), or whether it is an absolute time (in which case it is printed
+in the standard date format.)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>time</code></em> :</span></p></td>
+<td> the time in seconds.  If is_relative, then its the number of seconds after
+the current time; otherwise, it's unix time (ie seconds after Jan 1 1970, GMT).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-no-retry-after"></a><h3>gsk_http_response_set_no_retry_after ()</h3>
+<pre class="programlisting">void                gsk_http_response_set_no_retry_after
+                                                        (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response);</pre>
+<p>
+Clear the Retry-After header for this response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to clear the Retry-After line from.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-authenticate"></a><h3>gsk_http_response_set_authenticate ()</h3>
+<pre class="programlisting">void                gsk_http_response_set_authenticate  (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth,
+                                                         <a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> *auth);</pre>
+<p>
+Set the authentication for this response.
+This is like a key to get access to certain entities.
+</p>
+<p>
+Proxy-Authorization is intended to provide access control to the proxy.
+Normal Authorization is passed through a proxy.
+See sections 14.8 for normal Authorization and 14.34.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to adjust the authentication for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_proxy_auth</code></em> :</span></p></td>
+<td> whether to set the Proxy-Authorization or the Authorization field.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>auth</code></em> :</span></p></td>
+<td> the new authentication to use in this response.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-peek-authenticate"></a><h3>gsk_http_response_peek_authenticate ()</h3>
+<pre class="programlisting"><a class="link" href="GskHttpHeader.html#GskHttpAuthenticate" title="GskHttpAuthenticate">GskHttpAuthenticate</a> * gsk_http_response_peek_authenticate
+                                                        (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_proxy_auth);</pre>
+<p>
+Get the responseed authentication information.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_proxy_auth</code></em> :</span></p></td>
+<td> whether to query information about proxy authentication,
+or normal server authentication.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the authentication information, or NULL if none exists (default).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-has-content-body"></a><h3>gsk_http_response_has_content_body ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_http_response_has_content_body  (<a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a> *response,
+                                                         <a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request);</pre>
+<p>
+Find out whether a HTTP Response should be
+accompanied by a body.
+</p>
+<p>
+It also depends on the request, in particular,
+HEAD requests do not retrieve bodies.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to query
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request that provoked the response.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the response should be accompanied
+by a body of data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-cache-directive-free"></a><h3>gsk_http_response_cache_directive_free ()</h3>
+<pre class="programlisting">void                gsk_http_response_cache_directive_free
+                                                        (GskHttpResponseCacheDirective *directive);</pre>
+<p>
+Deallocate a GskHttpResponseCacheDirective.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>directive</code></em> :</span></p></td>
+<td> cache-directive to de-allocate.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-cache-directive-new"></a><h3>gsk_http_response_cache_directive_new ()</h3>
+<pre class="programlisting">GskHttpResponseCacheDirective * gsk_http_response_cache_directive_new
+                                                        (void);</pre>
+<p>
+</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new cache response directive.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-cache-directive-set-no-cache-name"></a><h3>gsk_http_response_cache_directive_set_no_cache_name ()</h3>
+<pre class="programlisting">void                gsk_http_response_cache_directive_set_no_cache_name
+                                                        (GskHttpResponseCacheDirective *directive,
+                                                         const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> name_len);</pre>
+<p>
+Intended for more detailed specification of no-cache data,
+which is never supposed to be cached.
+</p>
+<p>
+[RFC 2616, 14.9.1]
+If the no-cache directive does specify one or more field-names,
+then a cache MAY use the response to satisfy a subsequent request,
+subject to any other restrictions on caching. However, the
+specified field-name(s) MUST NOT be sent in the response to a
+subsequent request without successful revalidation with the origin
+server. This allows an origin server to prevent the re-use of
+certain header fields in a response, while still allowing caching
+of the rest of the response.
+</p>
+<p>
+good luck.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>directive</code></em> :</span></p></td>
+<td> the cache directive to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> new qualifier for how the no-cache data is allowed to be used.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_len</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-cache-directive-set-private-name"></a><h3>gsk_http_response_cache_directive_set_private_name ()</h3>
+<pre class="programlisting">void                gsk_http_response_cache_directive_set_private_name
+                                                        (GskHttpResponseCacheDirective *directive,
+                                                         const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> name_len);</pre>
+<p>
+Intended for more detailed specification of private cache data.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>directive</code></em> :</span></p></td>
+<td> the cache directive to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> new qualifier for how the private data is allowed to be used.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_len</code></em> :</span></p></td>
+<td> length of name string
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-get-content-subtype"></a><h3>gsk_http_response_get_content_subtype</h3>
+<pre class="programlisting">#define             gsk_http_response_get_content_subtype</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-get-content-type"></a><h3>gsk_http_response_get_content_type</h3>
+<pre class="programlisting">#define             gsk_http_response_get_content_type</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-content-subtype"></a><h3>gsk_http_response_set_content_subtype</h3>
+<pre class="programlisting">#define             gsk_http_response_set_content_subtype</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-http-response-set-content-type"></a><h3>gsk_http_response_set_content_type</h3>
+<pre class="programlisting">#define             gsk_http_response_set_content_type</pre>
+<p>
+</p>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpResponse.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse--age"></a><h3>The <code class="literal">"age"</code> property</h3>
+<pre class="programlisting">  "age"                      <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write</pre>
+<p>Age of content.</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse--e-tag"></a><h3>The <code class="literal">"e-tag"</code> property</h3>
+<pre class="programlisting">  "e-tag"                    <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>Unique identifier for this content.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse--expires"></a><h3>The <code class="literal">"expires"</code> property</h3>
+<pre class="programlisting">  "expires"                  <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write</pre>
+<p>Length of time to wait for content to expire.</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse--last-modified"></a><h3>The <code class="literal">"last-modified"</code> property</h3>
+<pre class="programlisting">  "last-modified"            <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a>                 : Read / Write</pre>
+<p>Time this content was last changed.</p>
+<p>Allowed values: &gt;= -1</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse--location"></a><h3>The <code class="literal">"location"</code> property</h3>
+<pre class="programlisting">  "location"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>The URL of the content, for redirect responses.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse--server"></a><h3>The <code class="literal">"server"</code> property</h3>
+<pre class="programlisting">  "server"                   <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read / Write</pre>
+<p>Name of this webserver program.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskHttpResponse--status-code"></a><h3>The <code class="literal">"status-code"</code> property</h3>
+<pre class="programlisting">  "status-code"              <a class="link" href="GskHttpHeader.html#GskHttpStatus" title="enum GskHttpStatus">GskHttpStatus</a>         : Read / Write</pre>
+<p>HTTP status code.</p>
+<p>Default value: GSK_HTTP_STATUS_OK</p>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskHttpResponse.see-also"></a><h2>See Also</h2>
+<p>
+GskHttpHeader, GskHttpRequest
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

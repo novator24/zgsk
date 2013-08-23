@@ -1,0 +1,202 @@
+<refentry id="GskStreamListener">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskStreamListener.top_of_page">Listening for Connections</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Listening for Connections</refname>
+<refpurpose>Base class for server-type objects.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskStreamListener.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskStreamListenerAcceptFunc">*GskStreamListenerAcceptFunc</link>)      (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                (<link linkend="GskStreamListenerErrorFunc">*GskStreamListenerErrorFunc</link>)       (<link linkend="GError">GError</link> *err,
+                                                         <link linkend="gpointer">gpointer</link> data);
+                    <link linkend="GskStreamListenerClass">GskStreamListenerClass</link>;
+                    <link linkend="GskStreamListener-struct">GskStreamListener</link>;
+<link linkend="void">void</link>                <link linkend="gsk-stream-listener-handle-accept">gsk_stream_listener_handle_accept</link>   (<link linkend="GskStreamListener">GskStreamListener</link> *listener,
+                                                         <link linkend="GskStreamListenerAcceptFunc">GskStreamListenerAcceptFunc</link> func,
+                                                         <link linkend="GskStreamListenerErrorFunc">GskStreamListenerErrorFunc</link> err_func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-stream-listener-notify-accepted">gsk_stream_listener_notify_accepted</link> (<link linkend="GskStreamListener">GskStreamListener</link> *stream_listener,
+                                                         <link linkend="GskStream">GskStream</link> *new_stream);
+<link linkend="void">void</link>                <link linkend="gsk-stream-listener-notify-error">gsk_stream_listener_notify_error</link>    (<link linkend="GskStreamListener">GskStreamListener</link> *stream_listener,
+                                                         <link linkend="GError">GError</link> *error);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskStreamListener.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskStreamListener
+         +----<link linkend="GskStreamListenerSocket">GskStreamListenerSocket</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskStreamListener.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Derived classes of GskStreamListener provide new GskStreams
+as connections are accepted.  Users can receive notification
+of this, and usually attach the stream to a new protocol object
+to handle the connection.
+</para>
+</refsect1>
+
+<refsect1 id="GskStreamListener.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskStreamListenerAcceptFunc" role="function">
+<title>GskStreamListenerAcceptFunc ()</title>
+<indexterm zone="GskStreamListenerAcceptFunc"><primary sortas="GskStreamListenerAcceptFunc">GskStreamListenerAcceptFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskStreamListenerAcceptFunc)      (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+A method for handling a new connection.
+</para>
+<para>
+Because <link linkend="gsk-stream-attach"><function>gsk_stream_attach()</function></link> automatically adds a reference to
+the stream, the usual pattern is to do a few <link linkend="gsk-stream-attach"><function>gsk_stream_attach()</function></link>s
+and then <link linkend="g-object-unref"><function>g_object_unref()</function></link> from within this callback.
+</para>
+<para>
+TODO: One can interpret this as meaning that the ownership of the
+stream is passed through this callback,
+which is irregular.
+We will probably fix this by
+implementing listener attachment with a GskHook
+and deprecating this API.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the new connection.
+This should be <link linkend="g-object-unref"><function>g_object_unref()</function></link>d eventually be the called code.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>the data provided to <link linkend="gsk-stream-listener-handle-accept"><function>gsk_stream_listener_handle_accept()</function></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether everything is ok.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStreamListenerErrorFunc" role="function">
+<title>GskStreamListenerErrorFunc ()</title>
+<indexterm zone="GskStreamListenerErrorFunc"><primary sortas="GskStreamListenerErrorFunc">GskStreamListenerErrorFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskStreamListenerErrorFunc)       (<link linkend="GError">GError</link> *err,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+A method for handling a low-level server error.
+</para><variablelist role="params">
+<varlistentry><term><parameter>err</parameter>&#160;:</term>
+<listitem><simpara>the error which transpired.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>the data provided to <link linkend="gsk-stream-listener-handle-accept"><function>gsk_stream_listener_handle_accept()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStreamListenerClass" role="struct">
+<title>GskStreamListenerClass</title>
+<indexterm zone="GskStreamListenerClass"><primary sortas="GskStreamListenerClass">GskStreamListenerClass</primary></indexterm><programlisting>typedef struct {
+  GObjectClass object_class;
+} GskStreamListenerClass;
+</programlisting>
+<para>
+The base class of an object which accepts
+new incoming <link linkend="GskStream"><type>GskStream</type></link>'s.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>object_class</structfield>;</term>
+<listitem><simpara>parent class of this class.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStreamListener-struct" role="struct">
+<title>GskStreamListener</title>
+<indexterm zone="GskStreamListener-struct"><primary sortas="GskStreamListener">GskStreamListener</primary></indexterm><programlisting>typedef struct _GskStreamListener GskStreamListener;</programlisting>
+<para>
+The base instance of an object which accepts
+new incoming <link linkend="GskStream"><type>GskStream</type></link>'s.
+</para></refsect2>
+<refsect2 id="gsk-stream-listener-handle-accept" role="function">
+<title>gsk_stream_listener_handle_accept ()</title>
+<indexterm zone="gsk-stream-listener-handle-accept"><primary sortas="gsk_stream_listener_handle_accept">gsk_stream_listener_handle_accept</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_listener_handle_accept   (<link linkend="GskStreamListener">GskStreamListener</link> *listener,
+                                                         <link linkend="GskStreamListenerAcceptFunc">GskStreamListenerAcceptFunc</link> func,
+                                                         <link linkend="GskStreamListenerErrorFunc">GskStreamListenerErrorFunc</link> err_func,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Public interface to trap when new connections are established.
+Basically, <parameter>func</parameter> will be called with new streams until an error occurs,
+then <parameter>err_func</parameter> and <parameter>destroy</parameter> will be run.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>listener</parameter>&#160;:</term>
+<listitem><simpara> object to handle accepted connections from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function to call if a connection is accepted.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>err_func</parameter>&#160;:</term>
+<listitem><simpara> function to call if an error occurs.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data to be passed to <parameter>func</parameter> and <parameter>err_func</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to be notified with the trap is been undone.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-listener-notify-accepted" role="function">
+<title>gsk_stream_listener_notify_accepted ()</title>
+<indexterm zone="gsk-stream-listener-notify-accepted"><primary sortas="gsk_stream_listener_notify_accepted">gsk_stream_listener_notify_accepted</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_listener_notify_accepted (<link linkend="GskStreamListener">GskStreamListener</link> *stream_listener,
+                                                         <link linkend="GskStream">GskStream</link> *new_stream);</programlisting>
+<para>
+Called by a derived class to notify the system that 
+a new stream has been accepted.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream_listener</parameter>&#160;:</term>
+<listitem><simpara> object which accepted a new connection.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>new_stream</parameter>&#160;:</term>
+<listitem><simpara> the newly accepted input stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-listener-notify-error" role="function">
+<title>gsk_stream_listener_notify_error ()</title>
+<indexterm zone="gsk-stream-listener-notify-error"><primary sortas="gsk_stream_listener_notify_error">gsk_stream_listener_notify_error</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_listener_notify_error    (<link linkend="GskStreamListener">GskStreamListener</link> *stream_listener,
+                                                         <link linkend="GError">GError</link> *error);</programlisting>
+<para>
+Called by a derived class to notify the system that 
+an error has occurred.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream_listener</parameter>&#160;:</term>
+<listitem><simpara> object which has an error.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> the error which occurred.  The *callee* *takes* responsibility for error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskstreamconnection</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="GskStream.html" title="Binary Input/Output Stream Base">
+<link rel="next" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskStream.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskMainLoop.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskstreamconnection.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskstreamconnection.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskstreamconnection"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskstreamconnection.top_of_page"></a>gskstreamconnection</span></h2>
+<p>gskstreamconnection — Connection between the input of one stream
+and the output of another.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskstreamconnection.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a>;
+<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> * <a class="link" href="gsk-gskstreamconnection.html#gsk-stream-connection-new" title="gsk_stream_connection_new ()">gsk_stream_connection_new</a>         (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *input_stream,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *output_stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskstreamconnection.html#gsk-stream-connection-get-atomic-read-size" title="gsk_stream_connection_get_atomic_read_size ()">gsk_stream_connection_get_atomic_read_size</a>
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);
+void                <a class="link" href="gsk-gskstreamconnection.html#gsk-stream-connection-set-atomic-read-size" title="gsk_stream_connection_set_atomic_read_size ()">gsk_stream_connection_set_atomic_read_size</a>
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> atomic_read_size);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskstreamconnection.html#gsk-stream-connection-get-max-buffered" title="gsk_stream_connection_get_max_buffered ()">gsk_stream_connection_get_max_buffered</a>
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);
+void                <a class="link" href="gsk-gskstreamconnection.html#gsk-stream-connection-set-max-buffered" title="gsk_stream_connection_set_max_buffered ()">gsk_stream_connection_set_max_buffered</a>
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_buffered);
+void                <a class="link" href="gsk-gskstreamconnection.html#gsk-stream-connection-shutdown" title="gsk_stream_connection_shutdown ()">gsk_stream_connection_shutdown</a>      (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);
+void                <a class="link" href="gsk-gskstreamconnection.html#gsk-stream-connection-detach" title="gsk_stream_connection_detach ()">gsk_stream_connection_detach</a>        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamconnection.description"></a><h2>Description</h2>
+<p>
+This object allows you to configure the connection
+between two streams more precisely than
+<a class="link" href="GskStream.html#gsk-stream-attach" title="gsk_stream_attach ()"><code class="function">gsk_stream_attach()</code></a>.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamconnection.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamConnection"></a><h3>GskStreamConnection</h3>
+<pre class="programlisting">typedef struct {
+  GObject      object;
+
+  /* The stream to read from. */
+  GskStream *read_side;
+
+  /* The stream to write to. */
+  GskStream *write_side;
+
+  /* Whether we are blocking the read-side because the buffer is 0 length. */
+  guint blocking_write_side : 1;
+
+  /* Whether we are blocking the write-side because the buffer is too long. */
+  guint blocking_read_side : 1;
+
+  /* Whether to use gsk_stream_read_buffer() on the read-side.
+     This is TRUE by default, even though it can cause
+     both max_buffered and atomic_read_size to be violated. */
+  guint use_read_buffer : 1;
+
+  /* Data which is to be transferred from read_side to write_side,
+     which hasn't been processed on the write side. */
+  GskBuffer buffer;
+
+  /* The maximum number of bytes to store in buffer. */
+  guint max_buffered;
+
+  /* The maximum number of bytes to read atomically from the input stream. */
+  guint atomic_read_size;
+} GskStreamConnection;
+</pre>
+<p>
+An opaque object representing the connection between
+the input of one stream and the output of another.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-connection-new"></a><h3>gsk_stream_connection_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> * gsk_stream_connection_new         (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *input_stream,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *output_stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Attach the read end of <em class="parameter"><code>input_stream</code></em>
+to the write end of <em class="parameter"><code>output_stream</code></em>,
+returning an error if anything goes wrong.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>input_stream</code></em> :</span></p></td>
+<td> the input stream whose read-end will be trapped.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>output_stream</code></em> :</span></p></td>
+<td> the output stream whose write-end will be trapped.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return location.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference at the connection.
+You should use eventually call <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"
+><code class="function">g_object_unref()</code></a> on the connection.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-connection-get-atomic-read-size"></a><h3>gsk_stream_connection_get_atomic_read_size ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_stream_connection_get_atomic_read_size
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);</pre>
+<p>
+Set the number of bytes to read atomically from
+an underlying source.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td> the connection to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the size to read at a time.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-connection-set-atomic-read-size"></a><h3>gsk_stream_connection_set_atomic_read_size ()</h3>
+<pre class="programlisting">void                gsk_stream_connection_set_atomic_read_size
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> atomic_read_size);</pre>
+<p>
+Set the number of bytes to read atomically from
+an underlying source.  This is only
+used if the input stream has no read_buffer method.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td> the connection to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>atomic_read_size</code></em> :</span></p></td>
+<td> the size to read at a time.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-connection-get-max-buffered"></a><h3>gsk_stream_connection_get_max_buffered ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_stream_connection_get_max_buffered
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);</pre>
+<p>
+Get the maximum number of bytes of data to buffer between the input and
+output ends of the connection.
+</p>
+<p>
+The actual number of bytes of data can be found with <code class="function">gsk_stream_connection_get_cur_buffered()</code>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td> the connection to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the maximum number of bytes.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-connection-set-max-buffered"></a><h3>gsk_stream_connection_set_max_buffered ()</h3>
+<pre class="programlisting">void                gsk_stream_connection_set_max_buffered
+                                                        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_buffered);</pre>
+<p>
+Adjust the maximum amount of memory buffer to use between these streams.
+</p>
+<p>
+Sometimes, we will buffer more data, either because set_max_buffer was run
+to make the amount allowed smaller than the amount currently buffered,
+or because there was a buffer-to-buffer transfer (which are allowed
+to be large).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td> the connection to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_buffered</code></em> :</span></p></td>
+<td> maximum of data to hold from the input stream
+for the output stream.  After this much data has built up,
+we will no longer read from the input stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-connection-shutdown"></a><h3>gsk_stream_connection_shutdown ()</h3>
+<pre class="programlisting">void                gsk_stream_connection_shutdown      (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);</pre>
+<p>
+Shut down both ends of a connection.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td> the connection to shut down.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-connection-detach"></a><h3>gsk_stream_connection_detach ()</h3>
+<pre class="programlisting">void                gsk_stream_connection_detach        (<a class="link" href="gsk-gskstreamconnection.html#GskStreamConnection" title="GskStreamConnection">GskStreamConnection</a> *connection);</pre>
+<p>
+Disconnects the input/output pair of a connection.
+Data held in the buffer will be lost.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td> the connection to detach.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskstreamconnection.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GskStream.html#gsk-stream-attach" title="gsk_stream_attach ()"><code class="function">gsk_stream_attach()</code></a>.
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

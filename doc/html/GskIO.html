@@ -1,0 +1,1684 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Base Input/Output Object</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskmacros.html" title="Helpful Macros">
+<link rel="next" href="GskStream.html" title="Binary Input/Output Stream Base">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskmacros.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskStream.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskIO.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskIO.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskIO.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#GskIO.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskIO"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskIO.top_of_page"></a>Base Input/Output Object</span></h2>
+<p>Base Input/Output Object — A base class with input and output triggers,
+but no actual read or write methods.
+Those are left for derived classes to support.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskIO.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskIO.html#GskIOClass" title="GskIOClass">GskIOClass</a>;
+                    <a class="link" href="GskIO.html#GskIO-struct" title="GskIO">GskIO</a>;
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="GskIO.html#GskIOHookFunc" title="GskIOHookFunc ()">*GskIOHookFunc</a>)                    (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+enum                <a class="link" href="GskIO.html#GskIOErrorCause" title="enum GskIOErrorCause">GskIOErrorCause</a>;
+#define             <a class="link" href="GskIO.html#GSK-IO-READ-HOOK--CAPS" title="GSK_IO_READ_HOOK()">GSK_IO_READ_HOOK</a>                    (io)
+#define             <a class="link" href="GskIO.html#GSK-IO-WRITE-HOOK--CAPS" title="GSK_IO_WRITE_HOOK()">GSK_IO_WRITE_HOOK</a>                   (io)
+#define             <a class="link" href="GskIO.html#gsk-io-block-read" title="gsk_io_block_read()">gsk_io_block_read</a>                   (io)
+#define             <a class="link" href="GskIO.html#gsk-io-block-write" title="gsk_io_block_write()">gsk_io_block_write</a>                  (io)
+#define             <a class="link" href="GskIO.html#gsk-io-unblock-read" title="gsk_io_unblock_read()">gsk_io_unblock_read</a>                 (io)
+#define             <a class="link" href="GskIO.html#gsk-io-unblock-write" title="gsk_io_unblock_write()">gsk_io_unblock_write</a>                (io)
+#define             <a class="link" href="GskIO.html#gsk-io-has-read-hook" title="gsk_io_has_read_hook()">gsk_io_has_read_hook</a>                (io)
+#define             <a class="link" href="GskIO.html#gsk-io-has-write-hook" title="gsk_io_has_write_hook()">gsk_io_has_write_hook</a>               (io)
+#define             <a class="link" href="GskIO.html#gsk-io-trap-readable" title="gsk_io_trap_readable()">gsk_io_trap_readable</a>                (io, func, shutdown_func, data, destroy)
+#define             <a class="link" href="GskIO.html#gsk-io-trap-writable" title="gsk_io_trap_writable()">gsk_io_trap_writable</a>                (io, func, shutdown_func, data, destroy)
+#define             <a class="link" href="GskIO.html#gsk-io-untrap-readable" title="gsk_io_untrap_readable()">gsk_io_untrap_readable</a>              (io)
+#define             <a class="link" href="GskIO.html#gsk-io-untrap-writable" title="gsk_io_untrap_writable()">gsk_io_untrap_writable</a>              (io)
+void                <a class="link" href="GskIO.html#gsk-io-shutdown" title="gsk_io_shutdown ()">gsk_io_shutdown</a>                     (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+#define             <a class="link" href="GskIO.html#gsk-io-read-shutdown" title="gsk_io_read_shutdown()">gsk_io_read_shutdown</a>                (io, error)
+#define             <a class="link" href="GskIO.html#gsk-io-write-shutdown" title="gsk_io_write_shutdown()">gsk_io_write_shutdown</a>               (io, error)
+void                <a class="link" href="GskIO.html#gsk-io-close" title="gsk_io_close ()">gsk_io_close</a>                        (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io);
+#define             <a class="link" href="GskIO.html#gsk-io-notify-ready-to-read" title="gsk_io_notify_ready_to_read()">gsk_io_notify_ready_to_read</a>         (io)
+#define             <a class="link" href="GskIO.html#gsk-io-notify-ready-to-write" title="gsk_io_notify_ready_to_write()">gsk_io_notify_ready_to_write</a>        (io)
+#define             <a class="link" href="GskIO.html#gsk-io-notify-read-shutdown" title="gsk_io_notify_read_shutdown()">gsk_io_notify_read_shutdown</a>         (io)
+#define             <a class="link" href="GskIO.html#gsk-io-notify-write-shutdown" title="gsk_io_notify_write_shutdown()">gsk_io_notify_write_shutdown</a>        (io)
+void                <a class="link" href="GskIO.html#gsk-io-notify-shutdown" title="gsk_io_notify_shutdown ()">gsk_io_notify_shutdown</a>              (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io);
+void                <a class="link" href="GskIO.html#gsk-io-notify-connected" title="gsk_io_notify_connected ()">gsk_io_notify_connected</a>             (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io);
+#define             <a class="link" href="GskIO.html#gsk-io-is-polling-for-read" title="gsk_io_is_polling_for_read()">gsk_io_is_polling_for_read</a>          (io)
+#define             <a class="link" href="GskIO.html#gsk-io-is-polling-for-write" title="gsk_io_is_polling_for_write()">gsk_io_is_polling_for_write</a>         (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-is-connecting" title="gsk_io_get_is_connecting()">gsk_io_get_is_connecting</a>            (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-is-readable" title="gsk_io_get_is_readable()">gsk_io_get_is_readable</a>              (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-is-writable" title="gsk_io_get_is_writable()">gsk_io_get_is_writable</a>              (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-never-partial-reads" title="gsk_io_get_never_partial_reads()">gsk_io_get_never_partial_reads</a>      (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-never-partial-writes" title="gsk_io_get_never_partial_writes()">gsk_io_get_never_partial_writes</a>     (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-never-blocks-write" title="gsk_io_get_never_blocks_write()">gsk_io_get_never_blocks_write</a>       (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-never-blocks-read" title="gsk_io_get_never_blocks_read()">gsk_io_get_never_blocks_read</a>        (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-idle-notify-write" title="gsk_io_get_idle_notify_write()">gsk_io_get_idle_notify_write</a>        (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-idle-notify-read" title="gsk_io_get_idle_notify_read()">gsk_io_get_idle_notify_read</a>         (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-is-open" title="gsk_io_get_is_open()">gsk_io_get_is_open</a>                  (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-is-read-shutting-down" title="gsk_io_get_is_read_shutting_down()">gsk_io_get_is_read_shutting_down</a>    (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-is-write-shutting-down" title="gsk_io_get_is_write_shutting_down()">gsk_io_get_is_write_shutting_down</a>   (io)
+#define             <a class="link" href="GskIO.html#gsk-io-get-shutdown-on-error" title="gsk_io_get_shutdown_on_error()">gsk_io_get_shutdown_on_error</a>        (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-is-connecting" title="gsk_io_mark_is_connecting()">gsk_io_mark_is_connecting</a>           (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-is-readable" title="gsk_io_mark_is_readable()">gsk_io_mark_is_readable</a>             (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-is-writable" title="gsk_io_mark_is_writable()">gsk_io_mark_is_writable</a>             (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-never-partial-reads" title="gsk_io_mark_never_partial_reads()">gsk_io_mark_never_partial_reads</a>     (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-never-partial-writes" title="gsk_io_mark_never_partial_writes()">gsk_io_mark_never_partial_writes</a>    (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-never-blocks-write" title="gsk_io_mark_never_blocks_write()">gsk_io_mark_never_blocks_write</a>      (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-never-blocks-read" title="gsk_io_mark_never_blocks_read()">gsk_io_mark_never_blocks_read</a>       (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-idle-notify-write" title="gsk_io_mark_idle_notify_write()">gsk_io_mark_idle_notify_write</a>       (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-idle-notify-read" title="gsk_io_mark_idle_notify_read()">gsk_io_mark_idle_notify_read</a>        (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-is-open" title="gsk_io_mark_is_open()">gsk_io_mark_is_open</a>                 (io)
+#define             <a class="link" href="GskIO.html#gsk-io-mark-shutdown-on-error" title="gsk_io_mark_shutdown_on_error()">gsk_io_mark_shutdown_on_error</a>       (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-is-readable" title="gsk_io_clear_is_readable()">gsk_io_clear_is_readable</a>            (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-is-writable" title="gsk_io_clear_is_writable()">gsk_io_clear_is_writable</a>            (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-never-partial-reads" title="gsk_io_clear_never_partial_reads()">gsk_io_clear_never_partial_reads</a>    (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-never-partial-writes" title="gsk_io_clear_never_partial_writes()">gsk_io_clear_never_partial_writes</a>   (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-idle-notify-write" title="gsk_io_clear_idle_notify_write()">gsk_io_clear_idle_notify_write</a>      (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-idle-notify-read" title="gsk_io_clear_idle_notify_read()">gsk_io_clear_idle_notify_read</a>       (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-is-open" title="gsk_io_clear_is_open()">gsk_io_clear_is_open</a>                (io)
+#define             <a class="link" href="GskIO.html#gsk-io-clear-shutdown-on-error" title="gsk_io_clear_shutdown_on_error()">gsk_io_clear_shutdown_on_error</a>      (io)
+#define             <a class="link" href="GskIO.html#gsk-io-set-idle-notify-write" title="gsk_io_set_idle_notify_write()">gsk_io_set_idle_notify_write</a>        (io,v)
+#define             <a class="link" href="GskIO.html#gsk-io-set-idle-notify-read" title="gsk_io_set_idle_notify_read()">gsk_io_set_idle_notify_read</a>         (io,v)
+void                <a class="link" href="GskIO.html#gsk-io-set-error" title="gsk_io_set_error ()">gsk_io_set_error</a>                    (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a class="link" href="GskIO.html#GskIOErrorCause" title="enum GskIOErrorCause">GskIOErrorCause</a> cause,
+                                                         <a class="link" href="gsk-gskerror.html#GskErrorCode" title="enum GskErrorCode">GskErrorCode</a> error_code,
+                                                         const char *format,
+                                                         ...);
+void                <a class="link" href="GskIO.html#gsk-io-set-gerror" title="gsk_io_set_gerror ()">gsk_io_set_gerror</a>                   (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a class="link" href="GskIO.html#GskIOErrorCause" title="enum GskIOErrorCause">GskIOErrorCause</a> cause,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error);
+const char *        <a class="link" href="GskIO.html#gsk-io-error-cause-to-string" title="gsk_io_error_cause_to_string ()">gsk_io_error_cause_to_string</a>        (<a class="link" href="GskIO.html#GskIOErrorCause" title="enum GskIOErrorCause">GskIOErrorCause</a> cause);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskIO.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskIO
+         +----<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a>
+         +----<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskIO.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GskIO.html#GskIO-on-connect" title='The "on-connect" signal'>on-connect</a>"                                     : No Recursion
+  "<a class="link" href="GskIO.html#GskIO-on-error" title='The "on-error" signal'>on-error</a>"                                       : No Recursion
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskIO.description"></a><h2>Description</h2>
+<p>
+The primary feature of this class is that it has two hooks;
+a read hook and a write hook, and a ton of convenience methods
+to access them.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskIO.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskIOClass"></a><h3>GskIOClass</h3>
+<pre class="programlisting">typedef struct {
+  GObjectClass object_class;
+  /* --- signals (do not override, usually) --- */
+  /* Emitted after the connection is made. */
+  void       (*on_connect)      (GskIO      *io);
+  void       (*on_error)        (GskIO      *io);
+
+  /* --- virtuals --- */
+  gboolean   (*open)            (GskIO      *io,
+				 GError    **error);
+  void       (*set_poll_read)   (GskIO      *io,
+				 gboolean    do_poll);
+  void       (*set_poll_write)  (GskIO      *io,
+				 gboolean    do_poll);
+  gboolean   (*shutdown_read)   (GskIO      *io,
+				 GError    **error);
+  gboolean   (*shutdown_write)  (GskIO      *io,
+				 GError    **error);
+  void       (*close)           (GskIO      *io);
+} GskIOClass;
+</pre>
+<p>
+Methods which derived classes should overload to
+implement their polling and shutdown strategies.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"
+>GObjectClass</a> <em class="structfield"><code>object_class</code></em>;</span></p></td>
+<td>
+The base class (private).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>on_connect</code></em> ()</span></p></td>
+<td>
+This is a signal which is emitted after a connection
+has been completed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>on_error</code></em> ()</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>open</code></em> ()</span></p></td>
+<td>
+Open resources.  This is called when the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is constructed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>set_poll_read</code></em> ()</span></p></td>
+<td>
+This function should turn on/off whether the implementation
+will call <a class="link" href="GskIO.html#gsk-io-notify-ready-to-read" title="gsk_io_notify_ready_to_read()"><code class="function">gsk_io_notify_ready_to_read()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>set_poll_write</code></em> ()</span></p></td>
+<td>
+This function should turn on/off whether the implementation
+will call <a class="link" href="GskIO.html#gsk-io-notify-ready-to-write" title="gsk_io_notify_ready_to_write()"><code class="function">gsk_io_notify_ready_to_write()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>shutdown_read</code></em> ()</span></p></td>
+<td>
+This function should stop the object from being readable
+ever again.  If applicable, a user's read-trap's shutdown callback
+will be run.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>shutdown_write</code></em> ()</span></p></td>
+<td>
+This function should stop the object from being writable
+ever again.  If applicable, a user's write-trap's shutdown callback
+will be run.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>close</code></em> ()</span></p></td>
+<td>
+Deallocate system resources associated with instance.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskIO-struct"></a><h3>GskIO</h3>
+<pre class="programlisting">typedef struct _GskIO GskIO;</pre>
+<p>
+The base class for all input/output objects.
+It has no public members.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskIOHookFunc"></a><h3>GskIOHookFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskIOHookFunc)                    (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+A callback which will be run when either the object
+is ready to read or write, or shutdown in either direction.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>an object which is ready to read or write
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>the data passed to <a class="link" href="GskIO.html#gsk-io-trap-readable" title="gsk_io_trap_readable()"><code class="function">gsk_io_trap_readable()</code></a>
+or <a class="link" href="GskIO.html#gsk-io-trap-writable" title="gsk_io_trap_writable()"><code class="function">gsk_io_trap_writable()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether the trap should be kept, otherwise it will
+be deleted.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskIOErrorCause"></a><h3>enum GskIOErrorCause</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_IO_ERROR_NONE,
+  GSK_IO_ERROR_INIT,
+  GSK_IO_ERROR_CONNECT,
+  GSK_IO_ERROR_OPEN,
+  GSK_IO_ERROR_READ,
+  GSK_IO_ERROR_WRITE,
+  GSK_IO_ERROR_POLL_READ,
+  GSK_IO_ERROR_POLL_WRITE,
+  GSK_IO_ERROR_SHUTDOWN_READ,
+  GSK_IO_ERROR_SHUTDOWN_WRITE,
+  GSK_IO_ERROR_CLOSE,
+  GSK_IO_ERROR_SYNC,
+  GSK_IO_ERROR_POLL
+} GskIOErrorCause;
+</pre>
+<p>
+Every <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> has an GError and a GskIOErrorCause
+which tells the last error observed on the stream,
+and what type of action triggered it.
+</p>
+<p>
+Implementations can use <a class="link" href="GskIO.html#gsk-io-set-error" title="gsk_io_set_error ()"><code class="function">gsk_io_set_error()</code></a>
+to register an error.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-IO-ERROR-NONE--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_NONE</code></span></p></td>
+<td>
+No error has been observed.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-INIT--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_INIT</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-CONNECT--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_CONNECT</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-OPEN--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_OPEN</code></span></p></td>
+<td>
+An error occurred opening the file.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-READ--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_READ</code></span></p></td>
+<td>
+An error occurred reading from the file.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-WRITE--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_WRITE</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-POLL-READ--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_POLL_READ</code></span></p></td>
+<td>
+An error occurred polling for readability.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-POLL-WRITE--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_POLL_WRITE</code></span></p></td>
+<td>
+An error occurred polling for writability.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-SHUTDOWN-READ--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_SHUTDOWN_READ</code></span></p></td>
+<td>
+An error occurred shutting down the read end.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-SHUTDOWN-WRITE--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_SHUTDOWN_WRITE</code></span></p></td>
+<td>
+An error occurred shutting down the write end.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-CLOSE--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_CLOSE</code></span></p></td>
+<td>
+An error occurred closing.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-SYNC--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_SYNC</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-IO-ERROR-POLL--CAPS"></a><span class="term"><code class="literal">GSK_IO_ERROR_POLL</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-IO-READ-HOOK--CAPS"></a><h3>GSK_IO_READ_HOOK()</h3>
+<pre class="programlisting">#define             GSK_IO_READ_HOOK(io)</pre>
+<p>
+Get a pointer to the <a class="link" href="gsk-gskhook.html#GskHook" title="GskHook"><span class="type">GskHook</span></a>
+corresponding to the read end of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO which contains the read-hook.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-IO-WRITE-HOOK--CAPS"></a><h3>GSK_IO_WRITE_HOOK()</h3>
+<pre class="programlisting">#define             GSK_IO_WRITE_HOOK(io)</pre>
+<p>
+Get a pointer to the <a class="link" href="gsk-gskhook.html#GskHook" title="GskHook"><span class="type">GskHook</span></a>
+corresponding to the write end of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO which contains the write-hook.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-block-read"></a><h3>gsk_io_block_read()</h3>
+<pre class="programlisting">#define             gsk_io_block_read(io)</pre>
+<p>
+Block the read hook from being triggered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO whose read hook should be blocked.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-block-write"></a><h3>gsk_io_block_write()</h3>
+<pre class="programlisting">#define             gsk_io_block_write(io)</pre>
+<p>
+Block the write hook from being triggered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO whose write hook should be blocked.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-unblock-read"></a><h3>gsk_io_unblock_read()</h3>
+<pre class="programlisting">#define             gsk_io_unblock_read(io)</pre>
+<p>
+Unblock the read hook from being triggered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO whose read hook should be unblocked.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-unblock-write"></a><h3>gsk_io_unblock_write()</h3>
+<pre class="programlisting">#define             gsk_io_unblock_write(io)</pre>
+<p>
+Unblock the write hook from being triggered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO whose write hook should be unblocked.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-has-read-hook"></a><h3>gsk_io_has_read_hook()</h3>
+<pre class="programlisting">#define             gsk_io_has_read_hook(io)</pre>
+<p>
+Return whether the read hook is trapped.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO whose read hook should be tested.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-has-write-hook"></a><h3>gsk_io_has_write_hook()</h3>
+<pre class="programlisting">#define             gsk_io_has_write_hook(io)</pre>
+<p>
+Return whether the write hook is trapped.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the GskIO whose write hook should be tested.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-trap-readable"></a><h3>gsk_io_trap_readable()</h3>
+<pre class="programlisting">#define             gsk_io_trap_readable(io, func, shutdown_func, data, destroy)</pre>
+<p>
+Trap the read end of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<p>
+Note that only one trap of a <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>'s read-end is allowed at a time.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose read end should be trapped.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>the function to call (a <a class="link" href="GskIO.html#GskIOHookFunc" title="GskIOHookFunc ()"><span class="type">GskIOHookFunc</span></a>) when it's readable.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown_func</code></em> :</span></p></td>
+<td>the function to call (a <a class="link" href="GskIO.html#GskIOHookFunc" title="GskIOHookFunc ()"><span class="type">GskIOHookFunc</span></a>) when it's read end is shut down.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>data passed along to <em class="parameter"><code>func</code></em> and <em class="parameter"><code>shutdown_func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>optional function called when the hook is untrapped.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-trap-writable"></a><h3>gsk_io_trap_writable()</h3>
+<pre class="programlisting">#define             gsk_io_trap_writable(io, func, shutdown_func, data, destroy)</pre>
+<p>
+Trap the write end of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<p>
+Note that only one trap of a <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>'s write-end is allowed at a time.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose write end should be trapped.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>the function to call (a <a class="link" href="GskIO.html#GskIOHookFunc" title="GskIOHookFunc ()"><span class="type">GskIOHookFunc</span></a>) when it's writable.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown_func</code></em> :</span></p></td>
+<td>the function to call (a <a class="link" href="GskIO.html#GskIOHookFunc" title="GskIOHookFunc ()"><span class="type">GskIOHookFunc</span></a>) when it's write end is shut down.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>data passed along to <em class="parameter"><code>func</code></em> and <em class="parameter"><code>shutdown_func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>optional function called when the hook is untrapped.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-untrap-readable"></a><h3>gsk_io_untrap_readable()</h3>
+<pre class="programlisting">#define             gsk_io_untrap_readable(io)</pre>
+<p>
+Untrap the read end of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose read end should be untrapped.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-untrap-writable"></a><h3>gsk_io_untrap_writable()</h3>
+<pre class="programlisting">#define             gsk_io_untrap_writable(io)</pre>
+<p>
+Untrap the write end of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose write end should be untrapped.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-shutdown"></a><h3>gsk_io_shutdown ()</h3>
+<pre class="programlisting">void                gsk_io_shutdown                     (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Shutdown the read and write ends of a <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td> the object which should be shut down.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error to set upon failure.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-read-shutdown"></a><h3>gsk_io_read_shutdown()</h3>
+<pre class="programlisting">#define             gsk_io_read_shutdown(io, error)</pre>
+<p>
+Shutdown both the read ends of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<p>
+Returns TRUE if the shutdown succeeded immediately.
+</p>
+<p>
+Returns FALSE if the shutdown has been initiated but not finished,
+or if an error occurred.  These cases can be distinguished by looking
+at the <em class="parameter"><code>error</code></em> return.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>error return if things go wrong.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-write-shutdown"></a><h3>gsk_io_write_shutdown()</h3>
+<pre class="programlisting">#define             gsk_io_write_shutdown(io, error)</pre>
+<p>
+Shutdown both the write ends of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.
+</p>
+<p>
+Returns FALSE if the shutdown has been initiated but not finished,
+or if an error occurred.  These cases can be distinguished by looking
+at the <em class="parameter"><code>error</code></em> return.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>optional error return if things go wrong.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-close"></a><h3>gsk_io_close ()</h3>
+<pre class="programlisting">void                gsk_io_close                        (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io);</pre>
+<p>
+Close an open <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td> the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to close.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-notify-ready-to-read"></a><h3>gsk_io_notify_ready_to_read()</h3>
+<pre class="programlisting">#define             gsk_io_notify_ready_to_read(io)</pre>
+<p>
+Trigger an is-readable event.  This should only be
+called by derived implementations.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose read-end is ready.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-notify-ready-to-write"></a><h3>gsk_io_notify_ready_to_write()</h3>
+<pre class="programlisting">#define             gsk_io_notify_ready_to_write(io)</pre>
+<p>
+Trigger an is-writable event.  This should only be
+called by derived implementations.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose write-end is ready.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-notify-read-shutdown"></a><h3>gsk_io_notify_read_shutdown()</h3>
+<pre class="programlisting">#define             gsk_io_notify_read_shutdown(io)</pre>
+<p>
+Trigger a read-end-shutdown event.  This should only be
+called by derived implementations.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose read-end is shutdown.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-notify-write-shutdown"></a><h3>gsk_io_notify_write_shutdown()</h3>
+<pre class="programlisting">#define             gsk_io_notify_write_shutdown(io)</pre>
+<p>
+Trigger a write-end-shutdown event.  This should only be
+called by derived implementations.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> whose write-end is shutdown.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-notify-shutdown"></a><h3>gsk_io_notify_shutdown ()</h3>
+<pre class="programlisting">void                gsk_io_notify_shutdown              (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io);</pre>
+<p>
+This function is called by an implementation
+when the read- and write- ends of the i/o object
+have both shut-down.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td> the object which is shut-down.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-notify-connected"></a><h3>gsk_io_notify_connected ()</h3>
+<pre class="programlisting">void                gsk_io_notify_connected             (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io);</pre>
+<p>
+Trigger an is-connected event.  This should only be
+called by derived implementations.
+Called to indicate that the connection has been made.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td> the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> that finished connecting to the remote side.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-is-polling-for-read"></a><h3>gsk_io_is_polling_for_read()</h3>
+<pre class="programlisting">#define             gsk_io_is_polling_for_read(io)</pre>
+<p>
+Check whether the last invocation of <code class="function">set_poll_read()</code>
+indicated that polling for readability was desired.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the IO to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-is-polling-for-write"></a><h3>gsk_io_is_polling_for_write()</h3>
+<pre class="programlisting">#define             gsk_io_is_polling_for_write(io)</pre>
+<p>
+Check whether the last invocation of <code class="function">set_poll_write()</code>
+indicated that polling for writability was desired.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the IO to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-is-connecting"></a><h3>gsk_io_get_is_connecting()</h3>
+<pre class="programlisting">#define             gsk_io_get_is_connecting(io)</pre>
+<p>
+Return whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is still connecting.
+Will be FALSE if the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is never connecting.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-is-readable"></a><h3>gsk_io_get_is_readable()</h3>
+<pre class="programlisting">#define             gsk_io_get_is_readable(io)</pre>
+<p>
+Return whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is readable.
+(It means that the read-end is available--
+it does not that there is any data which can be read.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-is-writable"></a><h3>gsk_io_get_is_writable()</h3>
+<pre class="programlisting">#define             gsk_io_get_is_writable(io)</pre>
+<p>
+Return whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is writable.
+(It means that the write-end is available--
+it does not mean that you can necessarily write data.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-never-partial-reads"></a><h3>gsk_io_get_never_partial_reads()</h3>
+<pre class="programlisting">#define             gsk_io_get_never_partial_reads(io)</pre>
+<p>
+Return whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> ever reads a partial buffer.
+</p>
+<p>
+An example of a source which never returns partial data
+is a virtual source like /dev/zero.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-never-partial-writes"></a><h3>gsk_io_get_never_partial_writes()</h3>
+<pre class="programlisting">#define             gsk_io_get_never_partial_writes(io)</pre>
+<p>
+Return whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> ever writes a partial buffer.
+</p>
+<p>
+An example of a source which never writes partial data
+is a infinite memory buffer, or a sink which merely
+discards data written to it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-never-blocks-write"></a><h3>gsk_io_get_never_blocks_write()</h3>
+<pre class="programlisting">#define             gsk_io_get_never_blocks_write(io)</pre>
+<p>
+Return if the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> will never block to write data.  It will always allow
+some data to be written, until it is full and will allow no more ever.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-never-blocks-read"></a><h3>gsk_io_get_never_blocks_read()</h3>
+<pre class="programlisting">#define             gsk_io_get_never_blocks_read(io)</pre>
+<p>
+Return if the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> will never block to read data.  It will always return
+some data, until it is empty and will never return any more.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-idle-notify-write"></a><h3>gsk_io_get_idle_notify_write()</h3>
+<pre class="programlisting">#define             gsk_io_get_idle_notify_write(io)</pre>
+<p>
+Return whether the write-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-idle-notify-read"></a><h3>gsk_io_get_idle_notify_read()</h3>
+<pre class="programlisting">#define             gsk_io_get_idle_notify_read(io)</pre>
+<p>
+Return whether the read-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-is-open"></a><h3>gsk_io_get_is_open()</h3>
+<pre class="programlisting">#define             gsk_io_get_is_open(io)</pre>
+<p>
+Return whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is open.  A <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> should be open if
+you want to use it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-is-read-shutting-down"></a><h3>gsk_io_get_is_read_shutting_down()</h3>
+<pre class="programlisting">#define             gsk_io_get_is_read_shutting_down(io)</pre>
+<p>
+Get whether the read end of the IO is in the process of shutting down.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the IO to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-is-write-shutting-down"></a><h3>gsk_io_get_is_write_shutting_down()</h3>
+<pre class="programlisting">#define             gsk_io_get_is_write_shutting_down(io)</pre>
+<p>
+Get whether the write end of the IO is in the process of shutting down.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the IO to query.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-get-shutdown-on-error"></a><h3>gsk_io_get_shutdown_on_error()</h3>
+<pre class="programlisting">#define             gsk_io_get_shutdown_on_error(io)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-is-connecting"></a><h3>gsk_io_mark_is_connecting()</h3>
+<pre class="programlisting">#define             gsk_io_mark_is_connecting(io)</pre>
+<p>
+Set the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>'s is_connecting flag.  This should only be called
+by the implementations of derived classes.  By default,
+GskIO is not in the connecting state.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-is-readable"></a><h3>gsk_io_mark_is_readable()</h3>
+<pre class="programlisting">#define             gsk_io_mark_is_readable(io)</pre>
+<p>
+Set whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is_readable.  This should only be called by
+the implementations of derived classes.  In general,
+you should not change is_readable more than once in the lifetime
+of an object; however some types of streams
+can be made readable again once they are shutdown.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-is-writable"></a><h3>gsk_io_mark_is_writable()</h3>
+<pre class="programlisting">#define             gsk_io_mark_is_writable(io)</pre>
+<p>
+Set whether the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is_writable.  This should only be called by
+the implementations of derived classes.  In general,
+you should not change is_writable more than once in the lifetime
+of an object; however some types of streams
+can be made writable again once they are shutdown.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-never-partial-reads"></a><h3>gsk_io_mark_never_partial_reads()</h3>
+<pre class="programlisting">#define             gsk_io_mark_never_partial_reads(io)</pre>
+<p>
+Mark the never_partial_reads flag.  This means that the read method
+should never have a partial success.
+This should therefore only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-never-partial-writes"></a><h3>gsk_io_mark_never_partial_writes()</h3>
+<pre class="programlisting">#define             gsk_io_mark_never_partial_writes(io)</pre>
+<p>
+Mark the never_partial_writes flag.  This means that the write method
+should never have a partial success.
+This should therefore only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-never-blocks-write"></a><h3>gsk_io_mark_never_blocks_write()</h3>
+<pre class="programlisting">#define             gsk_io_mark_never_blocks_write(io)</pre>
+<p>
+Indicate that writing to the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-never-blocks-read"></a><h3>gsk_io_mark_never_blocks_read()</h3>
+<pre class="programlisting">#define             gsk_io_mark_never_blocks_read(io)</pre>
+<p>
+Indicate that reading from the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-idle-notify-write"></a><h3>gsk_io_mark_idle_notify_write()</h3>
+<pre class="programlisting">#define             gsk_io_mark_idle_notify_write(io)</pre>
+<p>
+Tell the GskIO system to continually trigger a user's write hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-idle-notify-read"></a><h3>gsk_io_mark_idle_notify_read()</h3>
+<pre class="programlisting">#define             gsk_io_mark_idle_notify_read(io)</pre>
+<p>
+Tell the GskIO system to continually trigger a user's read hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-is-open"></a><h3>gsk_io_mark_is_open()</h3>
+<pre class="programlisting">#define             gsk_io_mark_is_open(io)</pre>
+<p>
+Indicate that a <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is open.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-mark-shutdown-on-error"></a><h3>gsk_io_mark_shutdown_on_error()</h3>
+<pre class="programlisting">#define             gsk_io_mark_shutdown_on_error(io)</pre>
+<p>
+Cause the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> object to be shutdown if it fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> object to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-is-readable"></a><h3>gsk_io_clear_is_readable()</h3>
+<pre class="programlisting">#define             gsk_io_clear_is_readable(io)</pre>
+<p>
+Indicate that a <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is no longer readable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-is-writable"></a><h3>gsk_io_clear_is_writable()</h3>
+<pre class="programlisting">#define             gsk_io_clear_is_writable(io)</pre>
+<p>
+Indicate that a <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> is no longer writable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-never-partial-reads"></a><h3>gsk_io_clear_never_partial_reads()</h3>
+<pre class="programlisting">#define             gsk_io_clear_never_partial_reads(io)</pre>
+<p>
+Indicate that the GskIO may exhibit partial reads.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-never-partial-writes"></a><h3>gsk_io_clear_never_partial_writes()</h3>
+<pre class="programlisting">#define             gsk_io_clear_never_partial_writes(io)</pre>
+<p>
+Indicate that the GskIO may exhibit partial writes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-idle-notify-write"></a><h3>gsk_io_clear_idle_notify_write()</h3>
+<pre class="programlisting">#define             gsk_io_clear_idle_notify_write(io)</pre>
+<p>
+Stop continually triggering the user's write hook.
+(This undoes <a class="link" href="GskIO.html#gsk-io-mark-idle-notify-write" title="gsk_io_mark_idle_notify_write()"><code class="function">gsk_io_mark_idle_notify_write()</code></a>)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-idle-notify-read"></a><h3>gsk_io_clear_idle_notify_read()</h3>
+<pre class="programlisting">#define             gsk_io_clear_idle_notify_read(io)</pre>
+<p>
+Stop continually triggering the user's read hook.
+(This undoes <a class="link" href="GskIO.html#gsk-io-mark-idle-notify-read" title="gsk_io_mark_idle_notify_read()"><code class="function">gsk_io_mark_idle_notify_read()</code></a>)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-is-open"></a><h3>gsk_io_clear_is_open()</h3>
+<pre class="programlisting">#define             gsk_io_clear_is_open(io)</pre>
+<p>
+Indicate that the GskIO is closed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-clear-shutdown-on-error"></a><h3>gsk_io_clear_shutdown_on_error()</h3>
+<pre class="programlisting">#define             gsk_io_clear_shutdown_on_error(io)</pre>
+<p>
+Suppress automatic-shutdown when the stream fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the stream to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-set-idle-notify-write"></a><h3>gsk_io_set_idle_notify_write()</h3>
+<pre class="programlisting">#define             gsk_io_set_idle_notify_write(io,v)</pre>
+<p>
+Set whether to perform idle-notification on the writable end of this GskIO.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the IO object to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>v</code></em> :</span></p></td>
+<td>whether to notify.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-set-idle-notify-read"></a><h3>gsk_io_set_idle_notify_read()</h3>
+<pre class="programlisting">#define             gsk_io_set_idle_notify_read(io,v)</pre>
+<p>
+Set whether to perform idle-notification on the readable end of this GskIO.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td>the IO object to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>v</code></em> :</span></p></td>
+<td>whether to notify.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-set-error"></a><h3>gsk_io_set_error ()</h3>
+<pre class="programlisting">void                gsk_io_set_error                    (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a class="link" href="GskIO.html#GskIOErrorCause" title="enum GskIOErrorCause">GskIOErrorCause</a> cause,
+                                                         <a class="link" href="gsk-gskerror.html#GskErrorCode" title="enum GskErrorCode">GskErrorCode</a> error_code,
+                                                         const char *format,
+                                                         ...);</pre>
+<p>
+Set the error member of the <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td> the object whose GError member should be set.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cause</code></em> :</span></p></td>
+<td> what kind of situation triggered the error
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error_code</code></em> :</span></p></td>
+<td> an error code.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> a printf-like format string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td> values to be embedded in the format string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-set-gerror"></a><h3>gsk_io_set_gerror ()</h3>
+<pre class="programlisting">void                gsk_io_set_gerror                   (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a> *io,
+                                                         <a class="link" href="GskIO.html#GskIOErrorCause" title="enum GskIOErrorCause">GskIOErrorCause</a> cause,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error);</pre>
+<p>
+Set the IO's error member, taking ownership of
+the <em class="parameter"><code>error</code></em> parameter.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io</code></em> :</span></p></td>
+<td> the IO whose error member should be set.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cause</code></em> :</span></p></td>
+<td> the operation which caused the error.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> gerror which will be freed by the IO automatically now.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-io-error-cause-to-string"></a><h3>gsk_io_error_cause_to_string ()</h3>
+<pre class="programlisting">const char *        gsk_io_error_cause_to_string        (<a class="link" href="GskIO.html#GskIOErrorCause" title="enum GskIOErrorCause">GskIOErrorCause</a> cause);</pre>
+<p>
+Convert the GskIOErrorCause code into a human-readable lowercase string.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cause</code></em> :</span></p></td>
+<td> the cause code.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the error as a string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskIO.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskIO-on-connect"></a><h3>The <code class="literal">"on-connect"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>   *gskio,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data)      : No Recursion</pre>
+<p>
+Signal to indicate that the gsk-io has become connected
+(to a remote server).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gskio</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskIO-on-error"></a><h3>The <code class="literal">"on-error"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>   *gskio,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data)      : No Recursion</pre>
+<p>
+Signal to indicate that the gsk-io has had an error.
+Use the 'error' and 'error_cause' members of <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>
+to find out what went wrong.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gskio</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskIO.see-also"></a><h2>See Also</h2>
+<p>
+GskHook, GskStream
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

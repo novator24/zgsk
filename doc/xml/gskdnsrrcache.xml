@@ -1,0 +1,561 @@
+<refentry id="gsk-gskdnsrrcache">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskdnsrrcache.top_of_page">gskdnsrrcache</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskdnsrrcache</refname>
+<refpurpose>A cache of Resource Record data.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskdnsrrcache.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskDnsRRCache">GskDnsRRCache</link>;
+#define             <link linkend="GSK-TYPE-DNS-RR-CACHE--CAPS">GSK_TYPE_DNS_RR_CACHE</link>
+<link linkend="GskDnsRRCache">GskDnsRRCache</link> *     <link linkend="gsk-dns-rr-cache-new">gsk_dns_rr_cache_new</link>                (<link linkend="guint64">guint64</link> max_bytes,
+                                                         <link linkend="guint">guint</link> max_records);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-cache-insert">gsk_dns_rr_cache_insert</link>          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record,
+                                                         <link linkend="gboolean">gboolean</link> is_authoritative,
+                                                         <link linkend="gulong">gulong</link> cur_time);
+<link linkend="GSList">GSList</link> *            <link linkend="gsk-dns-rr-cache-lookup-list">gsk_dns_rr_cache_lookup_list</link>        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class);
+<link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * <link linkend="gsk-dns-rr-cache-lookup-one">gsk_dns_rr_cache_lookup_one</link>      (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class,
+                                                         <link linkend="GskDnsRRCacheLookupFlags">GskDnsRRCacheLookupFlags</link> flags);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-dns-rr-cache-is-negative">gsk_dns_rr_cache_is_negative</link>        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-cache-unlock">gsk_dns_rr_cache_unlock</link>             (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-cache-lock">gsk_dns_rr_cache_lock</link>               (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-cache-mark-user">gsk_dns_rr_cache_mark_user</link>          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-cache-unmark-user">gsk_dns_rr_cache_unmark_user</link>        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-cache-add-negative">gsk_dns_rr_cache_add_negative</link>       (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class,
+                                                         <link linkend="gulong">gulong</link> expire_time,
+                                                         <link linkend="gboolean">gboolean</link> is_authoritative);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-dns-rr-cache-load-zone">gsk_dns_rr_cache_load_zone</link>          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *filename,
+                                                         const <link linkend="char">char</link> *default_origin,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-dns-rr-cache-get-ns-addr">gsk_dns_rr_cache_get_ns_addr</link>        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *host,
+                                                         const <link linkend="char">char</link> **ns_name_out,
+                                                         <link linkend="GskSocketAddressIpv4">GskSocketAddressIpv4</link> **address_out);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-dns-rr-cache-get-addr">gsk_dns_rr_cache_get_addr</link>           (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *host,
+                                                         <link linkend="GskSocketAddressIpv4">GskSocketAddressIpv4</link> **address);
+<link linkend="GskDnsRRCache">GskDnsRRCache</link> *     <link linkend="gsk-dns-rr-cache-ref">gsk_dns_rr_cache_ref</link>                (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-cache-unref">gsk_dns_rr_cache_unref</link>              (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache);
+<link linkend="void">void</link>                <link linkend="gsk-dns-rr-cache-flush">gsk_dns_rr_cache_flush</link>              (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="gulong">gulong</link> cur_time);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-dns-rr-cache-parse-etc-hosts-line">gsk_dns_rr_cache_parse_etc_hosts_line</link>
+                                                        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *text);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-dns-rr-cache-parse-etc-hosts">gsk_dns_rr_cache_parse_etc_hosts</link>    (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *filename,
+                                                         <link linkend="gboolean">gboolean</link> may_be_missing);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskdnsrrcache.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This in a database of <link linkend="GskDnsResourceRecord"><type>GskDnsResourceRecord</type></link>'s, as well as caching certain
+negative information.  Furthermore, the <link linkend="GskDnsRRCache"><type>GskDnsRRCache</type></link> knows how to expire
+obsolete resource records automatically.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskdnsrrcache.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskDnsRRCache" role="struct">
+<title>GskDnsRRCache</title>
+<indexterm zone="GskDnsRRCache"><primary sortas="GskDnsRRCache">GskDnsRRCache</primary></indexterm><programlisting>typedef struct _GskDnsRRCache GskDnsRRCache;</programlisting>
+<para>
+A cache of resource records and related information.
+</para></refsect2>
+<refsect2 id="GSK-TYPE-DNS-RR-CACHE--CAPS" role="macro">
+<title>GSK_TYPE_DNS_RR_CACHE</title>
+<indexterm zone="GSK-TYPE-DNS-RR-CACHE--CAPS"><primary sortas="GSK_TYPE_DNS_RR_CACHE">GSK_TYPE_DNS_RR_CACHE</primary></indexterm><programlisting>#define             GSK_TYPE_DNS_RR_CACHE</programlisting>
+<para>
+Return the GType of a <link linkend="GskDnsRRCache"><type>GskDnsRRCache</type></link>.
+(It is a boxed type.)
+</para></refsect2>
+<refsect2 id="gsk-dns-rr-cache-new" role="function">
+<title>gsk_dns_rr_cache_new ()</title>
+<indexterm zone="gsk-dns-rr-cache-new"><primary sortas="gsk_dns_rr_cache_new">gsk_dns_rr_cache_new</primary></indexterm><programlisting><link linkend="GskDnsRRCache">GskDnsRRCache</link> *     gsk_dns_rr_cache_new                (<link linkend="guint64">guint64</link> max_bytes,
+                                                         <link linkend="guint">guint</link> max_records);</programlisting>
+<para>
+Create a new, empty DNS cache.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>max_bytes</parameter>&#160;:</term>
+<listitem><simpara> the maximum number of bytes to use for all the resource
+records and negative information in this pool.  (Note that there is other
+overhead, like hash-tables, which is not considered in this number.)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_records</parameter>&#160;:</term>
+<listitem><simpara> the maximum number of records in this cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new GskDnsRRCache.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-insert" role="function">
+<title>gsk_dns_rr_cache_insert ()</title>
+<indexterm zone="gsk-dns-rr-cache-insert"><primary sortas="gsk_dns_rr_cache_insert">gsk_dns_rr_cache_insert</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_cache_insert          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record,
+                                                         <link linkend="gboolean">gboolean</link> is_authoritative,
+                                                         <link linkend="gulong">gulong</link> cur_time);</programlisting>
+<para>
+Insert a new finding into the resource-record cache.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> the record to store in the cache.
+(The cache will maintain its own copy of the data)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_authoritative</parameter>&#160;:</term>
+<listitem><simpara> whether the entry comes from an authoritative
+source, as defined by RFC 1034.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cur_time</parameter>&#160;:</term>
+<listitem><simpara> the current time, used for figuring out the absolute expiration time.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+A new copy of the record is returned; if you wish to guarantee that
+the record is not deleted, you should call <link linkend="gsk-dns-rr-cache-lock"><function>gsk_dns_rr_cache_lock()</function></link> on it.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-lookup-list" role="function">
+<title>gsk_dns_rr_cache_lookup_list ()</title>
+<indexterm zone="gsk-dns-rr-cache-lookup-list"><primary sortas="gsk_dns_rr_cache_lookup_list">gsk_dns_rr_cache_lookup_list</primary></indexterm><programlisting><link linkend="GSList">GSList</link> *            gsk_dns_rr_cache_lookup_list        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class);</programlisting>
+<para>
+Lookup some or all information about a given name in
+<parameter>rr_cache</parameter>'s memory.
+</para>
+<para>
+If you receive NULL, it may be because we have gotten
+negative information registered with <link linkend="gsk-dns-rr-cache-add-negative"><function>gsk_dns_rr_cache_add_negative()</function></link>
+or because we don't have a relevant record on file.
+You may call <link linkend="gsk-dns-rr-cache-is-negative"><function>gsk_dns_rr_cache_is_negative()</function></link> to distinguish these cases.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> the domain name to lookup resource-records for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_type</parameter>&#160;:</term>
+<listitem><simpara> the type of resource-record to look up.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_class</parameter>&#160;:</term>
+<listitem><simpara> the address namespace in which to look for the information.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a list of <link linkend="GskDnsResourceRecord"><type>GskDnsResourceRecord</type></link> which you must
+call <link linkend="gsk-dns-rr-cache-lock"><function>gsk_dns_rr_cache_lock()</function></link> on if you want to keep around.
+However, you must call <link linkend="g-slist-free"><function>g_slist_free()</function></link> on the list itself.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-lookup-one" role="function">
+<title>gsk_dns_rr_cache_lookup_one ()</title>
+<indexterm zone="gsk-dns-rr-cache-lookup-one"><primary sortas="gsk_dns_rr_cache_lookup_one">gsk_dns_rr_cache_lookup_one</primary></indexterm><programlisting><link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> * gsk_dns_rr_cache_lookup_one      (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class,
+                                                         <link linkend="GskDnsRRCacheLookupFlags">GskDnsRRCacheLookupFlags</link> flags);</programlisting>
+<para>
+Find the first appropriate resource record of a given
+specification.
+</para>
+<para>
+If you receive NULL, it may be because we have gotten
+negative information registered with <link linkend="gsk-dns-rr-cache-add-negative"><function>gsk_dns_rr_cache_add_negative()</function></link>
+or because we don't have a relevant record on file.
+You may call <link linkend="gsk-dns-rr-cache-is-negative"><function>gsk_dns_rr_cache_is_negative()</function></link> to distinguish these cases.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> the domain name to lookup resource-records for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_type</parameter>&#160;:</term>
+<listitem><simpara> the type of resource-record to look up.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_class</parameter>&#160;:</term>
+<listitem><simpara> the address namespace in which to look for the information.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a pointer to a <link linkend="GskDnsResourceRecord"><type>GskDnsResourceRecord</type></link>.
+You must call <link linkend="gsk-dns-rr-cache-lock"><function>gsk_dns_rr_cache_lock()</function></link> on it if you want to keep it around.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-is-negative" role="function">
+<title>gsk_dns_rr_cache_is_negative ()</title>
+<indexterm zone="gsk-dns-rr-cache-is-negative"><primary sortas="gsk_dns_rr_cache_is_negative">gsk_dns_rr_cache_is_negative</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_dns_rr_cache_is_negative        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class);</programlisting>
+<para>
+Look to see if we have an explicit negative
+entry for this resource-record.
+</para>
+<para>
+Note that if <parameter>query_type</parameter> or <parameter>query_class</parameter>
+is WILDCARD then there must be a negative wildcard
+resource-record in the cache.
+</para>
+<para>
+A negative WILDCARD resource-record in the cache will
+satisfy any type or class.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> name to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_type</parameter>&#160;:</term>
+<listitem><simpara> type of query to answer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_class</parameter>&#160;:</term>
+<listitem><simpara> class of query to answer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> TRUE if an explicit negative entry exists in the cache.
+  FALSE means either a positive entry or no entry exists in the cache.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-unlock" role="function">
+<title>gsk_dns_rr_cache_unlock ()</title>
+<indexterm zone="gsk-dns-rr-cache-unlock"><primary sortas="gsk_dns_rr_cache_unlock">gsk_dns_rr_cache_unlock</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_cache_unlock             (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);</programlisting>
+<para>
+Reduce the lock-count of this record within the cache.
+When a record is locked, it will not be deleted, even
+if memory requirements are violated as a result.
+</para>
+<para>
+Once the lock-count is zero, the resource record
+will be deleted whenever it grows sufficiently stale,
+or resources grow sufficiently scarce.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> a locked record belonging to that cache.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-lock" role="function">
+<title>gsk_dns_rr_cache_lock ()</title>
+<indexterm zone="gsk-dns-rr-cache-lock"><primary sortas="gsk_dns_rr_cache_lock">gsk_dns_rr_cache_lock</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_cache_lock               (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);</programlisting>
+<para>
+Lock this record in the cache.
+When a record is locked, it will not be deleted, even
+if memory requirements are violated as a result.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> a record obtained from <link linkend="gsk-dns-rr-cache-lookup-one"><function>gsk_dns_rr_cache_lookup_one()</function></link>
+or <link linkend="gsk-dns-rr-cache-lookup-list"><function>gsk_dns_rr_cache_lookup_list()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-mark-user" role="function">
+<title>gsk_dns_rr_cache_mark_user ()</title>
+<indexterm zone="gsk-dns-rr-cache-mark-user"><primary sortas="gsk_dns_rr_cache_mark_user">gsk_dns_rr_cache_mark_user</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_cache_mark_user          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);</programlisting>
+<para>
+Indicate that a record should be regarded as completely
+authoritative.  This is like locking the record, but
+additionally, the record will be used no matter what other
+supposed authorities say.
+</para>
+<para>
+This is currently just used for handling /etc/hosts,
+whose entries precede any other name-server checking.
+</para>
+<para>
+You should not call this function if the is_from_user
+flag is already set.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> a record obtained from <link linkend="gsk-dns-rr-cache-lookup-one"><function>gsk_dns_rr_cache_lookup_one()</function></link>
+or <link linkend="gsk-dns-rr-cache-lookup-list"><function>gsk_dns_rr_cache_lookup_list()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-unmark-user" role="function">
+<title>gsk_dns_rr_cache_unmark_user ()</title>
+<indexterm zone="gsk-dns-rr-cache-unmark-user"><primary sortas="gsk_dns_rr_cache_unmark_user">gsk_dns_rr_cache_unmark_user</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_cache_unmark_user        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="GskDnsResourceRecord">GskDnsResourceRecord</link> *record);</programlisting>
+<para>
+Undo the affect of <link linkend="gsk-dns-rr-cache-mark-user"><function>gsk_dns_rr_cache_mark_user()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>record</parameter>&#160;:</term>
+<listitem><simpara> a record which had previously been passed to
+<link linkend="gsk-dns-rr-cache-mark-user"><function>gsk_dns_rr_cache_mark_user()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-add-negative" role="function">
+<title>gsk_dns_rr_cache_add_negative ()</title>
+<indexterm zone="gsk-dns-rr-cache-add-negative"><primary sortas="gsk_dns_rr_cache_add_negative">gsk_dns_rr_cache_add_negative</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_cache_add_negative       (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *owner,
+                                                         <link linkend="GskDnsResourceRecordType">GskDnsResourceRecordType</link> query_type,
+                                                         <link linkend="GskDnsResourceClass">GskDnsResourceClass</link> query_class,
+                                                         <link linkend="gulong">gulong</link> expire_time,
+                                                         <link linkend="gboolean">gboolean</link> is_authoritative);</programlisting>
+<para>
+Add an entry into the cache indicating
+that there is no entry of the given type.
+</para>
+<para>
+The DNS specification refers to this as 'negative caching'.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>owner</parameter>&#160;:</term>
+<listitem><simpara> the name which the negative response belongs to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_type</parameter>&#160;:</term>
+<listitem><simpara> type of negative response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query_class</parameter>&#160;:</term>
+<listitem><simpara> address namespace of negative response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>expire_time</parameter>&#160;:</term>
+<listitem><simpara> when this negative record should be deleted.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_authoritative</parameter>&#160;:</term>
+<listitem><simpara> whether this negative record came from an authority.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-load-zone" role="function">
+<title>gsk_dns_rr_cache_load_zone ()</title>
+<indexterm zone="gsk-dns-rr-cache-load-zone"><primary sortas="gsk_dns_rr_cache_load_zone">gsk_dns_rr_cache_load_zone</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_dns_rr_cache_load_zone          (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *filename,
+                                                         const <link linkend="char">char</link> *default_origin,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Parse a zone file.
+This file format is defined in RFC 1035, Section 5.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>filename</parameter>&#160;:</term>
+<listitem><simpara> a zone file to parse.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>default_origin</parameter>&#160;:</term>
+<listitem><simpara> the initial origin.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the zone file was parsed successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-get-ns-addr" role="function">
+<title>gsk_dns_rr_cache_get_ns_addr ()</title>
+<indexterm zone="gsk-dns-rr-cache-get-ns-addr"><primary sortas="gsk_dns_rr_cache_get_ns_addr">gsk_dns_rr_cache_get_ns_addr</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_dns_rr_cache_get_ns_addr        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *host,
+                                                         const <link linkend="char">char</link> **ns_name_out,
+                                                         <link linkend="GskSocketAddressIpv4">GskSocketAddressIpv4</link> **address_out);</programlisting>
+<para>
+Look up an address for a nameserver.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host</parameter>&#160;:</term>
+<listitem><simpara> the name to find a nameserver for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ns_name_out</parameter>&#160;:</term>
+<listitem><simpara> a string, maintained by the RRCache, for the nameserver record,
+if there is any present.
+The string should not be freed by the caller.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address_out</parameter>&#160;:</term>
+<listitem><simpara> pointer to where the returned address should be put.
+The address should be g_object_unref'd by the caller.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether an address could be found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-get-addr" role="function">
+<title>gsk_dns_rr_cache_get_addr ()</title>
+<indexterm zone="gsk-dns-rr-cache-get-addr"><primary sortas="gsk_dns_rr_cache_get_addr">gsk_dns_rr_cache_get_addr</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_dns_rr_cache_get_addr           (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *host,
+                                                         <link linkend="GskSocketAddressIpv4">GskSocketAddressIpv4</link> **address);</programlisting>
+<para>
+Look up the IP address of a name.
+This will follow CNAME records.
+</para>
+<para>
+BUGS: 
+- OBSOLETE BUG: This will allow a loop of CNAMEs to cause a hang!
+  (i think i fixed this bug...)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host</parameter>&#160;:</term>
+<listitem><simpara> a name to obtain an IP address for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> pointer to where the returned address should be put.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the cache has sufficient information to resolve the name.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-ref" role="function">
+<title>gsk_dns_rr_cache_ref ()</title>
+<indexterm zone="gsk-dns-rr-cache-ref"><primary sortas="gsk_dns_rr_cache_ref">gsk_dns_rr_cache_ref</primary></indexterm><programlisting><link linkend="GskDnsRRCache">GskDnsRRCache</link> *     gsk_dns_rr_cache_ref                (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache);</programlisting>
+<para>
+Increase the reference count on the resource record cache.
+The cache will not be destroyed until the reference count gets to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <parameter>rr_cache</parameter>, for convenience.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-unref" role="function">
+<title>gsk_dns_rr_cache_unref ()</title>
+<indexterm zone="gsk-dns-rr-cache-unref"><primary sortas="gsk_dns_rr_cache_unref">gsk_dns_rr_cache_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_cache_unref              (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache);</programlisting>
+<para>
+Decrease the reference count on the resource record cache.
+The cache will be destroyed when the reference count gets to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-flush" role="function">
+<title>gsk_dns_rr_cache_flush ()</title>
+<indexterm zone="gsk-dns-rr-cache-flush"><primary sortas="gsk_dns_rr_cache_flush">gsk_dns_rr_cache_flush</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_dns_rr_cache_flush              (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         <link linkend="gulong">gulong</link> cur_time);</programlisting>
+<para>
+Flush out the expired records from the cache, and
+try to ensure that we are using an acceptable amount of memory.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cur_time</parameter>&#160;:</term>
+<listitem><simpara> the current unix time.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-parse-etc-hosts-line" role="function">
+<title>gsk_dns_rr_cache_parse_etc_hosts_line ()</title>
+<indexterm zone="gsk-dns-rr-cache-parse-etc-hosts-line"><primary sortas="gsk_dns_rr_cache_parse_etc_hosts_line">gsk_dns_rr_cache_parse_etc_hosts_line</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_dns_rr_cache_parse_etc_hosts_line
+                                                        (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *text);</programlisting>
+<para>
+Process a single line of text from an /etc/hosts file.
+</para>
+<para>
+This file format is defined in RFC 952.
+</para>
+<para>
+TODO: this does not handle IPv6 correctly!!!</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text</parameter>&#160;:</term>
+<listitem><simpara> a line from an /etc/hosts file.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the line was parsed successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-dns-rr-cache-parse-etc-hosts" role="function">
+<title>gsk_dns_rr_cache_parse_etc_hosts ()</title>
+<indexterm zone="gsk-dns-rr-cache-parse-etc-hosts"><primary sortas="gsk_dns_rr_cache_parse_etc_hosts">gsk_dns_rr_cache_parse_etc_hosts</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_dns_rr_cache_parse_etc_hosts    (<link linkend="GskDnsRRCache">GskDnsRRCache</link> *rr_cache,
+                                                         const <link linkend="char">char</link> *filename,
+                                                         <link linkend="gboolean">gboolean</link> may_be_missing);</programlisting>
+<para>
+Process an /etc/hosts file.
+</para>
+<para>
+This file format is defined in RFC 952.
+</para>
+<para>
+TODO: this does not handle IPv6 correctly!!!</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>rr_cache</parameter>&#160;:</term>
+<listitem><simpara> a resource-record cache.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>filename</parameter>&#160;:</term>
+<listitem><simpara> an /etc/hosts file.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>may_be_missing</parameter>&#160;:</term>
+<listitem><simpara> whether to return an error if the file does not exist.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the file was parsed successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

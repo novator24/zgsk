@@ -1,0 +1,245 @@
+<refentry id="GskHttpServer">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskHttpServer.top_of_page">GskHttpServer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskHttpServer</refname>
+<refpurpose>The server end of an HTTP connection.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskHttpServer.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskHttpServerTrap">*GskHttpServerTrap</link>)                (<link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="gpointer">gpointer</link> data);
+                    <link linkend="GskHttpServerClass">GskHttpServerClass</link>;
+                    <link linkend="GskHttpServer-struct">GskHttpServer</link>;
+#define             <link linkend="GSK-HTTP-SERVER-HOOK--CAPS">GSK_HTTP_SERVER_HOOK</link>                (client)
+#define             <link linkend="gsk-http-server-trap">gsk_http_server_trap</link>                (server,func,shutdown,data,destroy)
+#define             <link linkend="gsk-http-server-untrap">gsk_http_server_untrap</link>              (server)
+<link linkend="GskHttpServer">GskHttpServer</link> *     <link linkend="gsk-http-server-new">gsk_http_server_new</link>                 (void);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-http-server-get-request">gsk_http_server_get_request</link>         (<link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> **request_out,
+                                                         <link linkend="GskStream">GskStream</link> **post_data_out);
+<link linkend="void">void</link>                <link linkend="gsk-http-server-respond">gsk_http_server_respond</link>             (<link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskStream">GskStream</link> *content);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskHttpServer.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----<link linkend="GskStream">GskStream</link>
+               +----GskHttpServer
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskHttpServer.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This class manages incoming requests (including post-data),
+and outgoing responses (by passing a supplied <link linkend="GskStream"><type>GskStream</type></link>
+as HTTP content).
+</para>
+</refsect1>
+
+<refsect1 id="GskHttpServer.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskHttpServerTrap" role="function">
+<title>GskHttpServerTrap ()</title>
+<indexterm zone="GskHttpServerTrap"><primary sortas="GskHttpServerTrap">GskHttpServerTrap</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskHttpServerTrap)                (<link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function which will be called when the server has a request ready.
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara>the server which has the request available.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>as passed in to <link linkend="gsk-http-server-trap"><function>gsk_http_server_trap()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to keep the trap active.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpServerClass" role="struct">
+<title>GskHttpServerClass</title>
+<indexterm zone="GskHttpServerClass"><primary sortas="GskHttpServerClass">GskHttpServerClass</primary></indexterm><programlisting>typedef struct {
+  GskStreamClass stream_class;
+  void         (*set_poll_request) (GskHttpServer *server,
+				    gboolean       do_poll);
+  void         (*shutdown_request) (GskHttpServer *server);
+} GskHttpServerClass;
+</programlisting>
+<para>
+Virtual functions which are implemented by an
+HTTP server.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskStreamClass">GskStreamClass</link>&#160;<structfield>stream_class</structfield>;</term>
+<listitem><simpara>the base server class.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>set_poll_request</structfield>&#160;()</term>
+<listitem><simpara>function to indicate whether to
+notify on the HTTP trap.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>shutdown_request</structfield>&#160;()</term>
+<listitem><simpara>function to call to stop
+accepting requests.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpServer-struct" role="struct">
+<title>GskHttpServer</title>
+<indexterm zone="GskHttpServer-struct"><primary sortas="GskHttpServer">GskHttpServer</primary></indexterm><programlisting>typedef struct _GskHttpServer GskHttpServer;</programlisting>
+<para>
+Stream which is the server end of an HTTP connection.
+</para>
+<para>
+This has a trap which is triggered when new requests are
+available.  This HTTP server does not define any behavior--
+the user is responsible for calling <link linkend="gsk-http-server-respond"><function>gsk_http_server_respond()</function></link>
+to handle the request.
+</para></refsect2>
+<refsect2 id="GSK-HTTP-SERVER-HOOK--CAPS" role="macro">
+<title>GSK_HTTP_SERVER_HOOK()</title>
+<indexterm zone="GSK-HTTP-SERVER-HOOK--CAPS"><primary sortas="GSK_HTTP_SERVER_HOOK">GSK_HTTP_SERVER_HOOK</primary></indexterm><programlisting>#define             GSK_HTTP_SERVER_HOOK(client)</programlisting>
+<para>
+Get the hook which is triggered on HTTP request availability.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>the client to get the hook from.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-server-trap" role="macro">
+<title>gsk_http_server_trap()</title>
+<indexterm zone="gsk-http-server-trap"><primary sortas="gsk_http_server_trap">gsk_http_server_trap</primary></indexterm><programlisting>#define             gsk_http_server_trap(server,func,shutdown,data,destroy)</programlisting>
+<para>
+Register a function which will get called as long as a request is
+available.
+The request should be dequeued with <link linkend="gsk-http-server-get-request"><function>gsk_http_server_get_request()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara>the server to watch.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>the function to call if a request is available.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown</parameter>&#160;:</term>
+<listitem><simpara>the function to call if no further requests are going to be available.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data to pass to <parameter>func</parameter> and <parameter>shutdown</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>the function to call when the trap is removed or destroyed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-server-untrap" role="macro">
+<title>gsk_http_server_untrap()</title>
+<indexterm zone="gsk-http-server-untrap"><primary sortas="gsk_http_server_untrap">gsk_http_server_untrap</primary></indexterm><programlisting>#define             gsk_http_server_untrap(server)</programlisting>
+<para>
+Unregister the function which was to be called
+whenever a request was available.
+</para>
+<para>
+This has the same effect as returning FALSE from the function
+registered with <link linkend="gsk-http-server-trap"><function>gsk_http_server_trap()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara>the server to stop watching.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-server-new" role="function">
+<title>gsk_http_server_new ()</title>
+<indexterm zone="gsk-http-server-new"><primary sortas="gsk_http_server_new">gsk_http_server_new</primary></indexterm><programlisting><link linkend="GskHttpServer">GskHttpServer</link> *     gsk_http_server_new                 (void);</programlisting>
+<para>
+Allocate a new HTTP server protocol processor.
+(Note that generally you will need to connect it
+to an accepted socket)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated server.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-server-get-request" role="function">
+<title>gsk_http_server_get_request ()</title>
+<indexterm zone="gsk-http-server-get-request"><primary sortas="gsk_http_server_get_request">gsk_http_server_get_request</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_http_server_get_request         (<link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> **request_out,
+                                                         <link linkend="GskStream">GskStream</link> **post_data_out);</programlisting>
+<para>
+Grab a client request if available.  Use <link linkend="gsk-http-server-trap"><function>gsk_http_server_trap()</function></link>
+to get notification when a request is available.
+</para>
+<para>
+The corresponding POST data stream must be retrieved at the 
+same time.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the HTTP server to grab the request from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request_out</parameter>&#160;:</term>
+<listitem><simpara> location to store a reference to the HTTP request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>post_data_out</parameter>&#160;:</term>
+<listitem><simpara> location to store a reference to the HTTP request's POST data,
+or NULL will be stored if this is not a POST-type request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether a request was successfully dequeued.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-server-respond" role="function">
+<title>gsk_http_server_respond ()</title>
+<indexterm zone="gsk-http-server-respond"><primary sortas="gsk_http_server_respond">gsk_http_server_respond</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_server_respond             (<link linkend="GskHttpServer">GskHttpServer</link> *server,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskStream">GskStream</link> *content);</programlisting>
+<para>
+Give a response to a client's request.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&#160;:</term>
+<listitem><simpara> the server to write the response to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> the request obtained with <link linkend="gsk-http-server-get-request"><function>gsk_http_server_get_request()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara> the response constructed to this request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>content</parameter>&#160;:</term>
+<listitem><simpara> content data if appropriate to this request.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="GskHttpServer.see-also">
+<title>See Also</title>
+<para>
+GskHttpClient
+</para>
+</refsect1>
+
+</refentry>

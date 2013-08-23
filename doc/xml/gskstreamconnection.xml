@@ -1,0 +1,227 @@
+<refentry id="gsk-gskstreamconnection">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskstreamconnection.top_of_page">gskstreamconnection</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskstreamconnection</refname>
+<refpurpose>Connection between the input of one stream
+and the output of another.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskstreamconnection.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskStreamConnection">GskStreamConnection</link>;
+<link linkend="GskStreamConnection">GskStreamConnection</link> * <link linkend="gsk-stream-connection-new">gsk_stream_connection_new</link>         (<link linkend="GskStream">GskStream</link> *input_stream,
+                                                         <link linkend="GskStream">GskStream</link> *output_stream,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="guint">guint</link>               <link linkend="gsk-stream-connection-get-atomic-read-size">gsk_stream_connection_get_atomic_read_size</link>
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);
+<link linkend="void">void</link>                <link linkend="gsk-stream-connection-set-atomic-read-size">gsk_stream_connection_set_atomic_read_size</link>
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection,
+                                                         <link linkend="guint">guint</link> atomic_read_size);
+<link linkend="guint">guint</link>               <link linkend="gsk-stream-connection-get-max-buffered">gsk_stream_connection_get_max_buffered</link>
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);
+<link linkend="void">void</link>                <link linkend="gsk-stream-connection-set-max-buffered">gsk_stream_connection_set_max_buffered</link>
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection,
+                                                         <link linkend="guint">guint</link> max_buffered);
+<link linkend="void">void</link>                <link linkend="gsk-stream-connection-shutdown">gsk_stream_connection_shutdown</link>      (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);
+<link linkend="void">void</link>                <link linkend="gsk-stream-connection-detach">gsk_stream_connection_detach</link>        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskstreamconnection.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This object allows you to configure the connection
+between two streams more precisely than
+<link linkend="gsk-stream-attach"><function>gsk_stream_attach()</function></link>.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskstreamconnection.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskStreamConnection" role="struct">
+<title>GskStreamConnection</title>
+<indexterm zone="GskStreamConnection"><primary sortas="GskStreamConnection">GskStreamConnection</primary></indexterm><programlisting>typedef struct {
+  GObject      object;
+
+  /* The stream to read from. */
+  GskStream *read_side;
+
+  /* The stream to write to. */
+  GskStream *write_side;
+
+  /* Whether we are blocking the read-side because the buffer is 0 length. */
+  guint blocking_write_side : 1;
+
+  /* Whether we are blocking the write-side because the buffer is too long. */
+  guint blocking_read_side : 1;
+
+  /* Whether to use gsk_stream_read_buffer() on the read-side.
+     This is TRUE by default, even though it can cause
+     both max_buffered and atomic_read_size to be violated. */
+  guint use_read_buffer : 1;
+
+  /* Data which is to be transferred from read_side to write_side,
+     which hasn't been processed on the write side. */
+  GskBuffer buffer;
+
+  /* The maximum number of bytes to store in buffer. */
+  guint max_buffered;
+
+  /* The maximum number of bytes to read atomically from the input stream. */
+  guint atomic_read_size;
+} GskStreamConnection;
+</programlisting>
+<para>
+An opaque object representing the connection between
+the input of one stream and the output of another.
+</para></refsect2>
+<refsect2 id="gsk-stream-connection-new" role="function">
+<title>gsk_stream_connection_new ()</title>
+<indexterm zone="gsk-stream-connection-new"><primary sortas="gsk_stream_connection_new">gsk_stream_connection_new</primary></indexterm><programlisting><link linkend="GskStreamConnection">GskStreamConnection</link> * gsk_stream_connection_new         (<link linkend="GskStream">GskStream</link> *input_stream,
+                                                         <link linkend="GskStream">GskStream</link> *output_stream,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Attach the read end of <parameter>input_stream</parameter>
+to the write end of <parameter>output_stream</parameter>,
+returning an error if anything goes wrong.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>input_stream</parameter>&#160;:</term>
+<listitem><simpara> the input stream whose read-end will be trapped.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output_stream</parameter>&#160;:</term>
+<listitem><simpara> the output stream whose write-end will be trapped.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference at the connection.
+You should use eventually call <link linkend="g-object-unref"><function>g_object_unref()</function></link> on the connection.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-connection-get-atomic-read-size" role="function">
+<title>gsk_stream_connection_get_atomic_read_size ()</title>
+<indexterm zone="gsk-stream-connection-get-atomic-read-size"><primary sortas="gsk_stream_connection_get_atomic_read_size">gsk_stream_connection_get_atomic_read_size</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_stream_connection_get_atomic_read_size
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);</programlisting>
+<para>
+Set the number of bytes to read atomically from
+an underlying source.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>connection</parameter>&#160;:</term>
+<listitem><simpara> the connection to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the size to read at a time.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-connection-set-atomic-read-size" role="function">
+<title>gsk_stream_connection_set_atomic_read_size ()</title>
+<indexterm zone="gsk-stream-connection-set-atomic-read-size"><primary sortas="gsk_stream_connection_set_atomic_read_size">gsk_stream_connection_set_atomic_read_size</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_connection_set_atomic_read_size
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection,
+                                                         <link linkend="guint">guint</link> atomic_read_size);</programlisting>
+<para>
+Set the number of bytes to read atomically from
+an underlying source.  This is only
+used if the input stream has no read_buffer method.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>connection</parameter>&#160;:</term>
+<listitem><simpara> the connection to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>atomic_read_size</parameter>&#160;:</term>
+<listitem><simpara> the size to read at a time.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-connection-get-max-buffered" role="function">
+<title>gsk_stream_connection_get_max_buffered ()</title>
+<indexterm zone="gsk-stream-connection-get-max-buffered"><primary sortas="gsk_stream_connection_get_max_buffered">gsk_stream_connection_get_max_buffered</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_stream_connection_get_max_buffered
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);</programlisting>
+<para>
+Get the maximum number of bytes of data to buffer between the input and
+output ends of the connection.
+</para>
+<para>
+The actual number of bytes of data can be found with <link linkend="gsk-stream-connection-get-cur-buffered"><function>gsk_stream_connection_get_cur_buffered()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>connection</parameter>&#160;:</term>
+<listitem><simpara> the connection to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the maximum number of bytes.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-connection-set-max-buffered" role="function">
+<title>gsk_stream_connection_set_max_buffered ()</title>
+<indexterm zone="gsk-stream-connection-set-max-buffered"><primary sortas="gsk_stream_connection_set_max_buffered">gsk_stream_connection_set_max_buffered</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_connection_set_max_buffered
+                                                        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection,
+                                                         <link linkend="guint">guint</link> max_buffered);</programlisting>
+<para>
+Adjust the maximum amount of memory buffer to use between these streams.
+</para>
+<para>
+Sometimes, we will buffer more data, either because set_max_buffer was run
+to make the amount allowed smaller than the amount currently buffered,
+or because there was a buffer-to-buffer transfer (which are allowed
+to be large).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>connection</parameter>&#160;:</term>
+<listitem><simpara> the connection to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_buffered</parameter>&#160;:</term>
+<listitem><simpara> maximum of data to hold from the input stream
+for the output stream.  After this much data has built up,
+we will no longer read from the input stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-connection-shutdown" role="function">
+<title>gsk_stream_connection_shutdown ()</title>
+<indexterm zone="gsk-stream-connection-shutdown"><primary sortas="gsk_stream_connection_shutdown">gsk_stream_connection_shutdown</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_connection_shutdown      (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);</programlisting>
+<para>
+Shut down both ends of a connection.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>connection</parameter>&#160;:</term>
+<listitem><simpara> the connection to shut down.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-connection-detach" role="function">
+<title>gsk_stream_connection_detach ()</title>
+<indexterm zone="gsk-stream-connection-detach"><primary sortas="gsk_stream_connection_detach">gsk_stream_connection_detach</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_stream_connection_detach        (<link linkend="GskStreamConnection">GskStreamConnection</link> *connection);</programlisting>
+<para>
+Disconnects the input/output pair of a connection.
+Data held in the buffer will be lost.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>connection</parameter>&#160;:</term>
+<listitem><simpara> the connection to detach.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskstreamconnection.see-also">
+<title>See Also</title>
+<para>
+<link linkend="gsk-stream-attach"><function>gsk_stream_attach()</function></link>.
+</para>
+</refsect1>
+
+</refentry>

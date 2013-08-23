@@ -1,0 +1,175 @@
+<refentry id="gsk-gskbase64">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskbase64.top_of_page">Base-64</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Base-64</refname>
+<refpurpose>Base-64 Encoding and Decoding</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskbase64.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-BASE64-GET-ENCODED-LEN--CAPS">GSK_BASE64_GET_ENCODED_LEN</link>          (length)
+#define             <link linkend="GSK-BASE64-GET-MAX-DECODED-LEN--CAPS">GSK_BASE64_GET_MAX_DECODED_LEN</link>      (length)
+<link linkend="guint">guint</link>               <link linkend="gsk-base64-decode">gsk_base64_decode</link>                   (<link linkend="char">char</link> *dst,
+                                                         <link linkend="guint">guint</link> dst_len,
+                                                         const <link linkend="char">char</link> *src,
+                                                         <link linkend="gssize">gssize</link> src_len);
+<link linkend="GByteArray">GByteArray</link> *        <link linkend="gsk-base64-decode-alloc">gsk_base64_decode_alloc</link>             (const <link linkend="char">char</link> *src);
+<link linkend="void">void</link>                <link linkend="gsk-base64-encode">gsk_base64_encode</link>                   (<link linkend="char">char</link> *dst,
+                                                         const <link linkend="char">char</link> *src,
+                                                         <link linkend="guint">guint</link> src_len);
+<link linkend="char">char</link> *              <link linkend="gsk-base64-encode-alloc">gsk_base64_encode_alloc</link>             (const <link linkend="char">char</link> *src,
+                                                         <link linkend="gssize">gssize</link> src_len);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskbase64.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A collection of methods to deal with base-64 encoding and decoding.
+Base-64 is defined in RFC 2045, Section 6.8.
+</para>
+<para>
+The number of terminal = characters is specified
+in the FAQ such that a base-64 encoded string
+is always a multiple of 4 bytes long.
+</para>
+<para>
+XXX: The encoding end of this class probably needs
+some fixing in light of RFC 2045.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskbase64.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-BASE64-GET-ENCODED-LEN--CAPS" role="macro">
+<title>GSK_BASE64_GET_ENCODED_LEN()</title>
+<indexterm zone="GSK-BASE64-GET-ENCODED-LEN--CAPS"><primary sortas="GSK_BASE64_GET_ENCODED_LEN">GSK_BASE64_GET_ENCODED_LEN</primary></indexterm><programlisting>#define             GSK_BASE64_GET_ENCODED_LEN(length)</programlisting>
+<para>
+Get the number of bytes needed to encode in base-64 a binary block of data of
+a given length.  This includes space for a terminal = sign,
+but does not include space for a NUL.
+</para><variablelist role="params">
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara>the length of the raw binary string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-BASE64-GET-MAX-DECODED-LEN--CAPS" role="macro">
+<title>GSK_BASE64_GET_MAX_DECODED_LEN()</title>
+<indexterm zone="GSK-BASE64-GET-MAX-DECODED-LEN--CAPS"><primary sortas="GSK_BASE64_GET_MAX_DECODED_LEN">GSK_BASE64_GET_MAX_DECODED_LEN</primary></indexterm><programlisting>#define             GSK_BASE64_GET_MAX_DECODED_LEN(length)</programlisting>
+<para>
+Get the maximum number of bytes a base-64 encoded string may require.
+This assumes that there is no terminal = character, but there may be one,
+causing the actual number of bytes once decoded to be smaller.
+The actual number is returned by <link linkend="gsk-base64-decode"><function>gsk_base64_decode()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara>the length of the base64 encoded string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-base64-decode" role="function">
+<title>gsk_base64_decode ()</title>
+<indexterm zone="gsk-base64-decode"><primary sortas="gsk_base64_decode">gsk_base64_decode</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_base64_decode                   (<link linkend="char">char</link> *dst,
+                                                         <link linkend="guint">guint</link> dst_len,
+                                                         const <link linkend="char">char</link> *src,
+                                                         <link linkend="gssize">gssize</link> src_len);</programlisting>
+<para>
+Decode a base64-encoded string into binary.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dst</parameter>&#160;:</term>
+<listitem><simpara> output area for binary data.
+Should be GSK_BASE64_GET_MAX_DECODED_LEN(<parameter>src</parameter>) long at least.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dst_len</parameter>&#160;:</term>
+<listitem><simpara> length of buffer allocated for <parameter>dst</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> base64 encoded data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_len</parameter>&#160;:</term>
+<listitem><simpara> length of the binary data, or -1 to assume that <parameter>src</parameter> is
+NUL-terminated.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> number of bytes decoded.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-base64-decode-alloc" role="function">
+<title>gsk_base64_decode_alloc ()</title>
+<indexterm zone="gsk-base64-decode-alloc"><primary sortas="gsk_base64_decode_alloc">gsk_base64_decode_alloc</primary></indexterm><programlisting><link linkend="GByteArray">GByteArray</link> *        gsk_base64_decode_alloc             (const <link linkend="char">char</link> *src);</programlisting>
+<para>
+Decode a base64-encoded string into binary.
+</para>
+<para>
+GSK_BASE64_GET_MAX_DECODED_LEN might not be the return value,
+because it doesn't take a terminate '=' sign into account.
+The return value should be exactly that if <parameter>src</parameter>
+is not = terminated, or <link linkend="GSK-BASE64-GET-MAX-DECODED-LEN--CAPS"><function>GSK_BASE64_GET_MAX_DECODED_LEN()</function></link>
+is only called on the length which precedes the = sign.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> base64 encoded data, NUL terminated.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the byte-array with the binary data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-base64-encode" role="function">
+<title>gsk_base64_encode ()</title>
+<indexterm zone="gsk-base64-encode"><primary sortas="gsk_base64_encode">gsk_base64_encode</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_base64_encode                   (<link linkend="char">char</link> *dst,
+                                                         const <link linkend="char">char</link> *src,
+                                                         <link linkend="guint">guint</link> src_len);</programlisting>
+<para>
+base64 encodes binary data.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dst</parameter>&#160;:</term>
+<listitem><simpara> output base64 encoded string.  The result is NOT nul-terminated,
+but is terminated with an = sign.  <parameter>dst</parameter> should be exactly
+GSK_BASE64_GET_ENCODED_LEN(<parameter>src_len</parameter>) bytes long.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> input binary data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_len</parameter>&#160;:</term>
+<listitem><simpara> length of <parameter>src</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-base64-encode-alloc" role="function">
+<title>gsk_base64_encode_alloc ()</title>
+<indexterm zone="gsk-base64-encode-alloc"><primary sortas="gsk_base64_encode_alloc">gsk_base64_encode_alloc</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_base64_encode_alloc             (const <link linkend="char">char</link> *src,
+                                                         <link linkend="gssize">gssize</link> src_len);</programlisting>
+<para>
+base64 encodes binary data (that does not contain a NULL).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> data to base64 encode.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_len</parameter>&#160;:</term>
+<listitem><simpara> length of binary data to encode, or -1 to take <parameter>src</parameter> as a NUL-terminated string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> an newly allocated base64 encoded NUL-terminated ASCII string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

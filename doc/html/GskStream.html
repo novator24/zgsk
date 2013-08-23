@@ -1,0 +1,1037 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Binary Input/Output Stream Base</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="GskIO.html" title="Base Input/Output Object">
+<link rel="next" href="gsk-gskstreamconnection.html" title="gskstreamconnection">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskIO.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskstreamconnection.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskStream.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskStream.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskStream.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskStream"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskStream.top_of_page"></a>Binary Input/Output Stream Base</span></h2>
+<p>Binary Input/Output Stream Base — A byte stream.  This has methods to read and write data,
+and it inherits read/write notification from <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskStream.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskStream.html#GskStreamClass" title="GskStreamClass">GskStreamClass</a>;
+                    <a class="link" href="GskStream.html#GskStream-struct" title="GskStream">GskStream</a>;
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               <a class="link" href="GskStream.html#gsk-stream-read" title="gsk_stream_read ()">gsk_stream_read</a>                     (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> buffer_length,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               <a class="link" href="GskStream.html#gsk-stream-write" title="gsk_stream_write ()">gsk_stream_write</a>                    (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> buffer_length,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               <a class="link" href="GskStream.html#gsk-stream-read-buffer" title="gsk_stream_read_buffer ()">gsk_stream_read_buffer</a>              (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               <a class="link" href="GskStream.html#gsk-stream-write-buffer" title="gsk_stream_write_buffer ()">gsk_stream_write_buffer</a>             (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskStream.html#gsk-stream-attach" title="gsk_stream_attach ()">gsk_stream_attach</a>                   (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *input_stream,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *output_stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskStream.html#gsk-stream-attach-pair" title="gsk_stream_attach_pair ()">gsk_stream_attach_pair</a>              (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream_a,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream_b,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+#define             <a class="link" href="GskStream.html#gsk-stream-get-is-connecting" title="gsk_stream_get_is_connecting()">gsk_stream_get_is_connecting</a>        (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-is-readable" title="gsk_stream_get_is_readable()">gsk_stream_get_is_readable</a>          (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-is-writable" title="gsk_stream_get_is_writable()">gsk_stream_get_is_writable</a>          (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-never-blocks-write" title="gsk_stream_get_never_blocks_write()">gsk_stream_get_never_blocks_write</a>   (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-never-blocks-read" title="gsk_stream_get_never_blocks_read()">gsk_stream_get_never_blocks_read</a>    (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-idle-notify-write" title="gsk_stream_get_idle_notify_write()">gsk_stream_get_idle_notify_write</a>    (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-idle-notify-read" title="gsk_stream_get_idle_notify_read()">gsk_stream_get_idle_notify_read</a>     (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-is-open" title="gsk_stream_get_is_open()">gsk_stream_get_is_open</a>              (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-never-partial-reads" title="gsk_stream_get_never_partial_reads()">gsk_stream_get_never_partial_reads</a>  (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-get-never-partial-writes" title="gsk_stream_get_never_partial_writes()">gsk_stream_get_never_partial_writes</a> (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-is-connecting" title="gsk_stream_mark_is_connecting()">gsk_stream_mark_is_connecting</a>       (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-is-readable" title="gsk_stream_mark_is_readable()">gsk_stream_mark_is_readable</a>         (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-is-writable" title="gsk_stream_mark_is_writable()">gsk_stream_mark_is_writable</a>         (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-never-blocks-write" title="gsk_stream_mark_never_blocks_write()">gsk_stream_mark_never_blocks_write</a>  (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-never-blocks-read" title="gsk_stream_mark_never_blocks_read()">gsk_stream_mark_never_blocks_read</a>   (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-idle-notify-write" title="gsk_stream_mark_idle_notify_write()">gsk_stream_mark_idle_notify_write</a>   (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-idle-notify-read" title="gsk_stream_mark_idle_notify_read()">gsk_stream_mark_idle_notify_read</a>    (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-is-open" title="gsk_stream_mark_is_open()">gsk_stream_mark_is_open</a>             (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-never-partial-reads" title="gsk_stream_mark_never_partial_reads()">gsk_stream_mark_never_partial_reads</a> (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-mark-never-partial-writes" title="gsk_stream_mark_never_partial_writes()">gsk_stream_mark_never_partial_writes</a>(stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-clear-is-readable" title="gsk_stream_clear_is_readable()">gsk_stream_clear_is_readable</a>        (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-clear-is-writable" title="gsk_stream_clear_is_writable()">gsk_stream_clear_is_writable</a>        (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-clear-is-open" title="gsk_stream_clear_is_open()">gsk_stream_clear_is_open</a>            (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-clear-idle-notify-write" title="gsk_stream_clear_idle_notify_write()">gsk_stream_clear_idle_notify_write</a>  (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-clear-idle-notify-read" title="gsk_stream_clear_idle_notify_read()">gsk_stream_clear_idle_notify_read</a>   (stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-clear-never-partial-reads" title="gsk_stream_clear_never_partial_reads()">gsk_stream_clear_never_partial_reads</a>(stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-clear-never-partial-writes" title="gsk_stream_clear_never_partial_writes()">gsk_stream_clear_never_partial_writes</a>(stream)
+#define             <a class="link" href="GskStream.html#gsk-stream-trap-readable" title="gsk_stream_trap_readable">gsk_stream_trap_readable</a>
+#define             <a class="link" href="GskStream.html#gsk-stream-trap-writable" title="gsk_stream_trap_writable">gsk_stream_trap_writable</a>
+#define             <a class="link" href="GskStream.html#gsk-stream-untrap-readable" title="gsk_stream_untrap_readable">gsk_stream_untrap_readable</a>
+#define             <a class="link" href="GskStream.html#gsk-stream-untrap-writable" title="gsk_stream_untrap_writable">gsk_stream_untrap_writable</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStream.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+         +----GskStream
+               +----<a class="link" href="GskStreamFd.html" title="GskStreamFd">GskStreamFd</a>
+               +----<a class="link" href="gsk-gskstreamssl.html#GskStreamSsl">GskStreamSsl</a>
+               +----<a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a>
+               +----<a class="link" href="GskHttpClient.html" title="GskHttpClient">GskHttpClient</a>
+               +----<a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStream.description"></a><h2>Description</h2>
+<p>
+This encapsulates anything which reads bytes in or writes bytes out.
+Examples are a unix socket or a http-protocol implementation.
+</p>
+<p>
+It supports all the richness of <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>'s read/write notification
+system, along with read and write methods.
+In particular, (1) you can trap and block read/write separately on the stream.
+(2) the read/write ends of the stream can be shutdown separately.
+(3) in general, you may not be able to read/write immediately,
+but instead may have to trap the appropriate end to know when you can
+read or write.  (4) you may be able to only write or read a partial buffer.
+</p>
+<p>
+By checking certain flags below, you can assume that the data will never be partial,
+or that the stream will never block.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStream.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamClass"></a><h3>GskStreamClass</h3>
+<pre class="programlisting">typedef struct {
+  GskIOClass base_class;
+
+  /* --- virtuals --- */
+  guint      (*raw_read)        (GskStream     *stream,
+			 	 gpointer       data,
+			 	 guint          length,
+			 	 GError       **error);
+  guint      (*raw_write)       (GskStream     *stream,
+			 	 gconstpointer  data,
+			 	 guint          length,
+			 	 GError       **error);
+  guint      (*raw_read_buffer) (GskStream     *stream,
+				 GskBuffer     *buffer,
+				 GError       **error);
+  guint      (*raw_write_buffer)(GskStream    *stream,
+				 GskBuffer     *buffer,
+				 GError       **error);
+} GskStreamClass;
+</pre>
+<p>
+Functions which may be overridden by derived classes to provide
+input and output methods.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskIO.html#GskIOClass" title="GskIOClass">GskIOClass</a> <em class="structfield"><code>base_class</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>raw_read</code></em> ()</span></p></td>
+<td>function to read raw binary data into a contiguous buffer.
+This function may not block, but it can return any number of bytes
+without an error code (even returning 0 does NOT imply end-of-file),
+or it can return a GError when things go wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>raw_write</code></em> ()</span></p></td>
+<td>
+This function may not block, but it can return any number of bytes
+without an error code (if it returns 0, it merely means that it does not have
+space or time for more outgoing data; it is not necessarily an error).
+Or it can return a GError when things go wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>raw_read_buffer</code></em> ()</span></p></td>
+<td>
+Optional function to read from a stream and transfer it into a buffer,
+without blocking.
+This function is provided as an optimization.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>raw_write_buffer</code></em> ()</span></p></td>
+<td>
+Optional function to write to a stream from a buffer,
+without blocking.
+This function is provided as an optimization.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStream-struct"></a><h3>GskStream</h3>
+<pre class="programlisting">typedef struct _GskStream GskStream;</pre>
+<p>
+An input and/or output stream of raw bytes.
+This has input and output triggers, inherited from <a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>
+as well as methods to read and write raw bytes.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-read"></a><h3>gsk_stream_read ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               gsk_stream_read                     (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> buffer_length,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Read up to <em class="parameter"><code>buffer_length</code></em> bytes into <em class="parameter"><code>buffer</code></em>,
+returning the amount read.  It may return 0;
+this does not indicate an end-of-file.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to attempt to read data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to fill with data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer_length</code></em> :</span></p></td>
+<td> the maximum data to copy into the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional place to store a GError if something goes wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes read into <em class="parameter"><code>buffer</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-write"></a><h3>gsk_stream_write ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               gsk_stream_write                    (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> buffer_length,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Write up to <em class="parameter"><code>buffer_length</code></em> bytes into <em class="parameter"><code>buffer</code></em>,
+returning the amount written.  It may return 0;
+this does not indicate an error by itself.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to attempt to write data to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to write from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer_length</code></em> :</span></p></td>
+<td> the number of bytes in buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional place to store a GError if something goes wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes written.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-read-buffer"></a><h3>gsk_stream_read_buffer ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               gsk_stream_read_buffer              (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Read data from the stream directly into a <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer"><span class="type">GskBuffer</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to attempt to read data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to copy data into.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional place to store a GError if something goes wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes read into <em class="parameter"><code>buffer</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-write-buffer"></a><h3>gsk_stream_write_buffer ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a>               gsk_stream_write_buffer             (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Write data to the stream directly from a <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer"><span class="type">GskBuffer</span></a>.
+Data written from the buffer is removed from it.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to attempt to write data to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to get data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional place to store a GError if something goes wrong.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes written from <em class="parameter"><code>buffer</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-attach"></a><h3>gsk_stream_attach ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_stream_attach                   (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *input_stream,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *output_stream,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Attach the read end of <em class="parameter"><code>input_stream</code></em>
+to the write end of <em class="parameter"><code>output_stream</code></em>,
+returning an error if anything goes wrong.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>input_stream</code></em> :</span></p></td>
+<td> the input stream whose read-end will be trapped.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>output_stream</code></em> :</span></p></td>
+<td> the output stream whose write-end will be trapped.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return location.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the connection was successful.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-attach-pair"></a><h3>gsk_stream_attach_pair ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_stream_attach_pair              (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream_a,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream_b,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Attach a's input to b's output and vice versa.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream_a</code></em> :</span></p></td>
+<td> one of the two streams to attach together.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream_b</code></em> :</span></p></td>
+<td> one of the two streams to attach together.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return location.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the connection was successful.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-is-connecting"></a><h3>gsk_stream_get_is_connecting()</h3>
+<pre class="programlisting">#define             gsk_stream_get_is_connecting(stream)</pre>
+<p>
+Test whether the stream is connecting.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-is-readable"></a><h3>gsk_stream_get_is_readable()</h3>
+<pre class="programlisting">#define             gsk_stream_get_is_readable(stream)</pre>
+<p>
+Test whether the stream is potentially readable.
+(There may not be any data available at the moment, however.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-is-writable"></a><h3>gsk_stream_get_is_writable()</h3>
+<pre class="programlisting">#define             gsk_stream_get_is_writable(stream)</pre>
+<p>
+Test whether the stream is potentially writable.
+(you may not be able to write at the moment, however.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-never-blocks-write"></a><h3>gsk_stream_get_never_blocks_write()</h3>
+<pre class="programlisting">#define             gsk_stream_get_never_blocks_write(stream)</pre>
+<p>
+Return if the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> will never block to write data.  It will always allow
+some data to be written, until it is full and will allow no more ever.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-never-blocks-read"></a><h3>gsk_stream_get_never_blocks_read()</h3>
+<pre class="programlisting">#define             gsk_stream_get_never_blocks_read(stream)</pre>
+<p>
+Return if the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> will never block to read data.  It will always return
+some data, until it is empty and will never return any more.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-idle-notify-write"></a><h3>gsk_stream_get_idle_notify_write()</h3>
+<pre class="programlisting">#define             gsk_stream_get_idle_notify_write(stream)</pre>
+<p>
+Return whether the write-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-idle-notify-read"></a><h3>gsk_stream_get_idle_notify_read()</h3>
+<pre class="programlisting">#define             gsk_stream_get_idle_notify_read(stream)</pre>
+<p>
+Return whether the read-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-is-open"></a><h3>gsk_stream_get_is_open()</h3>
+<pre class="programlisting">#define             gsk_stream_get_is_open(stream)</pre>
+<p>
+Return whether the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is open.  A <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> should be open if
+you want to use it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-never-partial-reads"></a><h3>gsk_stream_get_never_partial_reads()</h3>
+<pre class="programlisting">#define             gsk_stream_get_never_partial_reads(stream)</pre>
+<p>
+Return whether the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is never allowed to return a partial buffer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-get-never-partial-writes"></a><h3>gsk_stream_get_never_partial_writes()</h3>
+<pre class="programlisting">#define             gsk_stream_get_never_partial_writes(stream)</pre>
+<p>
+Return whether the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is never allowed to write a partial buffer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream to test.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-is-connecting"></a><h3>gsk_stream_mark_is_connecting()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_is_connecting(stream)</pre>
+<p>
+Set the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>'s is_connecting flag.  This should only be called
+by the implementations of derived classes.  By default,
+GskStream is not in the connecting state.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-is-readable"></a><h3>gsk_stream_mark_is_readable()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_is_readable(stream)</pre>
+<p>
+Set whether the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is_readable.  This should only be called by
+the implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-is-writable"></a><h3>gsk_stream_mark_is_writable()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_is_writable(stream)</pre>
+<p>
+Set whether the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is_writable.  This should only be called by
+the implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-never-blocks-write"></a><h3>gsk_stream_mark_never_blocks_write()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_never_blocks_write(stream)</pre>
+<p>
+Indicate that writing to the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-never-blocks-read"></a><h3>gsk_stream_mark_never_blocks_read()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_never_blocks_read(stream)</pre>
+<p>
+Indicate that reading to the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-idle-notify-write"></a><h3>gsk_stream_mark_idle_notify_write()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_idle_notify_write(stream)</pre>
+<p>
+Tell the GskStream system to continually trigger a user's write hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-idle-notify-read"></a><h3>gsk_stream_mark_idle_notify_read()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_idle_notify_read(stream)</pre>
+<p>
+Tell the GskStream system to continually trigger a user's read hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-is-open"></a><h3>gsk_stream_mark_is_open()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_is_open(stream)</pre>
+<p>
+Indicate that a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is open.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-never-partial-reads"></a><h3>gsk_stream_mark_never_partial_reads()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_never_partial_reads(stream)</pre>
+<p>
+Indicate that the <a class="link" href="GskStream.html#gsk-stream-read" title="gsk_stream_read ()"><code class="function">gsk_stream_read()</code></a>
+will always read a whole buffer of data.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-mark-never-partial-writes"></a><h3>gsk_stream_mark_never_partial_writes()</h3>
+<pre class="programlisting">#define             gsk_stream_mark_never_partial_writes(stream)</pre>
+<p>
+Indicate that the <a class="link" href="GskStream.html#gsk-stream-write" title="gsk_stream_write ()"><code class="function">gsk_stream_write()</code></a> and <a class="link" href="GskStream.html#gsk-stream-write-buffer" title="gsk_stream_write_buffer ()"><code class="function">gsk_stream_write_buffer()</code></a>
+will always finish completely, or give an error.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-clear-is-readable"></a><h3>gsk_stream_clear_is_readable()</h3>
+<pre class="programlisting">#define             gsk_stream_clear_is_readable(stream)</pre>
+<p>
+Indicate that a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is no longer readable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-clear-is-writable"></a><h3>gsk_stream_clear_is_writable()</h3>
+<pre class="programlisting">#define             gsk_stream_clear_is_writable(stream)</pre>
+<p>
+Indicate that a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is no longer writable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-clear-is-open"></a><h3>gsk_stream_clear_is_open()</h3>
+<pre class="programlisting">#define             gsk_stream_clear_is_open(stream)</pre>
+<p>
+Indicate that the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> is closed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-clear-idle-notify-write"></a><h3>gsk_stream_clear_idle_notify_write()</h3>
+<pre class="programlisting">#define             gsk_stream_clear_idle_notify_write(stream)</pre>
+<p>
+Stop continually triggering the user's write hook.
+(This undoes <a class="link" href="GskStream.html#gsk-stream-mark-idle-notify-write" title="gsk_stream_mark_idle_notify_write()"><code class="function">gsk_stream_mark_idle_notify_write()</code></a>)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-clear-idle-notify-read"></a><h3>gsk_stream_clear_idle_notify_read()</h3>
+<pre class="programlisting">#define             gsk_stream_clear_idle_notify_read(stream)</pre>
+<p>
+Stop continually triggering the user's read hook.
+(This undoes <a class="link" href="GskStream.html#gsk-stream-mark-idle-notify-read" title="gsk_stream_mark_idle_notify_read()"><code class="function">gsk_stream_mark_idle_notify_read()</code></a>)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-clear-never-partial-reads"></a><h3>gsk_stream_clear_never_partial_reads()</h3>
+<pre class="programlisting">#define             gsk_stream_clear_never_partial_reads(stream)</pre>
+<p>
+Indicate that the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> may exhibit partial reads.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-clear-never-partial-writes"></a><h3>gsk_stream_clear_never_partial_writes()</h3>
+<pre class="programlisting">#define             gsk_stream_clear_never_partial_writes(stream)</pre>
+<p>
+Indicate that the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> may exhibit partial writes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a> to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-trap-readable"></a><h3>gsk_stream_trap_readable</h3>
+<pre class="programlisting">#define             gsk_stream_trap_readable</pre>
+<p>
+Trap the read end of a stream.  See <a class="link" href="GskIO.html#gsk-io-trap-readable" title="gsk_io_trap_readable()"><code class="function">gsk_io_trap_readable()</code></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-trap-writable"></a><h3>gsk_stream_trap_writable</h3>
+<pre class="programlisting">#define             gsk_stream_trap_writable</pre>
+<p>
+Trap the write end of a stream.  See <a class="link" href="GskIO.html#gsk-io-trap-writable" title="gsk_io_trap_writable()"><code class="function">gsk_io_trap_writable()</code></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-untrap-readable"></a><h3>gsk_stream_untrap_readable</h3>
+<pre class="programlisting">#define             gsk_stream_untrap_readable</pre>
+<p>
+Untrap the read end of a stream.  See <a class="link" href="GskIO.html#gsk-io-untrap-readable" title="gsk_io_untrap_readable()"><code class="function">gsk_io_untrap_readable()</code></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-untrap-writable"></a><h3>gsk_stream_untrap_writable</h3>
+<pre class="programlisting">#define             gsk_stream_untrap_writable</pre>
+<p>
+Untrap the write end of a stream.  See <a class="link" href="GskIO.html#gsk-io-untrap-writable" title="gsk_io_untrap_writable()"><code class="function">gsk_io_untrap_writable()</code></a>.
+</p>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStream.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GskIO.html" title="Base Input/Output Object"><span class="type">GskIO</span></a>
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

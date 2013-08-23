@@ -1,0 +1,59 @@
+<refentry id="gsk-GskMainLoopSigio">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskMainLoopSigio.top_of_page">GskMainLoopSigio</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskMainLoopSigio</refname>
+<refpurpose>signal I/O based event loop.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskMainLoopSigio.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskMainLoopSigio">GskMainLoopSigio</link>;
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskMainLoopSigio.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A main-loop which uses signal-driven I/O.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskMainLoopSigio.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMainLoopSigio" role="struct">
+<title>GskMainLoopSigio</title>
+<indexterm zone="GskMainLoopSigio"><primary sortas="GskMainLoopSigio">GskMainLoopSigio</primary></indexterm><programlisting>typedef struct {
+  GskMainLoop      main_loop;
+} GskMainLoopSigio;
+</programlisting>
+<para>
+Signal-driven I/O main-loop object.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskMainLoop">GskMainLoop</link>&#160;<structfield>main_loop</structfield>;</term>
+<listitem><simpara>the signal-driven I/O main-loop.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

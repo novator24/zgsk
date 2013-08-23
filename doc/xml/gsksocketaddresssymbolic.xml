@@ -1,0 +1,242 @@
+<refentry id="gsk-GskSocketAddressSymbolicIpv4">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskSocketAddressSymbolicIpv4.top_of_page">GskSocketAddressSymbolicIpv4</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskSocketAddressSymbolicIpv4</refname>
+<refpurpose>A symbolic IPv4 socket-address description.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskSocketAddressSymbolicIpv4.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                (<link linkend="GskSocketAddressSymbolicResolveFunc">*GskSocketAddressSymbolicResolveFunc</link>)
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *orig,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *resolved,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="void">void</link>                (<link linkend="GskSocketAddressSymbolicErrorFunc">*GskSocketAddressSymbolicErrorFunc</link>)
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *orig,
+                                                         const <link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+                    <link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link>;
+                    <link linkend="GskSocketAddressSymbolicIpv4">GskSocketAddressSymbolicIpv4</link>;
+<link linkend="GskSocketAddress">GskSocketAddress</link> *  <link linkend="gsk-socket-address-symbolic-ipv4-new">gsk_socket_address_symbolic_ipv4_new</link>
+                                                        (const <link linkend="char">char</link> *name,
+                                                         <link linkend="guint16">guint16</link> port);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-socket-address-symbolic-create-name-resolver">gsk_socket_address_symbolic_create_name_resolver</link>
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic);
+<link linkend="void">void</link>                <link linkend="gsk-socket-address-symbolic-start-resolution">gsk_socket_address_symbolic_start_resolution</link>
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic,
+                                                         <link linkend="gpointer">gpointer</link> name_resolver,
+                                                         <link linkend="GskSocketAddressSymbolicResolveFunc">GskSocketAddressSymbolicResolveFunc</link> r,
+                                                         <link linkend="GskSocketAddressSymbolicErrorFunc">GskSocketAddressSymbolicErrorFunc</link> e,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-socket-address-symbolic-cancel-resolution">gsk_socket_address_symbolic_cancel_resolution</link>
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic,
+                                                         <link linkend="gpointer">gpointer</link> name_resolver);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskSocketAddressSymbolicIpv4.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This is a TCP or UDP socket-address in IPv4 space, as represented
+by a hostname and port.
+</para>
+<para>
+Since this uses a hostname,
+it is not possible to convert this to a native socket-address,
+(we will have to go through DNS to do that)
+However, most interfaces will handle this for you.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskSocketAddressSymbolicIpv4.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskSocketAddressSymbolicResolveFunc" role="function">
+<title>GskSocketAddressSymbolicResolveFunc ()</title>
+<indexterm zone="GskSocketAddressSymbolicResolveFunc"><primary sortas="GskSocketAddressSymbolicResolveFunc">GskSocketAddressSymbolicResolveFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskSocketAddressSymbolicResolveFunc)
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *orig,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *resolved,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+A callback which will be invoked when
+the symbolic socket-address is resolved into a
+native socket-address.
+</para><variablelist role="params">
+<varlistentry><term><parameter>orig</parameter>&#160;:</term>
+<listitem><simpara>the symbolic socket address
+on which <link linkend="gsk-socket-address-symbolic-create-name-resolver"><function>gsk_socket_address_symbolic_create_name_resolver()</function></link>
+was invoked.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>resolved</parameter>&#160;:</term>
+<listitem><simpara>the socket-address which has a native representation
+(that is, <link linkend="gsk-socket-address-to-native"><function>gsk_socket_address_to_native()</function></link> will work on it)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>opaque data passed in to <link linkend="gsk-socket-address-symbolic-create-name-resolver"><function>gsk_socket_address_symbolic_create_name_resolver()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskSocketAddressSymbolicErrorFunc" role="function">
+<title>GskSocketAddressSymbolicErrorFunc ()</title>
+<indexterm zone="GskSocketAddressSymbolicErrorFunc"><primary sortas="GskSocketAddressSymbolicErrorFunc">GskSocketAddressSymbolicErrorFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskSocketAddressSymbolicErrorFunc)
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *orig,
+                                                         const <link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Invoked when symbolic socket-address name-resolution
+fails.
+</para><variablelist role="params">
+<varlistentry><term><parameter>orig</parameter>&#160;:</term>
+<listitem><simpara>the symbolic socket address
+on which <link linkend="gsk-socket-address-symbolic-create-name-resolver"><function>gsk_socket_address_symbolic_create_name_resolver()</function></link>
+was invoked.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>error, including message and code.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>opaque data passed in to <link linkend="gsk-socket-address-symbolic-create-name-resolver"><function>gsk_socket_address_symbolic_create_name_resolver()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskSocketAddressSymbolic" role="struct">
+<title>GskSocketAddressSymbolic</title>
+<indexterm zone="GskSocketAddressSymbolic"><primary sortas="GskSocketAddressSymbolic">GskSocketAddressSymbolic</primary></indexterm><programlisting>typedef struct {
+  GskSocketAddress      socket_address;
+  char                 *name;
+} GskSocketAddressSymbolic;
+</programlisting>
+<para>
+A symbolic socket-addresss.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;<structfield>socket_address</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>name</structfield>;</term>
+<listitem><simpara>hostname.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskSocketAddressSymbolicIpv4" role="struct">
+<title>GskSocketAddressSymbolicIpv4</title>
+<indexterm zone="GskSocketAddressSymbolicIpv4"><primary sortas="GskSocketAddressSymbolicIpv4">GskSocketAddressSymbolicIpv4</primary></indexterm><programlisting>typedef struct {
+  GskSocketAddressSymbolic base_instance;
+  guint16                  port;
+} GskSocketAddressSymbolicIpv4;
+</programlisting>
+<para>
+A symbolic socket-addresss in ipv4 space.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link>&#160;<structfield>base_instance</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint16">guint16</link>&#160;<structfield>port</structfield>;</term>
+<listitem><simpara>the ipv4 port.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-symbolic-ipv4-new" role="function">
+<title>gsk_socket_address_symbolic_ipv4_new ()</title>
+<indexterm zone="gsk-socket-address-symbolic-ipv4-new"><primary sortas="gsk_socket_address_symbolic_ipv4_new">gsk_socket_address_symbolic_ipv4_new</primary></indexterm><programlisting><link linkend="GskSocketAddress">GskSocketAddress</link> *  gsk_socket_address_symbolic_ipv4_new
+                                                        (const <link linkend="char">char</link> *name,
+                                                         <link linkend="guint16">guint16</link> port);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-symbolic-create-name-resolver" role="function">
+<title>gsk_socket_address_symbolic_create_name_resolver ()</title>
+<indexterm zone="gsk-socket-address-symbolic-create-name-resolver"><primary sortas="gsk_socket_address_symbolic_create_name_resolver">gsk_socket_address_symbolic_create_name_resolver</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_socket_address_symbolic_create_name_resolver
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>symbolic</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-symbolic-start-resolution" role="function">
+<title>gsk_socket_address_symbolic_start_resolution ()</title>
+<indexterm zone="gsk-socket-address-symbolic-start-resolution"><primary sortas="gsk_socket_address_symbolic_start_resolution">gsk_socket_address_symbolic_start_resolution</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_socket_address_symbolic_start_resolution
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic,
+                                                         <link linkend="gpointer">gpointer</link> name_resolver,
+                                                         <link linkend="GskSocketAddressSymbolicResolveFunc">GskSocketAddressSymbolicResolveFunc</link> r,
+                                                         <link linkend="GskSocketAddressSymbolicErrorFunc">GskSocketAddressSymbolicErrorFunc</link> e,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>symbolic</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name_resolver</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>r</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>e</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-symbolic-cancel-resolution" role="function">
+<title>gsk_socket_address_symbolic_cancel_resolution ()</title>
+<indexterm zone="gsk-socket-address-symbolic-cancel-resolution"><primary sortas="gsk_socket_address_symbolic_cancel_resolution">gsk_socket_address_symbolic_cancel_resolution</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_socket_address_symbolic_cancel_resolution
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic,
+                                                         <link linkend="gpointer">gpointer</link> name_resolver);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>symbolic</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name_resolver</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-GskSocketAddressSymbolicIpv4.see-also">
+<title>See Also</title>
+<para>
+<link linkend="GskSocketAddressSymbolic"><type>GskSocketAddressSymbolic</type></link>, which has generic instructions
+about making a symbolic socket-address into a native one.
+</para>
+</refsect1>
+
+</refentry>

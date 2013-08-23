@@ -1,0 +1,205 @@
+<refentry id="gsk-gskdebug">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskdebug.top_of_page">Runtime Toggled Debug Logging</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Runtime Toggled Debug Logging</refname>
+<refpurpose>methods to quickly turn logging on and off for portions of GSK.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskdebug.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+enum                <link linkend="GskDebugFlags">GskDebugFlags</link>;
+extern              const gboolean <link linkend="gsk-debugging-on">gsk_debugging_on</link>;
+<link linkend="void">void</link>                <link linkend="gsk-debug-set-flags">gsk_debug_set_flags</link>                 (<link linkend="GskDebugFlags">GskDebugFlags</link> flags);
+<link linkend="void">void</link>                <link linkend="gsk-debug-add-flags">gsk_debug_add_flags</link>                 (<link linkend="GskDebugFlags">GskDebugFlags</link> flags);
+extern              GskDebugFlags <link linkend="gsk-debug-flags">gsk_debug_flags</link>;
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskdebug.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+These functions allow you to programmitcally
+set the GSK debugging flags.  Usually, one
+sets these at runtime instead, by using the --gsk-debug=FLAGS
+command-line argument to your program.
+</para>
+<para>
+In any event, GSK's debugging facilities are only available if
+GSK itself was configured with gsk-debug support,
+by specifying <arg>--enable-gsk-debug</arg> to
+GSK's configure script.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskdebug.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskDebugFlags" role="enum">
+<title>enum GskDebugFlags</title>
+<indexterm zone="GskDebugFlags"><primary sortas="GskDebugFlags">GskDebugFlags</primary></indexterm><programlisting>typedef enum
+{
+  GSK_DEBUG_IO     		= (1&lt;&lt;0),
+  GSK_DEBUG_STREAM 		= (1&lt;&lt;1),
+  GSK_DEBUG_STREAM_LISTENER 	= (1&lt;&lt;2),
+  GSK_DEBUG_STREAM_DATA         = (1&lt;&lt;3),
+  GSK_DEBUG_LIFETIME		= (1&lt;&lt;4),
+  GSK_DEBUG_MAIN_LOOP		= (1&lt;&lt;5),
+  GSK_DEBUG_DNS			= (1&lt;&lt;6),
+  GSK_DEBUG_HOOK		= (1&lt;&lt;7),
+  GSK_DEBUG_SSL     		= (1&lt;&lt;8),
+  GSK_DEBUG_HTTP     		= (1&lt;&lt;9),
+  GSK_DEBUG_FTP     		= (1&lt;&lt;10),
+  GSK_DEBUG_REQUEST 		= (1&lt;&lt;11),
+  GSK_DEBUG_FD                  = (1&lt;&lt;12),
+
+  GSK_DEBUG_ALL			= 0xffffffff
+} GskDebugFlags;
+</programlisting>
+<para>
+Flags which may be turned on to print debugging messages about
+them.
+</para><variablelist role="enum">
+<varlistentry id="GSK-DEBUG-IO--CAPS" role="constant">
+<term><literal>GSK_DEBUG_IO</literal></term>
+<listitem><simpara>
+I/O hook debugging.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-STREAM--CAPS" role="constant">
+<term><literal>GSK_DEBUG_STREAM</literal></term>
+<listitem><simpara>
+Read/write debugging.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-STREAM-LISTENER--CAPS" role="constant">
+<term><literal>GSK_DEBUG_STREAM_LISTENER</literal></term>
+<listitem><simpara>
+Server listener debugging.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-STREAM-DATA--CAPS" role="constant">
+<term><literal>GSK_DEBUG_STREAM_DATA</literal></term>
+<listitem><simpara>
+Stream debugging by dumping all the data exchanged with
+the stream.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-LIFETIME--CAPS" role="constant">
+<term><literal>GSK_DEBUG_LIFETIME</literal></term>
+<listitem><simpara>
+Debug object lifetime issues.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-MAIN-LOOP--CAPS" role="constant">
+<term><literal>GSK_DEBUG_MAIN_LOOP</literal></term>
+<listitem><simpara>
+Debug main-loop behavior.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-DNS--CAPS" role="constant">
+<term><literal>GSK_DEBUG_DNS</literal></term>
+<listitem><simpara>
+Debug name lookup behavior.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-HOOK--CAPS" role="constant">
+<term><literal>GSK_DEBUG_HOOK</literal></term>
+<listitem><simpara>
+Debug hooks.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-SSL--CAPS" role="constant">
+<term><literal>GSK_DEBUG_SSL</literal></term>
+<listitem><simpara>
+Debug SSL (a secure transport layer, used by https).
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-HTTP--CAPS" role="constant">
+<term><literal>GSK_DEBUG_HTTP</literal></term>
+<listitem><simpara>
+Debug HTTP, the protocol used for web pages.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-FTP--CAPS" role="constant">
+<term><literal>GSK_DEBUG_FTP</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-REQUEST--CAPS" role="constant">
+<term><literal>GSK_DEBUG_REQUEST</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-FD--CAPS" role="constant">
+<term><literal>GSK_DEBUG_FD</literal></term>
+<listitem><simpara>
+Debug file-descriptor usage.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-DEBUG-ALL--CAPS" role="constant">
+<term><literal>GSK_DEBUG_ALL</literal></term>
+<listitem><simpara>
+All debug flags.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-debugging-on" role="variable">
+<title>gsk_debugging_on</title>
+<indexterm zone="gsk-debugging-on"><primary sortas="gsk_debugging_on">gsk_debugging_on</primary></indexterm><programlisting>extern const gboolean gsk_debugging_on;
+</programlisting>
+<para>
+Whether debugging is on.
+</para>
+<para>
+This corresponds with whether GSK's <program>configure</program>
+script was run with the <arg>--enable-gsk-debug</arg> option.
+</para></refsect2>
+<refsect2 id="gsk-debug-set-flags" role="function">
+<title>gsk_debug_set_flags ()</title>
+<indexterm zone="gsk-debug-set-flags"><primary sortas="gsk_debug_set_flags">gsk_debug_set_flags</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_debug_set_flags                 (<link linkend="GskDebugFlags">GskDebugFlags</link> flags);</programlisting>
+<para>
+Set which types of debug logs to emit.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> debug bits to start logging.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-debug-add-flags" role="function">
+<title>gsk_debug_add_flags ()</title>
+<indexterm zone="gsk-debug-add-flags"><primary sortas="gsk_debug_add_flags">gsk_debug_add_flags</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_debug_add_flags                 (<link linkend="GskDebugFlags">GskDebugFlags</link> flags);</programlisting>
+<para>
+Add new types of debug logs to emit.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> debug bits to start logging.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-debug-flags" role="variable">
+<title>gsk_debug_flags</title>
+<indexterm zone="gsk-debug-flags"><primary sortas="gsk_debug_flags">gsk_debug_flags</primary></indexterm><programlisting>extern GskDebugFlags gsk_debug_flags;
+</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

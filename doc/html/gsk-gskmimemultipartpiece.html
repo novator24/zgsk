@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskmimemultipartpiece</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch11.html" title="MIME handling">
+<link rel="prev" href="ch11.html" title="MIME handling">
+<link rel="next" href="gsk-GskMimeMultipartDecoder.html" title="GskMimeMultipartDecoder">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch11.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch11.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-GskMimeMultipartDecoder.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskmimemultipartpiece.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskmimemultipartpiece.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskmimemultipartpiece"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskmimemultipartpiece.top_of_page"></a>gskmimemultipartpiece</span></h2>
+<p>gskmimemultipartpiece</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskmimemultipartpiece.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a>;
+<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> * <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-ref" title="gsk_mime_multipart_piece_ref ()">gsk_mime_multipart_piece_ref</a>    (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-unref" title="gsk_mime_multipart_piece_unref ()">gsk_mime_multipart_piece_unref</a>      (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece);
+<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> * <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-alloc" title="gsk_mime_multipart_piece_alloc ()">gsk_mime_multipart_piece_alloc</a>  (void);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-description" title="gsk_mime_multipart_piece_set_description ()">gsk_mime_multipart_piece_set_description</a>
+                                                        (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *description);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-stream" title="gsk_mime_multipart_piece_set_stream ()">gsk_mime_multipart_piece_set_stream</a> (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-type" title="gsk_mime_multipart_piece_set_type ()">gsk_mime_multipart_piece_set_type</a>   (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *type,
+                                                         const char *subtype,
+                                                         const char *charset,
+                                                         const char * const *kv_pairs);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-data" title="gsk_mime_multipart_piece_set_data ()">gsk_mime_multipart_piece_set_data</a>   (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-transfer-encoding" title="gsk_mime_multipart_piece_set_transfer_encoding ()">gsk_mime_multipart_piece_set_transfer_encoding</a>
+                                                        (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *encoding);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-location" title="gsk_mime_multipart_piece_set_location ()">gsk_mime_multipart_piece_set_location</a>
+                                                        (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *location);
+void                <a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-set-id" title="gsk_mime_multipart_piece_set_id ()">gsk_mime_multipart_piece_set_id</a>     (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *id);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmimemultipartpiece.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskmimemultipartpiece.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskMimeMultipartPiece"></a><h3>GskMimeMultipartPiece</h3>
+<pre class="programlisting">typedef struct {
+  char *type;
+  char *subtype;
+  char *id;
+  char *description;
+  char *charset;
+  char *location;
+  char *transfer_encoding;
+  char *disposition;
+  char **other_fields;
+
+  /* if is_memory */
+  guint content_length;
+  gconstpointer content_data;
+} GskMimeMultipartPiece;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-ref"></a><h3>gsk_mime_multipart_piece_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> * gsk_mime_multipart_piece_ref    (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece);</pre>
+<p>
+Reference the piece.  This piece will only be destroyed
+when its reference-count hits 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> a piece whose reference count should be increased by 1.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the <em class="parameter"><code>piece</code></em>, for convenience.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-unref"></a><h3>gsk_mime_multipart_piece_unref ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_unref      (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece);</pre>
+<p>
+Unreference the piece.  This piece will be destroyed
+when its reference-count hits 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> a piece whose reference count should be decreased by 1.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-alloc"></a><h3>gsk_mime_multipart_piece_alloc ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> * gsk_mime_multipart_piece_alloc  (void);</pre>
+<p>
+Allocate a new MIME piece.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated MIME piece.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-set-description"></a><h3>gsk_mime_multipart_piece_set_description ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_set_description
+                                                        (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *description);</pre>
+<p>
+Set the Content-Description tag for this MIME piece.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> the piece to describe.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>description</code></em> :</span></p></td>
+<td> the text description.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-set-stream"></a><h3>gsk_mime_multipart_piece_set_stream ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_set_stream (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *stream);</pre>
+<p>
+Set the content of a MIME piece to the <em class="parameter"><code>stream</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> the piece whose content-stream should be set.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to associate with <em class="parameter"><code>piece</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-set-type"></a><h3>gsk_mime_multipart_piece_set_type ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_set_type   (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *type,
+                                                         const char *subtype,
+                                                         const char *charset,
+                                                         const char * const *kv_pairs);</pre>
+<p>
+Set the content-type for the given MIME piece.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> the piece whose Content-Type header should be affected.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> the major type of this content, eg 'text' or 'image'.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>subtype</code></em> :</span></p></td>
+<td> the minor type of this content, if type=='text',
+then 'plain', 'html', 'wml' are common examples of subtypes.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>charset</code></em> :</span></p></td>
+<td> the character set to use for text encodings.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>kv_pairs</code></em> :</span></p></td>
+<td> any other key-value pairs are a NULL-terminated
+array of strings, the even strings are keys, and the odd
+strings are their values.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-set-data"></a><h3>gsk_mime_multipart_piece_set_data ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_set_data   (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);</pre>
+<p>
+Set the binary data for a piece of a multipart stream,
+with destroy notification.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> the piece whose memory content should be set.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> the slab of memory to associate with this part.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
+<td> the length of the data in this part.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to invoke when this piece is destroyed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy_data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>destroy</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-set-transfer-encoding"></a><h3>gsk_mime_multipart_piece_set_transfer_encoding ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_set_transfer_encoding
+                                                        (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *encoding);</pre>
+<p>
+Set the Content-Encoding tag for this MIME piece.
+</p>
+<p>
+Only three content-encodings are recognized:
+"identity" (data transfered as binary data;
+not safe for some mail gateways),
+"base64" (binary data in 'base-64' encoding);
+"quoted-printable" uses '=' to escape funny
+characters as hex.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> the piece to describe.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>encoding</code></em> :</span></p></td>
+<td> the transfer-encoding
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-set-location"></a><h3>gsk_mime_multipart_piece_set_location ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_set_location
+                                                        (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *location);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>location</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-piece-set-id"></a><h3>gsk_mime_multipart_piece_set_id ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_piece_set_id     (<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> *piece,
+                                                         const char *id);</pre>
+<p>
+Set the Content-ID tag for this MIME piece.
+</p>
+<p>
+See: XXX?</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>piece</code></em> :</span></p></td>
+<td> the piece to describe.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>id</code></em> :</span></p></td>
+<td> the content-id.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

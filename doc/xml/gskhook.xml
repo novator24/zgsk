@@ -1,0 +1,816 @@
+<refentry id="gsk-gskhook">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskhook.top_of_page">Lightweight Hookable Events</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Lightweight Hookable Events</refname>
+<refpurpose>a blockable, optionally shutdown-able, trap-able
+structure inside a GObject.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskhook.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskHook">GskHook</link>;
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskHookFunc">*GskHookFunc</link>)                      (<link linkend="GObject">GObject</link> *object,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="void">void</link>                (<link linkend="GskHookSetPollFunc">*GskHookSetPollFunc</link>)               (<link linkend="GObject">GObject</link> *object,
+                                                         <link linkend="gboolean">gboolean</link> do_polling);
+<link linkend="void">void</link>                (<link linkend="GskHookShutdownFunc">*GskHookShutdownFunc</link>)              (<link linkend="GObject">GObject</link> *object);
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskHookShutdownErrorFunc">*GskHookShutdownErrorFunc</link>)         (<link linkend="GObject">GObject</link> *object,
+                                                         <link linkend="GError">GError</link> **error);
+enum                <link linkend="GskHookFlags">GskHookFlags</link>;
+#define             <link linkend="GSK-HOOK-GET-OBJECT--CAPS">GSK_HOOK_GET_OBJECT</link>                 (hook)
+#define             <link linkend="GSK-HOOK-TEST-FLAG--CAPS">GSK_HOOK_TEST_FLAG</link>                  (hook, flag_shortname)
+#define             <link linkend="GSK-HOOK-SET-FLAG--CAPS">GSK_HOOK_SET_FLAG</link>
+#define             <link linkend="GSK-HOOK-CLEAR-FLAG--CAPS">GSK_HOOK_CLEAR_FLAG</link>                 (hook, flag_shortname)
+#define             <link linkend="GSK-HOOK-TEST-USER-FLAG--CAPS">GSK_HOOK_TEST_USER_FLAG</link>             (hook, bit)
+#define             <link linkend="GSK-HOOK-MARK-USER-FLAG--CAPS">GSK_HOOK_MARK_USER_FLAG</link>             (hook, bit)
+#define             <link linkend="GSK-HOOK-CLEAR-USER-FLAG--CAPS">GSK_HOOK_CLEAR_USER_FLAG</link>            (hook, bit)
+#define             <link linkend="GSK-HOOK-TEST-SHUTTING-DOWN--CAPS">GSK_HOOK_TEST_SHUTTING_DOWN</link>         (hook)
+#define             <link linkend="GSK-HOOK-TEST-NEVER-BLOCKS--CAPS">GSK_HOOK_TEST_NEVER_BLOCKS</link>          (hook)
+#define             <link linkend="GSK-HOOK-TEST-IS-AVAILABLE--CAPS">GSK_HOOK_TEST_IS_AVAILABLE</link>          (hook)
+#define             <link linkend="GSK-HOOK-TEST-IDLE-NOTIFY--CAPS">GSK_HOOK_TEST_IDLE_NOTIFY</link>           (hook)
+<link linkend="void">void</link>                <link linkend="gsk-hook-trap">gsk_hook_trap</link>                       (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="GskHookFunc">GskHookFunc</link> func,
+                                                         <link linkend="GskHookFunc">GskHookFunc</link> shutdown,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-hook-untrap">gsk_hook_untrap</link>                     (<link linkend="GskHook">GskHook</link> *hook);
+#define             <link linkend="gsk-hook-is-trapped">gsk_hook_is_trapped</link>                 (hook)
+<link linkend="void">void</link>                <link linkend="gsk-hook-block">gsk_hook_block</link>                      (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="void">void</link>                <link linkend="gsk-hook-unblock">gsk_hook_unblock</link>                    (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-hook-shutdown">gsk_hook_shutdown</link>                   (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-hook-init">gsk_hook_init</link>                       (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="GskHookFlags">GskHookFlags</link> flags,
+                                                         <link linkend="guint">guint</link> inset,
+                                                         <link linkend="guint">guint</link> class_set_poll_offset,
+                                                         <link linkend="guint">guint</link> class_shutdown_offset);
+<link linkend="void">void</link>                <link linkend="gsk-hook-class-init">gsk_hook_class_init</link>                 (<link linkend="GObjectClass">GObjectClass</link> *object_class,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="guint">guint</link> hook_offset);
+<link linkend="void">void</link>                <link linkend="gsk-hook-notify">gsk_hook_notify</link>                     (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="void">void</link>                <link linkend="gsk-hook-notify-shutdown">gsk_hook_notify_shutdown</link>            (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="void">void</link>                <link linkend="gsk-hook-destruct">gsk_hook_destruct</link>                   (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="void">void</link>                <link linkend="gsk-hook-set-idle-notify">gsk_hook_set_idle_notify</link>            (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="gboolean">gboolean</link> should_idle_notify);
+<link linkend="void">void</link>                <link linkend="gsk-hook-mark-idle-notify">gsk_hook_mark_idle_notify</link>           (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="void">void</link>                <link linkend="gsk-hook-clear-idle-notify">gsk_hook_clear_idle_notify</link>          (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="void">void</link>                <link linkend="gsk-hook-mark-never-blocks">gsk_hook_mark_never_blocks</link>          (<link linkend="GskHook">GskHook</link> *hook);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-hook-get-last-poll-state">gsk_hook_get_last_poll_state</link>        (<link linkend="GskHook">GskHook</link> *hook);
+#define             <link linkend="GSK-HOOK-INIT--CAPS">GSK_HOOK_INIT</link>                       (object, struct, member, flags, set_poll, shutdown)
+#define             <link linkend="GSK-HOOK-INIT-NO-SHUTDOWN--CAPS">GSK_HOOK_INIT_NO_SHUTDOWN</link>           (object, struct, member, flags, set_poll)
+#define             <link linkend="GSK-HOOK-CLASS-INIT--CAPS">GSK_HOOK_CLASS_INIT</link>                 (object_class, hook_name, Type, member)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskhook.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+GskHook is to be used as a member of a GObject.
+Its class must have at least a <link linkend="GskHookSetPollFunc"><type>GskHookSetPollFunc</type></link> member,
+and for hooks which have a corresponding shutdown method,
+that should be in the class as well.
+</para>
+<para>
+The point of this class is to encapsulate i/o event handling.
+This means that it must be possible to trap the event,
+and it also must not waste cpu notifying us if the event is not trapped.
+</para>
+<para>
+Therefore, <link linkend="GskHook"><type>GskHook</type></link> has two components:
+(1) methods to make it easy to write classes which have GskHooks in them.
+(2) methods to be exposed to an end user of such a class:
+meaning, ways to trap, untrap, block, unblock the events.
+</para>
+<para>
+To implement a class which contains a <link linkend="GskHook"><type>GskHook</type></link>,
+traditionally, you should have a set_poll method of the class
+which should just turn on or off whether the class
+tries to call <link linkend="gsk-hook-notify"><function>gsk_hook_notify()</function></link>.
+Furthermore, you might want a shutdown method.  It's optional.
+</para>
+<para>
+Sometimes a hook is always ready to trigger.
+You can call <link linkend="gsk-hook-mark-idle-notify"><function>gsk_hook_mark_idle_notify()</function></link> to cause
+the hook to trigger constantly, if it's trapped and unblocked.
+Also, <link linkend="gsk-hook-clear-idle-notify"><function>gsk_hook_clear_idle_notify()</function></link> stops that.
+In this case, you may not need a set_poll function even.
+</para>
+<para>
+When a hook is shut down, it is marked as unavailable.
+When you wish to shut down a hook, you should call
+<link linkend="gsk-hook-shutdown"><function>gsk_hook_shutdown()</function></link>.  Typically, the shutdown happens immediately.
+However, the implementation of a class that contains a hook
+may need to leave the object in a transitional state, SHUTTING_DOWN.
+Even if this happens, the hook is still marked as unavailable.
+The implementation should eventually call <link linkend="gsk-hook-notify-shutdown"><function>gsk_hook_notify_shutdown()</function></link>
+to indicate that the shutdown finally finished.
+The shutdown hook registered with <link linkend="gsk-hook-trap"><function>gsk_hook_trap()</function></link>
+will only be run after <link linkend="gsk-hook-notify-shutdown"><function>gsk_hook_notify_shutdown()</function></link> is called in that case.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskhook.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskHook" role="struct">
+<title>GskHook</title>
+<indexterm zone="GskHook"><primary sortas="GskHook">GskHook</primary></indexterm><programlisting>typedef struct {
+} GskHook;
+</programlisting>
+<para>
+A structure which you can embed in a GObject.
+All of its members are private.
+</para></refsect2>
+<refsect2 id="GskHookFunc" role="function">
+<title>GskHookFunc ()</title>
+<indexterm zone="GskHookFunc"><primary sortas="GskHookFunc">GskHookFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskHookFunc)                      (<link linkend="GObject">GObject</link> *object,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+To be called when the hook is triggered.
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&#160;:</term>
+<listitem><simpara>the object which contains this hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>user-data passed in to <link linkend="gsk-hook-trap"><type>gsk_hook_trap</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether the hook should stay trapped.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHookSetPollFunc" role="function">
+<title>GskHookSetPollFunc ()</title>
+<indexterm zone="GskHookSetPollFunc"><primary sortas="GskHookSetPollFunc">GskHookSetPollFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskHookSetPollFunc)               (<link linkend="GObject">GObject</link> *object,
+                                                         <link linkend="gboolean">gboolean</link> do_polling);</programlisting>
+<para>
+To be called when the class should start or stop
+calling <link linkend="gsk-hook-notify"><type>gsk_hook_notify</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&#160;:</term>
+<listitem><simpara>the object which contains this hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>do_polling</parameter>&#160;:</term>
+<listitem><simpara>whether to trigger the hook.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHookShutdownFunc" role="function">
+<title>GskHookShutdownFunc ()</title>
+<indexterm zone="GskHookShutdownFunc"><primary sortas="GskHookShutdownFunc">GskHookShutdownFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskHookShutdownFunc)              (<link linkend="GObject">GObject</link> *object);</programlisting>
+<para>
+This function is how the "shutdown" method in a class will
+be invoked (if the hook WAS NOT created
+with <link linkend="GSK-HOOK-CAN-HAVE-SHUTDOWN-ERROR--CAPS"><type>GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR</type></link>; see <link linkend="GskHookShutdownErrorFunc"><type>GskHookShutdownErrorFunc</type></link>).
+</para>
+<para>
+GSK automatically untraps after this is over,
+since there is no more potential for this hook to trigger.
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&#160;:</term>
+<listitem><simpara>the object whose hook should shut down.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHookShutdownErrorFunc" role="function">
+<title>GskHookShutdownErrorFunc ()</title>
+<indexterm zone="GskHookShutdownErrorFunc"><primary sortas="GskHookShutdownErrorFunc">GskHookShutdownErrorFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskHookShutdownErrorFunc)         (<link linkend="GObject">GObject</link> *object,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+This function is how the "shutdown" method in a class will
+be invoked (if the hook WAS NOT created
+without <link linkend="GSK-HOOK-CAN-HAVE-SHUTDOWN-ERROR--CAPS"><type>GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR</type></link>; see <link linkend="GskHookShutdownErrorFunc"><type>GskHookShutdownErrorFunc</type></link>).
+</para>
+<para>
+This function returns with whether the shutdown completed successfully.
+</para>
+<para>
+If this function return FALSE but sets no error, then
+this hook is not shutdown, but it is working on shutting down.
+(The shutdown notify hook should be called by the
+object itself later.)
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&#160;:</term>
+<listitem><simpara>the object whose hook should shut down.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>place for an error to be placed if shutdown fails.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether shutdown succeeds.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHookFlags" role="enum">
+<title>enum GskHookFlags</title>
+<indexterm zone="GskHookFlags"><primary sortas="GskHookFlags">GskHookFlags</primary></indexterm><programlisting>typedef enum
+{
+  GSK_HOOK_IS_AVAILABLE            	= (1 &lt;&lt; 0),
+  GSK_HOOK_NEVER_AUTO_SHUTS_DOWN   	= (1 &lt;&lt; 1),
+  GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR 	= (1 &lt;&lt; 2),
+  GSK_HOOK_private_IDLE_NOTIFY     	= (1 &lt;&lt; 3), /*&lt; private &gt;*/
+  GSK_HOOK_private_JUST_NEVER_BLOCKS    = (1 &lt;&lt; 4), /*&lt; private &gt;*/
+  GSK_HOOK_private_NEVER_BLOCKS		= (GSK_HOOK_private_IDLE_NOTIFY | GSK_HOOK_private_JUST_NEVER_BLOCKS), /*&lt; private &gt;*/
+  GSK_HOOK_private_CAN_DEFER_SHUTDOWN   = (1 &lt;&lt; 5), /*&lt; private &gt;*/
+  GSK_HOOK_private_SHUTTING_DOWN        = (1 &lt;&lt; 6), /*&lt; private &gt;*/
+  _GSK_HOOK_FLAGS_RESERVED	   	= (0xff &lt;&lt; 8), /*&lt; private &gt;*/
+} GskHookFlags;
+</programlisting>
+<para>
+Flags which can be read about any hook.
+See <link linkend="GSK-HOOK-TEST-FLAG--CAPS"><function>GSK_HOOK_TEST_FLAG()</function></link>, <link linkend="GSK-HOOK-SET-FLAG--CAPS"><function>GSK_HOOK_SET_FLAG()</function></link>
+and <link linkend="GSK-HOOK-CLEAR-FLAG--CAPS"><function>GSK_HOOK_CLEAR_FLAG()</function></link>.
+</para><variablelist role="enum">
+<varlistentry id="GSK-HOOK-IS-AVAILABLE--CAPS" role="constant">
+<term><literal>GSK_HOOK_IS_AVAILABLE</literal></term>
+<listitem><simpara>whether the hook is available
+to be trapped.  (It is not available either because it
+was never available, or because it was shut down.)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-NEVER-AUTO-SHUTS-DOWN--CAPS" role="constant">
+<term><literal>GSK_HOOK_NEVER_AUTO_SHUTS_DOWN</literal></term>
+<listitem><simpara>
+whether the hook will auto-shutdown in some circumstances,
+ie due to end-of-file or error.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-CAN-HAVE-SHUTDOWN-ERROR--CAPS" role="constant">
+<term><literal>GSK_HOOK_CAN_HAVE_SHUTDOWN_ERROR</literal></term>
+<listitem><simpara>
+whether this hook can have an error on shutdown.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-private-IDLE-NOTIFY" role="constant">
+<term><literal>GSK_HOOK_private_IDLE_NOTIFY</literal></term>
+<listitem><simpara>
+private. (used by macros so it has to be exposed)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-private-JUST-NEVER-BLOCKS" role="constant">
+<term><literal>GSK_HOOK_private_JUST_NEVER_BLOCKS</literal></term>
+<listitem><simpara>
+private. (used by macros so it has to be exposed)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-private-NEVER-BLOCKS" role="constant">
+<term><literal>GSK_HOOK_private_NEVER_BLOCKS</literal></term>
+<listitem><simpara>
+private. (used by macros so it has to be exposed)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-private-CAN-DEFER-SHUTDOWN" role="constant">
+<term><literal>GSK_HOOK_private_CAN_DEFER_SHUTDOWN</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-private-SHUTTING-DOWN" role="constant">
+<term><literal>GSK_HOOK_private_SHUTTING_DOWN</literal></term>
+<listitem><simpara>
+private. (used by macros so it has to be exposed)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-HOOK-FLAGS-RESERVED--CAPS" role="constant">
+<term><literal>_GSK_HOOK_FLAGS_RESERVED</literal></term>
+<listitem><simpara>
+bits used internally.  private.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-GET-OBJECT--CAPS" role="macro">
+<title>GSK_HOOK_GET_OBJECT()</title>
+<indexterm zone="GSK-HOOK-GET-OBJECT--CAPS"><primary sortas="GSK_HOOK_GET_OBJECT">GSK_HOOK_GET_OBJECT</primary></indexterm><programlisting>#define             GSK_HOOK_GET_OBJECT(hook)</programlisting>
+<para>
+Get a pointer to the GObject which owns this hook.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook whose GObject should be found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-TEST-FLAG--CAPS" role="macro">
+<title>GSK_HOOK_TEST_FLAG()</title>
+<indexterm zone="GSK-HOOK-TEST-FLAG--CAPS"><primary sortas="GSK_HOOK_TEST_FLAG">GSK_HOOK_TEST_FLAG</primary></indexterm><programlisting>#define             GSK_HOOK_TEST_FLAG(hook, flag_shortname)</programlisting>
+<para>
+Test if a particular flag in the GskHook is set.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook to test.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flag_shortname</parameter>&#160;:</term>
+<listitem><simpara>the name of the flag, without
+its GSK_HOOK prefix.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-SET-FLAG--CAPS" role="macro">
+<title>GSK_HOOK_SET_FLAG</title>
+<indexterm zone="GSK-HOOK-SET-FLAG--CAPS"><primary sortas="GSK_HOOK_SET_FLAG">GSK_HOOK_SET_FLAG</primary></indexterm><programlisting>#define             GSK_HOOK_SET_FLAG</programlisting>
+<para>
+Set the bit of the hook to TRUE.  This should
+only be used by implementors of
+GskHook-containing objects.
+</para></refsect2>
+<refsect2 id="GSK-HOOK-CLEAR-FLAG--CAPS" role="macro">
+<title>GSK_HOOK_CLEAR_FLAG()</title>
+<indexterm zone="GSK-HOOK-CLEAR-FLAG--CAPS"><primary sortas="GSK_HOOK_CLEAR_FLAG">GSK_HOOK_CLEAR_FLAG</primary></indexterm><programlisting>#define             GSK_HOOK_CLEAR_FLAG(hook, flag_shortname)</programlisting>
+<para>
+Set the bit of the hook to FALSE.  This should
+only be used by implementors of
+GskHook-containing objects.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flag_shortname</parameter>&#160;:</term>
+<listitem><simpara>the name of the flag, without
+its GSK_HOOK prefix.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-TEST-USER-FLAG--CAPS" role="macro">
+<title>GSK_HOOK_TEST_USER_FLAG()</title>
+<indexterm zone="GSK-HOOK-TEST-USER-FLAG--CAPS"><primary sortas="GSK_HOOK_TEST_USER_FLAG">GSK_HOOK_TEST_USER_FLAG</primary></indexterm><programlisting>#define             GSK_HOOK_TEST_USER_FLAG(hook, bit)</programlisting>
+<para>
+Test if a class-usable bit of the hook is TRUE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook whose class-usable bit should be tested.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bit</parameter>&#160;:</term>
+<listitem><simpara>the bit.  (a guint16)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-MARK-USER-FLAG--CAPS" role="macro">
+<title>GSK_HOOK_MARK_USER_FLAG()</title>
+<indexterm zone="GSK-HOOK-MARK-USER-FLAG--CAPS"><primary sortas="GSK_HOOK_MARK_USER_FLAG">GSK_HOOK_MARK_USER_FLAG</primary></indexterm><programlisting>#define             GSK_HOOK_MARK_USER_FLAG(hook, bit)</programlisting>
+<para>
+Set a class-usable bit of the hook to TRUE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook whose class-usable bit should be marked (set to 1).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bit</parameter>&#160;:</term>
+<listitem><simpara>the bit.  (a guint16)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-CLEAR-USER-FLAG--CAPS" role="macro">
+<title>GSK_HOOK_CLEAR_USER_FLAG()</title>
+<indexterm zone="GSK-HOOK-CLEAR-USER-FLAG--CAPS"><primary sortas="GSK_HOOK_CLEAR_USER_FLAG">GSK_HOOK_CLEAR_USER_FLAG</primary></indexterm><programlisting>#define             GSK_HOOK_CLEAR_USER_FLAG(hook, bit)</programlisting>
+<para>
+Set a class-usable bit of the hook to FALSE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook whose class-usable bit should be cleared (set to 0).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bit</parameter>&#160;:</term>
+<listitem><simpara>the bit.  (a guint16)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-TEST-SHUTTING-DOWN--CAPS" role="macro">
+<title>GSK_HOOK_TEST_SHUTTING_DOWN()</title>
+<indexterm zone="GSK-HOOK-TEST-SHUTTING-DOWN--CAPS"><primary sortas="GSK_HOOK_TEST_SHUTTING_DOWN">GSK_HOOK_TEST_SHUTTING_DOWN</primary></indexterm><programlisting>#define             GSK_HOOK_TEST_SHUTTING_DOWN(hook)</programlisting>
+<para>
+Test if a hook is in the process of shutting down.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-TEST-NEVER-BLOCKS--CAPS" role="macro">
+<title>GSK_HOOK_TEST_NEVER_BLOCKS()</title>
+<indexterm zone="GSK-HOOK-TEST-NEVER-BLOCKS--CAPS"><primary sortas="GSK_HOOK_TEST_NEVER_BLOCKS">GSK_HOOK_TEST_NEVER_BLOCKS</primary></indexterm><programlisting>#define             GSK_HOOK_TEST_NEVER_BLOCKS(hook)</programlisting>
+<para>
+Test if a hook is permanently non-blocking.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-TEST-IS-AVAILABLE--CAPS" role="macro">
+<title>GSK_HOOK_TEST_IS_AVAILABLE()</title>
+<indexterm zone="GSK-HOOK-TEST-IS-AVAILABLE--CAPS"><primary sortas="GSK_HOOK_TEST_IS_AVAILABLE">GSK_HOOK_TEST_IS_AVAILABLE</primary></indexterm><programlisting>#define             GSK_HOOK_TEST_IS_AVAILABLE(hook)</programlisting>
+<para>
+Test if a hook is available for trapping.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-TEST-IDLE-NOTIFY--CAPS" role="macro">
+<title>GSK_HOOK_TEST_IDLE_NOTIFY()</title>
+<indexterm zone="GSK-HOOK-TEST-IDLE-NOTIFY--CAPS"><primary sortas="GSK_HOOK_TEST_IDLE_NOTIFY">GSK_HOOK_TEST_IDLE_NOTIFY</primary></indexterm><programlisting>#define             GSK_HOOK_TEST_IDLE_NOTIFY(hook)</programlisting>
+<para>
+Test whether this hook is in the idle-notify state,
+meaning that it will trigger an active trap constantly.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-trap" role="function">
+<title>gsk_hook_trap ()</title>
+<indexterm zone="gsk-hook-trap"><primary sortas="gsk_hook_trap">gsk_hook_trap</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_trap                       (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="GskHookFunc">GskHookFunc</link> func,
+                                                         <link linkend="GskHookFunc">GskHookFunc</link> shutdown,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Traps hook triggers and shutdowns.  The caller's functions will
+be run in response to <link linkend="gsk-hook-notify"><type>gsk_hook_notify</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to trap
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> function to call with the hook is triggered.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown</parameter>&#160;:</term>
+<listitem><simpara> function to be called if the hook is shutting down and will
+never trigger again.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> user-data to pass to func and shutdown.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call on user-data when the hook is untrapped.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-untrap" role="function">
+<title>gsk_hook_untrap ()</title>
+<indexterm zone="gsk-hook-untrap"><primary sortas="gsk_hook_untrap">gsk_hook_untrap</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_untrap                     (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+Stops trapping the hook.  The user's function will
+no longer be run, and invoke the user's destroy method,
+if it was supplied to <link linkend="gsk-hook-trap"><type>gsk_hook_trap</type></link>.
+</para>
+<para>
+If you untrap the hook while it is executing,
+the destroy handler will be deferred
+until after the hook is done notifying and/or shutdown-notifying.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to untrap
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-is-trapped" role="macro">
+<title>gsk_hook_is_trapped()</title>
+<indexterm zone="gsk-hook-is-trapped"><primary sortas="gsk_hook_is_trapped">gsk_hook_is_trapped</primary></indexterm><programlisting>#define             gsk_hook_is_trapped(hook)</programlisting>
+<para>
+Return whether the hook is trapped (has a callback).
+</para>
+<para>
+Note that the hook may be blocked.
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara>the hook to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-block" role="function">
+<title>gsk_hook_block ()</title>
+<indexterm zone="gsk-hook-block"><primary sortas="gsk_hook_block">gsk_hook_block</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_block                      (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+Temporarily block the hook from triggerring the callback.
+This may cause the set_poll method to be run.
+</para>
+<para>
+This increases a block_count, so you may call
+gsk_hook_block as many times as you like,
+but you must call <link linkend="gsk-hook-unblock"><type>gsk_hook_unblock</type></link> an equal number of times.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to block.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-unblock" role="function">
+<title>gsk_hook_unblock ()</title>
+<indexterm zone="gsk-hook-unblock"><primary sortas="gsk_hook_unblock">gsk_hook_unblock</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_unblock                    (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+Undoes a <link linkend="gsk-hook-block"><function>gsk_hook_block()</function></link>.  The block count is decreased,
+and if it gets to 0, the hook may be eligible to start
+triggering again.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to unblock.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-shutdown" role="function">
+<title>gsk_hook_shutdown ()</title>
+<indexterm zone="gsk-hook-shutdown"><primary sortas="gsk_hook_shutdown">gsk_hook_shutdown</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_hook_shutdown                   (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Shutdown a hook.  You may call gsk_hook_shutdown on a hook more than
+once, but it will be ignored after the first time.
+</para>
+<para>
+Note that when gsk_hook_shutdown succeeds, the hook is not necessarily
+completely shut down.  Some hooks (for example, for a socket waiting
+for a reply from a remote server) may remain in the SHUTTING_DOWN state
+for some time before the shutdown completes and the user's shutdown
+callback is invoked.  You may test whether the shutdown has completed
+using GSK_HOOK_TEST_SHUTTING_DOWN (hook): if true, the shutdown is still
+in progress.
+</para>
+<para>
+Regardless of whether the shutdown succeeds, or whether the shutdown
+completes immediately, the hook will be marked unavailable after
+calling gsk_hook_shutdown.  (That is, GSK_HOOK_TEST_IS_AVAILABLE (hook)
+will be false.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to shut down.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> true if successful, or false if an error occurred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-init" role="function">
+<title>gsk_hook_init ()</title>
+<indexterm zone="gsk-hook-init"><primary sortas="gsk_hook_init">gsk_hook_init</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_init                       (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="GskHookFlags">GskHookFlags</link> flags,
+                                                         <link linkend="guint">guint</link> inset,
+                                                         <link linkend="guint">guint</link> class_set_poll_offset,
+                                                         <link linkend="guint">guint</link> class_shutdown_offset);</programlisting>
+<para>
+Prepare a GskHook to be used.  This should almost always
+be done in the instance-init function of the class which contains the hook.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> The hook to initialize.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> Special details about the hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>inset</parameter>&#160;:</term>
+<listitem><simpara> Offset in bytes of this hook inside the containing object.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>class_set_poll_offset</parameter>&#160;:</term>
+<listitem><simpara> Offset in bytes of the set_poll
+method in the containing object's class.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>class_shutdown_offset</parameter>&#160;:</term>
+<listitem><simpara> Offset in bytes of the shutdown
+method in the containing object's class, or 0 if there is no shutdown
+method.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-class-init" role="function">
+<title>gsk_hook_class_init ()</title>
+<indexterm zone="gsk-hook-class-init"><primary sortas="gsk_hook_class_init">gsk_hook_class_init</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_class_init                 (<link linkend="GObjectClass">GObjectClass</link> *object_class,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="guint">guint</link> hook_offset);</programlisting>
+<para>
+This is used to register a hook.  This is mostly used
+to make debugging printouts easier to read.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>object_class</parameter>&#160;:</term>
+<listitem><simpara> the class of the object which contains this hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> an identifying name for this type of hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>hook_offset</parameter>&#160;:</term>
+<listitem><simpara> the offset of the hook in the structure.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-notify" role="function">
+<title>gsk_hook_notify ()</title>
+<indexterm zone="gsk-hook-notify"><primary sortas="gsk_hook_notify">gsk_hook_notify</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_notify                     (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+This is called by the implementation of a class
+which contains a hook to trigger it, i.e. call the user's
+callback.
+</para>
+<para>
+Generally, you should only call this if the user is ready
+for data (so that set_poll has been called with TRUE);
+however, if you call it, it will be remembered,
+and immediately triggered once it is allowed to:
+for example, when the block count gets to 0.
+</para>
+<para>
+Some gory details come up now and then:
+</para>
+<para>
+- there are reentrance guards which prevent recursive calls
+  to do anything.  Also, notify within shutdown is not allowed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook which is triggering.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-notify-shutdown" role="function">
+<title>gsk_hook_notify_shutdown ()</title>
+<indexterm zone="gsk-hook-notify-shutdown"><primary sortas="gsk_hook_notify_shutdown">gsk_hook_notify_shutdown</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_notify_shutdown            (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+Notify the user that a shutdown event has occurred.
+This may happen because you called <link linkend="gsk-hook-shutdown"><function>gsk_hook_shutdown()</function></link>
+or because the hook was shut down by the object:
+for example, the remote side of a connection may have shutdown.
+</para>
+<para>
+This does nothing if the hook is not presently available or in the
+middle of shutting down (i.e., IS_AVAILABLE || SHUTTING_DOWN); after
+this call the hook will be marked both unavailable and completely
+shut down (i.e., !IS_AVAILABLE &amp;&amp; !SHUTTING_DOWN).
+</para>
+<para>
+A shutdown hook will no longer be idle-notified.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook which has shut down.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-destruct" role="function">
+<title>gsk_hook_destruct ()</title>
+<indexterm zone="gsk-hook-destruct"><primary sortas="gsk_hook_destruct">gsk_hook_destruct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_destruct                   (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+This should be called only by the class which contains the hook,
+from the instance's finalize method.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to destroy.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-set-idle-notify" role="function">
+<title>gsk_hook_set_idle_notify ()</title>
+<indexterm zone="gsk-hook-set-idle-notify"><primary sortas="gsk_hook_set_idle_notify">gsk_hook_set_idle_notify</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_set_idle_notify            (<link linkend="GskHook">GskHook</link> *hook,
+                                                         <link linkend="gboolean">gboolean</link> should_idle_notify);</programlisting>
+<para>
+When idle_notify is set, the hook will run every cycle of the
+main-loop.  Nothing will happen unless the user
+has trapped the event, and it's not blocked.
+</para>
+<para>
+Opposite of <link linkend="gsk-hook-clear-idle-notify"><function>gsk_hook_clear_idle_notify()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to run constantly.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>should_idle_notify</parameter>&#160;:</term>
+<listitem><simpara> whether to run the user's callback
+continually.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-mark-idle-notify" role="function">
+<title>gsk_hook_mark_idle_notify ()</title>
+<indexterm zone="gsk-hook-mark-idle-notify"><primary sortas="gsk_hook_mark_idle_notify">gsk_hook_mark_idle_notify</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_mark_idle_notify           (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+When idle_notify is set, the hook will run every cycle of the
+main-loop.  Of course, nothing will happen unless the user
+has trapped the event, and it's not blocked.
+</para>
+<para>
+Opposite of <link linkend="gsk-hook-clear-idle-notify"><function>gsk_hook_clear_idle_notify()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to run constantly.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-clear-idle-notify" role="function">
+<title>gsk_hook_clear_idle_notify ()</title>
+<indexterm zone="gsk-hook-clear-idle-notify"><primary sortas="gsk_hook_clear_idle_notify">gsk_hook_clear_idle_notify</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_clear_idle_notify          (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+Stop running the hook at every cycle of the main-loop.
+</para>
+<para>
+Opposite of <link linkend="gsk-hook-set-idle-notify"><function>gsk_hook_set_idle_notify()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook to stop running constantly.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-mark-never-blocks" role="function">
+<title>gsk_hook_mark_never_blocks ()</title>
+<indexterm zone="gsk-hook-mark-never-blocks"><primary sortas="gsk_hook_mark_never_blocks">gsk_hook_mark_never_blocks</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_hook_mark_never_blocks          (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+Indicate that you will never block, ever.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> the hook which will never block.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-hook-get-last-poll-state" role="function">
+<title>gsk_hook_get_last_poll_state ()</title>
+<indexterm zone="gsk-hook-get-last-poll-state"><primary sortas="gsk_hook_get_last_poll_state">gsk_hook_get_last_poll_state</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_hook_get_last_poll_state        (<link linkend="GskHook">GskHook</link> *hook);</programlisting>
+<para>
+Get whether this hook is supposed to be polling or not.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>hook</parameter>&#160;:</term>
+<listitem><simpara> test whether the last invocation of the set-poll function
+was called with TRUE or FALSE.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the hook is being polled.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-INIT--CAPS" role="macro">
+<title>GSK_HOOK_INIT()</title>
+<indexterm zone="GSK-HOOK-INIT--CAPS"><primary sortas="GSK_HOOK_INIT">GSK_HOOK_INIT</primary></indexterm><programlisting>#define             GSK_HOOK_INIT(object, struct, member, flags, set_poll, shutdown)</programlisting>
+<para>
+Initialize a hook which is contained in a GObject.
+This should only be used for GObject instance init functions.
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&#160;:</term>
+<listitem><simpara>a pointer to an instance of a GObject.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>struct</parameter>&#160;:</term>
+<listitem><simpara>name of type for this init function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member</parameter>&#160;:</term>
+<listitem><simpara>member name of hook inside of type <parameter>struct</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>@GskHookFlags which apply to this hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>set_poll</parameter>&#160;:</term>
+<listitem><simpara>member function of type gboolean(*)(GObject*, gpointer)
+in the class whose name is <parameter>struct</parameter> with Class appended.
+to call to specify whether or not the hook should be triggered.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown</parameter>&#160;:</term>
+<listitem><simpara>member function to perform shutdown
+in the class whose name is <parameter>struct</parameter> with Class appended.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-INIT-NO-SHUTDOWN--CAPS" role="macro">
+<title>GSK_HOOK_INIT_NO_SHUTDOWN()</title>
+<indexterm zone="GSK-HOOK-INIT-NO-SHUTDOWN--CAPS"><primary sortas="GSK_HOOK_INIT_NO_SHUTDOWN">GSK_HOOK_INIT_NO_SHUTDOWN</primary></indexterm><programlisting>#define             GSK_HOOK_INIT_NO_SHUTDOWN(object, struct, member, flags, set_poll)</programlisting>
+<para>
+Initialize a hook which is contained in a GObject.
+This should only be used for GObject instance init functions.
+This hook is for when have no shutdown virtual is wanted
+in the base class.
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&#160;:</term>
+<listitem><simpara>a pointer to an instance of a GObject.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>struct</parameter>&#160;:</term>
+<listitem><simpara>name of type for this init function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member</parameter>&#160;:</term>
+<listitem><simpara>member name of hook inside of type <parameter>struct</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>@GskHookFlags which apply to this hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>set_poll</parameter>&#160;:</term>
+<listitem><simpara>member function of type gboolean(*)(GObject*, gpointer)
+in the class whose name is <parameter>struct</parameter> with Class appended.
+to call to specify whether or not the hook should be triggered.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HOOK-CLASS-INIT--CAPS" role="macro">
+<title>GSK_HOOK_CLASS_INIT()</title>
+<indexterm zone="GSK-HOOK-CLASS-INIT--CAPS"><primary sortas="GSK_HOOK_CLASS_INIT">GSK_HOOK_CLASS_INIT</primary></indexterm><programlisting>#define             GSK_HOOK_CLASS_INIT(object_class, hook_name, Type, member)</programlisting>
+<para>
+For assigning a hook a name.
+This is mostly used by debugging printout code.
+</para><variablelist role="params">
+<varlistentry><term><parameter>object_class</parameter>&#160;:</term>
+<listitem><simpara>a class whose instances will always have hooks.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>hook_name</parameter>&#160;:</term>
+<listitem><simpara>name of the hook.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>Type</parameter>&#160;:</term>
+<listitem><simpara>type name of the instance.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>member</parameter>&#160;:</term>
+<listitem><simpara>member name of this hook in <parameter>Type</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskhook.see-also">
+<title>See Also</title>
+<para>
+<link linkend="GskIO"><type>GskIO</type></link>, <link linkend="GskStream"><type>GskStream</type></link>
+</para>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,218 @@
+<refentry id="gsk-gskthreadpool">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskthreadpool.top_of_page">gskthreadpool</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskthreadpool</refname>
+<refpurpose>For running things in other threads.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskthreadpool.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskThreadPool">GskThreadPool</link>;
+<link linkend="gpointer">gpointer</link>            (<link linkend="GskThreadPoolRunFunc">*GskThreadPoolRunFunc</link>)             (<link linkend="gpointer">gpointer</link> run_data);
+<link linkend="void">void</link>                (<link linkend="GskThreadPoolResultFunc">*GskThreadPoolResultFunc</link>)          (<link linkend="gpointer">gpointer</link> run_data,
+                                                         <link linkend="gpointer">gpointer</link> result_data);
+<link linkend="void">void</link>                (<link linkend="GskThreadPoolDestroyFunc">*GskThreadPoolDestroyFunc</link>)         (<link linkend="gpointer">gpointer</link> run_data,
+                                                         <link linkend="gpointer">gpointer</link> result_data);
+<link linkend="GskThreadPool">GskThreadPool</link> *     <link linkend="gsk-thread-pool-new">gsk_thread_pool_new</link>                 (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="guint">guint</link> max_threads);
+<link linkend="void">void</link>                <link linkend="gsk-thread-pool-push">gsk_thread_pool_push</link>                (<link linkend="GskThreadPool">GskThreadPool</link> *pool,
+                                                         <link linkend="GskThreadPoolRunFunc">GskThreadPoolRunFunc</link> run,
+                                                         <link linkend="GskThreadPoolResultFunc">GskThreadPoolResultFunc</link> handle_result,
+                                                         <link linkend="gpointer">gpointer</link> run_data,
+                                                         <link linkend="GskThreadPoolDestroyFunc">GskThreadPoolDestroyFunc</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-thread-pool-destroy">gsk_thread_pool_destroy</link>             (<link linkend="GskThreadPool">GskThreadPool</link> *pool,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskthreadpool.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A thread pool is an optimization which allows many
+small jobs to be run in a background thread.
+Our thread pools are tied to main-loops, and
+the view process termination as
+just another kind of event.
+</para>
+<para>
+Task done notification is run in the main-thread.
+The Main-thread is the thread to which the main-loop
+belongs, and is the only thread from
+which the <link linkend="GskThreadPool"><type>GskThreadPool</type></link> methods (eg <link linkend="gsk-thread-pool-push"><type>gsk_thread_pool_push</type></link>)
+may be run.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskthreadpool.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskThreadPool" role="struct">
+<title>GskThreadPool</title>
+<indexterm zone="GskThreadPool"><primary sortas="GskThreadPool">GskThreadPool</primary></indexterm><programlisting>typedef struct _GskThreadPool GskThreadPool;</programlisting>
+<para>
+An opaque structure which houses a number of worker threads.
+</para></refsect2>
+<refsect2 id="GskThreadPoolRunFunc" role="function">
+<title>GskThreadPoolRunFunc ()</title>
+<indexterm zone="GskThreadPoolRunFunc"><primary sortas="GskThreadPoolRunFunc">GskThreadPoolRunFunc</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            (*GskThreadPoolRunFunc)             (<link linkend="gpointer">gpointer</link> run_data);</programlisting>
+<para>
+A function to be run in the background thread.
+It may create a return value that will be
+examined in the main-thread.
+</para>
+<para>
+Anytime run_data is used in this thread must be thread-safe,
+meaning: either only the background thread is accessing it,
+or it can be guarded by mutexes.
+(is that really the plural of "mutex"?)
+</para><variablelist role="params">
+<varlistentry><term><parameter>run_data</parameter>&#160;:</term>
+<listitem><simpara>data that was passed to <link linkend="gsk-thread-pool-push"><function>gsk_thread_pool_push()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the result_data, which will be passed
+to the <link linkend="GskThreadPoolResultFunc"><type>GskThreadPoolResultFunc</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskThreadPoolResultFunc" role="function">
+<title>GskThreadPoolResultFunc ()</title>
+<indexterm zone="GskThreadPoolResultFunc"><primary sortas="GskThreadPoolResultFunc">GskThreadPoolResultFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskThreadPoolResultFunc)          (<link linkend="gpointer">gpointer</link> run_data,
+                                                         <link linkend="gpointer">gpointer</link> result_data);</programlisting>
+<para>
+A function to be run in the main thread with the
+result of the background processing.
+</para><variablelist role="params">
+<varlistentry><term><parameter>run_data</parameter>&#160;:</term>
+<listitem><simpara>data that was passed to <link linkend="gsk-thread-pool-push"><function>gsk_thread_pool_push()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>result_data</parameter>&#160;:</term>
+<listitem><simpara>data that was returned by the <link linkend="GskThreadPoolRunFunc"><type>GskThreadPoolRunFunc</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskThreadPoolDestroyFunc" role="function">
+<title>GskThreadPoolDestroyFunc ()</title>
+<indexterm zone="GskThreadPoolDestroyFunc"><primary sortas="GskThreadPoolDestroyFunc">GskThreadPoolDestroyFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskThreadPoolDestroyFunc)         (<link linkend="gpointer">gpointer</link> run_data,
+                                                         <link linkend="gpointer">gpointer</link> result_data);</programlisting>
+<para>
+Function to run in the main thread after <link linkend="GskThreadPoolRunFunc"><type>GskThreadPoolRunFunc</type></link> is finished,
+or if the thread-pool is destroyed before the
+task can be started.
+</para><variablelist role="params">
+<varlistentry><term><parameter>run_data</parameter>&#160;:</term>
+<listitem><simpara>data that was passed to <link linkend="gsk-thread-pool-push"><function>gsk_thread_pool_push()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>result_data</parameter>&#160;:</term>
+<listitem><simpara>data that was returned by the <link linkend="GskThreadPoolRunFunc"><type>GskThreadPoolRunFunc</type></link>,
+or <link linkend="NULL--CAPS"><type>NULL</type></link> if the task had not been started before the thread-pool
+was destroyed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-thread-pool-new" role="function">
+<title>gsk_thread_pool_new ()</title>
+<indexterm zone="gsk-thread-pool-new"><primary sortas="gsk_thread_pool_new">gsk_thread_pool_new</primary></indexterm><programlisting><link linkend="GskThreadPool">GskThreadPool</link> *     gsk_thread_pool_new                 (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="guint">guint</link> max_threads);</programlisting>
+<para>
+Make a new thread pool.  A thread pool is a way of recycling threads
+to reduce thread construction costs.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the main loop that will manage the thread pool.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_threads</parameter>&#160;:</term>
+<listitem><simpara> maximum number of threads that may be used by
+this thread pool, or 0 to indicate that there is no limit.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated thread pool.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-thread-pool-push" role="function">
+<title>gsk_thread_pool_push ()</title>
+<indexterm zone="gsk-thread-pool-push"><primary sortas="gsk_thread_pool_push">gsk_thread_pool_push</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_thread_pool_push                (<link linkend="GskThreadPool">GskThreadPool</link> *pool,
+                                                         <link linkend="GskThreadPoolRunFunc">GskThreadPoolRunFunc</link> run,
+                                                         <link linkend="GskThreadPoolResultFunc">GskThreadPoolResultFunc</link> handle_result,
+                                                         <link linkend="gpointer">gpointer</link> run_data,
+                                                         <link linkend="GskThreadPoolDestroyFunc">GskThreadPoolDestroyFunc</link> destroy);</programlisting>
+<para>
+Add a new task for the thread-pool.
+</para>
+<para>
+The <parameter>run</parameter> function should be the slow function that must
+be run in a background thread.
+</para>
+<para>
+The <parameter>handle_result</parameter> function will be called in the current
+thread (which must be the same as the thread of the main-loop
+that was used to construct this pool) with the return
+value of <parameter>run</parameter>.
+</para>
+<para>
+The <parameter>destroy</parameter> function will be invoked in the main thread,
+after <parameter>run</parameter> and <parameter>handle_result</parameter> are done.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the pool to add the new task to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>run</parameter>&#160;:</term>
+<listitem><simpara> function to invoke in the other thread.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handle_result</parameter>&#160;:</term>
+<listitem><simpara> function to invoke in the main-loop's thread.
+It is invoked with both <parameter>run_data</parameter> and the return value from <parameter>run</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>run_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to both <parameter>run</parameter> and <parameter>handle_result</parameter> and <parameter>destroy</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to be invoked once everything else is done,
+with both <parameter>run_data</parameter> and the return value from <parameter>run</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-thread-pool-destroy" role="function">
+<title>gsk_thread_pool_destroy ()</title>
+<indexterm zone="gsk-thread-pool-destroy"><primary sortas="gsk_thread_pool_destroy">gsk_thread_pool_destroy</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_thread_pool_destroy             (<link linkend="GskThreadPool">GskThreadPool</link> *pool,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);</programlisting>
+<para>
+Destroy a thread-pool.
+This may take some time,
+so you may register a handler that will be 
+called from the main thread once the thread-pool
+is destructed.  (The memory is not yet deallocated though,
+so that hash-tables keyed off the thread-pool
+will have no race condition)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the pool to destroy.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to invoke when the thread-pool is really done.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>destroy</parameter> when all the threads in
+the thread pool as gone.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

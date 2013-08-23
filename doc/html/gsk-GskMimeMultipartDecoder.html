@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskMimeMultipartDecoder</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch11.html" title="MIME handling">
+<link rel="prev" href="gsk-gskmimemultipartpiece.html" title="gskmimemultipartpiece">
+<link rel="next" href="ch12.html" title="RPC protocols">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskmimemultipartpiece.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch11.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch12.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-GskMimeMultipartDecoder.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-GskMimeMultipartDecoder.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-GskMimeMultipartDecoder"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-GskMimeMultipartDecoder.top_of_page"></a>GskMimeMultipartDecoder</span></h2>
+<p>GskMimeMultipartDecoder — read Content-Type multipart/*.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-GskMimeMultipartDecoder.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderHook" title="GskMimeMultipartDecoderHook ()">*GskMimeMultipartDecoderHook</a>)      (<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> *multipart_decoder);
+enum                <a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderMode" title="enum GskMimeMultipartDecoderMode">GskMimeMultipartDecoderMode</a>;
+                    <a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderClass" title="GskMimeMultipartDecoderClass">GskMimeMultipartDecoderClass</a>;
+                    <a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a>;
+<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> * <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-new" title="gsk_mime_multipart_decoder_new ()">gsk_mime_multipart_decoder_new</a>
+                                                        (char **kv_pairs);
+void                <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-set-mode" title="gsk_mime_multipart_decoder_set_mode ()">gsk_mime_multipart_decoder_set_mode</a> (<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> *decoder,
+                                                         <a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderMode" title="enum GskMimeMultipartDecoderMode">GskMimeMultipartDecoderMode</a> mode);
+<a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> * <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-get-piece" title="gsk_mime_multipart_decoder_get_piece ()">gsk_mime_multipart_decoder_get_piece</a>
+                                                        (<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> *decoder);
+#define             <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-trap" title="gsk_mime_multipart_decoder_trap()">gsk_mime_multipart_decoder_trap</a>     (multipart_decoder, func, shutdown, data, destroy)
+#define             <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-untrap" title="gsk_mime_multipart_decoder_untrap()">gsk_mime_multipart_decoder_untrap</a>   (multipart_decoder)
+#define             <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-block" title="gsk_mime_multipart_decoder_block()">gsk_mime_multipart_decoder_block</a>    (multipart_decoder)
+#define             <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-unblock" title="gsk_mime_multipart_decoder_unblock()">gsk_mime_multipart_decoder_unblock</a>  (multipart_decoder)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskMimeMultipartDecoder.description"></a><h2>Description</h2>
+<p>
+This code implements the MIME multipart encapsulation
+format, which is defined
+in "RFC 2046, Section 5: MIME MultipartDecoder Media Types".
+This format is often encountered parsing form data from webpages.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskMimeMultipartDecoder.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskMimeMultipartDecoderHook"></a><h3>GskMimeMultipartDecoderHook ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskMimeMultipartDecoderHook)      (<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> *multipart_decoder);</pre>
+<p>
+Function to invoke when a new piece is available.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>multipart_decoder</code></em> :</span></p></td>
+<td>the decoder which can be read from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether to continue being notified of the availability
+of un-retrieved pieces.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMimeMultipartDecoderMode"></a><h3>enum GskMimeMultipartDecoderMode</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT,
+  GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_MEMORY,
+  GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM
+} GskMimeMultipartDecoderMode;
+</pre>
+<p>
+Multipart pieces may be streaming or a memory buffer.
+This gives the user control over which format to use.
+</p>
+<p>
+(Note: currently <a class="link" href="gsk-GskMimeMultipartDecoder.html#GSK-MIME-MULTIPART-DECODER-MODE-DEFAULT--CAPS"><span class="type">GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT</span></a>
+acts like <a class="link" href="gsk-GskMimeMultipartDecoder.html#GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-STREAM--CAPS"><span class="type">GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM</span></a>.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-MIME-MULTIPART-DECODER-MODE-DEFAULT--CAPS"></a><span class="term"><code class="literal">GSK_MIME_MULTIPART_DECODER_MODE_DEFAULT</code></span></p></td>
+<td>
+The pieces may be either streaming, or pure memory,
+whichever is easier.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-MEMORY--CAPS"></a><span class="term"><code class="literal">GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_MEMORY</code></span></p></td>
+<td>
+The pieces must be memory slabs.  They will
+not be available until all there data has been
+received and parsed.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-MIME-MULTIPART-DECODER-MODE-ALWAYS-STREAM--CAPS"></a><span class="term"><code class="literal">GSK_MIME_MULTIPART_DECODER_MODE_ALWAYS_STREAM</code></span></p></td>
+<td>
+The pieces must be streams, even if that means allocating
+a stream for just a few bytes.  This is can be slightly inconvenient.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMimeMultipartDecoderClass"></a><h3>GskMimeMultipartDecoderClass</h3>
+<pre class="programlisting">typedef struct {
+  GskStreamClass base_class;
+
+  gboolean (*set_poll_new_part) (GskMimeMultipartDecoder *decoder,
+				 gboolean do_polling);
+  void     (*shutdown_new_part) (GskMimeMultipartDecoder *decoder);
+} GskMimeMultipartDecoderClass;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMimeMultipartDecoder"></a><h3>GskMimeMultipartDecoder</h3>
+<pre class="programlisting">typedef struct {
+  GskStream      base_instance;
+
+  /* these are parsed out of the initial key-value pairs. */
+  char *type;		/* 3.1: type of the body */
+  char *start;		/* 3.2: content-id of root part */
+  char *start_info;	/* 3.3: random application information */
+} GskMimeMultipartDecoder;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-decoder-new"></a><h3>gsk_mime_multipart_decoder_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> * gsk_mime_multipart_decoder_new
+                                                        (char **kv_pairs);</pre>
+<p>
+Allocate a new MIME multipart decoder,
+which is a write-only <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>
+that converts to a stream of individual pieces.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>kv_pairs</code></em> :</span></p></td>
+<td> key,value pairs of auxillary information parsed along
+with the Content-Type field.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-decoder-set-mode"></a><h3>gsk_mime_multipart_decoder_set_mode ()</h3>
+<pre class="programlisting">void                gsk_mime_multipart_decoder_set_mode (<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> *decoder,
+                                                         <a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoderMode" title="enum GskMimeMultipartDecoderMode">GskMimeMultipartDecoderMode</a> mode);</pre>
+<p>
+Set whether to force the decoder to convert
+everything to memory or a stream, or it may
+specify to use whatever the MultipartDecoder
+internals prefer.
+</p>
+<p>
+This function should only be called immediately after
+construction.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>decoder</code></em> :</span></p></td>
+<td> the multipart decoder to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mode</code></em> :</span></p></td>
+<td> the operating mode of the decoder.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-decoder-get-piece"></a><h3>gsk_mime_multipart_decoder_get_piece ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskmimemultipartpiece.html#GskMimeMultipartPiece" title="GskMimeMultipartPiece">GskMimeMultipartPiece</a> * gsk_mime_multipart_decoder_get_piece
+                                                        (<a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder">GskMimeMultipartDecoder</a> *decoder);</pre>
+<p>
+Retrieve a piece of multipart content.
+Pieces will be retrieve in the order they are
+received.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>decoder</code></em> :</span></p></td>
+<td> the multipart decoder to retrieve the part.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a piece that the caller must
+<a class="link" href="gsk-gskmimemultipartpiece.html#gsk-mime-multipart-piece-unref" title="gsk_mime_multipart_piece_unref ()"><code class="function">gsk_mime_multipart_piece_unref()</code></a>, or NULL if there
+is no remaining piece.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-decoder-trap"></a><h3>gsk_mime_multipart_decoder_trap()</h3>
+<pre class="programlisting">#define             gsk_mime_multipart_decoder_trap(multipart_decoder, func, shutdown, data, destroy)</pre>
+<p>
+Get notification when a MIME piece is available.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>multipart_decoder</code></em> :</span></p></td>
+<td>the decoder to watch.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>function to invoke when a piece is available.
+(It will be invoked repeatedly until all the pieces have
+been dequeued)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown</code></em> :</span></p></td>
+<td>function to invoke when no more pieces will ever
+be available.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>data to pass to <em class="parameter"><code>func</code></em>, <em class="parameter"><code>shutdown</code></em> and <em class="parameter"><code>destroy</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>data to call when the trap is destroyed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-decoder-untrap"></a><h3>gsk_mime_multipart_decoder_untrap()</h3>
+<pre class="programlisting">#define             gsk_mime_multipart_decoder_untrap(multipart_decoder)</pre>
+<p>
+Untrap the new-piece-available hook.
+Its destroy method will be run.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>multipart_decoder</code></em> :</span></p></td>
+<td>the decoder to stop watching.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-decoder-block"></a><h3>gsk_mime_multipart_decoder_block()</h3>
+<pre class="programlisting">#define             gsk_mime_multipart_decoder_block(multipart_decoder)</pre>
+<p>
+Stop notifying about new MIME piece availability,
+if we are currently notifying.
+Invocations to this function may be stacked;
+it is undone with <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-unblock" title="gsk_mime_multipart_decoder_unblock()"><code class="function">gsk_mime_multipart_decoder_unblock()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>multipart_decoder</code></em> :</span></p></td>
+<td>the <a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder"><span class="type">GskMimeMultipartDecoder</span></a> to watch.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-mime-multipart-decoder-unblock"></a><h3>gsk_mime_multipart_decoder_unblock()</h3>
+<pre class="programlisting">#define             gsk_mime_multipart_decoder_unblock(multipart_decoder)</pre>
+<p>
+Resume notifying about new MIME piece availability,
+if we are currently notifying and if this is the last blocker.
+It undones one invocation of <a class="link" href="gsk-GskMimeMultipartDecoder.html#gsk-mime-multipart-decoder-block" title="gsk_mime_multipart_decoder_block()"><code class="function">gsk_mime_multipart_decoder_block()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>multipart_decoder</code></em> :</span></p></td>
+<td>the <a class="link" href="gsk-GskMimeMultipartDecoder.html#GskMimeMultipartDecoder" title="GskMimeMultipartDecoder"><span class="type">GskMimeMultipartDecoder</span></a> to stop watching.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

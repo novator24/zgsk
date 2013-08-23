@@ -1,0 +1,318 @@
+<refentry id="gsk-gskmempool">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskmempool.top_of_page">gskmempool</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskmempool</refname>
+<refpurpose>pooling memory allocators.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskmempool.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-MEM-POOL-FIXED-STATIC-INIT--CAPS">GSK_MEM_POOL_FIXED_STATIC_INIT</link>      (size)
+#define             <link linkend="GSK-MEM-POOL-STATIC-INIT--CAPS">GSK_MEM_POOL_STATIC_INIT</link>
+                    <link linkend="GskMemPool">GskMemPool</link>;
+                    <link linkend="GskMemPoolFixed">GskMemPoolFixed</link>;
+<link linkend="void">void</link>                <link linkend="gsk-mem-pool-construct">gsk_mem_pool_construct</link>              (<link linkend="GskMemPool">GskMemPool</link> *pool);
+<link linkend="void">void</link>                <link linkend="gsk-mem-pool-construct-with-scratch-buf">gsk_mem_pool_construct_with_scratch_buf</link>
+                                                        (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         <link linkend="gpointer">gpointer</link> buffer,
+                                                         <link linkend="gsize">gsize</link> buffer_size);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-mem-pool-alloc">gsk_mem_pool_alloc</link>                  (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         <link linkend="gsize">gsize</link> size);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-mem-pool-alloc0">gsk_mem_pool_alloc0</link>                 (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         <link linkend="gsize">gsize</link> size);
+<link linkend="char">char</link> *              <link linkend="gsk-mem-pool-strdup">gsk_mem_pool_strdup</link>                 (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         const <link linkend="char">char</link> *str);
+<link linkend="void">void</link>                <link linkend="gsk-mem-pool-destruct">gsk_mem_pool_destruct</link>               (<link linkend="GskMemPool">GskMemPool</link> *pool);
+<link linkend="void">void</link>                <link linkend="gsk-mem-pool-fixed-construct">gsk_mem_pool_fixed_construct</link>        (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool,
+                                                         <link linkend="gsize">gsize</link> size);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-mem-pool-fixed-alloc">gsk_mem_pool_fixed_alloc</link>            (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-mem-pool-fixed-alloc0">gsk_mem_pool_fixed_alloc0</link>           (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool);
+<link linkend="void">void</link>                <link linkend="gsk-mem-pool-fixed-free">gsk_mem_pool_fixed_free</link>             (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool,
+                                                         <link linkend="gpointer">gpointer</link> from_pool);
+<link linkend="void">void</link>                <link linkend="gsk-mem-pool-fixed-destruct">gsk_mem_pool_fixed_destruct</link>         (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskmempool.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+GSK provides two pooling memory allocators.
+The first allocator is allocate-only,
+and can allocate blocks of variable size.
+The second allocator is alloc-and-free,
+but must allocate blocks of a fixed-size,
+which must be chosen when you construct the pool.
+</para>
+<para>
+Both of these classes use the global allocator (g_new and g_free)
+as their underlying store.
+</para>
+<para>These may only be accessed by
+one thread at a time: you should make sure to have a mutex to lock
+if multiple threads have access to the same mempool.
+I suspect the majority of use cases already must be mutex-protected for
+other reasons, but stronger evidence is welcome.</para>
+</refsect1>
+
+<refsect1 id="gsk-gskmempool.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-MEM-POOL-FIXED-STATIC-INIT--CAPS" role="macro">
+<title>GSK_MEM_POOL_FIXED_STATIC_INIT()</title>
+<indexterm zone="GSK-MEM-POOL-FIXED-STATIC-INIT--CAPS"><primary sortas="GSK_MEM_POOL_FIXED_STATIC_INIT">GSK_MEM_POOL_FIXED_STATIC_INIT</primary></indexterm><programlisting>#define             GSK_MEM_POOL_FIXED_STATIC_INIT(size)</programlisting>
+<para>
+Initialize a fixed-length static mem-pool
+member-wise given its elements' size.
+</para>
+<para>
+Example:
+<programlisting>
+static GskMemPoolFixed request_pool = GSK_MEM_POOL_FIXED_STATIC_INIT(sizeof (Request));
+...
+Request *request = gsk_mem_pool_fixed_alloc (&amp;request_pool);
+...
+gsk_mem_pool_fixed_free (request);
+</programlisting>
+</para><variablelist role="params">
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara>the size of the mem-pool's elements.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-MEM-POOL-STATIC-INIT--CAPS" role="macro">
+<title>GSK_MEM_POOL_STATIC_INIT</title>
+<indexterm zone="GSK-MEM-POOL-STATIC-INIT--CAPS"><primary sortas="GSK_MEM_POOL_STATIC_INIT">GSK_MEM_POOL_STATIC_INIT</primary></indexterm><programlisting>#define             GSK_MEM_POOL_STATIC_INIT</programlisting>
+<para>
+Initialize a fixed-length static mem-pool
+member-wise.
+</para>
+<para>
+Example:
+<programlisting>
+void foo ()
+{
+  GskMemPool mem_pool = GSK_MEM_POOL_STATIC_INIT;
+  void *garbage = gsk_mem_pool_alloc (&amp;mem_pool, 20);
+  ...
+  gsk_mem_pool_destruct (&amp;mem_pool);
+}
+</programlisting>
+</para></refsect2>
+<refsect2 id="GskMemPool" role="struct">
+<title>GskMemPool</title>
+<indexterm zone="GskMemPool"><primary sortas="GskMemPool">GskMemPool</primary></indexterm><programlisting>typedef struct {
+} GskMemPool;
+</programlisting>
+<para>
+A memory pool.
+It should be created on the stack or inside another
+object.
+</para></refsect2>
+<refsect2 id="GskMemPoolFixed" role="struct">
+<title>GskMemPoolFixed</title>
+<indexterm zone="GskMemPoolFixed"><primary sortas="GskMemPoolFixed">GskMemPoolFixed</primary></indexterm><programlisting>typedef struct {
+} GskMemPoolFixed;
+</programlisting>
+<para>
+A fixed-size memory pool.
+It should be created on the stack or inside another
+object.
+</para></refsect2>
+<refsect2 id="gsk-mem-pool-construct" role="function">
+<title>gsk_mem_pool_construct ()</title>
+<indexterm zone="gsk-mem-pool-construct"><primary sortas="gsk_mem_pool_construct">gsk_mem_pool_construct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mem_pool_construct              (<link linkend="GskMemPool">GskMemPool</link> *pool);</programlisting>
+<para>
+Initialize the members of a mem-pool.
+(The memory for the mem-pool structure itself
+must be provided: either as a part of another
+structure or on the stack.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the mem-pool to initialize.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-construct-with-scratch-buf" role="function">
+<title>gsk_mem_pool_construct_with_scratch_buf ()</title>
+<indexterm zone="gsk-mem-pool-construct-with-scratch-buf"><primary sortas="gsk_mem_pool_construct_with_scratch_buf">gsk_mem_pool_construct_with_scratch_buf</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mem_pool_construct_with_scratch_buf
+                                                        (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         <link linkend="gpointer">gpointer</link> buffer,
+                                                         <link linkend="gsize">gsize</link> buffer_size);</programlisting>
+<para>
+Initialize the members of a mem-pool,
+using a scratch-buffer that the user provides.
+(The caller is responsible for ensuring that
+the buffer exists long enough)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the mem-pool to initialize.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to use.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer_size</parameter>&#160;:</term>
+<listitem><simpara> the number of bytes in buffer
+to use as storage.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-alloc" role="function">
+<title>gsk_mem_pool_alloc ()</title>
+<indexterm zone="gsk-mem-pool-alloc"><primary sortas="gsk_mem_pool_alloc">gsk_mem_pool_alloc</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_mem_pool_alloc                  (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         <link linkend="gsize">gsize</link> size);</programlisting>
+<para>
+Allocate memory from a pool,
+This function terminates the program if there is an
+out-of-memory condition.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> area to allocate memory from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara> number of bytes to allocate.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the slab of memory allocated from the pool.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-alloc0" role="function">
+<title>gsk_mem_pool_alloc0 ()</title>
+<indexterm zone="gsk-mem-pool-alloc0"><primary sortas="gsk_mem_pool_alloc0">gsk_mem_pool_alloc0</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_mem_pool_alloc0                 (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         <link linkend="gsize">gsize</link> size);</programlisting>
+<para>
+Allocate memory from a pool, and initializes it to 0.
+This function terminates the program if there is an
+out-of-memory condition.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> area to allocate memory from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara> number of bytes to allocate.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the slab of memory allocated from the pool.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-strdup" role="function">
+<title>gsk_mem_pool_strdup ()</title>
+<indexterm zone="gsk-mem-pool-strdup"><primary sortas="gsk_mem_pool_strdup">gsk_mem_pool_strdup</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_mem_pool_strdup                 (<link linkend="GskMemPool">GskMemPool</link> *pool,
+                                                         const <link linkend="char">char</link> *str);</programlisting>
+<para>
+Allocated space from the mem-pool to store
+the given string (including its terminal
+NUL character) and copy the string onto that buffer.
+</para>
+<para>
+If <parameter>str</parameter> is NULL, then NULL is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> area to allocate memory from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> a string to duplicate, or NULL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a copy of <parameter>str</parameter>, allocated from <parameter>pool</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-destruct" role="function">
+<title>gsk_mem_pool_destruct ()</title>
+<indexterm zone="gsk-mem-pool-destruct"><primary sortas="gsk_mem_pool_destruct">gsk_mem_pool_destruct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mem_pool_destruct               (<link linkend="GskMemPool">GskMemPool</link> *pool);</programlisting>
+<para>
+Destroy all chunk associated with the given mem-pool.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the pool to destroy.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-fixed-construct" role="function">
+<title>gsk_mem_pool_fixed_construct ()</title>
+<indexterm zone="gsk-mem-pool-fixed-construct"><primary sortas="gsk_mem_pool_fixed_construct">gsk_mem_pool_fixed_construct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mem_pool_fixed_construct        (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool,
+                                                         <link linkend="gsize">gsize</link> size);</programlisting>
+<para>
+Set up a fixed-size memory allocator for use.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the fixed-size memory pool to construct.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara> size of the allocation to take from the mem-pool.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-fixed-alloc" role="function">
+<title>gsk_mem_pool_fixed_alloc ()</title>
+<indexterm zone="gsk-mem-pool-fixed-alloc"><primary sortas="gsk_mem_pool_fixed_alloc">gsk_mem_pool_fixed_alloc</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_mem_pool_fixed_alloc            (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool);</programlisting>
+<para>
+Allocate a block of the Fixed-Pool's size.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the pool to allocate a block from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the allocated memory.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-fixed-alloc0" role="function">
+<title>gsk_mem_pool_fixed_alloc0 ()</title>
+<indexterm zone="gsk-mem-pool-fixed-alloc0"><primary sortas="gsk_mem_pool_fixed_alloc0">gsk_mem_pool_fixed_alloc0</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_mem_pool_fixed_alloc0           (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool);</programlisting>
+<para>
+Allocate a block of the Fixed-Pool's size.
+Set its contents to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the pool to allocate a block from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the allocated, zeroed memory.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-fixed-free" role="function">
+<title>gsk_mem_pool_fixed_free ()</title>
+<indexterm zone="gsk-mem-pool-fixed-free"><primary sortas="gsk_mem_pool_fixed_free">gsk_mem_pool_fixed_free</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mem_pool_fixed_free             (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool,
+                                                         <link linkend="gpointer">gpointer</link> from_pool);</programlisting>
+<para>
+Recycle some of the pool's memory back to it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the pool to return memory to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>from_pool</parameter>&#160;:</term>
+<listitem><simpara> the memory to return to this pool.
+It must have been allocated from this pool.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mem-pool-fixed-destruct" role="function">
+<title>gsk_mem_pool_fixed_destruct ()</title>
+<indexterm zone="gsk-mem-pool-fixed-destruct"><primary sortas="gsk_mem_pool_fixed_destruct">gsk_mem_pool_fixed_destruct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_mem_pool_fixed_destruct         (<link linkend="GskMemPoolFixed">GskMemPoolFixed</link> *pool);</programlisting>
+<para>
+Free all memory associated with this pool.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara> the pool to destroy.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

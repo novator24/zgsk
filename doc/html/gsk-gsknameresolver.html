@@ -1,0 +1,670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Socket Address Lookup by Name</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">
+<link rel="next" href="gsk-gsktypes.html" title="Useful GTypes">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskMainLoop.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gsktypes.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gsknameresolver.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gsknameresolver.description" class="shortcut">Description</a>
+                 | 
+                <a href="#gsk-gsknameresolver.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#gsk-gsknameresolver.implementations" class="shortcut">Known Implementations</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gsknameresolver"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gsknameresolver.top_of_page"></a>Socket Address Lookup by Name</span></h2>
+<p>Socket Address Lookup by Name — A way to lookup addresses from names.
+(Like a generic DNS.)</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gsknameresolver.synopsis"></a><h2>Synopsis</h2>
+<a name="GskNameResolver"></a><pre class="synopsis">
+                    <a class="link" href="gsk-gsknameresolver.html#GskNameResolver-struct" title="GskNameResolver">GskNameResolver</a>;
+                    <a class="link" href="gsk-gsknameresolver.html#GskNameResolverIface" title="GskNameResolverIface">GskNameResolverIface</a>;
+                    <a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a>;
+void                (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverSuccessFunc" title="GskNameResolverSuccessFunc ()">*GskNameResolverSuccessFunc</a>)       (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);
+void                (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFailureFunc" title="GskNameResolverFailureFunc ()">*GskNameResolverFailureFunc</a>)       (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);
+enum                <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a>;
+<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a>  <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-family-get-by-name" title="gsk_name_resolver_family_get_by_name ()">gsk_name_resolver_family_get_by_name</a>
+                                                        (const char *name);
+const char *        <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-family-get-name" title="gsk_name_resolver_family_get_name ()">gsk_name_resolver_family_get_name</a>   (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family);
+void                <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-lookup" title="gsk_name_resolver_lookup ()">gsk_name_resolver_lookup</a>            (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverSuccessFunc" title="GskNameResolverSuccessFunc ()">GskNameResolverSuccessFunc</a> success,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFailureFunc" title="GskNameResolverFailureFunc ()">GskNameResolverFailureFunc</a> failure,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+<a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> * <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-task-new" title="gsk_name_resolver_task_new ()">gsk_name_resolver_task_new</a>        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverSuccessFunc" title="GskNameResolverSuccessFunc ()">GskNameResolverSuccessFunc</a> success,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFailureFunc" title="GskNameResolverFailureFunc ()">GskNameResolverFailureFunc</a> failure,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+void                <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-task-cancel" title="gsk_name_resolver_task_cancel ()">gsk_name_resolver_task_cancel</a>       (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> *task);
+void                <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-task-ref" title="gsk_name_resolver_task_ref ()">gsk_name_resolver_task_ref</a>          (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> *task);
+void                <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-task-unref" title="gsk_name_resolver_task_unref ()">gsk_name_resolver_task_unref</a>        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> *task);
+<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a>  <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-family-unique" title="gsk_name_resolver_family_unique ()">gsk_name_resolver_family_unique</a>  (const char *name);
+void                <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-add-family-name" title="gsk_name_resolver_add_family_name ()">gsk_name_resolver_add_family_name</a>   (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         const char *name);
+<a class="link" href="gsk-gsknameresolver.html#GskNameResolver">GskNameResolver</a> *   (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamilyHandler" title="GskNameResolverFamilyHandler ()">*GskNameResolverFamilyHandler</a>)     (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+void                <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-add-family-resolver" title="gsk_name_resolver_add_family_resolver ()">gsk_name_resolver_add_family_resolver</a>
+                                                        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolver">GskNameResolver</a> *resolver);
+void                <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-add-family-handler" title="gsk_name_resolver_add_family_handler ()">gsk_name_resolver_add_family_handler</a>
+                                                        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamilyHandler" title="GskNameResolverFamilyHandler ()">GskNameResolverFamilyHandler</a> handler,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsknameresolver.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GInterface
+   +----GskNameResolver
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsknameresolver.implementations"></a><h2>Known Implementations</h2>
+<p>
+GskNameResolver is implemented by
+ <a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a>.</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsknameresolver.description"></a><h2>Description</h2>
+<p>
+This code provides (1) a method to lookup an address given the type of address and
+its name, and (2) a way of registering new types of address families and namespaces.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsknameresolver.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskNameResolver-struct"></a><h3>GskNameResolver</h3>
+<pre class="programlisting">typedef struct _GskNameResolver GskNameResolver;</pre>
+<p>
+Opaque object representing an instance which implements
+the NameResolver interface.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNameResolverIface"></a><h3>GskNameResolverIface</h3>
+<pre class="programlisting">typedef struct {
+  GObjectClass object_class;
+  gpointer (*start_resolve)  (GskNameResolver           *resolver,
+			      GskNameResolverFamily      family,
+                              const char                *name,
+                              GskNameResolverSuccessFunc success,
+                              GskNameResolverFailureFunc failure,
+                              gpointer                   func_data,
+                              GDestroyNotify             destroy);
+  gboolean (*cancel_resolve) (GskNameResolver           *resolver,
+                              gpointer                   handle);
+} GskNameResolverIface;
+</pre>
+<p>
+An interface that can be implemented by a class which provides name-lookups.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"
+>GObjectClass</a> <em class="structfield"><code>object_class</code></em>;</span></p></td>
+<td>base class.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>start_resolve</code></em> ()</span></p></td>
+<td>method to start a name lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>cancel_resolve</code></em> ()</span></p></td>
+<td>method to cancel a name lookup.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNameResolverTask"></a><h3>GskNameResolverTask</h3>
+<pre class="programlisting">typedef struct _GskNameResolverTask GskNameResolverTask;</pre>
+<p>
+An opaque type representing a name lookup (which may be running,
+or it may be succeeded, failed or been cancelled).
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNameResolverSuccessFunc"></a><h3>GskNameResolverSuccessFunc ()</h3>
+<pre class="programlisting">void                (*GskNameResolverSuccessFunc)       (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);</pre>
+<p>
+Function to call when an address has been successfully found for the name.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td>the address corresponding to the name.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td>data passed to <code class="function">gsk_name_resolve()</code>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNameResolverFailureFunc"></a><h3>GskNameResolverFailureFunc ()</h3>
+<pre class="programlisting">void                (*GskNameResolverFailureFunc)       (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);</pre>
+<p>
+Function to call when a name lookup fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>what when wrong with the name lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td>data passed to <code class="function">gsk_name_resolve()</code>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNameResolverFamily"></a><h3>enum GskNameResolverFamily</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_NAME_RESOLVER_FAMILY_NONE,
+  GSK_NAME_RESOLVER_FAMILY_IPV4
+} GskNameResolverFamily;
+</pre>
+<p>
+Namespaces.  This enum is extendable.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-NAME-RESOLVER-FAMILY-NONE--CAPS"></a><span class="term"><code class="literal">GSK_NAME_RESOLVER_FAMILY_NONE</code></span></p></td>
+<td>
+An invalid namespace used to report errors.  Must be 0.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-NAME-RESOLVER-FAMILY-IPV4--CAPS"></a><span class="term"><code class="literal">GSK_NAME_RESOLVER_FAMILY_IPV4</code></span></p></td>
+<td>
+The IPv4 namespace, used for practically all of the internet (in 2003)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-family-get-by-name"></a><h3>gsk_name_resolver_family_get_by_name ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a>  gsk_name_resolver_family_get_by_name
+                                                        (const char *name);</pre>
+<p>
+Get the <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily"><span class="type">GskNameResolverFamily</span></a> of a resolver namespace
+by ascii string.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> the name of the namespace, as a c string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the family, or 0 on error.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-family-get-name"></a><h3>gsk_name_resolver_family_get_name ()</h3>
+<pre class="programlisting">const char *        gsk_name_resolver_family_get_name   (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family);</pre>
+<p>
+Get the resolver-namespace as a printable c string.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>family</code></em> :</span></p></td>
+<td> the namespace family to enquire about.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the namespace's name as a c string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-lookup"></a><h3>gsk_name_resolver_lookup ()</h3>
+<pre class="programlisting">void                gsk_name_resolver_lookup            (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverSuccessFunc" title="GskNameResolverSuccessFunc ()">GskNameResolverSuccessFunc</a> success,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFailureFunc" title="GskNameResolverFailureFunc ()">GskNameResolverFailureFunc</a> failure,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Begin a non-cancellable name-lookup.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>family</code></em> :</span></p></td>
+<td> name family to perform the lookup in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> name to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>success</code></em> :</span></p></td>
+<td> callback for successful name-lookup: this will
+be called with the <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a> that was found.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>failure</code></em> :</span></p></td>
+<td> callback for failure.  This is invoked with the
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+><span class="type">GError</span></a> object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td> data to call to the callbacks.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to be called after the callbacks are done.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-task-new"></a><h3>gsk_name_resolver_task_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> * gsk_name_resolver_task_new        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverSuccessFunc" title="GskNameResolverSuccessFunc ()">GskNameResolverSuccessFunc</a> success,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFailureFunc" title="GskNameResolverFailureFunc ()">GskNameResolverFailureFunc</a> failure,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Begin a name lookup.  This may succeed before the function returns.
+It you wish to cancel a name resolution task, call
+<a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-task-cancel" title="gsk_name_resolver_task_cancel ()"><code class="function">gsk_name_resolver_task_cancel()</code></a>.  In any event,
+you must <a class="link" href="gsk-gsknameresolver.html#gsk-name-resolver-task-unref" title="gsk_name_resolver_task_unref ()"><code class="function">gsk_name_resolver_task_unref()</code></a> once you are done
+with the handle.  (This will NOT cause a running task to be cancelled.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>family</code></em> :</span></p></td>
+<td> name space to look the address up in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> name within <em class="parameter"><code>family</code></em>'s namespace.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>success</code></em> :</span></p></td>
+<td> function to be called with an appropriate <a class="link" href="GskSocketAddress.html" title="Socket Addresses."><span class="type">GskSocketAddress</span></a>
+   once the name is successfully resolved.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>failure</code></em> :</span></p></td>
+<td> function to call if the name lookup failed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>success</code></em> or <em class="parameter"><code>failure</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> optionally called after <em class="parameter"><code>success</code></em> or <em class="parameter"><code>failure</code></em>, to deallocate
+func_data usually.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference to a <a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask"><span class="type">GskNameResolverTask</span></a> which can
+be used to cancel or query the task.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-task-cancel"></a><h3>gsk_name_resolver_task_cancel ()</h3>
+<pre class="programlisting">void                gsk_name_resolver_task_cancel       (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> *task);</pre>
+<p>
+Stops the name lookup from continuing.
+Neither the success or failure functions will be invoked subsequently,
+but the destroy method will be.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>task</code></em> :</span></p></td>
+<td> a running name resolution task to cancel.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-task-ref"></a><h3>gsk_name_resolver_task_ref ()</h3>
+<pre class="programlisting">void                gsk_name_resolver_task_ref          (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> *task);</pre>
+<p>
+Increase the reference count on a name-resolver task.
+This is mostly useless outside the resolver code.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>task</code></em> :</span></p></td>
+<td> task whose reference count should be increased.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-task-unref"></a><h3>gsk_name_resolver_task_unref ()</h3>
+<pre class="programlisting">void                gsk_name_resolver_task_unref        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverTask" title="GskNameResolverTask">GskNameResolverTask</a> *task);</pre>
+<p>
+Decrease the reference count on a name-resolver task, freeing it if needed.
+This does NOT cancel the task.  You MUST unref the task returned by
+<code class="function">gsk_name_resolve()</code>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>task</code></em> :</span></p></td>
+<td> task whose reference count should be decreased.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-family-unique"></a><h3>gsk_name_resolver_family_unique ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a>  gsk_name_resolver_family_unique  (const char *name);</pre>
+<p>
+Allocate a unique GskNameResolverFamily
+given a new name, or return the old GskNameResolverFamily
+if one already exists.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> name of a new namespace to register.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the family corresponding to <em class="parameter"><code>name</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-add-family-name"></a><h3>gsk_name_resolver_add_family_name ()</h3>
+<pre class="programlisting">void                gsk_name_resolver_add_family_name   (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         const char *name);</pre>
+<p>
+Add a new nickname for the name resolver family.
+</p>
+<p>
+The family is the name of the namespace.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>family</code></em> :</span></p></td>
+<td> registered family to give a new name for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> alias name for <em class="parameter"><code>family</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskNameResolverFamilyHandler"></a><h3>GskNameResolverFamilyHandler ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsknameresolver.html#GskNameResolver">GskNameResolver</a> *   (*GskNameResolverFamilyHandler)     (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+Create a reference to a name-resolver on demand.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-add-family-resolver"></a><h3>gsk_name_resolver_add_family_resolver ()</h3>
+<pre class="programlisting">void                gsk_name_resolver_add_family_resolver
+                                                        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolver">GskNameResolver</a> *resolver);</pre>
+<p>
+Add a name-resolver that will handle a request
+of a given family.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>family</code></em> :</span></p></td>
+<td> registered family to provide an alias for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>resolver</code></em> :</span></p></td>
+<td> name resolver to use for addresses in <em class="parameter"><code>family</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-name-resolver-add-family-handler"></a><h3>gsk_name_resolver_add_family_handler ()</h3>
+<pre class="programlisting">void                gsk_name_resolver_add_family_handler
+                                                        (<a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamily" title="enum GskNameResolverFamily">GskNameResolverFamily</a> family,
+                                                         <a class="link" href="gsk-gsknameresolver.html#GskNameResolverFamilyHandler" title="GskNameResolverFamilyHandler ()">GskNameResolverFamilyHandler</a> handler,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Add a name-resolver that will handle a request
+of a given family.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>family</code></em> :</span></p></td>
+<td> registered family to provide a resolver implementation for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handler</code></em> :</span></p></td>
+<td> ...
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>handler</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to call when the handler has deregistered.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

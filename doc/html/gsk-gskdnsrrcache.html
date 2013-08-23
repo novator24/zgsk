@@ -1,0 +1,905 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskdnsrrcache</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch09.html" title="DNS library (client and server support)">
+<link rel="prev" href="gsk-gskdns.html" title="gskdns">
+<link rel="next" href="gsk-gskdnsclient.html" title="gskdnsclient">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskdns.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch09.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskdnsclient.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskdnsrrcache.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskdnsrrcache.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskdnsrrcache"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskdnsrrcache.top_of_page"></a>gskdnsrrcache</span></h2>
+<p>gskdnsrrcache — A cache of Resource Record data.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskdnsrrcache.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a>;
+#define             <a class="link" href="gsk-gskdnsrrcache.html#GSK-TYPE-DNS-RR-CACHE--CAPS" title="GSK_TYPE_DNS_RR_CACHE">GSK_TYPE_DNS_RR_CACHE</a>
+<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *     <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-new" title="gsk_dns_rr_cache_new ()">gsk_dns_rr_cache_new</a>                (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"
+>guint64</a> max_bytes,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_records);
+<a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> * <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-insert" title="gsk_dns_rr_cache_insert ()">gsk_dns_rr_cache_insert</a>          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_authoritative,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> cur_time);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-list" title="gsk_dns_rr_cache_lookup_list ()">gsk_dns_rr_cache_lookup_list</a>        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class);
+<a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> * <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-one" title="gsk_dns_rr_cache_lookup_one ()">gsk_dns_rr_cache_lookup_one</a>      (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class,
+                                                         GskDnsRRCacheLookupFlags flags);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-is-negative" title="gsk_dns_rr_cache_is_negative ()">gsk_dns_rr_cache_is_negative</a>        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class);
+void                <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-unlock" title="gsk_dns_rr_cache_unlock ()">gsk_dns_rr_cache_unlock</a>             (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);
+void                <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lock" title="gsk_dns_rr_cache_lock ()">gsk_dns_rr_cache_lock</a>               (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);
+void                <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-mark-user" title="gsk_dns_rr_cache_mark_user ()">gsk_dns_rr_cache_mark_user</a>          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);
+void                <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-unmark-user" title="gsk_dns_rr_cache_unmark_user ()">gsk_dns_rr_cache_unmark_user</a>        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);
+void                <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-add-negative" title="gsk_dns_rr_cache_add_negative ()">gsk_dns_rr_cache_add_negative</a>       (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> expire_time,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_authoritative);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-load-zone" title="gsk_dns_rr_cache_load_zone ()">gsk_dns_rr_cache_load_zone</a>          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *filename,
+                                                         const char *default_origin,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-get-ns-addr" title="gsk_dns_rr_cache_get_ns_addr ()">gsk_dns_rr_cache_get_ns_addr</a>        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *host,
+                                                         const char **ns_name_out,
+                                                         <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a> **address_out);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-get-addr" title="gsk_dns_rr_cache_get_addr ()">gsk_dns_rr_cache_get_addr</a>           (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *host,
+                                                         <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a> **address);
+<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *     <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-ref" title="gsk_dns_rr_cache_ref ()">gsk_dns_rr_cache_ref</a>                (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);
+void                <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-unref" title="gsk_dns_rr_cache_unref ()">gsk_dns_rr_cache_unref</a>              (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);
+void                <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-flush" title="gsk_dns_rr_cache_flush ()">gsk_dns_rr_cache_flush</a>              (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> cur_time);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-parse-etc-hosts-line" title="gsk_dns_rr_cache_parse_etc_hosts_line ()">gsk_dns_rr_cache_parse_etc_hosts_line</a>
+                                                        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *text);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-parse-etc-hosts" title="gsk_dns_rr_cache_parse_etc_hosts ()">gsk_dns_rr_cache_parse_etc_hosts</a>    (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> may_be_missing);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsrrcache.description"></a><h2>Description</h2>
+<p>
+This in a database of <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord"><span class="type">GskDnsResourceRecord</span></a>'s, as well as caching certain
+negative information.  Furthermore, the <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache"><span class="type">GskDnsRRCache</span></a> knows how to expire
+obsolete resource records automatically.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsrrcache.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDnsRRCache"></a><h3>GskDnsRRCache</h3>
+<pre class="programlisting">typedef struct _GskDnsRRCache GskDnsRRCache;</pre>
+<p>
+A cache of resource records and related information.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-TYPE-DNS-RR-CACHE--CAPS"></a><h3>GSK_TYPE_DNS_RR_CACHE</h3>
+<pre class="programlisting">#define             GSK_TYPE_DNS_RR_CACHE</pre>
+<p>
+Return the GType of a <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache"><span class="type">GskDnsRRCache</span></a>.
+(It is a boxed type.)
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-new"></a><h3>gsk_dns_rr_cache_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *     gsk_dns_rr_cache_new                (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"
+>guint64</a> max_bytes,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_records);</pre>
+<p>
+Create a new, empty DNS cache.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_bytes</code></em> :</span></p></td>
+<td> the maximum number of bytes to use for all the resource
+records and negative information in this pool.  (Note that there is other
+overhead, like hash-tables, which is not considered in this number.)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_records</code></em> :</span></p></td>
+<td> the maximum number of records in this cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new GskDnsRRCache.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-insert"></a><h3>gsk_dns_rr_cache_insert ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> * gsk_dns_rr_cache_insert          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_authoritative,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> cur_time);</pre>
+<p>
+Insert a new finding into the resource-record cache.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>record</code></em> :</span></p></td>
+<td> the record to store in the cache.
+(The cache will maintain its own copy of the data)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_authoritative</code></em> :</span></p></td>
+<td> whether the entry comes from an authoritative
+source, as defined by RFC 1034.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cur_time</code></em> :</span></p></td>
+<td> the current time, used for figuring out the absolute expiration time.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+A new copy of the record is returned; if you wish to guarantee that
+the record is not deleted, you should call <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lock" title="gsk_dns_rr_cache_lock ()"><code class="function">gsk_dns_rr_cache_lock()</code></a> on it.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-lookup-list"></a><h3>gsk_dns_rr_cache_lookup_list ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            gsk_dns_rr_cache_lookup_list        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class);</pre>
+<p>
+Lookup some or all information about a given name in
+<em class="parameter"><code>rr_cache</code></em>'s memory.
+</p>
+<p>
+If you receive NULL, it may be because we have gotten
+negative information registered with <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-add-negative" title="gsk_dns_rr_cache_add_negative ()"><code class="function">gsk_dns_rr_cache_add_negative()</code></a>
+or because we don't have a relevant record on file.
+You may call <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-is-negative" title="gsk_dns_rr_cache_is_negative ()"><code class="function">gsk_dns_rr_cache_is_negative()</code></a> to distinguish these cases.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>owner</code></em> :</span></p></td>
+<td> the domain name to lookup resource-records for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_type</code></em> :</span></p></td>
+<td> the type of resource-record to look up.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_class</code></em> :</span></p></td>
+<td> the address namespace in which to look for the information.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a list of <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord"><span class="type">GskDnsResourceRecord</span></a> which you must
+call <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lock" title="gsk_dns_rr_cache_lock ()"><code class="function">gsk_dns_rr_cache_lock()</code></a> on if you want to keep around.
+However, you must call <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#g-slist-free"
+><code class="function">g_slist_free()</code></a> on the list itself.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-lookup-one"></a><h3>gsk_dns_rr_cache_lookup_one ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> * gsk_dns_rr_cache_lookup_one      (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class,
+                                                         GskDnsRRCacheLookupFlags flags);</pre>
+<p>
+Find the first appropriate resource record of a given
+specification.
+</p>
+<p>
+If you receive NULL, it may be because we have gotten
+negative information registered with <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-add-negative" title="gsk_dns_rr_cache_add_negative ()"><code class="function">gsk_dns_rr_cache_add_negative()</code></a>
+or because we don't have a relevant record on file.
+You may call <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-is-negative" title="gsk_dns_rr_cache_is_negative ()"><code class="function">gsk_dns_rr_cache_is_negative()</code></a> to distinguish these cases.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>owner</code></em> :</span></p></td>
+<td> the domain name to lookup resource-records for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_type</code></em> :</span></p></td>
+<td> the type of resource-record to look up.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_class</code></em> :</span></p></td>
+<td> the address namespace in which to look for the information.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a pointer to a <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord"><span class="type">GskDnsResourceRecord</span></a>.
+You must call <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lock" title="gsk_dns_rr_cache_lock ()"><code class="function">gsk_dns_rr_cache_lock()</code></a> on it if you want to keep it around.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-is-negative"></a><h3>gsk_dns_rr_cache_is_negative ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_dns_rr_cache_is_negative        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class);</pre>
+<p>
+Look to see if we have an explicit negative
+entry for this resource-record.
+</p>
+<p>
+Note that if <em class="parameter"><code>query_type</code></em> or <em class="parameter"><code>query_class</code></em>
+is WILDCARD then there must be a negative wildcard
+resource-record in the cache.
+</p>
+<p>
+A negative WILDCARD resource-record in the cache will
+satisfy any type or class.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>owner</code></em> :</span></p></td>
+<td> name to lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_type</code></em> :</span></p></td>
+<td> type of query to answer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_class</code></em> :</span></p></td>
+<td> class of query to answer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> TRUE if an explicit negative entry exists in the cache.
+  FALSE means either a positive entry or no entry exists in the cache.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-unlock"></a><h3>gsk_dns_rr_cache_unlock ()</h3>
+<pre class="programlisting">void                gsk_dns_rr_cache_unlock             (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);</pre>
+<p>
+Reduce the lock-count of this record within the cache.
+When a record is locked, it will not be deleted, even
+if memory requirements are violated as a result.
+</p>
+<p>
+Once the lock-count is zero, the resource record
+will be deleted whenever it grows sufficiently stale,
+or resources grow sufficiently scarce.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>record</code></em> :</span></p></td>
+<td> a locked record belonging to that cache.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-lock"></a><h3>gsk_dns_rr_cache_lock ()</h3>
+<pre class="programlisting">void                gsk_dns_rr_cache_lock               (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);</pre>
+<p>
+Lock this record in the cache.
+When a record is locked, it will not be deleted, even
+if memory requirements are violated as a result.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>record</code></em> :</span></p></td>
+<td> a record obtained from <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-one" title="gsk_dns_rr_cache_lookup_one ()"><code class="function">gsk_dns_rr_cache_lookup_one()</code></a>
+or <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-list" title="gsk_dns_rr_cache_lookup_list ()"><code class="function">gsk_dns_rr_cache_lookup_list()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-mark-user"></a><h3>gsk_dns_rr_cache_mark_user ()</h3>
+<pre class="programlisting">void                gsk_dns_rr_cache_mark_user          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);</pre>
+<p>
+Indicate that a record should be regarded as completely
+authoritative.  This is like locking the record, but
+additionally, the record will be used no matter what other
+supposed authorities say.
+</p>
+<p>
+This is currently just used for handling /etc/hosts,
+whose entries precede any other name-server checking.
+</p>
+<p>
+You should not call this function if the is_from_user
+flag is already set.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>record</code></em> :</span></p></td>
+<td> a record obtained from <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-one" title="gsk_dns_rr_cache_lookup_one ()"><code class="function">gsk_dns_rr_cache_lookup_one()</code></a>
+or <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-lookup-list" title="gsk_dns_rr_cache_lookup_list ()"><code class="function">gsk_dns_rr_cache_lookup_list()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-unmark-user"></a><h3>gsk_dns_rr_cache_unmark_user ()</h3>
+<pre class="programlisting">void                gsk_dns_rr_cache_unmark_user        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord">GskDnsResourceRecord</a> *record);</pre>
+<p>
+Undo the affect of <a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-mark-user" title="gsk_dns_rr_cache_mark_user ()"><code class="function">gsk_dns_rr_cache_mark_user()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>record</code></em> :</span></p></td>
+<td> a record which had previously been passed to
+<a class="link" href="gsk-gskdnsrrcache.html#gsk-dns-rr-cache-mark-user" title="gsk_dns_rr_cache_mark_user ()"><code class="function">gsk_dns_rr_cache_mark_user()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-add-negative"></a><h3>gsk_dns_rr_cache_add_negative ()</h3>
+<pre class="programlisting">void                gsk_dns_rr_cache_add_negative       (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *owner,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceRecordType" title="enum GskDnsResourceRecordType">GskDnsResourceRecordType</a> query_type,
+                                                         <a class="link" href="gsk-gskdns.html#GskDnsResourceClass" title="enum GskDnsResourceClass">GskDnsResourceClass</a> query_class,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> expire_time,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_authoritative);</pre>
+<p>
+Add an entry into the cache indicating
+that there is no entry of the given type.
+</p>
+<p>
+The DNS specification refers to this as 'negative caching'.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>owner</code></em> :</span></p></td>
+<td> the name which the negative response belongs to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_type</code></em> :</span></p></td>
+<td> type of negative response.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_class</code></em> :</span></p></td>
+<td> address namespace of negative response.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>expire_time</code></em> :</span></p></td>
+<td> when this negative record should be deleted.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_authoritative</code></em> :</span></p></td>
+<td> whether this negative record came from an authority.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-load-zone"></a><h3>gsk_dns_rr_cache_load_zone ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_dns_rr_cache_load_zone          (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *filename,
+                                                         const char *default_origin,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Parse a zone file.
+This file format is defined in RFC 1035, Section 5.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> a zone file to parse.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>default_origin</code></em> :</span></p></td>
+<td> the initial origin.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the zone file was parsed successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-get-ns-addr"></a><h3>gsk_dns_rr_cache_get_ns_addr ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_dns_rr_cache_get_ns_addr        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *host,
+                                                         const char **ns_name_out,
+                                                         <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a> **address_out);</pre>
+<p>
+Look up an address for a nameserver.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>host</code></em> :</span></p></td>
+<td> the name to find a nameserver for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ns_name_out</code></em> :</span></p></td>
+<td> a string, maintained by the RRCache, for the nameserver record,
+if there is any present.
+The string should not be freed by the caller.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address_out</code></em> :</span></p></td>
+<td> pointer to where the returned address should be put.
+The address should be g_object_unref'd by the caller.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether an address could be found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-get-addr"></a><h3>gsk_dns_rr_cache_get_addr ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_dns_rr_cache_get_addr           (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *host,
+                                                         <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a> **address);</pre>
+<p>
+Look up the IP address of a name.
+This will follow CNAME records.
+</p>
+<p>
+BUGS: 
+- OBSOLETE BUG: This will allow a loop of CNAMEs to cause a hang!
+  (i think i fixed this bug...)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>host</code></em> :</span></p></td>
+<td> a name to obtain an IP address for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> pointer to where the returned address should be put.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the cache has sufficient information to resolve the name.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-ref"></a><h3>gsk_dns_rr_cache_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *     gsk_dns_rr_cache_ref                (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);</pre>
+<p>
+Increase the reference count on the resource record cache.
+The cache will not be destroyed until the reference count gets to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <em class="parameter"><code>rr_cache</code></em>, for convenience.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-unref"></a><h3>gsk_dns_rr_cache_unref ()</h3>
+<pre class="programlisting">void                gsk_dns_rr_cache_unref              (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);</pre>
+<p>
+Decrease the reference count on the resource record cache.
+The cache will be destroyed when the reference count gets to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-flush"></a><h3>gsk_dns_rr_cache_flush ()</h3>
+<pre class="programlisting">void                gsk_dns_rr_cache_flush              (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> cur_time);</pre>
+<p>
+Flush out the expired records from the cache, and
+try to ensure that we are using an acceptable amount of memory.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cur_time</code></em> :</span></p></td>
+<td> the current unix time.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-parse-etc-hosts-line"></a><h3>gsk_dns_rr_cache_parse_etc_hosts_line ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_dns_rr_cache_parse_etc_hosts_line
+                                                        (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *text);</pre>
+<p>
+Process a single line of text from an /etc/hosts file.
+</p>
+<p>
+This file format is defined in RFC 952.
+</p>
+<p>
+TODO: this does not handle IPv6 correctly!!!</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td> a line from an /etc/hosts file.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the line was parsed successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-rr-cache-parse-etc-hosts"></a><h3>gsk_dns_rr_cache_parse_etc_hosts ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_dns_rr_cache_parse_etc_hosts    (<a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> may_be_missing);</pre>
+<p>
+Process an /etc/hosts file.
+</p>
+<p>
+This file format is defined in RFC 952.
+</p>
+<p>
+TODO: this does not handle IPv6 correctly!!!</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> a resource-record cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> an /etc/hosts file.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>may_be_missing</code></em> :</span></p></td>
+<td> whether to return an error if the file does not exist.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the file was parsed successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

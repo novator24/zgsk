@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Library Initialization</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskhook.html" title="Lightweight Hookable Events">
+<link rel="next" href="gsk-gskmacros.html" title="Helpful Macros">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskhook.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskmacros.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskinit.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskinit.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskinit"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskinit.top_of_page"></a>Library Initialization</span></h2>
+<p>Library Initialization — Perform general initialization with limited argument parsing.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskinit.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a>;
+void                <a class="link" href="gsk-gskinit.html#gsk-init-info-get-defaults" title="gsk_init_info_get_defaults ()">gsk_init_info_get_defaults</a>          (<a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *info);
+void                <a class="link" href="gsk-gskinit.html#gsk-init" title="gsk_init ()">gsk_init</a>                            (int *argc,
+                                                         char ***argv,
+                                                         <a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *info);
+void                <a class="link" href="gsk-gskinit.html#gsk-init-without-threads" title="gsk_init_without_threads ()">gsk_init_without_threads</a>            (int *argc,
+                                                         char ***argv);
+#define             <a class="link" href="gsk-gskinit.html#gsk-init-get-support-threads" title="gsk_init_get_support_threads()">gsk_init_get_support_threads</a>        ()
+void                <a class="link" href="gsk-gskinit.html#gsk-init-info-parse-args" title="gsk_init_info_parse_args ()">gsk_init_info_parse_args</a>            (<a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *in_out,
+                                                         int *argc,
+                                                         char ***argv);
+void                <a class="link" href="gsk-gskinit.html#gsk-init-raw" title="gsk_init_raw ()">gsk_init_raw</a>                        (<a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *info);
+extern              _GskInitFlags <a class="link" href="gsk-gskinit.html#gsk-init-flags" title="gsk_init_flags">gsk_init_flags</a>;
+extern              gpointer <a class="link" href="gsk-gskinit.html#gsk-main-thread" title="gsk_main_thread">gsk_main_thread</a>;
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskinit.description"></a><h2>Description</h2>
+<p>
+Almost always one run <a class="link" href="gsk-gskinit.html#gsk-init" title="gsk_init ()"><code class="function">gsk_init()</code></a> at the top of main and forgets about it.
+But sometimes you wish to separate the parsing and the initialization
+so these routines give you more fine-grained control,
+by separating the parsing into <a class="link" href="gsk-gskinit.html#gsk-init-info-parse-args" title="gsk_init_info_parse_args ()"><code class="function">gsk_init_info_parse_args()</code></a> and
+the real initialization into <a class="link" href="gsk-gskinit.html#gsk-init-raw" title="gsk_init_raw ()"><code class="function">gsk_init_raw()</code></a>.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskinit.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskInitInfo"></a><h3>GskInitInfo</h3>
+<pre class="programlisting">typedef struct {
+  char *prgname;
+  guint needs_threads : 1;
+} GskInitInfo;
+</pre>
+<p>
+Information about how to initialize GSK.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>prgname</code></em>;</span></p></td>
+<td>The name of the program, may be NULL.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>needs_threads</code></em> : 1;</span></p></td>
+<td>Whether the program needs threads.  True by default.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-init-info-get-defaults"></a><h3>gsk_init_info_get_defaults ()</h3>
+<pre class="programlisting">void                gsk_init_info_get_defaults          (<a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *info);</pre>
+<p>
+Obtain the default initialization information.
+This should be run before <a class="link" href="gsk-gskinit.html#gsk-init" title="gsk_init ()"><code class="function">gsk_init()</code></a> or <a class="link" href="gsk-gskinit.html#gsk-init-info-parse-args" title="gsk_init_info_parse_args ()"><code class="function">gsk_init_info_parse_args()</code></a>.
+</p>
+<p>
+This API has been deprecated for public use,
+because it doesn't allow us to expand
+GskInitInfo without breaking binary-compatibility.
+</p>
+<p>
+Use <code class="function">gsk_init_info_new()</code> instead.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the <a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo"><span class="type">GskInitInfo</span></a> to fill.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-init"></a><h3>gsk_init ()</h3>
+<pre class="programlisting">void                gsk_init                            (int *argc,
+                                                         char ***argv,
+                                                         <a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *info);</pre>
+<p>
+Initialize the GSK library.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argc</code></em> :</span></p></td>
+<td> a reference to <code class="function">main()</code>'s argc;
+this will be decreased if arguments are parsed
+out of the argument array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argv</code></em> :</span></p></td>
+<td> a reference to <code class="function">main()</code>'s argc;
+this may have arguments removed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the <a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo"><span class="type">GskInitInfo</span></a> to use as hints,
+which will be filled with the
+actual initialization information used.
+If NULL, default initialization parameters
+will be used.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-init-without-threads"></a><h3>gsk_init_without_threads ()</h3>
+<pre class="programlisting">void                gsk_init_without_threads            (int *argc,
+                                                         char ***argv);</pre>
+<p>
+Initialize the GSK library indicating that you will not use threads.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argc</code></em> :</span></p></td>
+<td> a reference to <code class="function">main()</code>'s argc;
+this will be decreased if arguments are parsed
+out of the argument array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argv</code></em> :</span></p></td>
+<td> a reference to <code class="function">main()</code>'s argc;
+this may have arguments removed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-init-get-support-threads"></a><h3>gsk_init_get_support_threads()</h3>
+<pre class="programlisting">#define             gsk_init_get_support_threads()</pre>
+<p>
+Ascertain whether thread support is necessary.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-init-info-parse-args"></a><h3>gsk_init_info_parse_args ()</h3>
+<pre class="programlisting">void                gsk_init_info_parse_args            (<a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *in_out,
+                                                         int *argc,
+                                                         char ***argv);</pre>
+<p>
+Parse/modify arguments and return their values in <em class="parameter"><code>in_out</code></em>.
+</p>
+<p>
+The only currently supported argument is --gsk-debug=FLAGS.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>in_out</code></em> :</span></p></td>
+<td> the <a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo"><span class="type">GskInitInfo</span></a> to fill.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argc</code></em> :</span></p></td>
+<td> the argument count (may be modified)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argv</code></em> :</span></p></td>
+<td> the arguments (may be modified)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-init-raw"></a><h3>gsk_init_raw ()</h3>
+<pre class="programlisting">void                gsk_init_raw                        (<a class="link" href="gsk-gskinit.html#GskInitInfo" title="GskInitInfo">GskInitInfo</a> *info);</pre>
+<p>
+Initialize GSK.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> information to use for initializing.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-init-flags"></a><h3>gsk_init_flags</h3>
+<pre class="programlisting">extern _GskInitFlags gsk_init_flags;
+</pre>
+<p>
+Flags given to <a class="link" href="gsk-gskinit.html#gsk-init" title="gsk_init ()"><code class="function">gsk_init()</code></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-thread"></a><h3>gsk_main_thread</h3>
+<pre class="programlisting">extern gpointer gsk_main_thread;
+</pre>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

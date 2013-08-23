@@ -1,0 +1,812 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gsklistmacros</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch15.html" title="Macro Madness">
+<link rel="prev" href="ch15.html" title="Macro Madness">
+<link rel="next" href="gsk-gskrbtreemacros.html" title="gskrbtreemacros">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch15.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch15.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskrbtreemacros.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gsklistmacros.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gsklistmacros.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gsklistmacros"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gsklistmacros.top_of_page"></a>gsklistmacros</span></h2>
+<p>gsklistmacros — macro-based list macros</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gsklistmacros.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LOG2-MAX-LIST-SIZE--CAPS" title="GSK_LOG2_MAX_LIST_SIZE">GSK_LOG2_MAX_LIST_SIZE</a>
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-PUSH--CAPS" title="GSK_STACK_PUSH()">GSK_STACK_PUSH</a>                      (stack, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-POP--CAPS" title="GSK_STACK_POP()">GSK_STACK_POP</a>                       (stack, rv_node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-INSERT-AFTER--CAPS" title="GSK_STACK_INSERT_AFTER()">GSK_STACK_INSERT_AFTER</a>              (stack, above_node, new_node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-REVERSE--CAPS" title="GSK_STACK_REVERSE()">GSK_STACK_REVERSE</a>                   (stack)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-FOREACH--CAPS" title="GSK_STACK_FOREACH()">GSK_STACK_FOREACH</a>                   (stack, iter_var, code)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-SORT--CAPS" title="GSK_STACK_SORT()">GSK_STACK_SORT</a>                      (stack, comparator)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-GET-BOTTOM--CAPS" title="GSK_STACK_GET_BOTTOM()">GSK_STACK_GET_BOTTOM</a>                (stack, rv_node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-STACK-IS-EMPTY--CAPS" title="GSK_STACK_IS_EMPTY()">GSK_STACK_IS_EMPTY</a>                  (stack)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-QUEUE-ENQUEUE--CAPS" title="GSK_QUEUE_ENQUEUE()">GSK_QUEUE_ENQUEUE</a>                   (queue, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-QUEUE-DEQUEUE--CAPS" title="GSK_QUEUE_DEQUEUE()">GSK_QUEUE_DEQUEUE</a>                   (queue, rv_node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-QUEUE-PREPEND--CAPS" title="GSK_QUEUE_PREPEND()">GSK_QUEUE_PREPEND</a>                   (queue, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-QUEUE-REVERSE--CAPS" title="GSK_QUEUE_REVERSE()">GSK_QUEUE_REVERSE</a>                   (queue)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-QUEUE-SORT--CAPS" title="GSK_QUEUE_SORT()">GSK_QUEUE_SORT</a>                      (queue, comparator)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-QUEUE-IS-EMPTY--CAPS" title="GSK_QUEUE_IS_EMPTY()">GSK_QUEUE_IS_EMPTY</a>                  (queue)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-PREPEND--CAPS" title="GSK_LIST_PREPEND()">GSK_LIST_PREPEND</a>                    (list, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-APPEND--CAPS" title="GSK_LIST_APPEND()">GSK_LIST_APPEND</a>                     (list, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-REMOVE-FIRST--CAPS" title="GSK_LIST_REMOVE_FIRST()">GSK_LIST_REMOVE_FIRST</a>               (list)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-REMOVE-LAST--CAPS" title="GSK_LIST_REMOVE_LAST()">GSK_LIST_REMOVE_LAST</a>                (list)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-REMOVE--CAPS" title="GSK_LIST_REMOVE()">GSK_LIST_REMOVE</a>                     (list, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-INSERT-AFTER--CAPS" title="GSK_LIST_INSERT_AFTER()">GSK_LIST_INSERT_AFTER</a>               (list, at, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-INSERT-BEFORE--CAPS" title="GSK_LIST_INSERT_BEFORE()">GSK_LIST_INSERT_BEFORE</a>              (list, at, node)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-IS-EMPTY--CAPS" title="GSK_LIST_IS_EMPTY()">GSK_LIST_IS_EMPTY</a>                   (list)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-REVERSE--CAPS" title="GSK_LIST_REVERSE()">GSK_LIST_REVERSE</a>                    (list)
+#define             <a class="link" href="gsk-gsklistmacros.html#GSK-LIST-SORT--CAPS" title="GSK_LIST_SORT()">GSK_LIST_SORT</a>                       (list, comparator)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsklistmacros.description"></a><h2>Description</h2>
+<p>
+These macros define several kinds of "invasive" list
+structures.  We call them invasive because their
+members must be placed in structures which
+you are in charge of allocating: for example, if you are
+using a doubly-linked list, you must place two link pointers in
+your structures.
+</p>
+<p>
+Perhaps an example will help to illustrate:
+</p>
+<pre class="programlisting">
+typedef struct _IntNode IntNode;
+struct _IntNode
+{
+  int value;
+  IntNode *prev, *next;
+};
+IntNode *first_int = NULL, *last_int = NULL;
+#define GET_INT_LIST() IntNode *, first_int, last_int, prev, next
+  IntNode *add = g_new (IntNode, 1);
+  add-&gt;a = 42;
+  GSK_LIST_APPEND (GET_INT_LIST(), add);
+</pre>
+<p>
+In other words, your "list" is just the presence of the members
+"prev", "next", "first_int", "last_int" and the macro
+definition "<code class="function">GET_INT_LIST()</code>".
+</p>
+<p>You might see why this is useful immediately,
+but here's a few neat implications of
+a macro-based system:
+</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p>they are as fast as writing the list code yourself.</p></li>
+<li><p>they allow you to manage memory as you want.</p></li>
+<li><p>it is easy to have the nodes be members of several
+ lists, or other invasive data structures</p></li>
+</ul></div>
+<p>
+</p>
+<p>
+ Here are the types of lists, along with some examples:
+ </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">stack</span></p></td>
+<td>
+<p>
+   A stack is a singly-linked list where we only keep
+   track of one end.
+   </p>
+<p>
+   To define a stack, you should make a macro
+   defining the type of node, the end-pointer, and the member-name.
+   </p>
+<p>Here is a stack:
+    </p>
+<pre class="programlisting">
+typedef struct _StackNode StackNode;
+struct _StackNode
+{
+  int value;
+  StackNode *next;
+};
+StackNode *stack_top = NULL;
+#define GET_STACK()  StackNode *, stack_top, next
+    </pre>
+<p>
+   </p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">queue</span></p></td>
+<td>
+<p>
+   A queue is a singly-linked list where we keep
+   track of both ends.
+   </p>
+<p>
+   To define a queue, you should make a macro
+   defining the type of node, the first and last pointers,
+   and the member-name.
+   </p>
+<p>Here is a queue:
+    </p>
+<pre class="programlisting">
+typedef struct _QueueNode QueueNode;
+struct _QueueNode
+{
+  int value;
+  QueueNode *next;
+};
+QueueNode *head = NULL, *tail = NULL;
+#define GET_QUEUE()  QueueNode *, head, tail, next
+    </pre>
+<p>
+   </p>
+<p>This defines a queue such that "prepending" to the queue
+   means inserting an element at its "head" end.
+   To put an element at the tail end, use "enqueue",
+   and to remove from the head end, use "dequeue".
+   It is not possible to remove from the tail end.
+   </p>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">list</span></p></td>
+<td>
+<p>
+   A list is a doubly-linked list where we keep
+   track of both ends.
+   </p>
+<p>
+   To define a list, you should make a macro
+   defining the type of node, the first and last pointers,
+   and the names of the members corresponding to
+   the previous and next pointers.
+   </p>
+<p>Here is a list:
+    </p>
+<pre class="programlisting">
+typedef struct _ListNode ListNode;
+struct _ListNode
+{
+  int value;
+  ListNode *prev, *next;
+};
+ListNode *head = NULL, *tail = NULL;
+#define GET_LIST()  ListNode *, head, tail, prev, next
+    </pre>
+<p>
+   </p>
+<p>This defines a list such that "prepending"
+   means inserting an element at its "head" end,
+   and "appending" means inserting an element at its "tail" end.
+   Similarly "remove_first" will remove the head element
+   and "remove_last" will remove the tail element.
+   And, since this is a doubly-linked list, you can also
+   remove an arbitrary element.
+   </p>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>
+</p>
+<p>
+The sorting routines
+all take "comparator macros".
+These take three arguments: two nodes and a variable
+which should be set to -1, 0, or +1 if the first
+node is less than, equal to, or greater than
+the second node.
+</p>
+<p>
+For the list example, here's a comparator macro:
+</p>
+<pre class="programlisting">#define COMPARATOR(a,b,rv) \
+
+  rv = (a-&gt;value &lt; b-&gt;value) ? -1 : (a-&gt;value &gt; b-&gt;value) ? 1 : 0
+</pre>
+<p>
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsklistmacros.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GSK-LOG2-MAX-LIST-SIZE--CAPS"></a><h3>GSK_LOG2_MAX_LIST_SIZE</h3>
+<pre class="programlisting">#define             GSK_LOG2_MAX_LIST_SIZE</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-PUSH--CAPS"></a><h3>GSK_STACK_PUSH()</h3>
+<pre class="programlisting">#define             GSK_STACK_PUSH(stack, node)</pre>
+<p>
+Push an entry onto the stack.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to add to the stack.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-POP--CAPS"></a><h3>GSK_STACK_POP()</h3>
+<pre class="programlisting">#define             GSK_STACK_POP(stack, rv_node)</pre>
+<p>
+Pop an entry off the stack.  This will segfault
+if the stack is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rv_node</code></em> :</span></p></td>
+<td>this variable is set to the node that was removed from the stack.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-INSERT-AFTER--CAPS"></a><h3>GSK_STACK_INSERT_AFTER()</h3>
+<pre class="programlisting">#define             GSK_STACK_INSERT_AFTER(stack, above_node, new_node)</pre>
+<p>
+Put an element onto the stack after another element.
+After doing this, <em class="parameter"><code>above_node</code></em>'s next pointer will be set to
+<em class="parameter"><code>new_node</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>above_node</code></em> :</span></p></td>
+<td>a node in the stack whose next pointer will be set to <em class="parameter"><code>new_node</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_node</code></em> :</span></p></td>
+<td>the node to insert into the stack.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-REVERSE--CAPS"></a><h3>GSK_STACK_REVERSE()</h3>
+<pre class="programlisting">#define             GSK_STACK_REVERSE(stack)</pre>
+<p>
+Reverse the order of a stack.  The top of the stack will now point to
+the node that was the bottom.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro) to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-FOREACH--CAPS"></a><h3>GSK_STACK_FOREACH()</h3>
+<pre class="programlisting">#define             GSK_STACK_FOREACH(stack, iter_var, code)</pre>
+<p>
+Run code on each element of the list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter_var</code></em> :</span></p></td>
+<td>variable to set to each element of the list in turn.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>code</code></em> :</span></p></td>
+<td>code to invoke on each element of the list.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-SORT--CAPS"></a><h3>GSK_STACK_SORT()</h3>
+<pre class="programlisting">#define             GSK_STACK_SORT(stack, comparator)</pre>
+<p>
+Sort a stack.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>comparator</code></em> :</span></p></td>
+<td>a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-GET-BOTTOM--CAPS"></a><h3>GSK_STACK_GET_BOTTOM()</h3>
+<pre class="programlisting">#define             GSK_STACK_GET_BOTTOM(stack, rv_node)</pre>
+<p>
+Find the bottom of the stack.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rv_node</code></em> :</span></p></td>
+<td>This will assigned to the bottom of the stack,
+or NULL if the stack is empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STACK-IS-EMPTY--CAPS"></a><h3>GSK_STACK_IS_EMPTY()</h3>
+<pre class="programlisting">#define             GSK_STACK_IS_EMPTY(stack)</pre>
+<p>
+Evaluates to TRUE iff the stack is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stack</code></em> :</span></p></td>
+<td>the stack (a list of three arguments provided by a macro).
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QUEUE-ENQUEUE--CAPS"></a><h3>GSK_QUEUE_ENQUEUE()</h3>
+<pre class="programlisting">#define             GSK_QUEUE_ENQUEUE(queue, node)</pre>
+<p>
+Append a node to the queue.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue (a list of four arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QUEUE-DEQUEUE--CAPS"></a><h3>GSK_QUEUE_DEQUEUE()</h3>
+<pre class="programlisting">#define             GSK_QUEUE_DEQUEUE(queue, rv_node)</pre>
+<p>
+Remove a node from the front of the queue.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue (a list of four arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rv_node</code></em> :</span></p></td>
+<td>this pointer will be set to the node
+that was the front of the queue, or NULL if the queue was empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QUEUE-PREPEND--CAPS"></a><h3>GSK_QUEUE_PREPEND()</h3>
+<pre class="programlisting">#define             GSK_QUEUE_PREPEND(queue, node)</pre>
+<p>
+Prepend a node to the queue.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue (a list of four arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to prepend.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QUEUE-REVERSE--CAPS"></a><h3>GSK_QUEUE_REVERSE()</h3>
+<pre class="programlisting">#define             GSK_QUEUE_REVERSE(queue)</pre>
+<p>
+Reverse the order of a queue.  The front
+of the queue will point to what used to be the back
+of the queue, and vice versa.
+</p>
+<p>
+This operation runs in O(N) time.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue to reverse.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QUEUE-SORT--CAPS"></a><h3>GSK_QUEUE_SORT()</h3>
+<pre class="programlisting">#define             GSK_QUEUE_SORT(queue, comparator)</pre>
+<p>
+Sort the elements of the queue.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue (a list of four arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>comparator</code></em> :</span></p></td>
+<td>a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QUEUE-IS-EMPTY--CAPS"></a><h3>GSK_QUEUE_IS_EMPTY()</h3>
+<pre class="programlisting">#define             GSK_QUEUE_IS_EMPTY(queue)</pre>
+<p>
+Evaluates to TRUE iff the queue is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue (a list of four arguments provided by a macro).
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-PREPEND--CAPS"></a><h3>GSK_LIST_PREPEND()</h3>
+<pre class="programlisting">#define             GSK_LIST_PREPEND(list, node)</pre>
+<p>
+Prepend a node to the list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to prepend.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-APPEND--CAPS"></a><h3>GSK_LIST_APPEND()</h3>
+<pre class="programlisting">#define             GSK_LIST_APPEND(list, node)</pre>
+<p>
+Append a node to the list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-REMOVE-FIRST--CAPS"></a><h3>GSK_LIST_REMOVE_FIRST()</h3>
+<pre class="programlisting">#define             GSK_LIST_REMOVE_FIRST(list)</pre>
+<p>
+Remove the first element from the list.
+The list must not be empty initially.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-REMOVE-LAST--CAPS"></a><h3>GSK_LIST_REMOVE_LAST()</h3>
+<pre class="programlisting">#define             GSK_LIST_REMOVE_LAST(list)</pre>
+<p>
+Remove the last element from the list.
+The list must not be empty initially.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-REMOVE--CAPS"></a><h3>GSK_LIST_REMOVE()</h3>
+<pre class="programlisting">#define             GSK_LIST_REMOVE(list, node)</pre>
+<p>
+Remove a node from a list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to remove from the list.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-INSERT-AFTER--CAPS"></a><h3>GSK_LIST_INSERT_AFTER()</h3>
+<pre class="programlisting">#define             GSK_LIST_INSERT_AFTER(list, at, node)</pre>
+<p>
+Insert the new node <em class="parameter"><code>node</code></em> after the node <em class="parameter"><code>at</code></em> in the list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>at</code></em> :</span></p></td>
+<td>the node in the list telling where to insert <em class="parameter"><code>node</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to insert into the list.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-INSERT-BEFORE--CAPS"></a><h3>GSK_LIST_INSERT_BEFORE()</h3>
+<pre class="programlisting">#define             GSK_LIST_INSERT_BEFORE(list, at, node)</pre>
+<p>
+Insert the new node <em class="parameter"><code>node</code></em> before the node <em class="parameter"><code>at</code></em> in the list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>at</code></em> :</span></p></td>
+<td>the node in the list telling where to insert <em class="parameter"><code>node</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td>the node to insert into the list.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-IS-EMPTY--CAPS"></a><h3>GSK_LIST_IS_EMPTY()</h3>
+<pre class="programlisting">#define             GSK_LIST_IS_EMPTY(list)</pre>
+<p>
+Evaluates to TRUE iff the list is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro).
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-REVERSE--CAPS"></a><h3>GSK_LIST_REVERSE()</h3>
+<pre class="programlisting">#define             GSK_LIST_REVERSE(list)</pre>
+<p>
+Reverse the order of a list.  The first and last pointers
+and next/prev pointers are switched.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-LIST-SORT--CAPS"></a><h3>GSK_LIST_SORT()</h3>
+<pre class="programlisting">#define             GSK_LIST_SORT(list, comparator)</pre>
+<p>
+Sort the elements of the list.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>the list (a list of five arguments provided by a macro) to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>comparator</code></em> :</span></p></td>
+<td>a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsklistmacros.see-also"></a><h2>See Also</h2>
+<p>
+gskrbtreemacros, gskqsortmacro
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

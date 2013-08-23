@@ -1,0 +1,2110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskxmlrpc</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch12.html" title="RPC protocols">
+<link rel="prev" href="ch12.html" title="RPC protocols">
+<link rel="next" href="gsk-GskXmlrpcStream.html" title="GskXmlrpcStream">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch12.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch12.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-GskXmlrpcStream.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskxmlrpc.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskxmlrpc.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskxmlrpc"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskxmlrpc.top_of_page"></a>gskxmlrpc</span></h2>
+<p>gskxmlrpc — XMLRPC definitions</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskxmlrpc.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a>;
+                    <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a>;
+                    <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcValue" title="GskXmlrpcValue">GskXmlrpcValue</a>;
+                    <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcNamedValue" title="GskXmlrpcNamedValue">GskXmlrpcNamedValue</a>;
+                    <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a>;
+                    <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a>;
+                    <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a>;
+enum                <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcType" title="enum GskXmlrpcType">GskXmlrpcType</a>;
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *   <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-new" title="gsk_xmlrpc_struct_new ()">gsk_xmlrpc_struct_new</a>               (void);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-free" title="gsk_xmlrpc_struct_free ()">gsk_xmlrpc_struct_free</a>              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-int32" title="gsk_xmlrpc_struct_add_int32 ()">gsk_xmlrpc_struct_add_int32</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-boolean" title="gsk_xmlrpc_struct_add_boolean ()">gsk_xmlrpc_struct_add_boolean</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-double" title="gsk_xmlrpc_struct_add_double ()">gsk_xmlrpc_struct_add_double</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-string" title="gsk_xmlrpc_struct_add_string ()">gsk_xmlrpc_struct_add_string</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         const char *value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-date" title="gsk_xmlrpc_struct_add_date ()">gsk_xmlrpc_struct_add_date</a>          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-data" title="gsk_xmlrpc_struct_add_data ()">gsk_xmlrpc_struct_add_data</a>          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-struct" title="gsk_xmlrpc_struct_add_struct ()">gsk_xmlrpc_struct_add_struct</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-add-array" title="gsk_xmlrpc_struct_add_array ()">gsk_xmlrpc_struct_add_array</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-date" title="gsk_xmlrpc_struct_peek_date ()">gsk_xmlrpc_struct_peek_date</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> *out);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-boolean" title="gsk_xmlrpc_struct_peek_boolean ()">gsk_xmlrpc_struct_peek_boolean</a>      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> *out);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-double" title="gsk_xmlrpc_struct_peek_double ()">gsk_xmlrpc_struct_peek_double</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         double *out);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *   <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-struct" title="gsk_xmlrpc_struct_peek_struct ()">gsk_xmlrpc_struct_peek_struct</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);
+const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a>*   <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-data" title="gsk_xmlrpc_struct_peek_data ()">gsk_xmlrpc_struct_peek_data</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *    <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-array" title="gsk_xmlrpc_struct_peek_array ()">gsk_xmlrpc_struct_peek_array</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);
+const char *        <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-string" title="gsk_xmlrpc_struct_peek_string ()">gsk_xmlrpc_struct_peek_string</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-struct-peek-int32" title="gsk_xmlrpc_struct_peek_int32 ()">gsk_xmlrpc_struct_peek_int32</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> *out);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *    <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-new" title="gsk_xmlrpc_array_new ()">gsk_xmlrpc_array_new</a>                (void);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-free" title="gsk_xmlrpc_array_free ()">gsk_xmlrpc_array_free</a>               (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-int32" title="gsk_xmlrpc_array_add_int32 ()">gsk_xmlrpc_array_add_int32</a>          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-boolean" title="gsk_xmlrpc_array_add_boolean ()">gsk_xmlrpc_array_add_boolean</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-double" title="gsk_xmlrpc_array_add_double ()">gsk_xmlrpc_array_add_double</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-string" title="gsk_xmlrpc_array_add_string ()">gsk_xmlrpc_array_add_string</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         const char *value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-date" title="gsk_xmlrpc_array_add_date ()">gsk_xmlrpc_array_add_date</a>           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-data" title="gsk_xmlrpc_array_add_data ()">gsk_xmlrpc_array_add_data</a>           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-struct" title="gsk_xmlrpc_array_add_struct ()">gsk_xmlrpc_array_add_struct</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-array-add-array" title="gsk_xmlrpc_array_add_array ()">gsk_xmlrpc_array_add_array</a>          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *subarray);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a>*   <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-new" title="gsk_xmlrpc_request_new ()">gsk_xmlrpc_request_new</a>              (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *xmlrpc_stream);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a>*   <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-ref" title="gsk_xmlrpc_request_ref ()">gsk_xmlrpc_request_ref</a>              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-unref" title="gsk_xmlrpc_request_unref ()">gsk_xmlrpc_request_unref</a>            (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-set-name" title="gsk_xmlrpc_request_set_name ()">gsk_xmlrpc_request_set_name</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         const char *name);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-int32" title="gsk_xmlrpc_request_add_int32 ()">gsk_xmlrpc_request_add_int32</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-boolean" title="gsk_xmlrpc_request_add_boolean ()">gsk_xmlrpc_request_add_boolean</a>      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-double" title="gsk_xmlrpc_request_add_double ()">gsk_xmlrpc_request_add_double</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-string" title="gsk_xmlrpc_request_add_string ()">gsk_xmlrpc_request_add_string</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         const char *value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-date" title="gsk_xmlrpc_request_add_date ()">gsk_xmlrpc_request_add_date</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-data" title="gsk_xmlrpc_request_add_data ()">gsk_xmlrpc_request_add_data</a>         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-struct" title="gsk_xmlrpc_request_add_struct ()">gsk_xmlrpc_request_add_struct</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-add-array" title="gsk_xmlrpc_request_add_array ()">gsk_xmlrpc_request_add_array</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> * <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-new" title="gsk_xmlrpc_response_new ()">gsk_xmlrpc_response_new</a>             (void);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> * <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-ref" title="gsk_xmlrpc_response_ref ()">gsk_xmlrpc_response_ref</a>             (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-unref" title="gsk_xmlrpc_response_unref ()">gsk_xmlrpc_response_unref</a>           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-int32" title="gsk_xmlrpc_response_add_int32 ()">gsk_xmlrpc_response_add_int32</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-boolean" title="gsk_xmlrpc_response_add_boolean ()">gsk_xmlrpc_response_add_boolean</a>     (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-double" title="gsk_xmlrpc_response_add_double ()">gsk_xmlrpc_response_add_double</a>      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-string" title="gsk_xmlrpc_response_add_string ()">gsk_xmlrpc_response_add_string</a>      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         const char *value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-date" title="gsk_xmlrpc_response_add_date ()">gsk_xmlrpc_response_add_date</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-data" title="gsk_xmlrpc_response_add_data ()">gsk_xmlrpc_response_add_data</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-struct" title="gsk_xmlrpc_response_add_struct ()">gsk_xmlrpc_response_add_struct</a>      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-add-array" title="gsk_xmlrpc_response_add_array ()">gsk_xmlrpc_response_add_array</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-fault" title="gsk_xmlrpc_response_fault ()">gsk_xmlrpc_response_fault</a>           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *   <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-new" title="gsk_xmlrpc_parser_new ()">gsk_xmlrpc_parser_new</a>               (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-feed" title="gsk_xmlrpc_parser_feed ()">gsk_xmlrpc_parser_feed</a>              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser,
+                                                         const char *text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *  <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-get-request" title="gsk_xmlrpc_parser_get_request ()">gsk_xmlrpc_parser_get_request</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser);
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> * <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-get-response" title="gsk_xmlrpc_parser_get_response ()">gsk_xmlrpc_parser_get_response</a>      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-free" title="gsk_xmlrpc_parser_free ()">gsk_xmlrpc_parser_free</a>              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-to-buffer" title="gsk_xmlrpc_request_to_buffer ()">gsk_xmlrpc_request_to_buffer</a>        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+void                <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-to-buffer" title="gsk_xmlrpc_response_to_buffer ()">gsk_xmlrpc_response_to_buffer</a>       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskxmlrpc.description"></a><h2>Description</h2>
+<p>
+This file contains types mapping to the XMLRPC
+standard fundamental types, structures, arrays and faults.
+It contains a generic parser that has no I/O dependencies.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskxmlrpc.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcArray"></a><h3>GskXmlrpcArray</h3>
+<pre class="programlisting">typedef struct {
+  unsigned len;
+  GskXmlrpcValue *values;
+} GskXmlrpcArray;
+</pre>
+<p>
+An array of XMLRPC values.
+Each may have a different type.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcValue" title="GskXmlrpcValue">GskXmlrpcValue</a> *<em class="structfield"><code>values</code></em>;</span></p></td>
+<td>the values in the array.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcStruct"></a><h3>GskXmlrpcStruct</h3>
+<pre class="programlisting">typedef struct {
+  unsigned n_members;
+  GskXmlrpcNamedValue *members;
+} GskXmlrpcStruct;
+</pre>
+<p>
+A structure, which is a set of named members.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcValue"></a><h3>GskXmlrpcValue</h3>
+<pre class="programlisting">typedef struct {
+  GskXmlrpcType type;
+  union
+  {
+    int v_int32;
+    gboolean v_boolean;
+    double v_double;
+    char *v_string;
+    gulong v_date;
+    GByteArray *v_binary_data;
+    GskXmlrpcStruct *v_struct;
+    GskXmlrpcArray *v_array;
+  } data;
+} GskXmlrpcValue;
+</pre>
+<p>
+A XMLRPC value that may be of any of the XMLRPC types.
+The type is included with the value.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcNamedValue"></a><h3>GskXmlrpcNamedValue</h3>
+<pre class="programlisting">typedef struct {
+  char *name;
+  GskXmlrpcValue value;
+} GskXmlrpcNamedValue;
+</pre>
+<p>
+A name/value pair, appropriate as a structure member.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>name</code></em>;</span></p></td>
+<td>the string, name, label.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcValue" title="GskXmlrpcValue">GskXmlrpcValue</a> <em class="structfield"><code>value</code></em>;</span></p></td>
+<td>the typed value.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcRequest"></a><h3>GskXmlrpcRequest</h3>
+<pre class="programlisting">typedef struct {
+  unsigned magic;		/* private, must be first */
+  char *method_name;
+  GskXmlrpcArray *params;
+  GskXmlrpcStream *xmlrpc_stream;
+} GskXmlrpcRequest;
+</pre>
+<p>
+An XMLRPC request (invocation).
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcResponse"></a><h3>GskXmlrpcResponse</h3>
+<pre class="programlisting">typedef struct {
+  unsigned magic;		/* private, must be first */
+
+  GskXmlrpcArray *params;
+  gboolean has_fault;
+  GskXmlrpcValue fault;
+} GskXmlrpcResponse;
+</pre>
+<p>
+An XMLRPC response (return).
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcParser"></a><h3>GskXmlrpcParser</h3>
+<pre class="programlisting">typedef struct _GskXmlrpcParser GskXmlrpcParser;</pre>
+<p>
+An object which can parse XMLRPC requests and responses,
+in any order.  It does no interpretation of the requests or responses.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcType"></a><h3>enum GskXmlrpcType</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_XMLRPC_INT32,
+  GSK_XMLRPC_BOOLEAN,
+  GSK_XMLRPC_DOUBLE,
+  GSK_XMLRPC_STRING,
+  GSK_XMLRPC_DATE,
+  GSK_XMLRPC_BINARY_DATA,
+  GSK_XMLRPC_STRUCT,
+  GSK_XMLRPC_ARRAY
+} GskXmlrpcType;
+</pre>
+<p>
+The type of a XMLRPC value.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-XMLRPC-INT32--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_INT32</code></span></p></td>
+<td>a 32-bit integer.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-XMLRPC-BOOLEAN--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_BOOLEAN</code></span></p></td>
+<td>a boolean value, written as 0 or 1.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-XMLRPC-DOUBLE--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_DOUBLE</code></span></p></td>
+<td>a double-precission floating-point value.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-XMLRPC-STRING--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_STRING</code></span></p></td>
+<td>a string value, NUL-terminated.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-XMLRPC-DATE--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_DATE</code></span></p></td>
+<td>a date and time.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-XMLRPC-BINARY-DATA--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_BINARY_DATA</code></span></p></td>
+<td>binary data, which will be transmitted as base64,
+but is always presented to the user as raw bytes.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-XMLRPC-STRUCT--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_STRUCT</code></span></p></td>
+<td>a set of named values.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-XMLRPC-ARRAY--CAPS"></a><span class="term"><code class="literal">GSK_XMLRPC_ARRAY</code></span></p></td>
+<td>an array of values.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-new"></a><h3>gsk_xmlrpc_struct_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *   gsk_xmlrpc_struct_new               (void);</pre>
+<p>
+Allocate a new structure, with no members.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated structure.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-free"></a><h3>gsk_xmlrpc_struct_free ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_free              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure);</pre>
+<p>
+Free memory associated with an XMLRPC struct.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to free.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-int32"></a><h3>gsk_xmlrpc_struct_add_int32 ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_int32         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);</pre>
+<p>
+Add a single int32 member to the given struct.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new int32 member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> value of the new int32 member.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-boolean"></a><h3>gsk_xmlrpc_struct_add_boolean ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_boolean       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);</pre>
+<p>
+Add a single boolean member to the given struct.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new boolean member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> value of the new boolean member.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-double"></a><h3>gsk_xmlrpc_struct_add_double ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_double        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);</pre>
+<p>
+Add a single double member to the given struct.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new double member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> value of the new double member.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-string"></a><h3>gsk_xmlrpc_struct_add_string ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_string        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         const char *value);</pre>
+<p>
+Add a single string member to the given struct.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new string member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> value of the new string member.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-date"></a><h3>gsk_xmlrpc_struct_add_date ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_date          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);</pre>
+<p>
+Add a single date member to the given struct.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new date member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> value of the new date member.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-data"></a><h3>gsk_xmlrpc_struct_add_data ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_data          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);</pre>
+<p>
+Add a single data member to the given struct.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new date member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> binary data to add, which will be freed by the structure when
+it is freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-struct"></a><h3>gsk_xmlrpc_struct_add_struct ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_struct        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);</pre>
+<p>
+Add a structure as a member of another structure.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new struct member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>substructure</code></em> :</span></p></td>
+<td> substructure to add, which will be freed by <em class="parameter"><code>structure</code></em> when
+it is freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-add-array"></a><h3>gsk_xmlrpc_struct_add_array ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_struct_add_array         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);</pre>
+<p>
+Add an array as a member of a structure.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> name of the new struct member.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> subarray to add, which will be freed by <em class="parameter"><code>structure</code></em> when
+it is freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-date"></a><h3>gsk_xmlrpc_struct_peek_date ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_xmlrpc_struct_peek_date         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> *out);</pre>
+<p>
+Lookup a named date member of a structure,
+storing the result, if any, in <em class="parameter"><code>out</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> place to store the result.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether there was an date member named <em class="parameter"><code>member_name</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-boolean"></a><h3>gsk_xmlrpc_struct_peek_boolean ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_xmlrpc_struct_peek_boolean      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> *out);</pre>
+<p>
+Lookup a named boolean member of a structure,
+storing the result, if any, in <em class="parameter"><code>out</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> place to store the result.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether there was an boolean member named <em class="parameter"><code>member_name</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-double"></a><h3>gsk_xmlrpc_struct_peek_double ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_xmlrpc_struct_peek_double       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         double *out);</pre>
+<p>
+Lookup a named double member of a structure,
+storing the result, if any, in <em class="parameter"><code>out</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> place to store the result.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether there was an double member named <em class="parameter"><code>member_name</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-struct"></a><h3>gsk_xmlrpc_struct_peek_struct ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *   gsk_xmlrpc_struct_peek_struct       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);</pre>
+<p>
+Lookup a named substructure member of a structure,
+returning a reference to the <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct"><span class="type">GskXmlrpcStruct</span></a> result, or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL--CAPS"
+><span class="type">NULL</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference (not a copy!) to the struct, or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL--CAPS"
+><span class="type">NULL</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-data"></a><h3>gsk_xmlrpc_struct_peek_data ()</h3>
+<pre class="programlisting">const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a>*   gsk_xmlrpc_struct_peek_data         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);</pre>
+<p>
+Lookup a named binary-data member of a structure,
+returning a reference to the <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+><span class="type">GByteArray</span></a> result, or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL--CAPS"
+><span class="type">NULL</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference (not a copy!) to the binary data, or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL--CAPS"
+><span class="type">NULL</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-array"></a><h3>gsk_xmlrpc_struct_peek_array ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *    gsk_xmlrpc_struct_peek_array        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);</pre>
+<p>
+Lookup a named subarray member of a structure,
+returning a reference to the <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray"><span class="type">GskXmlrpcArray</span></a> result, or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL--CAPS"
+><span class="type">NULL</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference (not a copy!) to the array, or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL--CAPS"
+><span class="type">NULL</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-string"></a><h3>gsk_xmlrpc_struct_peek_string ()</h3>
+<pre class="programlisting">const char *        gsk_xmlrpc_struct_peek_string       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name);</pre>
+<p>
+Lookup a named string member of a structure,
+returning the result, or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL--CAPS"
+><span class="type">NULL</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the string value, or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-struct-peek-int32"></a><h3>gsk_xmlrpc_struct_peek_int32 ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_xmlrpc_struct_peek_int32        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure,
+                                                         const char *member_name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> *out);</pre>
+<p>
+Lookup a named int32 member of a structure,
+storing the result, if any, in <em class="parameter"><code>out</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the structure to lookup the member of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>member_name</code></em> :</span></p></td>
+<td> the value to retrieve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> place to store the result.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether there was an int32 member named <em class="parameter"><code>member_name</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-new"></a><h3>gsk_xmlrpc_array_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *    gsk_xmlrpc_array_new                (void);</pre>
+<p>
+Allocate a new, empty array.*</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated arrays.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-free"></a><h3>gsk_xmlrpc_array_free ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_free               (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);</pre>
+<p>
+Free the array and all its values.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> the array to free.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-int32"></a><h3>gsk_xmlrpc_array_add_int32 ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_int32          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);</pre>
+<p>
+Append an integer to an XMLRPC array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> integer value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-boolean"></a><h3>gsk_xmlrpc_array_add_boolean ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_boolean        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);</pre>
+<p>
+Append a boolean to an XMLRPC array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> boolean value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-double"></a><h3>gsk_xmlrpc_array_add_double ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_double         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);</pre>
+<p>
+Append a double-precision floating-pointer value to an XMLRPC array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> double value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-string"></a><h3>gsk_xmlrpc_array_add_string ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_string         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         const char *value);</pre>
+<p>
+Append a string to an XMLRPC array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> string value to append.
+This value is copied: we do not take ownership.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-date"></a><h3>gsk_xmlrpc_array_add_date ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_date           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);</pre>
+<p>
+Append a string to an XMLRPC array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> date/time value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-data"></a><h3>gsk_xmlrpc_array_add_data ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_data           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);</pre>
+<p>
+Append a binary-data element to an XMLRPC array.
+This take ownership of <em class="parameter"><code>data</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> a byte array containing arbitrary binary-data.
+The XMLRPC array takes ownership of the data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-struct"></a><h3>gsk_xmlrpc_array_add_struct ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_struct         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);</pre>
+<p>
+Append a binary-data element to an XMLRPC array.
+This take ownership of <em class="parameter"><code>substructure</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>substructure</code></em> :</span></p></td>
+<td> structure to append to <em class="parameter"><code>array</code></em>.
+It will be freed by the <em class="parameter"><code>array</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-array-add-array"></a><h3>gsk_xmlrpc_array_add_array ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_array_add_array          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *subarray);</pre>
+<p>
+Append a binary-data element to an XMLRPC array.
+This take ownership of <em class="parameter"><code>subarray</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to which to append a value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>subarray</code></em> :</span></p></td>
+<td> array to append to <em class="parameter"><code>array</code></em>.
+It will be freed by the <em class="parameter"><code>array</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-new"></a><h3>gsk_xmlrpc_request_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a>*   gsk_xmlrpc_request_new              (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *xmlrpc_stream);</pre>
+<p>
+Allocate a new request.
+At a very minimum, it should have a method name set with
+<a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-set-name" title="gsk_xmlrpc_request_set_name ()"><code class="function">gsk_xmlrpc_request_set_name()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xmlrpc_stream</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly allocated request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-ref"></a><h3>gsk_xmlrpc_request_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a>*   gsk_xmlrpc_request_ref              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request);</pre>
+<p>
+Increase the reference count on <em class="parameter"><code>request</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request to reference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the <em class="parameter"><code>request</code></em>, for convenience.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-unref"></a><h3>gsk_xmlrpc_request_unref ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_unref            (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request);</pre>
+<p>
+Decrease the reference count on <em class="parameter"><code>request</code></em>,
+and free it if the count reached 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request to stop referencing.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-set-name"></a><h3>gsk_xmlrpc_request_set_name ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_set_name         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         const char *name);</pre>
+<p>
+Set the method name for this request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request whose method-name should be set.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> the name of the method to invoke.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-int32"></a><h3>gsk_xmlrpc_request_add_int32 ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_int32        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);</pre>
+<p>
+Append an integer to an XMLRPC request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> integer value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-boolean"></a><h3>gsk_xmlrpc_request_add_boolean ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_boolean      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);</pre>
+<p>
+Append a boolean to an XMLRPC request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> integer value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-double"></a><h3>gsk_xmlrpc_request_add_double ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_double       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);</pre>
+<p>
+Append a double to an XMLRPC request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> double value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-string"></a><h3>gsk_xmlrpc_request_add_string ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_string       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         const char *value);</pre>
+<p>
+Append a string to an XMLRPC request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> string value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-date"></a><h3>gsk_xmlrpc_request_add_date ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_date         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);</pre>
+<p>
+Append a date to an XMLRPC request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> date value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-data"></a><h3>gsk_xmlrpc_request_add_data ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_data         (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);</pre>
+<p>
+Append binary data to an XMLRPC request (it will be base64 encoded transparently).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> GByteArray to append: it shall be freed by the request,
+that is, there is a transfer of ownership.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-struct"></a><h3>gsk_xmlrpc_request_add_struct ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_struct       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);</pre>
+<p>
+Add a structure as a parameter to the request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>substructure</code></em> :</span></p></td>
+<td> structure to append to <em class="parameter"><code>array</code></em>.
+This will be freed by the <em class="parameter"><code>request</code></em> automatically: a transfer of ownership
+occurs in this function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-add-array"></a><h3>gsk_xmlrpc_request_add_array ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_add_array        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);</pre>
+<p>
+Add a structure as a parameter to the request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> request to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to append to <em class="parameter"><code>request</code></em>'s parmeter list.
+This will be freed by the <em class="parameter"><code>request</code></em> automatically: a transfer of ownership
+occurs in this function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-new"></a><h3>gsk_xmlrpc_response_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> * gsk_xmlrpc_response_new             (void);</pre>
+<p>
+Allocate a new response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated response which has no parameters
+and no fault.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-ref"></a><h3>gsk_xmlrpc_response_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> * gsk_xmlrpc_response_ref             (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response);</pre>
+<p>
+Increase the reference count on <em class="parameter"><code>response</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to reference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the <em class="parameter"><code>response</code></em>, for convenience.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-unref"></a><h3>gsk_xmlrpc_response_unref ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_unref           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response);</pre>
+<p>
+Decrease the reference count on <em class="parameter"><code>response</code></em>,
+and free it if the count reached 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to stop referencing.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-int32"></a><h3>gsk_xmlrpc_response_add_int32 ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_int32       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint32"
+>gint32</a> value);</pre>
+<p>
+Append an integer to an XMLRPC response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> integer value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-boolean"></a><h3>gsk_xmlrpc_response_add_boolean ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_boolean     (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> value);</pre>
+<p>
+Append a boolean to an XMLRPC response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> integer value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-double"></a><h3>gsk_xmlrpc_response_add_double ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_double      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"
+>gdouble</a> value);</pre>
+<p>
+Append a double to an XMLRPC response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> double value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-string"></a><h3>gsk_xmlrpc_response_add_string ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_string      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         const char *value);</pre>
+<p>
+Append a string to an XMLRPC response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> string value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-date"></a><h3>gsk_xmlrpc_response_add_date ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_date        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gulong"
+>gulong</a> value);</pre>
+<p>
+Append a date to an XMLRPC response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> date value to append.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-data"></a><h3>gsk_xmlrpc_response_add_data ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_data        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *data);</pre>
+<p>
+Append binary data to an XMLRPC response (it will be base64 encoded transparently).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> GByteArray to append: it shall be freed by the response,
+that is, there is a transfer of ownership.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-struct"></a><h3>gsk_xmlrpc_response_add_struct ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_struct      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *substructure);</pre>
+<p>
+Add a structure as a parameter to the response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>substructure</code></em> :</span></p></td>
+<td> structure to append to <em class="parameter"><code>array</code></em>.
+This will be freed by the <em class="parameter"><code>response</code></em> automatically: a transfer of ownership
+occurs in this function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-add-array"></a><h3>gsk_xmlrpc_response_add_array ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_add_array       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcArray" title="GskXmlrpcArray">GskXmlrpcArray</a> *array);</pre>
+<p>
+Add a structure as a parameter to the response.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> response to whose parameters a value shall be appended.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to append to <em class="parameter"><code>response</code></em>'s parmeter list.
+This will be freed by the <em class="parameter"><code>response</code></em> automatically: a transfer of ownership
+occurs in this function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-fault"></a><h3>gsk_xmlrpc_response_fault ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_fault           (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcStruct" title="GskXmlrpcStruct">GskXmlrpcStruct</a> *structure);</pre>
+<p>
+Indicate that an error occurred trying to
+process the XMLRPC request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the response to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>structure</code></em> :</span></p></td>
+<td> the fault information.
+This should be a struct with
+at most an integer 'faultCode'
+and a string 'faultString'.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-parser-new"></a><h3>gsk_xmlrpc_parser_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *   gsk_xmlrpc_parser_new               (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream);</pre>
+<p>
+Allocate a new XMLRPC parser. A parser can parse both requests and responses.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated parser.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-parser-feed"></a><h3>gsk_xmlrpc_parser_feed ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_xmlrpc_parser_feed              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser,
+                                                         const char *text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> len,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Pass data into the XMLRPC parser.
+</p>
+<p>
+If this works, <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-get-request" title="gsk_xmlrpc_parser_get_request ()"><code class="function">gsk_xmlrpc_parser_get_request()</code></a> and/or
+<a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-parser-get-response" title="gsk_xmlrpc_parser_get_response ()"><code class="function">gsk_xmlrpc_parser_get_response()</code></a> should be called as appropriate
+until there are no more messages to dequeue.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parser</code></em> :</span></p></td>
+<td> the parser to give data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td> the data to parse (it may just be a partial request).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
+<td> the length of <em class="parameter"><code>text</code></em>, or -1 to use NUL-termination.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> place to put the error object if the parsing has a problem.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> TRUE if processing did not encounter an error.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-parser-get-request"></a><h3>gsk_xmlrpc_parser_get_request ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *  gsk_xmlrpc_parser_get_request       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser);</pre>
+<p>
+Get a parsed request from the list maintained by
+the parser.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parser</code></em> :</span></p></td>
+<td> parser to try and get a parsed request from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference to the request; the caller
+must call <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-unref" title="gsk_xmlrpc_request_unref ()"><code class="function">gsk_xmlrpc_request_unref()</code></a> eventually.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-parser-get-response"></a><h3>gsk_xmlrpc_parser_get_response ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> * gsk_xmlrpc_parser_get_response      (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser);</pre>
+<p>
+Get a parsed response from the list maintained by
+the parser.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parser</code></em> :</span></p></td>
+<td> parser to try and get a parsed response from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference to the response; the caller
+must call <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-response-unref" title="gsk_xmlrpc_response_unref ()"><code class="function">gsk_xmlrpc_response_unref()</code></a> eventually.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-parser-free"></a><h3>gsk_xmlrpc_parser_free ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_parser_free              (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcParser" title="GskXmlrpcParser">GskXmlrpcParser</a> *parser);</pre>
+<p>
+Free the memory associated with the parser.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>parser</code></em> :</span></p></td>
+<td> the parser to free.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-request-to-buffer"></a><h3>gsk_xmlrpc_request_to_buffer ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_request_to_buffer        (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-response-to-buffer"></a><h3>gsk_xmlrpc_response_to_buffer ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_response_to_buffer       (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+Write the XML corresponding to this response to the buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> the XMLRPC response to serialize.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to append to.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskxmlrpc.see-also"></a><h2>See Also</h2>
+<p>
+GskXmlrpcStream
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

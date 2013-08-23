@@ -1,0 +1,548 @@
+<refentry id="gsk-gsklistmacros">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gsklistmacros.top_of_page">gsklistmacros</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gsklistmacros</refname>
+<refpurpose>macro-based list macros</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gsklistmacros.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-LOG2-MAX-LIST-SIZE--CAPS">GSK_LOG2_MAX_LIST_SIZE</link>
+#define             <link linkend="GSK-STACK-PUSH--CAPS">GSK_STACK_PUSH</link>                      (stack, node)
+#define             <link linkend="GSK-STACK-POP--CAPS">GSK_STACK_POP</link>                       (stack, rv_node)
+#define             <link linkend="GSK-STACK-INSERT-AFTER--CAPS">GSK_STACK_INSERT_AFTER</link>              (stack, above_node, new_node)
+#define             <link linkend="GSK-STACK-REVERSE--CAPS">GSK_STACK_REVERSE</link>                   (stack)
+#define             <link linkend="GSK-STACK-FOREACH--CAPS">GSK_STACK_FOREACH</link>                   (stack, iter_var, code)
+#define             <link linkend="GSK-STACK-SORT--CAPS">GSK_STACK_SORT</link>                      (stack, comparator)
+#define             <link linkend="GSK-STACK-GET-BOTTOM--CAPS">GSK_STACK_GET_BOTTOM</link>                (stack, rv_node)
+#define             <link linkend="GSK-STACK-IS-EMPTY--CAPS">GSK_STACK_IS_EMPTY</link>                  (stack)
+#define             <link linkend="GSK-QUEUE-ENQUEUE--CAPS">GSK_QUEUE_ENQUEUE</link>                   (queue, node)
+#define             <link linkend="GSK-QUEUE-DEQUEUE--CAPS">GSK_QUEUE_DEQUEUE</link>                   (queue, rv_node)
+#define             <link linkend="GSK-QUEUE-PREPEND--CAPS">GSK_QUEUE_PREPEND</link>                   (queue, node)
+#define             <link linkend="GSK-QUEUE-REVERSE--CAPS">GSK_QUEUE_REVERSE</link>                   (queue)
+#define             <link linkend="GSK-QUEUE-SORT--CAPS">GSK_QUEUE_SORT</link>                      (queue, comparator)
+#define             <link linkend="GSK-QUEUE-IS-EMPTY--CAPS">GSK_QUEUE_IS_EMPTY</link>                  (queue)
+#define             <link linkend="GSK-LIST-PREPEND--CAPS">GSK_LIST_PREPEND</link>                    (list, node)
+#define             <link linkend="GSK-LIST-APPEND--CAPS">GSK_LIST_APPEND</link>                     (list, node)
+#define             <link linkend="GSK-LIST-REMOVE-FIRST--CAPS">GSK_LIST_REMOVE_FIRST</link>               (list)
+#define             <link linkend="GSK-LIST-REMOVE-LAST--CAPS">GSK_LIST_REMOVE_LAST</link>                (list)
+#define             <link linkend="GSK-LIST-REMOVE--CAPS">GSK_LIST_REMOVE</link>                     (list, node)
+#define             <link linkend="GSK-LIST-INSERT-AFTER--CAPS">GSK_LIST_INSERT_AFTER</link>               (list, at, node)
+#define             <link linkend="GSK-LIST-INSERT-BEFORE--CAPS">GSK_LIST_INSERT_BEFORE</link>              (list, at, node)
+#define             <link linkend="GSK-LIST-IS-EMPTY--CAPS">GSK_LIST_IS_EMPTY</link>                   (list)
+#define             <link linkend="GSK-LIST-REVERSE--CAPS">GSK_LIST_REVERSE</link>                    (list)
+#define             <link linkend="GSK-LIST-SORT--CAPS">GSK_LIST_SORT</link>                       (list, comparator)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gsklistmacros.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+These macros define several kinds of "invasive" list
+structures.  We call them invasive because their
+members must be placed in structures which
+you are in charge of allocating: for example, if you are
+using a doubly-linked list, you must place two link pointers in
+your structures.
+</para>
+<para>
+Perhaps an example will help to illustrate:
+<programlisting><![CDATA[
+typedef struct _IntNode IntNode;
+struct _IntNode
+{
+  int value;
+  IntNode *prev, *next;
+};
+IntNode *first_int = NULL, *last_int = NULL;
+]]>&hash;<![CDATA[define GET_INT_LIST]]><![CDATA[() IntNode *, first_int, last_int, prev, next
+  IntNode *add = g_new (IntNode, 1);
+  add->a = 42;
+  GSK_LIST_APPEND (GET_INT_LIST]]><![CDATA[(), add);
+]]></programlisting>
+In other words, your "list" is just the presence of the members
+"prev", "next", "first_int", "last_int" and the macro
+definition "<link linkend="GET-INT-LIST--CAPS"><function>GET_INT_LIST()</function></link>".
+</para>
+<para>You might see why this is useful immediately,
+but here's a few neat implications of
+a macro-based system:
+<itemizedlist>
+ <listitem><para>they are as fast as writing the list code yourself.</para>
+ </listitem>
+ <listitem><para>they allow you to manage memory as you want.</para>
+ </listitem>
+ <listitem><para>it is easy to have the nodes be members of several
+ lists, or other invasive data structures</para>
+ </listitem>
+</itemizedlist>
+</para>
+<para>
+ Here are the types of lists, along with some examples:
+ <variablelist>
+  <varlistentry>
+   <term>stack</term>
+   <listitem><para>
+   A stack is a singly-linked list where we only keep
+   track of one end.
+   </para>
+   <para>
+   To define a stack, you should make a macro
+   defining the type of node, the end-pointer, and the member-name.
+   </para>
+   <para>Here is a stack:
+    <programlisting><![CDATA[
+typedef struct _StackNode StackNode;
+struct _StackNode
+{
+  int value;
+  StackNode *next;
+};
+StackNode *stack_top = NULL;
+]]>&hash;<![CDATA[define GET_STACK]]><![CDATA[()  StackNode *, stack_top, next
+    ]]></programlisting>
+   </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>queue</term>
+   <listitem><para>
+   A queue is a singly-linked list where we keep
+   track of both ends.
+   </para>
+   <para>
+   To define a queue, you should make a macro
+   defining the type of node, the first and last pointers,
+   and the member-name.
+   </para>
+   <para>Here is a queue:
+    <programlisting><![CDATA[
+typedef struct _QueueNode QueueNode;
+struct _QueueNode
+{
+  int value;
+  QueueNode *next;
+};
+QueueNode *head = NULL, *tail = NULL;
+]]>&hash;<![CDATA[define GET_QUEUE]]><![CDATA[()  QueueNode *, head, tail, next
+    ]]></programlisting>
+   </para>
+   <para>This defines a queue such that "prepending" to the queue
+   means inserting an element at its "head" end.
+   To put an element at the tail end, use "enqueue",
+   and to remove from the head end, use "dequeue".
+   It is not possible to remove from the tail end.
+   </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>list</term>
+   <listitem><para>
+   A list is a doubly-linked list where we keep
+   track of both ends.
+   </para>
+   <para>
+   To define a list, you should make a macro
+   defining the type of node, the first and last pointers,
+   and the names of the members corresponding to
+   the previous and next pointers.
+   </para>
+   <para>Here is a list:
+    <programlisting><![CDATA[
+typedef struct _ListNode ListNode;
+struct _ListNode
+{
+  int value;
+  ListNode *prev, *next;
+};
+ListNode *head = NULL, *tail = NULL;
+]]>&hash;<![CDATA[define GET_LIST]]><![CDATA[()  ListNode *, head, tail, prev, next
+    ]]></programlisting>
+   </para>
+   <para>This defines a list such that "prepending"
+   means inserting an element at its "head" end,
+   and "appending" means inserting an element at its "tail" end.
+   Similarly "remove_first" will remove the head element
+   and "remove_last" will remove the tail element.
+   And, since this is a doubly-linked list, you can also
+   remove an arbitrary element.
+   </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</para>
+<para>
+The sorting routines
+all take "comparator macros".
+These take three arguments: two nodes and a variable
+which should be set to -1, 0, or +1 if the first
+node is less than, equal to, or greater than
+the second node.
+</para>
+<para>
+For the list example, here's a comparator macro:
+<programlisting>&hash;define COMPARATOR<![CDATA[]]>(a,b,rv) \
+<![CDATA[
+  rv = (a->value < b->value) ? -1 : (a->value > b->value) ? 1 : 0
+]]></programlisting>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gsklistmacros.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-LOG2-MAX-LIST-SIZE--CAPS" role="macro">
+<title>GSK_LOG2_MAX_LIST_SIZE</title>
+<indexterm zone="GSK-LOG2-MAX-LIST-SIZE--CAPS"><primary sortas="GSK_LOG2_MAX_LIST_SIZE">GSK_LOG2_MAX_LIST_SIZE</primary></indexterm><programlisting>#define             GSK_LOG2_MAX_LIST_SIZE</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GSK-STACK-PUSH--CAPS" role="macro">
+<title>GSK_STACK_PUSH()</title>
+<indexterm zone="GSK-STACK-PUSH--CAPS"><primary sortas="GSK_STACK_PUSH">GSK_STACK_PUSH</primary></indexterm><programlisting>#define             GSK_STACK_PUSH(stack, node)</programlisting>
+<para>
+Push an entry onto the stack.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to add to the stack.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STACK-POP--CAPS" role="macro">
+<title>GSK_STACK_POP()</title>
+<indexterm zone="GSK-STACK-POP--CAPS"><primary sortas="GSK_STACK_POP">GSK_STACK_POP</primary></indexterm><programlisting>#define             GSK_STACK_POP(stack, rv_node)</programlisting>
+<para>
+Pop an entry off the stack.  This will segfault
+if the stack is empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rv_node</parameter>&#160;:</term>
+<listitem><simpara>this variable is set to the node that was removed from the stack.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STACK-INSERT-AFTER--CAPS" role="macro">
+<title>GSK_STACK_INSERT_AFTER()</title>
+<indexterm zone="GSK-STACK-INSERT-AFTER--CAPS"><primary sortas="GSK_STACK_INSERT_AFTER">GSK_STACK_INSERT_AFTER</primary></indexterm><programlisting>#define             GSK_STACK_INSERT_AFTER(stack, above_node, new_node)</programlisting>
+<para>
+Put an element onto the stack after another element.
+After doing this, <parameter>above_node</parameter>'s next pointer will be set to
+<parameter>new_node</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>above_node</parameter>&#160;:</term>
+<listitem><simpara>a node in the stack whose next pointer will be set to <parameter>new_node</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>new_node</parameter>&#160;:</term>
+<listitem><simpara>the node to insert into the stack.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STACK-REVERSE--CAPS" role="macro">
+<title>GSK_STACK_REVERSE()</title>
+<indexterm zone="GSK-STACK-REVERSE--CAPS"><primary sortas="GSK_STACK_REVERSE">GSK_STACK_REVERSE</primary></indexterm><programlisting>#define             GSK_STACK_REVERSE(stack)</programlisting>
+<para>
+Reverse the order of a stack.  The top of the stack will now point to
+the node that was the bottom.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STACK-FOREACH--CAPS" role="macro">
+<title>GSK_STACK_FOREACH()</title>
+<indexterm zone="GSK-STACK-FOREACH--CAPS"><primary sortas="GSK_STACK_FOREACH">GSK_STACK_FOREACH</primary></indexterm><programlisting>#define             GSK_STACK_FOREACH(stack, iter_var, code)</programlisting>
+<para>
+Run code on each element of the list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter_var</parameter>&#160;:</term>
+<listitem><simpara>variable to set to each element of the list in turn.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>code</parameter>&#160;:</term>
+<listitem><simpara>code to invoke on each element of the list.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STACK-SORT--CAPS" role="macro">
+<title>GSK_STACK_SORT()</title>
+<indexterm zone="GSK-STACK-SORT--CAPS"><primary sortas="GSK_STACK_SORT">GSK_STACK_SORT</primary></indexterm><programlisting>#define             GSK_STACK_SORT(stack, comparator)</programlisting>
+<para>
+Sort a stack.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>comparator</parameter>&#160;:</term>
+<listitem><simpara>a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STACK-GET-BOTTOM--CAPS" role="macro">
+<title>GSK_STACK_GET_BOTTOM()</title>
+<indexterm zone="GSK-STACK-GET-BOTTOM--CAPS"><primary sortas="GSK_STACK_GET_BOTTOM">GSK_STACK_GET_BOTTOM</primary></indexterm><programlisting>#define             GSK_STACK_GET_BOTTOM(stack, rv_node)</programlisting>
+<para>
+Find the bottom of the stack.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rv_node</parameter>&#160;:</term>
+<listitem><simpara>This will assigned to the bottom of the stack,
+or NULL if the stack is empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-STACK-IS-EMPTY--CAPS" role="macro">
+<title>GSK_STACK_IS_EMPTY()</title>
+<indexterm zone="GSK-STACK-IS-EMPTY--CAPS"><primary sortas="GSK_STACK_IS_EMPTY">GSK_STACK_IS_EMPTY</primary></indexterm><programlisting>#define             GSK_STACK_IS_EMPTY(stack)</programlisting>
+<para>
+Evaluates to TRUE iff the stack is empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stack</parameter>&#160;:</term>
+<listitem><simpara>the stack (a list of three arguments provided by a macro).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QUEUE-ENQUEUE--CAPS" role="macro">
+<title>GSK_QUEUE_ENQUEUE()</title>
+<indexterm zone="GSK-QUEUE-ENQUEUE--CAPS"><primary sortas="GSK_QUEUE_ENQUEUE">GSK_QUEUE_ENQUEUE</primary></indexterm><programlisting>#define             GSK_QUEUE_ENQUEUE(queue, node)</programlisting>
+<para>
+Append a node to the queue.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue (a list of four arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QUEUE-DEQUEUE--CAPS" role="macro">
+<title>GSK_QUEUE_DEQUEUE()</title>
+<indexterm zone="GSK-QUEUE-DEQUEUE--CAPS"><primary sortas="GSK_QUEUE_DEQUEUE">GSK_QUEUE_DEQUEUE</primary></indexterm><programlisting>#define             GSK_QUEUE_DEQUEUE(queue, rv_node)</programlisting>
+<para>
+Remove a node from the front of the queue.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue (a list of four arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rv_node</parameter>&#160;:</term>
+<listitem><simpara>this pointer will be set to the node
+that was the front of the queue, or NULL if the queue was empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QUEUE-PREPEND--CAPS" role="macro">
+<title>GSK_QUEUE_PREPEND()</title>
+<indexterm zone="GSK-QUEUE-PREPEND--CAPS"><primary sortas="GSK_QUEUE_PREPEND">GSK_QUEUE_PREPEND</primary></indexterm><programlisting>#define             GSK_QUEUE_PREPEND(queue, node)</programlisting>
+<para>
+Prepend a node to the queue.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue (a list of four arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to prepend.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QUEUE-REVERSE--CAPS" role="macro">
+<title>GSK_QUEUE_REVERSE()</title>
+<indexterm zone="GSK-QUEUE-REVERSE--CAPS"><primary sortas="GSK_QUEUE_REVERSE">GSK_QUEUE_REVERSE</primary></indexterm><programlisting>#define             GSK_QUEUE_REVERSE(queue)</programlisting>
+<para>
+Reverse the order of a queue.  The front
+of the queue will point to what used to be the back
+of the queue, and vice versa.
+</para>
+<para>
+This operation runs in O(N) time.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue to reverse.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QUEUE-SORT--CAPS" role="macro">
+<title>GSK_QUEUE_SORT()</title>
+<indexterm zone="GSK-QUEUE-SORT--CAPS"><primary sortas="GSK_QUEUE_SORT">GSK_QUEUE_SORT</primary></indexterm><programlisting>#define             GSK_QUEUE_SORT(queue, comparator)</programlisting>
+<para>
+Sort the elements of the queue.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue (a list of four arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>comparator</parameter>&#160;:</term>
+<listitem><simpara>a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-QUEUE-IS-EMPTY--CAPS" role="macro">
+<title>GSK_QUEUE_IS_EMPTY()</title>
+<indexterm zone="GSK-QUEUE-IS-EMPTY--CAPS"><primary sortas="GSK_QUEUE_IS_EMPTY">GSK_QUEUE_IS_EMPTY</primary></indexterm><programlisting>#define             GSK_QUEUE_IS_EMPTY(queue)</programlisting>
+<para>
+Evaluates to TRUE iff the queue is empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the queue (a list of four arguments provided by a macro).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-PREPEND--CAPS" role="macro">
+<title>GSK_LIST_PREPEND()</title>
+<indexterm zone="GSK-LIST-PREPEND--CAPS"><primary sortas="GSK_LIST_PREPEND">GSK_LIST_PREPEND</primary></indexterm><programlisting>#define             GSK_LIST_PREPEND(list, node)</programlisting>
+<para>
+Prepend a node to the list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to prepend.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-APPEND--CAPS" role="macro">
+<title>GSK_LIST_APPEND()</title>
+<indexterm zone="GSK-LIST-APPEND--CAPS"><primary sortas="GSK_LIST_APPEND">GSK_LIST_APPEND</primary></indexterm><programlisting>#define             GSK_LIST_APPEND(list, node)</programlisting>
+<para>
+Append a node to the list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to append.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-REMOVE-FIRST--CAPS" role="macro">
+<title>GSK_LIST_REMOVE_FIRST()</title>
+<indexterm zone="GSK-LIST-REMOVE-FIRST--CAPS"><primary sortas="GSK_LIST_REMOVE_FIRST">GSK_LIST_REMOVE_FIRST</primary></indexterm><programlisting>#define             GSK_LIST_REMOVE_FIRST(list)</programlisting>
+<para>
+Remove the first element from the list.
+The list must not be empty initially.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-REMOVE-LAST--CAPS" role="macro">
+<title>GSK_LIST_REMOVE_LAST()</title>
+<indexterm zone="GSK-LIST-REMOVE-LAST--CAPS"><primary sortas="GSK_LIST_REMOVE_LAST">GSK_LIST_REMOVE_LAST</primary></indexterm><programlisting>#define             GSK_LIST_REMOVE_LAST(list)</programlisting>
+<para>
+Remove the last element from the list.
+The list must not be empty initially.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-REMOVE--CAPS" role="macro">
+<title>GSK_LIST_REMOVE()</title>
+<indexterm zone="GSK-LIST-REMOVE--CAPS"><primary sortas="GSK_LIST_REMOVE">GSK_LIST_REMOVE</primary></indexterm><programlisting>#define             GSK_LIST_REMOVE(list, node)</programlisting>
+<para>
+Remove a node from a list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to remove from the list.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-INSERT-AFTER--CAPS" role="macro">
+<title>GSK_LIST_INSERT_AFTER()</title>
+<indexterm zone="GSK-LIST-INSERT-AFTER--CAPS"><primary sortas="GSK_LIST_INSERT_AFTER">GSK_LIST_INSERT_AFTER</primary></indexterm><programlisting>#define             GSK_LIST_INSERT_AFTER(list, at, node)</programlisting>
+<para>
+Insert the new node <parameter>node</parameter> after the node <parameter>at</parameter> in the list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>at</parameter>&#160;:</term>
+<listitem><simpara>the node in the list telling where to insert <parameter>node</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to insert into the list.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-INSERT-BEFORE--CAPS" role="macro">
+<title>GSK_LIST_INSERT_BEFORE()</title>
+<indexterm zone="GSK-LIST-INSERT-BEFORE--CAPS"><primary sortas="GSK_LIST_INSERT_BEFORE">GSK_LIST_INSERT_BEFORE</primary></indexterm><programlisting>#define             GSK_LIST_INSERT_BEFORE(list, at, node)</programlisting>
+<para>
+Insert the new node <parameter>node</parameter> before the node <parameter>at</parameter> in the list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>at</parameter>&#160;:</term>
+<listitem><simpara>the node in the list telling where to insert <parameter>node</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara>the node to insert into the list.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-IS-EMPTY--CAPS" role="macro">
+<title>GSK_LIST_IS_EMPTY()</title>
+<indexterm zone="GSK-LIST-IS-EMPTY--CAPS"><primary sortas="GSK_LIST_IS_EMPTY">GSK_LIST_IS_EMPTY</primary></indexterm><programlisting>#define             GSK_LIST_IS_EMPTY(list)</programlisting>
+<para>
+Evaluates to TRUE iff the list is empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-REVERSE--CAPS" role="macro">
+<title>GSK_LIST_REVERSE()</title>
+<indexterm zone="GSK-LIST-REVERSE--CAPS"><primary sortas="GSK_LIST_REVERSE">GSK_LIST_REVERSE</primary></indexterm><programlisting>#define             GSK_LIST_REVERSE(list)</programlisting>
+<para>
+Reverse the order of a list.  The first and last pointers
+and next/prev pointers are switched.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-LIST-SORT--CAPS" role="macro">
+<title>GSK_LIST_SORT()</title>
+<indexterm zone="GSK-LIST-SORT--CAPS"><primary sortas="GSK_LIST_SORT">GSK_LIST_SORT</primary></indexterm><programlisting>#define             GSK_LIST_SORT(list, comparator)</programlisting>
+<para>
+Sort the elements of the list.
+</para><variablelist role="params">
+<varlistentry><term><parameter>list</parameter>&#160;:</term>
+<listitem><simpara>the list (a list of five arguments provided by a macro) to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>comparator</parameter>&#160;:</term>
+<listitem><simpara>a macro that takes three arguments: two nodes,
+and an integer which should be assigned -1, 0, or 1 if the first node
+is lesser, equal to, or greater than the second node, respectively.
+(See example at top of this section)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gsklistmacros.see-also">
+<title>See Also</title>
+<para>
+gskrbtreemacros, gskqsortmacro
+</para>
+</refsect1>
+
+</refentry>

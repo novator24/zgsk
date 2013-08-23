@@ -1,0 +1,494 @@
+<refentry id="gsk-gsktree">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gsktree.top_of_page">gsktree</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gsktree</refname>
+<refpurpose>A robustly iterateable tree.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gsktree.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskTreeNode">GskTreeNode</link>;
+                    <link linkend="GskTree">GskTree</link>;
+<link linkend="GskTree">GskTree</link> *           <link linkend="gsk-tree-new">gsk_tree_new</link>                        (<link linkend="GCompareFunc">GCompareFunc</link> compare);
+<link linkend="GskTree">GskTree</link> *           <link linkend="gsk-tree-ref">gsk_tree_ref</link>                        (<link linkend="GskTree">GskTree</link> *tree);
+<link linkend="void">void</link>                <link linkend="gsk-tree-unref">gsk_tree_unref</link>                      (<link linkend="GskTree">GskTree</link> *tree);
+<link linkend="GskTree">GskTree</link> *           <link linkend="gsk-tree-new-full">gsk_tree_new_full</link>                   (<link linkend="GCompareDataFunc">GCompareDataFunc</link> compare,
+                                                         <link linkend="gpointer">gpointer</link> compare_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> key_destroy_func,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> value_destroy_func);
+<link linkend="void">void</link>                <link linkend="gsk-tree-insert">gsk_tree_insert</link>                     (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key,
+                                                         <link linkend="gpointer">gpointer</link> value);
+<link linkend="void">void</link>                <link linkend="gsk-tree-replace">gsk_tree_replace</link>                    (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key,
+                                                         <link linkend="gpointer">gpointer</link> value);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-tree-lookup">gsk_tree_lookup</link>                     (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key);
+<link linkend="void">void</link>                <link linkend="gsk-tree-remove">gsk_tree_remove</link>                     (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key);
+<link linkend="guint">guint</link>               <link linkend="gsk-tree-n-nodes">gsk_tree_n_nodes</link>                    (<link linkend="GskTree">GskTree</link> *tree);
+<link linkend="GskTreeNode">GskTreeNode</link> *       <link linkend="gsk-tree-node-first">gsk_tree_node_first</link>                 (<link linkend="GskTree">GskTree</link> *tree);
+<link linkend="GskTreeNode">GskTreeNode</link> *       <link linkend="gsk-tree-node-last">gsk_tree_node_last</link>                  (<link linkend="GskTree">GskTree</link> *tree);
+<link linkend="GskTreeNode">GskTreeNode</link> *       <link linkend="gsk-tree-node-find">gsk_tree_node_find</link>                  (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> search_key);
+<link linkend="GskTreeNode">GskTreeNode</link> *       <link linkend="gsk-tree-node-next">gsk_tree_node_next</link>                  (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);
+<link linkend="GskTreeNode">GskTreeNode</link> *       <link linkend="gsk-tree-node-prev">gsk_tree_node_prev</link>                  (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-tree-node-peek-key">gsk_tree_node_peek_key</link>              (<link linkend="GskTreeNode">GskTreeNode</link> *node);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-tree-node-peek-value">gsk_tree_node_peek_value</link>            (<link linkend="GskTreeNode">GskTreeNode</link> *node);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-tree-node-is-removed">gsk_tree_node_is_removed</link>            (<link linkend="GskTreeNode">GskTreeNode</link> *node);
+<link linkend="void">void</link>                <link linkend="gsk-tree-node-visit">gsk_tree_node_visit</link>                 (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);
+<link linkend="void">void</link>                <link linkend="gsk-tree-node-unvisit">gsk_tree_node_unvisit</link>               (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-tree-validate">gsk_tree_validate</link>                   (<link linkend="GskTree">GskTree</link> *tree);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gsktree.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This tree provides an efficient map from any
+type of data which can be totally ordered to
+any type of data.
+</para>
+<para>
+The primary interesting feature is
+that one can iterate the trees in a robust manner
+using the <link linkend="GskTreeNode"><type>GskTreeNode</type></link>, which takes the place of an iterator.
+In particular, when walking around the tree,
+any nodes which are being visited cannot be destroyed
+until their are no more visitors.  Even though the nodes
+are destroyed, they will not be returned by
+<link linkend="gsk-tree-lookup"><function>gsk_tree_lookup()</function></link> or <link linkend="gsk-tree-node-find"><function>gsk_tree_node_find()</function></link>.
+But the node is in the tree, in the sense that
+<link linkend="gsk-tree-node-next"><function>gsk_tree_node_next()</function></link> and <link linkend="gsk-tree-node-prev"><function>gsk_tree_node_prev()</function></link> still work correctly.
+</para>
+<para>
+XXX: if walking a removed node, and a new node with the same key is added,
+should <link linkend="gsk-tree-node-next"><function>gsk_tree_node_next()</function></link> or <link linkend="gsk-tree-node-prev"><function>gsk_tree_node_prev()</function></link> or both or neither
+return the new node???
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gsktree.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskTreeNode" role="struct">
+<title>GskTreeNode</title>
+<indexterm zone="GskTreeNode"><primary sortas="GskTreeNode">GskTreeNode</primary></indexterm><programlisting>typedef struct _GskTreeNode GskTreeNode;</programlisting>
+<para>
+An opaque type representing a node of the tree.
+You should not hold on to a <link linkend="GskTreeNode"><type>GskTreeNode</type></link> unless you
+"own" a visit count on the node.
+</para></refsect2>
+<refsect2 id="GskTree" role="struct">
+<title>GskTree</title>
+<indexterm zone="GskTree"><primary sortas="GskTree">GskTree</primary></indexterm><programlisting>typedef struct _GskTree GskTree;</programlisting>
+<para>
+A map from keys to values implemented as a Red-Black tree.
+</para></refsect2>
+<refsect2 id="gsk-tree-new" role="function">
+<title>gsk_tree_new ()</title>
+<indexterm zone="gsk-tree-new"><primary sortas="gsk_tree_new">gsk_tree_new</primary></indexterm><programlisting><link linkend="GskTree">GskTree</link> *           gsk_tree_new                        (<link linkend="GCompareFunc">GCompareFunc</link> compare);</programlisting>
+<para>
+Create a new tree.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>compare</parameter>&#160;:</term>
+<listitem><simpara> function to compare two keys and return -1, 0, or +1
+to indicate their relative order.  Every distinct key
+must compare to a nonzero value (ie. the ordering is total).
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-ref" role="function">
+<title>gsk_tree_ref ()</title>
+<indexterm zone="gsk-tree-ref"><primary sortas="gsk_tree_ref">gsk_tree_ref</primary></indexterm><programlisting><link linkend="GskTree">GskTree</link> *           gsk_tree_ref                        (<link linkend="GskTree">GskTree</link> *tree);</programlisting>
+<para>
+Increase the reference count on the tree.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> tree to add a reference to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <parameter>tree</parameter>, as a convenience; it leads to nice looking code.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-unref" role="function">
+<title>gsk_tree_unref ()</title>
+<indexterm zone="gsk-tree-unref"><primary sortas="gsk_tree_unref">gsk_tree_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_tree_unref                      (<link linkend="GskTree">GskTree</link> *tree);</programlisting>
+<para>
+Decrease the reference count on the tree.
+Once its ref-count reached 0, it and all its nodes
+will be destroyed.  So it may be a good idea
+to hold a reference to a tree you are visiting!</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> tree to release your reference to.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-new-full" role="function">
+<title>gsk_tree_new_full ()</title>
+<indexterm zone="gsk-tree-new-full"><primary sortas="gsk_tree_new_full">gsk_tree_new_full</primary></indexterm><programlisting><link linkend="GskTree">GskTree</link> *           gsk_tree_new_full                   (<link linkend="GCompareDataFunc">GCompareDataFunc</link> compare,
+                                                         <link linkend="gpointer">gpointer</link> compare_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> key_destroy_func,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> value_destroy_func);</programlisting>
+<para>
+Create a new tree.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>compare</parameter>&#160;:</term>
+<listitem><simpara> function to compare two keys and return -1, 0, or +1
+to indicate their relative order.  Every distinct key
+must compare to a nonzero value (ie. the ordering is total).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>compare_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass as the third argument to <parameter>compare</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_destroy_func</parameter>&#160;:</term>
+<listitem><simpara> function to destroy a key when it is removed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value_destroy_func</parameter>&#160;:</term>
+<listitem><simpara> function to destroy a value when it is removed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-insert" role="function">
+<title>gsk_tree_insert ()</title>
+<indexterm zone="gsk-tree-insert"><primary sortas="gsk_tree_insert">gsk_tree_insert</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_tree_insert                     (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key,
+                                                         <link linkend="gpointer">gpointer</link> value);</programlisting>
+<para>
+Insert a new key/value pair into the tree.
+</para>
+<para>
+If the key is currently in the tree,
+the new key is destroyed, and the old value is destroyed,
+and the old value is replaced with the new value in the tree.
+(This is for compatibility with g_hash_table_insert
+and g_tree_insert.)
+</para>
+<para>
+See also <link linkend="gsk-tree-replace"><function>gsk_tree_replace()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> tree to insert a new element into.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> key of the new element.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> value of the new element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-replace" role="function">
+<title>gsk_tree_replace ()</title>
+<indexterm zone="gsk-tree-replace"><primary sortas="gsk_tree_replace">gsk_tree_replace</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_tree_replace                    (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key,
+                                                         <link linkend="gpointer">gpointer</link> value);</programlisting>
+<para>
+Insert a new key/value pair into the tree.
+</para>
+<para>
+If the key is currently in the tree,
+the old key and value are destroyed
+and replaced with this key.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> tree to insert a new element into.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> key of the new element.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> value of the new element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-lookup" role="function">
+<title>gsk_tree_lookup ()</title>
+<indexterm zone="gsk-tree-lookup"><primary sortas="gsk_tree_lookup">gsk_tree_lookup</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_tree_lookup                     (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key);</programlisting>
+<para>
+Find the value of a node in the tree, given a key.
+Or NULL if the node cannot be found.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> the key to look up.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the value of a matching node, or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-remove" role="function">
+<title>gsk_tree_remove ()</title>
+<indexterm zone="gsk-tree-remove"><primary sortas="gsk_tree_remove">gsk_tree_remove</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_tree_remove                     (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> key);</programlisting>
+<para>
+The element with the given key will be removed from the tree.
+</para>
+<para>
+Note that if another iterator is visiting the node which
+is being deleted, then the key/value pair will not
+be destroyed until the last iterator has
+left the node.  An iterator may determine
+whether the node it is visiting has been removed
+by calling <link linkend="gsk-tree-node-is-removed"><function>gsk_tree_node_is_removed()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to remove an element from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> the key of the element to remove.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-n-nodes" role="function">
+<title>gsk_tree_n_nodes ()</title>
+<indexterm zone="gsk-tree-n-nodes"><primary sortas="gsk_tree_n_nodes">gsk_tree_n_nodes</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_tree_n_nodes                    (<link linkend="GskTree">GskTree</link> *tree);</programlisting>
+<para>
+Get the size of the tree, not including removed nodes, even
+if they are currently being visited.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of nodes in the tree.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-first" role="function">
+<title>gsk_tree_node_first ()</title>
+<indexterm zone="gsk-tree-node-first"><primary sortas="gsk_tree_node_first">gsk_tree_node_first</primary></indexterm><programlisting><link linkend="GskTreeNode">GskTreeNode</link> *       gsk_tree_node_first                 (<link linkend="GskTree">GskTree</link> *tree);</programlisting>
+<para>
+Return the first node in the tree,
+and increment its visit count.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to begin iterating.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the first node in the tree, or NULL if the tree is empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-last" role="function">
+<title>gsk_tree_node_last ()</title>
+<indexterm zone="gsk-tree-node-last"><primary sortas="gsk_tree_node_last">gsk_tree_node_last</primary></indexterm><programlisting><link linkend="GskTreeNode">GskTreeNode</link> *       gsk_tree_node_last                  (<link linkend="GskTree">GskTree</link> *tree);</programlisting>
+<para>
+Return the last node in the tree,
+and increment its visit count.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to begin iterating.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the last node in the tree, or NULL if the tree is empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-find" role="function">
+<title>gsk_tree_node_find ()</title>
+<indexterm zone="gsk-tree-node-find"><primary sortas="gsk_tree_node_find">gsk_tree_node_find</primary></indexterm><programlisting><link linkend="GskTreeNode">GskTreeNode</link> *       gsk_tree_node_find                  (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="gpointer">gpointer</link> search_key);</programlisting>
+<para>
+Start iterating at the given key,
+or return NULL if the node cannot be found.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>search_key</parameter>&#160;:</term>
+<listitem><simpara> the key to look up.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the matching node, whose visit count has been incremented,
+or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-next" role="function">
+<title>gsk_tree_node_next ()</title>
+<indexterm zone="gsk-tree-node-next"><primary sortas="gsk_tree_node_next">gsk_tree_node_next</primary></indexterm><programlisting><link linkend="GskTreeNode">GskTreeNode</link> *       gsk_tree_node_next                  (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);</programlisting>
+<para>
+Return the next node in the tree after <parameter>node</parameter>,
+and increment its visit count, while
+decrementing the visit count of the current node.
+</para>
+<para>
+Usually this is used to advance an iterator:
+  node = gsk_tree_node_next(tree,node);</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to iterate through.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara> the current node.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the next node in the tree, or NULL if <parameter>node</parameter> is the last node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-prev" role="function">
+<title>gsk_tree_node_prev ()</title>
+<indexterm zone="gsk-tree-node-prev"><primary sortas="gsk_tree_node_prev">gsk_tree_node_prev</primary></indexterm><programlisting><link linkend="GskTreeNode">GskTreeNode</link> *       gsk_tree_node_prev                  (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);</programlisting>
+<para>
+Return the previous node in the tree after <parameter>node</parameter>,
+and increment its visit count, while
+decrementing the visit count of the current node.
+</para>
+<para>
+Usually this is used to advance an iterator backward:
+  node = gsk_tree_node_prev(tree,node);</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to iterate through.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara> the current node.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the previous node in the tree, or NULL if <parameter>node</parameter> is the last node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-peek-key" role="function">
+<title>gsk_tree_node_peek_key ()</title>
+<indexterm zone="gsk-tree-node-peek-key"><primary sortas="gsk_tree_node_peek_key">gsk_tree_node_peek_key</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_tree_node_peek_key              (<link linkend="GskTreeNode">GskTreeNode</link> *node);</programlisting>
+<para>
+Get the key of a node you are visiting.
+It may have been removed by <link linkend="gsk-tree-remove"><function>gsk_tree_remove()</function></link>,
+but it will not have been destroyed until 
+the visit count has been reduced to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara> visited node to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> key of the current tree node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-peek-value" role="function">
+<title>gsk_tree_node_peek_value ()</title>
+<indexterm zone="gsk-tree-node-peek-value"><primary sortas="gsk_tree_node_peek_value">gsk_tree_node_peek_value</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_tree_node_peek_value            (<link linkend="GskTreeNode">GskTreeNode</link> *node);</programlisting>
+<para>
+Get the value of a node you are visiting.
+It may have been removed by <link linkend="gsk-tree-remove"><function>gsk_tree_remove()</function></link>,
+but it will not have been destroyed until 
+the visit count has been reduced to 0.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara> visited node to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> value of the current tree node.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-is-removed" role="function">
+<title>gsk_tree_node_is_removed ()</title>
+<indexterm zone="gsk-tree-node-is-removed"><primary sortas="gsk_tree_node_is_removed">gsk_tree_node_is_removed</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_tree_node_is_removed            (<link linkend="GskTreeNode">GskTreeNode</link> *node);</programlisting>
+<para>
+Check to see if a node which is being visited
+has been removed from the tree.
+</para>
+<para>
+(Note that if you are not visiting the node,
+then it should already have been freed,
+so it is only valid to call this on a node you
+are visiting.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara> a node to check.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the node has been removed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-visit" role="function">
+<title>gsk_tree_node_visit ()</title>
+<indexterm zone="gsk-tree-node-visit"><primary sortas="gsk_tree_node_visit">gsk_tree_node_visit</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_tree_node_visit                 (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);</programlisting>
+<para>
+Increment the visit count for a node.
+A non-zero visit count prevents the
+node's key and value from being deleted,
+even after the node is "removed" from the tree.
+</para>
+<para>
+The removed node may still be used to advance to "next"
+and "prev", however, you may iterate freely
+from a "removed" node, and you cannot get back to it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree that <parameter>node</parameter> is iterating.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara> the node in the tree that is being visited.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-node-unvisit" role="function">
+<title>gsk_tree_node_unvisit ()</title>
+<indexterm zone="gsk-tree-node-unvisit"><primary sortas="gsk_tree_node_unvisit">gsk_tree_node_unvisit</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_tree_node_unvisit               (<link linkend="GskTree">GskTree</link> *tree,
+                                                         <link linkend="GskTreeNode">GskTreeNode</link> *node);</programlisting>
+<para>
+Decrease the visit count on the node,
+indicating that you are done visiting it.
+</para>
+<para>
+If the node has been removed and you
+are the last visitor, its key and value will be deleted at this point.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree that <parameter>node</parameter> is iterating.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>node</parameter>&#160;:</term>
+<listitem><simpara> the node in the tree which you want to stop visiting.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-tree-validate" role="function">
+<title>gsk_tree_validate ()</title>
+<indexterm zone="gsk-tree-validate"><primary sortas="gsk_tree_validate">gsk_tree_validate</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_tree_validate                   (<link linkend="GskTree">GskTree</link> *tree);</programlisting>
+<para>
+Check the tree for integrity.
+This is only used for debugging.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>tree</parameter>&#160;:</term>
+<listitem><simpara> the tree to check.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the tree was valid.
+If it returns FALSE, then there is either a
+bug in the tree code, or the comparison function
+isn't transitive.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

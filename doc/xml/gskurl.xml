@@ -1,0 +1,872 @@
+<refentry id="GskUrl">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskUrl.top_of_page">GskUrl</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskUrl</refname>
+<refpurpose>A Universal Resource Locator (or Identifier)
+object.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskUrl.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskUrl-struct">GskUrl</link>;
+enum                <link linkend="GskUrlScheme">GskUrlScheme</link>;
+#define             <link linkend="GSK-URL-RESERVED-CHARSET--CAPS">GSK_URL_RESERVED_CHARSET</link>
+#define             <link linkend="GSK-URL-UNRESERVED-CHARSET--CAPS">GSK_URL_UNRESERVED_CHARSET</link>
+<link linkend="GskUrl">GskUrl</link> *            <link linkend="gsk-url-new">gsk_url_new</link>                         (const <link linkend="char">char</link> *spec,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskUrl">GskUrl</link> *            <link linkend="gsk-url-new-in-context">gsk_url_new_in_context</link>              (const <link linkend="char">char</link> *spec,
+                                                         <link linkend="GskUrlScheme">GskUrlScheme</link> context,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskUrl">GskUrl</link> *            <link linkend="gsk-url-new-from-parts">gsk_url_new_from_parts</link>              (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         const <link linkend="char">char</link> *host,
+                                                         <link linkend="int">int</link> port,
+                                                         const <link linkend="char">char</link> *user_name,
+                                                         const <link linkend="char">char</link> *password,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *query,
+                                                         const <link linkend="char">char</link> *fragment);
+<link linkend="GskUrl">GskUrl</link> *            <link linkend="gsk-url-new-relative">gsk_url_new_relative</link>                (<link linkend="GskUrl">GskUrl</link> *base_url,
+                                                         const <link linkend="char">char</link> *location,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="char">char</link> *              <link linkend="gsk-url-get-relative-path">gsk_url_get_relative_path</link>           (<link linkend="GskUrl">GskUrl</link> *url);
+<link linkend="guint">guint</link>               <link linkend="gsk-url-get-port">gsk_url_get_port</link>                    (const <link linkend="GskUrl">GskUrl</link> *url);
+<link linkend="char">char</link> *              <link linkend="gsk-url-decode">gsk_url_decode</link>                      (const <link linkend="char">char</link> *encoded);
+<link linkend="char">char</link> *              <link linkend="gsk-url-decode-http">gsk_url_decode_http</link>                 (const <link linkend="char">char</link> *encoded);
+<link linkend="char">char</link> *              <link linkend="gsk-url-encode">gsk_url_encode</link>                      (const <link linkend="char">char</link> *decoded);
+<link linkend="char">char</link> *              <link linkend="gsk-url-encode-http">gsk_url_encode_http</link>                 (const <link linkend="char">char</link> *decoded);
+#define             <link linkend="gsk-url-is-valid-fragment">gsk_url_is_valid_fragment</link>           (str, bad_char_out)
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-is-valid-generic-component">gsk_url_is_valid_generic_component</link>  (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> *bad_char_out);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-is-valid-hostname">gsk_url_is_valid_hostname</link>           (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> *bad_char_out);
+#define             <link linkend="gsk-url-is-valid-path">gsk_url_is_valid_path</link>               (str, bad_char_out)
+#define             <link linkend="gsk-url-is-valid-query">gsk_url_is_valid_query</link>              (str, bad_char_out)
+<link linkend="char">char</link> **             <link linkend="gsk-url-split-form-urlencoded">gsk_url_split_form_urlencoded</link>       (const <link linkend="char">char</link> *encoded_query);
+<link linkend="char">char</link> *              <link linkend="gsk-url-to-string">gsk_url_to_string</link>                   (const <link linkend="GskUrl">GskUrl</link> *url);
+<link linkend="void">void</link>                (<link linkend="GskUrlSuccess">*GskUrlSuccess</link>)                    (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="void">void</link>                (<link linkend="GskUrlFailure">*GskUrlFailure</link>)                    (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="void">void</link>                <link linkend="gsk-url-download">gsk_url_download</link>                    (<link linkend="GskUrl">GskUrl</link> *url,
+                                                         <link linkend="GskUrlSuccess">GskUrlSuccess</link> success_func,
+                                                         <link linkend="GskUrlFailure">GskUrlFailure</link> failure_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="GskUrl">GskUrl</link> *            (<link linkend="GskUrlParser">*GskUrlParser</link>)                     (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         const <link linkend="char">char</link> *url,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="char">char</link> *              (<link linkend="GskUrlToString">*GskUrlToString</link>)                   (<link linkend="GskUrl">GskUrl</link> *url,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="GskUrlScheme">GskUrlScheme</link>        <link linkend="gsk-url-scheme-get-unique">gsk_url_scheme_get_unique</link>           (const <link linkend="char">char</link> *url_scheme,
+                                                         <link linkend="guint">guint</link> default_port,
+                                                         <link linkend="GskUrlParser">GskUrlParser</link> parse_func,
+                                                         <link linkend="GskUrlToString">GskUrlToString</link> print_func,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="guint">guint</link>               <link linkend="gsk-url-hash">gsk_url_hash</link>                        (const <link linkend="GskUrl">GskUrl</link> *url);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-url-equal">gsk_url_equal</link>                       (const <link linkend="GskUrl">GskUrl</link> *a,
+                                                         const <link linkend="GskUrl">GskUrl</link> *b);
+                    <link linkend="GskUrlDownload">GskUrlDownload</link>;
+<link linkend="void">void</link>                (<link linkend="GskUrlDownloadMethod">*GskUrlDownloadMethod</link>)             (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="gpointer">gpointer</link> download_data);
+<link linkend="void">void</link>                <link linkend="gsk-url-scheme-add-dl-method">gsk_url_scheme_add_dl_method</link>        (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         <link linkend="GskUrlDownloadMethod">GskUrlDownloadMethod</link> download_method,
+                                                         <link linkend="gpointer">gpointer</link> download_data);
+<link linkend="void">void</link>                <link linkend="gsk-url-download-success">gsk_url_download_success</link>            (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="GskStream">GskStream</link> *stream);
+<link linkend="void">void</link>                <link linkend="gsk-url-download-fail">gsk_url_download_fail</link>               (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="GError">GError</link> *error);
+<link linkend="GskUrl">GskUrl</link> *            <link linkend="gsk-url-download-peek-url">gsk_url_download_peek_url</link>           (<link linkend="GskUrlDownload">GskUrlDownload</link> *download);
+<link linkend="void">void</link>                <link linkend="gsk-url-download-redirect">gsk_url_download_redirect</link>           (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="GskUrl">GskUrl</link> *new_url);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskUrl.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskUrl
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="GskUrl.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskUrl--fragment">fragment</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskUrl--host">host</link>&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskUrl--password">password</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskUrl--path">path</link>&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskUrl--port">port</link>&quot;                     <link linkend="guint">guint</link>                 : Read / Write
+  &quot;<link linkend="GskUrl--query">query</link>&quot;                    <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="GskUrl--user-name">user-name</link>&quot;                <link linkend="gchar">gchar</link>*                : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="GskUrl.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A URL is a pointer to content on the internet.
+(Well, not all types of URLs apply across the internet;
+especially file URLs are really quite local.)
+</para>
+<para>
+This class provides convenient parsing and printing methods,
+as well as support for downloading the content of various URL types.
+</para>
+<para>
+Also, we provide interfaces for URL encoding and decoding strings.
+This may be used to provide GET data from the HTTP client, amongst other
+things.
+TODO: find a reference RFC for URL encoding.
+</para>
+</refsect1>
+
+<refsect1 id="GskUrl.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskUrl-struct" role="struct">
+<title>GskUrl</title>
+<indexterm zone="GskUrl-struct"><primary sortas="GskUrl">GskUrl</primary></indexterm><programlisting>typedef struct _GskUrl GskUrl;</programlisting>
+<para>
+A URL (Universal Resource Locator).
+This structure contains a number of read-only, pre-parsed
+fields, which make it easy to use the URL from C.
+</para>
+<para>
+It also derived from GObject, so you get the usual g_object_ref/unref
+and other usual benefits.
+</para></refsect2>
+<refsect2 id="GskUrlScheme" role="enum">
+<title>enum GskUrlScheme</title>
+<indexterm zone="GskUrlScheme"><primary sortas="GskUrlScheme">GskUrlScheme</primary></indexterm><programlisting>typedef enum 
+{
+  GSK_URL_SCHEME_FILE,
+  GSK_URL_SCHEME_HTTP,
+  GSK_URL_SCHEME_HTTPS,
+  GSK_URL_SCHEME_FTP,
+  GSK_URL_SCHEME_OTHER = 0x10000,
+} GskUrlScheme;
+</programlisting>
+<para>
+Types of URLs that are known.
+(This is an extensible enum-- you can allocate new enum values
+using <link linkend="gsk-url-scheme-get-unique"><function>gsk_url_scheme_get_unique()</function></link>).
+</para><variablelist role="enum">
+<varlistentry id="GSK-URL-SCHEME-FILE--CAPS" role="constant">
+<term><literal>GSK_URL_SCHEME_FILE</literal></term>
+<listitem><simpara>
+The URL corresponds to a local file.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-SCHEME-HTTP--CAPS" role="constant">
+<term><literal>GSK_URL_SCHEME_HTTP</literal></term>
+<listitem><simpara>
+The URL corresponds to HTTP-retrievable content.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-SCHEME-HTTPS--CAPS" role="constant">
+<term><literal>GSK_URL_SCHEME_HTTPS</literal></term>
+<listitem><simpara>
+The URL corresponds to HTTPS-retrievable content.
+HTTPS is secure HTTP:  it is just HTTP over SSL.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-SCHEME-FTP--CAPS" role="constant">
+<term><literal>GSK_URL_SCHEME_FTP</literal></term>
+<listitem><simpara>
+The URL corresponds to FTP-retrievable content.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-URL-SCHEME-OTHER--CAPS" role="constant">
+<term><literal>GSK_URL_SCHEME_OTHER</literal></term>
+<listitem><simpara>
+An unknown URL scheme was encountered.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-URL-RESERVED-CHARSET--CAPS" role="macro">
+<title>GSK_URL_RESERVED_CHARSET</title>
+<indexterm zone="GSK-URL-RESERVED-CHARSET--CAPS"><primary sortas="GSK_URL_RESERVED_CHARSET">GSK_URL_RESERVED_CHARSET</primary></indexterm><programlisting>#define             GSK_URL_RESERVED_CHARSET</programlisting>
+<para>
+[From RFC 2396, section 2.2.]
+Characters having specific meaning within a url;
+these should be escaped to be passed on to the underlying scheme.
+</para></refsect2>
+<refsect2 id="GSK-URL-UNRESERVED-CHARSET--CAPS" role="macro">
+<title>GSK_URL_UNRESERVED_CHARSET</title>
+<indexterm zone="GSK-URL-UNRESERVED-CHARSET--CAPS"><primary sortas="GSK_URL_UNRESERVED_CHARSET">GSK_URL_UNRESERVED_CHARSET</primary></indexterm><programlisting>#define             GSK_URL_UNRESERVED_CHARSET</programlisting>
+<para>
+[From RFC 2396, section 2.3.]
+Characters which do not normally need escaping within a URL.
+</para></refsect2>
+<refsect2 id="gsk-url-new" role="function">
+<title>gsk_url_new ()</title>
+<indexterm zone="gsk-url-new"><primary sortas="gsk_url_new">gsk_url_new</primary></indexterm><programlisting><link linkend="GskUrl">GskUrl</link> *            gsk_url_new                         (const <link linkend="char">char</link> *spec,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Parse a URL object from a string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>spec</parameter>&#160;:</term>
+<listitem><simpara> standard string representation of the URL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to store a <link linkend="GError"><type>GError</type></link> if an error occurs.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference to a new URL object, or NULL if an error occurred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-new-in-context" role="function">
+<title>gsk_url_new_in_context ()</title>
+<indexterm zone="gsk-url-new-in-context"><primary sortas="gsk_url_new_in_context">gsk_url_new_in_context</primary></indexterm><programlisting><link linkend="GskUrl">GskUrl</link> *            gsk_url_new_in_context              (const <link linkend="char">char</link> *spec,
+                                                         <link linkend="GskUrlScheme">GskUrlScheme</link> context,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+For places where you expect a certain type of URL,
+soemtimes people get lazy and drop the scheme.
+We support this here, by allowing a "backup scheme"
+to be specified.
+</para>
+<para>
+To be fully paranoid in such a situation, you may wish to
+if there appears to be a scheme, use <link linkend="gsk-url-new"><function>gsk_url_new()</function></link>;
+otherwise call <link linkend="gsk-url-new-from-scheme-specific"><function>gsk_url_new_from_scheme_specific()</function></link> directly.
+Alternately, it may be easier just to call
+<link linkend="gsk-url-new-in-context"><function>gsk_url_new_in_context()</function></link> directly all the time.
+</para>
+<para>
+See also <link linkend="gsk-url-new-relative"><function>gsk_url_new_relative()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>spec</parameter>&#160;:</term>
+<listitem><simpara> rough URL specification.  This may be a complete URL,
+or it may have an implied scheme.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara> default scheme for URL's in your context.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to store a <link linkend="GError"><type>GError</type></link> if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated URL object.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-new-from-parts" role="function">
+<title>gsk_url_new_from_parts ()</title>
+<indexterm zone="gsk-url-new-from-parts"><primary sortas="gsk_url_new_from_parts">gsk_url_new_from_parts</primary></indexterm><programlisting><link linkend="GskUrl">GskUrl</link> *            gsk_url_new_from_parts              (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         const <link linkend="char">char</link> *host,
+                                                         <link linkend="int">int</link> port,
+                                                         const <link linkend="char">char</link> *user_name,
+                                                         const <link linkend="char">char</link> *password,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *query,
+                                                         const <link linkend="char">char</link> *fragment);</programlisting>
+<para>
+Allocate a new URL from a bunch of pieces.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>scheme</parameter>&#160;:</term>
+<listitem><simpara> the type of URL being created.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>host</parameter>&#160;:</term>
+<listitem><simpara> the name (or numeric address as ASCII digits and dots) of the host.
+This is called the Authority by RFC 2396, Section 3.2.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&#160;:</term>
+<listitem><simpara> the port number to use for the service, or 0 to use the default port
+for this type of URL scheme.  For FTP, this is the control port and the data port
+will default to the next integer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_name</parameter>&#160;:</term>
+<listitem><simpara> optional username identifier from the client.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara> optional password to authenticate.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> the host-relative path for the URL
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>query</parameter>&#160;:</term>
+<listitem><simpara> optional query string for URL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fragment</parameter>&#160;:</term>
+<listitem><simpara> optional information about a sublocation in the resource.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference to a new URL object.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-new-relative" role="function">
+<title>gsk_url_new_relative ()</title>
+<indexterm zone="gsk-url-new-relative"><primary sortas="gsk_url_new_relative">gsk_url_new_relative</primary></indexterm><programlisting><link linkend="GskUrl">GskUrl</link> *            gsk_url_new_relative                (<link linkend="GskUrl">GskUrl</link> *base_url,
+                                                         const <link linkend="char">char</link> *location,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Allocate a new URL, which will be taken
+to be relative to <parameter>base_url</parameter> if the <parameter>location</parameter>
+is not obviously an absolute URL.
+</para>
+<para>
+Note that there is some ambiguity in how relative urls are
+interpreted.  Note especially that
+   /foo + /bar = /bar.
+   /foo +  bar = /bar.
+   /foo/ + bar = /foo/bar.
+That is, a symbol with a trailing slash is a directory,
+otherwise the last piece of the url is assumed to be a file.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>base_url</parameter>&#160;:</term>
+<listitem><simpara> context of the <parameter>spec</parameter> found.  This tells where <parameter>spec</parameter>
+may be relative to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>location</parameter>&#160;:</term>
+<listitem><simpara> the possibly relative spec.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to store a <link linkend="GError"><type>GError</type></link> if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated URL object.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-get-relative-path" role="function">
+<title>gsk_url_get_relative_path ()</title>
+<indexterm zone="gsk-url-get-relative-path"><primary sortas="gsk_url_get_relative_path">gsk_url_get_relative_path</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_url_get_relative_path           (<link linkend="GskUrl">GskUrl</link> *url);</programlisting>
+<para>
+Obtain the path portion of a URL without
+the initial slash (/) character.
+</para>
+<para>
+The query component and fragment are also returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> the URL to get the host-relative path from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the URL as a string.  This must be freed by the caller.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-get-port" role="function">
+<title>gsk_url_get_port ()</title>
+<indexterm zone="gsk-url-get-port"><primary sortas="gsk_url_get_port">gsk_url_get_port</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_url_get_port                    (const <link linkend="GskUrl">GskUrl</link> *url);</programlisting>
+<para>
+Returns the port.  If the port is 0, the default port
+for the type of scheme is returned (80 for HTTP, 21 for FTP
+and 443 for HTTP/SSL).  If no default exists, 0 is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> the URL whose port is desired.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the port as an integer, or 0 if no port could be computed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-decode" role="function">
+<title>gsk_url_decode ()</title>
+<indexterm zone="gsk-url-decode"><primary sortas="gsk_url_decode">gsk_url_decode</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_url_decode                      (const <link linkend="char">char</link> *encoded);</programlisting>
+<para>
+Decode characters to be passed in a URL.
+Basically, any <link linkend="xx"><literal>xx</literal></link> string is changed to the
+character whose ASCII code is xx, treating xx as
+a hexidecimal 2-digit number.
+</para>
+<para>
+See RFC ??, Section ??.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoded</parameter>&#160;:</term>
+<listitem><simpara> encoded URL to convert to plaintext.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-decode-http" role="function">
+<title>gsk_url_decode_http ()</title>
+<indexterm zone="gsk-url-decode-http"><primary sortas="gsk_url_decode_http">gsk_url_decode_http</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_url_decode_http                 (const <link linkend="char">char</link> *encoded);</programlisting>
+<para>
+Do what is typically thought of
+as "url decoding" in http-land... namely '+' maps to SPACE
+and <link linkend="xx"><literal>xx</literal></link>, where 'x' denotes a single hex-digit, maps to the character
+given as hexidecimal.  (warning: the resulting string is not UTF-8)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoded</parameter>&#160;:</term>
+<listitem><simpara> the encoded url text.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated encoded string that the caller
+must free (the empty string "" when unable to decode hex).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-encode" role="function">
+<title>gsk_url_encode ()</title>
+<indexterm zone="gsk-url-encode"><primary sortas="gsk_url_encode">gsk_url_encode</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_url_encode                      (const <link linkend="char">char</link> *decoded);</programlisting>
+<para>
+Encode characters to be passed in a URL.
+Basically, "unsafe" characters are converted
+to <link linkend="xx"><literal>xx</literal></link> where 'x' is a hexidecimal digit.
+</para>
+<para>
+See RFC 2396 Section 2.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>decoded</parameter>&#160;:</term>
+<listitem><simpara> decoded data to escape.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-encode-http" role="function">
+<title>gsk_url_encode_http ()</title>
+<indexterm zone="gsk-url-encode-http"><primary sortas="gsk_url_encode_http">gsk_url_encode_http</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_url_encode_http                 (const <link linkend="char">char</link> *decoded);</programlisting>
+<para>
+Do what is typically thought of
+as "url encoding" in http-land... namely SPACE maps to '+'
+and funny characters are encoded
+as <link linkend="xx"><literal>xx</literal></link> where 'x' denotes a single hex-digit.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>decoded</parameter>&#160;:</term>
+<listitem><simpara> the raw url text; this is treated as raw 8-bit data,
+not UTF-8.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated encoded string that the caller
+must free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-is-valid-fragment" role="macro">
+<title>gsk_url_is_valid_fragment()</title>
+<indexterm zone="gsk-url-is-valid-fragment"><primary sortas="gsk_url_is_valid_fragment">gsk_url_is_valid_fragment</primary></indexterm><programlisting>#define             gsk_url_is_valid_fragment(str, bad_char_out)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bad_char_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-is-valid-generic-component" role="function">
+<title>gsk_url_is_valid_generic_component ()</title>
+<indexterm zone="gsk-url-is-valid-generic-component"><primary sortas="gsk_url_is_valid_generic_component">gsk_url_is_valid_generic_component</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_is_valid_generic_component  (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> *bad_char_out);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bad_char_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-is-valid-hostname" role="function">
+<title>gsk_url_is_valid_hostname ()</title>
+<indexterm zone="gsk-url-is-valid-hostname"><primary sortas="gsk_url_is_valid_hostname">gsk_url_is_valid_hostname</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_is_valid_hostname           (const <link linkend="char">char</link> *str,
+                                                         <link linkend="char">char</link> *bad_char_out);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bad_char_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-is-valid-path" role="macro">
+<title>gsk_url_is_valid_path()</title>
+<indexterm zone="gsk-url-is-valid-path"><primary sortas="gsk_url_is_valid_path">gsk_url_is_valid_path</primary></indexterm><programlisting>#define             gsk_url_is_valid_path(str, bad_char_out)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bad_char_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-is-valid-query" role="macro">
+<title>gsk_url_is_valid_query()</title>
+<indexterm zone="gsk-url-is-valid-query"><primary sortas="gsk_url_is_valid_query">gsk_url_is_valid_query</primary></indexterm><programlisting>#define             gsk_url_is_valid_query(str, bad_char_out)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bad_char_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-split-form-urlencoded" role="function">
+<title>gsk_url_split_form_urlencoded ()</title>
+<indexterm zone="gsk-url-split-form-urlencoded"><primary sortas="gsk_url_split_form_urlencoded">gsk_url_split_form_urlencoded</primary></indexterm><programlisting><link linkend="char">char</link> **             gsk_url_split_form_urlencoded       (const <link linkend="char">char</link> *encoded_query);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoded_query</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-to-string" role="function">
+<title>gsk_url_to_string ()</title>
+<indexterm zone="gsk-url-to-string"><primary sortas="gsk_url_to_string">gsk_url_to_string</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_url_to_string                   (const <link linkend="GskUrl">GskUrl</link> *url);</programlisting>
+<para>
+Convert the URL to a string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> the URL to stringify.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlSuccess" role="function">
+<title>GskUrlSuccess ()</title>
+<indexterm zone="GskUrlSuccess"><primary sortas="GskUrlSuccess">GskUrlSuccess</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskUrlSuccess)                    (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to call with an input stream if the URL
+download request seems to be succeeding.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>content stream of the data referenced
+by the URL which was passed to <link linkend="gsk-url-download"><function>gsk_url_download()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-url-download"><function>gsk_url_download()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlFailure" role="function">
+<title>GskUrlFailure ()</title>
+<indexterm zone="GskUrlFailure"><primary sortas="GskUrlFailure">GskUrlFailure</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskUrlFailure)                    (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to call if the URL
+download seems to be failing.
+</para><variablelist role="params">
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>the error that preventing the URL download from starting.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-url-download"><function>gsk_url_download()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-download" role="function">
+<title>gsk_url_download ()</title>
+<indexterm zone="gsk-url-download"><primary sortas="gsk_url_download">gsk_url_download</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_download                    (<link linkend="GskUrl">GskUrl</link> *url,
+                                                         <link linkend="GskUrlSuccess">GskUrlSuccess</link> success_func,
+                                                         <link linkend="GskUrlFailure">GskUrlFailure</link> failure_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Initiate a URL download.
+</para>
+<para>
+A caller-supplied function will be invoked when
+the first content is available or a different
+function will be called if there is a problem.
+Only exactly one of these functions will be called.
+</para>
+<para>
+Either callback may be invoked before this function returns:
+the caller must deal with it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> the URL to attempt to retrieve.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>success_func</parameter>&#160;:</term>
+<listitem><simpara> a function to call with a stream corresponding to the
+content of the page.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>failure_func</parameter>&#160;:</term>
+<listitem><simpara> a function to call with an error message if the
+url cannot be retrieved.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>success_func</parameter> or <parameter>failure_func</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlParser" role="function">
+<title>GskUrlParser ()</title>
+<indexterm zone="GskUrlParser"><primary sortas="GskUrlParser">GskUrlParser</primary></indexterm><programlisting><link linkend="GskUrl">GskUrl</link> *            (*GskUrlParser)                     (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         const <link linkend="char">char</link> *url,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function to parse a string (of a given scheme)
+into a <link linkend="GskUrl"><type>GskUrl</type></link>.  This is used to register new types
+of URL.  See <link linkend="gsk-url-scheme-get-unique"><function>gsk_url_scheme_get_unique()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>scheme</parameter>&#160;:</term>
+<listitem><simpara>the type of URL, as determined by the first characters of the URL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara>the whole URL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-url-scheme-get-unique"><function>gsk_url_scheme_get_unique()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a newly allocated URL, or NULL on a parse error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlToString" role="function">
+<title>GskUrlToString ()</title>
+<indexterm zone="GskUrlToString"><primary sortas="GskUrlToString">GskUrlToString</primary></indexterm><programlisting><link linkend="char">char</link> *              (*GskUrlToString)                   (<link linkend="GskUrl">GskUrl</link> *url,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function to convert a <link linkend="GskUrl"><type>GskUrl</type></link> into a NUL-terminated string.
+This is used to register new types
+of URL.  See <link linkend="gsk-url-scheme-get-unique"><function>gsk_url_scheme_get_unique()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara>the URL to print.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-url-scheme-get-unique"><function>gsk_url_scheme_get_unique()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a newly allocated C string, or NULL on error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-scheme-get-unique" role="function">
+<title>gsk_url_scheme_get_unique ()</title>
+<indexterm zone="gsk-url-scheme-get-unique"><primary sortas="gsk_url_scheme_get_unique">gsk_url_scheme_get_unique</primary></indexterm><programlisting><link linkend="GskUrlScheme">GskUrlScheme</link>        gsk_url_scheme_get_unique           (const <link linkend="char">char</link> *url_scheme,
+                                                         <link linkend="guint">guint</link> default_port,
+                                                         <link linkend="GskUrlParser">GskUrlParser</link> parse_func,
+                                                         <link linkend="GskUrlToString">GskUrlToString</link> print_func,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url_scheme</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>default_port</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parse_func</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>print_func</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-hash" role="function">
+<title>gsk_url_hash ()</title>
+<indexterm zone="gsk-url-hash"><primary sortas="gsk_url_hash">gsk_url_hash</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_url_hash                        (const <link linkend="GskUrl">GskUrl</link> *url);</programlisting>
+<para>
+Compute a randomish hash code based on the URL.
+</para>
+<para>
+You can create a GHashTable that's keyed off of URLs with:
+  g_hash_table_new((GHashFunc)gsk_url_hash,
+                   (GEqualFunc)gsk_url_equal);</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> a url.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the hash code.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-equal" role="function">
+<title>gsk_url_equal ()</title>
+<indexterm zone="gsk-url-equal"><primary sortas="gsk_url_equal">gsk_url_equal</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_url_equal                       (const <link linkend="GskUrl">GskUrl</link> *a,
+                                                         const <link linkend="GskUrl">GskUrl</link> *b);</programlisting>
+<para>
+Test to see if two URLs are the same.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>a</parameter>&#160;:</term>
+<listitem><simpara> a url.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>b</parameter>&#160;:</term>
+<listitem><simpara> another url.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the URLs are the same.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskUrlDownload" role="struct">
+<title>GskUrlDownload</title>
+<indexterm zone="GskUrlDownload"><primary sortas="GskUrlDownload">GskUrlDownload</primary></indexterm><programlisting>typedef struct _GskUrlDownload GskUrlDownload;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskUrlDownloadMethod" role="function">
+<title>GskUrlDownloadMethod ()</title>
+<indexterm zone="GskUrlDownloadMethod"><primary sortas="GskUrlDownloadMethod">GskUrlDownloadMethod</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskUrlDownloadMethod)             (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="gpointer">gpointer</link> download_data);</programlisting>
+<para>
+Function to begin downloading a given URL.
+</para>
+<para>
+A function which must eventually call <link linkend="gsk-url-download-fail"><function>gsk_url_download_fail()</function></link>
+or <link linkend="gsk-url-download-success"><function>gsk_url_download_success()</function></link>.  (Note: it may happen long after this
+function returns, but it is allowed to call these functions
+before returning as well).
+</para>
+<para>
+This function type is only used to register new methods for downloading URLs.
+</para><variablelist role="params">
+<varlistentry><term><parameter>download</parameter>&#160;:</term>
+<listitem><simpara>the object representing the download.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>download_data</parameter>&#160;:</term>
+<listitem><simpara>data passed in to <link linkend="gsk-url-scheme-add-dl-method"><function>gsk_url_scheme_add_dl_method()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-scheme-add-dl-method" role="function">
+<title>gsk_url_scheme_add_dl_method ()</title>
+<indexterm zone="gsk-url-scheme-add-dl-method"><primary sortas="gsk_url_scheme_add_dl_method">gsk_url_scheme_add_dl_method</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_scheme_add_dl_method        (<link linkend="GskUrlScheme">GskUrlScheme</link> scheme,
+                                                         <link linkend="GskUrlDownloadMethod">GskUrlDownloadMethod</link> download_method,
+                                                         <link linkend="gpointer">gpointer</link> download_data);</programlisting>
+<para>
+Register a new method for downloading a URL of a particular scheme.
+</para>
+<para>
+The callback <parameter>download_method</parameter> will be run with each new requested URL.
+Each call to <parameter>download_method</parameter> must cause it to
+eventually call <link linkend="gsk-url-download-success"><function>gsk_url_download_success()</function></link>
+or <link linkend="gsk-url-download-fail"><function>gsk_url_download_fail()</function></link>; furthermore, it may
+call those functions before returning.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>scheme</parameter>&#160;:</term>
+<listitem><simpara> the URL scheme which this download method can handle.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>download_method</parameter>&#160;:</term>
+<listitem><simpara> function to call to initiate the URL download.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>download_data</parameter>&#160;:</term>
+<listitem><simpara> data to be passed to download_method.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-download-success" role="function">
+<title>gsk_url_download_success ()</title>
+<indexterm zone="gsk-url-download-success"><primary sortas="gsk_url_download_success">gsk_url_download_success</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_download_success            (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="GskStream">GskStream</link> *stream);</programlisting>
+<para>
+Give a stream to the user which requested it
+via <link linkend="gsk-url-download"><function>gsk_url_download()</function></link>.
+</para>
+<para>
+This function should only be used for implementing
+handlers for new URL schemes.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>download</parameter>&#160;:</term>
+<listitem><simpara> the download object.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the content stream to return to the caller
+who requested the download.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-download-fail" role="function">
+<title>gsk_url_download_fail ()</title>
+<indexterm zone="gsk-url-download-fail"><primary sortas="gsk_url_download_fail">gsk_url_download_fail</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_download_fail               (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="GError">GError</link> *error);</programlisting>
+<para>
+Give a failure notice to the user which requested a url download
+via <link linkend="gsk-url-download"><function>gsk_url_download()</function></link>.
+</para>
+<para>
+This function should only be used for implementing
+handlers for new URL schemes.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>download</parameter>&#160;:</term>
+<listitem><simpara> the download object.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> an error to return.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-download-peek-url" role="function">
+<title>gsk_url_download_peek_url ()</title>
+<indexterm zone="gsk-url-download-peek-url"><primary sortas="gsk_url_download_peek_url">gsk_url_download_peek_url</primary></indexterm><programlisting><link linkend="GskUrl">GskUrl</link> *            gsk_url_download_peek_url           (<link linkend="GskUrlDownload">GskUrlDownload</link> *download);</programlisting>
+<para>
+Get the URL that you are supposed to download.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>download</parameter>&#160;:</term>
+<listitem><simpara> the download object to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the URL for downloading.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-url-download-redirect" role="function">
+<title>gsk_url_download_redirect ()</title>
+<indexterm zone="gsk-url-download-redirect"><primary sortas="gsk_url_download_redirect">gsk_url_download_redirect</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_url_download_redirect           (<link linkend="GskUrlDownload">GskUrlDownload</link> *download,
+                                                         <link linkend="GskUrl">GskUrl</link> *new_url);</programlisting>
+<para>
+Indicate that retrieving one URL lead to a message
+saying that the content is at a different URL.
+The new URL should be retrieved, just like if it has
+been the original requestor.
+</para>
+<para>
+This function should only be used for implementing
+handlers for new URL schemes.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>download</parameter>&#160;:</term>
+<listitem><simpara> the download whose URL has been redirected.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>new_url</parameter>&#160;:</term>
+<listitem><simpara> the new URL to download.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GskUrl.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskUrl--fragment" role="property"><title>The <literal>&quot;fragment&quot;</literal> property</title>
+<indexterm zone="GskUrl--fragment"><primary sortas="GskUrl:fragment">GskUrl:fragment</primary></indexterm><programlisting>  &quot;fragment&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Fragment (for HTTP resources).</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskUrl--host" role="property"><title>The <literal>&quot;host&quot;</literal> property</title>
+<indexterm zone="GskUrl--host"><primary sortas="GskUrl:host">GskUrl:host</primary></indexterm><programlisting>  &quot;host&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>name of host having resource.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskUrl--password" role="property"><title>The <literal>&quot;password&quot;</literal> property</title>
+<indexterm zone="GskUrl--password"><primary sortas="GskUrl:password">GskUrl:password</primary></indexterm><programlisting>  &quot;password&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>password protecting resource.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskUrl--path" role="property"><title>The <literal>&quot;path&quot;</literal> property</title>
+<indexterm zone="GskUrl--path"><primary sortas="GskUrl:path">GskUrl:path</primary></indexterm><programlisting>  &quot;path&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Path on the server to the resource.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskUrl--port" role="property"><title>The <literal>&quot;port&quot;</literal> property</title>
+<indexterm zone="GskUrl--port"><primary sortas="GskUrl:port">GskUrl:port</primary></indexterm><programlisting>  &quot;port&quot;                     <link linkend="guint">guint</link>                 : Read / Write</programlisting>
+<para>port for resource (or 0 for default).</para><para>Allowed values: &lt;= 65536</para>
+<para>Default value: 0</para>
+</refsect2>
+<refsect2 id="GskUrl--query" role="property"><title>The <literal>&quot;query&quot;</literal> property</title>
+<indexterm zone="GskUrl--query"><primary sortas="GskUrl:query">GskUrl:query</primary></indexterm><programlisting>  &quot;query&quot;                    <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>Query (for HTTP resources).</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskUrl--user-name" role="property"><title>The <literal>&quot;user-name&quot;</literal> property</title>
+<indexterm zone="GskUrl--user-name"><primary sortas="GskUrl:user-name">GskUrl:user-name</primary></indexterm><programlisting>  &quot;user-name&quot;                <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>username for resource.</para><para>Default value: NULL</para>
+</refsect2>
+</refsect1>
+
+
+
+
+</refentry>

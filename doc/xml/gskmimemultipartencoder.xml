@@ -1,0 +1,183 @@
+<refentry id="gsk-GskMimeMultipartEncoder">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskMimeMultipartEncoder.top_of_page">GskMimeMultipartEncoder</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskMimeMultipartEncoder</refname>
+<refpurpose>encode several MIME pieces into one body.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskMimeMultipartEncoder.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-MIME-MULTIPART-ENCODER-GOOD-BOUNDARY--CAPS">GSK_MIME_MULTIPART_ENCODER_GOOD_BOUNDARY</link>
+                    <link linkend="GskMimeMultipartEncoderClass">GskMimeMultipartEncoderClass</link>;
+                    <link linkend="GskMimeMultipartEncoder">GskMimeMultipartEncoder</link>;
+<link linkend="GskMimeMultipartEncoder">GskMimeMultipartEncoder</link> * <link linkend="gsk-mime-multipart-encoder-new">gsk_mime_multipart_encoder_new</link>
+                                                        (const <link linkend="char">char</link> *boundary);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-mime-multipart-encoder-add-part">gsk_mime_multipart_encoder_add_part</link> (<link linkend="GskMimeMultipartEncoder">GskMimeMultipartEncoder</link> *encoder,
+                                                         <link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         <link linkend="GError">GError</link> **error);
+#define             <link linkend="gsk-mime-multipart-encoder-new-defaults">gsk_mime_multipart_encoder_new_defaults</link>()
+#define             <link linkend="gsk-mime-multipart-encoder-trap-part-needed">gsk_mime_multipart_encoder_trap_part_needed</link>(encoder, func, data)
+#define             <link linkend="gsk-mime-multipart-encoder-terminate">gsk_mime_multipart_encoder_terminate</link>(encoder)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskMimeMultipartEncoder.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Multipart MIME encodings are how mail attachments
+are implements, and how large form data is uploaded
+from web servers.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskMimeMultipartEncoder.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-MIME-MULTIPART-ENCODER-GOOD-BOUNDARY--CAPS" role="macro">
+<title>GSK_MIME_MULTIPART_ENCODER_GOOD_BOUNDARY</title>
+<indexterm zone="GSK-MIME-MULTIPART-ENCODER-GOOD-BOUNDARY--CAPS"><primary sortas="GSK_MIME_MULTIPART_ENCODER_GOOD_BOUNDARY">GSK_MIME_MULTIPART_ENCODER_GOOD_BOUNDARY</primary></indexterm><programlisting>#define             GSK_MIME_MULTIPART_ENCODER_GOOD_BOUNDARY</programlisting>
+<para>
+A string which can be used to construct an encoder
+that can handle any quoted-printable or base64 encoded chunk.
+</para></refsect2>
+<refsect2 id="GskMimeMultipartEncoderClass" role="struct">
+<title>GskMimeMultipartEncoderClass</title>
+<indexterm zone="GskMimeMultipartEncoderClass"><primary sortas="GskMimeMultipartEncoderClass">GskMimeMultipartEncoderClass</primary></indexterm><programlisting>typedef struct {
+  GskStreamClass stream_class;
+  void (*new_part_needed_set_poll) (GskMimeMultipartEncoder  *encoder,
+				    gboolean                  do_poll);
+  void (*new_part_needed_shutdown) (GskMimeMultipartEncoder  *encoder);
+} GskMimeMultipartEncoderClass;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskMimeMultipartEncoder" role="struct">
+<title>GskMimeMultipartEncoder</title>
+<indexterm zone="GskMimeMultipartEncoder"><primary sortas="GskMimeMultipartEncoder">GskMimeMultipartEncoder</primary></indexterm><programlisting>typedef struct {
+  GskStream      stream;
+  GskHook        new_part_needed;
+  GQueue        *outgoing_pieces;
+  GskStream     *active_stream;
+  GskBuffer      outgoing_data;
+
+  char          *boundary_str;
+
+  guint          max_buffered;
+  guint          blocked_active_stream : 1;
+  guint          shutdown : 1;
+  guint          wrote_terminator : 1;
+} GskMimeMultipartEncoder;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-mime-multipart-encoder-new" role="function">
+<title>gsk_mime_multipart_encoder_new ()</title>
+<indexterm zone="gsk-mime-multipart-encoder-new"><primary sortas="gsk_mime_multipart_encoder_new">gsk_mime_multipart_encoder_new</primary></indexterm><programlisting><link linkend="GskMimeMultipartEncoder">GskMimeMultipartEncoder</link> * gsk_mime_multipart_encoder_new
+                                                        (const <link linkend="char">char</link> *boundary);</programlisting>
+<para>
+Create a read-only stream which encodes MIME pieces given
+to it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>boundary</parameter>&#160;:</term>
+<listitem><simpara> string used to separate pieces of content
+on the underlying stream. 
+This only affects quoted-printable and identity 
+encoded text-- if your content has
+a line starting with '--' then the boundary string,
+it will be confused for a content-part separator.
+You should use GSK_MIME_MULTIPART_ENCODER_GOOD_BOUNDARY
+for this string-- then quoted-printable may be used
+without restriction.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated encoder.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-encoder-add-part" role="function">
+<title>gsk_mime_multipart_encoder_add_part ()</title>
+<indexterm zone="gsk-mime-multipart-encoder-add-part"><primary sortas="gsk_mime_multipart_encoder_add_part">gsk_mime_multipart_encoder_add_part</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_mime_multipart_encoder_add_part (<link linkend="GskMimeMultipartEncoder">GskMimeMultipartEncoder</link> *encoder,
+                                                         <link linkend="GskMimeMultipartPiece">GskMimeMultipartPiece</link> *piece,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Add a new part to <parameter>encoder</parameter>.  The pieces will be transmitted in
+the order receieved.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoder</parameter>&#160;:</term>
+<listitem><simpara> the encoder to add the part to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>piece</parameter>&#160;:</term>
+<listitem><simpara> the content to append.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> place to store the error code if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the part could be added to the stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-encoder-new-defaults" role="macro">
+<title>gsk_mime_multipart_encoder_new_defaults()</title>
+<indexterm zone="gsk-mime-multipart-encoder-new-defaults"><primary sortas="gsk_mime_multipart_encoder_new_defaults">gsk_mime_multipart_encoder_new_defaults</primary></indexterm><programlisting>#define             gsk_mime_multipart_encoder_new_defaults()</programlisting>
+<para>
+Allocate a new encoder with the default/recommended settings.
+</para>
+<para>
+Such an encoder cannot deal with some 'identity' encoded pieces;
+that is because an appropriate boundary string can
+only be had with some knowledge of the contents.
+</para></refsect2>
+<refsect2 id="gsk-mime-multipart-encoder-trap-part-needed" role="macro">
+<title>gsk_mime_multipart_encoder_trap_part_needed()</title>
+<indexterm zone="gsk-mime-multipart-encoder-trap-part-needed"><primary sortas="gsk_mime_multipart_encoder_trap_part_needed">gsk_mime_multipart_encoder_trap_part_needed</primary></indexterm><programlisting>#define             gsk_mime_multipart_encoder_trap_part_needed(encoder, func, data)</programlisting>
+<para>
+Trap availability of a Multipart-Piece becomes available.
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoder</parameter>&#160;:</term>
+<listitem><simpara>the encoder to trap.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>the function to invoke when the piece is available.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data to pass to <parameter>func</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-multipart-encoder-terminate" role="macro">
+<title>gsk_mime_multipart_encoder_terminate()</title>
+<indexterm zone="gsk-mime-multipart-encoder-terminate"><primary sortas="gsk_mime_multipart_encoder_terminate">gsk_mime_multipart_encoder_terminate</primary></indexterm><programlisting>#define             gsk_mime_multipart_encoder_terminate(encoder)</programlisting>
+<para>
+Shutdown the encoder so that no more pieces may be added.
+The stream will remain readable until all the data
+is processed.
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoder</parameter>&#160;:</term>
+<listitem><simpara>the encoder to shut down.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-GskMimeMultipartEncoder.see-also">
+<title>See Also</title>
+<para>
+<link linkend="GskMimeMultipartDecoder"><type>GskMimeMultipartDecoder</type></link>
+</para>
+</refsect1>
+
+</refentry>

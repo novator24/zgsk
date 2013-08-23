@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskXmlrpcStream</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch12.html" title="RPC protocols">
+<link rel="prev" href="gsk-gskxmlrpc.html" title="gskxmlrpc">
+<link rel="next" href="ch13.html" title="Main Loops">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskxmlrpc.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch12.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch13.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-GskXmlrpcStream.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-GskXmlrpcStream.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-GskXmlrpcStream"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-GskXmlrpcStream.top_of_page"></a>GskXmlrpcStream</span></h2>
+<p>GskXmlrpcStream — a stream of XMLRPC method calls and responses.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-GskXmlrpcStream.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStreamClass" title="GskXmlrpcStreamClass">GskXmlrpcStreamClass</a>;
+                    <a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a>;
+#define             <a class="link" href="gsk-GskXmlrpcStream.html#GSK-XMLRPC-STREAM-REQUEST-HOOK--CAPS" title="GSK_XMLRPC_STREAM_REQUEST_HOOK()">GSK_XMLRPC_STREAM_REQUEST_HOOK</a>      (stream)
+<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *  <a class="link" href="gsk-GskXmlrpcStream.html#gsk-xmlrpc-stream-get-request" title="gsk_xmlrpc_stream_get_request ()">gsk_xmlrpc_stream_get_request</a>       (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream);
+void                <a class="link" href="gsk-GskXmlrpcStream.html#gsk-xmlrpc-stream-respond" title="gsk_xmlrpc_stream_respond ()">gsk_xmlrpc_stream_respond</a>           (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response);
+void                (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcResponseNotify" title="GskXmlrpcResponseNotify ()">*GskXmlrpcResponseNotify</a>)          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+void                <a class="link" href="gsk-GskXmlrpcStream.html#gsk-xmlrpc-stream-make-request" title="gsk_xmlrpc_stream_make_request ()">gsk_xmlrpc_stream_make_request</a>      (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcResponseNotify" title="GskXmlrpcResponseNotify ()">GskXmlrpcResponseNotify</a> notify,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskXmlrpcStream.description"></a><h2>Description</h2>
+<p>
+This class provides an easy way to handle XMLRPC;
+you may wish to attach this to an HTTP post_data
+or content_stream.
+</p>
+<p>
+Or, you may use XMLRPC with the raw TCP/IP transport layer
+if you please.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskXmlrpcStream.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcStreamClass"></a><h3>GskXmlrpcStreamClass</h3>
+<pre class="programlisting">typedef struct {
+  GskStreamClass stream_class;
+
+  void (*set_poll_requestable) (GskXmlrpcStream *,
+				gboolean polling);
+  void (*shutdown_requestable) (GskXmlrpcStream *);
+} GskXmlrpcStreamClass;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcStream"></a><h3>GskXmlrpcStream</h3>
+<pre class="programlisting">typedef struct {
+  GskStream      stream;
+  GskXmlrpcParser *parser;
+
+  /* handle incoming requests */
+  GskXmlrpcIncoming *first_unhandled_request;
+  GskXmlrpcIncoming *next_to_dequeue;
+  GskXmlrpcIncoming *last_request;
+  GskHook incoming_request_hook;
+
+  /* handle outgoing requests */
+  GskXmlrpcOutgoing *first_unresponded_request;
+  GskXmlrpcOutgoing *last_unresponded_request;
+
+  /* queue outgoing response and request data here */
+  GskBuffer outgoing;
+} GskXmlrpcStream;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-XMLRPC-STREAM-REQUEST-HOOK--CAPS"></a><h3>GSK_XMLRPC_STREAM_REQUEST_HOOK()</h3>
+<pre class="programlisting">#define             GSK_XMLRPC_STREAM_REQUEST_HOOK(stream)</pre>
+<p>
+Get the <a class="link" href="gsk-gskhook.html#GskHook" title="GskHook"><span class="type">GskHook</span></a> for the request-available end of the stream.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>#GskXmlrpcStream from which to obtain the hook.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-stream-get-request"></a><h3>gsk_xmlrpc_stream_get_request ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *  gsk_xmlrpc_stream_get_request       (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream);</pre>
+<p>
+Grab a new request from the stream.
+The caller should eventually respond to it with
+<a class="link" href="gsk-GskXmlrpcStream.html#gsk-xmlrpc-stream-respond" title="gsk_xmlrpc_stream_respond ()"><code class="function">gsk_xmlrpc_stream_respond()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to dequeue an incomiung request from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a reference to a remote request which the caller
+must call <a class="link" href="gsk-gskxmlrpc.html#gsk-xmlrpc-request-unref" title="gsk_xmlrpc_request_unref ()"><code class="function">gsk_xmlrpc_request_unref()</code></a> on eventually,
+or NULL if no unhandled requests are available.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-stream-respond"></a><h3>gsk_xmlrpc_stream_respond ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_stream_respond           (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response);</pre>
+<p>
+Give the RPC result to the other side of this connection.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream where the incoming request came in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request initiated by the other side.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td> local response to the request.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskXmlrpcResponseNotify"></a><h3>GskXmlrpcResponseNotify ()</h3>
+<pre class="programlisting">void                (*GskXmlrpcResponseNotify)          (<a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcResponse" title="GskXmlrpcResponse">GskXmlrpcResponse</a> *response,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-xmlrpc-stream-make-request"></a><h3>gsk_xmlrpc_stream_make_request ()</h3>
+<pre class="programlisting">void                gsk_xmlrpc_stream_make_request      (<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream">GskXmlrpcStream</a> *stream,
+                                                         <a class="link" href="gsk-gskxmlrpc.html#GskXmlrpcRequest" title="GskXmlrpcRequest">GskXmlrpcRequest</a> *request,
+                                                         <a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcResponseNotify" title="GskXmlrpcResponseNotify ()">GskXmlrpcResponseNotify</a> notify,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Make a request (a method call) to the other side of this
+<a class="link" href="gsk-GskXmlrpcStream.html#GskXmlrpcStream" title="GskXmlrpcStream"><span class="type">GskXmlrpcStream</span></a>.  When a response is received,
+<em class="parameter"><code>notify</code></em> will be called, then destroy will be called.
+</p>
+<p>
+If the stream shuts down before a notify is obtained,
+then just <em class="parameter"><code>destroy</code></em> is run.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td> the stream to make the request on.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td> the request to issue.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>notify</code></em> :</span></p></td>
+<td> callback to eventaully invoke with the remote response,
+if we get it.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> opaque user data to pass to the <em class="parameter"><code>notify</code></em> function eventually.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> callback to invoke after the handler is run,
+or if the stream shuts down before a response is obtained.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<refentry id="GskSocketAddress">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskSocketAddress.top_of_page">Socket Addresses.</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Socket Addresses.</refname>
+<refpurpose>The location of a socket endpoint, in some domain.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskSocketAddress.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="GskSocketAddressIpv4"/><anchor id="GskSocketAddressLocal"/><anchor id="GskSocketAddressIpv6"/>
+<synopsis>
+                    <link linkend="GskSocketAddressClass">GskSocketAddressClass</link>;
+                    <link linkend="GskSocketAddress-struct">GskSocketAddress</link>;
+                    <link linkend="GskSocketAddressIpv4-struct">GskSocketAddressIpv4</link>;
+                    <link linkend="GskSocketAddressLocal-struct">GskSocketAddressLocal</link>;
+                    <link linkend="GskSocketAddressIpv6-struct">GskSocketAddressIpv6</link>;
+                    <link linkend="GskSocketAddressEthernet">GskSocketAddressEthernet</link>;
+<link linkend="GskSocketAddress">GskSocketAddress</link> *  <link linkend="gsk-socket-address-from-native">gsk_socket_address_from_native</link>      (<link linkend="gconstpointer">gconstpointer</link> native_data,
+                                                         <link linkend="gsize">gsize</link> native_size);
+<link linkend="gint">gint</link>                <link linkend="gsk-socket-address-protocol-family">gsk_socket_address_protocol_family</link>  (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+<link linkend="gint">gint</link>                <link linkend="gsk-socket-address-address-family">gsk_socket_address_address_family</link>   (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+<link linkend="guint">guint</link>               <link linkend="gsk-socket-address-sizeof-native">gsk_socket_address_sizeof_native</link>    (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-socket-address-to-native">gsk_socket_address_to_native</link>        (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gpointer">gpointer</link> output,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="char">char</link> *              <link linkend="gsk-socket-address-to-string">gsk_socket_address_to_string</link>        (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+#define             <link linkend="gsk-socket-address-ipv4-localhost">gsk_socket_address_ipv4_localhost</link>   (port)
+<link linkend="GskSocketAddress">GskSocketAddress</link> *  <link linkend="gsk-socket-address-ipv4-new">gsk_socket_address_ipv4_new</link>         (const <link linkend="guint8">guint8</link> *ip_address,
+                                                         <link linkend="guint16">guint16</link> port);
+<link linkend="GskSocketAddress">GskSocketAddress</link> *  <link linkend="gsk-socket-address-ipv6-new">gsk_socket_address_ipv6_new</link>         (const <link linkend="guint8">guint8</link> *address,
+                                                         <link linkend="guint16">guint16</link> port);
+<link linkend="GskSocketAddress">GskSocketAddress</link> *  <link linkend="gsk-socket-address-ethernet-new">gsk_socket_address_ethernet_new</link>     (const <link linkend="guint8">guint8</link> *mac_addr);
+<link linkend="GskSocketAddress">GskSocketAddress</link> *  <link linkend="gsk-socket-address-local-new">gsk_socket_address_local_new</link>        (const <link linkend="char">char</link> *path);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-socket-address-system-supports-ipv6">gsk_socket_address_system_supports_ipv6</link>
+                                                        (void);
+<link linkend="void">void</link>                <link linkend="gsk-socket-address-register-subclass">gsk_socket_address_register_subclass</link>
+                                                        (<link linkend="GskSocketAddressClass">GskSocketAddressClass</link> *klass);
+<link linkend="int">int</link>                 <link linkend="gsk-socket-address-connect-fd">gsk_socket_address_connect_fd</link>       (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gboolean">gboolean</link> *is_connected,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-socket-address-finish-fd">gsk_socket_address_finish_fd</link>        (<link linkend="int">int</link> fd,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-socket-address-equals">gsk_socket_address_equals</link>           (<link linkend="gconstpointer">gconstpointer</link> address_a_ptr,
+                                                         <link linkend="gconstpointer">gconstpointer</link> address_b_ptr);
+<link linkend="guint">guint</link>               <link linkend="gsk-socket-address-hash">gsk_socket_address_hash</link>             (<link linkend="gconstpointer">gconstpointer</link> address_ptr);
+#define             <link linkend="GSK-SOCKET-ADDRESS-REMOTE-QUARK--CAPS">GSK_SOCKET_ADDRESS_REMOTE_QUARK</link>
+#define             <link linkend="GSK-SOCKET-ADDRESS-LOCAL-QUARK--CAPS">GSK_SOCKET_ADDRESS_LOCAL_QUARK</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskSocketAddress.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskSocketAddress
+         +----<link linkend="GskSocketAddressIpv4">GskSocketAddressIpv4</link>
+         +----<link linkend="GskSocketAddressIpv6">GskSocketAddressIpv6</link>
+         +----<link linkend="GskSocketAddressLocal">GskSocketAddressLocal</link>
+</synopsis>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskSocketAddress">GskSocketAddress</link>
+         +----GskSocketAddressIpv4
+</synopsis>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskSocketAddress">GskSocketAddress</link>
+         +----GskSocketAddressLocal
+</synopsis>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskSocketAddress">GskSocketAddress</link>
+         +----GskSocketAddressIpv6
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskSocketAddress.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This is a <link linkend="GObject"><type>GObject</type></link> equivalent of sockaddr_t.
+</para>
+</refsect1>
+
+<refsect1 id="GskSocketAddress.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskSocketAddressClass" role="struct">
+<title>GskSocketAddressClass</title>
+<indexterm zone="GskSocketAddressClass"><primary sortas="GskSocketAddressClass">GskSocketAddressClass</primary></indexterm><programlisting>typedef struct {
+  GObjectClass object_class;
+  gsize sizeof_native_address;
+  gint protocol_family;		/* eg PF_INET, PF_LOCAL etc */
+  gint address_family;		/* eg AF_INET, AF_LOCAL etc */
+  gboolean (*to_native)  (GskSocketAddress *address,
+			  gpointer          output);
+  gboolean (*from_native)(GskSocketAddress *address,
+			  gconstpointer     sockaddr_data,
+			  gsize             sockaddr_length);
+  char    *(*to_string)  (GskSocketAddress *address);
+  /* note: both addresses will be of exactly the same type */
+  gboolean (*equals)     (GskSocketAddress *addr1,
+			  GskSocketAddress *addr2);
+  guint    (*hash)       (GskSocketAddress *addr);
+} GskSocketAddressClass;
+</programlisting>
+<para>
+The base-class for all types of socket-addresses.
+The members of this class should only be used by derived classes.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>object_class</structfield>;</term>
+<listitem><simpara>the base-class.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gsize">gsize</link>&#160;<structfield>sizeof_native_address</structfield>;</term>
+<listitem><simpara>how big is a socket-address of
+this type in the native OS representation.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gint">gint</link>&#160;<structfield>protocol_family</structfield>;</term>
+<listitem><simpara>native PF_* macro value for this type of address.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gint">gint</link>&#160;<structfield>address_family</structfield>;</term>
+<listitem><simpara>native AF_* macro value for this type of address.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>to_native</structfield>&#160;()</term>
+<listitem><simpara>Convert to a native struct sockaddr* type representation.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>from_native</structfield>&#160;()</term>
+<listitem><simpara>Convert from a native struct sockaddr* type representation.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>to_string</structfield>&#160;()</term>
+<listitem><simpara>Convert to a human-readable ASCII representation.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>equals</structfield>&#160;()</term>
+<listitem><simpara>Test if this is equal to another <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link>
+of this exact type are equal.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>hash</structfield>&#160;()</term>
+<listitem><simpara>Compute a hash-value based on this socket.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskSocketAddress-struct" role="struct">
+<title>GskSocketAddress</title>
+<indexterm zone="GskSocketAddress-struct"><primary sortas="GskSocketAddress">GskSocketAddress</primary></indexterm><programlisting>typedef struct _GskSocketAddress GskSocketAddress;</programlisting>
+<para>
+The base instance for all socket addresses.
+</para></refsect2>
+<refsect2 id="GskSocketAddressIpv4-struct" role="struct">
+<title>GskSocketAddressIpv4</title>
+<indexterm zone="GskSocketAddressIpv4-struct"><primary sortas="GskSocketAddressIpv4">GskSocketAddressIpv4</primary></indexterm><programlisting>typedef struct _GskSocketAddressIpv4 GskSocketAddressIpv4;</programlisting>
+<para>
+An IPv4 Socket Address.  This is a 4-byte host IP address
+and a 2-byte port number (as a guint16).
+</para></refsect2>
+<refsect2 id="GskSocketAddressLocal-struct" role="struct">
+<title>GskSocketAddressLocal</title>
+<indexterm zone="GskSocketAddressLocal-struct"><primary sortas="GskSocketAddressLocal">GskSocketAddressLocal</primary></indexterm><programlisting>typedef struct _GskSocketAddressLocal GskSocketAddressLocal;</programlisting>
+<para>
+A local socket, often called a UNIX-domain socket.
+</para></refsect2>
+<refsect2 id="GskSocketAddressIpv6-struct" role="struct">
+<title>GskSocketAddressIpv6</title>
+<indexterm zone="GskSocketAddressIpv6-struct"><primary sortas="GskSocketAddressIpv6">GskSocketAddressIpv6</primary></indexterm><programlisting>typedef struct _GskSocketAddressIpv6 GskSocketAddressIpv6;</programlisting>
+<para>
+An IPv6 Socket Address.  For now, the IPv6 implementation is unfinished.
+</para></refsect2>
+<refsect2 id="GskSocketAddressEthernet" role="struct">
+<title>GskSocketAddressEthernet</title>
+<indexterm zone="GskSocketAddressEthernet"><primary sortas="GskSocketAddressEthernet">GskSocketAddressEthernet</primary></indexterm><programlisting>typedef struct {
+  GskSocketAddress      socket_address;
+  guint8                mac_address[6];
+} GskSocketAddressEthernet;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-socket-address-from-native" role="function">
+<title>gsk_socket_address_from_native ()</title>
+<indexterm zone="gsk-socket-address-from-native"><primary sortas="gsk_socket_address_from_native">gsk_socket_address_from_native</primary></indexterm><programlisting><link linkend="GskSocketAddress">GskSocketAddress</link> *  gsk_socket_address_from_native      (<link linkend="gconstpointer">gconstpointer</link> native_data,
+                                                         <link linkend="gsize">gsize</link> native_size);</programlisting>
+<para>
+Allocate a new GskSocketAddress based on
+native_data, if we know how.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>native_data</parameter>&#160;:</term>
+<listitem><simpara> a struct sockaddr_t*.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>native_size</parameter>&#160;:</term>
+<listitem><simpara> length of native_data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskSocketAddress or NULL if we could not interpret the sockaddr.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-protocol-family" role="function">
+<title>gsk_socket_address_protocol_family ()</title>
+<indexterm zone="gsk-socket-address-protocol-family"><primary sortas="gsk_socket_address_protocol_family">gsk_socket_address_protocol_family</primary></indexterm><programlisting><link linkend="gint">gint</link>                gsk_socket_address_protocol_family  (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+Get the PF_* macro value corresponding to this address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> a socket address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the protocol family.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-address-family" role="function">
+<title>gsk_socket_address_address_family ()</title>
+<indexterm zone="gsk-socket-address-address-family"><primary sortas="gsk_socket_address_address_family">gsk_socket_address_address_family</primary></indexterm><programlisting><link linkend="gint">gint</link>                gsk_socket_address_address_family   (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+Get the AF_* macro value corresponding to this address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> a socket address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the address family.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-sizeof-native" role="function">
+<title>gsk_socket_address_sizeof_native ()</title>
+<indexterm zone="gsk-socket-address-sizeof-native"><primary sortas="gsk_socket_address_sizeof_native">gsk_socket_address_sizeof_native</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_socket_address_sizeof_native    (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+Determine how many bytes of storage the sockaddr_t
+based on this object will require.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> a socket address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the size in bytes of the native sockaddr type.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-to-native" role="function">
+<title>gsk_socket_address_to_native ()</title>
+<indexterm zone="gsk-socket-address-to-native"><primary sortas="gsk_socket_address_to_native">gsk_socket_address_to_native</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_socket_address_to_native        (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gpointer">gpointer</link> output,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Convert a socket-address to its native form.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> a socket address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output</parameter>&#160;:</term>
+<listitem><simpara> a struct sockaddr_t (at least conceptually)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether it was able to convert the address.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-to-string" role="function">
+<title>gsk_socket_address_to_string ()</title>
+<indexterm zone="gsk-socket-address-to-string"><primary sortas="gsk_socket_address_to_string">gsk_socket_address_to_string</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_socket_address_to_string        (<link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+Convert a socket-address to a newly allocated string,
+which the caller must free.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> a socket address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a string for the user to free.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-ipv4-localhost" role="macro">
+<title>gsk_socket_address_ipv4_localhost()</title>
+<indexterm zone="gsk-socket-address-ipv4-localhost"><primary sortas="gsk_socket_address_ipv4_localhost">gsk_socket_address_ipv4_localhost</primary></indexterm><programlisting>#define             gsk_socket_address_ipv4_localhost(port)</programlisting>
+<para>
+Create a new address pointing to this host,
+on the given port.
+</para><variablelist role="params">
+<varlistentry><term><parameter>port</parameter>&#160;:</term>
+<listitem><simpara>the port on the local host the address should refer to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the newly allocated <link linkend="GskSocketAddressIpv4"><type>GskSocketAddressIpv4</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-ipv4-new" role="function">
+<title>gsk_socket_address_ipv4_new ()</title>
+<indexterm zone="gsk-socket-address-ipv4-new"><primary sortas="gsk_socket_address_ipv4_new">gsk_socket_address_ipv4_new</primary></indexterm><programlisting><link linkend="GskSocketAddress">GskSocketAddress</link> *  gsk_socket_address_ipv4_new         (const <link linkend="guint8">guint8</link> *ip_address,
+                                                         <link linkend="guint16">guint16</link> port);</programlisting>
+<para>
+Allocate a new IPv4 address given a numeric IP and port number.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ip_address</parameter>&#160;:</term>
+<listitem><simpara> the 4-byte IP address
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&#160;:</term>
+<listitem><simpara> the port number.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskSocketAddress
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-ipv6-new" role="function">
+<title>gsk_socket_address_ipv6_new ()</title>
+<indexterm zone="gsk-socket-address-ipv6-new"><primary sortas="gsk_socket_address_ipv6_new">gsk_socket_address_ipv6_new</primary></indexterm><programlisting><link linkend="GskSocketAddress">GskSocketAddress</link> *  gsk_socket_address_ipv6_new         (const <link linkend="guint8">guint8</link> *address,
+                                                         <link linkend="guint16">guint16</link> port);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-ethernet-new" role="function">
+<title>gsk_socket_address_ethernet_new ()</title>
+<indexterm zone="gsk-socket-address-ethernet-new"><primary sortas="gsk_socket_address_ethernet_new">gsk_socket_address_ethernet_new</primary></indexterm><programlisting><link linkend="GskSocketAddress">GskSocketAddress</link> *  gsk_socket_address_ethernet_new     (const <link linkend="guint8">guint8</link> *mac_addr);</programlisting>
+<para>
+Allocate a new socket address corresponding to an
+ethernet device.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mac_addr</parameter>&#160;:</term>
+<listitem><simpara> the 6-byte unique address of this ethernet device.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated socket-address.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-local-new" role="function">
+<title>gsk_socket_address_local_new ()</title>
+<indexterm zone="gsk-socket-address-local-new"><primary sortas="gsk_socket_address_local_new">gsk_socket_address_local_new</primary></indexterm><programlisting><link linkend="GskSocketAddress">GskSocketAddress</link> *  gsk_socket_address_local_new        (const <link linkend="char">char</link> *path);</programlisting>
+<para>
+Create a socket-address which is associated with a path
+in the local filesystem.  Such socket-addresses
+are useful for fast communication between processes on the same
+host.
+</para>
+<para>
+Sometimes, these types of addresses are called unix-domain addresses,
+but it is better to avoid the term unix for a generic concept.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> path in filesystem to hook this socket up.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated socket address.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-system-supports-ipv6" role="function">
+<title>gsk_socket_address_system_supports_ipv6 ()</title>
+<indexterm zone="gsk-socket-address-system-supports-ipv6"><primary sortas="gsk_socket_address_system_supports_ipv6">gsk_socket_address_system_supports_ipv6</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_socket_address_system_supports_ipv6
+                                                        (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-register-subclass" role="function">
+<title>gsk_socket_address_register_subclass ()</title>
+<indexterm zone="gsk-socket-address-register-subclass"><primary sortas="gsk_socket_address_register_subclass">gsk_socket_address_register_subclass</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_socket_address_register_subclass
+                                                        (<link linkend="GskSocketAddressClass">GskSocketAddressClass</link> *klass);</programlisting>
+<para>
+Add the class to a per address-family hash table
+for use converting from native.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> a concrete derived class.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-connect-fd" role="function">
+<title>gsk_socket_address_connect_fd ()</title>
+<indexterm zone="gsk-socket-address-connect-fd"><primary sortas="gsk_socket_address_connect_fd">gsk_socket_address_connect_fd</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_socket_address_connect_fd       (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gboolean">gboolean</link> *is_connected,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Begin connecting to a location by address.
+</para>
+<para>
+If the connection is fully established before returning to
+the caller, then *<parameter>is_connected</parameter> will be set to TRUE
+and a non-negative file descriptor will be returned.
+</para>
+<para>
+Sometimes connections only partially succeed,
+in which case *<parameter>is_connected</parameter> will be set to FALSE,
+and you must call <link linkend="gsk-socket-address-finish-fd"><function>gsk_socket_address_finish_fd()</function></link> whenever the
+file-description polls ready to input or output.
+</para>
+<para>
+If the connect fails immediately, -1 will be returned
+and *<parameter>error</parameter> will be set if <parameter>error</parameter> is non-NULL.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the address to connect to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_connected</parameter>&#160;:</term>
+<listitem><simpara> whether the connection succeeded completely.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> an optional error return.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the connecting or connected file-descriptor, or -1 on error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-finish-fd" role="function">
+<title>gsk_socket_address_finish_fd ()</title>
+<indexterm zone="gsk-socket-address-finish-fd"><primary sortas="gsk_socket_address_finish_fd">gsk_socket_address_finish_fd</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_socket_address_finish_fd        (<link linkend="int">int</link> fd,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Finish connecting a partially connected file-descriptor.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> a file descriptor which may be done connecting.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> an optional error return.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> TRUE if the connection is now established,
+otherwise it returns FALSE and will set *<parameter>error</parameter> if an error occurred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-equals" role="function">
+<title>gsk_socket_address_equals ()</title>
+<indexterm zone="gsk-socket-address-equals"><primary sortas="gsk_socket_address_equals">gsk_socket_address_equals</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_socket_address_equals           (<link linkend="gconstpointer">gconstpointer</link> address_a_ptr,
+                                                         <link linkend="gconstpointer">gconstpointer</link> address_b_ptr);</programlisting>
+<para>
+This function is a GEqualFunc which can determine
+if two socket address are the same.
+This is principally used with <link linkend="gsk-socket-address-hash"><type>gsk_socket_address_hash</type></link>
+to make a hash-table mapping from socket-addresses.
+</para>
+<para>
+(This just uses the virtual method of GskSocketAddressClass)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address_a_ptr</parameter>&#160;:</term>
+<listitem><simpara> a pointer to a <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address_b_ptr</parameter>&#160;:</term>
+<listitem><simpara> a pointer to a <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the addresses are equal.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-socket-address-hash" role="function">
+<title>gsk_socket_address_hash ()</title>
+<indexterm zone="gsk-socket-address-hash"><primary sortas="gsk_socket_address_hash">gsk_socket_address_hash</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_socket_address_hash             (<link linkend="gconstpointer">gconstpointer</link> address_ptr);</programlisting>
+<para>
+This function is a GHashFunc which can determine
+a hash value for a socket-address.
+</para>
+<para>
+This is principally used with <link linkend="gsk-socket-address-equals"><type>gsk_socket_address_equals</type></link>
+to make a hash-table mapping from socket-addresses.
+</para>
+<para>
+(This just uses the virtual method of GskSocketAddressClass)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address_ptr</parameter>&#160;:</term>
+<listitem><simpara> a pointer to a <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the hash value for the socket-address.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-SOCKET-ADDRESS-REMOTE-QUARK--CAPS" role="macro">
+<title>GSK_SOCKET_ADDRESS_REMOTE_QUARK</title>
+<indexterm zone="GSK-SOCKET-ADDRESS-REMOTE-QUARK--CAPS"><primary sortas="GSK_SOCKET_ADDRESS_REMOTE_QUARK">GSK_SOCKET_ADDRESS_REMOTE_QUARK</primary></indexterm><programlisting>#define             GSK_SOCKET_ADDRESS_REMOTE_QUARK</programlisting>
+<para>
+Used with <link linkend="g-object-set-qdata"><function>g_object_set_qdata()</function></link> to store
+the remote-address of a stream.
+</para></refsect2>
+<refsect2 id="GSK-SOCKET-ADDRESS-LOCAL-QUARK--CAPS" role="macro">
+<title>GSK_SOCKET_ADDRESS_LOCAL_QUARK</title>
+<indexterm zone="GSK-SOCKET-ADDRESS-LOCAL-QUARK--CAPS"><primary sortas="GSK_SOCKET_ADDRESS_LOCAL_QUARK">GSK_SOCKET_ADDRESS_LOCAL_QUARK</primary></indexterm><programlisting>#define             GSK_SOCKET_ADDRESS_LOCAL_QUARK</programlisting>
+<para>
+Used with <link linkend="g-object-set-qdata"><function>g_object_set_qdata()</function></link> to store
+the local-address of a stream.
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

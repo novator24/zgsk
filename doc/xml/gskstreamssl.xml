@@ -1,0 +1,178 @@
+<refentry id="gsk-gskstreamssl">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskstreamssl.top_of_page">GskStreamSsl</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskStreamSsl</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskstreamssl.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="GskStreamSsl"/>
+<synopsis>
+                    <link linkend="GskStreamSsl-struct">GskStreamSsl</link>;
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-ssl-new-client">gsk_stream_ssl_new_client</link>           (const <link linkend="char">char</link> *cert_file,
+                                                         const <link linkend="char">char</link> *key_file,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="GskStream">GskStream</link> *transport,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-ssl-new-server">gsk_stream_ssl_new_server</link>           (const <link linkend="char">char</link> *cert_file,
+                                                         const <link linkend="char">char</link> *key_file,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="GskStream">GskStream</link> *transport,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-ssl-peek-backend">gsk_stream_ssl_peek_backend</link>         (<link linkend="GskStreamSsl">GskStreamSsl</link> *ssl);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gsk-gskstreamssl.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----<link linkend="GskStream">GskStream</link>
+               +----GskStreamSsl
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="gsk-gskstreamssl.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskStreamSsl--cert-file">cert-file</link>&quot;                <link linkend="gchar">gchar</link>*                : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamSsl--is-client">is-client</link>&quot;                <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamSsl--key-file">key-file</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamSsl--password">password</link>&quot;                 <link linkend="gchar">gchar</link>*                : Write / Construct Only
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskstreamssl.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskstreamssl.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskStreamSsl-struct" role="struct">
+<title>GskStreamSsl</title>
+<indexterm zone="GskStreamSsl-struct"><primary sortas="GskStreamSsl">GskStreamSsl</primary></indexterm><programlisting>typedef struct _GskStreamSsl GskStreamSsl;</programlisting>
+<para>
+A SSL client or server.
+</para></refsect2>
+<refsect2 id="gsk-stream-ssl-new-client" role="function">
+<title>gsk_stream_ssl_new_client ()</title>
+<indexterm zone="gsk-stream-ssl-new-client"><primary sortas="gsk_stream_ssl_new_client">gsk_stream_ssl_new_client</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_ssl_new_client           (const <link linkend="char">char</link> *cert_file,
+                                                         const <link linkend="char">char</link> *key_file,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="GskStream">GskStream</link> *transport,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create the client end of a SSL connection.
+This should be attached to a connecting or connected stream,
+usually provided as the <parameter>transport</parameter> argument.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cert_file</parameter>&#160;:</term>
+<listitem><simpara> the PEM x509 certificate file.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_file</parameter>&#160;:</term>
+<listitem><simpara> key file???
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara> password required by the certificate, or NULL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>transport</parameter>&#160;:</term>
+<listitem><simpara> optional transport layer (which will be connected
+to the backend stream by bidirectionally).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional location in which to store a <link linkend="GError"><type>GError</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new SSL stream, or NULL if an error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-ssl-new-server" role="function">
+<title>gsk_stream_ssl_new_server ()</title>
+<indexterm zone="gsk-stream-ssl-new-server"><primary sortas="gsk_stream_ssl_new_server">gsk_stream_ssl_new_server</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_ssl_new_server           (const <link linkend="char">char</link> *cert_file,
+                                                         const <link linkend="char">char</link> *key_file,
+                                                         const <link linkend="char">char</link> *password,
+                                                         <link linkend="GskStream">GskStream</link> *transport,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a new SSL server.
+It should be connected to a socket which was accepted from
+a server (usually provided as the <parameter>transport</parameter> argument).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cert_file</parameter>&#160;:</term>
+<listitem><simpara> the PEM x509 certificate file.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_file</parameter>&#160;:</term>
+<listitem><simpara> key file???
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>password</parameter>&#160;:</term>
+<listitem><simpara> password required by the certificate, or NULL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>transport</parameter>&#160;:</term>
+<listitem><simpara> optional transport layer (which will be connected
+to the backend stream by bidirectionally).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional location in which to store a <link linkend="GError"><type>GError</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new SSL stream, or NULL if an error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-ssl-peek-backend" role="function">
+<title>gsk_stream_ssl_peek_backend ()</title>
+<indexterm zone="gsk-stream-ssl-peek-backend"><primary sortas="gsk_stream_ssl_peek_backend">gsk_stream_ssl_peek_backend</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_ssl_peek_backend         (<link linkend="GskStreamSsl">GskStreamSsl</link> *ssl);</programlisting>
+<para>
+Get a reference to the backend stream, which
+should be connected to the underlying transport
+layer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ssl</parameter>&#160;:</term>
+<listitem><simpara> the stream to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the SSL backend (to be connected to the transport,
+which is the stream which is typically insecure
+without SSL protection).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gsk-gskstreamssl.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskStreamSsl--cert-file" role="property"><title>The <literal>&quot;cert-file&quot;</literal> property</title>
+<indexterm zone="GskStreamSsl--cert-file"><primary sortas="GskStreamSsl:cert-file">GskStreamSsl:cert-file</primary></indexterm><programlisting>  &quot;cert-file&quot;                <link linkend="gchar">gchar</link>*                : Read / Write / Construct Only</programlisting>
+<para>the x.509 PEM Certificate.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskStreamSsl--is-client" role="property"><title>The <literal>&quot;is-client&quot;</literal> property</title>
+<indexterm zone="GskStreamSsl--is-client"><primary sortas="GskStreamSsl:is-client">GskStreamSsl:is-client</primary></indexterm><programlisting>  &quot;is-client&quot;                <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only</programlisting>
+<para>is this a SSL client (versus a server).</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="GskStreamSsl--key-file" role="property"><title>The <literal>&quot;key-file&quot;</literal> property</title>
+<indexterm zone="GskStreamSsl--key-file"><primary sortas="GskStreamSsl:key-file">GskStreamSsl:key-file</primary></indexterm><programlisting>  &quot;key-file&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write / Construct Only</programlisting>
+<para>the x.509 PEM Key.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GskStreamSsl--password" role="property"><title>The <literal>&quot;password&quot;</literal> property</title>
+<indexterm zone="GskStreamSsl--password"><primary sortas="GskStreamSsl:password">GskStreamSsl:password</primary></indexterm><programlisting>  &quot;password&quot;                 <link linkend="gchar">gchar</link>*                : Write / Construct Only</programlisting>
+<para>secret passphrase for the certificate.</para><para>Default value: NULL</para>
+</refsect2>
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,125 @@
+<refentry id="gsk-gskfork">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskfork.top_of_page">gskfork</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskfork</refname>
+<refpurpose>Functions to call to clean up after forking.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskfork.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="int">int</link>                 (<link linkend="GskForkFunc">*GskForkFunc</link>)                      (<link linkend="gpointer">gpointer</link> data);
+<link linkend="gint">gint</link>                <link linkend="gsk-fork">gsk_fork</link>                            (<link linkend="GskForkFunc">GskForkFunc</link> action,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-fork-add-cleanup-fd">gsk_fork_add_cleanup_fd</link>             (<link linkend="int">int</link> fd);
+<link linkend="void">void</link>                <link linkend="gsk-fork-remove-cleanup-fd">gsk_fork_remove_cleanup_fd</link>          (<link linkend="int">int</link> fd);
+<link linkend="void">void</link>                <link linkend="gsk-fork-child-cleanup">gsk_fork_child_cleanup</link>              (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskfork.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This provides a way to register file descriptors that
+should be closed by the background thread.
+It also contains a gsk-like wrapper to fork.. that is,
+a callback oriented fork interface.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskfork.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskForkFunc" role="function">
+<title>GskForkFunc ()</title>
+<indexterm zone="GskForkFunc"><primary sortas="GskForkFunc">GskForkFunc</primary></indexterm><programlisting><link linkend="int">int</link>                 (*GskForkFunc)                      (<link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function to call from the background process.
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data passed through <link linkend="gsk-fork"><function>gsk_fork()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the exit status of this process.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fork" role="function">
+<title>gsk_fork ()</title>
+<indexterm zone="gsk-fork"><primary sortas="gsk_fork">gsk_fork</primary></indexterm><programlisting><link linkend="gint">gint</link>                gsk_fork                            (<link linkend="GskForkFunc">GskForkFunc</link> action,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Fork a new thread, cleaning up loose file-descriptors,
+then running the background function,
+and exiting with the return value of the background function.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>action</parameter>&#160;:</term>
+<listitem><simpara> function to call from the background process.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> user-data to pass to <parameter>action</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional place to errors to be put.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the process-id of the background thread,
+or -1 on error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fork-add-cleanup-fd" role="function">
+<title>gsk_fork_add_cleanup_fd ()</title>
+<indexterm zone="gsk-fork-add-cleanup-fd"><primary sortas="gsk_fork_add_cleanup_fd">gsk_fork_add_cleanup_fd</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_fork_add_cleanup_fd             (<link linkend="int">int</link> fd);</programlisting>
+<para>
+Add a file-descriptor to the list that should be closed
+when <link linkend="fork"><function>fork()</function></link> is run.
+</para>
+<para>
+A file-descriptor must only be added once.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> a file descriptor that should be closed from a background thread.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fork-remove-cleanup-fd" role="function">
+<title>gsk_fork_remove_cleanup_fd ()</title>
+<indexterm zone="gsk-fork-remove-cleanup-fd"><primary sortas="gsk_fork_remove_cleanup_fd">gsk_fork_remove_cleanup_fd</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_fork_remove_cleanup_fd          (<link linkend="int">int</link> fd);</programlisting>
+<para>
+Remove a file-descriptor from the list that should be closed
+when <link linkend="fork"><function>fork()</function></link> is run.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> remove a file descriptor that was previously registered
+to be closed on fork with <link linkend="gsk-fork-add-cleanup-fd"><function>gsk_fork_add_cleanup_fd()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fork-child-cleanup" role="function">
+<title>gsk_fork_child_cleanup ()</title>
+<indexterm zone="gsk-fork-child-cleanup"><primary sortas="gsk_fork_child_cleanup">gsk_fork_child_cleanup</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_fork_child_cleanup              (void);</programlisting>
+<para>
+Do all cleanup that should follow a fork(2) system call
+from the child process.</para>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

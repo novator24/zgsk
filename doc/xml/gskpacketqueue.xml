@@ -1,0 +1,409 @@
+<refentry id="GskPacketQueue">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskPacketQueue.top_of_page">Datagram I/O</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Datagram I/O</refname>
+<refpurpose>base class for datagram I/O classes</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskPacketQueue.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskPacketQueueClass">GskPacketQueueClass</link>;
+                    <link linkend="GskPacketQueue-struct">GskPacketQueue</link>;
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-packet-queue-bind">gsk_packet_queue_bind</link>               (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskPacket">GskPacket</link> *         <link linkend="gsk-packet-queue-read">gsk_packet_queue_read</link>               (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="gboolean">gboolean</link> save_address,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-packet-queue-write">gsk_packet_queue_write</link>              (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="GskPacket">GskPacket</link> *out,
+                                                         <link linkend="GError">GError</link> **error);
+#define             <link linkend="gsk-packet-queue-get-allow-address">gsk_packet_queue_get_allow_address</link>  (queue)
+#define             <link linkend="gsk-packet-queue-get-allow-no-address">gsk_packet_queue_get_allow_no_address</link>(queue)
+#define             <link linkend="gsk-packet-queue-get-misses-packets">gsk_packet_queue_get_misses_packets</link> (queue)
+#define             <link linkend="gsk-packet-queue-get-is-readable">gsk_packet_queue_get_is_readable</link>    (queue)
+#define             <link linkend="gsk-packet-queue-get-is-writable">gsk_packet_queue_get_is_writable</link>    (queue)
+#define             <link linkend="gsk-packet-queue-peek-bound-address">gsk_packet_queue_peek_bound_address</link> (queue)
+#define             <link linkend="gsk-packet-queue-mark-allow-address">gsk_packet_queue_mark_allow_address</link> (queue)
+#define             <link linkend="gsk-packet-queue-mark-allow-no-address">gsk_packet_queue_mark_allow_no_address</link>(queue)
+#define             <link linkend="gsk-packet-queue-mark-misses-packets">gsk_packet_queue_mark_misses_packets</link>(queue)
+#define             <link linkend="gsk-packet-queue-mark-is-readable">gsk_packet_queue_mark_is_readable</link>   (queue)
+#define             <link linkend="gsk-packet-queue-mark-is-writable">gsk_packet_queue_mark_is_writable</link>   (queue)
+#define             <link linkend="gsk-packet-queue-clear-allow-address">gsk_packet_queue_clear_allow_address</link>(queue)
+#define             <link linkend="gsk-packet-queue-clear-allow-no-address">gsk_packet_queue_clear_allow_no_address</link>(queue)
+#define             <link linkend="gsk-packet-queue-clear-misses-packets">gsk_packet_queue_clear_misses_packets</link>(queue)
+#define             <link linkend="gsk-packet-queue-clear-is-readable">gsk_packet_queue_clear_is_readable</link>  (queue)
+#define             <link linkend="gsk-packet-queue-clear-is-writable">gsk_packet_queue_clear_is_writable</link>  (queue)
+<link linkend="void">void</link>                <link linkend="gsk-packet-queue-set-bound-addresss">gsk_packet_queue_set_bound_addresss</link> (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskPacketQueue.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----GskPacketQueue
+               +----<link linkend="GskPacketQueueFd">GskPacketQueueFd</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskPacketQueue.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Datagram I/O means binary packets of data are the transmission unit.
+You can bind to an address in the right family,
+and read and write packets.
+Unless the packet_queue is bound, it is unlikely to ever be readable.
+</para>
+</refsect1>
+
+<refsect1 id="GskPacketQueue.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskPacketQueueClass" role="struct">
+<title>GskPacketQueueClass</title>
+<indexterm zone="GskPacketQueueClass"><primary sortas="GskPacketQueueClass">GskPacketQueueClass</primary></indexterm><programlisting>typedef struct {
+  GskIOClass io_class;
+  gboolean   (*bind)  (GskPacketQueue    *queue,
+		       GskSocketAddress  *addr,
+		       GError           **error);
+  GskPacket *(*read)  (GskPacketQueue    *queue,
+		       gboolean           save_address,
+		       GError           **error);
+  gboolean   (*write) (GskPacketQueue    *queue,
+		       GskPacket         *out,
+		       GError           **error);
+} GskPacketQueueClass;
+</programlisting>
+<para>
+Base class for an object which can input and output packets.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskIOClass">GskIOClass</link>&#160;<structfield>io_class</structfield>;</term>
+<listitem><simpara>parent class.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>bind</structfield>&#160;()</term>
+<listitem><simpara>bind to a particular socket-address.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>read</structfield>&#160;()</term>
+<listitem><simpara>read an incoming packet.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>write</structfield>&#160;()</term>
+<listitem><simpara>write an outgoing packet.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskPacketQueue-struct" role="struct">
+<title>GskPacketQueue</title>
+<indexterm zone="GskPacketQueue-struct"><primary sortas="GskPacketQueue">GskPacketQueue</primary></indexterm><programlisting>typedef struct _GskPacketQueue GskPacketQueue;</programlisting>
+<para>
+Abstract instance which can read and write packets.
+</para></refsect2>
+<refsect2 id="gsk-packet-queue-bind" role="function">
+<title>gsk_packet_queue_bind ()</title>
+<indexterm zone="gsk-packet-queue-bind"><primary sortas="gsk_packet_queue_bind">gsk_packet_queue_bind</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_packet_queue_bind               (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Bind a packet queue to receive on a particular address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> the packet queue to bind to a particular address.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the address to receive packets from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the bind call succeeded.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-read" role="function">
+<title>gsk_packet_queue_read ()</title>
+<indexterm zone="gsk-packet-queue-read"><primary sortas="gsk_packet_queue_read">gsk_packet_queue_read</primary></indexterm><programlisting><link linkend="GskPacket">GskPacket</link> *         gsk_packet_queue_read               (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="gboolean">gboolean</link> save_address,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Read a packet from the queue, optionally tracking whence it came.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> to try to read a packet from
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>save_address</parameter>&#160;:</term>
+<listitem><simpara> whether to create a remote address indication.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new packet, or NULL on error or if no packet was available.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-write" role="function">
+<title>gsk_packet_queue_write ()</title>
+<indexterm zone="gsk-packet-queue-write"><primary sortas="gsk_packet_queue_write">gsk_packet_queue_write</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_packet_queue_write              (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="GskPacket">GskPacket</link> *out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Try and write a packet to the queue.
+If the packet has no address, then the packet-queue must allow_no_address.
+If the packet has an address, then the packet-queue must allow_address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> to try to write a packet to
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> outgoing packet.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the write succeeded.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-get-allow-address" role="macro">
+<title>gsk_packet_queue_get_allow_address()</title>
+<indexterm zone="gsk-packet-queue-get-allow-address"><primary sortas="gsk_packet_queue_get_allow_address">gsk_packet_queue_get_allow_address</primary></indexterm><programlisting>#define             gsk_packet_queue_get_allow_address(queue)</programlisting>
+<para>
+Determine whether packets with remote addresses may be written to this packet queue.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-get-allow-no-address" role="macro">
+<title>gsk_packet_queue_get_allow_no_address()</title>
+<indexterm zone="gsk-packet-queue-get-allow-no-address"><primary sortas="gsk_packet_queue_get_allow_no_address">gsk_packet_queue_get_allow_no_address</primary></indexterm><programlisting>#define             gsk_packet_queue_get_allow_no_address(queue)</programlisting>
+<para>
+Determine whether packets without a remote address may be written to this packet queue.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-get-misses-packets" role="macro">
+<title>gsk_packet_queue_get_misses_packets()</title>
+<indexterm zone="gsk-packet-queue-get-misses-packets"><primary sortas="gsk_packet_queue_get_misses_packets">gsk_packet_queue_get_misses_packets</primary></indexterm><programlisting>#define             gsk_packet_queue_get_misses_packets(queue)</programlisting>
+<para>
+Determine whether the packet-queue drops incoming packets.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-get-is-readable" role="macro">
+<title>gsk_packet_queue_get_is_readable()</title>
+<indexterm zone="gsk-packet-queue-get-is-readable"><primary sortas="gsk_packet_queue_get_is_readable">gsk_packet_queue_get_is_readable</primary></indexterm><programlisting>#define             gsk_packet_queue_get_is_readable(queue)</programlisting>
+<para>
+Determine whether the packet-queue may have incoming packets.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-get-is-writable" role="macro">
+<title>gsk_packet_queue_get_is_writable()</title>
+<indexterm zone="gsk-packet-queue-get-is-writable"><primary sortas="gsk_packet_queue_get_is_writable">gsk_packet_queue_get_is_writable</primary></indexterm><programlisting>#define             gsk_packet_queue_get_is_writable(queue)</programlisting>
+<para>
+Determine whether the packet-queue may have packets written to it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-peek-bound-address" role="macro">
+<title>gsk_packet_queue_peek_bound_address()</title>
+<indexterm zone="gsk-packet-queue-peek-bound-address"><primary sortas="gsk_packet_queue_peek_bound_address">gsk_packet_queue_peek_bound_address</primary></indexterm><programlisting>#define             gsk_packet_queue_peek_bound_address(queue)</programlisting>
+<para>
+Get the address this queue is bound to, or NULL.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-mark-allow-address" role="macro">
+<title>gsk_packet_queue_mark_allow_address()</title>
+<indexterm zone="gsk-packet-queue-mark-allow-address"><primary sortas="gsk_packet_queue_mark_allow_address">gsk_packet_queue_mark_allow_address</primary></indexterm><programlisting>#define             gsk_packet_queue_mark_allow_address(queue)</programlisting>
+<para>
+Indicate that this packet-queue can accept outgoing packets which have an address.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-mark-allow-no-address" role="macro">
+<title>gsk_packet_queue_mark_allow_no_address()</title>
+<indexterm zone="gsk-packet-queue-mark-allow-no-address"><primary sortas="gsk_packet_queue_mark_allow_no_address">gsk_packet_queue_mark_allow_no_address</primary></indexterm><programlisting>#define             gsk_packet_queue_mark_allow_no_address(queue)</programlisting>
+<para>
+Indicate that this packet-queue can accept outgoing packets which have an no address.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-mark-misses-packets" role="macro">
+<title>gsk_packet_queue_mark_misses_packets()</title>
+<indexterm zone="gsk-packet-queue-mark-misses-packets"><primary sortas="gsk_packet_queue_mark_misses_packets">gsk_packet_queue_mark_misses_packets</primary></indexterm><programlisting>#define             gsk_packet_queue_mark_misses_packets(queue)</programlisting>
+<para>
+Indicate that this packet-queue may drop incoming packets.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-mark-is-readable" role="macro">
+<title>gsk_packet_queue_mark_is_readable()</title>
+<indexterm zone="gsk-packet-queue-mark-is-readable"><primary sortas="gsk_packet_queue_mark_is_readable">gsk_packet_queue_mark_is_readable</primary></indexterm><programlisting>#define             gsk_packet_queue_mark_is_readable(queue)</programlisting>
+<para>
+Indicate that this packet-queue may be read from.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-mark-is-writable" role="macro">
+<title>gsk_packet_queue_mark_is_writable()</title>
+<indexterm zone="gsk-packet-queue-mark-is-writable"><primary sortas="gsk_packet_queue_mark_is_writable">gsk_packet_queue_mark_is_writable</primary></indexterm><programlisting>#define             gsk_packet_queue_mark_is_writable(queue)</programlisting>
+<para>
+Indicate that this packet-queue may be written to.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-clear-allow-address" role="macro">
+<title>gsk_packet_queue_clear_allow_address()</title>
+<indexterm zone="gsk-packet-queue-clear-allow-address"><primary sortas="gsk_packet_queue_clear_allow_address">gsk_packet_queue_clear_allow_address</primary></indexterm><programlisting>#define             gsk_packet_queue_clear_allow_address(queue)</programlisting>
+<para>
+Indicate that this packet-queue cannot accept outgoing packets which have an address.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-clear-allow-no-address" role="macro">
+<title>gsk_packet_queue_clear_allow_no_address()</title>
+<indexterm zone="gsk-packet-queue-clear-allow-no-address"><primary sortas="gsk_packet_queue_clear_allow_no_address">gsk_packet_queue_clear_allow_no_address</primary></indexterm><programlisting>#define             gsk_packet_queue_clear_allow_no_address(queue)</programlisting>
+<para>
+Indicate that this packet-queue cannot accept outgoing packets which have no address.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-clear-misses-packets" role="macro">
+<title>gsk_packet_queue_clear_misses_packets()</title>
+<indexterm zone="gsk-packet-queue-clear-misses-packets"><primary sortas="gsk_packet_queue_clear_misses_packets">gsk_packet_queue_clear_misses_packets</primary></indexterm><programlisting>#define             gsk_packet_queue_clear_misses_packets(queue)</programlisting>
+<para>
+Indicate that this packet-queue will not drop incoming packets.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-clear-is-readable" role="macro">
+<title>gsk_packet_queue_clear_is_readable()</title>
+<indexterm zone="gsk-packet-queue-clear-is-readable"><primary sortas="gsk_packet_queue_clear_is_readable">gsk_packet_queue_clear_is_readable</primary></indexterm><programlisting>#define             gsk_packet_queue_clear_is_readable(queue)</programlisting>
+<para>
+Indicate that this packet-queue may not be read from.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-clear-is-writable" role="macro">
+<title>gsk_packet_queue_clear_is_writable()</title>
+<indexterm zone="gsk-packet-queue-clear-is-writable"><primary sortas="gsk_packet_queue_clear_is_writable">gsk_packet_queue_clear_is_writable</primary></indexterm><programlisting>#define             gsk_packet_queue_clear_is_writable(queue)</programlisting>
+<para>
+Indicate that this packet-queue may not be written to.
+</para>
+<para>
+This should only be used by derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara>the packet-queue to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-set-bound-addresss" role="function">
+<title>gsk_packet_queue_set_bound_addresss ()</title>
+<indexterm zone="gsk-packet-queue-set-bound-addresss"><primary sortas="gsk_packet_queue_set_bound_addresss">gsk_packet_queue_set_bound_addresss</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_packet_queue_set_bound_addresss (<link linkend="GskPacketQueue">GskPacketQueue</link> *queue,
+                                                         <link linkend="GskSocketAddress">GskSocketAddress</link> *address);</programlisting>
+<para>
+Set the bound_address member of the packet-queue safely.
+</para>
+<para>
+This should only be called by implementations
+which automatically bind to certain addresses.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>queue</parameter>&#160;:</term>
+<listitem><simpara> queue to mark
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> address to which the queue has been bound.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="GskPacketQueue.see-also">
+<title>See Also</title>
+<para>
+GskIO
+</para>
+</refsect1>
+
+</refentry>

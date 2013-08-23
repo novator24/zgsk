@@ -1,0 +1,108 @@
+<refentry id="gsk-gskstreamlistenerssl">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskstreamlistenerssl.top_of_page">gskstreamlistenerssl</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskstreamlistenerssl</refname>
+<refpurpose>SSL stream listener.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskstreamlistenerssl.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskStreamListenerSsl">GskStreamListenerSsl</link>;
+<link linkend="GskStreamListener">GskStreamListener</link> * <link linkend="gsk-stream-listener-ssl-new">gsk_stream_listener_ssl_new</link>         (<link linkend="GskStreamListener">GskStreamListener</link> *underlying,
+                                                         const <link linkend="char">char</link> *cert_file,
+                                                         const <link linkend="char">char</link> *key_file);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskstreamlistenerssl.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Accept SSL encrypted connections on top of a raw transport layer
+<link linkend="GskStreamListener"><type>GskStreamListener</type></link>.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskstreamlistenerssl.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskStreamListenerSsl" role="struct">
+<title>GskStreamListenerSsl</title>
+<indexterm zone="GskStreamListenerSsl"><primary sortas="GskStreamListenerSsl">GskStreamListenerSsl</primary></indexterm><programlisting>typedef struct {
+  GskStreamListener      stream_listener;
+  char *cert_file;
+  char *key_file;
+  char *password;
+  GskStreamListener *underlying;
+} GskStreamListenerSsl;
+</programlisting>
+<para>
+The SSL listener.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskStreamListener">GskStreamListener</link>&#160;<structfield>stream_listener</structfield>;</term>
+<listitem><simpara>the parent instance.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>cert_file</structfield>;</term>
+<listitem><simpara>the x509 certificate file.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>key_file</structfield>;</term>
+<listitem><simpara>the x509 key file.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>password</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskStreamListener">GskStreamListener</link>&#160;*<structfield>underlying</structfield>;</term>
+<listitem><simpara>the raw underlying stream-listener.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-listener-ssl-new" role="function">
+<title>gsk_stream_listener_ssl_new ()</title>
+<indexterm zone="gsk-stream-listener-ssl-new"><primary sortas="gsk_stream_listener_ssl_new">gsk_stream_listener_ssl_new</primary></indexterm><programlisting><link linkend="GskStreamListener">GskStreamListener</link> * gsk_stream_listener_ssl_new         (<link linkend="GskStreamListener">GskStreamListener</link> *underlying,
+                                                         const <link linkend="char">char</link> *cert_file,
+                                                         const <link linkend="char">char</link> *key_file);</programlisting>
+<para>
+Create a SSL server-listener based on an unencrypted raw transport.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>underlying</parameter>&#160;:</term>
+<listitem><simpara> the unencrypted raw stream-listener.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cert_file</parameter>&#160;:</term>
+<listitem><simpara> the certificate filename.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key_file</parameter>&#160;:</term>
+<listitem><simpara> the key filename.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new SSL-encrypted server.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

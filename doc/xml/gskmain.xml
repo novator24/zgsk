@@ -1,0 +1,76 @@
+<refentry id="gsk-gskmain">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskmain.top_of_page">Trivial Main Functions.</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Trivial Main Functions.</refname>
+<refpurpose>These are trivial interfaces to the main-loop.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskmain.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="int">int</link>                 <link linkend="gsk-main-run">gsk_main_run</link>                        ();
+<link linkend="void">void</link>                <link linkend="gsk-main-quit">gsk_main_quit</link>                       ();
+<link linkend="void">void</link>                <link linkend="gsk-main-exit">gsk_main_exit</link>                       (<link linkend="int">int</link> exit_status);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskmain.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+These function can be used to run the main loop
+for a fixed duration, or to quit / exit the program.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskmain.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-main-run" role="function">
+<title>gsk_main_run ()</title>
+<indexterm zone="gsk-main-run"><primary sortas="gsk_main_run">gsk_main_run</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_main_run                        ();</programlisting>
+<para>
+Run the main loop until it terminates, returning the value which 
+should be returned by <link linkend="main"><function>main()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the exit code for this process.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-quit" role="function">
+<title>gsk_main_quit ()</title>
+<indexterm zone="gsk-main-quit"><primary sortas="gsk_main_quit">gsk_main_quit</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_main_quit                       ();</programlisting>
+<para>
+Quit the program by stopping <link linkend="gsk-main-run"><function>gsk_main_run()</function></link>.</para>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-main-exit" role="function">
+<title>gsk_main_exit ()</title>
+<indexterm zone="gsk-main-exit"><primary sortas="gsk_main_exit">gsk_main_exit</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_main_exit                       (<link linkend="int">int</link> exit_status);</programlisting>
+<para>
+Exit the program by stopping <link linkend="gsk-main-run"><function>gsk_main_run()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>exit_status</parameter>&#160;:</term>
+<listitem><simpara> desired exit-status code for this process.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

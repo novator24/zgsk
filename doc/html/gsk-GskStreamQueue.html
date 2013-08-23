@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskStreamQueue</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="prev" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="next" href="gsk-gskmemory.html" title="memory-based streams">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch08.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch08.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskmemory.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-GskStreamQueue.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-GskStreamQueue.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-GskStreamQueue"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-GskStreamQueue.top_of_page"></a>GskStreamQueue</span></h2>
+<p>GskStreamQueue</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-GskStreamQueue.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+GskStreamQueue *    <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-new" title="gsk_stream_queue_new ()">gsk_stream_queue_new</a>                (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_readable,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_writable);
+void                <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-append-read-stream" title="gsk_stream_queue_append_read_stream ()">gsk_stream_queue_append_read_stream</a> (GskStreamQueue *queue,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *substream);
+void                <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-append-write-stream" title="gsk_stream_queue_append_write_stream ()">gsk_stream_queue_append_write_stream</a>
+                                                        (GskStreamQueue *queue,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *substream);
+void                <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-no-more-read-streams" title="gsk_stream_queue_no_more_read_streams ()">gsk_stream_queue_no_more_read_streams</a>
+                                                        (GskStreamQueue *queue);
+void                <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-no-more-write-streams" title="gsk_stream_queue_no_more_write_streams ()">gsk_stream_queue_no_more_write_streams</a>
+                                                        (GskStreamQueue *queue);
+#define             <a class="link" href="gsk-GskStreamQueue.html#GSK-STREAM-QUEUE-READ-EMPTY-HOOK--CAPS" title="GSK_STREAM_QUEUE_READ_EMPTY_HOOK()">GSK_STREAM_QUEUE_READ_EMPTY_HOOK</a>    (queue)
+#define             <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-trap-read-empty" title="gsk_stream_queue_trap_read_empty()">gsk_stream_queue_trap_read_empty</a>    (queue, func, shutdown, data, destroy)
+#define             <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-untrap-read-empty" title="gsk_stream_queue_untrap_read_empty()">gsk_stream_queue_untrap_read_empty</a>  (queue)
+#define             <a class="link" href="gsk-GskStreamQueue.html#GSK-STREAM-QUEUE-WRITE-EMPTY-HOOK--CAPS" title="GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK()">GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK</a>   (queue)
+#define             <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-trap-write-empty" title="gsk_stream_queue_trap_write_empty()">gsk_stream_queue_trap_write_empty</a>   (queue, func, shutdown, data, destroy)
+#define             <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-untrap-write-empty" title="gsk_stream_queue_untrap_write_empty()">gsk_stream_queue_untrap_write_empty</a> (queue)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskStreamQueue.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskStreamQueue.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-new"></a><h3>gsk_stream_queue_new ()</h3>
+<pre class="programlisting">GskStreamQueue *    gsk_stream_queue_new                (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_readable,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> is_writable);</pre>
+<p>
+Create a stream which can have other
+streams queueenated to either its read or write ends.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_readable</code></em> :</span></p></td>
+<td> whether the read can have readable streamss
+appended to it.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_writable</code></em> :</span></p></td>
+<td> whether the read can have writable streamss
+appended to it.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-append-read-stream"></a><h3>gsk_stream_queue_append_read_stream ()</h3>
+<pre class="programlisting">void                gsk_stream_queue_append_read_stream (GskStreamQueue *queue,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *substream);</pre>
+<p>
+Append a readable stream to a queue-stream.
+It will be read in the order in which it was appended.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> the larger stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>substream</code></em> :</span></p></td>
+<td> the stream whose data will be read by <em class="parameter"><code>queue</code></em>.
+Note that this function increments the ref-count on substream,
+so you must <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"
+><code class="function">g_object_unref()</code></a> it also.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-append-write-stream"></a><h3>gsk_stream_queue_append_write_stream ()</h3>
+<pre class="programlisting">void                gsk_stream_queue_append_write_stream
+                                                        (GskStreamQueue *queue,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *substream);</pre>
+<p>
+Append a writable stream to a queue-stream.
+It will be written to in the order in which it was appended.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> the larger stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>substream</code></em> :</span></p></td>
+<td> the stream which will be written to by the <em class="parameter"><code>queue</code></em>.
+Note that this function increments the ref-count on substream,
+so you must <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"
+><code class="function">g_object_unref()</code></a> it also.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-no-more-read-streams"></a><h3>gsk_stream_queue_no_more_read_streams ()</h3>
+<pre class="programlisting">void                gsk_stream_queue_no_more_read_streams
+                                                        (GskStreamQueue *queue);</pre>
+<p>
+Indicate that you are done added substreams to a queue-stream.
+When the last stream shuts down for reading, and all the buffered
+data has been read from queue, then this queue-stream
+will shut down.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> the stream to which no further streams can be appended.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-no-more-write-streams"></a><h3>gsk_stream_queue_no_more_write_streams ()</h3>
+<pre class="programlisting">void                gsk_stream_queue_no_more_write_streams
+                                                        (GskStreamQueue *queue);</pre>
+<p>
+Indicate that you are done added substreams to a queue-stream.
+When the last stream shuts down for writeing, then this queue-stream
+will shut down.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td> the stream to which no further streams can be appended.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STREAM-QUEUE-READ-EMPTY-HOOK--CAPS"></a><h3>GSK_STREAM_QUEUE_READ_EMPTY_HOOK()</h3>
+<pre class="programlisting">#define             GSK_STREAM_QUEUE_READ_EMPTY_HOOK(queue)</pre>
+<p>
+GskHook which notifies as long as the queue's supply of readable streams is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>queue whose hook should be returned.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-trap-read-empty"></a><h3>gsk_stream_queue_trap_read_empty()</h3>
+<pre class="programlisting">#define             gsk_stream_queue_trap_read_empty(queue, func, shutdown, data, destroy)</pre>
+<p>
+Provide a function that will be call as long as there are no
+streams to read from.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue to get notification about.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>function to invoke when the queue is empty,
+and which should return whether it wishes to continue
+trapping the event.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown</code></em> :</span></p></td>
+<td>called when the queue is no longer readable,
+should return FALSE.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>data to pass to <em class="parameter"><code>func</code></em>, <em class="parameter"><code>shutdown</code></em> and <em class="parameter"><code>destroy</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>called when the func and shutdown can no longer be invoked.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-untrap-read-empty"></a><h3>gsk_stream_queue_untrap_read_empty()</h3>
+<pre class="programlisting">#define             gsk_stream_queue_untrap_read_empty(queue)</pre>
+<p>
+Remove the trap set by <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-trap-read-empty" title="gsk_stream_queue_trap_read_empty()"><code class="function">gsk_stream_queue_trap_read_empty()</code></a>.
+</p>
+<p>
+The destroy function, if any, will be called (possibly not immediately)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue to stop getting notification about.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-STREAM-QUEUE-WRITE-EMPTY-HOOK--CAPS"></a><h3>GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK()</h3>
+<pre class="programlisting">#define             GSK_STREAM_QUEUE_WRITE_EMPTY_HOOK(queue)</pre>
+<p>
+GskHook which notifies as long as the queue's supply of writable streams is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>queue whose hook should be returned.
+<p>
+Provide a function that will be call as long as there are no
+streams to write to.
+</p>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-trap-write-empty"></a><h3>gsk_stream_queue_trap_write_empty()</h3>
+<pre class="programlisting">#define             gsk_stream_queue_trap_write_empty(queue, func, shutdown, data, destroy)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shutdown</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-queue-untrap-write-empty"></a><h3>gsk_stream_queue_untrap_write_empty()</h3>
+<pre class="programlisting">#define             gsk_stream_queue_untrap_write_empty(queue)</pre>
+<p>
+Remove the trap set by <a class="link" href="gsk-GskStreamQueue.html#gsk-stream-queue-trap-write-empty" title="gsk_stream_queue_trap_write_empty()"><code class="function">gsk_stream_queue_trap_write_empty()</code></a>.
+</p>
+<p>
+The destroy function, if any, will be called (possibly not immediately)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>queue</code></em> :</span></p></td>
+<td>the queue to stop getting notification about.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

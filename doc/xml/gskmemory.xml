@@ -1,0 +1,230 @@
+<refentry id="gsk-gskmemory">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskmemory.top_of_page">memory-based streams</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>memory-based streams</refname>
+<refpurpose>streams whose data is "memory", inside pointer-accessed data.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskmemory.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-memory-buffer-source-new">gsk_memory_buffer_source_new</link>        (<link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-memory-slab-source-new">gsk_memory_slab_source_new</link>          (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> data_len,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-memory-source-new-printf">gsk_memory_source_new_printf</link>        (const <link linkend="char">char</link> *format,
+                                                         ...);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-memory-source-new-vprintf">gsk_memory_source_new_vprintf</link>       (const <link linkend="char">char</link> *format,
+                                                         <link linkend="va-list">va_list</link> args);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-memory-source-static-string">gsk_memory_source_static_string</link>     (const <link linkend="char">char</link> *str);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-memory-source-static-string-n">gsk_memory_source_static_string_n</link>   (const <link linkend="char">char</link> *str,
+                                                         <link linkend="guint">guint</link> length);
+<link linkend="void">void</link>                (<link linkend="GskMemoryBufferCallback">*GskMemoryBufferCallback</link>)          (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gpointer">gpointer</link> data);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-memory-buffer-sink-new">gsk_memory_buffer_sink_new</link>          (<link linkend="GskMemoryBufferCallback">GskMemoryBufferCallback</link> callback,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskmemory.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+These are sources and sinks which use memory to store output
+and input.  Because of system-architectures, memory never blocks.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskmemory.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-memory-buffer-source-new" role="function">
+<title>gsk_memory_buffer_source_new ()</title>
+<indexterm zone="gsk-memory-buffer-source-new"><primary sortas="gsk_memory_buffer_source_new">gsk_memory_buffer_source_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_memory_buffer_source_new        (<link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Create a read-only <link linkend="GskStream"><type>GskStream</type></link> that will drain the 
+data from <parameter>buffer</parameter> and may it available for reading on the stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer whose contents should be readable from the new stream.
+It will be immediately (before the function returns) drained of all
+data, and will not be used any more by the stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new read-only stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-memory-slab-source-new" role="function">
+<title>gsk_memory_slab_source_new ()</title>
+<indexterm zone="gsk-memory-slab-source-new"><primary sortas="gsk_memory_slab_source_new">gsk_memory_slab_source_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_memory_slab_source_new          (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> data_len,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);</programlisting>
+<para>
+Create a read-only stream which has certain, given data available for reading.
+</para>
+<para>
+For efficiency, this code does not copy the data, but rather calls
+a user-supplied destroy method when we are done.  
+</para>
+<para>
+One possibility if you need the data copied, is to call
+g_memdup on data, then pass in g_free for <parameter>destroy</parameter> and the copy of the data
+as <parameter>destroy_data</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> binary data which will be readable from the returned stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data_len</parameter>&#160;:</term>
+<listitem><simpara> length of the returned stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> method called by the stream once <parameter>data</parameter> is completely used
+(ie, the user has read all the data or shutdown the stream)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara> data passed to <parameter>destroy</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new read-only stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-memory-source-new-printf" role="function">
+<title>gsk_memory_source_new_printf ()</title>
+<indexterm zone="gsk-memory-source-new-printf"><primary sortas="gsk_memory_source_new_printf">gsk_memory_source_new_printf</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_memory_source_new_printf        (const <link linkend="char">char</link> *format,
+                                                         ...);</programlisting>
+<para>
+Create a read-only stream which has the result of doing the
+sprintf available for reading.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>format</parameter>&#160;:</term>
+<listitem><simpara> a printf(3) format string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara> arguments, as used by printf(3).
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new read-only stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-memory-source-new-vprintf" role="function">
+<title>gsk_memory_source_new_vprintf ()</title>
+<indexterm zone="gsk-memory-source-new-vprintf"><primary sortas="gsk_memory_source_new_vprintf">gsk_memory_source_new_vprintf</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_memory_source_new_vprintf       (const <link linkend="char">char</link> *format,
+                                                         <link linkend="va-list">va_list</link> args);</programlisting>
+<para>
+Create a read-only stream which has the result of doing the
+vsprintf available for reading.  This is useful for
+chaining from other printf-like functions.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>format</parameter>&#160;:</term>
+<listitem><simpara> a printf(3) format string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>args</parameter>&#160;:</term>
+<listitem><simpara> arguments, as used by vprintf(3).
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new read-only stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-memory-source-static-string" role="function">
+<title>gsk_memory_source_static_string ()</title>
+<indexterm zone="gsk-memory-source-static-string"><primary sortas="gsk_memory_source_static_string">gsk_memory_source_static_string</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_memory_source_static_string     (const <link linkend="char">char</link> *str);</programlisting>
+<para>
+Create a read-only stream which has <parameter>str</parameter> available
+for reading.
+</para>
+<para>
+Note that the NUL will not be read from the stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> the static string which is the content of the stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new read-only stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-memory-source-static-string-n" role="function">
+<title>gsk_memory_source_static_string_n ()</title>
+<indexterm zone="gsk-memory-source-static-string-n"><primary sortas="gsk_memory_source_static_string_n">gsk_memory_source_static_string_n</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_memory_source_static_string_n   (const <link linkend="char">char</link> *str,
+                                                         <link linkend="guint">guint</link> length);</programlisting>
+<para>
+Create a read-only stream which has <parameter>length</parameter> bytes starting at <parameter>str</parameter> available
+for reading.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> the static string or binary-data which is the content of the stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara> length of the stream in bytes.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new read-only stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMemoryBufferCallback" role="function">
+<title>GskMemoryBufferCallback ()</title>
+<indexterm zone="GskMemoryBufferCallback"><primary sortas="GskMemoryBufferCallback">GskMemoryBufferCallback</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskMemoryBufferCallback)          (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Function to call when a memory-buffer-sink (as created
+with <link linkend="gsk-memory-buffer-sink-new"><function>gsk_memory_buffer_sink_new()</function></link>) is finished.
+This takes the buffer, which is full of data,
+and the data argument to <link linkend="gsk-memory-buffer-sink-new"><function>gsk_memory_buffer_sink_new()</function></link>
+as well.
+</para>
+<para>
+The buffer will be destroyed immediately after this
+call, so it does not matter if you read or peek from this
+buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>the buffer which has been filled.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>user-data to pass through to this function.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-memory-buffer-sink-new" role="function">
+<title>gsk_memory_buffer_sink_new ()</title>
+<indexterm zone="gsk-memory-buffer-sink-new"><primary sortas="gsk_memory_buffer_sink_new">gsk_memory_buffer_sink_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_memory_buffer_sink_new          (<link linkend="GskMemoryBufferCallback">GskMemoryBufferCallback</link> callback,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Create a sink for binary data which just fills
+a binary buffer.  When the stream is done,
+the <parameter>callback</parameter> will be run with the full buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>callback</parameter>&#160;:</term>
+<listitem><simpara> function to call when the buffer has been filled.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> user-data to pass to the <parameter>callback</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call when we are done with the data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the writable stream whose destination is a <link linkend="GskBuffer"><type>GskBuffer</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

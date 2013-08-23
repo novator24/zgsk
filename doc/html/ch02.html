@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Object Hierarchy</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="index.html" title="GSK Reference Manual">
+<link rel="prev" href="gsk-gskutils.html" title="gskutils">
+<link rel="next" href="ch03.html" title="Tutorials">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gsk-gskutils.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td> </td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch03.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter" lang="en">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="id2634337"></a>Object Hierarchy</h2></div></div></div>
+<pre class="screen">
+    <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+        <a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a>
+            <a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a>
+            GskUrlTransferFile
+        <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a>
+            <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a>
+            <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv6">GskSocketAddressIpv6</a>
+            <a class="link" href="GskSocketAddress.html#GskSocketAddressLocal">GskSocketAddressLocal</a>
+        <a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+            <a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a>
+                <a class="link" href="GskPacketQueueFd.html" title="GskPacketQueueFd">GskPacketQueueFd</a>
+            <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a>
+                <a class="link" href="GskStreamFd.html" title="GskStreamFd">GskStreamFd</a>
+                <a class="link" href="gsk-gskstreamssl.html#GskStreamSsl">GskStreamSsl</a>
+                <a class="link" href="gsk-gskbufferstream.html#GskBufferStream">GskBufferStream</a>
+                <a class="link" href="GskHttpClient.html" title="GskHttpClient">GskHttpClient</a>
+                <a class="link" href="GskHttpServer.html" title="GskHttpServer">GskHttpServer</a>
+        <a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a>
+            <a class="link" href="GskMainLoopPollBase.html" title="GskMainLoopPollBase">GskMainLoopPollBase</a>
+                <a class="link" href="GskMainLoopDevPoll.html" title="GskMainLoopDevPoll">GskMainLoopDevPoll</a>
+                <a class="link" href="GskMainLoopPoll.html" title="GskMainLoopPoll">GskMainLoopPoll</a>
+                <a class="link" href="GskMainLoopSelect.html" title="GskMainLoopSelect">GskMainLoopSelect</a>
+            <a class="link" href="GskMainLoopKqueue.html" title="GskMainLoopKqueue">GskMainLoopKqueue</a>
+        <a class="link" href="GskStreamListener.html" title="Listening for Connections">GskStreamListener</a>
+            <a class="link" href="GskStreamListenerSocket.html" title="GskStreamListenerSocket">GskStreamListenerSocket</a>
+        <a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a>
+        <a class="link" href="gsk-gskdnslocalresolver.html#GskDnsLocalResolver">GskDnsLocalResolver</a>
+        <a class="link" href="gsk-gskdnsserver.html#GskDnsServer">GskDnsServer</a>
+        <a class="link" href="GskHttpHeader.html" title="GskHttpHeader">GskHttpHeader</a>
+            <a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a>
+            <a class="link" href="GskHttpResponse.html" title="GskHttpResponse">GskHttpResponse</a>
+        <a class="link" href="GskUrl.html" title="GskUrl">GskUrl</a>
+    GInterface
+        <a class="link" href="gsk-gsknameresolver.html#GskNameResolver">GskNameResolver</a>
+        <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a>
+</pre>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskqsortmacro</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch15.html" title="Macro Madness">
+<link rel="prev" href="gsk-gskrbtreemacros.html" title="gskrbtreemacros">
+<link rel="next" href="ch16.html" title="Questionable ideas">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskrbtreemacros.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch15.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch16.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskqsortmacro.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskqsortmacro.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskqsortmacro"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskqsortmacro.top_of_page"></a>gskqsortmacro</span></h2>
+<p>gskqsortmacro — inline qsort macro</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskqsortmacro.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-QSORT-STACK-MAX-SIZE--CAPS" title="GSK_QSORT_STACK_MAX_SIZE">GSK_QSORT_STACK_MAX_SIZE</a>
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-INSERTION-SORT-THRESHOLD--CAPS" title="GSK_INSERTION_SORT_THRESHOLD">GSK_INSERTION_SORT_THRESHOLD</a>
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-QSORT--CAPS" title="GSK_QSORT()">GSK_QSORT</a>                           (array, type, n_elements, compare)
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-QSORT-DEBUG--CAPS" title="GSK_QSORT_DEBUG()">GSK_QSORT_DEBUG</a>                     (array, type, n_elements, compare)
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-QSORT-FULL--CAPS" title="GSK_QSORT_FULL()">GSK_QSORT_FULL</a>                      (array, type, n_elements, compare, isort_threshold, stack_size, ss_assertion)
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-QSELECT-FULL--CAPS" title="GSK_QSELECT_FULL()">GSK_QSELECT_FULL</a>                    (array, type, n_elements, n_select, compare, isort_threshold, stack_size, ss_assertion)
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-QSORT-ASSERT-STACK-SIZE--CAPS" title="GSK_QSORT_ASSERT_STACK_SIZE()">GSK_QSORT_ASSERT_STACK_SIZE</a>         (stack_alloced)
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-INSERTION-SORT--CAPS" title="GSK_INSERTION_SORT()">GSK_INSERTION_SORT</a>                  (array, type, length, compare)
+#define             <a class="link" href="gsk-gskqsortmacro.html#GSK-QSORT-SIMPLE-COMPARATOR--CAPS" title="GSK_QSORT_SIMPLE_COMPARATOR()">GSK_QSORT_SIMPLE_COMPARATOR</a>         (a,b,compare_rv)
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskqsortmacro.description"></a><h2>Description</h2>
+<p>
+This is an implementation of qsort that avoids
+recursion and uses a fixed-length stack.
+As such, it is suitable for a macro implementation.
+</p>
+<p>
+Please note that usually <code class="function">qsort()</code> or <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Miscellaneous-Utility-Functions.html#g-qsort-with-data"
+><code class="function">g_qsort_with_data()</code></a>
+is nicer to use than the macro version: it will
+compile to less code, for example.
+However, the macro-based version is often faster,
+and can be more convenient to use than
+the other routines.  For example, since the macro
+is lexically inlined, the comparator can use local variables.
+</p>
+<p>
+Here is an example: this qsorts an array
+of integers, considering only the least n_bits bits:
+</p>
+<pre class="programlisting">
+
+ static void
+ qsort_least_significant_bits (guint  array_len,
+                               guint *array,
+			       guint  n_bits)
+ {
+   guint mask = (1 &lt;&lt; n_bits) - 1;
+#define COMPARE(a,b,rv)       \
+  { guint tmp_a = mask &amp; a;   \
+    guint tmp_b = mask &amp; b;   \
+    rv = (tmp_a &lt; tmp_b) ? -1 \
+       : (tmp_a &gt; tmp_b) ? +1 \
+       0; }
+  GSK_QSORT (array, guint, array_len, COMPARE);
+#undef COMPARE
+ }
+
+</pre>
+<p>
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskqsortmacro.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GSK-QSORT-STACK-MAX-SIZE--CAPS"></a><h3>GSK_QSORT_STACK_MAX_SIZE</h3>
+<pre class="programlisting">#define             GSK_QSORT_STACK_MAX_SIZE</pre>
+<p>
+Maximum stack size to use for QSORT.
+Only should be changed if stack-space is very limited.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-INSERTION-SORT-THRESHOLD--CAPS"></a><h3>GSK_INSERTION_SORT_THRESHOLD</h3>
+<pre class="programlisting">#define             GSK_INSERTION_SORT_THRESHOLD</pre>
+<p>
+Maximum number of elements for which insertion sort
+is preferred to quicksort.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QSORT--CAPS"></a><h3>GSK_QSORT()</h3>
+<pre class="programlisting">#define             GSK_QSORT(array, type, n_elements, compare)</pre>
+<p>
+Sort an array.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> The array of values to sort.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>The type of an element of the array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_elements</code></em> :</span></p></td>
+<td>The number of elements in <em class="parameter"><code>array</code></em> to sort.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare</code></em> :</span></p></td>
+<td>A comparator macro.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QSORT-DEBUG--CAPS"></a><h3>GSK_QSORT_DEBUG()</h3>
+<pre class="programlisting">#define             GSK_QSORT_DEBUG(array, type, n_elements, compare)</pre>
+<p>
+Quicksort, with stack-checking.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> The array of values to sort.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>The type of an element of the array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_elements</code></em> :</span></p></td>
+<td>The number of elements in <em class="parameter"><code>array</code></em> to sort.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare</code></em> :</span></p></td>
+<td>A comparator macro.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QSORT-FULL--CAPS"></a><h3>GSK_QSORT_FULL()</h3>
+<pre class="programlisting">#define             GSK_QSORT_FULL(array, type, n_elements, compare, isort_threshold, stack_size, ss_assertion)</pre>
+<p>
+Quicksort, with a bit more configurability.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td>the array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>the type of elements in the array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_elements</code></em> :</span></p></td>
+<td>the number of elements in the array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare</code></em> :</span></p></td>
+<td>comparator macro
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>isort_threshold</code></em> :</span></p></td>
+<td>maximum size of array to insertion-sort
+instead of quicksort.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack_size</code></em> :</span></p></td>
+<td>maximum number of stack required.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss_assertion</code></em> :</span></p></td>
+<td>a macro which can do the stack-guard assertion.
+Should be blank or GSK_QSORT_ASSERT_STACK_SIZE.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QSELECT-FULL--CAPS"></a><h3>GSK_QSELECT_FULL()</h3>
+<pre class="programlisting">#define             GSK_QSELECT_FULL(array, type, n_elements, n_select, compare, isort_threshold, stack_size, ss_assertion)</pre>
+<p>
+Computes the top <em class="parameter"><code>n_select</code></em> elements of an
+array which has <em class="parameter"><code>n_elements</code></em> elements in it.
+The top <em class="parameter"><code>n_select</code></em> elements will be sorted.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td>the array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>the type of elements in the array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_elements</code></em> :</span></p></td>
+<td>the number of elements in the array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_select</code></em> :</span></p></td>
+<td>the number of elements to get in the sorted part.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare</code></em> :</span></p></td>
+<td>comparator macro
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>isort_threshold</code></em> :</span></p></td>
+<td>maximum size of array to insertion-sort
+instead of quicksort.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stack_size</code></em> :</span></p></td>
+<td>maximum number of stack required.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss_assertion</code></em> :</span></p></td>
+<td>a macro which can do the stack-guard assertion.
+Should be blank or GSK_QSORT_ASSERT_STACK_SIZE.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QSORT-ASSERT-STACK-SIZE--CAPS"></a><h3>GSK_QSORT_ASSERT_STACK_SIZE()</h3>
+<pre class="programlisting">#define             GSK_QSORT_ASSERT_STACK_SIZE(stack_alloced)</pre>
+<p>
+Macro to verify that the stack is not overflowed.
+The stack can overflow if the comparator is invalid.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stack_alloced</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-INSERTION-SORT--CAPS"></a><h3>GSK_INSERTION_SORT()</h3>
+<pre class="programlisting">#define             GSK_INSERTION_SORT(array, type, length, compare)</pre>
+<p>
+An insertion-sort implementation,
+which is used by the quicksort in the case
+of small arrays.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> The array of values to sort.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>The type of an element of the array.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td>The number elements in <em class="parameter"><code>array</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare</code></em> :</span></p></td>
+<td>comparator macro
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-QSORT-SIMPLE-COMPARATOR--CAPS"></a><h3>GSK_QSORT_SIMPLE_COMPARATOR()</h3>
+<pre class="programlisting">#define             GSK_QSORT_SIMPLE_COMPARATOR(a,b,compare_rv)</pre>
+<p>
+A comparator macro that just uses the normal operators &lt;,
+&gt; and ==.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a</code></em> :</span></p></td>
+<td>the first element
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>b</code></em> :</span></p></td>
+<td>the second element
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare_rv</code></em> :</span></p></td>
+<td>set to -1, 0, 1 if <em class="parameter"><code>a</code></em> is less than, equal to, or greater than <em class="parameter"><code>b</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskqsortmacro.see-also"></a><h2>See Also</h2>
+<p>
+The gskrbtreemacros, which can maintain a set in sorted order,
+so that the set can be walked in O(N) time, and each insert, delete or lookup
+is O(log N).
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

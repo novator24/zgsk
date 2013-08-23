@@ -1,0 +1,1466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Main Loop (Generic Event Management)</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskstreamconnection.html" title="gskstreamconnection">
+<link rel="next" href="gsk-gsknameresolver.html" title="Socket Address Lookup by Name">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskstreamconnection.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gsknameresolver.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskMainLoop.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskMainLoop.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskMainLoop.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskMainLoop"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskMainLoop.top_of_page"></a>Main Loop (Generic Event Management)</span></h2>
+<p>Main Loop (Generic Event Management) — Convenient way to be notified when certain types of event occur.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskMainLoop.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskMainLoop.html#GskMainLoopChange" title="GskMainLoopChange">GskMainLoopChange</a>;
+                    <a class="link" href="GskMainLoop.html#GskMainLoopEvent" title="GskMainLoopEvent">GskMainLoopEvent</a>;
+                    <a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a>;
+                    <a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a>;
+                    <a class="link" href="GskMainLoop.html#GskMainLoopContextList" title="GskMainLoopContextList">GskMainLoopContextList</a>;
+enum                <a class="link" href="GskMainLoop.html#GskMainLoopEventType" title="enum GskMainLoopEventType">GskMainLoopEventType</a>;
+                    <a class="link" href="GskMainLoop.html#GskMainLoopClass" title="GskMainLoopClass">GskMainLoopClass</a>;
+                    <a class="link" href="GskMainLoop.html#GskMainLoop-struct" title="GskMainLoop">GskMainLoop</a>;
+void                (<a class="link" href="GskMainLoop.html#GskMainLoopWaitPidFunc" title="GskMainLoopWaitPidFunc ()">*GskMainLoopWaitPidFunc</a>)           (<a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a> *info,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="GskMainLoop.html#GskMainLoopIdleFunc" title="GskMainLoopIdleFunc ()">*GskMainLoopIdleFunc</a>)              (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="GskMainLoop.html#GskMainLoopSignalFunc" title="GskMainLoopSignalFunc ()">*GskMainLoopSignalFunc</a>)            (int sig_no,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="GskMainLoop.html#GskMainLoopTimeoutFunc" title="GskMainLoopTimeoutFunc ()">*GskMainLoopTimeoutFunc</a>)           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (<a class="link" href="GskMainLoop.html#GskMainLoopIOFunc" title="GskMainLoopIOFunc ()">*GskMainLoopIOFunc</a>)                (int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-IO-Channels.html#GIOCondition"
+>GIOCondition</a> condition,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+enum                <a class="link" href="GskMainLoop.html#GskMainLoopCreateFlags" title="enum GskMainLoopCreateFlags">GskMainLoopCreateFlags</a>;
+<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *       <a class="link" href="GskMainLoop.html#gsk-main-loop-new" title="gsk_main_loop_new ()">gsk_main_loop_new</a>                   (<a class="link" href="GskMainLoop.html#GskMainLoopCreateFlags" title="enum GskMainLoopCreateFlags">GskMainLoopCreateFlags</a> create_flags);
+<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *       <a class="link" href="GskMainLoop.html#gsk-main-loop-default" title="gsk_main_loop_default ()">gsk_main_loop_default</a>               (void);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="GskMainLoop.html#gsk-main-loop-run" title="gsk_main_loop_run ()">gsk_main_loop_run</a>                   (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> timeout,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> *t_waited_out);
+<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         <a class="link" href="GskMainLoop.html#gsk-main-loop-add-idle" title="gsk_main_loop_add_idle ()">gsk_main_loop_add_idle</a>              (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopIdleFunc" title="GskMainLoopIdleFunc ()">GskMainLoopIdleFunc</a> source_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         <a class="link" href="GskMainLoop.html#gsk-main-loop-add-signal" title="gsk_main_loop_add_signal ()">gsk_main_loop_add_signal</a>            (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         int signal_number,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopSignalFunc" title="GskMainLoopSignalFunc ()">GskMainLoopSignalFunc</a> signal_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         <a class="link" href="GskMainLoop.html#gsk-main-loop-add-waitpid" title="gsk_main_loop_add_waitpid ()">gsk_main_loop_add_waitpid</a>           (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         int process_id,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopWaitPidFunc" title="GskMainLoopWaitPidFunc ()">GskMainLoopWaitPidFunc</a> waitpid_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         <a class="link" href="GskMainLoop.html#gsk-main-loop-add-io" title="gsk_main_loop_add_io ()">gsk_main_loop_add_io</a>                (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopIOFunc" title="GskMainLoopIOFunc ()">GskMainLoopIOFunc</a> io_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+void                <a class="link" href="GskMainLoop.html#gsk-source-adjust-io" title="gsk_source_adjust_io ()">gsk_source_adjust_io</a>                (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events);
+void                <a class="link" href="GskMainLoop.html#gsk-source-remove-io-events" title="gsk_source_remove_io_events ()">gsk_source_remove_io_events</a>         (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events);
+void                <a class="link" href="GskMainLoop.html#gsk-source-add-io-events" title="gsk_source_add_io_events ()">gsk_source_add_io_events</a>            (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events);
+<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         <a class="link" href="GskMainLoop.html#gsk-main-loop-add-timer" title="gsk_main_loop_add_timer ()">gsk_main_loop_add_timer</a>             (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopTimeoutFunc" title="GskMainLoopTimeoutFunc ()">GskMainLoopTimeoutFunc</a> timer_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> timer_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> timer_destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> millis_expire,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> milli_period);
+<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         <a class="link" href="GskMainLoop.html#gsk-main-loop-add-timer-absolute" title="gsk_main_loop_add_timer_absolute ()">gsk_main_loop_add_timer_absolute</a>    (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopTimeoutFunc" title="GskMainLoopTimeoutFunc ()">GskMainLoopTimeoutFunc</a> timer_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> timer_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> timer_destroy,
+                                                         int unixtime,
+                                                         int unixtime_micro);
+void                <a class="link" href="GskMainLoop.html#gsk-source-adjust-timer" title="gsk_source_adjust_timer ()">gsk_source_adjust_timer</a>             (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *timer_source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> millis_expire,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> milli_period);
+void                <a class="link" href="GskMainLoop.html#gsk-source-remove" title="gsk_source_remove ()">gsk_source_remove</a>                   (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source);
+void                <a class="link" href="GskMainLoop.html#gsk-main-loop-add-context" title="gsk_main_loop_add_context ()">gsk_main_loop_add_context</a>           (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#GMainContext"
+>GMainContext</a> *context);
+void                <a class="link" href="GskMainLoop.html#gsk-main-loop-quit" title="gsk_main_loop_quit ()">gsk_main_loop_quit</a>                  (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskMainLoop.html#gsk-main-loop-should-continue" title="gsk_main_loop_should_continue ()">gsk_main_loop_should_continue</a>       (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop);
+<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *       <a class="link" href="GskMainLoop.html#gsk-source-peek-main-loop" title="gsk_source_peek_main_loop ()">gsk_source_peek_main_loop</a>           (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source);
+void                <a class="link" href="GskMainLoop.html#gsk-main-loop-destroy-all-sources" title="gsk_main_loop_destroy_all_sources ()">gsk_main_loop_destroy_all_sources</a>   (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskMainLoop.html#gsk-main-loop-do-waitpid" title="gsk_main_loop_do_waitpid ()">gsk_main_loop_do_waitpid</a>            (int pid,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a> *wait_info);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskMainLoop.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskMainLoop
+         +----<a class="link" href="GskMainLoopPollBase.html" title="GskMainLoopPollBase">GskMainLoopPollBase</a>
+         +----<a class="link" href="GskMainLoopKqueue.html" title="GskMainLoopKqueue">GskMainLoopKqueue</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskMainLoop.description"></a><h2>Description</h2>
+<p>
+A main loop is an object which can trap events and call user functions
+when those events happen.
+</p>
+<p>
+The events that our main loop handles are fixed:  file-descriptors being
+readied, signals being delivered, timeouts, idle functions and child-process
+termination are the currently known events.
+</p>
+<p>
+GskMainLoop itself is abstract, you must use a system-specific derived class
+to do polling.  Use <a class="link" href="GskMainLoop.html#gsk-main-loop-default" title="gsk_main_loop_default ()"><code class="function">gsk_main_loop_default()</code></a> to get a main loop which is
+appropriate to your system.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskMainLoop.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopChange"></a><h3>GskMainLoopChange</h3>
+<pre class="programlisting">typedef struct {
+  GskMainLoopEventType type;
+  union
+  {
+    struct {
+      guint number;
+      gboolean add;
+    } signal;
+    struct {
+      guint fd;
+      GIOCondition old_events;
+      GIOCondition events;
+    } io;
+    struct {
+      gint pid;
+      gboolean add;
+      gboolean did_exit;
+    } process;
+  } data;
+} GskMainLoopChange;
+</pre>
+<p>
+This structure is passed to the system-dependent polling
+mechanism to indicate a change in events we want notification of.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskMainLoopEventType" title="enum GskMainLoopEventType">GskMainLoopEventType</a> <em class="structfield"><code>type</code></em>;</span></p></td>
+<td>what type of change is to occur.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopEvent"></a><h3>GskMainLoopEvent</h3>
+<pre class="programlisting">typedef struct {
+  GskMainLoopEventType type;
+  union
+  {
+    guint signal;
+    struct {
+      guint fd;
+      GIOCondition events;
+    } io;
+    GskMainLoopWaitInfo process_wait_info;
+  } data;
+} GskMainLoopEvent;
+</pre>
+<p>
+An event passed back from the system-dependent polling
+mechanism.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskMainLoopEventType" title="enum GskMainLoopEventType">GskMainLoopEventType</a> <em class="structfield"><code>type</code></em>;</span></p></td>
+<td>what type of event occurred.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a> <em class="structfield"><code>process_wait_info</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopWaitInfo"></a><h3>GskMainLoopWaitInfo</h3>
+<pre class="programlisting">typedef struct {
+  int               pid; 
+  gboolean          exited;         /* exit(2) or killed by signal? */
+  union {
+    int             signal;         /* !exited */
+    int             exit_status;    /*  exited */
+  } d;           
+  gboolean          dumped_core;
+} GskMainLoopWaitInfo;
+</pre>
+<p>
+Information about a process's termination.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>pid</code></em>;</span></p></td>
+<td>the process-id which terminated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> <em class="structfield"><code>exited</code></em>;</span></p></td>
+<td>whether the process exited, versus being killed
+by a signal, including crashes, which exit with SIGSEGV, SIGABRT, etc.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> <em class="structfield"><code>dumped_core</code></em>;</span></p></td>
+<td>whether the process dumped core.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskSource"></a><h3>GskSource</h3>
+<pre class="programlisting">typedef struct _GskSource GskSource;</pre>
+<p>
+An opaque object representing a trap of an event.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopContextList"></a><h3>GskMainLoopContextList</h3>
+<pre class="programlisting">typedef struct _GskMainLoopContextList GskMainLoopContextList;</pre>
+<p>
+Private.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopEventType"></a><h3>enum GskMainLoopEventType</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_MAIN_LOOP_EVENT_IO,
+  GSK_MAIN_LOOP_EVENT_SIGNAL,
+  GSK_MAIN_LOOP_EVENT_PROCESS
+} GskMainLoopEventType;
+</pre>
+<p>
+Types of event that can be dealt with by this main-loop.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-MAIN-LOOP-EVENT-IO--CAPS"></a><span class="term"><code class="literal">GSK_MAIN_LOOP_EVENT_IO</code></span></p></td>
+<td>
+An input/output event.  This is really just a file-descriptor event.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-MAIN-LOOP-EVENT-SIGNAL--CAPS"></a><span class="term"><code class="literal">GSK_MAIN_LOOP_EVENT_SIGNAL</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-MAIN-LOOP-EVENT-PROCESS--CAPS"></a><span class="term"><code class="literal">GSK_MAIN_LOOP_EVENT_PROCESS</code></span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopClass"></a><h3>GskMainLoopClass</h3>
+<pre class="programlisting">typedef struct {
+  GObjectClass object_class;
+  gboolean (*setup)  (GskMainLoop       *main_loop);
+  void     (*change) (GskMainLoop       *main_loop,
+                      GskMainLoopChange *change);
+  guint    (*poll)   (GskMainLoop       *main_loop,
+                      guint              max_events_out,
+                      GskMainLoopEvent  *events,
+                      gint               timeout);
+} GskMainLoopClass;
+</pre>
+<p>
+The virtual function which must be implemented for each type of main-loop.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"
+>GObjectClass</a> <em class="structfield"><code>object_class</code></em>;</span></p></td>
+<td>the base class from which the main-loop is derived.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>setup</code></em> ()</span></p></td>
+<td>function to call to initialize the main-loop.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>change</code></em> ()</span></p></td>
+<td>function invoked to indicate that a change in events we
+are interested in has occurred.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>poll</code></em> ()</span></p></td>
+<td>function invoked to check which events have occurred.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoop-struct"></a><h3>GskMainLoop</h3>
+<pre class="programlisting">typedef struct {
+  gint		 exit_status;
+
+  GskMainLoopEvent *event_array_cache;
+  unsigned       max_events;
+
+  /* a list of GMainContext's */
+  GskMainLoopContextList *first_context;
+  GskMainLoopContextList *last_context;
+} GskMainLoop;
+</pre>
+<p>
+A main-loop.  This holds information about all its sources.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> <em class="structfield"><code>exit_status</code></em>;</span></p></td>
+<td>Stored exit status which the user may
+return from <code class="function">main()</code>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskMainLoopEvent" title="GskMainLoopEvent">GskMainLoopEvent</a> *<em class="structfield"><code>event_array_cache</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskMainLoopContextList" title="GskMainLoopContextList">GskMainLoopContextList</a> *<em class="structfield"><code>first_context</code></em>;</span></p></td>
+<td>first GMainContext in the list.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskMainLoopContextList" title="GskMainLoopContextList">GskMainLoopContextList</a> *<em class="structfield"><code>last_context</code></em>;</span></p></td>
+<td>last GMainContext in the list.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopWaitPidFunc"></a><h3>GskMainLoopWaitPidFunc ()</h3>
+<pre class="programlisting">void                (*GskMainLoopWaitPidFunc)           (<a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a> *info,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+A function which will be invoked when a process terminates.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>information about the process and why it terminated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>data registered to <a class="link" href="GskMainLoop.html#gsk-main-loop-add-waitpid" title="gsk_main_loop_add_waitpid ()"><code class="function">gsk_main_loop_add_waitpid()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopIdleFunc"></a><h3>GskMainLoopIdleFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskMainLoopIdleFunc)              (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+Function to be called repetitively (that is, with no blocking or waiting; however,
+other events will continue to be processed).  It will stop when <code class="function">gsk_main_loop_remove()</code>
+is run on its source, or if it returns FALSE.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>data registered to <a class="link" href="GskMainLoop.html#gsk-main-loop-add-idle" title="gsk_main_loop_add_idle ()"><code class="function">gsk_main_loop_add_idle()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether to continue running.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopSignalFunc"></a><h3>GskMainLoopSignalFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskMainLoopSignalFunc)            (int sig_no,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+Function to be called whenever a UNIX signal of a particular number is raised.
+</p>
+<p>
+It will be untrapped when <code class="function">gsk_main_loop_remove()</code> is run on its source,
+or if it returns FALSE.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sig_no</code></em> :</span></p></td>
+<td>the number of the signal that was raised.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>data registered to <a class="link" href="GskMainLoop.html#gsk-main-loop-add-signal" title="gsk_main_loop_add_signal ()"><code class="function">gsk_main_loop_add_signal()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether to continue trapping the unix signal.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopTimeoutFunc"></a><h3>GskMainLoopTimeoutFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskMainLoopTimeoutFunc)           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+Function to invoke whenever a timeout expires.
+</p>
+<p>
+It will be untrapped when <code class="function">gsk_main_loop_remove()</code> is run on its source,
+or if it returns FALSE, or after it runs if it was registered as a one-shot (with
+milli_period==-1).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>data registered to <a class="link" href="GskMainLoop.html#gsk-main-loop-add-timer" title="gsk_main_loop_add_timer ()"><code class="function">gsk_main_loop_add_timer()</code></a> or
+<a class="link" href="GskMainLoop.html#gsk-main-loop-add-timer-absolute" title="gsk_main_loop_add_timer_absolute ()"><code class="function">gsk_main_loop_add_timer_absolute()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether to keep running this timer.  (Will be ignored if it is a one-shot timer
+or if the source has been destroyed)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopIOFunc"></a><h3>GskMainLoopIOFunc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            (*GskMainLoopIOFunc)                (int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-IO-Channels.html#GIOCondition"
+>GIOCondition</a> condition,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+Function to run whenever some subset of a set of
+requested events are noticed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td>the file-descriptor that the events occured on.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>condition</code></em> :</span></p></td>
+<td>the events that triggered the callback.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>data registered to <a class="link" href="GskMainLoop.html#gsk-main-loop-add-io" title="gsk_main_loop_add_io ()"><code class="function">gsk_main_loop_add_io()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether to keep these source.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskMainLoopCreateFlags"></a><h3>enum GskMainLoopCreateFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_MAIN_LOOP_NEEDS_THREADS = (1 &lt;&lt; 0)
+} GskMainLoopCreateFlags;
+</pre>
+<p>
+Indicate user requirements for the main-loop being constructed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><a name="GSK-MAIN-LOOP-NEEDS-THREADS--CAPS"></a><span class="term"><code class="literal">GSK_MAIN_LOOP_NEEDS_THREADS</code></span></p></td>
+<td>
+Some main loops (like GskMainLoopKqueue) don't cooperate with
+threads at all!  This flag precludes choosing main-loops
+which are have this property.
+If you don't need threads, this flag does not hurt, except
+that <code class="function">kqueue()</code> is a pretty good mechanism, so you probably
+want to get it right for a high-volume single-threaded server.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-new"></a><h3>gsk_main_loop_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *       gsk_main_loop_new                   (<a class="link" href="GskMainLoop.html#GskMainLoopCreateFlags" title="enum GskMainLoopCreateFlags">GskMainLoopCreateFlags</a> create_flags);</pre>
+<p>
+Make a new main loop.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>create_flags</code></em> :</span></p></td>
+<td>Stipulations on the nature of the main-loop.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new main loop.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-default"></a><h3>gsk_main_loop_default ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *       gsk_main_loop_default               (void);</pre>
+<p>
+Get the main-loop which is associated with the current thread.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a pointer to the main-loop.  This function does not
+increase the ref-count on the main-loop, so you do not need 
+to call <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"
+><code class="function">g_object_unref()</code></a> on the return value.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-run"></a><h3>gsk_main_loop_run ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_main_loop_run                   (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> timeout,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> *t_waited_out);</pre>
+<p>
+Run the main loop once, for a specified number of milliseconds.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the main loop to run.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timeout</code></em> :</span></p></td>
+<td> the maximum number of milliseconds to run, or -1 for no maximum.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>t_waited_out</code></em> :</span></p></td>
+<td> the number of milliseconds out used, if non-NULL.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of sources processed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-add-idle"></a><h3>gsk_main_loop_add_idle ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         gsk_main_loop_add_idle              (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopIdleFunc" title="GskMainLoopIdleFunc ()">GskMainLoopIdleFunc</a> source_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+This adds an idle function to the main loop.
+An idle function is a function which gets called every
+time the main loop is run.  Furthermore, while there are
+idle functions, the main loop will never block.
+</p>
+<p>
+One popular use of idle functions is to defer
+an operation, usually because either something is not
+in a good state to call immediately,
+or because there may be many requests that should
+be handled at one time.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the loop to add the idle function to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>source_func</code></em> :</span></p></td>
+<td> the function to call.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> parameter to be passed to <em class="parameter"><code>source_func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> to be called when the source is destroyed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <a class="link" href="GskMainLoop.html#GskSource" title="GskSource"><span class="type">GskSource</span></a> which can be removed (or ignored).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-add-signal"></a><h3>gsk_main_loop_add_signal ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         gsk_main_loop_add_signal            (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         int signal_number,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopSignalFunc" title="GskMainLoopSignalFunc ()">GskMainLoopSignalFunc</a> signal_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Add a signal handler to the main loop.
+</p>
+<p>
+Please note that unlike a normal unix signal handler (as provided by
+signal(2) or sigaction(2)), this handler will be run synchronously,
+so you can call non-reentrant methods.
+</p>
+<p>
+Also, because unix signal delivery is unreliable, if the signal is raised a
+few times in rapid succession, you may miss some callbacks.
+</p>
+<p>
+It is ok to connect multiple times to a single signal simulataneously.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the loop to add the unix signal handler function to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>signal_number</code></em> :</span></p></td>
+<td> the number of the signal handler, like SIGINT.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>signal_func</code></em> :</span></p></td>
+<td> the function to run synchronously when a unix signal is raised.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> data to be passed to <em class="parameter"><code>signal_func</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> to be called when the source is destroyed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <a class="link" href="GskMainLoop.html#GskSource" title="GskSource"><span class="type">GskSource</span></a> which can be removed (or ignored).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-add-waitpid"></a><h3>gsk_main_loop_add_waitpid ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         gsk_main_loop_add_waitpid           (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         int process_id,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopWaitPidFunc" title="GskMainLoopWaitPidFunc ()">GskMainLoopWaitPidFunc</a> waitpid_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Add a handler to trap process termination.
+</p>
+<p>
+Only one handler is allowed per child process.
+</p>
+<p>
+The handler will be invoked synchronously.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the loop to add the child-process termination handler function to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>process_id</code></em> :</span></p></td>
+<td> the child's process-id to wait for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>waitpid_func</code></em> :</span></p></td>
+<td> function to call when the process terminates in some way or another.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> data to be passed to <em class="parameter"><code>waitpid_func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> to be called when the source is destroyed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a class="link" href="GskMainLoop.html#GskSource" title="GskSource"><span class="type">GskSource</span></a> which can be removed (or ignored).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-add-io"></a><h3>gsk_main_loop_add_io ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         gsk_main_loop_add_io                (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         int fd,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopIOFunc" title="GskMainLoopIOFunc ()">GskMainLoopIOFunc</a> io_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Add a handler to input or output on a file-descriptor (a socket or a pipe, usually).
+</p>
+<p>
+Only one handler trap is allowed per file-descriptor.
+</p>
+<p>
+The handler will be re-invoked until the event subsides.
+For example, if you read only part of the data when a input event is raised,
+the <em class="parameter"><code>io_func</code></em> will be invoked again at every iteration of the main-loop
+until there is no data available.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the loop to add the i/o watch to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> the file-descriptor to watch for events.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>events</code></em> :</span></p></td>
+<td> initial I/O events to watch for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>io_func</code></em> :</span></p></td>
+<td> a function to call when the currently requested
+events occur.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> data to be passed to <em class="parameter"><code>io_func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> to be called when the source is destroyed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <a class="link" href="GskMainLoop.html#GskSource" title="GskSource"><span class="type">GskSource</span></a> which can be removed or altered.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-source-adjust-io"></a><h3>gsk_source_adjust_io ()</h3>
+<pre class="programlisting">void                gsk_source_adjust_io                (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events);</pre>
+<p>
+This changes the types of events being watched by the main-loop.
+</p>
+<p>
+Note:  each new file-descriptor needs a new GskSource.
+You must reuse this GskSource for a new file-descriptor
+even if it happens to have the same numeric value
+as a file-descriptor you closed.
+(The reason why:  GSK automatically coagulates
+multiple adjust_io calls.  This is fine with all main-loops.
+However, kqueue(2) on BSD, and possibly others, automatically
+unregister all interest in an event if the file-descriptor closes.
+Hence, if the file-descriptor is re-opened and re-used with the
+same GskSource, GSK will not be able to determine
+that anything has changed, and will not issue a new <a class="link" href="GskMainLoop.html#GskMainLoopChange" title="GskMainLoopChange"><span class="type">GskMainLoopChange</span></a>.
+This will break main-loops that are sensitive to exact which file-descriptor
+(not just the number) was registered.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>source</code></em> :</span></p></td>
+<td> the I/O source which now wants to watch different events.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>events</code></em> :</span></p></td>
+<td> the new events to watch for the I/O source.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-source-remove-io-events"></a><h3>gsk_source_remove_io_events ()</h3>
+<pre class="programlisting">void                gsk_source_remove_io_events         (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events);</pre>
+<p>
+Cause this source to stop being notified if any of the events in
+the <em class="parameter"><code>events</code></em> parameter are set.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>source</code></em> :</span></p></td>
+<td> the input/output source whose events-of-interest set
+should be reduced.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>events</code></em> :</span></p></td>
+<td> new events which should stop causing <em class="parameter"><code>source</code></em> to wake-up.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-source-add-io-events"></a><h3>gsk_source_add_io_events ()</h3>
+<pre class="programlisting">void                gsk_source_add_io_events            (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> events);</pre>
+<p>
+Cause this source to be notified if any of the events in
+the <em class="parameter"><code>events</code></em> parameter are set, in addition to the events which
+already caused this source to be woken up.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>source</code></em> :</span></p></td>
+<td> the input/output source whose events-of-interest set
+should be expanded.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>events</code></em> :</span></p></td>
+<td> new events which should cause <em class="parameter"><code>source</code></em> to wake-up.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-add-timer"></a><h3>gsk_main_loop_add_timer ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         gsk_main_loop_add_timer             (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopTimeoutFunc" title="GskMainLoopTimeoutFunc ()">GskMainLoopTimeoutFunc</a> timer_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> timer_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> timer_destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> millis_expire,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> milli_period);</pre>
+<p>
+Add a timeout function to the main-loop.
+This is a function that will be called after
+a fixed amount of time passes, and then may be called
+at a regular interval thereafter.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the main-loop which should keep track and run the timeout.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timer_func</code></em> :</span></p></td>
+<td> function to call when the requested amount of time elapses.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timer_data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>timer_func</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timer_destroy</code></em> :</span></p></td>
+<td> optional function to call to destroy the <em class="parameter"><code>timer_data</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>millis_expire</code></em> :</span></p></td>
+<td> number of milliseconds to wait before running <em class="parameter"><code>timer_func</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>milli_period</code></em> :</span></p></td>
+<td> period between subsequent invocation of the timeout.
+This may be -1 to indicate that the timeout is a one-shot.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a class="link" href="GskMainLoop.html#GskSource" title="GskSource"><span class="type">GskSource</span></a> which can be removed or altered.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-add-timer-absolute"></a><h3>gsk_main_loop_add_timer_absolute ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *         gsk_main_loop_add_timer_absolute    (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopTimeoutFunc" title="GskMainLoopTimeoutFunc ()">GskMainLoopTimeoutFunc</a> timer_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> timer_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> timer_destroy,
+                                                         int unixtime,
+                                                         int unixtime_micro);</pre>
+<p>
+Add a timeout function to the main-loop.
+The <em class="parameter"><code>timer_func</code></em> will be called as soon as we detect that the specified time has passed.
+</p>
+<p>
+The time to wait until is (<em class="parameter"><code>unixtime</code></em> + <em class="parameter"><code>unixtime_micro</code></em> * 10^{-6}) seconds after
+New Years, Jan 1, 1970 GMT.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the main-loop which should keep track and run the timeout.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timer_func</code></em> :</span></p></td>
+<td> function to call when the requested amount of time elapses.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timer_data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>timer_func</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timer_destroy</code></em> :</span></p></td>
+<td> optional function to call to destroy the <em class="parameter"><code>timer_data</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>unixtime</code></em> :</span></p></td>
+<td> number of seconds since Jan 1, 1970 GMT that will have passed when the 
+timer should expire.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>unixtime_micro</code></em> :</span></p></td>
+<td> fractional part of <em class="parameter"><code>unixtime</code></em>, in microseconds.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <a class="link" href="GskMainLoop.html#GskSource" title="GskSource"><span class="type">GskSource</span></a> which can be removed or altered.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-source-adjust-timer"></a><h3>gsk_source_adjust_timer ()</h3>
+<pre class="programlisting">void                gsk_source_adjust_timer             (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *timer_source,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> millis_expire,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a> milli_period);</pre>
+<p>
+Adjust the timeout and period for an already existing timer source.
+(You may only call this on timer sources.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timer_source</code></em> :</span></p></td>
+<td> the timeout source returned by <a class="link" href="GskMainLoop.html#gsk-main-loop-add-timer" title="gsk_main_loop_add_timer ()"><code class="function">gsk_main_loop_add_timer()</code></a> or <a class="link" href="GskMainLoop.html#gsk-main-loop-add-timer-absolute" title="gsk_main_loop_add_timer_absolute ()"><code class="function">gsk_main_loop_add_timer_absolute()</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>millis_expire</code></em> :</span></p></td>
+<td> the number of milliseconds from now that the timer should run.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>milli_period</code></em> :</span></p></td>
+<td> the period between subsequent runs of the timer, or -1 to indicate that 
+the timer is a one-shot.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-source-remove"></a><h3>gsk_source_remove ()</h3>
+<pre class="programlisting">void                gsk_source_remove                   (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source);</pre>
+<p>
+Destroy a main loop's source.
+</p>
+<p>
+If the source is currently running,
+it's destroy method will not be called until the
+source's callback returns.  (This way, important data won't be 
+deleted unexpectedly in the middle of the user's callback.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>source</code></em> :</span></p></td>
+<td> the source to remove and destroy.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-add-context"></a><h3>gsk_main_loop_add_context ()</h3>
+<pre class="programlisting">void                gsk_main_loop_add_context           (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#GMainContext"
+>GMainContext</a> *context);</pre>
+<p>
+Indicate that a particular <a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)"><span class="type">GskMainLoop</span></a> will take care of
+invoking the necessary methods of <em class="parameter"><code>context</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> main-loop which will take responsibility for <em class="parameter"><code>context</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td> a GMainContext that should be handled by <a class="link" href="GskMainLoop.html#gsk-main-loop-run" title="gsk_main_loop_run ()"><code class="function">gsk_main_loop_run()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-quit"></a><h3>gsk_main_loop_quit ()</h3>
+<pre class="programlisting">void                gsk_main_loop_quit                  (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop);</pre>
+<p>
+Set the main-loop flag that indicates that it should really stop running.
+</p>
+<p>
+If you are executing a GskMainLoop using <a class="link" href="GskMainLoop.html#gsk-main-loop-run" title="gsk_main_loop_run ()"><code class="function">gsk_main_loop_run()</code></a>,
+then you should probably check <a class="link" href="GskMainLoop.html#gsk-main-loop-should-continue" title="gsk_main_loop_should_continue ()"><code class="function">gsk_main_loop_should_continue()</code></a> at every iteration
+to ensure that you should not have quit by now.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the main-loop which is being asked to quit.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-should-continue"></a><h3>gsk_main_loop_should_continue ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_main_loop_should_continue       (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop);</pre>
+<p>
+Query whether the main-loop should keep running or not.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td> the main-loop to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether to keep running this main-loop.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-source-peek-main-loop"></a><h3>gsk_source_peek_main_loop ()</h3>
+<pre class="programlisting"><a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *       gsk_source_peek_main_loop           (<a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *source);</pre>
+<p>
+Get the main-loop where the source was created.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>source</code></em> :</span></p></td>
+<td> the source to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the main-loop associated with the source.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-destroy-all-sources"></a><h3>gsk_main_loop_destroy_all_sources ()</h3>
+<pre class="programlisting">void                gsk_main_loop_destroy_all_sources   (<a class="link" href="GskMainLoop.html" title="Main Loop (Generic Event Management)">GskMainLoop</a> *main_loop);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>main_loop</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-main-loop-do-waitpid"></a><h3>gsk_main_loop_do_waitpid ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_main_loop_do_waitpid            (int pid,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a> *wait_info);</pre>
+<p>
+Do a waitpid system call on the process and munge the
+data into <em class="parameter"><code>wait_info</code></em> for the caller to use.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pid</code></em> :</span></p></td>
+<td> the process id to wait for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wait_info</code></em> :</span></p></td>
+<td> place to collect termination status of the process.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the waitpid succeeded.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

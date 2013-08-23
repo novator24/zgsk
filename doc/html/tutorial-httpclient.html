@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Writing a HTTP Client</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch03.html" title="Tutorials">
+<link rel="prev" href="tutorial-httpserver.html" title="Writing an HTTP Server">
+<link rel="next" href="ch04.html" title="Standard Implementations">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="tutorial-httpserver.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch03.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch04.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="tutorial-httpclient"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">Writing a HTTP Client</span></h2>
+<p>Tutorial: Writing a HTTP client — How to write a web client</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" lang="en">
+<a name="id2636218"></a><h2>Writing a HTTP Client</h2>
+<p>
+This section of the tutorial describes how to write an HTTP client.
+An HTTP client is an object that gets webpages (and other content) by talking to
+an HTTP server.
+</p>
+<p>
+There are really two ways to do this:
+</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p>
+  Using GskUrlTransfer.
+  A simple, all-encompassing mechanism for transferring data with a resource at a given URL.
+ </p></li>
+<li><p>
+  The lowlevel way.  This way requires you to do DNS lookup, create the TCP connection,
+  and attach it to a transport-independent HTTP-client object.  This is a lot more flexible
+  in some ways: for example, you can use HTTP over non-TCP transports in this way.
+  But it requires more steps.
+ </p></li>
+</ul></div>
+<p>
+</p>
+<p>
+ You should use GskUrlTransfer unless you have a really good reason not to.
+ There are several reasons.
+ First, it's easier.
+ Also, it's not limited to HTTP: if your program uses GskUrlTransfer it
+ will be able to handle FTP and HTTPS.
+</p>
+<div class="refsect2" lang="en">
+<a name="id2636260"></a><h3>Using <span class="structname">GskUrlTransfer</span>
+</h3>
+<p>
+This is the high-level way to download content from a URL.
+</p>
+<p>
+Here is a very simple program that prints the contents of a URL to
+standard-output.
+</p>
+<pre class="programlisting">
+int main(int argc, char **argv)
+{
+  gsk_init (&amp;argc, &amp;argv, NULL);
+  if (argc != 2)
+    g_error ("usage: %s URL", argv[0]);
+  url = gsk_url_new (argv[1], &amp;error);
+  if (url == NULL)
+    g_error ("error parsing URL: %s", error-&gt;message);
+  if (!gsk_url_transfer (url,
+                         NULL, NULL, NULL,	/* no upload data */
+			 handle_transfer,
+			 NULL, NULL, &amp;error))
+    g_error ("error opening URL: %s", error-&gt;message);
+  return gsk_main_run ();
+}
+</pre>
+<p>
+And we also have to implement <code class="function">handle_transfer</code>
+which will get invoked when the transfer is started:
+</p>
+<pre class="programlisting">
+static void
+handle_transfer (GskUrlTransfer *info,
+	         gpointer        user_data)
+{
+  GError *error = NULL;
+  GskStream *stdout_stream;
+
+  /* Error handling */
+  if (info-&gt;result != GSK_URL_TRANSFER_SUCCESS)
+    {
+      g_printerr ("Download failed: result: %s\n", gsk_url_transfer_result_name (info-&gt;result));
+      gsk_main_exit (1);
+      return;
+    }
+  if (info-&gt;content == NULL)
+    {
+      g_printerr ("No content.\n");
+      gsk_main_exit (0);
+      return;
+    }
+
+  write_stream_to_stdout_and_exit (info-&gt;content);
+}
+</pre>
+<p>
+We will use this helper function (which is like <span style="color: red">&lt;program&gt;cat&lt;/program&gt;</span> for <span class="structname">GskStream</span>s):
+</p>
+<pre class="programlisting">
+static void 
+write_stream_to_stdout_and_exit (GskStream *content)
+{
+  /* Create a stream mapped to standard-output. */
+  stdout_stream = gsk_stream_fd_new_auto (STDOUT_FILENO);
+  if (stdout_stream == NULL)
+    g_error ("error opening STDOUT");
+
+  /* Attach content to stdout. */
+  if (!gsk_stream_attach (content, stdout_stream, &amp;error))
+    g_error ("error attaching streams: %s", error-&gt;message);
+
+  /* quit when done */
+  g_object_weak_ref (stdout_stream, (GWeakNotify) gsk_main_quit, NULL);
+  g_object_unref (stdout_stream);
+}
+</pre>
+<p>
+</p>
+<p>If you want to process binary-data from the URL's content as it comes,
+rather than attaching a stream to it, you should use
+consider using <code class="function">gsk_stream_hook_readable</code> on the content
+instead.  You'll have to <code class="function">g_object_ref</code> manually.
+Here's an implementation of handle_transfer that computes the MD5
+of the content instead of printing it:
+</p>
+<pre class="programlisting">
+static void
+handle_transfer_2 (GskUrlTransfer *info,
+	           gpointer        user_data)
+{
+  /* for real version, copy error handling from above */
+  g_assert (info-&gt;result == GSK_URL_TRANSFER_SUCCESS
+        &amp;&amp;  info-&gt;content != NULL);
+  gsk_stream_trap_readable (g_object_ref (info-&gt;content),
+                            handle_content_stream_is_readable,
+                            handle_content_stream_read_shutdown,
+			    gsk_hash_new_md5 (),
+			    (GDestroyNotify) gsk_hash_destroy);
+}
+static gboolean
+handle_content_stream_is_readable (GskStream *stream,
+                                   gpointer   data)
+{
+  GskHash *hash = data;
+  char buf[4096];
+  GError *error = NULL;
+  guint n_read = gsk_stream_read (stream, buf, sizeof (buf), &amp;error);
+  gsk_hash_feed (hash, buf, n_read);
+  if (error)
+    {
+      g_warning ("error reading %s: %s", G_OBJECT_TYPE_NAME (stream), error-&gt;message);
+      g_error_free (error);
+      return FALSE;
+    }
+  return TRUE;
+}
+static gboolean
+handle_content_stream_read_shutdown (GskStream *stream,
+                                     gpointer   data)
+{
+  GskHash *hash = data;
+  char *hex;
+  gsk_hash_done (hash);
+  hex = g_alloca (gsk_hash_get_size (hash) * 2 + 1);
+  gsk_hash_get_hex (hash, hex);
+  g_print ("%s\n", hex);
+  return FALSE;
+}
+</pre>
+<div class="refsect3" lang="en">
+<a name="id2637168"></a><h4>POSTing data using <span class="structname">GskUrlTransfer</span>
+</h4>
+<p>
+... [TODO: remember to describe gsk-memory; content-length]
+</p>
+</div>
+<div class="refsect3" lang="en">
+<a name="id2637181"></a><h4>Other HTTP-Specific Configuration</h4>
+<p>
+...
+</p>
+</div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2637192"></a><h3>Using <span class="structname">GskHttpClient</span>
+</h3>
+<p>
+This is the low-level way to be an HTTP client.
+</p>
+<p>
+The <span class="structname">GskHttpClient</span> class manages just the binary protocol
+that is used by HTTP.  It does not include the transport layer in any way!
+Instead, the <code class="function">read</code> method outputs data that will be sent
+across the transport to the server, whereas the <code class="function">write</code> method
+accepts data from the remote end.
+</p>
+<p>To use a <span class="structname">GskHttpClient</span> you
+<code class="function">gsk_stream_attach_pair</code> it to a transport layer,
+then call <code class="function">gsk_http_client_request</code> any number
+of times, followed by <code class="function">gsk_http_client_shutdown_when_done</code>.
+</p>
+<p>Here is an example usage of <span class="structname">GskHttpClient</span>,
+that connects to a unix-domain socket (for variety)
+and makes an HTTP request on it.<sup>[<a name="id2637284" href="#ftn.id2637284" class="footnote">1</a>]</sup>
+</p>
+<pre class="programlisting">
+int main(int argc, char **argv)
+{
+  const char *socket_fname, *uri_path;
+  GskSocketAddress *socket_address;
+  GskStream *client;
+  GskHttpClient *http_client;
+  GskHttpRequest *http_request;
+  gsk_init (&amp;argc, &amp;argv, NULL);
+  if (argc != 3)
+    g_error ("usage: %s SOCKET_PATH URI_PATH", argv[0]);
+  socket_fname = argv[1];
+  uri_path = argv[2];
+  socket_address = gsk_socket_address_new_local (socket_fname);
+  client = gsk_stream_new_connecting (socket_address, &amp;error);
+  if (client == NULL)
+    g_error ("error connecting to %s: %s", socket_fname, error-&gt;message);
+  http_client = gsk_http_client_new ();
+
+  /* Make our request */
+  gsk_http_client_request (http_client,
+                           http_request,
+			   NULL,	/* no POST data */
+			   handle_http_response, NULL,
+			   handle_http_response_destroyed);
+  g_object_unref (http_request);
+  http_request = NULL;
+
+  /* Attach the HttpClient to the transport */
+  if (!gsk_stream_attach_pair (client, GSK_STREAM (http_client), &amp;error))
+    g_error ("error attaching http client to transport: %s", error-&gt;message);
+
+  /* Run */
+  g_object_unref (http_client);
+  g_object_unref (client);
+  return gsk_main_run ();
+}
+</pre>
+<p>
+</p>
+<p>
+We have to write two more callbacks: <code class="function">handle_http_response</code> must handle the remote server's response.
+And <code class="function">handle_http_response_destroyed</code> will be invoked when the HTTP Client is destroyed:
+hopefully by then <code class="function">handle_http_response</code> will have been invoked, but if not, we must exit with an error.
+</p>
+<p>The implementation of <code class="function">handle_http_response</code> ...
+</p>
+<pre class="programlisting">
+static gboolean got_http_response = FALSE;
+static void
+handle_http_response (GskHttpRequest  *request,
+		      GskHttpResponse *response,
+		      GskStream       *input,
+		      gpointer         hook_data)
+{
+  g_assert (hook_data == NULL);  /* matches call to gsk_http_client_request */
+  got_http_response = TRUE;
+
+  if (response-&gt;status_code != GSK_HTTP_STATUS_OK)	/* == 200: the usual success code for HTTP */
+    {
+      g_warning ("Error: got %u from server", response-&gt;status_code);
+      gsk_main_exit (1);
+      return;
+    }
+  if (input == NULL)
+    {
+      g_warning ("No content from server");
+      gsk_main_exit (1);
+      return;
+    }
+
+  /* handle the input */
+  write_stream_to_stdout_and_exit (input);
+}
+</pre>
+<p>
+</p>
+<p>
+Finally we implement <code class="function">handle_http_response_destroyed</code>,
+whose only real point is to catch situations where the server gave
+no response whatsoever, although one common reason is that we failed to connect.
+</p>
+<pre class="programlisting">
+static void
+handle_http_response_destroyed (gpointer hook_data)
+{
+  if (!got_http_response)
+    {
+      g_warning ("no response from HTTP server");
+      gsk_main_exit (1);
+    }
+}
+</pre>
+<p>
+</p>
+</div>
+</div>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a name="ftn.id2637284" href="#id2637284" class="para">1</a>] </sup>You can use this code to talk to a GskControlServer,
+if you find the GskControlClient code too limited.</p></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

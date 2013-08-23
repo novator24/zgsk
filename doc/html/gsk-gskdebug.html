@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Runtime Toggled Debug Logging</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="tutorial-debugging-hints.html" title="Debugging Hints">
+<link rel="next" href="gsk-gskutils.html" title="gskutils">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="tutorial-debugging-hints.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskutils.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskdebug.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskdebug.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskdebug"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskdebug.top_of_page"></a>Runtime Toggled Debug Logging</span></h2>
+<p>Runtime Toggled Debug Logging — methods to quickly turn logging on and off for portions of GSK.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskdebug.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+enum                <a class="link" href="gsk-gskdebug.html#GskDebugFlags" title="enum GskDebugFlags">GskDebugFlags</a>;
+extern              const gboolean <a class="link" href="gsk-gskdebug.html#gsk-debugging-on" title="gsk_debugging_on">gsk_debugging_on</a>;
+void                <a class="link" href="gsk-gskdebug.html#gsk-debug-set-flags" title="gsk_debug_set_flags ()">gsk_debug_set_flags</a>                 (<a class="link" href="gsk-gskdebug.html#GskDebugFlags" title="enum GskDebugFlags">GskDebugFlags</a> flags);
+void                <a class="link" href="gsk-gskdebug.html#gsk-debug-add-flags" title="gsk_debug_add_flags ()">gsk_debug_add_flags</a>                 (<a class="link" href="gsk-gskdebug.html#GskDebugFlags" title="enum GskDebugFlags">GskDebugFlags</a> flags);
+extern              GskDebugFlags <a class="link" href="gsk-gskdebug.html#gsk-debug-flags" title="gsk_debug_flags">gsk_debug_flags</a>;
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdebug.description"></a><h2>Description</h2>
+<p>
+These functions allow you to programmitcally
+set the GSK debugging flags.  Usually, one
+sets these at runtime instead, by using the --gsk-debug=FLAGS
+command-line argument to your program.
+</p>
+<p>
+In any event, GSK's debugging facilities are only available if
+GSK itself was configured with gsk-debug support,
+by specifying [--enable-gsk-debug] to
+GSK's configure script.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdebug.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDebugFlags"></a><h3>enum GskDebugFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_DEBUG_IO     		= (1&lt;&lt;0),
+  GSK_DEBUG_STREAM 		= (1&lt;&lt;1),
+  GSK_DEBUG_STREAM_LISTENER 	= (1&lt;&lt;2),
+  GSK_DEBUG_STREAM_DATA         = (1&lt;&lt;3),
+  GSK_DEBUG_LIFETIME		= (1&lt;&lt;4),
+  GSK_DEBUG_MAIN_LOOP		= (1&lt;&lt;5),
+  GSK_DEBUG_DNS			= (1&lt;&lt;6),
+  GSK_DEBUG_HOOK		= (1&lt;&lt;7),
+  GSK_DEBUG_SSL     		= (1&lt;&lt;8),
+  GSK_DEBUG_HTTP     		= (1&lt;&lt;9),
+  GSK_DEBUG_FTP     		= (1&lt;&lt;10),
+  GSK_DEBUG_REQUEST 		= (1&lt;&lt;11),
+  GSK_DEBUG_FD                  = (1&lt;&lt;12),
+
+  GSK_DEBUG_ALL			= 0xffffffff
+} GskDebugFlags;
+</pre>
+<p>
+Flags which may be turned on to print debugging messages about
+them.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-DEBUG-IO--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_IO</code></span></p></td>
+<td>
+I/O hook debugging.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-STREAM--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_STREAM</code></span></p></td>
+<td>
+Read/write debugging.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-STREAM-LISTENER--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_STREAM_LISTENER</code></span></p></td>
+<td>
+Server listener debugging.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-STREAM-DATA--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_STREAM_DATA</code></span></p></td>
+<td>
+Stream debugging by dumping all the data exchanged with
+the stream.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-LIFETIME--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_LIFETIME</code></span></p></td>
+<td>
+Debug object lifetime issues.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-MAIN-LOOP--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_MAIN_LOOP</code></span></p></td>
+<td>
+Debug main-loop behavior.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-DNS--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_DNS</code></span></p></td>
+<td>
+Debug name lookup behavior.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-HOOK--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_HOOK</code></span></p></td>
+<td>
+Debug hooks.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-SSL--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_SSL</code></span></p></td>
+<td>
+Debug SSL (a secure transport layer, used by https).
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-HTTP--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_HTTP</code></span></p></td>
+<td>
+Debug HTTP, the protocol used for web pages.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-FTP--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_FTP</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-REQUEST--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_REQUEST</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-FD--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_FD</code></span></p></td>
+<td>
+Debug file-descriptor usage.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DEBUG-ALL--CAPS"></a><span class="term"><code class="literal">GSK_DEBUG_ALL</code></span></p></td>
+<td>
+All debug flags.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-debugging-on"></a><h3>gsk_debugging_on</h3>
+<pre class="programlisting">extern const gboolean gsk_debugging_on;
+</pre>
+<p>
+Whether debugging is on.
+</p>
+<p>
+This corresponds with whether GSK's <span style="color: red">&lt;program&gt;configure&lt;/program&gt;</span>
+script was run with the  [--enable-gsk-debug] option.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-debug-set-flags"></a><h3>gsk_debug_set_flags ()</h3>
+<pre class="programlisting">void                gsk_debug_set_flags                 (<a class="link" href="gsk-gskdebug.html#GskDebugFlags" title="enum GskDebugFlags">GskDebugFlags</a> flags);</pre>
+<p>
+Set which types of debug logs to emit.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> debug bits to start logging.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-debug-add-flags"></a><h3>gsk_debug_add_flags ()</h3>
+<pre class="programlisting">void                gsk_debug_add_flags                 (<a class="link" href="gsk-gskdebug.html#GskDebugFlags" title="enum GskDebugFlags">GskDebugFlags</a> flags);</pre>
+<p>
+Add new types of debug logs to emit.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> debug bits to start logging.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-debug-flags"></a><h3>gsk_debug_flags</h3>
+<pre class="programlisting">extern GskDebugFlags gsk_debug_flags;
+</pre>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

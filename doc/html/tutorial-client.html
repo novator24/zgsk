@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Writing a Generic Client</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch03.html" title="Tutorials">
+<link rel="prev" href="tutorial-server.html" title="Writing a Generic Server">
+<link rel="next" href="tutorial-httpserver.html" title="Writing an HTTP Server">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="tutorial-server.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch03.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="tutorial-httpserver.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="tutorial-client"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">Writing a Generic Client</span></h2>
+<p>Tutorial: Writing a client — How to write a client</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" lang="en">
+<a name="id2635228"></a><h2>Writing a Client</h2>
+<p>
+This section of the tutorial describes how to write a client.
+</p>
+<p>
+The first step in implementing a client is figuring out how to
+determine the host and port to connect to:
+</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p>Is there a default host?  If not, the host should either be
+determined programmatically (eg via an environment variable, a configuration
+file, a command-line parameter, or some other way), or the host may be a standard IP address or
+name.  You may have to wait on DNS lookups; use the gsk_name_resolve function to
+lookup the name.
+</p></li>
+<li><p>
+The port often defaults to a service-specific default port.
+Traditionally <code class="filename">/etc/services</code> gives
+a map from the port number to service name.
+More often, the default port is just hardcoded into the program.
+</p></li>
+</ul></div>
+<p>
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2635454"></a><h2>Example:  A TCP-Client API</h2>
+<p>
+Let us suppose that you have a server
+that responds to NUL-terminated requests
+with NUL-terminated responses.  You want to make
+a client API and a sample client program.
+</p>
+<p>First you have to design the client API:
+</p>
+<pre class="programlisting">
+typedef struct _MyClient MyClient;
+
+MyClient *my_client_new         (const char    *hostname,
+                                 int            port);
+void      my_client_trap_errors (MyClient      *client,
+                                 MyClientErrorFunc func,
+				 gpointer       data,
+				 GDestroyNotify destroy);
+void      my_client_request     (MyClient      *client,
+                                 const char    *request,
+				 MyClientResponseCallback func,
+				 gpointer       data,
+				 GDestroyNotify destroy);
+void      my_client_destroy     (MyClient      *client);
+</pre>
+<p>
+</p>
+<p>Then you have to design the <span class="structname">MyClient</span> data structure.
+We will keep a buffer of data that hasn't made it out to the server,
+and a queue of response callbacks, information about the actual connection,
+and the error-handlers.
+</p>
+<pre class="programlisting">
+struct _MyClient
+{
+  GskNameResolverTask *name_lookup;
+  int port;
+  GskStream *connection;
+
+  GskBuffer outgoing;
+  GskBuffer incoming;
+
+  GQueue *response_callbacks;
+
+  MyClientErrorFunc func;
+  gpointer       data;
+  GDestroyNotify destroy;
+};
+</pre>
+<p>
+</p>
+<p>
+TODO: Implement it!
+</p>
+<div class="refsect2" lang="en">
+<a name="id2635479"></a><h3>Sample Use of API</h3>
+<p>
+ Whenever you make an API like that, you should use it in a trivial test program.
+ This is vital for testing and debugging.
+</p>
+<p>In that spirit, we provide a trivial use of the <span class="structname">MyClient</span> API.
+</p>
+<pre class="programlisting">
+#include "my-client.h"
+static void
+handle_response (const char *response, gpointer data)
+{
+  g_print ("%s\n", response);
+  gsk_main_quit ();
+}
+int main (int argc, char **argv)
+{
+  gsk_init (&amp;argc, &amp;argv, NULL);
+  if (argc != 4)
+    g_error ("usage: %s HOST PORT QUERY", argv[0]);
+  client = my_client_new (argv[1], atoi (argv[2]));
+  my_client_request (client, argv[3], handle_response, NULL, NULL);
+  return gsk_main_run ();
+}
+</pre>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

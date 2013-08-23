@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Glib Helper Routines</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gskmain.html" title="Trivial Main Functions.">
+<link rel="next" href="GskPacketQueue.html" title="Datagram I/O">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskmain.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskPacketQueue.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskghelpers.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskghelpers.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskghelpers"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskghelpers.top_of_page"></a>Glib Helper Routines</span></h2>
+<p>Glib Helper Routines — Miscellaneous helper routines that could conceivably be moved to glib someday.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskghelpers.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+void                <a class="link" href="gsk-gskghelpers.html#gsk-g-ptr-array-foreach" title="gsk_g_ptr_array_foreach ()">gsk_g_ptr_array_foreach</a>             (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"
+>GPtrArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GFunc"
+>GFunc</a> func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gskghelpers.html#gsk-g-tree-min" title="gsk_g_tree_min ()">gsk_g_tree_min</a>                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gskghelpers.html#gsk-g-tree-max" title="gsk_g_tree_max ()">gsk_g_tree_max</a>                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            <a class="link" href="gsk-gskghelpers.html#gsk-g-tree-key-slist" title="gsk_g_tree_key_slist ()">gsk_g_tree_key_slist</a>                (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            <a class="link" href="gsk-gskghelpers.html#gsk-g-tree-value-slist" title="gsk_g_tree_value_slist ()">gsk_g_tree_value_slist</a>              (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            <a class="link" href="gsk-gskghelpers.html#gsk-g-hash-table-key-slist" title="gsk_g_hash_table_key_slist ()">gsk_g_hash_table_key_slist</a>          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *table);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            <a class="link" href="gsk-gskghelpers.html#gsk-g-hash-table-value-slist" title="gsk_g_hash_table_value_slist ()">gsk_g_hash_table_value_slist</a>        (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *table);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a>              <a class="link" href="gsk-gskghelpers.html#gsk-strtoll" title="gsk_strtoll ()">gsk_strtoll</a>                         (const char *str,
+                                                         char **endp,
+                                                         int base);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"
+>guint64</a>             <a class="link" href="gsk-gskghelpers.html#gsk-strtoull" title="gsk_strtoull ()">gsk_strtoull</a>                        (const char *str,
+                                                         char **endp,
+                                                         int base);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskghelpers.html#gsk-strnlen" title="gsk_strnlen ()">gsk_strnlen</a>                         (const char *ptr,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_len);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskghelpers.html#gsk-fd-set-nonblocking" title="gsk_fd_set_nonblocking ()">gsk_fd_set_nonblocking</a>              (int fd);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskghelpers.description"></a><h2>Description</h2>
+<p>
+Provide various simple functions that we have found useful.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskghelpers.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="gsk-g-ptr-array-foreach"></a><h3>gsk_g_ptr_array_foreach ()</h3>
+<pre class="programlisting">void                gsk_g_ptr_array_foreach             (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Pointer-Arrays.html#GPtrArray"
+>GPtrArray</a> *array,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GFunc"
+>GFunc</a> func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data);</pre>
+<p>
+Like <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#g-slist-foreach"
+><code class="function">g_slist_foreach()</code></a>, except it iterates over a GPtrArray instead.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
+<td> array to iterate over.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> function to call on each element of <em class="parameter"><code>array</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> second parameter to <em class="parameter"><code>func</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-g-tree-min"></a><h3>gsk_g_tree_min ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_g_tree_min                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);</pre>
+<p>
+Find the minimum key in the tree.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> tree to examine.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> smallest key in the tree.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-g-tree-max"></a><h3>gsk_g_tree_max ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_g_tree_max                      (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);</pre>
+<p>
+Find the maximum key in the tree.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> tree to examine.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> largest key in the tree.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-g-tree-key-slist"></a><h3>gsk_g_tree_key_slist ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            gsk_g_tree_key_slist                (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);</pre>
+<p>
+Get a list of all the keys in the trees, sorted.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to scan.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated list of pointers to the keys.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-g-tree-value-slist"></a><h3>gsk_g_tree_value_slist ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            gsk_g_tree_value_slist              (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Balanced-Binary-Trees.html#GTree"
+>GTree</a> *tree);</pre>
+<p>
+Get a list of all the values in the trees, sorted by key.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to scan.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated list of pointers to the keys.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-g-hash-table-key-slist"></a><h3>gsk_g_hash_table_key_slist ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            gsk_g_hash_table_key_slist          (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *table);</pre>
+<p>
+Accumulate all the keys in the hash table into a big list.
+You may not assume anything about the order of the list.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>table</code></em> :</span></p></td>
+<td> the hash table to scan.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an allocated GSList of all the keys in the hash-table.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-g-hash-table-value-slist"></a><h3>gsk_g_hash_table_value_slist ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *            gsk_g_hash_table_value_slist        (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"
+>GHashTable</a> *table);</pre>
+<p>
+Accumulate all the values in the hash table into a big list.
+You may not assume anything about the order of the list.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>table</code></em> :</span></p></td>
+<td> the hash table to scan.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an allocated GSList of all the values in the hash-table.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-strtoll"></a><h3>gsk_strtoll ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a>              gsk_strtoll                         (const char *str,
+                                                         char **endp,
+                                                         int base);</pre>
+<p>
+Like strtol, but for 64-bit integers.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> the string to parse a longlong integer (gint64) from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>endp</code></em> :</span></p></td>
+<td> optional place to store the character right past
+the number in <em class="parameter"><code>str</code></em>.  If *endp == <em class="parameter"><code>str</code></em>, then you may assume an error
+occurred.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>base</code></em> :</span></p></td>
+<td> the assumed base for the number to parse.  eg "2" to
+parse a binary, "8" for octal, "10" for decimal, "16" for hexidecimal.
+Also, "0" is autodetects the C-style base.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the parsed integer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-strtoull"></a><h3>gsk_strtoull ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"
+>guint64</a>             gsk_strtoull                        (const char *str,
+                                                         char **endp,
+                                                         int base);</pre>
+<p>
+Like strtol, but for 64-bit unsigned integers.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td> the string to parse a longlong unsigned integer (guint64) from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>endp</code></em> :</span></p></td>
+<td> optional place to store the character right past
+the number in <em class="parameter"><code>str</code></em>.  If *endp == <em class="parameter"><code>str</code></em>, then you may assume an error
+occurred.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>base</code></em> :</span></p></td>
+<td> the assumed base for the number to parse.  eg "2" to
+parse a binary, "8" for octal, "10" for decimal, "16" for hexidecimal.
+Also, "0" is autodetects the C-style base.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the parsed unsigned integer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-strnlen"></a><h3>gsk_strnlen ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_strnlen                         (const char *ptr,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_len);</pre>
+<p>
+Find the length of a string, which is only allocated
+<em class="parameter"><code>max_len</code></em> bytes, and does not need to be NUL-terminated.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ptr</code></em> :</span></p></td>
+<td> the string to find the length of.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_len</code></em> :</span></p></td>
+<td> the maximum length the string could be.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the length.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-fd-set-nonblocking"></a><h3>gsk_fd_set_nonblocking ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_fd_set_nonblocking              (int fd);</pre>
+<p>
+Make a file-descriptor non-blocking.
+When it is non-blocking, operations that would
+cause it to block should instead return
+EAGAIN.  (Although you should use <a class="link" href="gsk-gskerrno.html#gsk-errno-is-ignorable" title="gsk_errno_is_ignorable ()"><code class="function">gsk_errno_is_ignorable()</code></a>
+to test, since windoze uses a different code, EWOULDBLOCK,
+and you should always ignore EINTR.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> the file-descriptor to make non-blocking.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether it was able to set the file descriptor non-blocking.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

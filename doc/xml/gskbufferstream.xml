@@ -1,0 +1,281 @@
+<refentry id="gsk-gskbufferstream">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskbufferstream.top_of_page">gskbufferstream</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskbufferstream</refname>
+<refpurpose>Simple Buffering Stream</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskbufferstream.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="GskBufferStream"/>
+<synopsis>
+                    <link linkend="GskBufferStreamClass">GskBufferStreamClass</link>;
+                    <link linkend="GskBufferStream-struct">GskBufferStream</link>;
+<link linkend="GskBufferStream">GskBufferStream</link> *   <link linkend="gsk-buffer-stream-new">gsk_buffer_stream_new</link>               (void);
+#define             <link linkend="gsk-buffer-stream-read-hook">gsk_buffer_stream_read_hook</link>         (stream)
+#define             <link linkend="gsk-buffer-stream-write-hook">gsk_buffer_stream_write_hook</link>        (stream)
+<link linkend="void">void</link>                <link linkend="gsk-buffer-stream-read-buffer-changed">gsk_buffer_stream_read_buffer_changed</link>
+                                                        (<link linkend="GskBufferStream">GskBufferStream</link> *stream);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-stream-write-buffer-changed">gsk_buffer_stream_write_buffer_changed</link>
+                                                        (<link linkend="GskBufferStream">GskBufferStream</link> *stream);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-stream-read-shutdown">gsk_buffer_stream_read_shutdown</link>     (<link linkend="GskBufferStream">GskBufferStream</link> *stream);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-stream-changed">gsk_buffer_stream_changed</link>           (<link linkend="GskBufferStream">GskBufferStream</link> *stream);
+#define             <link linkend="gsk-buffer-stream-clear-strict-max-write">gsk_buffer_stream_clear_strict_max_write</link>(stream)
+#define             <link linkend="gsk-buffer-stream-has-strict-max-write">gsk_buffer_stream_has_strict_max_write</link>(stream)
+#define             <link linkend="gsk-buffer-stream-get-max-write-buffer">gsk_buffer_stream_get_max_write_buffer</link>(stream)
+#define             <link linkend="gsk-buffer-stream-peek-write-buffer">gsk_buffer_stream_peek_write_buffer</link> (stream)
+#define             <link linkend="gsk-buffer-stream-peek-read-buffer">gsk_buffer_stream_peek_read_buffer</link>  (stream)
+#define             <link linkend="gsk-buffer-stream-mark-strict-max-write">gsk_buffer_stream_mark_strict_max_write</link>(stream)
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gsk-gskbufferstream.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----<link linkend="GskStream">GskStream</link>
+               +----GskBufferStream
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskbufferstream.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This class provides trivial buffering, and additional
+hooks to be notified of buffer events.
+</para>
+<para>
+This class can be used for simple sources where there is
+minimal need for input/output monitoring.
+For example, it can be used to proxy for a foreign source.
+We use it for this purpose in gskopensslbufferstream.c
+to make a connected pair of a BIO (the SSL i/o abstraction)
+and a <link linkend="GskStream"><type>GskStream</type></link> (which is really a GskBufferStream).
+</para>
+<para>
+Most functions in the API are intended only for
+"implementors", that is, users who are using a <link linkend="GskBufferStream"><type>GskBufferStream</type></link>
+as an internal stream.  Most users who are given a <link linkend="GskBufferStream"><type>GskBufferStream</type></link>
+which is returned as a <link linkend="GskStream"><type>GskStream</type></link> should not use this API,
+because it may conflict with the way the implementor of
+the function which returned it expects it to be used.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskbufferstream.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskBufferStreamClass" role="struct">
+<title>GskBufferStreamClass</title>
+<indexterm zone="GskBufferStreamClass"><primary sortas="GskBufferStreamClass">GskBufferStreamClass</primary></indexterm><programlisting>typedef struct {
+  GskStreamClass stream_class;
+
+  void (*buffered_read_set_poll) (GskBufferStream *bs, gboolean);
+  void (*buffered_write_set_poll) (GskBufferStream *bs, gboolean);
+  void (*buffered_read_shutdown) (GskBufferStream *bs);
+  void (*buffered_write_shutdown) (GskBufferStream *bs);
+} GskBufferStreamClass;
+</programlisting>
+<para>
+The class which has the buffer methods.
+</para></refsect2>
+<refsect2 id="GskBufferStream-struct" role="struct">
+<title>GskBufferStream</title>
+<indexterm zone="GskBufferStream-struct"><primary sortas="GskBufferStream">GskBufferStream</primary></indexterm><programlisting>typedef struct _GskBufferStream GskBufferStream;</programlisting>
+<para>
+The buffered stream.  All of its members are private
+and should be accessed through the methods below only.
+</para>
+<para>
+However, for debugging purposes, ....
+</para></refsect2>
+<refsect2 id="gsk-buffer-stream-new" role="function">
+<title>gsk_buffer_stream_new ()</title>
+<indexterm zone="gsk-buffer-stream-new"><primary sortas="gsk_buffer_stream_new">gsk_buffer_stream_new</primary></indexterm><programlisting><link linkend="GskBufferStream">GskBufferStream</link> *   gsk_buffer_stream_new               (void);</programlisting>
+<para>
+Create a new <link linkend="GskBufferStream"><type>GskBufferStream</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated GskBufferStream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-read-hook" role="macro">
+<title>gsk_buffer_stream_read_hook()</title>
+<indexterm zone="gsk-buffer-stream-read-hook"><primary sortas="gsk_buffer_stream_read_hook">gsk_buffer_stream_read_hook</primary></indexterm><programlisting>#define             gsk_buffer_stream_read_hook(stream)</programlisting>
+<para>
+Get a pointer to a hook on the buffered-read method.
+This hook will be triggered as long as the stream's read-hook
+wants data and the buffer is empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskBufferStream"><type>GskBufferStream</type></link> to get the read-hook for.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-write-hook" role="macro">
+<title>gsk_buffer_stream_write_hook()</title>
+<indexterm zone="gsk-buffer-stream-write-hook"><primary sortas="gsk_buffer_stream_write_hook">gsk_buffer_stream_write_hook</primary></indexterm><programlisting>#define             gsk_buffer_stream_write_hook(stream)</programlisting>
+<para>
+Get a pointer to a hook of the buffered-write method.
+This will be triggered as long as the write-buffer
+is non-empty.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskBufferStream"><type>GskBufferStream</type></link> to get the write-hook for.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-read-buffer-changed" role="function">
+<title>gsk_buffer_stream_read_buffer_changed ()</title>
+<indexterm zone="gsk-buffer-stream-read-buffer-changed"><primary sortas="gsk_buffer_stream_read_buffer_changed">gsk_buffer_stream_read_buffer_changed</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_stream_read_buffer_changed
+                                                        (<link linkend="GskBufferStream">GskBufferStream</link> *stream);</programlisting>
+<para>
+Called to notify the buffer stream that its
+read-size has been changed, usually because
+an implementor has appended data into it
+for the attached stream to read.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> stream whose read buffer has been modified.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-write-buffer-changed" role="function">
+<title>gsk_buffer_stream_write_buffer_changed ()</title>
+<indexterm zone="gsk-buffer-stream-write-buffer-changed"><primary sortas="gsk_buffer_stream_write_buffer_changed">gsk_buffer_stream_write_buffer_changed</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_stream_write_buffer_changed
+                                                        (<link linkend="GskBufferStream">GskBufferStream</link> *stream);</programlisting>
+<para>
+Called to notify the buffer stream that its
+write-buffer has been changed, usually because
+an implementor has read data from it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> stream whose write buffer has been modified.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-read-shutdown" role="function">
+<title>gsk_buffer_stream_read_shutdown ()</title>
+<indexterm zone="gsk-buffer-stream-read-shutdown"><primary sortas="gsk_buffer_stream_read_shutdown">gsk_buffer_stream_read_shutdown</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_stream_read_shutdown     (<link linkend="GskBufferStream">GskBufferStream</link> *stream);</programlisting>
+<para>
+Shutdown the read-end of the buffer-stream,
+waiting for the buffer to be drained first.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the stream to gracefully shut-down.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-changed" role="function">
+<title>gsk_buffer_stream_changed ()</title>
+<indexterm zone="gsk-buffer-stream-changed"><primary sortas="gsk_buffer_stream_changed">gsk_buffer_stream_changed</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_stream_changed           (<link linkend="GskBufferStream">GskBufferStream</link> *stream);</programlisting>
+<para>
+Do all updates needed to compensate for
+any user changes to: read_buffer, write_buffer,
+max_write_buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the stream whose internals have been modified.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-clear-strict-max-write" role="macro">
+<title>gsk_buffer_stream_clear_strict_max_write()</title>
+<indexterm zone="gsk-buffer-stream-clear-strict-max-write"><primary sortas="gsk_buffer_stream_clear_strict_max_write">gsk_buffer_stream_clear_strict_max_write</primary></indexterm><programlisting>#define             gsk_buffer_stream_clear_strict_max_write(stream)</programlisting>
+<para>
+Stop forcing the buffer-writer to be in strict-compliance
+with the max-write-buffer quantity.  In this case,
+max-write-buffer just used for polling purposes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-has-strict-max-write" role="macro">
+<title>gsk_buffer_stream_has_strict_max_write()</title>
+<indexterm zone="gsk-buffer-stream-has-strict-max-write"><primary sortas="gsk_buffer_stream_has_strict_max_write">gsk_buffer_stream_has_strict_max_write</primary></indexterm><programlisting>#define             gsk_buffer_stream_has_strict_max_write(stream)</programlisting>
+<para>
+Whether the <link linkend="GskBufferStream"><type>GskBufferStream</type></link> will strictly enforce
+the maximum write-buffer threshold by
+forcing writes beyond the maximum to get
+clipped (possibly to 0).
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-get-max-write-buffer" role="macro">
+<title>gsk_buffer_stream_get_max_write_buffer()</title>
+<indexterm zone="gsk-buffer-stream-get-max-write-buffer"><primary sortas="gsk_buffer_stream_get_max_write_buffer">gsk_buffer_stream_get_max_write_buffer</primary></indexterm><programlisting>#define             gsk_buffer_stream_get_max_write_buffer(stream)</programlisting>
+<para>
+Get the maximum number of bytes in the write buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-peek-write-buffer" role="macro">
+<title>gsk_buffer_stream_peek_write_buffer()</title>
+<indexterm zone="gsk-buffer-stream-peek-write-buffer"><primary sortas="gsk_buffer_stream_peek_write_buffer">gsk_buffer_stream_peek_write_buffer</primary></indexterm><programlisting>#define             gsk_buffer_stream_peek_write_buffer(stream)</programlisting>
+<para>
+Peek at the write-buffer (the buffer where the input <link linkend="gsk-stream-write"><function>gsk_stream_write()</function></link>
+is appended).  Note that you must call <link linkend="gsk-buffer-stream-write-buffer-changed"><function>gsk_buffer_stream_write_buffer_changed()</function></link>
+if you change the returned buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream whose write-buffer is returned.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-peek-read-buffer" role="macro">
+<title>gsk_buffer_stream_peek_read_buffer()</title>
+<indexterm zone="gsk-buffer-stream-peek-read-buffer"><primary sortas="gsk_buffer_stream_peek_read_buffer">gsk_buffer_stream_peek_read_buffer</primary></indexterm><programlisting>#define             gsk_buffer_stream_peek_read_buffer(stream)</programlisting>
+<para>
+Peek at the read-buffer (the buffer where the output <link linkend="gsk-stream-read"><function>gsk_stream_read()</function></link>
+is drain from).
+Note that you must call <link linkend="gsk-buffer-stream-read-buffer-changed"><function>gsk_buffer_stream_read_buffer_changed()</function></link>
+if you change the returned buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream whose read-buffer is returned.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-stream-mark-strict-max-write" role="macro">
+<title>gsk_buffer_stream_mark_strict_max_write()</title>
+<indexterm zone="gsk-buffer-stream-mark-strict-max-write"><primary sortas="gsk_buffer_stream_mark_strict_max_write">gsk_buffer_stream_mark_strict_max_write</primary></indexterm><programlisting>#define             gsk_buffer_stream_mark_strict_max_write(stream)</programlisting>
+<para>
+Indicate that strict enforcement of the maximum-write buffer size
+is desired.
+</para>
+<para>
+Note that this only affect the write implementation:
+existing buffered data is retained, and also
+the implementor can always <link linkend="gsk-buffer-append"><function>gsk_buffer_append()</function></link> to cram
+extra data in.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream where the max-write-buffer should be strictly enforced.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="gsk-gskbufferstream.see-also">
+<title>See Also</title>
+<para>
+GskStream.
+</para>
+</refsect1>
+
+</refentry>

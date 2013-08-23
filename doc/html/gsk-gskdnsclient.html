@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskdnsclient</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch09.html" title="DNS library (client and server support)">
+<link rel="prev" href="gsk-gskdnsrrcache.html" title="gskdnsrrcache">
+<link rel="next" href="gsk-gskdnslocalresolver.html" title="gskdnslocalresolver">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskdnsrrcache.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch09.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskdnslocalresolver.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskdnsclient.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskdnsclient.description" class="shortcut">Description</a>
+                 | 
+                <a href="#gsk-gskdnsclient.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#gsk-gskdnsclient.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskdnsclient"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskdnsclient.top_of_page"></a>gskdnsclient</span></h2>
+<p>gskdnsclient — This is a DNS client.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskdnsclient.synopsis"></a><h2>Synopsis</h2>
+<a name="GskDnsClient"></a><pre class="synopsis">
+                    <a class="link" href="gsk-gskdnsclient.html#GskDnsClient-struct" title="GskDnsClient">GskDnsClient</a>;
+                    <a class="link" href="gsk-gskdnsclient.html#GskDnsClientClass" title="GskDnsClientClass">GskDnsClientClass</a>;
+enum                <a class="link" href="gsk-gskdnsclient.html#GskDnsClientFlags" title="enum GskDnsClientFlags">GskDnsClientFlags</a>;
+<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *      <a class="link" href="gsk-gskdnsclient.html#gsk-dns-client-new" title="gsk_dns_client_new ()">gsk_dns_client_new</a>                  (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *packet_queue,
+                                                         <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdnsclient.html#GskDnsClientFlags" title="enum GskDnsClientFlags">GskDnsClientFlags</a> flags);
+void                <a class="link" href="gsk-gskdnsclient.html#gsk-dns-client-add-searchpath" title="gsk_dns_client_add_searchpath ()">gsk_dns_client_add_searchpath</a>       (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         const char *searchpath);
+void                <a class="link" href="gsk-gskdnsclient.html#gsk-dns-client-add-ns" title="gsk_dns_client_add_ns ()">gsk_dns_client_add_ns</a>               (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a> *address);
+void                <a class="link" href="gsk-gskdnsclient.html#gsk-dns-client-set-cache" title="gsk_dns_client_set_cache ()">gsk_dns_client_set_cache</a>            (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);
+void                <a class="link" href="gsk-gskdnsclient.html#gsk-dns-client-set-flags" title="gsk_dns_client_set_flags ()">gsk_dns_client_set_flags</a>            (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         <a class="link" href="gsk-gskdnsclient.html#GskDnsClientFlags" title="enum GskDnsClientFlags">GskDnsClientFlags</a> flags);
+<a class="link" href="gsk-gskdnsclient.html#GskDnsClientFlags" title="enum GskDnsClientFlags">GskDnsClientFlags</a>   <a class="link" href="gsk-gskdnsclient.html#gsk-dns-client-get-flags" title="gsk_dns_client_get_flags ()">gsk_dns_client_get_flags</a>            (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdnsclient.html#gsk-dns-client-parse-system-files" title="gsk_dns_client_parse_system_files ()">gsk_dns_client_parse_system_files</a>   (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsclient.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----GskDnsClient
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsclient.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+GskDnsClient implements
+ <a class="link" href="gsk-gsknameresolver.html#GskNameResolver">GskNameResolver</a> and  <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a>.</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsclient.description"></a><h2>Description</h2>
+<p>
+This is a flexible DNS client.  It has (1) a transport for packets and
+(2) a cache of resource records.
+</p>
+<p>
+This code is almost always used indirectly, from <code class="function">gsk_name_resolve()</code>,
+since the default name resolver uses DNS.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsclient.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDnsClient-struct"></a><h3>GskDnsClient</h3>
+<pre class="programlisting">typedef struct _GskDnsClient GskDnsClient;</pre>
+<p>
+An instance of the DNS client.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsClientClass"></a><h3>GskDnsClientClass</h3>
+<pre class="programlisting">typedef struct _GskDnsClientClass GskDnsClientClass;</pre>
+<p>
+The class of the DNS client.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsClientFlags"></a><h3>enum GskDnsClientFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_DNS_CLIENT_STUB_RESOLVER = (1&lt;&lt;0)
+} GskDnsClientFlags;
+</pre>
+<p>
+Flags which affect how the DNS client operates.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><a name="GSK-DNS-CLIENT-STUB-RESOLVER--CAPS"></a><span class="term"><code class="literal">GSK_DNS_CLIENT_STUB_RESOLVER</code></span></p></td>
+<td>
+Whether this DNS client is a stub resolver.
+A stub resolver relies on its name-server to do all
+recursion and caching for it.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-client-new"></a><h3>gsk_dns_client_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *      gsk_dns_client_new                  (<a class="link" href="GskPacketQueue.html" title="Datagram I/O">GskPacketQueue</a> *packet_queue,
+                                                         <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache,
+                                                         <a class="link" href="gsk-gskdnsclient.html#GskDnsClientFlags" title="enum GskDnsClientFlags">GskDnsClientFlags</a> flags);</pre>
+<p>
+Create a new DNS client.
+This implements the <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver"><span class="type">GskDnsResolver</span></a> interface.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>packet_queue</code></em> :</span></p></td>
+<td> underlying transport layer to use.
+The client will keep a reference to this packet-queue.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> cache of resource-records.
+The client will keep a reference to this cache.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> whether you want this client to be a recursive
+or stub resolver.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly allocated DNS client.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-client-add-searchpath"></a><h3>gsk_dns_client_add_searchpath ()</h3>
+<pre class="programlisting">void                gsk_dns_client_add_searchpath       (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         const char *searchpath);</pre>
+<p>
+Add a new implicit domain to the list the client keeps.
+</p>
+<p>
+A searchpath entry is simply a domain to try
+post-fixing to any request.  For example,
+if you have "sourceforce.net" in your searchpath,
+then looking "cvs.gsk" should resolve "cvs.gsk.sourceforge.net".
+</p>
+<p>
+Searchpath entries take priority, EXCEPT
+if the requested domain name ends in ".".
+If you have "sourceforce.net" in your searchpath,
+then looking "cvs.com" should resolve "cvs.com.sourceforge.net"
+then "cvs.com" if the former does not exist.
+However, looking up "cvs.com." will ONLY search the global namespace.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td> the client to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>searchpath</code></em> :</span></p></td>
+<td> the new path to search.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-client-add-ns"></a><h3>gsk_dns_client_add_ns ()</h3>
+<pre class="programlisting">void                gsk_dns_client_add_ns               (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         <a class="link" href="GskSocketAddress.html#GskSocketAddressIpv4">GskSocketAddressIpv4</a> *address);</pre>
+<p>
+Add a new nameserver to query.
+All nameservers will be queried simultaneously.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td> the client to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td> the numeric address of the nameserver.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-client-set-cache"></a><h3>gsk_dns_client_set_cache ()</h3>
+<pre class="programlisting">void                gsk_dns_client_set_cache            (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         <a class="link" href="gsk-gskdnsrrcache.html#GskDnsRRCache" title="GskDnsRRCache">GskDnsRRCache</a> *rr_cache);</pre>
+<p>
+Switch the client to use a new resource-record cache.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td> the client to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>rr_cache</code></em> :</span></p></td>
+<td> the new resource-record cache to use.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-client-set-flags"></a><h3>gsk_dns_client_set_flags ()</h3>
+<pre class="programlisting">void                gsk_dns_client_set_flags            (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client,
+                                                         <a class="link" href="gsk-gskdnsclient.html#GskDnsClientFlags" title="enum GskDnsClientFlags">GskDnsClientFlags</a> flags);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-client-get-flags"></a><h3>gsk_dns_client_get_flags ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsclient.html#GskDnsClientFlags" title="enum GskDnsClientFlags">GskDnsClientFlags</a>   gsk_dns_client_get_flags            (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-client-parse-system-files"></a><h3>gsk_dns_client_parse_system_files ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_dns_client_parse_system_files   (<a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a> *client);</pre>
+<p>
+Parse system DNS configuration.
+</p>
+<p>
+Currently, this parses /etc/hosts and /etc/resolv.conf .</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td> the client which should add the system configuration information.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the files were parsed successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

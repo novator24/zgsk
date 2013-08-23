@@ -1,0 +1,216 @@
+<refentry id="gsk-gsknetworkinterface">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gsknetworkinterface.top_of_page">gsknetworkinterface</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gsknetworkinterface</refname>
+<refpurpose>Obtain information about your local network interfaces.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gsknetworkinterface.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskNetworkInterface">GskNetworkInterface</link>;
+                    <link linkend="GskNetworkInterfaceSet">GskNetworkInterfaceSet</link>;
+enum                <link linkend="GskNetworkInterfaceFlags">GskNetworkInterfaceFlags</link>;
+<link linkend="GskNetworkInterfaceSet">GskNetworkInterfaceSet</link> * <link linkend="gsk-network-interface-set-new">gsk_network_interface_set_new</link>  (<link linkend="GskNetworkInterfaceFlags">GskNetworkInterfaceFlags</link> flags);
+<link linkend="void">void</link>                <link linkend="gsk-network-interface-set-destroy">gsk_network_interface_set_destroy</link>   (<link linkend="GskNetworkInterfaceSet">GskNetworkInterfaceSet</link> *set);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gsknetworkinterface.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+These methods allow you to obtain information about the
+local network interfaces.
+</para>
+<para>
+A network interface is abstract jargon for an ethernet card,
+that is, it's a device that transmits and receives packets.
+Or, it can be a virtual interface, like the loopback interface is.
+One other possibility is that the interface is an alias:
+this sort of trick is done to make a computer listen
+on two IP addresses.
+</para>
+<para>
+The information returned by this function is a name
+for each interface (the same name as returned by <command>ifconfig</command>)
+and addresses, mostly the address used to connect to this device,
+ie your IP address (with port set to 0).
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gsknetworkinterface.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskNetworkInterface" role="struct">
+<title>GskNetworkInterface</title>
+<indexterm zone="GskNetworkInterface"><primary sortas="GskNetworkInterface">GskNetworkInterface</primary></indexterm><programlisting>typedef struct {
+  const char *ifname;
+
+  /* whether this interface is "virtual" -- just connects back to this host */
+  unsigned is_loopback : 1;
+
+  /* whether this interface supports broadcasting. */
+  unsigned supports_multicast : 1;
+
+  /* whether this interface is receiving packets not intended for it. */
+  unsigned is_promiscuous : 1;
+
+  /* ip-address if the interface is up. */
+  GskSocketAddress *address;
+
+  /* if !is_loopback, this is the device's MAC address. */
+  GskSocketAddress *hw_address;
+
+  /* if is_point_to_point, this is the address of the other end of
+   * the connection.
+   */
+  GskSocketAddress *p2p_address;
+
+  /* if supports_broadcast, this is the broadcast address. */
+  GskSocketAddress *broadcast;
+} GskNetworkInterface;
+</programlisting>
+<para>
+Information about a single network interface.
+</para><variablelist role="struct">
+<varlistentry>
+<term>const&#160;<link linkend="char">char</link>&#160;*<structfield>ifname</structfield>;</term>
+<listitem><simpara>the name of the interface.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;*<structfield>address</structfield>;</term>
+<listitem><simpara>the IP address of the interface (with port set to 0).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;*<structfield>hw_address</structfield>;</term>
+<listitem><simpara>the ethernet address of the interface.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;*<structfield>p2p_address</structfield>;</term>
+<listitem><simpara>the remote IP address of a point-to-point connection.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSocketAddress">GskSocketAddress</link>&#160;*<structfield>broadcast</structfield>;</term>
+<listitem><simpara>the broadcast IP address.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskNetworkInterfaceSet" role="struct">
+<title>GskNetworkInterfaceSet</title>
+<indexterm zone="GskNetworkInterfaceSet"><primary sortas="GskNetworkInterfaceSet">GskNetworkInterfaceSet</primary></indexterm><programlisting>typedef struct {
+  guint num_interfaces;
+  GskNetworkInterface *interfaces;
+} GskNetworkInterfaceSet;
+</programlisting>
+<para>
+Information about a number of network interfaces.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>num_interfaces</structfield>;</term>
+<listitem><simpara>the number of interfaces.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskNetworkInterface">GskNetworkInterface</link>&#160;*<structfield>interfaces</structfield>;</term>
+<listitem><simpara>the interfaces.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskNetworkInterfaceFlags" role="enum">
+<title>enum GskNetworkInterfaceFlags</title>
+<indexterm zone="GskNetworkInterfaceFlags"><primary sortas="GskNetworkInterfaceFlags">GskNetworkInterfaceFlags</primary></indexterm><programlisting>typedef enum
+{
+  GSK_NETWORK_INTERFACE_UP			= (1&lt;&lt;0),
+  GSK_NETWORK_INTERFACE_LOOPBACK		= (1&lt;&lt;1),
+  GSK_NETWORK_INTERFACE_NON_LOOPBACK		= (1&lt;&lt;2),
+  GSK_NETWORK_INTERFACE_HAS_BROADCAST		= (1&lt;&lt;3),
+  GSK_NETWORK_INTERFACE_HAS_MULTICAST		= (1&lt;&lt;4)
+} GskNetworkInterfaceFlags;
+</programlisting>
+<para>
+Constraints governing which interfaces to return.
+</para><variablelist role="enum">
+<varlistentry id="GSK-NETWORK-INTERFACE-UP--CAPS" role="constant">
+<term><literal>GSK_NETWORK_INTERFACE_UP</literal></term>
+<listitem><simpara>The interface must be up, ready to transmit
+and receive packets.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-NETWORK-INTERFACE-LOOPBACK--CAPS" role="constant">
+<term><literal>GSK_NETWORK_INTERFACE_LOOPBACK</literal></term>
+<listitem><simpara>The interface must be a loopback interface,
+a virtual interface, as opposed to a piece of hardware.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-NETWORK-INTERFACE-NON-LOOPBACK--CAPS" role="constant">
+<term><literal>GSK_NETWORK_INTERFACE_NON_LOOPBACK</literal></term>
+<listitem><simpara>The interface must be a non-loopback interface,
+an actual piece of hardware.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-NETWORK-INTERFACE-HAS-BROADCAST--CAPS" role="constant">
+<term><literal>GSK_NETWORK_INTERFACE_HAS_BROADCAST</literal></term>
+<listitem><simpara>The interface must have a broadcast address.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-NETWORK-INTERFACE-HAS-MULTICAST--CAPS" role="constant">
+<term><literal>GSK_NETWORK_INTERFACE_HAS_MULTICAST</literal></term>
+<listitem><simpara>The interface must have a multicast support.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-network-interface-set-new" role="function">
+<title>gsk_network_interface_set_new ()</title>
+<indexterm zone="gsk-network-interface-set-new"><primary sortas="gsk_network_interface_set_new">gsk_network_interface_set_new</primary></indexterm><programlisting><link linkend="GskNetworkInterfaceSet">GskNetworkInterfaceSet</link> * gsk_network_interface_set_new  (<link linkend="GskNetworkInterfaceFlags">GskNetworkInterfaceFlags</link> flags);</programlisting>
+<para>
+Create a new list of interfaces, subject to the constraints given.
+</para>
+<para>
+Note that the constraints must all be satified, so
+using GSK_NETWORK_INTERFACE_NO_LOOKBACK and GSK_NETWORK_INTERFACE_LOOKBACK
+will always return an empty set.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> constraints on the interfaces to return.  All the constraints
+must be satisfied.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated list of interfaces that
+must be freed with <link linkend="gsk-network-interface-set-destroy"><function>gsk_network_interface_set_destroy()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-network-interface-set-destroy" role="function">
+<title>gsk_network_interface_set_destroy ()</title>
+<indexterm zone="gsk-network-interface-set-destroy"><primary sortas="gsk_network_interface_set_destroy">gsk_network_interface_set_destroy</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_network_interface_set_destroy   (<link linkend="GskNetworkInterfaceSet">GskNetworkInterfaceSet</link> *set);</programlisting>
+<para>
+Free the memory used by the list of interfaces.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>set</parameter>&#160;:</term>
+<listitem><simpara> the list of interfaces to destroy.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

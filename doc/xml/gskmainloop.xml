@@ -1,0 +1,921 @@
+<refentry id="GskMainLoop">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskMainLoop.top_of_page">Main Loop (Generic Event Management)</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Main Loop (Generic Event Management)</refname>
+<refpurpose>Convenient way to be notified when certain types of event occur.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskMainLoop.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskMainLoopChange">GskMainLoopChange</link>;
+                    <link linkend="GskMainLoopEvent">GskMainLoopEvent</link>;
+                    <link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link>;
+                    <link linkend="GskSource">GskSource</link>;
+                    <link linkend="GskMainLoopContextList">GskMainLoopContextList</link>;
+enum                <link linkend="GskMainLoopEventType">GskMainLoopEventType</link>;
+                    <link linkend="GskMainLoopClass">GskMainLoopClass</link>;
+                    <link linkend="GskMainLoop-struct">GskMainLoop</link>;
+<link linkend="void">void</link>                (<link linkend="GskMainLoopWaitPidFunc">*GskMainLoopWaitPidFunc</link>)           (<link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link> *info,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskMainLoopIdleFunc">*GskMainLoopIdleFunc</link>)              (<link linkend="gpointer">gpointer</link> user_data);
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskMainLoopSignalFunc">*GskMainLoopSignalFunc</link>)            (<link linkend="int">int</link> sig_no,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskMainLoopTimeoutFunc">*GskMainLoopTimeoutFunc</link>)           (<link linkend="gpointer">gpointer</link> user_data);
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskMainLoopIOFunc">*GskMainLoopIOFunc</link>)                (<link linkend="int">int</link> fd,
+                                                         <link linkend="GIOCondition">GIOCondition</link> condition,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+enum                <link linkend="GskMainLoopCreateFlags">GskMainLoopCreateFlags</link>;
+<link linkend="GskMainLoop">GskMainLoop</link> *       <link linkend="gsk-main-loop-new">gsk_main_loop_new</link>                   (<link linkend="GskMainLoopCreateFlags">GskMainLoopCreateFlags</link> create_flags);
+<link linkend="GskMainLoop">GskMainLoop</link> *       <link linkend="gsk-main-loop-default">gsk_main_loop_default</link>               (void);
+<link linkend="guint">guint</link>               <link linkend="gsk-main-loop-run">gsk_main_loop_run</link>                   (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="gint">gint</link> timeout,
+                                                         <link linkend="guint">guint</link> *t_waited_out);
+<link linkend="GskSource">GskSource</link> *         <link linkend="gsk-main-loop-add-idle">gsk_main_loop_add_idle</link>              (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GskMainLoopIdleFunc">GskMainLoopIdleFunc</link> source_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="GskSource">GskSource</link> *         <link linkend="gsk-main-loop-add-signal">gsk_main_loop_add_signal</link>            (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="int">int</link> signal_number,
+                                                         <link linkend="GskMainLoopSignalFunc">GskMainLoopSignalFunc</link> signal_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="GskSource">GskSource</link> *         <link linkend="gsk-main-loop-add-waitpid">gsk_main_loop_add_waitpid</link>           (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="int">int</link> process_id,
+                                                         <link linkend="GskMainLoopWaitPidFunc">GskMainLoopWaitPidFunc</link> waitpid_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="GskSource">GskSource</link> *         <link linkend="gsk-main-loop-add-io">gsk_main_loop_add_io</link>                (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="int">int</link> fd,
+                                                         <link linkend="guint">guint</link> events,
+                                                         <link linkend="GskMainLoopIOFunc">GskMainLoopIOFunc</link> io_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-source-adjust-io">gsk_source_adjust_io</link>                (<link linkend="GskSource">GskSource</link> *source,
+                                                         <link linkend="guint">guint</link> events);
+<link linkend="void">void</link>                <link linkend="gsk-source-remove-io-events">gsk_source_remove_io_events</link>         (<link linkend="GskSource">GskSource</link> *source,
+                                                         <link linkend="guint">guint</link> events);
+<link linkend="void">void</link>                <link linkend="gsk-source-add-io-events">gsk_source_add_io_events</link>            (<link linkend="GskSource">GskSource</link> *source,
+                                                         <link linkend="guint">guint</link> events);
+<link linkend="GskSource">GskSource</link> *         <link linkend="gsk-main-loop-add-timer">gsk_main_loop_add_timer</link>             (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GskMainLoopTimeoutFunc">GskMainLoopTimeoutFunc</link> timer_func,
+                                                         <link linkend="gpointer">gpointer</link> timer_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> timer_destroy,
+                                                         <link linkend="gint64">gint64</link> millis_expire,
+                                                         <link linkend="gint64">gint64</link> milli_period);
+<link linkend="GskSource">GskSource</link> *         <link linkend="gsk-main-loop-add-timer-absolute">gsk_main_loop_add_timer_absolute</link>    (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GskMainLoopTimeoutFunc">GskMainLoopTimeoutFunc</link> timer_func,
+                                                         <link linkend="gpointer">gpointer</link> timer_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> timer_destroy,
+                                                         <link linkend="int">int</link> unixtime,
+                                                         <link linkend="int">int</link> unixtime_micro);
+<link linkend="void">void</link>                <link linkend="gsk-source-adjust-timer">gsk_source_adjust_timer</link>             (<link linkend="GskSource">GskSource</link> *timer_source,
+                                                         <link linkend="gint64">gint64</link> millis_expire,
+                                                         <link linkend="gint64">gint64</link> milli_period);
+<link linkend="void">void</link>                <link linkend="gsk-source-remove">gsk_source_remove</link>                   (<link linkend="GskSource">GskSource</link> *source);
+<link linkend="void">void</link>                <link linkend="gsk-main-loop-add-context">gsk_main_loop_add_context</link>           (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GMainContext">GMainContext</link> *context);
+<link linkend="void">void</link>                <link linkend="gsk-main-loop-quit">gsk_main_loop_quit</link>                  (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-main-loop-should-continue">gsk_main_loop_should_continue</link>       (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop);
+<link linkend="GskMainLoop">GskMainLoop</link> *       <link linkend="gsk-source-peek-main-loop">gsk_source_peek_main_loop</link>           (<link linkend="GskSource">GskSource</link> *source);
+<link linkend="void">void</link>                <link linkend="gsk-main-loop-destroy-all-sources">gsk_main_loop_destroy_all_sources</link>   (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-main-loop-do-waitpid">gsk_main_loop_do_waitpid</link>            (<link linkend="int">int</link> pid,
+                                                         <link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link> *wait_info);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskMainLoop.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GskMainLoop
+         +----<link linkend="GskMainLoopPollBase">GskMainLoopPollBase</link>
+         +----<link linkend="GskMainLoopKqueue">GskMainLoopKqueue</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskMainLoop.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A main loop is an object which can trap events and call user functions
+when those events happen.
+</para>
+<para>
+The events that our main loop handles are fixed:  file-descriptors being
+readied, signals being delivered, timeouts, idle functions and child-process
+termination are the currently known events.
+</para>
+<para>
+GskMainLoop itself is abstract, you must use a system-specific derived class
+to do polling.  Use <link linkend="gsk-main-loop-default"><function>gsk_main_loop_default()</function></link> to get a main loop which is
+appropriate to your system.
+</para>
+</refsect1>
+
+<refsect1 id="GskMainLoop.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMainLoopChange" role="struct">
+<title>GskMainLoopChange</title>
+<indexterm zone="GskMainLoopChange"><primary sortas="GskMainLoopChange">GskMainLoopChange</primary></indexterm><programlisting>typedef struct {
+  GskMainLoopEventType type;
+  union
+  {
+    struct {
+      guint number;
+      gboolean add;
+    } signal;
+    struct {
+      guint fd;
+      GIOCondition old_events;
+      GIOCondition events;
+    } io;
+    struct {
+      gint pid;
+      gboolean add;
+      gboolean did_exit;
+    } process;
+  } data;
+} GskMainLoopChange;
+</programlisting>
+<para>
+This structure is passed to the system-dependent polling
+mechanism to indicate a change in events we want notification of.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskMainLoopEventType">GskMainLoopEventType</link>&#160;<structfield>type</structfield>;</term>
+<listitem><simpara>what type of change is to occur.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopEvent" role="struct">
+<title>GskMainLoopEvent</title>
+<indexterm zone="GskMainLoopEvent"><primary sortas="GskMainLoopEvent">GskMainLoopEvent</primary></indexterm><programlisting>typedef struct {
+  GskMainLoopEventType type;
+  union
+  {
+    guint signal;
+    struct {
+      guint fd;
+      GIOCondition events;
+    } io;
+    GskMainLoopWaitInfo process_wait_info;
+  } data;
+} GskMainLoopEvent;
+</programlisting>
+<para>
+An event passed back from the system-dependent polling
+mechanism.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskMainLoopEventType">GskMainLoopEventType</link>&#160;<structfield>type</structfield>;</term>
+<listitem><simpara>what type of event occurred.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link>&#160;<structfield>process_wait_info</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopWaitInfo" role="struct">
+<title>GskMainLoopWaitInfo</title>
+<indexterm zone="GskMainLoopWaitInfo"><primary sortas="GskMainLoopWaitInfo">GskMainLoopWaitInfo</primary></indexterm><programlisting>typedef struct {
+  int               pid; 
+  gboolean          exited;         /* exit(2) or killed by signal? */
+  union {
+    int             signal;         /* !exited */
+    int             exit_status;    /*  exited */
+  } d;           
+  gboolean          dumped_core;
+} GskMainLoopWaitInfo;
+</programlisting>
+<para>
+Information about a process's termination.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>pid</structfield>;</term>
+<listitem><simpara>the process-id which terminated.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gboolean">gboolean</link>&#160;<structfield>exited</structfield>;</term>
+<listitem><simpara>whether the process exited, versus being killed
+by a signal, including crashes, which exit with SIGSEGV, SIGABRT, etc.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gboolean">gboolean</link>&#160;<structfield>dumped_core</structfield>;</term>
+<listitem><simpara>whether the process dumped core.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskSource" role="struct">
+<title>GskSource</title>
+<indexterm zone="GskSource"><primary sortas="GskSource">GskSource</primary></indexterm><programlisting>typedef struct _GskSource GskSource;</programlisting>
+<para>
+An opaque object representing a trap of an event.
+</para></refsect2>
+<refsect2 id="GskMainLoopContextList" role="struct">
+<title>GskMainLoopContextList</title>
+<indexterm zone="GskMainLoopContextList"><primary sortas="GskMainLoopContextList">GskMainLoopContextList</primary></indexterm><programlisting>typedef struct _GskMainLoopContextList GskMainLoopContextList;</programlisting>
+<para>
+Private.
+</para></refsect2>
+<refsect2 id="GskMainLoopEventType" role="enum">
+<title>enum GskMainLoopEventType</title>
+<indexterm zone="GskMainLoopEventType"><primary sortas="GskMainLoopEventType">GskMainLoopEventType</primary></indexterm><programlisting>typedef enum
+{
+  GSK_MAIN_LOOP_EVENT_IO,
+  GSK_MAIN_LOOP_EVENT_SIGNAL,
+  GSK_MAIN_LOOP_EVENT_PROCESS
+} GskMainLoopEventType;
+</programlisting>
+<para>
+Types of event that can be dealt with by this main-loop.
+</para><variablelist role="enum">
+<varlistentry id="GSK-MAIN-LOOP-EVENT-IO--CAPS" role="constant">
+<term><literal>GSK_MAIN_LOOP_EVENT_IO</literal></term>
+<listitem><simpara>
+An input/output event.  This is really just a file-descriptor event.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-MAIN-LOOP-EVENT-SIGNAL--CAPS" role="constant">
+<term><literal>GSK_MAIN_LOOP_EVENT_SIGNAL</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-MAIN-LOOP-EVENT-PROCESS--CAPS" role="constant">
+<term><literal>GSK_MAIN_LOOP_EVENT_PROCESS</literal></term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopClass" role="struct">
+<title>GskMainLoopClass</title>
+<indexterm zone="GskMainLoopClass"><primary sortas="GskMainLoopClass">GskMainLoopClass</primary></indexterm><programlisting>typedef struct {
+  GObjectClass object_class;
+  gboolean (*setup)  (GskMainLoop       *main_loop);
+  void     (*change) (GskMainLoop       *main_loop,
+                      GskMainLoopChange *change);
+  guint    (*poll)   (GskMainLoop       *main_loop,
+                      guint              max_events_out,
+                      GskMainLoopEvent  *events,
+                      gint               timeout);
+} GskMainLoopClass;
+</programlisting>
+<para>
+The virtual function which must be implemented for each type of main-loop.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>object_class</structfield>;</term>
+<listitem><simpara>the base class from which the main-loop is derived.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>setup</structfield>&#160;()</term>
+<listitem><simpara>function to call to initialize the main-loop.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>change</structfield>&#160;()</term>
+<listitem><simpara>function invoked to indicate that a change in events we
+are interested in has occurred.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>poll</structfield>&#160;()</term>
+<listitem><simpara>function invoked to check which events have occurred.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoop-struct" role="struct">
+<title>GskMainLoop</title>
+<indexterm zone="GskMainLoop-struct"><primary sortas="GskMainLoop">GskMainLoop</primary></indexterm><programlisting>typedef struct {
+  gint		 exit_status;
+
+  GskMainLoopEvent *event_array_cache;
+  unsigned       max_events;
+
+  /* a list of GMainContext's */
+  GskMainLoopContextList *first_context;
+  GskMainLoopContextList *last_context;
+} GskMainLoop;
+</programlisting>
+<para>
+A main-loop.  This holds information about all its sources.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="gint">gint</link>&#160;<structfield>exit_status</structfield>;</term>
+<listitem><simpara>Stored exit status which the user may
+return from <link linkend="main"><function>main()</function></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskMainLoopEvent">GskMainLoopEvent</link>&#160;*<structfield>event_array_cache</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskMainLoopContextList">GskMainLoopContextList</link>&#160;*<structfield>first_context</structfield>;</term>
+<listitem><simpara>first GMainContext in the list.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskMainLoopContextList">GskMainLoopContextList</link>&#160;*<structfield>last_context</structfield>;</term>
+<listitem><simpara>last GMainContext in the list.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopWaitPidFunc" role="function">
+<title>GskMainLoopWaitPidFunc ()</title>
+<indexterm zone="GskMainLoopWaitPidFunc"><primary sortas="GskMainLoopWaitPidFunc">GskMainLoopWaitPidFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskMainLoopWaitPidFunc)           (<link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link> *info,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+A function which will be invoked when a process terminates.
+</para><variablelist role="params">
+<varlistentry><term><parameter>info</parameter>&#160;:</term>
+<listitem><simpara>information about the process and why it terminated.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data registered to <link linkend="gsk-main-loop-add-waitpid"><function>gsk_main_loop_add_waitpid()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopIdleFunc" role="function">
+<title>GskMainLoopIdleFunc ()</title>
+<indexterm zone="GskMainLoopIdleFunc"><primary sortas="GskMainLoopIdleFunc">GskMainLoopIdleFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskMainLoopIdleFunc)              (<link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to be called repetitively (that is, with no blocking or waiting; however,
+other events will continue to be processed).  It will stop when <link linkend="gsk-main-loop-remove"><function>gsk_main_loop_remove()</function></link>
+is run on its source, or if it returns FALSE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data registered to <link linkend="gsk-main-loop-add-idle"><function>gsk_main_loop_add_idle()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to continue running.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopSignalFunc" role="function">
+<title>GskMainLoopSignalFunc ()</title>
+<indexterm zone="GskMainLoopSignalFunc"><primary sortas="GskMainLoopSignalFunc">GskMainLoopSignalFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskMainLoopSignalFunc)            (<link linkend="int">int</link> sig_no,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to be called whenever a UNIX signal of a particular number is raised.
+</para>
+<para>
+It will be untrapped when <link linkend="gsk-main-loop-remove"><function>gsk_main_loop_remove()</function></link> is run on its source,
+or if it returns FALSE.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sig_no</parameter>&#160;:</term>
+<listitem><simpara>the number of the signal that was raised.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data registered to <link linkend="gsk-main-loop-add-signal"><function>gsk_main_loop_add_signal()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to continue trapping the unix signal.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopTimeoutFunc" role="function">
+<title>GskMainLoopTimeoutFunc ()</title>
+<indexterm zone="GskMainLoopTimeoutFunc"><primary sortas="GskMainLoopTimeoutFunc">GskMainLoopTimeoutFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskMainLoopTimeoutFunc)           (<link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to invoke whenever a timeout expires.
+</para>
+<para>
+It will be untrapped when <link linkend="gsk-main-loop-remove"><function>gsk_main_loop_remove()</function></link> is run on its source,
+or if it returns FALSE, or after it runs if it was registered as a one-shot (with
+milli_period==-1).
+</para><variablelist role="params">
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data registered to <link linkend="gsk-main-loop-add-timer"><function>gsk_main_loop_add_timer()</function></link> or
+<link linkend="gsk-main-loop-add-timer-absolute"><function>gsk_main_loop_add_timer_absolute()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to keep running this timer.  (Will be ignored if it is a one-shot timer
+or if the source has been destroyed)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopIOFunc" role="function">
+<title>GskMainLoopIOFunc ()</title>
+<indexterm zone="GskMainLoopIOFunc"><primary sortas="GskMainLoopIOFunc">GskMainLoopIOFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskMainLoopIOFunc)                (<link linkend="int">int</link> fd,
+                                                         <link linkend="GIOCondition">GIOCondition</link> condition,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to run whenever some subset of a set of
+requested events are noticed.
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara>the file-descriptor that the events occured on.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>condition</parameter>&#160;:</term>
+<listitem><simpara>the events that triggered the callback.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>data registered to <link linkend="gsk-main-loop-add-io"><function>gsk_main_loop_add_io()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to keep these source.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopCreateFlags" role="enum">
+<title>enum GskMainLoopCreateFlags</title>
+<indexterm zone="GskMainLoopCreateFlags"><primary sortas="GskMainLoopCreateFlags">GskMainLoopCreateFlags</primary></indexterm><programlisting>typedef enum
+{
+  GSK_MAIN_LOOP_NEEDS_THREADS = (1 &lt;&lt; 0)
+} GskMainLoopCreateFlags;
+</programlisting>
+<para>
+Indicate user requirements for the main-loop being constructed.
+</para><variablelist role="enum">
+<varlistentry id="GSK-MAIN-LOOP-NEEDS-THREADS--CAPS" role="constant">
+<term><literal>GSK_MAIN_LOOP_NEEDS_THREADS</literal></term>
+<listitem><simpara>
+Some main loops (like GskMainLoopKqueue) don't cooperate with
+threads at all!  This flag precludes choosing main-loops
+which are have this property.
+If you don't need threads, this flag does not hurt, except
+that <link linkend="kqueue"><function>kqueue()</function></link> is a pretty good mechanism, so you probably
+want to get it right for a high-volume single-threaded server.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-new" role="function">
+<title>gsk_main_loop_new ()</title>
+<indexterm zone="gsk-main-loop-new"><primary sortas="gsk_main_loop_new">gsk_main_loop_new</primary></indexterm><programlisting><link linkend="GskMainLoop">GskMainLoop</link> *       gsk_main_loop_new                   (<link linkend="GskMainLoopCreateFlags">GskMainLoopCreateFlags</link> create_flags);</programlisting>
+<para>
+Make a new main loop.
+</para><variablelist role="params">
+<varlistentry><term><parameter>create_flags</parameter>&#160;:</term>
+<listitem><simpara>Stipulations on the nature of the main-loop.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new main loop.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-default" role="function">
+<title>gsk_main_loop_default ()</title>
+<indexterm zone="gsk-main-loop-default"><primary sortas="gsk_main_loop_default">gsk_main_loop_default</primary></indexterm><programlisting><link linkend="GskMainLoop">GskMainLoop</link> *       gsk_main_loop_default               (void);</programlisting>
+<para>
+Get the main-loop which is associated with the current thread.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a pointer to the main-loop.  This function does not
+increase the ref-count on the main-loop, so you do not need 
+to call <link linkend="g-object-unref"><function>g_object_unref()</function></link> on the return value.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-run" role="function">
+<title>gsk_main_loop_run ()</title>
+<indexterm zone="gsk-main-loop-run"><primary sortas="gsk_main_loop_run">gsk_main_loop_run</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_main_loop_run                   (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="gint">gint</link> timeout,
+                                                         <link linkend="guint">guint</link> *t_waited_out);</programlisting>
+<para>
+Run the main loop once, for a specified number of milliseconds.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the main loop to run.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&#160;:</term>
+<listitem><simpara> the maximum number of milliseconds to run, or -1 for no maximum.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>t_waited_out</parameter>&#160;:</term>
+<listitem><simpara> the number of milliseconds out used, if non-NULL.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of sources processed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-add-idle" role="function">
+<title>gsk_main_loop_add_idle ()</title>
+<indexterm zone="gsk-main-loop-add-idle"><primary sortas="gsk_main_loop_add_idle">gsk_main_loop_add_idle</primary></indexterm><programlisting><link linkend="GskSource">GskSource</link> *         gsk_main_loop_add_idle              (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GskMainLoopIdleFunc">GskMainLoopIdleFunc</link> source_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+This adds an idle function to the main loop.
+An idle function is a function which gets called every
+time the main loop is run.  Furthermore, while there are
+idle functions, the main loop will never block.
+</para>
+<para>
+One popular use of idle functions is to defer
+an operation, usually because either something is not
+in a good state to call immediately,
+or because there may be many requests that should
+be handled at one time.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the loop to add the idle function to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>source_func</parameter>&#160;:</term>
+<listitem><simpara> the function to call.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> parameter to be passed to <parameter>source_func</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> to be called when the source is destroyed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GskSource"><type>GskSource</type></link> which can be removed (or ignored).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-add-signal" role="function">
+<title>gsk_main_loop_add_signal ()</title>
+<indexterm zone="gsk-main-loop-add-signal"><primary sortas="gsk_main_loop_add_signal">gsk_main_loop_add_signal</primary></indexterm><programlisting><link linkend="GskSource">GskSource</link> *         gsk_main_loop_add_signal            (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="int">int</link> signal_number,
+                                                         <link linkend="GskMainLoopSignalFunc">GskMainLoopSignalFunc</link> signal_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Add a signal handler to the main loop.
+</para>
+<para>
+Please note that unlike a normal unix signal handler (as provided by
+signal(2) or sigaction(2)), this handler will be run synchronously,
+so you can call non-reentrant methods.
+</para>
+<para>
+Also, because unix signal delivery is unreliable, if the signal is raised a
+few times in rapid succession, you may miss some callbacks.
+</para>
+<para>
+It is ok to connect multiple times to a single signal simulataneously.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the loop to add the unix signal handler function to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>signal_number</parameter>&#160;:</term>
+<listitem><simpara> the number of the signal handler, like SIGINT.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>signal_func</parameter>&#160;:</term>
+<listitem><simpara> the function to run synchronously when a unix signal is raised.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> data to be passed to <parameter>signal_func</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> to be called when the source is destroyed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GskSource"><type>GskSource</type></link> which can be removed (or ignored).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-add-waitpid" role="function">
+<title>gsk_main_loop_add_waitpid ()</title>
+<indexterm zone="gsk-main-loop-add-waitpid"><primary sortas="gsk_main_loop_add_waitpid">gsk_main_loop_add_waitpid</primary></indexterm><programlisting><link linkend="GskSource">GskSource</link> *         gsk_main_loop_add_waitpid           (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="int">int</link> process_id,
+                                                         <link linkend="GskMainLoopWaitPidFunc">GskMainLoopWaitPidFunc</link> waitpid_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Add a handler to trap process termination.
+</para>
+<para>
+Only one handler is allowed per child process.
+</para>
+<para>
+The handler will be invoked synchronously.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the loop to add the child-process termination handler function to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>process_id</parameter>&#160;:</term>
+<listitem><simpara> the child's process-id to wait for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>waitpid_func</parameter>&#160;:</term>
+<listitem><simpara> function to call when the process terminates in some way or another.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> data to be passed to <parameter>waitpid_func</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> to be called when the source is destroyed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="GskSource"><type>GskSource</type></link> which can be removed (or ignored).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-add-io" role="function">
+<title>gsk_main_loop_add_io ()</title>
+<indexterm zone="gsk-main-loop-add-io"><primary sortas="gsk_main_loop_add_io">gsk_main_loop_add_io</primary></indexterm><programlisting><link linkend="GskSource">GskSource</link> *         gsk_main_loop_add_io                (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="int">int</link> fd,
+                                                         <link linkend="guint">guint</link> events,
+                                                         <link linkend="GskMainLoopIOFunc">GskMainLoopIOFunc</link> io_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Add a handler to input or output on a file-descriptor (a socket or a pipe, usually).
+</para>
+<para>
+Only one handler trap is allowed per file-descriptor.
+</para>
+<para>
+The handler will be re-invoked until the event subsides.
+For example, if you read only part of the data when a input event is raised,
+the <parameter>io_func</parameter> will be invoked again at every iteration of the main-loop
+until there is no data available.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the loop to add the i/o watch to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the file-descriptor to watch for events.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>events</parameter>&#160;:</term>
+<listitem><simpara> initial I/O events to watch for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>io_func</parameter>&#160;:</term>
+<listitem><simpara> a function to call when the currently requested
+events occur.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> data to be passed to <parameter>io_func</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> to be called when the source is destroyed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GskSource"><type>GskSource</type></link> which can be removed or altered.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-source-adjust-io" role="function">
+<title>gsk_source_adjust_io ()</title>
+<indexterm zone="gsk-source-adjust-io"><primary sortas="gsk_source_adjust_io">gsk_source_adjust_io</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_source_adjust_io                (<link linkend="GskSource">GskSource</link> *source,
+                                                         <link linkend="guint">guint</link> events);</programlisting>
+<para>
+This changes the types of events being watched by the main-loop.
+</para>
+<para>
+Note:  each new file-descriptor needs a new GskSource.
+You must reuse this GskSource for a new file-descriptor
+even if it happens to have the same numeric value
+as a file-descriptor you closed.
+(The reason why:  GSK automatically coagulates
+multiple adjust_io calls.  This is fine with all main-loops.
+However, kqueue(2) on BSD, and possibly others, automatically
+unregister all interest in an event if the file-descriptor closes.
+Hence, if the file-descriptor is re-opened and re-used with the
+same GskSource, GSK will not be able to determine
+that anything has changed, and will not issue a new <link linkend="GskMainLoopChange"><type>GskMainLoopChange</type></link>.
+This will break main-loops that are sensitive to exact which file-descriptor
+(not just the number) was registered.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>source</parameter>&#160;:</term>
+<listitem><simpara> the I/O source which now wants to watch different events.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>events</parameter>&#160;:</term>
+<listitem><simpara> the new events to watch for the I/O source.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-source-remove-io-events" role="function">
+<title>gsk_source_remove_io_events ()</title>
+<indexterm zone="gsk-source-remove-io-events"><primary sortas="gsk_source_remove_io_events">gsk_source_remove_io_events</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_source_remove_io_events         (<link linkend="GskSource">GskSource</link> *source,
+                                                         <link linkend="guint">guint</link> events);</programlisting>
+<para>
+Cause this source to stop being notified if any of the events in
+the <parameter>events</parameter> parameter are set.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>source</parameter>&#160;:</term>
+<listitem><simpara> the input/output source whose events-of-interest set
+should be reduced.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>events</parameter>&#160;:</term>
+<listitem><simpara> new events which should stop causing <parameter>source</parameter> to wake-up.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-source-add-io-events" role="function">
+<title>gsk_source_add_io_events ()</title>
+<indexterm zone="gsk-source-add-io-events"><primary sortas="gsk_source_add_io_events">gsk_source_add_io_events</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_source_add_io_events            (<link linkend="GskSource">GskSource</link> *source,
+                                                         <link linkend="guint">guint</link> events);</programlisting>
+<para>
+Cause this source to be notified if any of the events in
+the <parameter>events</parameter> parameter are set, in addition to the events which
+already caused this source to be woken up.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>source</parameter>&#160;:</term>
+<listitem><simpara> the input/output source whose events-of-interest set
+should be expanded.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>events</parameter>&#160;:</term>
+<listitem><simpara> new events which should cause <parameter>source</parameter> to wake-up.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-add-timer" role="function">
+<title>gsk_main_loop_add_timer ()</title>
+<indexterm zone="gsk-main-loop-add-timer"><primary sortas="gsk_main_loop_add_timer">gsk_main_loop_add_timer</primary></indexterm><programlisting><link linkend="GskSource">GskSource</link> *         gsk_main_loop_add_timer             (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GskMainLoopTimeoutFunc">GskMainLoopTimeoutFunc</link> timer_func,
+                                                         <link linkend="gpointer">gpointer</link> timer_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> timer_destroy,
+                                                         <link linkend="gint64">gint64</link> millis_expire,
+                                                         <link linkend="gint64">gint64</link> milli_period);</programlisting>
+<para>
+Add a timeout function to the main-loop.
+This is a function that will be called after
+a fixed amount of time passes, and then may be called
+at a regular interval thereafter.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the main-loop which should keep track and run the timeout.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timer_func</parameter>&#160;:</term>
+<listitem><simpara> function to call when the requested amount of time elapses.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timer_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>timer_func</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timer_destroy</parameter>&#160;:</term>
+<listitem><simpara> optional function to call to destroy the <parameter>timer_data</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>millis_expire</parameter>&#160;:</term>
+<listitem><simpara> number of milliseconds to wait before running <parameter>timer_func</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>milli_period</parameter>&#160;:</term>
+<listitem><simpara> period between subsequent invocation of the timeout.
+This may be -1 to indicate that the timeout is a one-shot.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="GskSource"><type>GskSource</type></link> which can be removed or altered.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-add-timer-absolute" role="function">
+<title>gsk_main_loop_add_timer_absolute ()</title>
+<indexterm zone="gsk-main-loop-add-timer-absolute"><primary sortas="gsk_main_loop_add_timer_absolute">gsk_main_loop_add_timer_absolute</primary></indexterm><programlisting><link linkend="GskSource">GskSource</link> *         gsk_main_loop_add_timer_absolute    (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GskMainLoopTimeoutFunc">GskMainLoopTimeoutFunc</link> timer_func,
+                                                         <link linkend="gpointer">gpointer</link> timer_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> timer_destroy,
+                                                         <link linkend="int">int</link> unixtime,
+                                                         <link linkend="int">int</link> unixtime_micro);</programlisting>
+<para>
+Add a timeout function to the main-loop.
+The <parameter>timer_func</parameter> will be called as soon as we detect that the specified time has passed.
+</para>
+<para>
+The time to wait until is (<parameter>unixtime</parameter> + <parameter>unixtime_micro</parameter> * 10^{-6}) seconds after
+New Years, Jan 1, 1970 GMT.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the main-loop which should keep track and run the timeout.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timer_func</parameter>&#160;:</term>
+<listitem><simpara> function to call when the requested amount of time elapses.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timer_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>timer_func</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timer_destroy</parameter>&#160;:</term>
+<listitem><simpara> optional function to call to destroy the <parameter>timer_data</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>unixtime</parameter>&#160;:</term>
+<listitem><simpara> number of seconds since Jan 1, 1970 GMT that will have passed when the 
+timer should expire.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>unixtime_micro</parameter>&#160;:</term>
+<listitem><simpara> fractional part of <parameter>unixtime</parameter>, in microseconds.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GskSource"><type>GskSource</type></link> which can be removed or altered.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-source-adjust-timer" role="function">
+<title>gsk_source_adjust_timer ()</title>
+<indexterm zone="gsk-source-adjust-timer"><primary sortas="gsk_source_adjust_timer">gsk_source_adjust_timer</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_source_adjust_timer             (<link linkend="GskSource">GskSource</link> *timer_source,
+                                                         <link linkend="gint64">gint64</link> millis_expire,
+                                                         <link linkend="gint64">gint64</link> milli_period);</programlisting>
+<para>
+Adjust the timeout and period for an already existing timer source.
+(You may only call this on timer sources.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>timer_source</parameter>&#160;:</term>
+<listitem><simpara> the timeout source returned by <link linkend="gsk-main-loop-add-timer"><function>gsk_main_loop_add_timer()</function></link> or <link linkend="gsk-main-loop-add-timer-absolute"><function>gsk_main_loop_add_timer_absolute()</function></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>millis_expire</parameter>&#160;:</term>
+<listitem><simpara> the number of milliseconds from now that the timer should run.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>milli_period</parameter>&#160;:</term>
+<listitem><simpara> the period between subsequent runs of the timer, or -1 to indicate that 
+the timer is a one-shot.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-source-remove" role="function">
+<title>gsk_source_remove ()</title>
+<indexterm zone="gsk-source-remove"><primary sortas="gsk_source_remove">gsk_source_remove</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_source_remove                   (<link linkend="GskSource">GskSource</link> *source);</programlisting>
+<para>
+Destroy a main loop's source.
+</para>
+<para>
+If the source is currently running,
+it's destroy method will not be called until the
+source's callback returns.  (This way, important data won't be 
+deleted unexpectedly in the middle of the user's callback.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>source</parameter>&#160;:</term>
+<listitem><simpara> the source to remove and destroy.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-add-context" role="function">
+<title>gsk_main_loop_add_context ()</title>
+<indexterm zone="gsk-main-loop-add-context"><primary sortas="gsk_main_loop_add_context">gsk_main_loop_add_context</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_main_loop_add_context           (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop,
+                                                         <link linkend="GMainContext">GMainContext</link> *context);</programlisting>
+<para>
+Indicate that a particular <link linkend="GskMainLoop"><type>GskMainLoop</type></link> will take care of
+invoking the necessary methods of <parameter>context</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> main-loop which will take responsibility for <parameter>context</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara> a GMainContext that should be handled by <link linkend="gsk-main-loop-run"><function>gsk_main_loop_run()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-quit" role="function">
+<title>gsk_main_loop_quit ()</title>
+<indexterm zone="gsk-main-loop-quit"><primary sortas="gsk_main_loop_quit">gsk_main_loop_quit</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_main_loop_quit                  (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop);</programlisting>
+<para>
+Set the main-loop flag that indicates that it should really stop running.
+</para>
+<para>
+If you are executing a GskMainLoop using <link linkend="gsk-main-loop-run"><function>gsk_main_loop_run()</function></link>,
+then you should probably check <link linkend="gsk-main-loop-should-continue"><function>gsk_main_loop_should_continue()</function></link> at every iteration
+to ensure that you should not have quit by now.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the main-loop which is being asked to quit.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-should-continue" role="function">
+<title>gsk_main_loop_should_continue ()</title>
+<indexterm zone="gsk-main-loop-should-continue"><primary sortas="gsk_main_loop_should_continue">gsk_main_loop_should_continue</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_main_loop_should_continue       (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop);</programlisting>
+<para>
+Query whether the main-loop should keep running or not.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara> the main-loop to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether to keep running this main-loop.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-source-peek-main-loop" role="function">
+<title>gsk_source_peek_main_loop ()</title>
+<indexterm zone="gsk-source-peek-main-loop"><primary sortas="gsk_source_peek_main_loop">gsk_source_peek_main_loop</primary></indexterm><programlisting><link linkend="GskMainLoop">GskMainLoop</link> *       gsk_source_peek_main_loop           (<link linkend="GskSource">GskSource</link> *source);</programlisting>
+<para>
+Get the main-loop where the source was created.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>source</parameter>&#160;:</term>
+<listitem><simpara> the source to query.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the main-loop associated with the source.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-destroy-all-sources" role="function">
+<title>gsk_main_loop_destroy_all_sources ()</title>
+<indexterm zone="gsk-main-loop-destroy-all-sources"><primary sortas="gsk_main_loop_destroy_all_sources">gsk_main_loop_destroy_all_sources</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_main_loop_destroy_all_sources   (<link linkend="GskMainLoop">GskMainLoop</link> *main_loop);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>main_loop</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-main-loop-do-waitpid" role="function">
+<title>gsk_main_loop_do_waitpid ()</title>
+<indexterm zone="gsk-main-loop-do-waitpid"><primary sortas="gsk_main_loop_do_waitpid">gsk_main_loop_do_waitpid</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_main_loop_do_waitpid            (<link linkend="int">int</link> pid,
+                                                         <link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link> *wait_info);</programlisting>
+<para>
+Do a waitpid system call on the process and munge the
+data into <parameter>wait_info</parameter> for the caller to use.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>pid</parameter>&#160;:</term>
+<listitem><simpara> the process id to wait for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>wait_info</parameter>&#160;:</term>
+<listitem><simpara> place to collect termination status of the process.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the waitpid succeeded.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskdnsresolver</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch09.html" title="DNS library (client and server support)">
+<link rel="prev" href="gsk-gskdnslocalresolver.html" title="gskdnslocalresolver">
+<link rel="next" href="gsk-gskdnsserver.html" title="gskdnsserver">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gskdnslocalresolver.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch09.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskdnsserver.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskdnsresolver.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskdnsresolver.description" class="shortcut">Description</a>
+                 | 
+                <a href="#gsk-gskdnsresolver.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#gsk-gskdnsresolver.prerequisites" class="shortcut">Prerequisites</a>
+                 | 
+                <a href="#gsk-gskdnsresolver.implementations" class="shortcut">Known Implementations</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskdnsresolver"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskdnsresolver.top_of_page"></a>gskdnsresolver</span></h2>
+<p>gskdnsresolver — An interface that DNS resolvers provide.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskdnsresolver.synopsis"></a><h2>Synopsis</h2>
+<a name="GskDnsResolver"></a><pre class="synopsis">
+                    <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverHints" title="GskDnsResolverHints">GskDnsResolverHints</a>;
+                    <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverIface" title="GskDnsResolverIface">GskDnsResolverIface</a>;
+                    <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver-struct" title="GskDnsResolver">GskDnsResolver</a>;
+                    <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a>;
+void                (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverLookupFunc" title="GskDnsResolverLookupFunc ()">*GskDnsResolverLookupFunc</a>)         (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);
+void                (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverRevLookupFunc" title="GskDnsResolverRevLookupFunc ()">*GskDnsResolverRevLookupFunc</a>)      (const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);
+void                (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverResponseFunc" title="GskDnsResolverResponseFunc ()">*GskDnsResolverResponseFunc</a>)       (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *answers,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *authority,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *additional,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *neg_questions,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);
+void                (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverFailFunc" title="GskDnsResolverFailFunc ()">*GskDnsResolverFailFunc</a>)           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);
+<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> * <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-resolve" title="gsk_dns_resolver_resolve ()">gsk_dns_resolver_resolve</a>           (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> recursive,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *dns_questions,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverResponseFunc" title="GskDnsResolverResponseFunc ()">GskDnsResolverResponseFunc</a> func,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverFailFunc" title="GskDnsResolverFailFunc ()">GskDnsResolverFailFunc</a> on_fail,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverHints" title="GskDnsResolverHints">GskDnsResolverHints</a> *hints);
+void                <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-cancel" title="gsk_dns_resolver_cancel ()">gsk_dns_resolver_cancel</a>             (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> *task);
+<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> * <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-lookup" title="gsk_dns_resolver_lookup ()">gsk_dns_resolver_lookup</a>            (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverLookupFunc" title="GskDnsResolverLookupFunc ()">GskDnsResolverLookupFunc</a> func,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverFailFunc" title="GskDnsResolverFailFunc ()">GskDnsResolverFailFunc</a> on_fail,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> * <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-rev-lookup" title="gsk_dns_resolver_rev_lookup ()">gsk_dns_resolver_rev_lookup</a>        (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverRevLookupFunc" title="GskDnsResolverRevLookupFunc ()">GskDnsResolverRevLookupFunc</a> func,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverFailFunc" title="GskDnsResolverFailFunc ()">GskDnsResolverFailFunc</a> on_fail,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+void                <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-add-name-resolver-iface" title="gsk_dns_resolver_add_name_resolver_iface ()">gsk_dns_resolver_add_name_resolver_iface</a>
+                                                        (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"
+>GType</a> type);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsresolver.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GInterface
+   +----GskDnsResolver
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsresolver.prerequisites"></a><h2>Prerequisites</h2>
+<p>
+GskDnsResolver requires
+ <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>.</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsresolver.implementations"></a><h2>Known Implementations</h2>
+<p>
+GskDnsResolver is implemented by
+ <a class="link" href="gsk-gskdnsclient.html#GskDnsClient">GskDnsClient</a>.</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsresolver.description"></a><h2>Description</h2>
+<p>
+This is an interface which classes that provide DNS lookups
+may implement.  It provides an easy way to conform
+to the <a class="link" href="gsk-gsknameresolver.html#GskNameResolver"><span class="type">GskNameResolver</span></a> interface.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsresolver.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolverHints"></a><h3>GskDnsResolverHints</h3>
+<pre class="programlisting">typedef struct {
+  GskSocketAddress       *address;
+} GskDnsResolverHints;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolverIface"></a><h3>GskDnsResolverIface</h3>
+<pre class="programlisting">typedef struct {
+  GTypeInterface base_iface;
+  gpointer            (*resolve) (GskDnsResolver               *resolver,
+				  gboolean                      recursive,
+				  GSList                       *dns_questions,
+				  GskDnsResolverResponseFunc    func,
+				  GskDnsResolverFailFunc        on_fail,
+				  gpointer                      func_data,
+				  GDestroyNotify                destroy,
+				  GskDnsResolverHints          *optional_hints);
+  void                (*cancel)  (GskDnsResolver               *resolver,
+				  gpointer                      task);
+} GskDnsResolverIface;
+</pre>
+<p>
+The interface for DNS resolvers.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"
+>GTypeInterface</a> <em class="structfield"><code>base_iface</code></em>;</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>resolve</code></em> ()</span></p></td>
+<td>begin a name-resolution task.  The pointer returned
+should identify the task to the resolver object,
+so that it can be cancelled.  Alternatively, if
+the resolver can operate without blocking, it may return NULL,
+after having called the success or failure callback.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code>cancel</code></em> ()</span></p></td>
+<td>a method to cancel a still running DNS task.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolver-struct"></a><h3>GskDnsResolver</h3>
+<pre class="programlisting">typedef struct _GskDnsResolver GskDnsResolver;</pre>
+<p>
+Any object which implements this interface.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolverTask"></a><h3>GskDnsResolverTask</h3>
+<pre class="programlisting">typedef struct _GskDnsResolverTask GskDnsResolverTask;</pre>
+<p>
+An opaque structure which represents a DNS resolving task.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolverLookupFunc"></a><h3>GskDnsResolverLookupFunc ()</h3>
+<pre class="programlisting">void                (*GskDnsResolverLookupFunc)         (<a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *address,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);</pre>
+<p>
+Function to call when an address is found from a name.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td>the address that was found.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td>data passed to <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-lookup" title="gsk_dns_resolver_lookup ()"><code class="function">gsk_dns_resolver_lookup()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolverRevLookupFunc"></a><h3>GskDnsResolverRevLookupFunc ()</h3>
+<pre class="programlisting">void                (*GskDnsResolverRevLookupFunc)      (const char *name,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);</pre>
+<p>
+Function to call when an name is found from an address.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>the name that was found.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td>data passed to <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-rev-lookup" title="gsk_dns_resolver_rev_lookup ()"><code class="function">gsk_dns_resolver_rev_lookup()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolverResponseFunc"></a><h3>GskDnsResolverResponseFunc ()</h3>
+<pre class="programlisting">void                (*GskDnsResolverResponseFunc)       (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *answers,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *authority,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *additional,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *neg_questions,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);</pre>
+<p>
+Handle a list of DNS results.
+This has all the sections of a <a class="link" href="gsk-gskdns.html#GskDnsMessage" title="GskDnsMessage"><span class="type">GskDnsMessage</span></a>
+except the questions.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>answers</code></em> :</span></p></td>
+<td>
+Direct answers to the questions posed to <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-resolve" title="gsk_dns_resolver_resolve ()"><code class="function">gsk_dns_resolver_resolve()</code></a>.
+(A GSList of <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord"><span class="type">GskDnsResourceRecord</span></a>'s)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>authority</code></em> :</span></p></td>
+<td>
+Information about the authority of the <em class="parameter"><code>answers</code></em>.
+(A GSList of <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord"><span class="type">GskDnsResourceRecord</span></a>'s)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>additional</code></em> :</span></p></td>
+<td>
+Supporting data, for example, the numeric address of a nameserver.
+(To try to save the client from making more queries.)
+(A GSList of <a class="link" href="gsk-gskdns.html#GskDnsResourceRecord" title="GskDnsResourceRecord"><span class="type">GskDnsResourceRecord</span></a>'s)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>neg_questions</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td>
+Data passed to <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-resolve" title="gsk_dns_resolver_resolve ()"><code class="function">gsk_dns_resolver_resolve()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskDnsResolverFailFunc"></a><h3>GskDnsResolverFailFunc ()</h3>
+<pre class="programlisting">void                (*GskDnsResolverFailFunc)           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> *error,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data);</pre>
+<p>
+Called when a DNS resolution fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>the error which caused the DNS query to fail.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td>
+Data passed to <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-resolve" title="gsk_dns_resolver_resolve ()"><code class="function">gsk_dns_resolver_resolve()</code></a>,
+<a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-lookup" title="gsk_dns_resolver_lookup ()"><code class="function">gsk_dns_resolver_lookup()</code></a> or <a class="link" href="gsk-gskdnsresolver.html#gsk-dns-resolver-rev-lookup" title="gsk_dns_resolver_rev_lookup ()"><code class="function">gsk_dns_resolver_rev_lookup()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-resolver-resolve"></a><h3>gsk_dns_resolver_resolve ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> * gsk_dns_resolver_resolve           (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> recursive,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Singly-Linked-Lists.html#GSList"
+>GSList</a> *dns_questions,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverResponseFunc" title="GskDnsResolverResponseFunc ()">GskDnsResolverResponseFunc</a> func,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverFailFunc" title="GskDnsResolverFailFunc ()">GskDnsResolverFailFunc</a> on_fail,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverHints" title="GskDnsResolverHints">GskDnsResolverHints</a> *hints);</pre>
+<p>
+Begin a DNS lookup task.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>resolver</code></em> :</span></p></td>
+<td> the DNS resolver which should begin processing the request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>recursive</code></em> :</span></p></td>
+<td> whether to use recursive name resolution on the server.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dns_questions</code></em> :</span></p></td>
+<td> list of GskDnsQuestion's to resolve.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> function which will be called with answers
+to the given questions.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>on_fail</code></em> :</span></p></td>
+<td> function to call if the name cannot be resolved.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>func</code></em> and <em class="parameter"><code>on_fail</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to call with the task is over.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hints</code></em> :</span></p></td>
+<td> flags to pass to the name resolver.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a running DNS lookup task.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-resolver-cancel"></a><h3>gsk_dns_resolver_cancel ()</h3>
+<pre class="programlisting">void                gsk_dns_resolver_cancel             (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> *task);</pre>
+<p>
+Cancel a running DNS lookup task.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>resolver</code></em> :</span></p></td>
+<td> a resolver which is running a DNS lookup task.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>task</code></em> :</span></p></td>
+<td> a DNS lookup task to cancel.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-resolver-lookup"></a><h3>gsk_dns_resolver_lookup ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> * gsk_dns_resolver_lookup            (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverLookupFunc" title="GskDnsResolverLookupFunc ()">GskDnsResolverLookupFunc</a> func,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverFailFunc" title="GskDnsResolverFailFunc ()">GskDnsResolverFailFunc</a> on_fail,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Begin a simple DNS lookup, using the underlying general resolver.
+</p>
+<p>
+TODO. IPv6 support.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>resolver</code></em> :</span></p></td>
+<td> DNS client to ask questions.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> name of host to look up.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> function to call on successful name lookup.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>on_fail</code></em> :</span></p></td>
+<td> function to call on name lookup failure.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td> data to pass to <em class="parameter"><code>func</code></em> and <em class="parameter"><code>on_fail</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> function to call when the task is destroyed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a running DNS lookup task.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-resolver-rev-lookup"></a><h3>gsk_dns_resolver_rev_lookup ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverTask" title="GskDnsResolverTask">GskDnsResolverTask</a> * gsk_dns_resolver_rev_lookup        (<a class="link" href="gsk-gskdnsresolver.html#GskDnsResolver">GskDnsResolver</a> *resolver,
+                                                         const char *name,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverRevLookupFunc" title="GskDnsResolverRevLookupFunc ()">GskDnsResolverRevLookupFunc</a> func,
+                                                         <a class="link" href="gsk-gskdnsresolver.html#GskDnsResolverFailFunc" title="GskDnsResolverFailFunc ()">GskDnsResolverFailFunc</a> on_fail,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> func_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>resolver</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>on_fail</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_data</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-dns-resolver-add-name-resolver-iface"></a><h3>gsk_dns_resolver_add_name_resolver_iface ()</h3>
+<pre class="programlisting">void                gsk_dns_resolver_add_name_resolver_iface
+                                                        (<a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"
+>GType</a> type);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdnsresolver.see-also"></a><h2>See Also</h2>
+<p>
+GskDnsLocalResolver and GskDnsClient.
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

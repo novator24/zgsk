@@ -1,0 +1,165 @@
+<refentry id="GskPacketQueueFd">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskPacketQueueFd.top_of_page">GskPacketQueueFd</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskPacketQueueFd</refname>
+<refpurpose>A PacketQueue based on a file descriptor.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskPacketQueueFd.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskPacketQueueFd-struct">GskPacketQueueFd</link>;
+<link linkend="GskPacketQueue">GskPacketQueue</link> *    <link linkend="gsk-packet-queue-fd-new">gsk_packet_queue_fd_new</link>             (<link linkend="int">int</link> fd);
+<link linkend="GskPacketQueue">GskPacketQueue</link> *    <link linkend="gsk-packet-queue-fd-new-by-family">gsk_packet_queue_fd_new_by_family</link>   (<link linkend="int">int</link> addr_family,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskPacketQueue">GskPacketQueue</link> *    <link linkend="gsk-packet-queue-fd-new-bound">gsk_packet_queue_fd_new_bound</link>       (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-packet-queue-fd-set-broadcast">gsk_packet_queue_fd_set_broadcast</link>   (<link linkend="GskPacketQueueFd">GskPacketQueueFd</link> *packet_queue_fd,
+                                                         <link linkend="gboolean">gboolean</link> allow_broadcast,
+                                                         <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskPacketQueueFd.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----<link linkend="GskPacketQueue">GskPacketQueue</link>
+               +----GskPacketQueueFd
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="GskPacketQueueFd.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskPacketQueueFd--file-descriptor">file-descriptor</link>&quot;          <link linkend="GskFd">GskFd</link>                 : Read / Write / Construct Only
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="GskPacketQueueFd.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A datagram client or server.
+</para>
+</refsect1>
+
+<refsect1 id="GskPacketQueueFd.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskPacketQueueFd-struct" role="struct">
+<title>GskPacketQueueFd</title>
+<indexterm zone="GskPacketQueueFd-struct"><primary sortas="GskPacketQueueFd">GskPacketQueueFd</primary></indexterm><programlisting>typedef struct _GskPacketQueueFd GskPacketQueueFd;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-packet-queue-fd-new" role="function">
+<title>gsk_packet_queue_fd_new ()</title>
+<indexterm zone="gsk-packet-queue-fd-new"><primary sortas="gsk_packet_queue_fd_new">gsk_packet_queue_fd_new</primary></indexterm><programlisting><link linkend="GskPacketQueue">GskPacketQueue</link> *    gsk_packet_queue_fd_new             (<link linkend="int">int</link> fd);</programlisting>
+<para>
+Create a new <link linkend="GskPacketQueue"><type>GskPacketQueue</type></link> from an already opened
+file-descriptor.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the datagram socket file-descriptor.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new packet-queue.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-fd-new-by-family" role="function">
+<title>gsk_packet_queue_fd_new_by_family ()</title>
+<indexterm zone="gsk-packet-queue-fd-new-by-family"><primary sortas="gsk_packet_queue_fd_new_by_family">gsk_packet_queue_fd_new_by_family</primary></indexterm><programlisting><link linkend="GskPacketQueue">GskPacketQueue</link> *    gsk_packet_queue_fd_new_by_family   (<link linkend="int">int</link> addr_family,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a new Packet Queue using a newly opened datagram
+socket of a given address family.  The address family
+is the sequence of AF_ defines in the header &amp;lt;sys/socket.h&amp;gt;
+on most unices.
+</para>
+<para>
+The address family of a <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link> may be found
+using <link linkend="gsk-socket-address-protocol-family"><function>gsk_socket_address_protocol_family()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>addr_family</parameter>&#160;:</term>
+<listitem><simpara> the system-specific address family.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional pointer to an error to set if things go wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new packet-queue, or NULL if there is a problem creating the socket.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-fd-new-bound" role="function">
+<title>gsk_packet_queue_fd_new_bound ()</title>
+<indexterm zone="gsk-packet-queue-fd-new-bound"><primary sortas="gsk_packet_queue_fd_new_bound">gsk_packet_queue_fd_new_bound</primary></indexterm><programlisting><link linkend="GskPacketQueue">GskPacketQueue</link> *    gsk_packet_queue_fd_new_bound       (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a new Packet Queue using a newly opened datagram
+socket which is bound to a given address.
+</para>
+<para>
+Note that socket address space for TCP and UDP is
+separate, so it's allowed (and sometimes encouraged)
+to bind to the same port for both a packet queue,
+and a stream-listener.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the address to bind to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional pointer to an error to set if things go wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new packet-queue, or NULL if there is a problem creating the socket or binding.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-packet-queue-fd-set-broadcast" role="function">
+<title>gsk_packet_queue_fd_set_broadcast ()</title>
+<indexterm zone="gsk-packet-queue-fd-set-broadcast"><primary sortas="gsk_packet_queue_fd_set_broadcast">gsk_packet_queue_fd_set_broadcast</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_packet_queue_fd_set_broadcast   (<link linkend="GskPacketQueueFd">GskPacketQueueFd</link> *packet_queue_fd,
+                                                         <link linkend="gboolean">gboolean</link> allow_broadcast,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Changes the operating-system-level flag of whether
+sends and receives of broadcast packets are allowed
+on datagram sockets.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet_queue_fd</parameter>&#160;:</term>
+<listitem><simpara> the packet-queue to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>allow_broadcast</parameter>&#160;:</term>
+<listitem><simpara> whether to allow (TRUE) or disallow broadcast sends
+and receives.  The default for a new datagram socket is to
+disallow broadcast packets.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional address of an error to set if things go wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the operation was successful.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GskPacketQueueFd.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskPacketQueueFd--file-descriptor" role="property"><title>The <literal>&quot;file-descriptor&quot;</literal> property</title>
+<indexterm zone="GskPacketQueueFd--file-descriptor"><primary sortas="GskPacketQueueFd:file-descriptor">GskPacketQueueFd:file-descriptor</primary></indexterm><programlisting>  &quot;file-descriptor&quot;          <link linkend="GskFd">GskFd</link>                 : Read / Write / Construct Only</programlisting>
+<para>for reading and/or writing.</para></refsect2>
+</refsect1>
+
+
+
+
+</refentry>

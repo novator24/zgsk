@@ -1,0 +1,827 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gsktree</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch16.html" title="Questionable ideas">
+<link rel="prev" href="ch16.html" title="Questionable ideas">
+<link rel="next" href="gsk-gskfork.html" title="gskfork">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch16.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch16.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskfork.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gsktree.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gsktree.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gsktree"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gsktree.top_of_page"></a>gsktree</span></h2>
+<p>gsktree — A robustly iterateable tree.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gsktree.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a>;
+                    <a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a>;
+<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *           <a class="link" href="gsk-gsktree.html#gsk-tree-new" title="gsk_tree_new ()">gsk_tree_new</a>                        (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GCompareFunc"
+>GCompareFunc</a> compare);
+<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *           <a class="link" href="gsk-gsktree.html#gsk-tree-ref" title="gsk_tree_ref ()">gsk_tree_ref</a>                        (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);
+void                <a class="link" href="gsk-gsktree.html#gsk-tree-unref" title="gsk_tree_unref ()">gsk_tree_unref</a>                      (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);
+<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *           <a class="link" href="gsk-gsktree.html#gsk-tree-new-full" title="gsk_tree_new_full ()">gsk_tree_new_full</a>                   (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GCompareDataFunc"
+>GCompareDataFunc</a> compare,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> compare_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> key_destroy_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> value_destroy_func);
+void                <a class="link" href="gsk-gsktree.html#gsk-tree-insert" title="gsk_tree_insert ()">gsk_tree_insert</a>                     (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> value);
+void                <a class="link" href="gsk-gsktree.html#gsk-tree-replace" title="gsk_tree_replace ()">gsk_tree_replace</a>                    (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> value);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gsktree.html#gsk-tree-lookup" title="gsk_tree_lookup ()">gsk_tree_lookup</a>                     (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key);
+void                <a class="link" href="gsk-gsktree.html#gsk-tree-remove" title="gsk_tree_remove ()">gsk_tree_remove</a>                     (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gsktree.html#gsk-tree-n-nodes" title="gsk_tree_n_nodes ()">gsk_tree_n_nodes</a>                    (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);
+<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       <a class="link" href="gsk-gsktree.html#gsk-tree-node-first" title="gsk_tree_node_first ()">gsk_tree_node_first</a>                 (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);
+<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       <a class="link" href="gsk-gsktree.html#gsk-tree-node-last" title="gsk_tree_node_last ()">gsk_tree_node_last</a>                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);
+<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       <a class="link" href="gsk-gsktree.html#gsk-tree-node-find" title="gsk_tree_node_find ()">gsk_tree_node_find</a>                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> search_key);
+<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       <a class="link" href="gsk-gsktree.html#gsk-tree-node-next" title="gsk_tree_node_next ()">gsk_tree_node_next</a>                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);
+<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       <a class="link" href="gsk-gsktree.html#gsk-tree-node-prev" title="gsk_tree_node_prev ()">gsk_tree_node_prev</a>                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gsktree.html#gsk-tree-node-peek-key" title="gsk_tree_node_peek_key ()">gsk_tree_node_peek_key</a>              (<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            <a class="link" href="gsk-gsktree.html#gsk-tree-node-peek-value" title="gsk_tree_node_peek_value ()">gsk_tree_node_peek_value</a>            (<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gsktree.html#gsk-tree-node-is-removed" title="gsk_tree_node_is_removed ()">gsk_tree_node_is_removed</a>            (<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);
+void                <a class="link" href="gsk-gsktree.html#gsk-tree-node-visit" title="gsk_tree_node_visit ()">gsk_tree_node_visit</a>                 (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);
+void                <a class="link" href="gsk-gsktree.html#gsk-tree-node-unvisit" title="gsk_tree_node_unvisit ()">gsk_tree_node_unvisit</a>               (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gsktree.html#gsk-tree-validate" title="gsk_tree_validate ()">gsk_tree_validate</a>                   (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsktree.description"></a><h2>Description</h2>
+<p>
+This tree provides an efficient map from any
+type of data which can be totally ordered to
+any type of data.
+</p>
+<p>
+The primary interesting feature is
+that one can iterate the trees in a robust manner
+using the <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode"><span class="type">GskTreeNode</span></a>, which takes the place of an iterator.
+In particular, when walking around the tree,
+any nodes which are being visited cannot be destroyed
+until their are no more visitors.  Even though the nodes
+are destroyed, they will not be returned by
+<a class="link" href="gsk-gsktree.html#gsk-tree-lookup" title="gsk_tree_lookup ()"><code class="function">gsk_tree_lookup()</code></a> or <a class="link" href="gsk-gsktree.html#gsk-tree-node-find" title="gsk_tree_node_find ()"><code class="function">gsk_tree_node_find()</code></a>.
+But the node is in the tree, in the sense that
+<a class="link" href="gsk-gsktree.html#gsk-tree-node-next" title="gsk_tree_node_next ()"><code class="function">gsk_tree_node_next()</code></a> and <a class="link" href="gsk-gsktree.html#gsk-tree-node-prev" title="gsk_tree_node_prev ()"><code class="function">gsk_tree_node_prev()</code></a> still work correctly.
+</p>
+<p>
+XXX: if walking a removed node, and a new node with the same key is added,
+should <a class="link" href="gsk-gsktree.html#gsk-tree-node-next" title="gsk_tree_node_next ()"><code class="function">gsk_tree_node_next()</code></a> or <a class="link" href="gsk-gsktree.html#gsk-tree-node-prev" title="gsk_tree_node_prev ()"><code class="function">gsk_tree_node_prev()</code></a> or both or neither
+return the new node???
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gsktree.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskTreeNode"></a><h3>GskTreeNode</h3>
+<pre class="programlisting">typedef struct _GskTreeNode GskTreeNode;</pre>
+<p>
+An opaque type representing a node of the tree.
+You should not hold on to a <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode"><span class="type">GskTreeNode</span></a> unless you
+"own" a visit count on the node.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskTree"></a><h3>GskTree</h3>
+<pre class="programlisting">typedef struct _GskTree GskTree;</pre>
+<p>
+A map from keys to values implemented as a Red-Black tree.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-new"></a><h3>gsk_tree_new ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *           gsk_tree_new                        (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GCompareFunc"
+>GCompareFunc</a> compare);</pre>
+<p>
+Create a new tree.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare</code></em> :</span></p></td>
+<td> function to compare two keys and return -1, 0, or +1
+to indicate their relative order.  Every distinct key
+must compare to a nonzero value (ie. the ordering is total).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new tree.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-ref"></a><h3>gsk_tree_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *           gsk_tree_ref                        (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);</pre>
+<p>
+Increase the reference count on the tree.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> tree to add a reference to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the <em class="parameter"><code>tree</code></em>, as a convenience; it leads to nice looking code.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-unref"></a><h3>gsk_tree_unref ()</h3>
+<pre class="programlisting">void                gsk_tree_unref                      (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);</pre>
+<p>
+Decrease the reference count on the tree.
+Once its ref-count reached 0, it and all its nodes
+will be destroyed.  So it may be a good idea
+to hold a reference to a tree you are visiting!</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> tree to release your reference to.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-new-full"></a><h3>gsk_tree_new_full ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *           gsk_tree_new_full                   (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GCompareDataFunc"
+>GCompareDataFunc</a> compare,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> compare_data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> key_destroy_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> value_destroy_func);</pre>
+<p>
+Create a new tree.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare</code></em> :</span></p></td>
+<td> function to compare two keys and return -1, 0, or +1
+to indicate their relative order.  Every distinct key
+must compare to a nonzero value (ie. the ordering is total).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>compare_data</code></em> :</span></p></td>
+<td> data to pass as the third argument to <em class="parameter"><code>compare</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_destroy_func</code></em> :</span></p></td>
+<td> function to destroy a key when it is removed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value_destroy_func</code></em> :</span></p></td>
+<td> function to destroy a value when it is removed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new tree.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-insert"></a><h3>gsk_tree_insert ()</h3>
+<pre class="programlisting">void                gsk_tree_insert                     (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> value);</pre>
+<p>
+Insert a new key/value pair into the tree.
+</p>
+<p>
+If the key is currently in the tree,
+the new key is destroyed, and the old value is destroyed,
+and the old value is replaced with the new value in the tree.
+(This is for compatibility with g_hash_table_insert
+and g_tree_insert.)
+</p>
+<p>
+See also <a class="link" href="gsk-gsktree.html#gsk-tree-replace" title="gsk_tree_replace ()"><code class="function">gsk_tree_replace()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> tree to insert a new element into.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> key of the new element.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> value of the new element.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-replace"></a><h3>gsk_tree_replace ()</h3>
+<pre class="programlisting">void                gsk_tree_replace                    (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> value);</pre>
+<p>
+Insert a new key/value pair into the tree.
+</p>
+<p>
+If the key is currently in the tree,
+the old key and value are destroyed
+and replaced with this key.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> tree to insert a new element into.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> key of the new element.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> value of the new element.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-lookup"></a><h3>gsk_tree_lookup ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_tree_lookup                     (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key);</pre>
+<p>
+Find the value of a node in the tree, given a key.
+Or NULL if the node cannot be found.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> the key to look up.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the value of a matching node, or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-remove"></a><h3>gsk_tree_remove ()</h3>
+<pre class="programlisting">void                gsk_tree_remove                     (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> key);</pre>
+<p>
+The element with the given key will be removed from the tree.
+</p>
+<p>
+Note that if another iterator is visiting the node which
+is being deleted, then the key/value pair will not
+be destroyed until the last iterator has
+left the node.  An iterator may determine
+whether the node it is visiting has been removed
+by calling <a class="link" href="gsk-gsktree.html#gsk-tree-node-is-removed" title="gsk_tree_node_is_removed ()"><code class="function">gsk_tree_node_is_removed()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to remove an element from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> the key of the element to remove.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-n-nodes"></a><h3>gsk_tree_n_nodes ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_tree_n_nodes                    (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);</pre>
+<p>
+Get the size of the tree, not including removed nodes, even
+if they are currently being visited.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of nodes in the tree.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-first"></a><h3>gsk_tree_node_first ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       gsk_tree_node_first                 (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);</pre>
+<p>
+Return the first node in the tree,
+and increment its visit count.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to begin iterating.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the first node in the tree, or NULL if the tree is empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-last"></a><h3>gsk_tree_node_last ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       gsk_tree_node_last                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);</pre>
+<p>
+Return the last node in the tree,
+and increment its visit count.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to begin iterating.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the last node in the tree, or NULL if the tree is empty.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-find"></a><h3>gsk_tree_node_find ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       gsk_tree_node_find                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> search_key);</pre>
+<p>
+Start iterating at the given key,
+or return NULL if the node cannot be found.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>search_key</code></em> :</span></p></td>
+<td> the key to look up.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the matching node, whose visit count has been incremented,
+or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-next"></a><h3>gsk_tree_node_next ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       gsk_tree_node_next                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);</pre>
+<p>
+Return the next node in the tree after <em class="parameter"><code>node</code></em>,
+and increment its visit count, while
+decrementing the visit count of the current node.
+</p>
+<p>
+Usually this is used to advance an iterator:
+  node = gsk_tree_node_next(tree,node);</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to iterate through.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> the current node.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the next node in the tree, or NULL if <em class="parameter"><code>node</code></em> is the last node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-prev"></a><h3>gsk_tree_node_prev ()</h3>
+<pre class="programlisting"><a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *       gsk_tree_node_prev                  (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);</pre>
+<p>
+Return the previous node in the tree after <em class="parameter"><code>node</code></em>,
+and increment its visit count, while
+decrementing the visit count of the current node.
+</p>
+<p>
+Usually this is used to advance an iterator backward:
+  node = gsk_tree_node_prev(tree,node);</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to iterate through.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> the current node.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the previous node in the tree, or NULL if <em class="parameter"><code>node</code></em> is the last node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-peek-key"></a><h3>gsk_tree_node_peek_key ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_tree_node_peek_key              (<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);</pre>
+<p>
+Get the key of a node you are visiting.
+It may have been removed by <a class="link" href="gsk-gsktree.html#gsk-tree-remove" title="gsk_tree_remove ()"><code class="function">gsk_tree_remove()</code></a>,
+but it will not have been destroyed until 
+the visit count has been reduced to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> visited node to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> key of the current tree node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-peek-value"></a><h3>gsk_tree_node_peek_value ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>            gsk_tree_node_peek_value            (<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);</pre>
+<p>
+Get the value of a node you are visiting.
+It may have been removed by <a class="link" href="gsk-gsktree.html#gsk-tree-remove" title="gsk_tree_remove ()"><code class="function">gsk_tree_remove()</code></a>,
+but it will not have been destroyed until 
+the visit count has been reduced to 0.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> visited node to query.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> value of the current tree node.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-is-removed"></a><h3>gsk_tree_node_is_removed ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_tree_node_is_removed            (<a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);</pre>
+<p>
+Check to see if a node which is being visited
+has been removed from the tree.
+</p>
+<p>
+(Note that if you are not visiting the node,
+then it should already have been freed,
+so it is only valid to call this on a node you
+are visiting.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a node to check.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the node has been removed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-visit"></a><h3>gsk_tree_node_visit ()</h3>
+<pre class="programlisting">void                gsk_tree_node_visit                 (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);</pre>
+<p>
+Increment the visit count for a node.
+A non-zero visit count prevents the
+node's key and value from being deleted,
+even after the node is "removed" from the tree.
+</p>
+<p>
+The removed node may still be used to advance to "next"
+and "prev", however, you may iterate freely
+from a "removed" node, and you cannot get back to it.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree that <em class="parameter"><code>node</code></em> is iterating.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> the node in the tree that is being visited.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-node-unvisit"></a><h3>gsk_tree_node_unvisit ()</h3>
+<pre class="programlisting">void                gsk_tree_node_unvisit               (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree,
+                                                         <a class="link" href="gsk-gsktree.html#GskTreeNode" title="GskTreeNode">GskTreeNode</a> *node);</pre>
+<p>
+Decrease the visit count on the node,
+indicating that you are done visiting it.
+</p>
+<p>
+If the node has been removed and you
+are the last visitor, its key and value will be deleted at this point.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree that <em class="parameter"><code>node</code></em> is iterating.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> the node in the tree which you want to stop visiting.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-tree-validate"></a><h3>gsk_tree_validate ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_tree_validate                   (<a class="link" href="gsk-gsktree.html#GskTree" title="GskTree">GskTree</a> *tree);</pre>
+<p>
+Check the tree for integrity.
+This is only used for debugging.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree</code></em> :</span></p></td>
+<td> the tree to check.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the tree was valid.
+If it returns FALSE, then there is either a
+bug in the tree code, or the comparison function
+isn't transitive.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

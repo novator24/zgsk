@@ -1,0 +1,668 @@
+<refentry id="GskStream">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskStream.top_of_page">Binary Input/Output Stream Base</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Binary Input/Output Stream Base</refname>
+<refpurpose>A byte stream.  This has methods to read and write data,
+and it inherits read/write notification from <link linkend="GskStream"><type>GskStream</type></link>.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskStream.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskStreamClass">GskStreamClass</link>;
+                    <link linkend="GskStream-struct">GskStream</link>;
+<link linkend="gsize">gsize</link>               <link linkend="gsk-stream-read">gsk_stream_read</link>                     (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gpointer">gpointer</link> buffer,
+                                                         <link linkend="gsize">gsize</link> buffer_length,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gsize">gsize</link>               <link linkend="gsk-stream-write">gsk_stream_write</link>                    (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gconstpointer">gconstpointer</link> buffer,
+                                                         <link linkend="gsize">gsize</link> buffer_length,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gsize">gsize</link>               <link linkend="gsk-stream-read-buffer">gsk_stream_read_buffer</link>              (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gsize">gsize</link>               <link linkend="gsk-stream-write-buffer">gsk_stream_write_buffer</link>             (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-stream-attach">gsk_stream_attach</link>                   (<link linkend="GskStream">GskStream</link> *input_stream,
+                                                         <link linkend="GskStream">GskStream</link> *output_stream,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-stream-attach-pair">gsk_stream_attach_pair</link>              (<link linkend="GskStream">GskStream</link> *stream_a,
+                                                         <link linkend="GskStream">GskStream</link> *stream_b,
+                                                         <link linkend="GError">GError</link> **error);
+#define             <link linkend="gsk-stream-get-is-connecting">gsk_stream_get_is_connecting</link>        (stream)
+#define             <link linkend="gsk-stream-get-is-readable">gsk_stream_get_is_readable</link>          (stream)
+#define             <link linkend="gsk-stream-get-is-writable">gsk_stream_get_is_writable</link>          (stream)
+#define             <link linkend="gsk-stream-get-never-blocks-write">gsk_stream_get_never_blocks_write</link>   (stream)
+#define             <link linkend="gsk-stream-get-never-blocks-read">gsk_stream_get_never_blocks_read</link>    (stream)
+#define             <link linkend="gsk-stream-get-idle-notify-write">gsk_stream_get_idle_notify_write</link>    (stream)
+#define             <link linkend="gsk-stream-get-idle-notify-read">gsk_stream_get_idle_notify_read</link>     (stream)
+#define             <link linkend="gsk-stream-get-is-open">gsk_stream_get_is_open</link>              (stream)
+#define             <link linkend="gsk-stream-get-never-partial-reads">gsk_stream_get_never_partial_reads</link>  (stream)
+#define             <link linkend="gsk-stream-get-never-partial-writes">gsk_stream_get_never_partial_writes</link> (stream)
+#define             <link linkend="gsk-stream-mark-is-connecting">gsk_stream_mark_is_connecting</link>       (stream)
+#define             <link linkend="gsk-stream-mark-is-readable">gsk_stream_mark_is_readable</link>         (stream)
+#define             <link linkend="gsk-stream-mark-is-writable">gsk_stream_mark_is_writable</link>         (stream)
+#define             <link linkend="gsk-stream-mark-never-blocks-write">gsk_stream_mark_never_blocks_write</link>  (stream)
+#define             <link linkend="gsk-stream-mark-never-blocks-read">gsk_stream_mark_never_blocks_read</link>   (stream)
+#define             <link linkend="gsk-stream-mark-idle-notify-write">gsk_stream_mark_idle_notify_write</link>   (stream)
+#define             <link linkend="gsk-stream-mark-idle-notify-read">gsk_stream_mark_idle_notify_read</link>    (stream)
+#define             <link linkend="gsk-stream-mark-is-open">gsk_stream_mark_is_open</link>             (stream)
+#define             <link linkend="gsk-stream-mark-never-partial-reads">gsk_stream_mark_never_partial_reads</link> (stream)
+#define             <link linkend="gsk-stream-mark-never-partial-writes">gsk_stream_mark_never_partial_writes</link>(stream)
+#define             <link linkend="gsk-stream-clear-is-readable">gsk_stream_clear_is_readable</link>        (stream)
+#define             <link linkend="gsk-stream-clear-is-writable">gsk_stream_clear_is_writable</link>        (stream)
+#define             <link linkend="gsk-stream-clear-is-open">gsk_stream_clear_is_open</link>            (stream)
+#define             <link linkend="gsk-stream-clear-idle-notify-write">gsk_stream_clear_idle_notify_write</link>  (stream)
+#define             <link linkend="gsk-stream-clear-idle-notify-read">gsk_stream_clear_idle_notify_read</link>   (stream)
+#define             <link linkend="gsk-stream-clear-never-partial-reads">gsk_stream_clear_never_partial_reads</link>(stream)
+#define             <link linkend="gsk-stream-clear-never-partial-writes">gsk_stream_clear_never_partial_writes</link>(stream)
+#define             <link linkend="gsk-stream-trap-readable">gsk_stream_trap_readable</link>
+#define             <link linkend="gsk-stream-trap-writable">gsk_stream_trap_writable</link>
+#define             <link linkend="gsk-stream-untrap-readable">gsk_stream_untrap_readable</link>
+#define             <link linkend="gsk-stream-untrap-writable">gsk_stream_untrap_writable</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskStream.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----GskStream
+               +----<link linkend="GskStreamFd">GskStreamFd</link>
+               +----<link linkend="GskStreamSsl">GskStreamSsl</link>
+               +----<link linkend="GskBufferStream">GskBufferStream</link>
+               +----<link linkend="GskHttpClient">GskHttpClient</link>
+               +----<link linkend="GskHttpServer">GskHttpServer</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskStream.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This encapsulates anything which reads bytes in or writes bytes out.
+Examples are a unix socket or a http-protocol implementation.
+</para>
+<para>
+It supports all the richness of <link linkend="GskIO"><type>GskIO</type></link>'s read/write notification
+system, along with read and write methods.
+In particular, (1) you can trap and block read/write separately on the stream.
+(2) the read/write ends of the stream can be shutdown separately.
+(3) in general, you may not be able to read/write immediately,
+but instead may have to trap the appropriate end to know when you can
+read or write.  (4) you may be able to only write or read a partial buffer.
+</para>
+<para>
+By checking certain flags below, you can assume that the data will never be partial,
+or that the stream will never block.
+</para>
+</refsect1>
+
+<refsect1 id="GskStream.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskStreamClass" role="struct">
+<title>GskStreamClass</title>
+<indexterm zone="GskStreamClass"><primary sortas="GskStreamClass">GskStreamClass</primary></indexterm><programlisting>typedef struct {
+  GskIOClass base_class;
+
+  /* --- virtuals --- */
+  guint      (*raw_read)        (GskStream     *stream,
+			 	 gpointer       data,
+			 	 guint          length,
+			 	 GError       **error);
+  guint      (*raw_write)       (GskStream     *stream,
+			 	 gconstpointer  data,
+			 	 guint          length,
+			 	 GError       **error);
+  guint      (*raw_read_buffer) (GskStream     *stream,
+				 GskBuffer     *buffer,
+				 GError       **error);
+  guint      (*raw_write_buffer)(GskStream    *stream,
+				 GskBuffer     *buffer,
+				 GError       **error);
+} GskStreamClass;
+</programlisting>
+<para>
+Functions which may be overridden by derived classes to provide
+input and output methods.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskIOClass">GskIOClass</link>&#160;<structfield>base_class</structfield>;</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>raw_read</structfield>&#160;()</term>
+<listitem><simpara>function to read raw binary data into a contiguous buffer.
+This function may not block, but it can return any number of bytes
+without an error code (even returning 0 does NOT imply end-of-file),
+or it can return a GError when things go wrong.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>raw_write</structfield>&#160;()</term>
+<listitem><simpara>
+This function may not block, but it can return any number of bytes
+without an error code (if it returns 0, it merely means that it does not have
+space or time for more outgoing data; it is not necessarily an error).
+Or it can return a GError when things go wrong.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>raw_read_buffer</structfield>&#160;()</term>
+<listitem><simpara>
+Optional function to read from a stream and transfer it into a buffer,
+without blocking.
+This function is provided as an optimization.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>raw_write_buffer</structfield>&#160;()</term>
+<listitem><simpara>
+Optional function to write to a stream from a buffer,
+without blocking.
+This function is provided as an optimization.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStream-struct" role="struct">
+<title>GskStream</title>
+<indexterm zone="GskStream-struct"><primary sortas="GskStream">GskStream</primary></indexterm><programlisting>typedef struct _GskStream GskStream;</programlisting>
+<para>
+An input and/or output stream of raw bytes.
+This has input and output triggers, inherited from <link linkend="GskIO"><type>GskIO</type></link>
+as well as methods to read and write raw bytes.
+</para></refsect2>
+<refsect2 id="gsk-stream-read" role="function">
+<title>gsk_stream_read ()</title>
+<indexterm zone="gsk-stream-read"><primary sortas="gsk_stream_read">gsk_stream_read</primary></indexterm><programlisting><link linkend="gsize">gsize</link>               gsk_stream_read                     (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gpointer">gpointer</link> buffer,
+                                                         <link linkend="gsize">gsize</link> buffer_length,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Read up to <parameter>buffer_length</parameter> bytes into <parameter>buffer</parameter>,
+returning the amount read.  It may return 0;
+this does not indicate an end-of-file.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the stream to attempt to read data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to fill with data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer_length</parameter>&#160;:</term>
+<listitem><simpara> the maximum data to copy into the buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional place to store a GError if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes read into <parameter>buffer</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-write" role="function">
+<title>gsk_stream_write ()</title>
+<indexterm zone="gsk-stream-write"><primary sortas="gsk_stream_write">gsk_stream_write</primary></indexterm><programlisting><link linkend="gsize">gsize</link>               gsk_stream_write                    (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="gconstpointer">gconstpointer</link> buffer,
+                                                         <link linkend="gsize">gsize</link> buffer_length,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Write up to <parameter>buffer_length</parameter> bytes into <parameter>buffer</parameter>,
+returning the amount written.  It may return 0;
+this does not indicate an error by itself.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the stream to attempt to write data to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to write from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer_length</parameter>&#160;:</term>
+<listitem><simpara> the number of bytes in buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional place to store a GError if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes written.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-read-buffer" role="function">
+<title>gsk_stream_read_buffer ()</title>
+<indexterm zone="gsk-stream-read-buffer"><primary sortas="gsk_stream_read_buffer">gsk_stream_read_buffer</primary></indexterm><programlisting><link linkend="gsize">gsize</link>               gsk_stream_read_buffer              (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Read data from the stream directly into a <link linkend="GskBuffer"><type>GskBuffer</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the stream to attempt to read data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to copy data into.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional place to store a GError if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes read into <parameter>buffer</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-write-buffer" role="function">
+<title>gsk_stream_write_buffer ()</title>
+<indexterm zone="gsk-stream-write-buffer"><primary sortas="gsk_stream_write_buffer">gsk_stream_write_buffer</primary></indexterm><programlisting><link linkend="gsize">gsize</link>               gsk_stream_write_buffer             (<link linkend="GskStream">GskStream</link> *stream,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Write data to the stream directly from a <link linkend="GskBuffer"><type>GskBuffer</type></link>.
+Data written from the buffer is removed from it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara> the stream to attempt to write data to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to get data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional place to store a GError if something goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes written from <parameter>buffer</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-attach" role="function">
+<title>gsk_stream_attach ()</title>
+<indexterm zone="gsk-stream-attach"><primary sortas="gsk_stream_attach">gsk_stream_attach</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_stream_attach                   (<link linkend="GskStream">GskStream</link> *input_stream,
+                                                         <link linkend="GskStream">GskStream</link> *output_stream,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Attach the read end of <parameter>input_stream</parameter>
+to the write end of <parameter>output_stream</parameter>,
+returning an error if anything goes wrong.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>input_stream</parameter>&#160;:</term>
+<listitem><simpara> the input stream whose read-end will be trapped.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output_stream</parameter>&#160;:</term>
+<listitem><simpara> the output stream whose write-end will be trapped.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the connection was successful.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-attach-pair" role="function">
+<title>gsk_stream_attach_pair ()</title>
+<indexterm zone="gsk-stream-attach-pair"><primary sortas="gsk_stream_attach_pair">gsk_stream_attach_pair</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_stream_attach_pair              (<link linkend="GskStream">GskStream</link> *stream_a,
+                                                         <link linkend="GskStream">GskStream</link> *stream_b,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Attach a's input to b's output and vice versa.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream_a</parameter>&#160;:</term>
+<listitem><simpara> one of the two streams to attach together.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stream_b</parameter>&#160;:</term>
+<listitem><simpara> one of the two streams to attach together.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the connection was successful.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-is-connecting" role="macro">
+<title>gsk_stream_get_is_connecting()</title>
+<indexterm zone="gsk-stream-get-is-connecting"><primary sortas="gsk_stream_get_is_connecting">gsk_stream_get_is_connecting</primary></indexterm><programlisting>#define             gsk_stream_get_is_connecting(stream)</programlisting>
+<para>
+Test whether the stream is connecting.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-is-readable" role="macro">
+<title>gsk_stream_get_is_readable()</title>
+<indexterm zone="gsk-stream-get-is-readable"><primary sortas="gsk_stream_get_is_readable">gsk_stream_get_is_readable</primary></indexterm><programlisting>#define             gsk_stream_get_is_readable(stream)</programlisting>
+<para>
+Test whether the stream is potentially readable.
+(There may not be any data available at the moment, however.)
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-is-writable" role="macro">
+<title>gsk_stream_get_is_writable()</title>
+<indexterm zone="gsk-stream-get-is-writable"><primary sortas="gsk_stream_get_is_writable">gsk_stream_get_is_writable</primary></indexterm><programlisting>#define             gsk_stream_get_is_writable(stream)</programlisting>
+<para>
+Test whether the stream is potentially writable.
+(you may not be able to write at the moment, however.)
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-never-blocks-write" role="macro">
+<title>gsk_stream_get_never_blocks_write()</title>
+<indexterm zone="gsk-stream-get-never-blocks-write"><primary sortas="gsk_stream_get_never_blocks_write">gsk_stream_get_never_blocks_write</primary></indexterm><programlisting>#define             gsk_stream_get_never_blocks_write(stream)</programlisting>
+<para>
+Return if the <link linkend="GskStream"><type>GskStream</type></link> will never block to write data.  It will always allow
+some data to be written, until it is full and will allow no more ever.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-never-blocks-read" role="macro">
+<title>gsk_stream_get_never_blocks_read()</title>
+<indexterm zone="gsk-stream-get-never-blocks-read"><primary sortas="gsk_stream_get_never_blocks_read">gsk_stream_get_never_blocks_read</primary></indexterm><programlisting>#define             gsk_stream_get_never_blocks_read(stream)</programlisting>
+<para>
+Return if the <link linkend="GskStream"><type>GskStream</type></link> will never block to read data.  It will always return
+some data, until it is empty and will never return any more.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-idle-notify-write" role="macro">
+<title>gsk_stream_get_idle_notify_write()</title>
+<indexterm zone="gsk-stream-get-idle-notify-write"><primary sortas="gsk_stream_get_idle_notify_write">gsk_stream_get_idle_notify_write</primary></indexterm><programlisting>#define             gsk_stream_get_idle_notify_write(stream)</programlisting>
+<para>
+Return whether the write-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-idle-notify-read" role="macro">
+<title>gsk_stream_get_idle_notify_read()</title>
+<indexterm zone="gsk-stream-get-idle-notify-read"><primary sortas="gsk_stream_get_idle_notify_read">gsk_stream_get_idle_notify_read</primary></indexterm><programlisting>#define             gsk_stream_get_idle_notify_read(stream)</programlisting>
+<para>
+Return whether the read-hook is in idle-notify mode.
+That means it will be triggered continually,
+as long as there is a unblocked hook watching it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-is-open" role="macro">
+<title>gsk_stream_get_is_open()</title>
+<indexterm zone="gsk-stream-get-is-open"><primary sortas="gsk_stream_get_is_open">gsk_stream_get_is_open</primary></indexterm><programlisting>#define             gsk_stream_get_is_open(stream)</programlisting>
+<para>
+Return whether the <link linkend="GskStream"><type>GskStream</type></link> is open.  A <link linkend="GskStream"><type>GskStream</type></link> should be open if
+you want to use it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-never-partial-reads" role="macro">
+<title>gsk_stream_get_never_partial_reads()</title>
+<indexterm zone="gsk-stream-get-never-partial-reads"><primary sortas="gsk_stream_get_never_partial_reads">gsk_stream_get_never_partial_reads</primary></indexterm><programlisting>#define             gsk_stream_get_never_partial_reads(stream)</programlisting>
+<para>
+Return whether the <link linkend="GskStream"><type>GskStream</type></link> is never allowed to return a partial buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-get-never-partial-writes" role="macro">
+<title>gsk_stream_get_never_partial_writes()</title>
+<indexterm zone="gsk-stream-get-never-partial-writes"><primary sortas="gsk_stream_get_never_partial_writes">gsk_stream_get_never_partial_writes</primary></indexterm><programlisting>#define             gsk_stream_get_never_partial_writes(stream)</programlisting>
+<para>
+Return whether the <link linkend="GskStream"><type>GskStream</type></link> is never allowed to write a partial buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream to test.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-is-connecting" role="macro">
+<title>gsk_stream_mark_is_connecting()</title>
+<indexterm zone="gsk-stream-mark-is-connecting"><primary sortas="gsk_stream_mark_is_connecting">gsk_stream_mark_is_connecting</primary></indexterm><programlisting>#define             gsk_stream_mark_is_connecting(stream)</programlisting>
+<para>
+Set the <link linkend="GskStream"><type>GskStream</type></link>'s is_connecting flag.  This should only be called
+by the implementations of derived classes.  By default,
+GskStream is not in the connecting state.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-is-readable" role="macro">
+<title>gsk_stream_mark_is_readable()</title>
+<indexterm zone="gsk-stream-mark-is-readable"><primary sortas="gsk_stream_mark_is_readable">gsk_stream_mark_is_readable</primary></indexterm><programlisting>#define             gsk_stream_mark_is_readable(stream)</programlisting>
+<para>
+Set whether the <link linkend="GskStream"><type>GskStream</type></link> is_readable.  This should only be called by
+the implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-is-writable" role="macro">
+<title>gsk_stream_mark_is_writable()</title>
+<indexterm zone="gsk-stream-mark-is-writable"><primary sortas="gsk_stream_mark_is_writable">gsk_stream_mark_is_writable</primary></indexterm><programlisting>#define             gsk_stream_mark_is_writable(stream)</programlisting>
+<para>
+Set whether the <link linkend="GskStream"><type>GskStream</type></link> is_writable.  This should only be called by
+the implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-never-blocks-write" role="macro">
+<title>gsk_stream_mark_never_blocks_write()</title>
+<indexterm zone="gsk-stream-mark-never-blocks-write"><primary sortas="gsk_stream_mark_never_blocks_write">gsk_stream_mark_never_blocks_write</primary></indexterm><programlisting>#define             gsk_stream_mark_never_blocks_write(stream)</programlisting>
+<para>
+Indicate that writing to the <link linkend="GskStream"><type>GskStream</type></link> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-never-blocks-read" role="macro">
+<title>gsk_stream_mark_never_blocks_read()</title>
+<indexterm zone="gsk-stream-mark-never-blocks-read"><primary sortas="gsk_stream_mark_never_blocks_read">gsk_stream_mark_never_blocks_read</primary></indexterm><programlisting>#define             gsk_stream_mark_never_blocks_read(stream)</programlisting>
+<para>
+Indicate that reading to the <link linkend="GskStream"><type>GskStream</type></link> never will block.
+Once this flag is set it cannot be cleared.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-idle-notify-write" role="macro">
+<title>gsk_stream_mark_idle_notify_write()</title>
+<indexterm zone="gsk-stream-mark-idle-notify-write"><primary sortas="gsk_stream_mark_idle_notify_write">gsk_stream_mark_idle_notify_write</primary></indexterm><programlisting>#define             gsk_stream_mark_idle_notify_write(stream)</programlisting>
+<para>
+Tell the GskStream system to continually trigger a user's write hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-idle-notify-read" role="macro">
+<title>gsk_stream_mark_idle_notify_read()</title>
+<indexterm zone="gsk-stream-mark-idle-notify-read"><primary sortas="gsk_stream_mark_idle_notify_read">gsk_stream_mark_idle_notify_read</primary></indexterm><programlisting>#define             gsk_stream_mark_idle_notify_read(stream)</programlisting>
+<para>
+Tell the GskStream system to continually trigger a user's read hook,
+if any, assuming it is not blocked.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-is-open" role="macro">
+<title>gsk_stream_mark_is_open()</title>
+<indexterm zone="gsk-stream-mark-is-open"><primary sortas="gsk_stream_mark_is_open">gsk_stream_mark_is_open</primary></indexterm><programlisting>#define             gsk_stream_mark_is_open(stream)</programlisting>
+<para>
+Indicate that a <link linkend="GskStream"><type>GskStream</type></link> is open.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-never-partial-reads" role="macro">
+<title>gsk_stream_mark_never_partial_reads()</title>
+<indexterm zone="gsk-stream-mark-never-partial-reads"><primary sortas="gsk_stream_mark_never_partial_reads">gsk_stream_mark_never_partial_reads</primary></indexterm><programlisting>#define             gsk_stream_mark_never_partial_reads(stream)</programlisting>
+<para>
+Indicate that the <link linkend="gsk-stream-read"><function>gsk_stream_read()</function></link>
+will always read a whole buffer of data.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-mark-never-partial-writes" role="macro">
+<title>gsk_stream_mark_never_partial_writes()</title>
+<indexterm zone="gsk-stream-mark-never-partial-writes"><primary sortas="gsk_stream_mark_never_partial_writes">gsk_stream_mark_never_partial_writes</primary></indexterm><programlisting>#define             gsk_stream_mark_never_partial_writes(stream)</programlisting>
+<para>
+Indicate that the <link linkend="gsk-stream-write"><function>gsk_stream_write()</function></link> and <link linkend="gsk-stream-write-buffer"><function>gsk_stream_write_buffer()</function></link>
+will always finish completely, or give an error.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-clear-is-readable" role="macro">
+<title>gsk_stream_clear_is_readable()</title>
+<indexterm zone="gsk-stream-clear-is-readable"><primary sortas="gsk_stream_clear_is_readable">gsk_stream_clear_is_readable</primary></indexterm><programlisting>#define             gsk_stream_clear_is_readable(stream)</programlisting>
+<para>
+Indicate that a <link linkend="GskStream"><type>GskStream</type></link> is no longer readable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-clear-is-writable" role="macro">
+<title>gsk_stream_clear_is_writable()</title>
+<indexterm zone="gsk-stream-clear-is-writable"><primary sortas="gsk_stream_clear_is_writable">gsk_stream_clear_is_writable</primary></indexterm><programlisting>#define             gsk_stream_clear_is_writable(stream)</programlisting>
+<para>
+Indicate that a <link linkend="GskStream"><type>GskStream</type></link> is no longer writable.
+In most classes, this condition is permanent.
+This should only be used by implementations of derived classes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-clear-is-open" role="macro">
+<title>gsk_stream_clear_is_open()</title>
+<indexterm zone="gsk-stream-clear-is-open"><primary sortas="gsk_stream_clear_is_open">gsk_stream_clear_is_open</primary></indexterm><programlisting>#define             gsk_stream_clear_is_open(stream)</programlisting>
+<para>
+Indicate that the <link linkend="GskStream"><type>GskStream</type></link> is closed.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-clear-idle-notify-write" role="macro">
+<title>gsk_stream_clear_idle_notify_write()</title>
+<indexterm zone="gsk-stream-clear-idle-notify-write"><primary sortas="gsk_stream_clear_idle_notify_write">gsk_stream_clear_idle_notify_write</primary></indexterm><programlisting>#define             gsk_stream_clear_idle_notify_write(stream)</programlisting>
+<para>
+Stop continually triggering the user's write hook.
+(This undoes <link linkend="gsk-stream-mark-idle-notify-write"><function>gsk_stream_mark_idle_notify_write()</function></link>)
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-clear-idle-notify-read" role="macro">
+<title>gsk_stream_clear_idle_notify_read()</title>
+<indexterm zone="gsk-stream-clear-idle-notify-read"><primary sortas="gsk_stream_clear_idle_notify_read">gsk_stream_clear_idle_notify_read</primary></indexterm><programlisting>#define             gsk_stream_clear_idle_notify_read(stream)</programlisting>
+<para>
+Stop continually triggering the user's read hook.
+(This undoes <link linkend="gsk-stream-mark-idle-notify-read"><function>gsk_stream_mark_idle_notify_read()</function></link>)
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-clear-never-partial-reads" role="macro">
+<title>gsk_stream_clear_never_partial_reads()</title>
+<indexterm zone="gsk-stream-clear-never-partial-reads"><primary sortas="gsk_stream_clear_never_partial_reads">gsk_stream_clear_never_partial_reads</primary></indexterm><programlisting>#define             gsk_stream_clear_never_partial_reads(stream)</programlisting>
+<para>
+Indicate that the <link linkend="GskStream"><type>GskStream</type></link> may exhibit partial reads.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-clear-never-partial-writes" role="macro">
+<title>gsk_stream_clear_never_partial_writes()</title>
+<indexterm zone="gsk-stream-clear-never-partial-writes"><primary sortas="gsk_stream_clear_never_partial_writes">gsk_stream_clear_never_partial_writes</primary></indexterm><programlisting>#define             gsk_stream_clear_never_partial_writes(stream)</programlisting>
+<para>
+Indicate that the <link linkend="GskStream"><type>GskStream</type></link> may exhibit partial writes.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskStream"><type>GskStream</type></link> to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-trap-readable" role="macro">
+<title>gsk_stream_trap_readable</title>
+<indexterm zone="gsk-stream-trap-readable"><primary sortas="gsk_stream_trap_readable">gsk_stream_trap_readable</primary></indexterm><programlisting>#define             gsk_stream_trap_readable</programlisting>
+<para>
+Trap the read end of a stream.  See <link linkend="gsk-io-trap-readable"><function>gsk_io_trap_readable()</function></link>.
+</para></refsect2>
+<refsect2 id="gsk-stream-trap-writable" role="macro">
+<title>gsk_stream_trap_writable</title>
+<indexterm zone="gsk-stream-trap-writable"><primary sortas="gsk_stream_trap_writable">gsk_stream_trap_writable</primary></indexterm><programlisting>#define             gsk_stream_trap_writable</programlisting>
+<para>
+Trap the write end of a stream.  See <link linkend="gsk-io-trap-writable"><function>gsk_io_trap_writable()</function></link>.
+</para></refsect2>
+<refsect2 id="gsk-stream-untrap-readable" role="macro">
+<title>gsk_stream_untrap_readable</title>
+<indexterm zone="gsk-stream-untrap-readable"><primary sortas="gsk_stream_untrap_readable">gsk_stream_untrap_readable</primary></indexterm><programlisting>#define             gsk_stream_untrap_readable</programlisting>
+<para>
+Untrap the read end of a stream.  See <link linkend="gsk-io-untrap-readable"><function>gsk_io_untrap_readable()</function></link>.
+</para></refsect2>
+<refsect2 id="gsk-stream-untrap-writable" role="macro">
+<title>gsk_stream_untrap_writable</title>
+<indexterm zone="gsk-stream-untrap-writable"><primary sortas="gsk_stream_untrap_writable">gsk_stream_untrap_writable</primary></indexterm><programlisting>#define             gsk_stream_untrap_writable</programlisting>
+<para>
+Untrap the write end of a stream.  See <link linkend="gsk-io-untrap-writable"><function>gsk_io_untrap_writable()</function></link>.
+</para></refsect2>
+
+</refsect1>
+
+
+
+<refsect1 id="GskStream.see-also">
+<title>See Also</title>
+<para>
+<link linkend="GskIO"><type>GskIO</type></link>
+</para>
+</refsect1>
+
+</refentry>

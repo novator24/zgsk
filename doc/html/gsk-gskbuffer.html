@@ -1,0 +1,1295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskBuffer</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch01.html" title="Core Library Support">
+<link rel="prev" href="gsk-gsktypes.html" title="Useful GTypes">
+<link rel="next" href="gsk-gskerrno.html" title="Old-Fashioned errno Handling">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gsktypes.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskerrno.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskbuffer.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskbuffer.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskbuffer"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskbuffer.top_of_page"></a>GskBuffer</span></h2>
+<p>GskBuffer — a fast, flexible in-memory data buffer</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskbuffer.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a>;
+                    <a class="link" href="gsk-gskbuffer.html#GskBufferFragment" title="GskBufferFragment">GskBufferFragment</a>;
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-construct" title="gsk_buffer_construct ()">gsk_buffer_construct</a>                (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbuffer.html#gsk-buffer-read" title="gsk_buffer_read ()">gsk_buffer_read</a>                     (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbuffer.html#gsk-buffer-peek" title="gsk_buffer_peek ()">gsk_buffer_peek</a>                     (const <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);
+int                 <a class="link" href="gsk-gskbuffer.html#gsk-buffer-discard" title="gsk_buffer_discard ()">gsk_buffer_discard</a>                  (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_discard);
+char *              <a class="link" href="gsk-gskbuffer.html#gsk-buffer-read-line" title="gsk_buffer_read_line ()">gsk_buffer_read_line</a>                (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+char *              <a class="link" href="gsk-gskbuffer.html#gsk-buffer-parse-string0" title="gsk_buffer_parse_string0 ()">gsk_buffer_parse_string0</a>            (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+int                 <a class="link" href="gsk-gskbuffer.html#gsk-buffer-peek-char" title="gsk_buffer_peek_char ()">gsk_buffer_peek_char</a>                (const <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+int                 <a class="link" href="gsk-gskbuffer.html#gsk-buffer-read-char" title="gsk_buffer_read_char ()">gsk_buffer_read_char</a>                (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-append" title="gsk_buffer_append ()">gsk_buffer_append</a>                   (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-append-string" title="gsk_buffer_append_string ()">gsk_buffer_append_string</a>            (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *string);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-append-char" title="gsk_buffer_append_char ()">gsk_buffer_append_char</a>              (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         char character);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-append-string0" title="gsk_buffer_append_string0 ()">gsk_buffer_append_string0</a>           (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *string);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-append-foreign" title="gsk_buffer_append_foreign ()">gsk_buffer_append_foreign</a>           (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         int length,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-printf" title="gsk_buffer_printf ()">gsk_buffer_printf</a>                   (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *format,
+                                                         ...);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-vprintf" title="gsk_buffer_vprintf ()">gsk_buffer_vprintf</a>                  (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *format,
+                                                         va_list args);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbuffer.html#gsk-buffer-drain" title="gsk_buffer_drain ()">gsk_buffer_drain</a>                    (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *dst,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *src);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbuffer.html#gsk-buffer-transfer" title="gsk_buffer_transfer ()">gsk_buffer_transfer</a>                 (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *dst,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_transfer);
+int                 <a class="link" href="gsk-gskbuffer.html#gsk-buffer-writev" title="gsk_buffer_writev ()">gsk_buffer_writev</a>                   (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *read_from,
+                                                         int fd);
+int                 <a class="link" href="gsk-gskbuffer.html#gsk-buffer-read-in-fd" title="gsk_buffer_read_in_fd ()">gsk_buffer_read_in_fd</a>               (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *write_to,
+                                                         int read_from);
+int                 <a class="link" href="gsk-gskbuffer.html#gsk-buffer-index-of" title="gsk_buffer_index_of ()">gsk_buffer_index_of</a>                 (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         char char_to_find);
+int                 <a class="link" href="gsk-gskbuffer.html#gsk-buffer-polystr-index-of" title="gsk_buffer_polystr_index_of ()">gsk_buffer_polystr_index_of</a>         (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         char **strings);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-destruct" title="gsk_buffer_destruct ()">gsk_buffer_destruct</a>                 (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *to_destroy);
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-cleanup-recycling-bin" title="gsk_buffer_cleanup_recycling_bin ()">gsk_buffer_cleanup_recycling_bin</a>    ();
+                    <a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a>;
+#define             <a class="link" href="gsk-gskbuffer.html#gsk-buffer-iterator-offset" title="gsk_buffer_iterator_offset()">gsk_buffer_iterator_offset</a>          (iterator)
+void                <a class="link" href="gsk-gskbuffer.html#gsk-buffer-iterator-construct" title="gsk_buffer_iterator_construct ()">gsk_buffer_iterator_construct</a>       (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *to_iterate);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbuffer.html#gsk-buffer-iterator-peek" title="gsk_buffer_iterator_peek ()">gsk_buffer_iterator_peek</a>            (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbuffer.html#gsk-buffer-iterator-read" title="gsk_buffer_iterator_read ()">gsk_buffer_iterator_read</a>            (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbuffer.html#gsk-buffer-iterator-skip" title="gsk_buffer_iterator_skip ()">gsk_buffer_iterator_skip</a>            (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskbuffer.html#gsk-buffer-iterator-find-char" title="gsk_buffer_iterator_find_char ()">gsk_buffer_iterator_find_char</a>       (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         char c);
+#define             <a class="link" href="gsk-gskbuffer.html#GSK-BUFFER-STATIC-INIT--CAPS" title="GSK_BUFFER_STATIC_INIT">GSK_BUFFER_STATIC_INIT</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbuffer.description"></a><h2>Description</h2>
+<p>
+This code manages a binary data buffer.
+Data is maintained first-in first-out; so
+<a class="link" href="gsk-gskbuffer.html#gsk-buffer-append" title="gsk_buffer_append ()"><code class="function">gsk_buffer_append()</code></a> writes to the end of the buffer,
+and <a class="link" href="gsk-gskbuffer.html#gsk-buffer-read" title="gsk_buffer_read ()"><code class="function">gsk_buffer_read()</code></a> reads from the beginning.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbuffer.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskBuffer"></a><h3>GskBuffer</h3>
+<pre class="programlisting">typedef struct {
+  guint			size;
+
+  GskBufferFragment    *first_frag;
+  GskBufferFragment    *last_frag;
+} GskBuffer;
+</pre>
+<p>
+A buffer is just a list of fragments and a size counter.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>size</code></em>;</span></p></td>
+<td>the number of bytes in the buffer total.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskbuffer.html#GskBufferFragment" title="GskBufferFragment">GskBufferFragment</a> *<em class="structfield"><code>first_frag</code></em>;</span></p></td>
+<td>the first fragment in the buffer (read end)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskbuffer.html#GskBufferFragment" title="GskBufferFragment">GskBufferFragment</a> *<em class="structfield"><code>last_frag</code></em>;</span></p></td>
+<td>the last fragment in the buffer (write end)
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskBufferFragment"></a><h3>GskBufferFragment</h3>
+<pre class="programlisting">typedef struct {
+  GskBufferFragment    *next;
+  char                 *buf;
+  guint                 buf_max_size;	/* allocation size of buf */
+  guint                 buf_start;	/* offset in buf of valid data */
+  guint                 buf_length;	/* length of valid data in buf */
+  
+  gboolean              is_foreign;
+  GDestroyNotify        destroy;
+  gpointer              destroy_data;
+} GskBufferFragment;
+</pre>
+<p>
+This structure should rarely be accessed directly,
+instead you should use the GskBuffer methods.
+They are exposed for optimization and debugging convenience.
+</p>
+<p>
+A single contiguous chunk of memory in the buffer.
+Each <a class="link" href="gsk-gskbuffer.html#GskBufferFragment" title="GskBufferFragment"><span class="type">GskBufferFragment</span></a> is managed by a single buffer,
+but internally fragments are sometimes transferred whole between buffers.
+</p>
+<p>
+A foreign fragment is one which created with
+<a class="link" href="gsk-gskbuffer.html#gsk-buffer-append-foreign" title="gsk_buffer_append_foreign ()"><code class="function">gsk_buffer_append_foreign()</code></a>.  It means that gsk
+will use the destroy method rather than the normal
+buffer pool, where data and the GskBufferFragment
+are allocated continguously.
+The headers of foreign fragments are pooled in a separate pool.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskbuffer.html#GskBufferFragment" title="GskBufferFragment">GskBufferFragment</a> *<em class="structfield"><code>next</code></em>;</span></p></td>
+<td>next fragment in the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">char *<em class="structfield"><code>buf</code></em>;</span></p></td>
+<td>raw data in the buffer
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>buf_max_size</code></em>;</span></p></td>
+<td>maximum size of buffer, assuming buf_start==0.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>buf_start</code></em>;</span></p></td>
+<td>offset in <em class="parameter"><code>buf</code></em> of first readable data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>buf_length</code></em>;</span></p></td>
+<td>number of bytes currently in the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> <em class="structfield"><code>is_foreign</code></em>;</span></p></td>
+<td>is this fragment foreign?
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> <em class="structfield"><code>destroy</code></em>;</span></p></td>
+<td>function to free foreign data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> <em class="structfield"><code>destroy_data</code></em>;</span></p></td>
+<td>data to destroy to free buf, if foreign.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-construct"></a><h3>gsk_buffer_construct ()</h3>
+<pre class="programlisting">void                gsk_buffer_construct                (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+Construct an empty buffer out of raw memory.
+(This is equivalent to filling the buffer with 0s)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer to initialize (as empty).
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-read"></a><h3>gsk_buffer_read ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_buffer_read                     (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);</pre>
+<p>
+Removes up to <em class="parameter"><code>max_length</code></em> data from the beginning of the buffer,
+and writes it to <em class="parameter"><code>data</code></em>.  The number of bytes actually read
+is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to read data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> buffer to fill with up to <em class="parameter"><code>max_length</code></em> bytes of data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_length</code></em> :</span></p></td>
+<td> maximum number of bytes to read.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> number of bytes transferred.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-peek"></a><h3>gsk_buffer_peek ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_buffer_peek                     (const <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);</pre>
+<p>
+Copies up to <em class="parameter"><code>max_length</code></em> data from the beginning of the buffer,
+and writes it to <em class="parameter"><code>data</code></em>.  The number of bytes actually copied
+is returned.
+</p>
+<p>
+This function is just like <a class="link" href="gsk-gskbuffer.html#gsk-buffer-read" title="gsk_buffer_read ()"><code class="function">gsk_buffer_read()</code></a> except that the 
+data is not removed from the buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to peek data from the front of.
+   This buffer is unchanged by the operation.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> buffer to fill with up to <em class="parameter"><code>max_length</code></em> bytes of data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_length</code></em> :</span></p></td>
+<td> maximum number of bytes to peek.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> number of bytes copied into data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-discard"></a><h3>gsk_buffer_discard ()</h3>
+<pre class="programlisting">int                 gsk_buffer_discard                  (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_discard);</pre>
+<p>
+Removes up to <em class="parameter"><code>max_discard</code></em> data from the beginning of the buffer,
+and returns the number of bytes actually discarded.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to discard data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_discard</code></em> :</span></p></td>
+<td> maximum number of bytes to discard.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> number of bytes discarded.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-read-line"></a><h3>gsk_buffer_read_line ()</h3>
+<pre class="programlisting">char *              gsk_buffer_read_line                (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+Parse a newline (\n) terminated line from
+buffer and return it as a newly allocated string.
+The newline is changed to a NUL character.
+</p>
+<p>
+If the buffer does not contain a newline, then NULL is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer to read a line from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly allocated NUL-terminated string, or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-parse-string0"></a><h3>gsk_buffer_parse_string0 ()</h3>
+<pre class="programlisting">char *              gsk_buffer_parse_string0            (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+Parse a NUL-terminated line from
+buffer and return it as a newly allocated string.
+</p>
+<p>
+If the buffer does not contain a newline, then NULL is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer to read a line from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly allocated NUL-terminated string, or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-peek-char"></a><h3>gsk_buffer_peek_char ()</h3>
+<pre class="programlisting">int                 gsk_buffer_peek_char                (const <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+Get the first byte in the buffer as a positive or 0 number.
+If the buffer is empty, -1 is returned.
+The buffer is unchanged.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer to peek a single byte from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an unsigned character or -1.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-read-char"></a><h3>gsk_buffer_read_char ()</h3>
+<pre class="programlisting">int                 gsk_buffer_read_char                (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer);</pre>
+<p>
+Get the first byte in the buffer as a positive or 0 number,
+and remove the character from the buffer.
+If the buffer is empty, -1 is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer to read a single byte from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an unsigned character or -1.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-append"></a><h3>gsk_buffer_append ()</h3>
+<pre class="programlisting">void                gsk_buffer_append                   (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> length);</pre>
+<p>
+Append data into the buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to add data to.  Data is put at the end of the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> binary data to add to the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td> length of <em class="parameter"><code>data</code></em> to add to the buffer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-append-string"></a><h3>gsk_buffer_append_string ()</h3>
+<pre class="programlisting">void                gsk_buffer_append_string            (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *string);</pre>
+<p>
+Append a string to the buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to add data to.  Data is put at the end of the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>string</code></em> :</span></p></td>
+<td> NUL-terminated string to append to the buffer.
+ The NUL is not appended.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-append-char"></a><h3>gsk_buffer_append_char ()</h3>
+<pre class="programlisting">void                gsk_buffer_append_char              (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         char character);</pre>
+<p>
+Append a byte to a buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to add the byte to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>character</code></em> :</span></p></td>
+<td> the byte to add to the buffer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-append-string0"></a><h3>gsk_buffer_append_string0 ()</h3>
+<pre class="programlisting">void                gsk_buffer_append_string0           (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *string);</pre>
+<p>
+Append a NUL-terminated string to the buffer.  The NUL is appended.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to add data to.  Data is put at the end of the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>string</code></em> :</span></p></td>
+<td> NUL-terminated string to append to the buffer;
+ NUL is appended.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-append-foreign"></a><h3>gsk_buffer_append_foreign ()</h3>
+<pre class="programlisting">void                gsk_buffer_append_foreign           (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"
+>gconstpointer</a> data,
+                                                         int length,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> destroy_data);</pre>
+<p>
+This function allows data to be placed in a buffer without
+copying.  It is the callers' responsibility to ensure that
+<em class="parameter"><code>data</code></em> will remain valid until the destroy method is called.
+<em class="parameter"><code>destroy</code></em> may be omitted if <em class="parameter"><code>data</code></em> is permanent, for example,
+if appended a static string into a buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to append into.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> the data to append.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td> length of <em class="parameter"><code>data</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> optional method to call when the data is no longer needed.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy_data</code></em> :</span></p></td>
+<td> the argument to the destroy method.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-printf"></a><h3>gsk_buffer_printf ()</h3>
+<pre class="programlisting">void                gsk_buffer_printf                   (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *format,
+                                                         ...);</pre>
+<p>
+Append printf-style content to a buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> printf-style format string describing what to append to buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td> values referenced by <em class="parameter"><code>format</code></em> string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-vprintf"></a><h3>gsk_buffer_vprintf ()</h3>
+<pre class="programlisting">void                gsk_buffer_vprintf                  (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         const char *format,
+                                                         va_list args);</pre>
+<p>
+Append printf-style content to a buffer, given a va_list.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the buffer to append to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> printf-style format string describing what to append to buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>args</code></em> :</span></p></td>
+<td> values referenced by <em class="parameter"><code>format</code></em> string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-drain"></a><h3>gsk_buffer_drain ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_buffer_drain                    (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *dst,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *src);</pre>
+<p>
+Transfer all data from <em class="parameter"><code>src</code></em> to <em class="parameter"><code>dst</code></em>,
+leaving <em class="parameter"><code>src</code></em> empty.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dst</code></em> :</span></p></td>
+<td> buffer to add to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td> buffer to remove from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes transferred.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-transfer"></a><h3>gsk_buffer_transfer ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_buffer_transfer                 (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *dst,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_transfer);</pre>
+<p>
+Transfer data out of <em class="parameter"><code>src</code></em> and into <em class="parameter"><code>dst</code></em>.
+Data is removed from <em class="parameter"><code>src</code></em>.  The number of bytes
+transferred is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dst</code></em> :</span></p></td>
+<td> place to copy data into.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td> place to read data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_transfer</code></em> :</span></p></td>
+<td> maximum number of bytes to transfer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes transferred.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-writev"></a><h3>gsk_buffer_writev ()</h3>
+<pre class="programlisting">int                 gsk_buffer_writev                   (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *read_from,
+                                                         int fd);</pre>
+<p>
+Writes as much data as possible to the
+given file-descriptor using the writev(2)
+function to deal with multiple fragments
+efficiently, where available.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>read_from</code></em> :</span></p></td>
+<td> buffer to take data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> file-descriptor to write data to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes transferred,
+or -1 on a write error (consult errno).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-read-in-fd"></a><h3>gsk_buffer_read_in_fd ()</h3>
+<pre class="programlisting">int                 gsk_buffer_read_in_fd               (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *write_to,
+                                                         int read_from);</pre>
+<p>
+Append data into the buffer directly from the
+given file-descriptor.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>write_to</code></em> :</span></p></td>
+<td> buffer to append data to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>read_from</code></em> :</span></p></td>
+<td> file-descriptor to read data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the number of bytes transferred,
+or -1 on a read error (consult errno).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-index-of"></a><h3>gsk_buffer_index_of ()</h3>
+<pre class="programlisting">int                 gsk_buffer_index_of                 (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         char char_to_find);</pre>
+<p>
+Scans for the first instance of the given character.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer to scan.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>char_to_find</code></em> :</span></p></td>
+<td> a byte to look for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> its index in the buffer, or -1 if the character
+is not in the buffer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-polystr-index-of"></a><h3>gsk_buffer_polystr_index_of ()</h3>
+<pre class="programlisting">int                 gsk_buffer_polystr_index_of         (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *buffer,
+                                                         char **strings);</pre>
+<p>
+Scans for the first instance of any of the strings
+in the buffer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> buffer to scan.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>strings</code></em> :</span></p></td>
+<td> NULL-terminated set of string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the index of that instance, or -1 if not found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-destruct"></a><h3>gsk_buffer_destruct ()</h3>
+<pre class="programlisting">void                gsk_buffer_destruct                 (<a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *to_destroy);</pre>
+<p>
+Remove all fragments from a buffer, leaving it empty.
+The buffer is guaranteed to not to be consuming any resources,
+but it also is allowed to start using it again.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>to_destroy</code></em> :</span></p></td>
+<td> the buffer to empty.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-cleanup-recycling-bin"></a><h3>gsk_buffer_cleanup_recycling_bin ()</h3>
+<pre class="programlisting">void                gsk_buffer_cleanup_recycling_bin    ();</pre>
+<p>
+Free unused buffer fragments.  (Normally some are
+kept around to reduce strain on the global allocator.)</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskBufferIterator"></a><h3>GskBufferIterator</h3>
+<pre class="programlisting">typedef struct {
+  GskBufferFragment *fragment;
+  guint in_cur;
+  guint cur_length;
+  const guint8 *cur_data;
+  guint offset;
+} GskBufferIterator;
+</pre>
+<p>
+An iterator which can be used to walk through a buffer.
+</p>
+<p>
+You MUST not modify the buffer that you are editing in any way.
+</p>
+<p>
+TODO: exceptions to the above may be feasible,
+but we have to see what the demands are...
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskbuffer.html#GskBufferFragment" title="GskBufferFragment">GskBufferFragment</a> *<em class="structfield"><code>fragment</code></em>;</span></p></td>
+<td>which fragment we are currently in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>in_cur</code></em>;</span></p></td>
+<td>the offset in bytes into <em class="parameter"><code>fragment</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>cur_length</code></em>;</span></p></td>
+<td>the length of fragment.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"
+>guint8</a> *<em class="structfield"><code>cur_data</code></em>;</span></p></td>
+<td>the data of fragment.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> <em class="structfield"><code>offset</code></em>;</span></p></td>
+<td>the offset in bytes into the whole buffer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-iterator-offset"></a><h3>gsk_buffer_iterator_offset()</h3>
+<pre class="programlisting">#define             gsk_buffer_iterator_offset(iterator)</pre>
+<p>
+Get the offset in bytes into <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer"><span class="type">GskBuffer</span></a> that we
+are into the whole buffer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>iterator</code></em> :</span></p></td>
+<td>the iterator to examine.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-iterator-construct"></a><h3>gsk_buffer_iterator_construct ()</h3>
+<pre class="programlisting">void                gsk_buffer_iterator_construct       (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> *to_iterate);</pre>
+<p>
+Initialize a new <a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator"><span class="type">GskBufferIterator</span></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iterator</code></em> :</span></p></td>
+<td> to initialize.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>to_iterate</code></em> :</span></p></td>
+<td> the buffer to walk through.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-iterator-peek"></a><h3>gsk_buffer_iterator_peek ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_buffer_iterator_peek            (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);</pre>
+<p>
+Peek data from the current position of an iterator.
+The iterator's position is not changed.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iterator</code></em> :</span></p></td>
+<td> to peek data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> to copy data into.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_length</code></em> :</span></p></td>
+<td> maximum number of bytes to write to <em class="parameter"><code>out</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> number of bytes peeked into <em class="parameter"><code>out</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-iterator-read"></a><h3>gsk_buffer_iterator_read ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_buffer_iterator_read            (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);</pre>
+<p>
+Peek data from the current position of an iterator.
+The iterator's position is updated to be at the end of
+the data read.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iterator</code></em> :</span></p></td>
+<td> to read data from.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> to copy data into.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_length</code></em> :</span></p></td>
+<td> maximum number of bytes to write to <em class="parameter"><code>out</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> number of bytes read into <em class="parameter"><code>out</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-iterator-skip"></a><h3>gsk_buffer_iterator_skip ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_buffer_iterator_skip            (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> max_length);</pre>
+<p>
+Advance an iterator forward in the buffer,
+returning the number of bytes skipped.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iterator</code></em> :</span></p></td>
+<td> to advance.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max_length</code></em> :</span></p></td>
+<td> maximum number of bytes to skip forward.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> number of bytes skipped forward.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-buffer-iterator-find-char"></a><h3>gsk_buffer_iterator_find_char ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_buffer_iterator_find_char       (<a class="link" href="gsk-gskbuffer.html#GskBufferIterator" title="GskBufferIterator">GskBufferIterator</a> *iterator,
+                                                         char c);</pre>
+<p>
+If it exists,
+skip forward to the next instance of <em class="parameter"><code>c</code></em> and return TRUE.
+Otherwise, do nothing and return FALSE.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iterator</code></em> :</span></p></td>
+<td> to advance.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>c</code></em> :</span></p></td>
+<td> the character to look for.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the character was found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-BUFFER-STATIC-INIT--CAPS"></a><h3>GSK_BUFFER_STATIC_INIT</h3>
+<pre class="programlisting">#define             GSK_BUFFER_STATIC_INIT</pre>
+<p>
+Macro which can be used to initialize an empty buffer.
+One can write:
+  GskBuffer buf = GSK_BUFFER_STATIC_INIT;
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

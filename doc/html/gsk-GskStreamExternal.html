@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskStreamExternal</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch04.html" title="Standard Implementations">
+<link rel="prev" href="GskStreamFd.html" title="GskStreamFd">
+<link rel="next" href="GskStreamListenerSocket.html" title="GskStreamListenerSocket">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskStreamFd.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="GskStreamListenerSocket.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-GskStreamExternal.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-GskStreamExternal.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-GskStreamExternal"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-GskStreamExternal.top_of_page"></a>GskStreamExternal</span></h2>
+<p>GskStreamExternal — streams which connect to another process.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-GskStreamExternal.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+void                (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalTerminated" title="GskStreamExternalTerminated ()">*GskStreamExternalTerminated</a>)      (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternal" title="GskStreamExternal">GskStreamExternal</a> *external,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a> *wait_info,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+void                (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalStderr" title="GskStreamExternalStderr ()">*GskStreamExternalStderr</a>)          (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternal" title="GskStreamExternal">GskStreamExternal</a> *external,
+                                                         const char *error_text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);
+                    <a class="link" href="gsk-GskStreamExternal.html#GskStreamExternal" title="GskStreamExternal">GskStreamExternal</a>;
+enum                <a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalFlags" title="enum GskStreamExternalFlags">GskStreamExternalFlags</a>;
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="gsk-GskStreamExternal.html#gsk-stream-external-new" title="gsk_stream_external_new ()">gsk_stream_external_new</a>             (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalFlags" title="enum GskStreamExternalFlags">GskStreamExternalFlags</a> flags,
+                                                         const char *stdin_filename,
+                                                         const char *stdout_filename,
+                                                         <a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalTerminated" title="GskStreamExternalTerminated ()">GskStreamExternalTerminated</a> term_func,
+                                                         <a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalStderr" title="GskStreamExternalStderr ()">GskStreamExternalStderr</a> err_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         const char *path,
+                                                         const char *argv[],
+                                                         const char *env[],
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskStreamExternal.description"></a><h2>Description</h2>
+<p>
+These are streams where the input and output
+map to standard output and standard input for
+another process which is exec(2)'d from this one.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-GskStreamExternal.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamExternalTerminated"></a><h3>GskStreamExternalTerminated ()</h3>
+<pre class="programlisting">void                (*GskStreamExternalTerminated)      (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternal" title="GskStreamExternal">GskStreamExternal</a> *external,
+                                                         <a class="link" href="GskMainLoop.html#GskMainLoopWaitInfo" title="GskMainLoopWaitInfo">GskMainLoopWaitInfo</a> *wait_info,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+Function to run when the process underlying the stream is terminated.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>external</code></em> :</span></p></td>
+<td>the stream corresponding to the process.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wait_info</code></em> :</span></p></td>
+<td>information about why the process exited.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>passed in from <a class="link" href="gsk-GskStreamExternal.html#gsk-stream-external-new" title="gsk_stream_external_new ()"><code class="function">gsk_stream_external_new()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamExternalStderr"></a><h3>GskStreamExternalStderr ()</h3>
+<pre class="programlisting">void                (*GskStreamExternalStderr)          (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternal" title="GskStreamExternal">GskStreamExternal</a> *external,
+                                                         const char *error_text,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data);</pre>
+<p>
+Function to be run with single lines taken from standard-error
+of the subprocess.  The line has had the newline chopped from it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>external</code></em> :</span></p></td>
+<td>the stream corresponding to the process.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error_text</code></em> :</span></p></td>
+<td>the NUL-terminated text from the subprocess.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>passed in from <a class="link" href="gsk-GskStreamExternal.html#gsk-stream-external-new" title="gsk_stream_external_new ()"><code class="function">gsk_stream_external_new()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamExternal"></a><h3>GskStreamExternal</h3>
+<pre class="programlisting">typedef struct {
+  GskStream      stream;
+
+  /* stdin for the process */
+  int write_fd;
+  GskSource *write_source;
+  GskBuffer write_buffer;
+  gsize max_write_buffer;
+
+  /* stdout for the process */
+  int read_fd;
+  GskSource *read_source;
+  GskBuffer read_buffer;
+  gsize max_read_buffer;
+
+  /* stderr for the process */
+  int read_err_fd;
+  GskSource *read_err_source;
+  GskBuffer read_err_buffer;
+  gsize max_err_line_length;
+
+  /* process-termination notification */
+  GskSource *process_source;
+  glong pid;
+
+  /* user-callback information */
+  GskStreamExternalTerminated term_func;
+  GskStreamExternalStderr err_func;
+  gpointer user_data;
+} GskStreamExternal;
+</pre>
+<p>
+Instance of an object whose input and output come
+from another process.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> <em class="structfield"><code>stream</code></em>;</span></p></td>
+<td>parent instance.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>write_fd</code></em>;</span></p></td>
+<td>file-descriptor to write to (received as
+standard-input of the child process).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *<em class="structfield"><code>write_source</code></em>;</span></p></td>
+<td>notification that it's ready to write.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> <em class="structfield"><code>write_buffer</code></em>;</span></p></td>
+<td>data pending to be written.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> <em class="structfield"><code>max_write_buffer</code></em>;</span></p></td>
+<td>max data pending to be written.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>read_fd</code></em>;</span></p></td>
+<td>file-descriptor to read from (sent as 
+standard-output of the child process).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *<em class="structfield"><code>read_source</code></em>;</span></p></td>
+<td>notification that it's ready to read.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> <em class="structfield"><code>read_buffer</code></em>;</span></p></td>
+<td>data pending read from child.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> <em class="structfield"><code>max_read_buffer</code></em>;</span></p></td>
+<td>max bytes data pending read from child.
+</td>
+</tr>
+<tr>
+<td><p><span class="term">int <em class="structfield"><code>read_err_fd</code></em>;</span></p></td>
+<td>file-descriptor to read from (sent as 
+standard-error of the child process).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *<em class="structfield"><code>read_err_source</code></em>;</span></p></td>
+<td>notification that the error stream is ready-to-read.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-gskbuffer.html#GskBuffer" title="GskBuffer">GskBuffer</a> <em class="structfield"><code>read_err_buffer</code></em>;</span></p></td>
+<td>data pending from error stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"
+>gsize</a> <em class="structfield"><code>max_err_line_length</code></em>;</span></p></td>
+<td>maximum length of line for an error string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GskMainLoop.html#GskSource" title="GskSource">GskSource</a> *<em class="structfield"><code>process_source</code></em>;</span></p></td>
+<td>process-termination notification.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"
+>glong</a> <em class="structfield"><code>pid</code></em>;</span></p></td>
+<td>process id.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalTerminated" title="GskStreamExternalTerminated ()">GskStreamExternalTerminated</a> <em class="structfield"><code>term_func</code></em>;</span></p></td>
+<td>function to call when the child process dies.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalStderr" title="GskStreamExternalStderr ()">GskStreamExternalStderr</a> <em class="structfield"><code>err_func</code></em>;</span></p></td>
+<td>function to call with standard error data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> <em class="structfield"><code>user_data</code></em>;</span></p></td>
+<td>parameter to pass to <em class="parameter"><code>term_func</code></em> and <em class="parameter"><code>err_func</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamExternalFlags"></a><h3>enum GskStreamExternalFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_STREAM_EXTERNAL_ALLOCATE_PSEUDOTTY = (1&lt;&lt;2),
+  GSK_STREAM_EXTERNAL_SEARCH_PATH        = (1&lt;&lt;3)
+} GskStreamExternalFlags;
+</pre>
+<p>
+Flags which affect the construction of the stream.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-STREAM-EXTERNAL-ALLOCATE-PSEUDOTTY--CAPS"></a><span class="term"><code class="literal">GSK_STREAM_EXTERNAL_ALLOCATE_PSEUDOTTY</code></span></p></td>
+<td>
+Allocate a pseudo tty for the input and output of the
+child process.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-STREAM-EXTERNAL-SEARCH-PATH--CAPS"></a><span class="term"><code class="literal">GSK_STREAM_EXTERNAL_SEARCH_PATH</code></span></p></td>
+<td>
+Search along $PATH for the binary.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-external-new"></a><h3>gsk_stream_external_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_external_new             (<a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalFlags" title="enum GskStreamExternalFlags">GskStreamExternalFlags</a> flags,
+                                                         const char *stdin_filename,
+                                                         const char *stdout_filename,
+                                                         <a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalTerminated" title="GskStreamExternalTerminated ()">GskStreamExternalTerminated</a> term_func,
+                                                         <a class="link" href="gsk-GskStreamExternal.html#GskStreamExternalStderr" title="GskStreamExternalStderr ()">GskStreamExternalStderr</a> err_func,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> user_data,
+                                                         const char *path,
+                                                         const char *argv[],
+                                                         const char *env[],
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Allocates a stream which points to standard input and/or output
+of a newly forked process.
+</p>
+<p>
+This forks, redirects the standard input from a file if <em class="parameter"><code>stdin_filename</code></em>
+is non-NULL, otherwise it uses a pipe to communicate
+the data to the main-loop.
+It redirects the standard output to a file if <em class="parameter"><code>stdout_filename</code></em>
+is non-NULL, otherwise it uses a pipe to communicate
+the data from the main-loop.
+</p>
+<p>
+When the process terminates, <em class="parameter"><code>term_func</code></em> will be called.
+Until <em class="parameter"><code>term_func</code></em> is called, <em class="parameter"><code>err_func</code></em> may be called with lines
+of data from the standard-error of the process.
+</p>
+<p>
+If <em class="parameter"><code>env</code></em> is non-NULL, then the environment for the subprocess
+will consist of nothing but the list given as <em class="parameter"><code>env</code></em>.
+If <em class="parameter"><code>env</code></em> is NULL, then the environment will be the same as
+the parent process's environment.
+</p>
+<p>
+If GSK_STREAM_EXTERNAL_SEARCH_PATH is set, then the executable
+will be saught in the colon-separated list of paths
+in the $PATH environment-variable.  Otherwise, <em class="parameter"><code>path</code></em> must be
+the exact path to the executable.
+</p>
+<p>
+If the executable is not found, or exec otherwise fails,
+then <em class="parameter"><code>term_func</code></em> will be called with an exit status of 127.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> whether to allocate a pseudo-tty and/or use $PATH.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stdin_filename</code></em> :</span></p></td>
+<td> file to redirect as standard input into the process.
+If NULL, then the returned stream will be writable, and data
+written in will appear as standard-input to the process.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stdout_filename</code></em> :</span></p></td>
+<td> file to redirect output from the process's standard-input.
+If NULL, then the returned stream will be readable; the data read
+will be the process's standard-output.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>term_func</code></em> :</span></p></td>
+<td> function to call with the process's exit status.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>err_func</code></em> :</span></p></td>
+<td> function to call with standard error output from the process,
+line-by-line.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> data to pass to term_func and err_func.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td> name of the executable.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argv</code></em> :</span></p></td>
+<td> arguments to pass to the executable.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>env</code></em> :</span></p></td>
+<td> environment variables, as a NULL-terminated key=value list of strings.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return location.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new stream.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<refentry id="gsk-gskftpcommon">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskftpcommon.top_of_page">gskftpcommon</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskftpcommon</refname>
+<refpurpose>basic ftp definitions</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskftpcommon.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskFtpCommand">GskFtpCommand</link>;
+enum                <link linkend="GskFtpCommandType">GskFtpCommandType</link>;
+enum                <link linkend="GskFtpCharType">GskFtpCharType</link>;
+enum                <link linkend="GskFtpTerminalType">GskFtpTerminalType</link>;
+enum                <link linkend="GskFtpFileStructure">GskFtpFileStructure</link>;
+enum                <link linkend="GskFtpTransferMode">GskFtpTransferMode</link>;
+const <link linkend="char">char</link> *        <link linkend="gsk-ftp-command-name">gsk_ftp_command_name</link>                (<link linkend="GskFtpCommandType">GskFtpCommandType</link> command_type);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-user">gsk_ftp_command_new_user</link>            (const <link linkend="char">char</link> *username);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-password">gsk_ftp_command_new_password</link>        (const <link linkend="char">char</link> *username);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-account">gsk_ftp_command_new_account</link>         (const <link linkend="char">char</link> *account);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-mount">gsk_ftp_command_new_mount</link>           (const <link linkend="char">char</link> *mount_point);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-rep-type">gsk_ftp_command_new_rep_type</link>        (<link linkend="GskFtpCharType">GskFtpCharType</link> char_type,
+                                                         <link linkend="GskFtpTerminalType">GskFtpTerminalType</link> terminal_type,
+                                                         <link linkend="int">int</link> byte_size);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-file-struct">gsk_ftp_command_new_file_struct</link>     (<link linkend="GskFtpFileStructure">GskFtpFileStructure</link> file_struct);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-transfer-mode">gsk_ftp_command_new_transfer_mode</link>   (<link linkend="GskFtpTransferMode">GskFtpTransferMode</link> transfer_mode);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-help">gsk_ftp_command_new_help</link>            (const <link linkend="char">char</link> *topic);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-file">gsk_ftp_command_new_file</link>            (<link linkend="GskFtpCommandType">GskFtpCommandType</link> cmd_type,
+                                                         const <link linkend="char">char</link> *path);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-new-simple">gsk_ftp_command_new_simple</link>          (<link linkend="GskFtpCommandType">GskFtpCommandType</link> cmd_type);
+<link linkend="GskFtpCommand">GskFtpCommand</link> *     <link linkend="gsk-ftp-command-parse">gsk_ftp_command_parse</link>               (const <link linkend="char">char</link> *parse);
+<link linkend="char">char</link> *              <link linkend="gsk-ftp-command-to-string">gsk_ftp_command_to_string</link>           (<link linkend="GskFtpCommand">GskFtpCommand</link> *command);
+<link linkend="void">void</link>                <link linkend="gsk-ftp-command-append">gsk_ftp_command_append</link>              (<link linkend="GskFtpCommand">GskFtpCommand</link> *command,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="void">void</link>                <link linkend="gsk-ftp-command-destroy">gsk_ftp_command_destroy</link>             (<link linkend="GskFtpCommand">GskFtpCommand</link> *command);
+struct              <link linkend="GskFtpReply">GskFtpReply</link>;
+<link linkend="GskFtpReply">GskFtpReply</link> *       <link linkend="gsk-ftp-reply-new-simple">gsk_ftp_reply_new_simple</link>            (<link linkend="GskFtpReplyType">GskFtpReplyType</link> type);
+<link linkend="GskFtpReply">GskFtpReply</link> *       <link linkend="gsk-ftp-reply-new-status">gsk_ftp_reply_new_status</link>            (<link linkend="GskFtpReplyType">GskFtpReplyType</link> type,
+                                                         const <link linkend="char">char</link> *message);
+<link linkend="GskFtpReply">GskFtpReply</link> *       <link linkend="gsk-ftp-reply-new-system">gsk_ftp_reply_new_system</link>            (const <link linkend="char">char</link> *system,
+                                                         const <link linkend="char">char</link> *additional);
+<link linkend="GskFtpReply">GskFtpReply</link> *       <link linkend="gsk-ftp-reply-new-ready-in-n">gsk_ftp_reply_new_ready_in_n</link>        (<link linkend="int">int</link> num_minutes);
+<link linkend="GskFtpReply">GskFtpReply</link> *       <link linkend="gsk-ftp-reply-parse">gsk_ftp_reply_parse</link>                 (const <link linkend="char">char</link> *raw_string);
+<link linkend="char">char</link> *              <link linkend="gsk-ftp-reply-to-string">gsk_ftp_reply_to_string</link>             (<link linkend="GskFtpReply">GskFtpReply</link> *reply);
+<link linkend="void">void</link>                <link linkend="gsk-ftp-reply-append">gsk_ftp_reply_append</link>                (<link linkend="GskFtpReply">GskFtpReply</link> *reply,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskftpcommon.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Structures and definitions for the FTP protocol implementation.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskftpcommon.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskFtpCommand" role="struct">
+<title>GskFtpCommand</title>
+<indexterm zone="GskFtpCommand"><primary sortas="GskFtpCommand">GskFtpCommand</primary></indexterm><programlisting>typedef struct {
+  GskFtpCommandType      type;
+  union
+  {
+    /* The following commands take no argument:
+     *      CDUP      Change to parent directory.
+     *      REIN      Reinitialize
+     *      QUIT      Logout
+     *      PASV      Set passive mode
+     *      STOU      Store unique
+     *      SYST      Find server system type.
+     *      NOOP      No operation to perform.
+     */
+    char                *username;         /* for USER */
+    char                *password;         /* for PASS */
+    char                *account;          /* for ACCT */
+    char                *mount_point;      /* for SMNT */
+    struct                                 /* for PORT */
+    {
+      int                port;
+      guint8             address[4];
+    } data_port;
+    struct 
+    {                                      /* for TYPE */
+      GskFtpCharType     char_type;
+      GskFtpTerminalType term_type;
+      int                local_byte_size;
+    } representation_type;
+    GskFtpFileStructure  struct_type;      /* for STRU */
+    GskFtpTransferMode   transfer_mode;    /* for MODE */
+
+    /*           The following commands use pathname:
+     *                  CWD RETR STOR APPE ALLO REST RNFR RNTO
+     *                  ABOR DELE RMD MKD LIST NLST STAT
+     */
+    char                *pathname;
+    char                *help_topic;       /* for HELP (may be NULL) */
+  } d;
+} GskFtpCommand;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskFtpCommandType" role="enum">
+<title>enum GskFtpCommandType</title>
+<indexterm zone="GskFtpCommandType"><primary sortas="GskFtpCommandType">GskFtpCommandType</primary></indexterm><programlisting>typedef enum
+{
+  /* ---  Authorization commands.  See RFC 959, Section 4.1.1. --- */
+
+  /* Login information */
+  GSK_FTP_COMMAND_USER,
+  GSK_FTP_COMMAND_PASS,
+  GSK_FTP_COMMAND_ACCT,
+
+  /* Directory-changing commands.  */
+  GSK_FTP_COMMAND_CWD,
+  GSK_FTP_COMMAND_CDUP,
+
+  /* Mounting "structures" (eg filesystems) */
+  GSK_FTP_COMMAND_SMNT,
+
+  /* Clear current authorization. */
+  GSK_FTP_COMMAND_REIN,		/* stay logged in */
+  GSK_FTP_COMMAND_QUIT,		/* disconnect */
+
+  /* --- Set data transport parameters.  See RFC 959, 4.1.2. --- */
+  GSK_FTP_COMMAND_PORT,
+
+  /* passive mode (client connects to remote side) */
+  GSK_FTP_COMMAND_PASV,
+
+  /* data format type */
+  GSK_FTP_COMMAND_TYPE,
+  GSK_FTP_COMMAND_STRU,
+  GSK_FTP_COMMAND_MODE,
+
+  /* --- Service commands --- */
+  GSK_FTP_COMMAND_RETR,		/* read a file from the server */
+  GSK_FTP_COMMAND_STOR,		/* write a file to the server */
+  GSK_FTP_COMMAND_STOU,		/* create (don't overwrite) a file */
+  GSK_FTP_COMMAND_APPE,		/* append data to the file */
+  GSK_FTP_COMMAND_ALLO,		/* allocate space */
+  GSK_FTP_COMMAND_REST,		/* restart transfer ???? */
+  GSK_FTP_COMMAND_RNFR,		/* rename file from */
+  GSK_FTP_COMMAND_RNTO,		/* rename from to */
+  GSK_FTP_COMMAND_ABOR,		/* abort file transfer */
+  GSK_FTP_COMMAND_DELE,		/* delet e file from the server */
+  GSK_FTP_COMMAND_RMD,		/* remove a directory */
+  GSK_FTP_COMMAND_MKD,		/* make a directory */
+  GSK_FTP_COMMAND_PWD,		/* `print working directory' */
+  GSK_FTP_COMMAND_LIST,		/* list files in dir (human-readable) */
+  GSK_FTP_COMMAND_NLST,		/* list files in dir (machine-readable) */
+  GSK_FTP_COMMAND_SITE,		/* site specific parameter */
+  GSK_FTP_COMMAND_SYST,		/* report server system type */
+  GSK_FTP_COMMAND_STAT,		/* stat a remote file */
+  GSK_FTP_COMMAND_HELP,		/* request help */
+  GSK_FTP_COMMAND_NOOP		/* no operation */
+} GskFtpCommandType;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskFtpCharType" role="enum">
+<title>enum GskFtpCharType</title>
+<indexterm zone="GskFtpCharType"><primary sortas="GskFtpCharType">GskFtpCharType</primary></indexterm><programlisting>typedef enum                            /* for ftp TYPE command */
+{ 
+  GSK_FTP_CHAR_TYPE_ASCII,
+  GSK_FTP_CHAR_TYPE_EBCDIC,
+  GSK_FTP_CHAR_TYPE_IMAGE
+} GskFtpCharType;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskFtpTerminalType" role="enum">
+<title>enum GskFtpTerminalType</title>
+<indexterm zone="GskFtpTerminalType"><primary sortas="GskFtpTerminalType">GskFtpTerminalType</primary></indexterm><programlisting>typedef enum                            /* for ftp TYPE command */
+{
+  GSK_FTP_TERMINAL_NONPRINT,
+  GSK_FTP_TERMINAL_TELNET,
+  GSK_FTP_TERMINAL_CARRIAGE_CONTROL
+} GskFtpTerminalType;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskFtpFileStructure" role="enum">
+<title>enum GskFtpFileStructure</title>
+<indexterm zone="GskFtpFileStructure"><primary sortas="GskFtpFileStructure">GskFtpFileStructure</primary></indexterm><programlisting>typedef enum                            /* for ftp STRU command */
+{
+  GSK_FTP_FILE_STRUCTURE_FILE,
+  GSK_FTP_FILE_STRUCTURE_RECORD,
+  GSK_FTP_FILE_STRUCTURE_PAGE
+} GskFtpFileStructure;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GskFtpTransferMode" role="enum">
+<title>enum GskFtpTransferMode</title>
+<indexterm zone="GskFtpTransferMode"><primary sortas="GskFtpTransferMode">GskFtpTransferMode</primary></indexterm><programlisting>typedef enum                            /* for ftp MODE command */
+{
+  GSK_FTP_TRANSFER_MODE_STREAM,
+  GSK_FTP_TRANSFER_MODE_BLOCK,
+  GSK_FTP_TRANSFER_MODE_COMPRESSED
+} GskFtpTransferMode;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-ftp-command-name" role="function">
+<title>gsk_ftp_command_name ()</title>
+<indexterm zone="gsk-ftp-command-name"><primary sortas="gsk_ftp_command_name">gsk_ftp_command_name</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_ftp_command_name                (<link linkend="GskFtpCommandType">GskFtpCommandType</link> command_type);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>command_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-user" role="function">
+<title>gsk_ftp_command_new_user ()</title>
+<indexterm zone="gsk-ftp-command-new-user"><primary sortas="gsk_ftp_command_new_user">gsk_ftp_command_new_user</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_user            (const <link linkend="char">char</link> *username);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>username</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-password" role="function">
+<title>gsk_ftp_command_new_password ()</title>
+<indexterm zone="gsk-ftp-command-new-password"><primary sortas="gsk_ftp_command_new_password">gsk_ftp_command_new_password</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_password        (const <link linkend="char">char</link> *username);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>username</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-account" role="function">
+<title>gsk_ftp_command_new_account ()</title>
+<indexterm zone="gsk-ftp-command-new-account"><primary sortas="gsk_ftp_command_new_account">gsk_ftp_command_new_account</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_account         (const <link linkend="char">char</link> *account);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>account</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-mount" role="function">
+<title>gsk_ftp_command_new_mount ()</title>
+<indexterm zone="gsk-ftp-command-new-mount"><primary sortas="gsk_ftp_command_new_mount">gsk_ftp_command_new_mount</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_mount           (const <link linkend="char">char</link> *mount_point);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mount_point</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-rep-type" role="function">
+<title>gsk_ftp_command_new_rep_type ()</title>
+<indexterm zone="gsk-ftp-command-new-rep-type"><primary sortas="gsk_ftp_command_new_rep_type">gsk_ftp_command_new_rep_type</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_rep_type        (<link linkend="GskFtpCharType">GskFtpCharType</link> char_type,
+                                                         <link linkend="GskFtpTerminalType">GskFtpTerminalType</link> terminal_type,
+                                                         <link linkend="int">int</link> byte_size);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>char_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>terminal_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>byte_size</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-file-struct" role="function">
+<title>gsk_ftp_command_new_file_struct ()</title>
+<indexterm zone="gsk-ftp-command-new-file-struct"><primary sortas="gsk_ftp_command_new_file_struct">gsk_ftp_command_new_file_struct</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_file_struct     (<link linkend="GskFtpFileStructure">GskFtpFileStructure</link> file_struct);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>file_struct</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-transfer-mode" role="function">
+<title>gsk_ftp_command_new_transfer_mode ()</title>
+<indexterm zone="gsk-ftp-command-new-transfer-mode"><primary sortas="gsk_ftp_command_new_transfer_mode">gsk_ftp_command_new_transfer_mode</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_transfer_mode   (<link linkend="GskFtpTransferMode">GskFtpTransferMode</link> transfer_mode);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>transfer_mode</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-help" role="function">
+<title>gsk_ftp_command_new_help ()</title>
+<indexterm zone="gsk-ftp-command-new-help"><primary sortas="gsk_ftp_command_new_help">gsk_ftp_command_new_help</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_help            (const <link linkend="char">char</link> *topic);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>topic</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-file" role="function">
+<title>gsk_ftp_command_new_file ()</title>
+<indexterm zone="gsk-ftp-command-new-file"><primary sortas="gsk_ftp_command_new_file">gsk_ftp_command_new_file</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_file            (<link linkend="GskFtpCommandType">GskFtpCommandType</link> cmd_type,
+                                                         const <link linkend="char">char</link> *path);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cmd_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-new-simple" role="function">
+<title>gsk_ftp_command_new_simple ()</title>
+<indexterm zone="gsk-ftp-command-new-simple"><primary sortas="gsk_ftp_command_new_simple">gsk_ftp_command_new_simple</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_new_simple          (<link linkend="GskFtpCommandType">GskFtpCommandType</link> cmd_type);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>cmd_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-parse" role="function">
+<title>gsk_ftp_command_parse ()</title>
+<indexterm zone="gsk-ftp-command-parse"><primary sortas="gsk_ftp_command_parse">gsk_ftp_command_parse</primary></indexterm><programlisting><link linkend="GskFtpCommand">GskFtpCommand</link> *     gsk_ftp_command_parse               (const <link linkend="char">char</link> *parse);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parse</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-to-string" role="function">
+<title>gsk_ftp_command_to_string ()</title>
+<indexterm zone="gsk-ftp-command-to-string"><primary sortas="gsk_ftp_command_to_string">gsk_ftp_command_to_string</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_ftp_command_to_string           (<link linkend="GskFtpCommand">GskFtpCommand</link> *command);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>command</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-append" role="function">
+<title>gsk_ftp_command_append ()</title>
+<indexterm zone="gsk-ftp-command-append"><primary sortas="gsk_ftp_command_append">gsk_ftp_command_append</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_ftp_command_append              (<link linkend="GskFtpCommand">GskFtpCommand</link> *command,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>command</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-command-destroy" role="function">
+<title>gsk_ftp_command_destroy ()</title>
+<indexterm zone="gsk-ftp-command-destroy"><primary sortas="gsk_ftp_command_destroy">gsk_ftp_command_destroy</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_ftp_command_destroy             (<link linkend="GskFtpCommand">GskFtpCommand</link> *command);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>command</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskFtpReply" role="struct">
+<title>struct GskFtpReply</title>
+<indexterm zone="GskFtpReply"><primary sortas="GskFtpReply">GskFtpReply</primary></indexterm><programlisting>struct GskFtpReply {
+  GskFtpReplyType type;
+  union
+  {
+    struct
+    {
+      char m[4];
+      char d[4];
+    } restart_marker;
+
+    /* SYSTEM_STATUS, DIR_STATUS, FILE_STATUS, HELP_MESSAGE */
+    char *literal;
+
+    /* NAME_SYSTEM */
+    struct
+    {
+      char *name;
+      char *additional;
+    } name_system;
+
+    /* READY_IN_N_MINUTES */
+    struct
+    {
+      int n_minutes;
+    } n_minutes;
+  } d;
+};
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-ftp-reply-new-simple" role="function">
+<title>gsk_ftp_reply_new_simple ()</title>
+<indexterm zone="gsk-ftp-reply-new-simple"><primary sortas="gsk_ftp_reply_new_simple">gsk_ftp_reply_new_simple</primary></indexterm><programlisting><link linkend="GskFtpReply">GskFtpReply</link> *       gsk_ftp_reply_new_simple            (<link linkend="GskFtpReplyType">GskFtpReplyType</link> type);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-reply-new-status" role="function">
+<title>gsk_ftp_reply_new_status ()</title>
+<indexterm zone="gsk-ftp-reply-new-status"><primary sortas="gsk_ftp_reply_new_status">gsk_ftp_reply_new_status</primary></indexterm><programlisting><link linkend="GskFtpReply">GskFtpReply</link> *       gsk_ftp_reply_new_status            (<link linkend="GskFtpReplyType">GskFtpReplyType</link> type,
+                                                         const <link linkend="char">char</link> *message);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-reply-new-system" role="function">
+<title>gsk_ftp_reply_new_system ()</title>
+<indexterm zone="gsk-ftp-reply-new-system"><primary sortas="gsk_ftp_reply_new_system">gsk_ftp_reply_new_system</primary></indexterm><programlisting><link linkend="GskFtpReply">GskFtpReply</link> *       gsk_ftp_reply_new_system            (const <link linkend="char">char</link> *system,
+                                                         const <link linkend="char">char</link> *additional);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>system</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>additional</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-reply-new-ready-in-n" role="function">
+<title>gsk_ftp_reply_new_ready_in_n ()</title>
+<indexterm zone="gsk-ftp-reply-new-ready-in-n"><primary sortas="gsk_ftp_reply_new_ready_in_n">gsk_ftp_reply_new_ready_in_n</primary></indexterm><programlisting><link linkend="GskFtpReply">GskFtpReply</link> *       gsk_ftp_reply_new_ready_in_n        (<link linkend="int">int</link> num_minutes);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>num_minutes</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-reply-parse" role="function">
+<title>gsk_ftp_reply_parse ()</title>
+<indexterm zone="gsk-ftp-reply-parse"><primary sortas="gsk_ftp_reply_parse">gsk_ftp_reply_parse</primary></indexterm><programlisting><link linkend="GskFtpReply">GskFtpReply</link> *       gsk_ftp_reply_parse                 (const <link linkend="char">char</link> *raw_string);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>raw_string</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-reply-to-string" role="function">
+<title>gsk_ftp_reply_to_string ()</title>
+<indexterm zone="gsk-ftp-reply-to-string"><primary sortas="gsk_ftp_reply_to_string">gsk_ftp_reply_to_string</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_ftp_reply_to_string             (<link linkend="GskFtpReply">GskFtpReply</link> *reply);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>reply</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-ftp-reply-append" role="function">
+<title>gsk_ftp_reply_append ()</title>
+<indexterm zone="gsk-ftp-reply-append"><primary sortas="gsk_ftp_reply_append">gsk_ftp_reply_append</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_ftp_reply_append                (<link linkend="GskFtpReply">GskFtpReply</link> *reply,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>reply</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

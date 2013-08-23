@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskUrlTransferHttp</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="prev" href="GskUrlTransfer.html" title="GskUrlTransfer">
+<link rel="next" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskUrlTransfer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch05.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch06.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskUrlTransferHttp.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskUrlTransferHttp.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskUrlTransferHttp.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskUrlTransferHttp"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskUrlTransferHttp.top_of_page"></a>GskUrlTransferHttp</span></h2>
+<p>GskUrlTransferHttp — An HTTP- or HTTPS-based transfer.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskUrlTransferHttp.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="GskUrlTransferHttp.html#GskUrlTransferHttp-struct" title="GskUrlTransferHttp">GskUrlTransferHttp</a>;
+void                <a class="link" href="GskUrlTransferHttp.html#gsk-url-transfer-http-set-ssl-cert" title="gsk_url_transfer_http_set_ssl_cert ()">gsk_url_transfer_http_set_ssl_cert</a>  (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *cert_fname);
+void                <a class="link" href="GskUrlTransferHttp.html#gsk-url-transfer-http-set-ssl-key" title="gsk_url_transfer_http_set_ssl_key ()">gsk_url_transfer_http_set_ssl_key</a>   (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *key_fname);
+void                <a class="link" href="GskUrlTransferHttp.html#gsk-url-transfer-http-set-ssl-password" title="gsk_url_transfer_http_set_ssl_password ()">gsk_url_transfer_http_set_ssl_password</a>
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *password);
+void                <a class="link" href="GskUrlTransferHttp.html#gsk-url-transfer-http-set-user-agent" title="gsk_url_transfer_http_set_user_agent ()">gsk_url_transfer_http_set_user_agent</a>
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *user_agent);
+void                <a class="link" href="GskUrlTransferHttp.html#gsk-url-transfer-http-add-extra-header" title="gsk_url_transfer_http_add_extra_header ()">gsk_url_transfer_http_add_extra_header</a>
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *key,
+                                                         const char *value);
+void                <a class="link" href="GskUrlTransferHttp.html#gsk-url-transfer-http-set-proxy-address" title="gsk_url_transfer_http_set_proxy_address ()">gsk_url_transfer_http_set_proxy_address</a>
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *proxy_address);
+void                (<a class="link" href="GskUrlTransferHttp.html#GskUrlTransferHttpRequestModifierFunc" title="GskUrlTransferHttpRequestModifierFunc ()">*GskUrlTransferHttpRequestModifierFunc</a>)
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> mod_data);
+void                <a class="link" href="GskUrlTransferHttp.html#gsk-url-transfer-http-add-modifier" title="gsk_url_transfer_http_add_modifier ()">gsk_url_transfer_http_add_modifier</a>  (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         <a class="link" href="GskUrlTransferHttp.html#GskUrlTransferHttpRequestModifierFunc" title="GskUrlTransferHttpRequestModifierFunc ()">GskUrlTransferHttpRequestModifierFunc</a> modifier,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransferHttp.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer">GskUrlTransfer</a>
+         +----GskUrlTransferHttp
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransferHttp.description"></a><h2>Description</h2>
+<p>
+A transfer with an HTTP-based URL.
+In particular, this class defines many HTTP specific configurations.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransferHttp.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskUrlTransferHttp-struct"></a><h3>GskUrlTransferHttp</h3>
+<pre class="programlisting">typedef struct _GskUrlTransferHttp GskUrlTransferHttp;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-http-set-ssl-cert"></a><h3>gsk_url_transfer_http_set_ssl_cert ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_http_set_ssl_cert  (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *cert_fname);</pre>
+<p>
+Set the SSL certificate file for this connection.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http</code></em> :</span></p></td>
+<td> the transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cert_fname</code></em> :</span></p></td>
+<td> the certificate filename.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-http-set-ssl-key"></a><h3>gsk_url_transfer_http_set_ssl_key ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_http_set_ssl_key   (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *key_fname);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key_fname</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-http-set-ssl-password"></a><h3>gsk_url_transfer_http_set_ssl_password ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_http_set_ssl_password
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *password);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>password</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-http-set-user-agent"></a><h3>gsk_url_transfer_http_set_user_agent ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_http_set_user_agent
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *user_agent);</pre>
+<p>
+Set the User-Agent to use for this HTTP transaction.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http</code></em> :</span></p></td>
+<td> the transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_agent</code></em> :</span></p></td>
+<td> the User-Agent: header's value for this transfer.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-http-add-extra-header"></a><h3>gsk_url_transfer_http_add_extra_header ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_http_add_extra_header
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         const char *key,
+                                                         const char *value);</pre>
+<p>
+Add an arbitrary header to the HTTP request.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http</code></em> :</span></p></td>
+<td> the transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td> a HTTP header name
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> the value of that HTTP header.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-http-set-proxy-address"></a><h3>gsk_url_transfer_http_set_proxy_address ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_http_set_proxy_address
+                                                        (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         <a class="link" href="GskSocketAddress.html" title="Socket Addresses.">GskSocketAddress</a> *proxy_address);</pre>
+<p>
+Set an HTTP proxy for this transfer.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http</code></em> :</span></p></td>
+<td> the transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proxy_address</code></em> :</span></p></td>
+<td> the socket-address to 
+really connect to.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskUrlTransferHttpRequestModifierFunc"></a><h3>GskUrlTransferHttpRequestModifierFunc ()</h3>
+<pre class="programlisting">void                (*GskUrlTransferHttpRequestModifierFunc)
+                                                        (<a class="link" href="GskHttpRequest.html" title="GskHttpRequest">GskHttpRequest</a> *request,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> mod_data);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mod_data</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-url-transfer-http-add-modifier"></a><h3>gsk_url_transfer_http_add_modifier ()</h3>
+<pre class="programlisting">void                gsk_url_transfer_http_add_modifier  (<a class="link" href="GskUrlTransferHttp.html" title="GskUrlTransferHttp">GskUrlTransferHttp</a> *http,
+                                                         <a class="link" href="GskUrlTransferHttp.html#GskUrlTransferHttpRequestModifierFunc" title="GskUrlTransferHttpRequestModifierFunc ()">GskUrlTransferHttpRequestModifierFunc</a> modifier,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a> data,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"
+>GDestroyNotify</a> destroy);</pre>
+<p>
+Add a generic transformation to do to the HTTP request header.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http</code></em> :</span></p></td>
+<td> the transfer to affect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>modifier</code></em> :</span></p></td>
+<td> function to call to modify the HTTP request header.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td> data to pass to modifier.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td> called with data when the modifier is destroyed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskUrlTransferHttp.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GskUrlTransfer.html" title="GskUrlTransfer"><span class="type">GskUrlTransfer</span></a>.
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<refentry id="gsk-GskStreamExternal">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-GskStreamExternal.top_of_page">GskStreamExternal</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskStreamExternal</refname>
+<refpurpose>streams which connect to another process.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-GskStreamExternal.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                (<link linkend="GskStreamExternalTerminated">*GskStreamExternalTerminated</link>)      (<link linkend="GskStreamExternal">GskStreamExternal</link> *external,
+                                                         <link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link> *wait_info,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="void">void</link>                (<link linkend="GskStreamExternalStderr">*GskStreamExternalStderr</link>)          (<link linkend="GskStreamExternal">GskStreamExternal</link> *external,
+                                                         const <link linkend="char">char</link> *error_text,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+                    <link linkend="GskStreamExternal">GskStreamExternal</link>;
+enum                <link linkend="GskStreamExternalFlags">GskStreamExternalFlags</link>;
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-external-new">gsk_stream_external_new</link>             (<link linkend="GskStreamExternalFlags">GskStreamExternalFlags</link> flags,
+                                                         const <link linkend="char">char</link> *stdin_filename,
+                                                         const <link linkend="char">char</link> *stdout_filename,
+                                                         <link linkend="GskStreamExternalTerminated">GskStreamExternalTerminated</link> term_func,
+                                                         <link linkend="GskStreamExternalStderr">GskStreamExternalStderr</link> err_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *argv[],
+                                                         const <link linkend="char">char</link> *env[],
+                                                         <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-GskStreamExternal.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+These are streams where the input and output
+map to standard output and standard input for
+another process which is exec(2)'d from this one.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-GskStreamExternal.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskStreamExternalTerminated" role="function">
+<title>GskStreamExternalTerminated ()</title>
+<indexterm zone="GskStreamExternalTerminated"><primary sortas="GskStreamExternalTerminated">GskStreamExternalTerminated</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskStreamExternalTerminated)      (<link linkend="GskStreamExternal">GskStreamExternal</link> *external,
+                                                         <link linkend="GskMainLoopWaitInfo">GskMainLoopWaitInfo</link> *wait_info,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to run when the process underlying the stream is terminated.
+</para><variablelist role="params">
+<varlistentry><term><parameter>external</parameter>&#160;:</term>
+<listitem><simpara>the stream corresponding to the process.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>wait_info</parameter>&#160;:</term>
+<listitem><simpara>information about why the process exited.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>passed in from <link linkend="gsk-stream-external-new"><function>gsk_stream_external_new()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStreamExternalStderr" role="function">
+<title>GskStreamExternalStderr ()</title>
+<indexterm zone="GskStreamExternalStderr"><primary sortas="GskStreamExternalStderr">GskStreamExternalStderr</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskStreamExternalStderr)          (<link linkend="GskStreamExternal">GskStreamExternal</link> *external,
+                                                         const <link linkend="char">char</link> *error_text,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Function to be run with single lines taken from standard-error
+of the subprocess.  The line has had the newline chopped from it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>external</parameter>&#160;:</term>
+<listitem><simpara>the stream corresponding to the process.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error_text</parameter>&#160;:</term>
+<listitem><simpara>the NUL-terminated text from the subprocess.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>passed in from <link linkend="gsk-stream-external-new"><function>gsk_stream_external_new()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStreamExternal" role="struct">
+<title>GskStreamExternal</title>
+<indexterm zone="GskStreamExternal"><primary sortas="GskStreamExternal">GskStreamExternal</primary></indexterm><programlisting>typedef struct {
+  GskStream      stream;
+
+  /* stdin for the process */
+  int write_fd;
+  GskSource *write_source;
+  GskBuffer write_buffer;
+  gsize max_write_buffer;
+
+  /* stdout for the process */
+  int read_fd;
+  GskSource *read_source;
+  GskBuffer read_buffer;
+  gsize max_read_buffer;
+
+  /* stderr for the process */
+  int read_err_fd;
+  GskSource *read_err_source;
+  GskBuffer read_err_buffer;
+  gsize max_err_line_length;
+
+  /* process-termination notification */
+  GskSource *process_source;
+  glong pid;
+
+  /* user-callback information */
+  GskStreamExternalTerminated term_func;
+  GskStreamExternalStderr err_func;
+  gpointer user_data;
+} GskStreamExternal;
+</programlisting>
+<para>
+Instance of an object whose input and output come
+from another process.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskStream">GskStream</link>&#160;<structfield>stream</structfield>;</term>
+<listitem><simpara>parent instance.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>write_fd</structfield>;</term>
+<listitem><simpara>file-descriptor to write to (received as
+standard-input of the child process).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSource">GskSource</link>&#160;*<structfield>write_source</structfield>;</term>
+<listitem><simpara>notification that it's ready to write.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskBuffer">GskBuffer</link>&#160;<structfield>write_buffer</structfield>;</term>
+<listitem><simpara>data pending to be written.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gsize">gsize</link>&#160;<structfield>max_write_buffer</structfield>;</term>
+<listitem><simpara>max data pending to be written.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>read_fd</structfield>;</term>
+<listitem><simpara>file-descriptor to read from (sent as 
+standard-output of the child process).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSource">GskSource</link>&#160;*<structfield>read_source</structfield>;</term>
+<listitem><simpara>notification that it's ready to read.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskBuffer">GskBuffer</link>&#160;<structfield>read_buffer</structfield>;</term>
+<listitem><simpara>data pending read from child.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gsize">gsize</link>&#160;<structfield>max_read_buffer</structfield>;</term>
+<listitem><simpara>max bytes data pending read from child.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="int">int</link>&#160;<structfield>read_err_fd</structfield>;</term>
+<listitem><simpara>file-descriptor to read from (sent as 
+standard-error of the child process).
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSource">GskSource</link>&#160;*<structfield>read_err_source</structfield>;</term>
+<listitem><simpara>notification that the error stream is ready-to-read.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskBuffer">GskBuffer</link>&#160;<structfield>read_err_buffer</structfield>;</term>
+<listitem><simpara>data pending from error stream.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gsize">gsize</link>&#160;<structfield>max_err_line_length</structfield>;</term>
+<listitem><simpara>maximum length of line for an error string.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskSource">GskSource</link>&#160;*<structfield>process_source</structfield>;</term>
+<listitem><simpara>process-termination notification.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="glong">glong</link>&#160;<structfield>pid</structfield>;</term>
+<listitem><simpara>process id.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskStreamExternalTerminated">GskStreamExternalTerminated</link>&#160;<structfield>term_func</structfield>;</term>
+<listitem><simpara>function to call when the child process dies.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskStreamExternalStderr">GskStreamExternalStderr</link>&#160;<structfield>err_func</structfield>;</term>
+<listitem><simpara>function to call with standard error data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gpointer">gpointer</link>&#160;<structfield>user_data</structfield>;</term>
+<listitem><simpara>parameter to pass to <parameter>term_func</parameter> and <parameter>err_func</parameter>.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStreamExternalFlags" role="enum">
+<title>enum GskStreamExternalFlags</title>
+<indexterm zone="GskStreamExternalFlags"><primary sortas="GskStreamExternalFlags">GskStreamExternalFlags</primary></indexterm><programlisting>typedef enum
+{
+  GSK_STREAM_EXTERNAL_ALLOCATE_PSEUDOTTY = (1&lt;&lt;2),
+  GSK_STREAM_EXTERNAL_SEARCH_PATH        = (1&lt;&lt;3)
+} GskStreamExternalFlags;
+</programlisting>
+<para>
+Flags which affect the construction of the stream.
+</para><variablelist role="enum">
+<varlistentry id="GSK-STREAM-EXTERNAL-ALLOCATE-PSEUDOTTY--CAPS" role="constant">
+<term><literal>GSK_STREAM_EXTERNAL_ALLOCATE_PSEUDOTTY</literal></term>
+<listitem><simpara>
+Allocate a pseudo tty for the input and output of the
+child process.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-STREAM-EXTERNAL-SEARCH-PATH--CAPS" role="constant">
+<term><literal>GSK_STREAM_EXTERNAL_SEARCH_PATH</literal></term>
+<listitem><simpara>
+Search along $PATH for the binary.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-external-new" role="function">
+<title>gsk_stream_external_new ()</title>
+<indexterm zone="gsk-stream-external-new"><primary sortas="gsk_stream_external_new">gsk_stream_external_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_external_new             (<link linkend="GskStreamExternalFlags">GskStreamExternalFlags</link> flags,
+                                                         const <link linkend="char">char</link> *stdin_filename,
+                                                         const <link linkend="char">char</link> *stdout_filename,
+                                                         <link linkend="GskStreamExternalTerminated">GskStreamExternalTerminated</link> term_func,
+                                                         <link linkend="GskStreamExternalStderr">GskStreamExternalStderr</link> err_func,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         const <link linkend="char">char</link> *path,
+                                                         const <link linkend="char">char</link> *argv[],
+                                                         const <link linkend="char">char</link> *env[],
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Allocates a stream which points to standard input and/or output
+of a newly forked process.
+</para>
+<para>
+This forks, redirects the standard input from a file if <parameter>stdin_filename</parameter>
+is non-NULL, otherwise it uses a pipe to communicate
+the data to the main-loop.
+It redirects the standard output to a file if <parameter>stdout_filename</parameter>
+is non-NULL, otherwise it uses a pipe to communicate
+the data from the main-loop.
+</para>
+<para>
+When the process terminates, <parameter>term_func</parameter> will be called.
+Until <parameter>term_func</parameter> is called, <parameter>err_func</parameter> may be called with lines
+of data from the standard-error of the process.
+</para>
+<para>
+If <parameter>env</parameter> is non-NULL, then the environment for the subprocess
+will consist of nothing but the list given as <parameter>env</parameter>.
+If <parameter>env</parameter> is NULL, then the environment will be the same as
+the parent process's environment.
+</para>
+<para>
+If GSK_STREAM_EXTERNAL_SEARCH_PATH is set, then the executable
+will be saught in the colon-separated list of paths
+in the $PATH environment-variable.  Otherwise, <parameter>path</parameter> must be
+the exact path to the executable.
+</para>
+<para>
+If the executable is not found, or exec otherwise fails,
+then <parameter>term_func</parameter> will be called with an exit status of 127.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> whether to allocate a pseudo-tty and/or use $PATH.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stdin_filename</parameter>&#160;:</term>
+<listitem><simpara> file to redirect as standard input into the process.
+If NULL, then the returned stream will be writable, and data
+written in will appear as standard-input to the process.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stdout_filename</parameter>&#160;:</term>
+<listitem><simpara> file to redirect output from the process's standard-input.
+If NULL, then the returned stream will be readable; the data read
+will be the process's standard-output.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>term_func</parameter>&#160;:</term>
+<listitem><simpara> function to call with the process's exit status.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>err_func</parameter>&#160;:</term>
+<listitem><simpara> function to call with standard error output from the process,
+line-by-line.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to term_func and err_func.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara> name of the executable.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argv</parameter>&#160;:</term>
+<listitem><simpara> arguments to pass to the executable.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>env</parameter>&#160;:</term>
+<listitem><simpara> environment variables, as a NULL-terminated key=value list of strings.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

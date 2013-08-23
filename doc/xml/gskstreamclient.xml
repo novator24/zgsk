@@ -1,0 +1,63 @@
+<refentry id="gsk-gskstreamclient">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskstreamclient.top_of_page">Client Stream</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Client Stream</refname>
+<refpurpose>Create a GskStream which is connecting to a remote address.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskstreamclient.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-new-connecting">gsk_stream_new_connecting</link>           (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskstreamclient.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A simple method to create a GskStream which is connecting
+to a remote address, without any of the low-level hassles.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskstreamclient.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-stream-new-connecting" role="function">
+<title>gsk_stream_new_connecting ()</title>
+<indexterm zone="gsk-stream-new-connecting"><primary sortas="gsk_stream_new_connecting">gsk_stream_new_connecting</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_new_connecting           (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a stream connecting to a given address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara> the address to connect to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional place to put an error response.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly created stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

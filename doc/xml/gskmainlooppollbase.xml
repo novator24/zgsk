@@ -1,0 +1,119 @@
+<refentry id="GskMainLoopPollBase">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskMainLoopPollBase.top_of_page">GskMainLoopPollBase</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskMainLoopPollBase</refname>
+<refpurpose>a base class for file-descriptor-only polling mechanisms.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskMainLoopPollBase.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskMainLoopPollBaseClass">GskMainLoopPollBaseClass</link>;
+                    <link linkend="GskMainLoopPollBase-struct">GskMainLoopPollBase</link>;
+<link linkend="void">void</link>                <link linkend="gsk-main-loop-poll-base-wakeup">gsk_main_loop_poll_base_wakeup</link>      (<link linkend="GskMainLoopPollBase">GskMainLoopPollBase</link> *poll_base);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskMainLoopPollBase.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskMainLoop">GskMainLoop</link>
+         +----GskMainLoopPollBase
+               +----<link linkend="GskMainLoopDevPoll">GskMainLoopDevPoll</link>
+               +----<link linkend="GskMainLoopPoll">GskMainLoopPoll</link>
+               +----<link linkend="GskMainLoopSelect">GskMainLoopSelect</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskMainLoopPollBase.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This class converts signals and child-process-termination notification
+events into I/O events so that derived class
+need only implement I/O.  The remaining event types
+are implemented in terms of pipes.
+</para>
+</refsect1>
+
+<refsect1 id="GskMainLoopPollBase.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMainLoopPollBaseClass" role="struct">
+<title>GskMainLoopPollBaseClass</title>
+<indexterm zone="GskMainLoopPollBaseClass"><primary sortas="GskMainLoopPollBaseClass">GskMainLoopPollBaseClass</primary></indexterm><programlisting>typedef struct {
+  GskMainLoopClass    main_loop_class;
+
+  void              (*config_fd)       (GskMainLoopPollBase   *main_loop,
+                                        int                    fd,
+					GIOCondition           old_io_conditions,
+				        GIOCondition           io_conditions);
+
+  /* returns FALSE if the poll function has an error.
+   */
+  gboolean          (*do_polling)      (GskMainLoopPollBase   *main_loop,
+				        int                    max_timeout,
+				        guint                  max_events,
+				        guint                 *num_events_out,
+                                        GskMainLoopEvent      *events);
+} GskMainLoopPollBaseClass;
+</programlisting>
+<para>
+Base-class for I/O-only main-loops.
+The <parameter>config_fd</parameter> and <parameter>do_polling</parameter> functions are to be implemented
+by specific polling mechanisms.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskMainLoopClass">GskMainLoopClass</link>&#160;<structfield>main_loop_class</structfield>;</term>
+<listitem><simpara>the base-class from which this is derived.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>config_fd</structfield>&#160;()</term>
+<listitem><simpara>method to change our preferences with regard to a file-descriptor.
+These should not be cached, since the parent-class automatically coagulates
+multiple configurations into a single event.  (Furthermore,
+caching would break on some OS's where the file-descriptor
+is auto-unpolled when it is closed.)
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>do_polling</structfield>&#160;()</term>
+<listitem><simpara>
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskMainLoopPollBase-struct" role="struct">
+<title>GskMainLoopPollBase</title>
+<indexterm zone="GskMainLoopPollBase-struct"><primary sortas="GskMainLoopPollBase">GskMainLoopPollBase</primary></indexterm><programlisting>typedef struct _GskMainLoopPollBase GskMainLoopPollBase;</programlisting>
+<para>
+Base data for I/O-only main loop mechanisms.
+</para></refsect2>
+<refsect2 id="gsk-main-loop-poll-base-wakeup" role="function">
+<title>gsk_main_loop_poll_base_wakeup ()</title>
+<indexterm zone="gsk-main-loop-poll-base-wakeup"><primary sortas="gsk_main_loop_poll_base_wakeup">gsk_main_loop_poll_base_wakeup</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_main_loop_poll_base_wakeup      (<link linkend="GskMainLoopPollBase">GskMainLoopPollBase</link> *poll_base);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>poll_base</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Base-64</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch14.html" title="Odds and Ends">
+<link rel="prev" href="ch14.html" title="Odds and Ends">
+<link rel="next" href="gsk-gskhash.html" title="gskhash">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch14.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch14.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-gskhash.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskbase64.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskbase64.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskbase64"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskbase64.top_of_page"></a>Base-64</span></h2>
+<p>Base-64 — Base-64 Encoding and Decoding</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskbase64.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="gsk-gskbase64.html#GSK-BASE64-GET-ENCODED-LEN--CAPS" title="GSK_BASE64_GET_ENCODED_LEN()">GSK_BASE64_GET_ENCODED_LEN</a>          (length)
+#define             <a class="link" href="gsk-gskbase64.html#GSK-BASE64-GET-MAX-DECODED-LEN--CAPS" title="GSK_BASE64_GET_MAX_DECODED_LEN()">GSK_BASE64_GET_MAX_DECODED_LEN</a>      (length)
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="gsk-gskbase64.html#gsk-base64-decode" title="gsk_base64_decode ()">gsk_base64_decode</a>                   (char *dst,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> dst_len,
+                                                         const char *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> src_len);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *        <a class="link" href="gsk-gskbase64.html#gsk-base64-decode-alloc" title="gsk_base64_decode_alloc ()">gsk_base64_decode_alloc</a>             (const char *src);
+void                <a class="link" href="gsk-gskbase64.html#gsk-base64-encode" title="gsk_base64_encode ()">gsk_base64_encode</a>                   (char *dst,
+                                                         const char *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> src_len);
+char *              <a class="link" href="gsk-gskbase64.html#gsk-base64-encode-alloc" title="gsk_base64_encode_alloc ()">gsk_base64_encode_alloc</a>             (const char *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> src_len);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbase64.description"></a><h2>Description</h2>
+<p>
+A collection of methods to deal with base-64 encoding and decoding.
+Base-64 is defined in RFC 2045, Section 6.8.
+</p>
+<p>
+The number of terminal = characters is specified
+in the FAQ such that a base-64 encoded string
+is always a multiple of 4 bytes long.
+</p>
+<p>
+XXX: The encoding end of this class probably needs
+some fixing in light of RFC 2045.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskbase64.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GSK-BASE64-GET-ENCODED-LEN--CAPS"></a><h3>GSK_BASE64_GET_ENCODED_LEN()</h3>
+<pre class="programlisting">#define             GSK_BASE64_GET_ENCODED_LEN(length)</pre>
+<p>
+Get the number of bytes needed to encode in base-64 a binary block of data of
+a given length.  This includes space for a terminal = sign,
+but does not include space for a NUL.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td>the length of the raw binary string.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-BASE64-GET-MAX-DECODED-LEN--CAPS"></a><h3>GSK_BASE64_GET_MAX_DECODED_LEN()</h3>
+<pre class="programlisting">#define             GSK_BASE64_GET_MAX_DECODED_LEN(length)</pre>
+<p>
+Get the maximum number of bytes a base-64 encoded string may require.
+This assumes that there is no terminal = character, but there may be one,
+causing the actual number of bytes once decoded to be smaller.
+The actual number is returned by <a class="link" href="gsk-gskbase64.html#gsk-base64-decode" title="gsk_base64_decode ()"><code class="function">gsk_base64_decode()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td>the length of the base64 encoded string.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-base64-decode"></a><h3>gsk_base64_decode ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               gsk_base64_decode                   (char *dst,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> dst_len,
+                                                         const char *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> src_len);</pre>
+<p>
+Decode a base64-encoded string into binary.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dst</code></em> :</span></p></td>
+<td> output area for binary data.
+Should be GSK_BASE64_GET_MAX_DECODED_LEN(<em class="parameter"><code>src</code></em>) long at least.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dst_len</code></em> :</span></p></td>
+<td> length of buffer allocated for <em class="parameter"><code>dst</code></em>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td> base64 encoded data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src_len</code></em> :</span></p></td>
+<td> length of the binary data, or -1 to assume that <em class="parameter"><code>src</code></em> is
+NUL-terminated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> number of bytes decoded.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-base64-decode-alloc"></a><h3>gsk_base64_decode_alloc ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Byte-Arrays.html#GByteArray"
+>GByteArray</a> *        gsk_base64_decode_alloc             (const char *src);</pre>
+<p>
+Decode a base64-encoded string into binary.
+</p>
+<p>
+GSK_BASE64_GET_MAX_DECODED_LEN might not be the return value,
+because it doesn't take a terminate '=' sign into account.
+The return value should be exactly that if <em class="parameter"><code>src</code></em>
+is not = terminated, or <a class="link" href="gsk-gskbase64.html#GSK-BASE64-GET-MAX-DECODED-LEN--CAPS" title="GSK_BASE64_GET_MAX_DECODED_LEN()"><code class="function">GSK_BASE64_GET_MAX_DECODED_LEN()</code></a>
+is only called on the length which precedes the = sign.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td> base64 encoded data, NUL terminated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the byte-array with the binary data.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-base64-encode"></a><h3>gsk_base64_encode ()</h3>
+<pre class="programlisting">void                gsk_base64_encode                   (char *dst,
+                                                         const char *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> src_len);</pre>
+<p>
+base64 encodes binary data.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dst</code></em> :</span></p></td>
+<td> output base64 encoded string.  The result is NOT nul-terminated,
+but is terminated with an = sign.  <em class="parameter"><code>dst</code></em> should be exactly
+GSK_BASE64_GET_ENCODED_LEN(<em class="parameter"><code>src_len</code></em>) bytes long.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td> input binary data.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src_len</code></em> :</span></p></td>
+<td> length of <em class="parameter"><code>src</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-base64-encode-alloc"></a><h3>gsk_base64_encode_alloc ()</h3>
+<pre class="programlisting">char *              gsk_base64_encode_alloc             (const char *src,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"
+>gssize</a> src_len);</pre>
+<p>
+base64 encodes binary data (that does not contain a NULL).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td> data to base64 encode.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src_len</code></em> :</span></p></td>
+<td> length of binary data to encode, or -1 to take <em class="parameter"><code>src</code></em> as a NUL-terminated string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an newly allocated base64 encoded NUL-terminated ASCII string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

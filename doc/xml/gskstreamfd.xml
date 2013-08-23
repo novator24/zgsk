@@ -1,0 +1,379 @@
+<refentry id="GskStreamFd">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskStreamFd.top_of_page">GskStreamFd</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskStreamFd</refname>
+<refpurpose>a file-descriptor based GskStream</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskStreamFd.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="GSK-STREAM-FD-GET-FD--CAPS">GSK_STREAM_FD_GET_FD</link>                (stream)
+                    <link linkend="GskStreamFd-struct">GskStreamFd</link>;
+enum                <link linkend="GskStreamFdFlags">GskStreamFdFlags</link>;
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new">gsk_stream_fd_new</link>                   (<link linkend="gint">gint</link> fd,
+                                                         <link linkend="GskStreamFdFlags">GskStreamFdFlags</link> flags);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new-auto">gsk_stream_fd_new_auto</link>              (<link linkend="gint">gint</link> fd);
+<link linkend="GskStreamFdFlags">GskStreamFdFlags</link>    <link linkend="gsk-stream-fd-flags-guess">gsk_stream_fd_flags_guess</link>           (<link linkend="gint">gint</link> fd);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-stream-fd-pipe">gsk_stream_fd_pipe</link>                  (<link linkend="GskStream">GskStream</link> **read_side_out,
+                                                         <link linkend="GskStream">GskStream</link> **write_side_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new-connecting">gsk_stream_fd_new_connecting</link>        (<link linkend="gint">gint</link> fd);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new-read-file">gsk_stream_fd_new_read_file</link>         (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new-write-file">gsk_stream_fd_new_write_file</link>        (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="gboolean">gboolean</link> may_create,
+                                                         <link linkend="gboolean">gboolean</link> should_truncate,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new-create-file">gsk_stream_fd_new_create_file</link>       (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="gboolean">gboolean</link> may_exist,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new-open">gsk_stream_fd_new_open</link>              (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="guint">guint</link> open_flags,
+                                                         <link linkend="guint">guint</link> permission,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-stream-fd-duplex-pipe">gsk_stream_fd_duplex_pipe</link>           (<link linkend="GskStream">GskStream</link> **side_a_out,
+                                                         <link linkend="GskStream">GskStream</link> **side_b_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-stream-fd-duplex-pipe-fd">gsk_stream_fd_duplex_pipe_fd</link>        (<link linkend="GskStream">GskStream</link> **side_a_out,
+                                                         <link linkend="int">int</link> *side_b_fd_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-stream-fd-new-from-symbolic-address">gsk_stream_fd_new_from_symbolic_address</link>
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic,
+                                                         <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskStreamFd.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----<link linkend="GskStream">GskStream</link>
+               +----GskStreamFd
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="GskStreamFd.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GskStreamFd--file-descriptor">file-descriptor</link>&quot;          <link linkend="GskFd">GskFd</link>                 : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamFd--is-pollable">is-pollable</link>&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamFd--is-readable">is-readable</link>&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only
+  &quot;<link linkend="GskStreamFd--is-writable">is-writable</link>&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="GskStreamFd.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+a GskStream that can be used for files and sockets.
+</para>
+</refsect1>
+
+<refsect1 id="GskStreamFd.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GSK-STREAM-FD-GET-FD--CAPS" role="macro">
+<title>GSK_STREAM_FD_GET_FD()</title>
+<indexterm zone="GSK-STREAM-FD-GET-FD--CAPS"><primary sortas="GSK_STREAM_FD_GET_FD">GSK_STREAM_FD_GET_FD</primary></indexterm><programlisting>#define             GSK_STREAM_FD_GET_FD(stream)</programlisting>
+<para>
+Get underlying file-descriptor from a <link linkend="GskStreamFd"><type>GskStreamFd</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>the stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskStreamFd-struct" role="struct">
+<title>GskStreamFd</title>
+<indexterm zone="GskStreamFd-struct"><primary sortas="GskStreamFd">GskStreamFd</primary></indexterm><programlisting>typedef struct _GskStreamFd GskStreamFd;</programlisting>
+<para>
+An instance of a file-descriptor based stream.
+</para></refsect2>
+<refsect2 id="GskStreamFdFlags" role="enum">
+<title>enum GskStreamFdFlags</title>
+<indexterm zone="GskStreamFdFlags"><primary sortas="GskStreamFdFlags">GskStreamFdFlags</primary></indexterm><programlisting>typedef enum
+{
+  GSK_STREAM_FD_IS_READABLE     = (1&lt;&lt;0),
+  GSK_STREAM_FD_IS_WRITABLE     = (1&lt;&lt;1),
+  GSK_STREAM_FD_IS_READWRITE    = GSK_STREAM_FD_IS_READABLE
+                                | GSK_STREAM_FD_IS_WRITABLE,
+  GSK_STREAM_FD_IS_POLLABLE     = (1&lt;&lt;2),
+  GSK_STREAM_FD_IS_SHUTDOWNABLE = (1&lt;&lt;3),
+  GSK_STREAM_FD_FOR_NEW_SOCKET  = GSK_STREAM_FD_IS_READWRITE
+                                | GSK_STREAM_FD_IS_POLLABLE
+			        | GSK_STREAM_FD_IS_SHUTDOWNABLE
+} GskStreamFdFlags;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-stream-fd-new" role="function">
+<title>gsk_stream_fd_new ()</title>
+<indexterm zone="gsk-stream-fd-new"><primary sortas="gsk_stream_fd_new">gsk_stream_fd_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new                   (<link linkend="gint">gint</link> fd,
+                                                         <link linkend="GskStreamFdFlags">GskStreamFdFlags</link> flags);</programlisting>
+<para>
+Create a new GskStream based on an already open file descriptor.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the raw file descriptor.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> information about how to use the file descriptor.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-new-auto" role="function">
+<title>gsk_stream_fd_new_auto ()</title>
+<indexterm zone="gsk-stream-fd-new-auto"><primary sortas="gsk_stream_fd_new_auto">gsk_stream_fd_new_auto</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new_auto              (<link linkend="gint">gint</link> fd);</programlisting>
+<para>
+Try to guess the nature of the file-descriptor using <link linkend="fstat"><function>fstat()</function></link>,
+<link linkend="isatty"><function>isatty()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the file-descriptor to use as the basis for a stream.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream which will free <parameter>fd</parameter> when it is closed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-flags-guess" role="function">
+<title>gsk_stream_fd_flags_guess ()</title>
+<indexterm zone="gsk-stream-fd-flags-guess"><primary sortas="gsk_stream_fd_flags_guess">gsk_stream_fd_flags_guess</primary></indexterm><programlisting><link linkend="GskStreamFdFlags">GskStreamFdFlags</link>    gsk_stream_fd_flags_guess           (<link linkend="gint">gint</link> fd);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-pipe" role="function">
+<title>gsk_stream_fd_pipe ()</title>
+<indexterm zone="gsk-stream-fd-pipe"><primary sortas="gsk_stream_fd_pipe">gsk_stream_fd_pipe</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_stream_fd_pipe                  (<link linkend="GskStream">GskStream</link> **read_side_out,
+                                                         <link linkend="GskStream">GskStream</link> **write_side_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Call the pipe(2) system call to make a half-duplex connection
+between two streams.
+The newly allocated streams are returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>read_side_out</parameter>&#160;:</term>
+<listitem><simpara> place to store a reference to a newly allocated readable stream-fd.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>write_side_out</parameter>&#160;:</term>
+<listitem><simpara> place to store a reference to a newly allocated writable stream-fd.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the streams were allocated successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-new-connecting" role="function">
+<title>gsk_stream_fd_new_connecting ()</title>
+<indexterm zone="gsk-stream-fd-new-connecting"><primary sortas="gsk_stream_fd_new_connecting">gsk_stream_fd_new_connecting</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new_connecting        (<link linkend="gint">gint</link> fd);</programlisting>
+<para>
+Create a new GskStream based on a socket which is still in the process of connecting.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the raw file descriptor.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-new-read-file" role="function">
+<title>gsk_stream_fd_new_read_file ()</title>
+<indexterm zone="gsk-stream-fd-new-read-file"><primary sortas="gsk_stream_fd_new_read_file">gsk_stream_fd_new_read_file</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new_read_file         (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Open a file for reading as a <link linkend="GskStream"><type>GskStream</type></link>.
+The stream is not writable.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>filename</parameter>&#160;:</term>
+<listitem><simpara> file to open readonly.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-new-write-file" role="function">
+<title>gsk_stream_fd_new_write_file ()</title>
+<indexterm zone="gsk-stream-fd-new-write-file"><primary sortas="gsk_stream_fd_new_write_file">gsk_stream_fd_new_write_file</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new_write_file        (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="gboolean">gboolean</link> may_create,
+                                                         <link linkend="gboolean">gboolean</link> should_truncate,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Open a file for writing as a <link linkend="GskStream"><type>GskStream</type></link>.
+The stream is not readable.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>filename</parameter>&#160;:</term>
+<listitem><simpara> file to open write-only.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>may_create</parameter>&#160;:</term>
+<listitem><simpara> whether creating the filename is acceptable.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>should_truncate</parameter>&#160;:</term>
+<listitem><simpara> whether an existing filename should be truncated.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-new-create-file" role="function">
+<title>gsk_stream_fd_new_create_file ()</title>
+<indexterm zone="gsk-stream-fd-new-create-file"><primary sortas="gsk_stream_fd_new_create_file">gsk_stream_fd_new_create_file</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new_create_file       (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="gboolean">gboolean</link> may_exist,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a file for writing as a <link linkend="GskStream"><type>GskStream</type></link>.
+The stream is not readable.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>filename</parameter>&#160;:</term>
+<listitem><simpara> file to open write-only.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>may_exist</parameter>&#160;:</term>
+<listitem><simpara> whether file may exist.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-new-open" role="function">
+<title>gsk_stream_fd_new_open ()</title>
+<indexterm zone="gsk-stream-fd-new-open"><primary sortas="gsk_stream_fd_new_open">gsk_stream_fd_new_open</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new_open              (const <link linkend="char">char</link> *filename,
+                                                         <link linkend="guint">guint</link> open_flags,
+                                                         <link linkend="guint">guint</link> permission,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Open a file as a <link linkend="GskStream"><type>GskStream</type></link>; this interface strongly
+reflects its underlying open(2) implementation.
+Using <link linkend="gsk-stream-fd-new-read-file"><function>gsk_stream_fd_new_read_file()</function></link>
+and <link linkend="gsk-stream-fd-new-write-file"><function>gsk_stream_fd_new_write_file()</function></link> may be more portable ultimately.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>filename</parameter>&#160;:</term>
+<listitem><simpara> file to open or create (depending on <parameter>open_flags</parameter>)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>open_flags</parameter>&#160;:</term>
+<listitem><simpara> same as the second argument to open(2).
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>permission</parameter>&#160;:</term>
+<listitem><simpara> permissions if creating a new file.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-duplex-pipe" role="function">
+<title>gsk_stream_fd_duplex_pipe ()</title>
+<indexterm zone="gsk-stream-fd-duplex-pipe"><primary sortas="gsk_stream_fd_duplex_pipe">gsk_stream_fd_duplex_pipe</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_stream_fd_duplex_pipe           (<link linkend="GskStream">GskStream</link> **side_a_out,
+                                                         <link linkend="GskStream">GskStream</link> **side_b_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a pair of file-descriptors that 
+are connected to eachother, and make GskStreamFds around them.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>side_a_out</parameter>&#160;:</term>
+<listitem><simpara> place to store a reference to a newly allocated stream-fd.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>side_b_out</parameter>&#160;:</term>
+<listitem><simpara> place to store a reference to a newly allocated stream-fd.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the streams were allocated successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-duplex-pipe-fd" role="function">
+<title>gsk_stream_fd_duplex_pipe_fd ()</title>
+<indexterm zone="gsk-stream-fd-duplex-pipe-fd"><primary sortas="gsk_stream_fd_duplex_pipe_fd">gsk_stream_fd_duplex_pipe_fd</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_stream_fd_duplex_pipe_fd        (<link linkend="GskStream">GskStream</link> **side_a_out,
+                                                         <link linkend="int">int</link> *side_b_fd_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a pair of file-descriptors that 
+are connected to eachother, and make a GskStreamFd around one of them.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>side_a_out</parameter>&#160;:</term>
+<listitem><simpara> place to store a reference to a newly allocated stream-fd.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>side_b_fd_out</parameter>&#160;:</term>
+<listitem><simpara> place to store a new file-descriptor.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the file-descriptors were allocated successfully.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-stream-fd-new-from-symbolic-address" role="function">
+<title>gsk_stream_fd_new_from_symbolic_address ()</title>
+<indexterm zone="gsk-stream-fd-new-from-symbolic-address"><primary sortas="gsk_stream_fd_new_from_symbolic_address">gsk_stream_fd_new_from_symbolic_address</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_stream_fd_new_from_symbolic_address
+                                                        (<link linkend="GskSocketAddressSymbolic">GskSocketAddressSymbolic</link> *symbolic,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Create a stream connecting to a symbolic socket-address.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>symbolic</parameter>&#160;:</term>
+<listitem><simpara> a symbolic address.  name resolution will begin immediately.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new GskStream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GskStreamFd.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GskStreamFd--file-descriptor" role="property"><title>The <literal>&quot;file-descriptor&quot;</literal> property</title>
+<indexterm zone="GskStreamFd--file-descriptor"><primary sortas="GskStreamFd:file-descriptor">GskStreamFd:file-descriptor</primary></indexterm><programlisting>  &quot;file-descriptor&quot;          <link linkend="GskFd">GskFd</link>                 : Read / Write / Construct Only</programlisting>
+<para>for reading and/or writing.</para></refsect2>
+<refsect2 id="GskStreamFd--is-pollable" role="property"><title>The <literal>&quot;is-pollable&quot;</literal> property</title>
+<indexterm zone="GskStreamFd--is-pollable"><primary sortas="GskStreamFd:is-pollable">GskStreamFd:is-pollable</primary></indexterm><programlisting>  &quot;is-pollable&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only</programlisting>
+<para>whether the file descriptor is pollable.</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="GskStreamFd--is-readable" role="property"><title>The <literal>&quot;is-readable&quot;</literal> property</title>
+<indexterm zone="GskStreamFd--is-readable"><primary sortas="GskStreamFd:is-readable">GskStreamFd:is-readable</primary></indexterm><programlisting>  &quot;is-readable&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only</programlisting>
+<para>is the FD readable.</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="GskStreamFd--is-writable" role="property"><title>The <literal>&quot;is-writable&quot;</literal> property</title>
+<indexterm zone="GskStreamFd--is-writable"><primary sortas="GskStreamFd:is-writable">GskStreamFd:is-writable</primary></indexterm><programlisting>  &quot;is-writable&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only</programlisting>
+<para>is the FD writable.</para><para>Default value: FALSE</para>
+</refsect2>
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,307 @@
+<refentry id="gsk-gskutils">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskutils.top_of_page">gskutils</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskutils</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskutils.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-mkdir-p">gsk_mkdir_p</link>                         (const <link linkend="char">char</link> *dir,
+                                                         <link linkend="guint">guint</link> permissions,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-rm-rf">gsk_rm_rf</link>                           (const <link linkend="char">char</link> *dir_or_file,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="char">char</link> *              <link linkend="gsk-escape-memory">gsk_escape_memory</link>                   (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> len);
+<link linkend="gpointer">gpointer</link>            <link linkend="gsk-unescape-memory">gsk_unescape_memory</link>                 (const <link linkend="char">char</link> *quoted,
+                                                         <link linkend="gboolean">gboolean</link> has_quote_marks,
+                                                         const <link linkend="char">char</link> **end,
+                                                         <link linkend="guint">guint</link> *length_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="char">char</link> *              <link linkend="gsk-escape-memory-hex">gsk_escape_memory_hex</link>               (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> len);
+<link linkend="guint8">guint8</link> *            <link linkend="gsk-unescape-memory-hex">gsk_unescape_memory_hex</link>             (const <link linkend="char">char</link> *str,
+                                                         <link linkend="gssize">gssize</link> len,
+                                                         <link linkend="gsize">gsize</link> *length_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="gsk-fd-set-close-on-exec">gsk_fd_set_close_on_exec</link>            (<link linkend="int">int</link> fd,
+                                                         <link linkend="gboolean">gboolean</link> close_on_exec);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-fd-clear-nonblocking">gsk_fd_clear_nonblocking</link>            (<link linkend="int">int</link> fd);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-fd-is-nonblocking">gsk_fd_is_nonblocking</link>               (<link linkend="int">int</link> fd);
+<link linkend="gssize">gssize</link>              <link linkend="gsk-readn">gsk_readn</link>                           (<link linkend="guint">guint</link> fd,
+                                                         <link linkend="void">void</link> *buf,
+                                                         <link linkend="gsize">gsize</link> len);
+<link linkend="gssize">gssize</link>              <link linkend="gsk-writen">gsk_writen</link>                          (<link linkend="guint">guint</link> fd,
+                                                         const <link linkend="void">void</link> *buf,
+                                                         <link linkend="gsize">gsize</link> len);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskutils.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskutils.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-mkdir-p" role="function">
+<title>gsk_mkdir_p ()</title>
+<indexterm zone="gsk-mkdir-p"><primary sortas="gsk_mkdir_p">gsk_mkdir_p</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_mkdir_p                         (const <link linkend="char">char</link> *dir,
+                                                         <link linkend="guint">guint</link> permissions,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Make a directory and any nonexistant parent directories.
+</para>
+<para>
+This parallels the unix command 'mkdir -p DIR'.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dir</parameter>&#160;:</term>
+<listitem><simpara> the directory to make.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>permissions</parameter>&#160;:</term>
+<listitem><simpara> file creation mode for the directory
+and its subdirectories.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> where to put an error, if one occurs.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the directory now exists.
+Note that this function returns TRUE if the directory
+existed on startup.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-rm-rf" role="function">
+<title>gsk_rm_rf ()</title>
+<indexterm zone="gsk-rm-rf"><primary sortas="gsk_rm_rf">gsk_rm_rf</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_rm_rf                           (const <link linkend="char">char</link> *dir_or_file,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Recursively remove a directory or file,
+similar to 'rm -rf DIR_OR_FILE' on the unix command-line.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dir_or_file</parameter>&#160;:</term>
+<listitem><simpara> the directory or file to delete.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the removal was successful.
+This routine fails if there is a permission or i/o problem.
+(It returns TRUE if the file does not exist.)
+If it fails, and error is non-NULL, *error will hold
+a <link linkend="GError"><type>GError</type></link> object.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-escape-memory" role="function">
+<title>gsk_escape_memory ()</title>
+<indexterm zone="gsk-escape-memory"><primary sortas="gsk_escape_memory">gsk_escape_memory</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_escape_memory                   (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> len);</programlisting>
+<para>
+Convert a bunch of memory to something
+suitable for addition into a C string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> raw data to C-escape.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara> length of raw data in bytes
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated string of escaped data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-unescape-memory" role="function">
+<title>gsk_unescape_memory ()</title>
+<indexterm zone="gsk-unescape-memory"><primary sortas="gsk_unescape_memory">gsk_unescape_memory</primary></indexterm><programlisting><link linkend="gpointer">gpointer</link>            gsk_unescape_memory                 (const <link linkend="char">char</link> *quoted,
+                                                         <link linkend="gboolean">gboolean</link> has_quote_marks,
+                                                         const <link linkend="char">char</link> **end,
+                                                         <link linkend="guint">guint</link> *length_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Take a C double-quoted string and make it into a
+suitable for addition into a C string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>quoted</parameter>&#160;:</term>
+<listitem><simpara> C-string to unquote.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>has_quote_marks</parameter>&#160;:</term>
+<listitem><simpara> whether to strip off double-quotes.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>end</parameter>&#160;:</term>
+<listitem><simpara> where to store the end of the quoted string (right
+past the last double-quote.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length_out</parameter>&#160;:</term>
+<listitem><simpara> where to store the length of the
+unquoted memory.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> optional error return location.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated string of raw data,
+which an extra NUL postpended, so that it can
+be used as a string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-escape-memory-hex" role="function">
+<title>gsk_escape_memory_hex ()</title>
+<indexterm zone="gsk-escape-memory-hex"><primary sortas="gsk_escape_memory_hex">gsk_escape_memory_hex</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_escape_memory_hex               (<link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> len);</programlisting>
+<para>
+Convert a bunch of memory to its hex dump.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> raw data to dump as hex
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara> length of raw data in bytes
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated string of hex digits.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-unescape-memory-hex" role="function">
+<title>gsk_unescape_memory_hex ()</title>
+<indexterm zone="gsk-unescape-memory-hex"><primary sortas="gsk_unescape_memory_hex">gsk_unescape_memory_hex</primary></indexterm><programlisting><link linkend="guint8">guint8</link> *            gsk_unescape_memory_hex             (const <link linkend="char">char</link> *str,
+                                                         <link linkend="gssize">gssize</link> len,
+                                                         <link linkend="gsize">gsize</link> *length_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Converts an even-number of hex digits into a
+binary set of bytes, and returns the bytes.
+Even if the data is length 0, you must free the return value.
+</para>
+<para>
+If NULL is returned, it means an error occurred.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&#160;:</term>
+<listitem><simpara> the memory dump as a string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara> the maximum length of the string, or -1 to use NUL-termination.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length_out</parameter>&#160;:</term>
+<listitem><simpara> length of the returned memory.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> where to put an error, if one occurs.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the binary data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fd-set-close-on-exec" role="function">
+<title>gsk_fd_set_close_on_exec ()</title>
+<indexterm zone="gsk-fd-set-close-on-exec"><primary sortas="gsk_fd_set_close_on_exec">gsk_fd_set_close_on_exec</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_fd_set_close_on_exec            (<link linkend="int">int</link> fd,
+                                                         <link linkend="gboolean">gboolean</link> close_on_exec);</programlisting>
+<para>
+This function sets the value of the close-on-exec flag
+for a file-descriprtor.
+</para>
+<para>
+Most files will be closed on the exec system call, but normally 0,1,2
+(standard input, output and error) are set not to close-on-exec,
+which is why they are always inherited.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the file-descriptor to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>close_on_exec</parameter>&#160;:</term>
+<listitem><simpara> whether the close the file-descriptor on exec(2).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fd-clear-nonblocking" role="function">
+<title>gsk_fd_clear_nonblocking ()</title>
+<indexterm zone="gsk-fd-clear-nonblocking"><primary sortas="gsk_fd_clear_nonblocking">gsk_fd_clear_nonblocking</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_fd_clear_nonblocking            (<link linkend="int">int</link> fd);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-fd-is-nonblocking" role="function">
+<title>gsk_fd_is_nonblocking ()</title>
+<indexterm zone="gsk-fd-is-nonblocking"><primary sortas="gsk_fd_is_nonblocking">gsk_fd_is_nonblocking</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_fd_is_nonblocking               (<link linkend="int">int</link> fd);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-readn" role="function">
+<title>gsk_readn ()</title>
+<indexterm zone="gsk-readn"><primary sortas="gsk_readn">gsk_readn</primary></indexterm><programlisting><link linkend="gssize">gssize</link>              gsk_readn                           (<link linkend="guint">guint</link> fd,
+                                                         <link linkend="void">void</link> *buf,
+                                                         <link linkend="gsize">gsize</link> len);</programlisting>
+<para>
+Read data from fd, retrying the read
+if not enough data is found.  This is only
+for blocking reads.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the file-descriptor to read from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buf</parameter>&#160;:</term>
+<listitem><simpara> the buffer to fill.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara> number of bytes to read from fd.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes read or -1 if an error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-writen" role="function">
+<title>gsk_writen ()</title>
+<indexterm zone="gsk-writen"><primary sortas="gsk_writen">gsk_writen</primary></indexterm><programlisting><link linkend="gssize">gssize</link>              gsk_writen                          (<link linkend="guint">guint</link> fd,
+                                                         const <link linkend="void">void</link> *buf,
+                                                         <link linkend="gsize">gsize</link> len);</programlisting>
+<para>
+Write data to fd, retrying the write
+if not enough data is sent.  This is only
+for blocking writes.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> the file-descriptor to write to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buf</parameter>&#160;:</term>
+<listitem><simpara> the buffer to read from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&#160;:</term>
+<listitem><simpara> number of bytes to write to fd.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes written or -1 if an error occurs.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

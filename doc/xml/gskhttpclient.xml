@@ -1,0 +1,336 @@
+<refentry id="GskHttpClient">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskHttpClient.top_of_page">GskHttpClient</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskHttpClient</refname>
+<refpurpose>The client end of an HTTP connection.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskHttpClient.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskHttpClientRequest">GskHttpClientRequest</link>;
+<link linkend="void">void</link>                (<link linkend="GskHttpClientResponse">*GskHttpClientResponse</link>)            (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskStream">GskStream</link> *input,
+                                                         <link linkend="gpointer">gpointer</link> hook_data);
+<link linkend="gboolean">gboolean</link>            (<link linkend="GskHttpClientTrap">*GskHttpClientTrap</link>)                (<link linkend="GskHttpClient">GskHttpClient</link> *client,
+                                                         <link linkend="gpointer">gpointer</link> data);
+                    <link linkend="GskHttpClientClass">GskHttpClientClass</link>;
+                    <link linkend="GskHttpClient-struct">GskHttpClient</link>;
+#define             <link linkend="GSK-HTTP-CLIENT-FAST-NOTIFY--CAPS">GSK_HTTP_CLIENT_FAST_NOTIFY</link>
+#define             <link linkend="GSK-HTTP-CLIENT-DEFERRED-SHUTDOWN--CAPS">GSK_HTTP_CLIENT_DEFERRED_SHUTDOWN</link>
+#define             <link linkend="GSK-HTTP-CLIENT-HOOK--CAPS">GSK_HTTP_CLIENT_HOOK</link>                (client)
+#define             <link linkend="GSK-HTTP-CLIENT-IS-FAST--CAPS">GSK_HTTP_CLIENT_IS_FAST</link>             (client)
+#define             <link linkend="gsk-http-client-trap-requestable">gsk_http_client_trap_requestable</link>    (client,func,shutdown,data,destroy)
+#define             <link linkend="gsk-http-client-untrap-requestable">gsk_http_client_untrap_requestable</link>  (client)
+#define             <link linkend="gsk-http-client-is-requestable">gsk_http_client_is_requestable</link>      (client)
+<link linkend="GskHttpClient">GskHttpClient</link> *     <link linkend="gsk-http-client-new">gsk_http_client_new</link>                 (void);
+<link linkend="void">void</link>                <link linkend="gsk-http-client-notify-fast">gsk_http_client_notify_fast</link>         (<link linkend="GskHttpClient">GskHttpClient</link> *client,
+                                                         <link linkend="gboolean">gboolean</link> is_fast);
+<link linkend="void">void</link>                <link linkend="gsk-http-client-request">gsk_http_client_request</link>             (<link linkend="GskHttpClient">GskHttpClient</link> *client,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskStream">GskStream</link> *post_data,
+                                                         <link linkend="GskHttpClientResponse">GskHttpClientResponse</link> handle_response,
+                                                         <link linkend="gpointer">gpointer</link> hook_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> hook_destroy);
+<link linkend="void">void</link>                <link linkend="gsk-http-client-shutdown-when-done">gsk_http_client_shutdown_when_done</link>  (<link linkend="GskHttpClient">GskHttpClient</link> *client);
+<link linkend="void">void</link>                <link linkend="gsk-http-client-propagate-content-read-shutdown">gsk_http_client_propagate_content_read_shutdown</link>
+                                                        (<link linkend="GskHttpClient">GskHttpClient</link> *client);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskHttpClient.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskIO">GskIO</link>
+         +----<link linkend="GskStream">GskStream</link>
+               +----GskHttpClient
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskHttpClient.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This class manages the queuing of outgoing requests,
+and the handling of incoming responses.
+</para>
+</refsect1>
+
+<refsect1 id="GskHttpClient.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskHttpClientRequest" role="struct">
+<title>GskHttpClientRequest</title>
+<indexterm zone="GskHttpClientRequest"><primary sortas="GskHttpClientRequest">GskHttpClientRequest</primary></indexterm><programlisting>typedef struct _GskHttpClientRequest GskHttpClientRequest;</programlisting>
+<para>
+An opaque object representing a request that may be made
+to the HTTP server.
+</para></refsect2>
+<refsect2 id="GskHttpClientResponse" role="function">
+<title>GskHttpClientResponse ()</title>
+<indexterm zone="GskHttpClientResponse"><primary sortas="GskHttpClientResponse">GskHttpClientResponse</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskHttpClientResponse)            (<link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskHttpResponse">GskHttpResponse</link> *response,
+                                                         <link linkend="GskStream">GskStream</link> *input,
+                                                         <link linkend="gpointer">gpointer</link> hook_data);</programlisting>
+<para>
+A callback to handle the response from the server.
+(The response content actually streams back -- at this
+point we may have merely have gotten the header.)
+</para><variablelist role="params">
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskHttpRequest"><type>GskHttpRequest</type></link> initially sent by the client.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>response</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GskHttpResponse"><type>GskHttpResponse</type></link> parsed from the server.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>input</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GskStream"><type>GskStream</type></link> which is the content, if any.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>hook_data</parameter>&#160;:</term>
+<listitem><simpara>the argument to <link linkend="gsk-http-client-request"><function>gsk_http_client_request()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpClientTrap" role="function">
+<title>GskHttpClientTrap ()</title>
+<indexterm zone="GskHttpClientTrap"><primary sortas="GskHttpClientTrap">GskHttpClientTrap</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*GskHttpClientTrap)                (<link linkend="GskHttpClient">GskHttpClient</link> *client,
+                                                         <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Notification that the client is ready to take another HTTP request.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>the ready GskHttpClient
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-http-client-trap-requestable"><function>gsk_http_client_trap_requestable()</function></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>whether to keep getting new notifications.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpClientClass" role="struct">
+<title>GskHttpClientClass</title>
+<indexterm zone="GskHttpClientClass"><primary sortas="GskHttpClientClass">GskHttpClientClass</primary></indexterm><programlisting>typedef struct {
+  GskStreamClass stream_class;
+  void         (*set_poll_requestable) (GskHttpClient *client,
+					gboolean       do_poll);
+  void         (*shutdown_requestable) (GskHttpClient *client);
+} GskHttpClientClass;
+</programlisting>
+<para>Class of the HTTP client stream.
+Not broadly useful.</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskStreamClass">GskStreamClass</link>&#160;<structfield>stream_class</structfield>;</term>
+<listitem><simpara>the base stream.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>set_poll_requestable</structfield>&#160;()</term>
+<listitem><simpara>function called by the hook
+to change whether the HTTP client trap should be triggered.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>shutdown_requestable</structfield>&#160;()</term>
+<listitem><simpara>function called by the hook
+to stop being able to accept new requests.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskHttpClient-struct" role="struct">
+<title>GskHttpClient</title>
+<indexterm zone="GskHttpClient-struct"><primary sortas="GskHttpClient">GskHttpClient</primary></indexterm><programlisting>typedef struct _GskHttpClient GskHttpClient;</programlisting>
+<para>
+A stream which is the client side of an HTTP connection.
+</para></refsect2>
+<refsect2 id="GSK-HTTP-CLIENT-FAST-NOTIFY--CAPS" role="macro">
+<title>GSK_HTTP_CLIENT_FAST_NOTIFY</title>
+<indexterm zone="GSK-HTTP-CLIENT-FAST-NOTIFY--CAPS"><primary sortas="GSK_HTTP_CLIENT_FAST_NOTIFY">GSK_HTTP_CLIENT_FAST_NOTIFY</primary></indexterm><programlisting>#define             GSK_HTTP_CLIENT_FAST_NOTIFY</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GSK-HTTP-CLIENT-DEFERRED-SHUTDOWN--CAPS" role="macro">
+<title>GSK_HTTP_CLIENT_DEFERRED_SHUTDOWN</title>
+<indexterm zone="GSK-HTTP-CLIENT-DEFERRED-SHUTDOWN--CAPS"><primary sortas="GSK_HTTP_CLIENT_DEFERRED_SHUTDOWN">GSK_HTTP_CLIENT_DEFERRED_SHUTDOWN</primary></indexterm><programlisting>#define             GSK_HTTP_CLIENT_DEFERRED_SHUTDOWN</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="GSK-HTTP-CLIENT-HOOK--CAPS" role="macro">
+<title>GSK_HTTP_CLIENT_HOOK()</title>
+<indexterm zone="GSK-HTTP-CLIENT-HOOK--CAPS"><primary sortas="GSK_HTTP_CLIENT_HOOK">GSK_HTTP_CLIENT_HOOK</primary></indexterm><programlisting>#define             GSK_HTTP_CLIENT_HOOK(client)</programlisting>
+<para>
+Obtain the hook which is triggered by
+new ability to make a new request.
+</para>
+<para>
+Mostly private.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>the client whose hook should be returned.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-HTTP-CLIENT-IS-FAST--CAPS" role="macro">
+<title>GSK_HTTP_CLIENT_IS_FAST()</title>
+<indexterm zone="GSK-HTTP-CLIENT-IS-FAST--CAPS"><primary sortas="GSK_HTTP_CLIENT_IS_FAST">GSK_HTTP_CLIENT_IS_FAST</primary></indexterm><programlisting>#define             GSK_HTTP_CLIENT_IS_FAST(client)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-trap-requestable" role="macro">
+<title>gsk_http_client_trap_requestable()</title>
+<indexterm zone="gsk-http-client-trap-requestable"><primary sortas="gsk_http_client_trap_requestable">gsk_http_client_trap_requestable</primary></indexterm><programlisting>#define             gsk_http_client_trap_requestable(client,func,shutdown,data,destroy)</programlisting>
+<para>
+Trap the event that the HTTP client is ready for
+another request to be issued.
+</para>
+<para>
+If this is set to do "fast notify" (see <link linkend="GSK-HTTP-CLIENT-IS-FAST--CAPS"><function>GSK_HTTP_CLIENT_IS_FAST()</function></link>), then
+this hook will be triggered nearly continuously.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>the HTTP client to watch.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>the callback for when a header is ready.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shutdown</parameter>&#160;:</term>
+<listitem><simpara>function called when no further requests can be made.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>data to pass to <parameter>func</parameter> and <parameter>shutdown</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara>function to call when the trap is removed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-untrap-requestable" role="macro">
+<title>gsk_http_client_untrap_requestable()</title>
+<indexterm zone="gsk-http-client-untrap-requestable"><primary sortas="gsk_http_client_untrap_requestable">gsk_http_client_untrap_requestable</primary></indexterm><programlisting>#define             gsk_http_client_untrap_requestable(client)</programlisting>
+<para>
+Untrap the event that the HTTP client is ready for
+another request to be issued.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>the HTTP client to stop watching.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-is-requestable" role="macro">
+<title>gsk_http_client_is_requestable()</title>
+<indexterm zone="gsk-http-client-is-requestable"><primary sortas="gsk_http_client_is_requestable">gsk_http_client_is_requestable</primary></indexterm><programlisting>#define             gsk_http_client_is_requestable(client)</programlisting>
+<para>
+Get whether the HTTP client is able to handle another
+request.
+</para>
+<para>
+Or at least, whether it thinks it is able
+to handle another request.  The server may elect to set Connection: close
+and then further requests will never be processed.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>the client to query.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-new" role="function">
+<title>gsk_http_client_new ()</title>
+<indexterm zone="gsk-http-client-new"><primary sortas="gsk_http_client_new">gsk_http_client_new</primary></indexterm><programlisting><link linkend="GskHttpClient">GskHttpClient</link> *     gsk_http_client_new                 (void);</programlisting>
+<para>
+Create a new HTTP client protocol stream.
+Note that usually you want to hook this up to
+a transport layer, typically from <link linkend="gsk-stream-new-connecting"><function>gsk_stream_new_connecting()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new client protocol stream.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-notify-fast" role="function">
+<title>gsk_http_client_notify_fast ()</title>
+<indexterm zone="gsk-http-client-notify-fast"><primary sortas="gsk_http_client_notify_fast">gsk_http_client_notify_fast</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_client_notify_fast         (<link linkend="GskHttpClient">GskHttpClient</link> *client,
+                                                         <link linkend="gboolean">gboolean</link> is_fast);</programlisting>
+<para>
+Set whether the client should allow and want multiple outgoing requests 
+before a single response has been received.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara> the http client to affect.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>is_fast</parameter>&#160;:</term>
+<listitem><simpara> whether to try to get requests without waiting for responses.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-request" role="function">
+<title>gsk_http_client_request ()</title>
+<indexterm zone="gsk-http-client-request"><primary sortas="gsk_http_client_request">gsk_http_client_request</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_client_request             (<link linkend="GskHttpClient">GskHttpClient</link> *client,
+                                                         <link linkend="GskHttpRequest">GskHttpRequest</link> *request,
+                                                         <link linkend="GskStream">GskStream</link> *post_data,
+                                                         <link linkend="GskHttpClientResponse">GskHttpClientResponse</link> handle_response,
+                                                         <link linkend="gpointer">gpointer</link> hook_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> hook_destroy);</programlisting>
+<para>
+Queue or send a HTTP client request.
+The <parameter>handle_response</parameter> function will be called once the response
+header is available, and the content data will be available as
+a <link linkend="GskStream"><type>GskStream</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara> the http client to transmit the outgoing request.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>request</parameter>&#160;:</term>
+<listitem><simpara> a request which should be sent from the client.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>post_data</parameter>&#160;:</term>
+<listitem><simpara> for PUT and POST requests, a stream of data to output.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handle_response</parameter>&#160;:</term>
+<listitem><simpara> function to call once an HTTP response header is received.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>hook_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>handle_response</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>hook_destroy</parameter>&#160;:</term>
+<listitem><simpara> method to call when the response is called or the request
+   is aborted.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-shutdown-when-done" role="function">
+<title>gsk_http_client_shutdown_when_done ()</title>
+<indexterm zone="gsk-http-client-shutdown-when-done"><primary sortas="gsk_http_client_shutdown_when_done">gsk_http_client_shutdown_when_done</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_client_shutdown_when_done  (<link linkend="GskHttpClient">GskHttpClient</link> *client);</programlisting>
+<para>
+Set the client to shutdown after the current requests are done.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara> the http client shut down.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-http-client-propagate-content-read-shutdown" role="function">
+<title>gsk_http_client_propagate_content_read_shutdown ()</title>
+<indexterm zone="gsk-http-client-propagate-content-read-shutdown"><primary sortas="gsk_http_client_propagate_content_read_shutdown">gsk_http_client_propagate_content_read_shutdown</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_http_client_propagate_content_read_shutdown
+                                                        (<link linkend="GskHttpClient">GskHttpClient</link> *client);</programlisting>
+<para>
+Propagate shutdowns of the content-stream to the http-client.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara> the http client to affect.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

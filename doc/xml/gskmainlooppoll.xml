@@ -1,0 +1,59 @@
+<refentry id="GskMainLoopPoll">
+<refmeta>
+<refentrytitle role="top_of_page" id="GskMainLoopPoll.top_of_page">GskMainLoopPoll</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskMainLoopPoll</refname>
+<refpurpose>a poll(2)-based main-loop.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GskMainLoopPoll.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskMainLoopPoll-struct">GskMainLoopPoll</link>;
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="GskMainLoopPoll.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GskMainLoop">GskMainLoop</link>
+         +----<link linkend="GskMainLoopPollBase">GskMainLoopPollBase</link>
+               +----GskMainLoopPoll
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="GskMainLoopPoll.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A main-loop which uses poll(2) as its underlying multiplexing method.
+</para>
+</refsect1>
+
+<refsect1 id="GskMainLoopPoll.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskMainLoopPoll-struct" role="struct">
+<title>GskMainLoopPoll</title>
+<indexterm zone="GskMainLoopPoll-struct"><primary sortas="GskMainLoopPoll">GskMainLoopPoll</primary></indexterm><programlisting>typedef struct _GskMainLoopPoll GskMainLoopPoll;</programlisting>
+<para>
+The poll(2)-based main-loop.
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

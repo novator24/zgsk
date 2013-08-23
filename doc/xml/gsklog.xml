@@ -1,0 +1,159 @@
+<refentry id="gsk-gsklog">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gsklog.top_of_page">gsklog</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gsklog</refname>
+<refpurpose>convenient logging methods around the glib mechanism</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gsklog.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="gsk-log-init">gsk_log_init</link>                        (void);
+<link linkend="GskLogTrap">GskLogTrap</link> *        <link linkend="gsk-log-trap-domain-to-file">gsk_log_trap_domain_to_file</link>         (const <link linkend="char">char</link> *domain,
+                                                         <link linkend="GLogLevelFlags">GLogLevelFlags</link> level_mask,
+                                                         const <link linkend="char">char</link> *filename,
+                                                         const <link linkend="char">char</link> *output_format);
+#define             <link linkend="gsk-debug">gsk_debug</link>                           (domain, ...)
+#define             <link linkend="gsk-warning">gsk_warning</link>                         (domain, ...)
+#define             <link linkend="gsk-error">gsk_error</link>                           (domain, ...)
+#define             <link linkend="gsk-critical">gsk_critical</link>                        (domain, ...)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gsklog.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This file provide macros to allow logging to go to selected
+domains from a single compilation unit.
+</para>
+<para>
+Also, it contains methods to conveniently trap the logs to
+given files.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gsklog.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-log-init" role="function">
+<title>gsk_log_init ()</title>
+<indexterm zone="gsk-log-init"><primary sortas="gsk_log_init">gsk_log_init</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_log_init                        (void);</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="gsk-log-trap-domain-to-file" role="function">
+<title>gsk_log_trap_domain_to_file ()</title>
+<indexterm zone="gsk-log-trap-domain-to-file"><primary sortas="gsk_log_trap_domain_to_file">gsk_log_trap_domain_to_file</primary></indexterm><programlisting><link linkend="GskLogTrap">GskLogTrap</link> *        gsk_log_trap_domain_to_file         (const <link linkend="char">char</link> *domain,
+                                                         <link linkend="GLogLevelFlags">GLogLevelFlags</link> level_mask,
+                                                         const <link linkend="char">char</link> *filename,
+                                                         const <link linkend="char">char</link> *output_format);</programlisting>
+<para>
+<parameter>domain</parameter>: the log-domain to trap, as passed to g_log
+or the gsk_ family of log functions.
+<parameter>filename</parameter>: the filename to write the log to.
+<parameter>output_format</parameter>: a string giving the formatting
+to be used with the given trap.
+It may contain any of the following strings:
+   %{message}       the message itself.
+   %{NNNmessage}    the first NNN characters of message.
+   %{localtime:FMT} the time/date in local timezone, formatted as per FMT.
+   %{gmtime:FMT}    the time/date in gm, formatted as per FMT.
+                    (If :FMT is omitted, a default format string is used)
+   %{domain}        the log domain.
+   %{level}         the log level, as 'error', 'message', etc.
+   %{glevel}        approximately how glib does the level:
+                    'Debug', 'Info', '*Message*', '***Warning***',
+                    '***Critical***', '***ERROR***'.
+   %{Level}, %{LEVEL}  like %{level} with casing differences.
+   %{levelsuffix}   '.', '!', '!!!' depending on the severity.
+   %%               a percent symbol.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>level_mask</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>filename</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output_format</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-debug" role="macro">
+<title>gsk_debug()</title>
+<indexterm zone="gsk-debug"><primary sortas="gsk_debug">gsk_debug</primary></indexterm><programlisting>#define             gsk_debug(domain, ...)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-warning" role="macro">
+<title>gsk_warning()</title>
+<indexterm zone="gsk-warning"><primary sortas="gsk_warning">gsk_warning</primary></indexterm><programlisting>#define             gsk_warning(domain, ...)</programlisting>
+<para>
+Log a message at the WARNING priority level.
+Messages logged at this level can be fatal in debugging mode.
+</para><variablelist role="params">
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara>the log-domain to use to categorize the message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-error" role="macro">
+<title>gsk_error()</title>
+<indexterm zone="gsk-error"><primary sortas="gsk_error">gsk_error</primary></indexterm><programlisting>#define             gsk_error(domain, ...)</programlisting>
+<para>
+Log a message at the WARNING priority level.
+Messages logged at this level are always fatal.
+</para><variablelist role="params">
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara> the log-domain to use to categorize the message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara>printf-style format and arguments.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-critical" role="macro">
+<title>gsk_critical()</title>
+<indexterm zone="gsk-critical"><primary sortas="gsk_critical">gsk_critical</primary></indexterm><programlisting>#define             gsk_critical(domain, ...)</programlisting>
+<para>
+Log a message at the CRITICAL priority level.
+Messages logged at this level can be fatal in debugging mode.
+</para><variablelist role="params">
+<varlistentry><term><parameter>domain</parameter>&#160;:</term>
+<listitem><simpara> the log-domain to use to categorize the message.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara>printf-style format and arguments.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

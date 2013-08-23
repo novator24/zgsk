@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>gskdate</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch14.html" title="Odds and Ends">
+<link rel="prev" href="gsk-gsknetworkinterface.html" title="gsknetworkinterface">
+<link rel="next" href="ch15.html" title="Macro Madness">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gsk-gsknetworkinterface.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch14.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="ch15.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gsk-gskdate.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#gsk-gskdate.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="gsk-gskdate"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gsk-gskdate.top_of_page"></a>gskdate</span></h2>
+<p>gskdate — Date parsing and printing code.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gsk-gskdate.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+enum                <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a>;
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdate.html#gsk-date-parse" title="gsk_date_parse ()">gsk_date_parse</a>                      (const char *date_str,
+                                                         struct tm *tm_out,
+                                                         int *tzoffset_out,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> formats_allowed);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="gsk-gskdate.html#gsk-date-parse-timet" title="gsk_date_parse_timet ()">gsk_date_parse_timet</a>                (const char *date_str,
+                                                         time_t *out,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> formats_allowed);
+void                <a class="link" href="gsk-gskdate.html#gsk-date-print" title="gsk_date_print ()">gsk_date_print</a>                      (const struct tm *tm,
+                                                         char *date_str_out,
+                                                         int date_str_max_len,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> format);
+void                <a class="link" href="gsk-gskdate.html#gsk-date-print-timet" title="gsk_date_print_timet ()">gsk_date_print_timet</a>                (time_t t,
+                                                         char *date_str_out,
+                                                         int date_str_max_len,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> format);
+#define             <a class="link" href="gsk-gskdate.html#GSK-DATE-MAX-LENGTH--CAPS" title="GSK_DATE_MAX_LENGTH">GSK_DATE_MAX_LENGTH</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdate.description"></a><h2>Description</h2>
+<p>
+Code to parse and print dates in a number of standard documented
+formats.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="gsk-gskdate.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskDateFormatMask"></a><h3>enum GskDateFormatMask</h3>
+<pre class="programlisting">typedef enum
+{
+  /* rfc 822, obsoleted by rfc 1123:
+   *     Sun, 06 Nov 1994 08:49:37 GMT
+   */
+  GSK_DATE_FORMAT_1123 = (1 &lt;&lt; 0),
+
+  /* rfc 850, obsoleted by rfc 1036:
+   *     Sunday, 06-Nov-94 08:49:37 GMT
+   */
+  GSK_DATE_FORMAT_1036 = (1 &lt;&lt; 1), /* rfc 850, obsoleted by rfc 1036 */
+
+  /* ansi c's asctime () format:
+   *     Sun Nov  6 08:49:37 1994
+   */
+  GSK_DATE_FORMAT_ANSI_C = (1 &lt;&lt; 2),
+
+  /* ISO 8601 defines a variety of timestamps:
+       2003-04-04  YYYY-MM-DD
+       2003-04
+       2003
+       2003-035    YYYY-DOY  [DOY=day-of-year]
+
+       NOTE: hyphens may be omitted.
+
+       plus optional time-of-day:
+
+       23:59:59.34  HH:MM:SS.SS
+       23:59:59     HH:MM:SS
+       23:59        HH:MM   
+       23           HH
+
+       NOTE: colons may be omitted.
+
+       Either a space or 'T' separate date/time.
+
+       Timezone:
+          Z suffix means UTC
+	  +hh:mm or +hhmm or +hh   [or - versions]
+     */
+
+  GSK_DATE_FORMAT_ISO8601 = (1 &lt;&lt; 3),
+
+
+  GSK_DATE_FORMAT_HTTP = (GSK_DATE_FORMAT_1123 
+                        | GSK_DATE_FORMAT_1036
+			| GSK_DATE_FORMAT_ANSI_C)
+} GskDateFormatMask;
+</pre>
+<p>
+Formats to accept when parsing with <a class="link" href="gsk-gskdate.html#gsk-date-parse" title="gsk_date_parse ()"><code class="function">gsk_date_parse()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GSK-DATE-FORMAT-1123--CAPS"></a><span class="term"><code class="literal">GSK_DATE_FORMAT_1123</code></span></p></td>
+<td>
+As per RFC 1123.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DATE-FORMAT-1036--CAPS"></a><span class="term"><code class="literal">GSK_DATE_FORMAT_1036</code></span></p></td>
+<td>
+As per RFC 1036.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DATE-FORMAT-ANSI-C--CAPS"></a><span class="term"><code class="literal">GSK_DATE_FORMAT_ANSI_C</code></span></p></td>
+<td>
+As per the ANSI C standard.
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DATE-FORMAT-ISO8601--CAPS"></a><span class="term"><code class="literal">GSK_DATE_FORMAT_ISO8601</code></span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><a name="GSK-DATE-FORMAT-HTTP--CAPS"></a><span class="term"><code class="literal">GSK_DATE_FORMAT_HTTP</code></span></p></td>
+<td>
+All formats permitted by the HTTP standard.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-date-parse"></a><h3>gsk_date_parse ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_date_parse                      (const char *date_str,
+                                                         struct tm *tm_out,
+                                                         int *tzoffset_out,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> formats_allowed);</pre>
+<p>
+Parse a date to a struct tm.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>date_str</code></em> :</span></p></td>
+<td> the string containing a date.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tm_out</code></em> :</span></p></td>
+<td> location to store the time, as a struct tm.
+(That is, all the fields are broken out).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tzoffset_out</code></em> :</span></p></td>
+<td> location to store the timezone offset.
+(offset stored in minutes)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>formats_allowed</code></em> :</span></p></td>
+<td> bitwise-OR of all the allowed date formats.
+The parser will try to find a date in any of the allowed formats.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the date was successfully parsed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-date-parse-timet"></a><h3>gsk_date_parse_timet ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_date_parse_timet                (const char *date_str,
+                                                         time_t *out,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> formats_allowed);</pre>
+<p>
+Parse a date to a unix time.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>date_str</code></em> :</span></p></td>
+<td> the string containing a date.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out</code></em> :</span></p></td>
+<td> location to store the time, as a unix time.
+That is, the time since the start of 1970 GMT.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>formats_allowed</code></em> :</span></p></td>
+<td> bitwise-OR of all the allowed date formats.
+The parser will try to find a date in any of the allowed formats.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the date was successfully parsed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-date-print"></a><h3>gsk_date_print ()</h3>
+<pre class="programlisting">void                gsk_date_print                      (const struct tm *tm,
+                                                         char *date_str_out,
+                                                         int date_str_max_len,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> format);</pre>
+<p>
+Print the date to a buffer, in the format requested.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tm</code></em> :</span></p></td>
+<td> the time, separated into pieces.
+(All fields, even derived fields like tm_wday, must be set.)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>date_str_out</code></em> :</span></p></td>
+<td> buffer to fill with the date as a string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>date_str_max_len</code></em> :</span></p></td>
+<td> the length of <em class="parameter"><code>date_str_out</code></em>.  This should be 80 or greater
+to prevent clipping.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> which presentation of the date to use.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-date-print-timet"></a><h3>gsk_date_print_timet ()</h3>
+<pre class="programlisting">void                gsk_date_print_timet                (time_t t,
+                                                         char *date_str_out,
+                                                         int date_str_max_len,
+                                                         <a class="link" href="gsk-gskdate.html#GskDateFormatMask" title="enum GskDateFormatMask">GskDateFormatMask</a> format);</pre>
+<p>
+Print the date to a buffer, in the format requested.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>t</code></em> :</span></p></td>
+<td> the time, as per unix tradition.  That is, this is the
+time since the beginning of 1970 GMT.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>date_str_out</code></em> :</span></p></td>
+<td> buffer to fill with the date as a string.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>date_str_max_len</code></em> :</span></p></td>
+<td> the length of <em class="parameter"><code>date_str_out</code></em>.  This should be 80 or greater
+to prevent clipping.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> which presentation of the date to use.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GSK-DATE-MAX-LENGTH--CAPS"></a><h3>GSK_DATE_MAX_LENGTH</h3>
+<pre class="programlisting">#define             GSK_DATE_MAX_LENGTH</pre>
+<p>
+Number of bytes required for any date format given in
+gsk-date, including the terminating NUL.
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

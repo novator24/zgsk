@@ -1,0 +1,422 @@
+<refentry id="gsk-gsknameresolver">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gsknameresolver.top_of_page">Socket Address Lookup by Name</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Socket Address Lookup by Name</refname>
+<refpurpose>A way to lookup addresses from names.
+(Like a generic DNS.)</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gsknameresolver.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+<anchor id="GskNameResolver"/>
+<synopsis>
+                    <link linkend="GskNameResolver-struct">GskNameResolver</link>;
+                    <link linkend="GskNameResolverIface">GskNameResolverIface</link>;
+                    <link linkend="GskNameResolverTask">GskNameResolverTask</link>;
+<link linkend="void">void</link>                (<link linkend="GskNameResolverSuccessFunc">*GskNameResolverSuccessFunc</link>)       (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gpointer">gpointer</link> func_data);
+<link linkend="void">void</link>                (<link linkend="GskNameResolverFailureFunc">*GskNameResolverFailureFunc</link>)       (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> func_data);
+enum                <link linkend="GskNameResolverFamily">GskNameResolverFamily</link>;
+<link linkend="GskNameResolverFamily">GskNameResolverFamily</link>  <link linkend="gsk-name-resolver-family-get-by-name">gsk_name_resolver_family_get_by_name</link>
+                                                        (const <link linkend="char">char</link> *name);
+const <link linkend="char">char</link> *        <link linkend="gsk-name-resolver-family-get-name">gsk_name_resolver_family_get_name</link>   (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family);
+<link linkend="void">void</link>                <link linkend="gsk-name-resolver-lookup">gsk_name_resolver_lookup</link>            (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskNameResolverSuccessFunc">GskNameResolverSuccessFunc</link> success,
+                                                         <link linkend="GskNameResolverFailureFunc">GskNameResolverFailureFunc</link> failure,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="GskNameResolverTask">GskNameResolverTask</link> * <link linkend="gsk-name-resolver-task-new">gsk_name_resolver_task_new</link>        (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskNameResolverSuccessFunc">GskNameResolverSuccessFunc</link> success,
+                                                         <link linkend="GskNameResolverFailureFunc">GskNameResolverFailureFunc</link> failure,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+<link linkend="void">void</link>                <link linkend="gsk-name-resolver-task-cancel">gsk_name_resolver_task_cancel</link>       (<link linkend="GskNameResolverTask">GskNameResolverTask</link> *task);
+<link linkend="void">void</link>                <link linkend="gsk-name-resolver-task-ref">gsk_name_resolver_task_ref</link>          (<link linkend="GskNameResolverTask">GskNameResolverTask</link> *task);
+<link linkend="void">void</link>                <link linkend="gsk-name-resolver-task-unref">gsk_name_resolver_task_unref</link>        (<link linkend="GskNameResolverTask">GskNameResolverTask</link> *task);
+<link linkend="GskNameResolverFamily">GskNameResolverFamily</link>  <link linkend="gsk-name-resolver-family-unique">gsk_name_resolver_family_unique</link>  (const <link linkend="char">char</link> *name);
+<link linkend="void">void</link>                <link linkend="gsk-name-resolver-add-family-name">gsk_name_resolver_add_family_name</link>   (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         const <link linkend="char">char</link> *name);
+<link linkend="GskNameResolver">GskNameResolver</link> *   (<link linkend="GskNameResolverFamilyHandler">*GskNameResolverFamilyHandler</link>)     (<link linkend="gpointer">gpointer</link> data);
+<link linkend="void">void</link>                <link linkend="gsk-name-resolver-add-family-resolver">gsk_name_resolver_add_family_resolver</link>
+                                                        (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         <link linkend="GskNameResolver">GskNameResolver</link> *resolver);
+<link linkend="void">void</link>                <link linkend="gsk-name-resolver-add-family-handler">gsk_name_resolver_add_family_handler</link>
+                                                        (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         <link linkend="GskNameResolverFamilyHandler">GskNameResolverFamilyHandler</link> handler,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gsk-gsknameresolver.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GInterface">GInterface</link>
+   +----GskNameResolver
+</synopsis>
+</refsect1>
+
+
+
+
+<refsect1 id="gsk-gsknameresolver.implementations" role="implementations">
+<title role="implementations.title">Known Implementations</title>
+<para>
+GskNameResolver is implemented by
+ <link linkend="GskDnsClient">GskDnsClient</link>.</para>
+</refsect1>
+
+
+
+
+<refsect1 id="gsk-gsknameresolver.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This code provides (1) a method to lookup an address given the type of address and
+its name, and (2) a way of registering new types of address families and namespaces.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gsknameresolver.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskNameResolver-struct" role="struct">
+<title>GskNameResolver</title>
+<indexterm zone="GskNameResolver-struct"><primary sortas="GskNameResolver">GskNameResolver</primary></indexterm><programlisting>typedef struct _GskNameResolver GskNameResolver;</programlisting>
+<para>
+Opaque object representing an instance which implements
+the NameResolver interface.
+</para></refsect2>
+<refsect2 id="GskNameResolverIface" role="struct">
+<title>GskNameResolverIface</title>
+<indexterm zone="GskNameResolverIface"><primary sortas="GskNameResolverIface">GskNameResolverIface</primary></indexterm><programlisting>typedef struct {
+  GObjectClass object_class;
+  gpointer (*start_resolve)  (GskNameResolver           *resolver,
+			      GskNameResolverFamily      family,
+                              const char                *name,
+                              GskNameResolverSuccessFunc success,
+                              GskNameResolverFailureFunc failure,
+                              gpointer                   func_data,
+                              GDestroyNotify             destroy);
+  gboolean (*cancel_resolve) (GskNameResolver           *resolver,
+                              gpointer                   handle);
+} GskNameResolverIface;
+</programlisting>
+<para>
+An interface that can be implemented by a class which provides name-lookups.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>object_class</structfield>;</term>
+<listitem><simpara>base class.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>start_resolve</structfield>&#160;()</term>
+<listitem><simpara>method to start a name lookup.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>cancel_resolve</structfield>&#160;()</term>
+<listitem><simpara>method to cancel a name lookup.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskNameResolverTask" role="struct">
+<title>GskNameResolverTask</title>
+<indexterm zone="GskNameResolverTask"><primary sortas="GskNameResolverTask">GskNameResolverTask</primary></indexterm><programlisting>typedef struct _GskNameResolverTask GskNameResolverTask;</programlisting>
+<para>
+An opaque type representing a name lookup (which may be running,
+or it may be succeeded, failed or been cancelled).
+</para></refsect2>
+<refsect2 id="GskNameResolverSuccessFunc" role="function">
+<title>GskNameResolverSuccessFunc ()</title>
+<indexterm zone="GskNameResolverSuccessFunc"><primary sortas="GskNameResolverSuccessFunc">GskNameResolverSuccessFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskNameResolverSuccessFunc)       (<link linkend="GskSocketAddress">GskSocketAddress</link> *address,
+                                                         <link linkend="gpointer">gpointer</link> func_data);</programlisting>
+<para>
+Function to call when an address has been successfully found for the name.
+</para><variablelist role="params">
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>the address corresponding to the name.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-name-resolve"><function>gsk_name_resolve()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskNameResolverFailureFunc" role="function">
+<title>GskNameResolverFailureFunc ()</title>
+<indexterm zone="GskNameResolverFailureFunc"><primary sortas="GskNameResolverFailureFunc">GskNameResolverFailureFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*GskNameResolverFailureFunc)       (<link linkend="GError">GError</link> *error,
+                                                         <link linkend="gpointer">gpointer</link> func_data);</programlisting>
+<para>
+Function to call when a name lookup fails.
+</para><variablelist role="params">
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>what when wrong with the name lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara>data passed to <link linkend="gsk-name-resolve"><function>gsk_name_resolve()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskNameResolverFamily" role="enum">
+<title>enum GskNameResolverFamily</title>
+<indexterm zone="GskNameResolverFamily"><primary sortas="GskNameResolverFamily">GskNameResolverFamily</primary></indexterm><programlisting>typedef enum
+{
+  GSK_NAME_RESOLVER_FAMILY_NONE,
+  GSK_NAME_RESOLVER_FAMILY_IPV4
+} GskNameResolverFamily;
+</programlisting>
+<para>
+Namespaces.  This enum is extendable.
+</para><variablelist role="enum">
+<varlistentry id="GSK-NAME-RESOLVER-FAMILY-NONE--CAPS" role="constant">
+<term><literal>GSK_NAME_RESOLVER_FAMILY_NONE</literal></term>
+<listitem><simpara>
+An invalid namespace used to report errors.  Must be 0.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GSK-NAME-RESOLVER-FAMILY-IPV4--CAPS" role="constant">
+<term><literal>GSK_NAME_RESOLVER_FAMILY_IPV4</literal></term>
+<listitem><simpara>
+The IPv4 namespace, used for practically all of the internet (in 2003)
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-family-get-by-name" role="function">
+<title>gsk_name_resolver_family_get_by_name ()</title>
+<indexterm zone="gsk-name-resolver-family-get-by-name"><primary sortas="gsk_name_resolver_family_get_by_name">gsk_name_resolver_family_get_by_name</primary></indexterm><programlisting><link linkend="GskNameResolverFamily">GskNameResolverFamily</link>  gsk_name_resolver_family_get_by_name
+                                                        (const <link linkend="char">char</link> *name);</programlisting>
+<para>
+Get the <link linkend="GskNameResolverFamily"><type>GskNameResolverFamily</type></link> of a resolver namespace
+by ascii string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> the name of the namespace, as a c string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the family, or 0 on error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-family-get-name" role="function">
+<title>gsk_name_resolver_family_get_name ()</title>
+<indexterm zone="gsk-name-resolver-family-get-name"><primary sortas="gsk_name_resolver_family_get_name">gsk_name_resolver_family_get_name</primary></indexterm><programlisting>const <link linkend="char">char</link> *        gsk_name_resolver_family_get_name   (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family);</programlisting>
+<para>
+Get the resolver-namespace as a printable c string.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara> the namespace family to enquire about.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the namespace's name as a c string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-lookup" role="function">
+<title>gsk_name_resolver_lookup ()</title>
+<indexterm zone="gsk-name-resolver-lookup"><primary sortas="gsk_name_resolver_lookup">gsk_name_resolver_lookup</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_name_resolver_lookup            (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskNameResolverSuccessFunc">GskNameResolverSuccessFunc</link> success,
+                                                         <link linkend="GskNameResolverFailureFunc">GskNameResolverFailureFunc</link> failure,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Begin a non-cancellable name-lookup.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara> name family to perform the lookup in.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> name to lookup.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>success</parameter>&#160;:</term>
+<listitem><simpara> callback for successful name-lookup: this will
+be called with the <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link> that was found.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>failure</parameter>&#160;:</term>
+<listitem><simpara> callback for failure.  This is invoked with the
+<link linkend="GError"><type>GError</type></link> object.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara> data to call to the callbacks.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to be called after the callbacks are done.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-task-new" role="function">
+<title>gsk_name_resolver_task_new ()</title>
+<indexterm zone="gsk-name-resolver-task-new"><primary sortas="gsk_name_resolver_task_new">gsk_name_resolver_task_new</primary></indexterm><programlisting><link linkend="GskNameResolverTask">GskNameResolverTask</link> * gsk_name_resolver_task_new        (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="GskNameResolverSuccessFunc">GskNameResolverSuccessFunc</link> success,
+                                                         <link linkend="GskNameResolverFailureFunc">GskNameResolverFailureFunc</link> failure,
+                                                         <link linkend="gpointer">gpointer</link> func_data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Begin a name lookup.  This may succeed before the function returns.
+It you wish to cancel a name resolution task, call
+<link linkend="gsk-name-resolver-task-cancel"><function>gsk_name_resolver_task_cancel()</function></link>.  In any event,
+you must <link linkend="gsk-name-resolver-task-unref"><function>gsk_name_resolver_task_unref()</function></link> once you are done
+with the handle.  (This will NOT cause a running task to be cancelled.)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara> name space to look the address up in.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> name within <parameter>family</parameter>'s namespace.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>success</parameter>&#160;:</term>
+<listitem><simpara> function to be called with an appropriate <link linkend="GskSocketAddress"><type>GskSocketAddress</type></link>
+   once the name is successfully resolved.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>failure</parameter>&#160;:</term>
+<listitem><simpara> function to call if the name lookup failed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>success</parameter> or <parameter>failure</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> optionally called after <parameter>success</parameter> or <parameter>failure</parameter>, to deallocate
+func_data usually.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a reference to a <link linkend="GskNameResolverTask"><type>GskNameResolverTask</type></link> which can
+be used to cancel or query the task.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-task-cancel" role="function">
+<title>gsk_name_resolver_task_cancel ()</title>
+<indexterm zone="gsk-name-resolver-task-cancel"><primary sortas="gsk_name_resolver_task_cancel">gsk_name_resolver_task_cancel</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_name_resolver_task_cancel       (<link linkend="GskNameResolverTask">GskNameResolverTask</link> *task);</programlisting>
+<para>
+Stops the name lookup from continuing.
+Neither the success or failure functions will be invoked subsequently,
+but the destroy method will be.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>task</parameter>&#160;:</term>
+<listitem><simpara> a running name resolution task to cancel.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-task-ref" role="function">
+<title>gsk_name_resolver_task_ref ()</title>
+<indexterm zone="gsk-name-resolver-task-ref"><primary sortas="gsk_name_resolver_task_ref">gsk_name_resolver_task_ref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_name_resolver_task_ref          (<link linkend="GskNameResolverTask">GskNameResolverTask</link> *task);</programlisting>
+<para>
+Increase the reference count on a name-resolver task.
+This is mostly useless outside the resolver code.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>task</parameter>&#160;:</term>
+<listitem><simpara> task whose reference count should be increased.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-task-unref" role="function">
+<title>gsk_name_resolver_task_unref ()</title>
+<indexterm zone="gsk-name-resolver-task-unref"><primary sortas="gsk_name_resolver_task_unref">gsk_name_resolver_task_unref</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_name_resolver_task_unref        (<link linkend="GskNameResolverTask">GskNameResolverTask</link> *task);</programlisting>
+<para>
+Decrease the reference count on a name-resolver task, freeing it if needed.
+This does NOT cancel the task.  You MUST unref the task returned by
+<link linkend="gsk-name-resolve"><function>gsk_name_resolve()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>task</parameter>&#160;:</term>
+<listitem><simpara> task whose reference count should be decreased.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-family-unique" role="function">
+<title>gsk_name_resolver_family_unique ()</title>
+<indexterm zone="gsk-name-resolver-family-unique"><primary sortas="gsk_name_resolver_family_unique">gsk_name_resolver_family_unique</primary></indexterm><programlisting><link linkend="GskNameResolverFamily">GskNameResolverFamily</link>  gsk_name_resolver_family_unique  (const <link linkend="char">char</link> *name);</programlisting>
+<para>
+Allocate a unique GskNameResolverFamily
+given a new name, or return the old GskNameResolverFamily
+if one already exists.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> name of a new namespace to register.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the family corresponding to <parameter>name</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-add-family-name" role="function">
+<title>gsk_name_resolver_add_family_name ()</title>
+<indexterm zone="gsk-name-resolver-add-family-name"><primary sortas="gsk_name_resolver_add_family_name">gsk_name_resolver_add_family_name</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_name_resolver_add_family_name   (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         const <link linkend="char">char</link> *name);</programlisting>
+<para>
+Add a new nickname for the name resolver family.
+</para>
+<para>
+The family is the name of the namespace.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara> registered family to give a new name for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> alias name for <parameter>family</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskNameResolverFamilyHandler" role="function">
+<title>GskNameResolverFamilyHandler ()</title>
+<indexterm zone="GskNameResolverFamilyHandler"><primary sortas="GskNameResolverFamilyHandler">GskNameResolverFamilyHandler</primary></indexterm><programlisting><link linkend="GskNameResolver">GskNameResolver</link> *   (*GskNameResolverFamilyHandler)     (<link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+Create a reference to a name-resolver on demand.
+</para><variablelist role="params">
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-add-family-resolver" role="function">
+<title>gsk_name_resolver_add_family_resolver ()</title>
+<indexterm zone="gsk-name-resolver-add-family-resolver"><primary sortas="gsk_name_resolver_add_family_resolver">gsk_name_resolver_add_family_resolver</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_name_resolver_add_family_resolver
+                                                        (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         <link linkend="GskNameResolver">GskNameResolver</link> *resolver);</programlisting>
+<para>
+Add a name-resolver that will handle a request
+of a given family.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara> registered family to provide an alias for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>resolver</parameter>&#160;:</term>
+<listitem><simpara> name resolver to use for addresses in <parameter>family</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-name-resolver-add-family-handler" role="function">
+<title>gsk_name_resolver_add_family_handler ()</title>
+<indexterm zone="gsk-name-resolver-add-family-handler"><primary sortas="gsk_name_resolver_add_family_handler">gsk_name_resolver_add_family_handler</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_name_resolver_add_family_handler
+                                                        (<link linkend="GskNameResolverFamily">GskNameResolverFamily</link> family,
+                                                         <link linkend="GskNameResolverFamilyHandler">GskNameResolverFamilyHandler</link> handler,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy);</programlisting>
+<para>
+Add a name-resolver that will handle a request
+of a given family.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara> registered family to provide a resolver implementation for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>handler</parameter>&#160;:</term>
+<listitem><simpara> ...
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to <parameter>handler</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> function to call when the handler has deregistered.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

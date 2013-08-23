@@ -1,0 +1,693 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GskStreamFd</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="index.html" title="GSK Reference Manual">
+<link rel="up" href="ch04.html" title="Standard Implementations">
+<link rel="prev" href="GskPacketQueueFd.html" title="GskPacketQueueFd">
+<link rel="next" href="gsk-GskStreamExternal.html" title="GskStreamExternal">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Core Library Support">
+<link rel="chapter" href="ch02.html" title="Object Hierarchy">
+<link rel="chapter" href="ch03.html" title="Tutorials">
+<link rel="chapter" href="ch04.html" title="Standard Implementations">
+<link rel="chapter" href="ch05.html" title="Standard Objects: the URL class">
+<link rel="chapter" href="ch06.html" title="Standard Streams: the HTTP client and server">
+<link rel="chapter" href="ch07.html" title="Standard Streams: standard compression algorithms">
+<link rel="chapter" href="ch08.html" title="Standard Streams: utility streams">
+<link rel="chapter" href="ch09.html" title="DNS library (client and server support)">
+<link rel="chapter" href="ch10.html" title="SSL interface">
+<link rel="chapter" href="ch11.html" title="MIME handling">
+<link rel="chapter" href="ch12.html" title="RPC protocols">
+<link rel="chapter" href="ch13.html" title="Main Loops">
+<link rel="chapter" href="ch14.html" title="Odds and Ends">
+<link rel="chapter" href="ch15.html" title="Macro Madness">
+<link rel="chapter" href="ch16.html" title="Questionable ideas">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GskPacketQueueFd.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GSK Reference Manual</th>
+<td><a accesskey="n" href="gsk-GskStreamExternal.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GskStreamFd.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#GskStreamFd.description" class="shortcut">Description</a>
+                 | 
+                <a href="#GskStreamFd.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#GskStreamFd.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GskStreamFd"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GskStreamFd.top_of_page"></a>GskStreamFd</span></h2>
+<p>GskStreamFd — a file-descriptor based GskStream</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GskStreamFd.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="GskStreamFd.html#GSK-STREAM-FD-GET-FD--CAPS" title="GSK_STREAM_FD_GET_FD()">GSK_STREAM_FD_GET_FD</a>                (stream)
+                    <a class="link" href="GskStreamFd.html#GskStreamFd-struct" title="GskStreamFd">GskStreamFd</a>;
+enum                <a class="link" href="GskStreamFd.html#GskStreamFdFlags" title="enum GskStreamFdFlags">GskStreamFdFlags</a>;
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new" title="gsk_stream_fd_new ()">gsk_stream_fd_new</a>                   (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd,
+                                                         <a class="link" href="GskStreamFd.html#GskStreamFdFlags" title="enum GskStreamFdFlags">GskStreamFdFlags</a> flags);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-auto" title="gsk_stream_fd_new_auto ()">gsk_stream_fd_new_auto</a>              (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd);
+<a class="link" href="GskStreamFd.html#GskStreamFdFlags" title="enum GskStreamFdFlags">GskStreamFdFlags</a>    <a class="link" href="GskStreamFd.html#gsk-stream-fd-flags-guess" title="gsk_stream_fd_flags_guess ()">gsk_stream_fd_flags_guess</a>           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskStreamFd.html#gsk-stream-fd-pipe" title="gsk_stream_fd_pipe ()">gsk_stream_fd_pipe</a>                  (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **read_side_out,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **write_side_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-connecting" title="gsk_stream_fd_new_connecting ()">gsk_stream_fd_new_connecting</a>        (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-read-file" title="gsk_stream_fd_new_read_file ()">gsk_stream_fd_new_read_file</a>         (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-write-file" title="gsk_stream_fd_new_write_file ()">gsk_stream_fd_new_write_file</a>        (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> may_create,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> should_truncate,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-create-file" title="gsk_stream_fd_new_create_file ()">gsk_stream_fd_new_create_file</a>       (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> may_exist,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-open" title="gsk_stream_fd_new_open ()">gsk_stream_fd_new_open</a>              (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> open_flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> permission,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskStreamFd.html#gsk-stream-fd-duplex-pipe" title="gsk_stream_fd_duplex_pipe ()">gsk_stream_fd_duplex_pipe</a>           (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **side_a_out,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **side_b_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="GskStreamFd.html#gsk-stream-fd-duplex-pipe-fd" title="gsk_stream_fd_duplex_pipe_fd ()">gsk_stream_fd_duplex_pipe_fd</a>        (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **side_a_out,
+                                                         int *side_b_fd_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-from-symbolic-address" title="gsk_stream_fd_new_from_symbolic_address ()">gsk_stream_fd_new_from_symbolic_address</a>
+                                                        (GskSocketAddressSymbolic *symbolic,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamFd.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="GskIO.html" title="Base Input/Output Object">GskIO</a>
+         +----<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a>
+               +----GskStreamFd
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamFd.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GskStreamFd.html#GskStreamFd--file-descriptor" title='The "file-descriptor" property'>file-descriptor</a>"          GskFd                 : Read / Write / Construct Only
+  "<a class="link" href="GskStreamFd.html#GskStreamFd--is-pollable" title='The "is-pollable" property'>is-pollable</a>"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only
+  "<a class="link" href="GskStreamFd.html#GskStreamFd--is-readable" title='The "is-readable" property'>is-readable</a>"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only
+  "<a class="link" href="GskStreamFd.html#GskStreamFd--is-writable" title='The "is-writable" property'>is-writable</a>"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamFd.description"></a><h2>Description</h2>
+<p>
+a GskStream that can be used for files and sockets.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamFd.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GSK-STREAM-FD-GET-FD--CAPS"></a><h3>GSK_STREAM_FD_GET_FD()</h3>
+<pre class="programlisting">#define             GSK_STREAM_FD_GET_FD(stream)</pre>
+<p>
+Get underlying file-descriptor from a <a class="link" href="GskStreamFd.html" title="GskStreamFd"><span class="type">GskStreamFd</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>the stream.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamFd-struct"></a><h3>GskStreamFd</h3>
+<pre class="programlisting">typedef struct _GskStreamFd GskStreamFd;</pre>
+<p>
+An instance of a file-descriptor based stream.
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamFdFlags"></a><h3>enum GskStreamFdFlags</h3>
+<pre class="programlisting">typedef enum
+{
+  GSK_STREAM_FD_IS_READABLE     = (1&lt;&lt;0),
+  GSK_STREAM_FD_IS_WRITABLE     = (1&lt;&lt;1),
+  GSK_STREAM_FD_IS_READWRITE    = GSK_STREAM_FD_IS_READABLE
+                                | GSK_STREAM_FD_IS_WRITABLE,
+  GSK_STREAM_FD_IS_POLLABLE     = (1&lt;&lt;2),
+  GSK_STREAM_FD_IS_SHUTDOWNABLE = (1&lt;&lt;3),
+  GSK_STREAM_FD_FOR_NEW_SOCKET  = GSK_STREAM_FD_IS_READWRITE
+                                | GSK_STREAM_FD_IS_POLLABLE
+			        | GSK_STREAM_FD_IS_SHUTDOWNABLE
+} GskStreamFdFlags;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new"></a><h3>gsk_stream_fd_new ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new                   (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd,
+                                                         <a class="link" href="GskStreamFd.html#GskStreamFdFlags" title="enum GskStreamFdFlags">GskStreamFdFlags</a> flags);</pre>
+<p>
+Create a new GskStream based on an already open file descriptor.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> the raw file descriptor.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td> information about how to use the file descriptor.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new-auto"></a><h3>gsk_stream_fd_new_auto ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new_auto              (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd);</pre>
+<p>
+Try to guess the nature of the file-descriptor using <code class="function">fstat()</code>,
+<code class="function">isatty()</code>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> the file-descriptor to use as the basis for a stream.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream which will free <em class="parameter"><code>fd</code></em> when it is closed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-flags-guess"></a><h3>gsk_stream_fd_flags_guess ()</h3>
+<pre class="programlisting"><a class="link" href="GskStreamFd.html#GskStreamFdFlags" title="enum GskStreamFdFlags">GskStreamFdFlags</a>    gsk_stream_fd_flags_guess           (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-pipe"></a><h3>gsk_stream_fd_pipe ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_stream_fd_pipe                  (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **read_side_out,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **write_side_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Call the pipe(2) system call to make a half-duplex connection
+between two streams.
+The newly allocated streams are returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>read_side_out</code></em> :</span></p></td>
+<td> place to store a reference to a newly allocated readable stream-fd.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>write_side_out</code></em> :</span></p></td>
+<td> place to store a reference to a newly allocated writable stream-fd.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the streams were allocated successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new-connecting"></a><h3>gsk_stream_fd_new_connecting ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new_connecting        (<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a> fd);</pre>
+<p>
+Create a new GskStream based on a socket which is still in the process of connecting.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td> the raw file descriptor.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new-read-file"></a><h3>gsk_stream_fd_new_read_file ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new_read_file         (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Open a file for reading as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.
+The stream is not writable.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> file to open readonly.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new-write-file"></a><h3>gsk_stream_fd_new_write_file ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new_write_file        (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> may_create,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> should_truncate,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Open a file for writing as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.
+The stream is not readable.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> file to open write-only.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>may_create</code></em> :</span></p></td>
+<td> whether creating the filename is acceptable.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>should_truncate</code></em> :</span></p></td>
+<td> whether an existing filename should be truncated.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new-create-file"></a><h3>gsk_stream_fd_new_create_file ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new_create_file       (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> may_exist,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a file for writing as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>.
+The stream is not readable.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> file to open write-only.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>may_exist</code></em> :</span></p></td>
+<td> whether file may exist.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new-open"></a><h3>gsk_stream_fd_new_open ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new_open              (const char *filename,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> open_flags,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a> permission,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Open a file as a <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base"><span class="type">GskStream</span></a>; this interface strongly
+reflects its underlying open(2) implementation.
+Using <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-read-file" title="gsk_stream_fd_new_read_file ()"><code class="function">gsk_stream_fd_new_read_file()</code></a>
+and <a class="link" href="GskStreamFd.html#gsk-stream-fd-new-write-file" title="gsk_stream_fd_new_write_file ()"><code class="function">gsk_stream_fd_new_write_file()</code></a> may be more portable ultimately.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> file to open or create (depending on <em class="parameter"><code>open_flags</code></em>)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>open_flags</code></em> :</span></p></td>
+<td> same as the second argument to open(2).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permission</code></em> :</span></p></td>
+<td> permissions if creating a new file.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-duplex-pipe"></a><h3>gsk_stream_fd_duplex_pipe ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_stream_fd_duplex_pipe           (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **side_a_out,
+                                                         <a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **side_b_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a pair of file-descriptors that 
+are connected to eachother, and make GskStreamFds around them.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>side_a_out</code></em> :</span></p></td>
+<td> place to store a reference to a newly allocated stream-fd.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>side_b_out</code></em> :</span></p></td>
+<td> place to store a reference to a newly allocated stream-fd.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the streams were allocated successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-duplex-pipe-fd"></a><h3>gsk_stream_fd_duplex_pipe_fd ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            gsk_stream_fd_duplex_pipe_fd        (<a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> **side_a_out,
+                                                         int *side_b_fd_out,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a pair of file-descriptors that 
+are connected to eachother, and make a GskStreamFd around one of them.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>side_a_out</code></em> :</span></p></td>
+<td> place to store a reference to a newly allocated stream-fd.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>side_b_fd_out</code></em> :</span></p></td>
+<td> place to store a new file-descriptor.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> whether the file-descriptors were allocated successfully.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="gsk-stream-fd-new-from-symbolic-address"></a><h3>gsk_stream_fd_new_from_symbolic_address ()</h3>
+<pre class="programlisting"><a class="link" href="GskStream.html" title="Binary Input/Output Stream Base">GskStream</a> *         gsk_stream_fd_new_from_symbolic_address
+                                                        (GskSocketAddressSymbolic *symbolic,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"
+>GError</a> **error);</pre>
+<p>
+Create a stream connecting to a symbolic socket-address.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>symbolic</code></em> :</span></p></td>
+<td> a symbolic address.  name resolution will begin immediately.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td> optional error return value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new GskStream
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="GskStreamFd.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" lang="en">
+<a name="GskStreamFd--file-descriptor"></a><h3>The <code class="literal">"file-descriptor"</code> property</h3>
+<pre class="programlisting">  "file-descriptor"          GskFd                 : Read / Write / Construct Only</pre>
+<p>for reading and/or writing.</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamFd--is-pollable"></a><h3>The <code class="literal">"is-pollable"</code> property</h3>
+<pre class="programlisting">  "is-pollable"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only</pre>
+<p>whether the file descriptor is pollable.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamFd--is-readable"></a><h3>The <code class="literal">"is-readable"</code> property</h3>
+<pre class="programlisting">  "is-readable"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only</pre>
+<p>is the FD readable.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GskStreamFd--is-writable"></a><h3>The <code class="literal">"is-writable"</code> property</h3>
+<pre class="programlisting">  "is-writable"              <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only</pre>
+<p>is the FD writable.</p>
+<p>Default value: FALSE</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<refentry id="gsk-gskmimeencodings">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskmimeencodings.top_of_page">gskmimeencodings</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>gskmimeencodings</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskmimeencodings.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-mime-make-transfer-encoding-decoders">gsk_mime_make_transfer_encoding_decoders</link>
+                                                        (const <link linkend="char">char</link> *encoding,
+                                                         <link linkend="GskStream">GskStream</link> **write_end_out,
+                                                         <link linkend="GskStream">GskStream</link> **read_end_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-mime-make-transfer-encoding-encoders">gsk_mime_make_transfer_encoding_encoders</link>
+                                                        (const <link linkend="char">char</link> *encoding,
+                                                         <link linkend="GskStream">GskStream</link> **write_end_out,
+                                                         <link linkend="GskStream">GskStream</link> **read_end_out,
+                                                         const <link linkend="char">char</link> *bdy_string_out,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-mime-base64-decoder-new">gsk_mime_base64_decoder_new</link>         (void);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-mime-base64-encoder-new">gsk_mime_base64_encoder_new</link>         (void);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-mime-quoted-printable-decoder-new">gsk_mime_quoted_printable_decoder_new</link>
+                                                        (void);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-mime-quoted-printable-encoder-new">gsk_mime_quoted_printable_encoder_new</link>
+                                                        (void);
+<link linkend="GskStream">GskStream</link> *         <link linkend="gsk-mime-identity-filter-new">gsk_mime_identity_filter_new</link>        (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskmimeencodings.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskmimeencodings.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-mime-make-transfer-encoding-decoders" role="function">
+<title>gsk_mime_make_transfer_encoding_decoders ()</title>
+<indexterm zone="gsk-mime-make-transfer-encoding-decoders"><primary sortas="gsk_mime_make_transfer_encoding_decoders">gsk_mime_make_transfer_encoding_decoders</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_mime_make_transfer_encoding_decoders
+                                                        (const <link linkend="char">char</link> *encoding,
+                                                         <link linkend="GskStream">GskStream</link> **write_end_out,
+                                                         <link linkend="GskStream">GskStream</link> **read_end_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Allocate an attached pair: one for writing and one for reading
+the decoded data.  On error, set *<parameter>error</parameter> and return FALSE.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoding</parameter>&#160;:</term>
+<listitem><simpara> text representation of the encoding,
+either "identity", "base64" or "quoted-printable".
+If NULL, default to "identity".
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>write_end_out</parameter>&#160;:</term>
+<listitem><simpara> location to store a reference to the
+write-end of the pipe.  This must be unreferenced by the caller.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>read_end_out</parameter>&#160;:</term>
+<listitem><simpara> location to store a reference to the
+read-end of the pipe.  This must be unreferenced by the caller.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> location to store a <link linkend="GError"><type>GError</type></link> if anything goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the construction succeeded.  If it returns
+FALSE, should examine *<parameter>error</parameter> to figure out why/inform the user.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-make-transfer-encoding-encoders" role="function">
+<title>gsk_mime_make_transfer_encoding_encoders ()</title>
+<indexterm zone="gsk-mime-make-transfer-encoding-encoders"><primary sortas="gsk_mime_make_transfer_encoding_encoders">gsk_mime_make_transfer_encoding_encoders</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_mime_make_transfer_encoding_encoders
+                                                        (const <link linkend="char">char</link> *encoding,
+                                                         <link linkend="GskStream">GskStream</link> **write_end_out,
+                                                         <link linkend="GskStream">GskStream</link> **read_end_out,
+                                                         const <link linkend="char">char</link> *bdy_string_out,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Allocate an attached pair: one for writing and one for reading
+the encoded data.  On error, set *<parameter>error</parameter> and return FALSE.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>encoding</parameter>&#160;:</term>
+<listitem><simpara> text representation of the encoding,
+either "identity", "base64" or "quoted-printable".
+If NULL, default to "identity".
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>write_end_out</parameter>&#160;:</term>
+<listitem><simpara> location to store a reference to the
+write-end of the pipe.  This must be unreferenced by the caller.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>read_end_out</parameter>&#160;:</term>
+<listitem><simpara> location to store a reference to the
+read-end of the pipe.  This must be unreferenced by the caller.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bdy_string_out</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> location to store a <link linkend="GError"><type>GError</type></link> if anything goes wrong.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the construction succeeded.  If it returns
+FALSE, should examine *<parameter>error</parameter> to figure out why/inform the user.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-base64-decoder-new" role="function">
+<title>gsk_mime_base64_decoder_new ()</title>
+<indexterm zone="gsk-mime-base64-decoder-new"><primary sortas="gsk_mime_base64_decoder_new">gsk_mime_base64_decoder_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_mime_base64_decoder_new         (void);</programlisting>
+<para>
+Allocate a new MIME encoder which
+takes base64 encoded data in and gives
+raw binary data out.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated decoder.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-base64-encoder-new" role="function">
+<title>gsk_mime_base64_encoder_new ()</title>
+<indexterm zone="gsk-mime-base64-encoder-new"><primary sortas="gsk_mime_base64_encoder_new">gsk_mime_base64_encoder_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_mime_base64_encoder_new         (void);</programlisting>
+<para>
+Allocate a new MIME encoder which
+takes raw binary data in and gives
+base64 encoded data out.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated encoder.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-quoted-printable-decoder-new" role="function">
+<title>gsk_mime_quoted_printable_decoder_new ()</title>
+<indexterm zone="gsk-mime-quoted-printable-decoder-new"><primary sortas="gsk_mime_quoted_printable_decoder_new">gsk_mime_quoted_printable_decoder_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_mime_quoted_printable_decoder_new
+                                                        (void);</programlisting>
+<para>
+Allocate a new MIME encoder which
+takes quoted-printable encoded data in and gives
+raw binary data out.
+(See RFC 2045, Section 6.7).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated decoder.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-quoted-printable-encoder-new" role="function">
+<title>gsk_mime_quoted_printable_encoder_new ()</title>
+<indexterm zone="gsk-mime-quoted-printable-encoder-new"><primary sortas="gsk_mime_quoted_printable_encoder_new">gsk_mime_quoted_printable_encoder_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_mime_quoted_printable_encoder_new
+                                                        (void);</programlisting>
+<para>
+Allocate a new MIME encoder which
+takes raw binary data in and gives
+quoted-printable encoded data out.
+(See RFC 2045, Section 6.7).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated encoder.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-mime-identity-filter-new" role="function">
+<title>gsk_mime_identity_filter_new ()</title>
+<indexterm zone="gsk-mime-identity-filter-new"><primary sortas="gsk_mime_identity_filter_new">gsk_mime_identity_filter_new</primary></indexterm><programlisting><link linkend="GskStream">GskStream</link> *         gsk_mime_identity_filter_new        (void);</programlisting>
+<para>
+A filter which gives the exact same output as it receives input.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the newly allocated identity filter.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

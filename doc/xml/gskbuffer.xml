@@ -1,0 +1,793 @@
+<refentry id="gsk-gskbuffer">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskbuffer.top_of_page">GskBuffer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>GskBuffer</refname>
+<refpurpose>a fast, flexible in-memory data buffer</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskbuffer.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="GskBuffer">GskBuffer</link>;
+                    <link linkend="GskBufferFragment">GskBufferFragment</link>;
+<link linkend="void">void</link>                <link linkend="gsk-buffer-construct">gsk_buffer_construct</link>                (<link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="guint">guint</link>               <link linkend="gsk-buffer-read">gsk_buffer_read</link>                     (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="guint">guint</link> max_length);
+<link linkend="guint">guint</link>               <link linkend="gsk-buffer-peek">gsk_buffer_peek</link>                     (const <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="guint">guint</link> max_length);
+<link linkend="int">int</link>                 <link linkend="gsk-buffer-discard">gsk_buffer_discard</link>                  (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="guint">guint</link> max_discard);
+<link linkend="char">char</link> *              <link linkend="gsk-buffer-read-line">gsk_buffer_read_line</link>                (<link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="char">char</link> *              <link linkend="gsk-buffer-parse-string0">gsk_buffer_parse_string0</link>            (<link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="int">int</link>                 <link linkend="gsk-buffer-peek-char">gsk_buffer_peek_char</link>                (const <link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="int">int</link>                 <link linkend="gsk-buffer-read-char">gsk_buffer_read_char</link>                (<link linkend="GskBuffer">GskBuffer</link> *buffer);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-append">gsk_buffer_append</link>                   (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> length);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-append-string">gsk_buffer_append_string</link>            (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *string);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-append-char">gsk_buffer_append_char</link>              (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="char">char</link> character);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-append-string0">gsk_buffer_append_string0</link>           (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *string);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-append-foreign">gsk_buffer_append_foreign</link>           (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="int">int</link> length,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-printf">gsk_buffer_printf</link>                   (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *format,
+                                                         ...);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-vprintf">gsk_buffer_vprintf</link>                  (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *format,
+                                                         <link linkend="va-list">va_list</link> args);
+<link linkend="guint">guint</link>               <link linkend="gsk-buffer-drain">gsk_buffer_drain</link>                    (<link linkend="GskBuffer">GskBuffer</link> *dst,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *src);
+<link linkend="guint">guint</link>               <link linkend="gsk-buffer-transfer">gsk_buffer_transfer</link>                 (<link linkend="GskBuffer">GskBuffer</link> *dst,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *src,
+                                                         <link linkend="guint">guint</link> max_transfer);
+<link linkend="int">int</link>                 <link linkend="gsk-buffer-writev">gsk_buffer_writev</link>                   (<link linkend="GskBuffer">GskBuffer</link> *read_from,
+                                                         <link linkend="int">int</link> fd);
+<link linkend="int">int</link>                 <link linkend="gsk-buffer-read-in-fd">gsk_buffer_read_in_fd</link>               (<link linkend="GskBuffer">GskBuffer</link> *write_to,
+                                                         <link linkend="int">int</link> read_from);
+<link linkend="int">int</link>                 <link linkend="gsk-buffer-index-of">gsk_buffer_index_of</link>                 (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="char">char</link> char_to_find);
+<link linkend="int">int</link>                 <link linkend="gsk-buffer-polystr-index-of">gsk_buffer_polystr_index_of</link>         (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="char">char</link> **strings);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-destruct">gsk_buffer_destruct</link>                 (<link linkend="GskBuffer">GskBuffer</link> *to_destroy);
+<link linkend="void">void</link>                <link linkend="gsk-buffer-cleanup-recycling-bin">gsk_buffer_cleanup_recycling_bin</link>    ();
+                    <link linkend="GskBufferIterator">GskBufferIterator</link>;
+#define             <link linkend="gsk-buffer-iterator-offset">gsk_buffer_iterator_offset</link>          (iterator)
+<link linkend="void">void</link>                <link linkend="gsk-buffer-iterator-construct">gsk_buffer_iterator_construct</link>       (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *to_iterate);
+<link linkend="guint">guint</link>               <link linkend="gsk-buffer-iterator-peek">gsk_buffer_iterator_peek</link>            (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="gpointer">gpointer</link> out,
+                                                         <link linkend="guint">guint</link> max_length);
+<link linkend="guint">guint</link>               <link linkend="gsk-buffer-iterator-read">gsk_buffer_iterator_read</link>            (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="gpointer">gpointer</link> out,
+                                                         <link linkend="guint">guint</link> max_length);
+<link linkend="guint">guint</link>               <link linkend="gsk-buffer-iterator-skip">gsk_buffer_iterator_skip</link>            (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="guint">guint</link> max_length);
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-buffer-iterator-find-char">gsk_buffer_iterator_find_char</link>       (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="char">char</link> c);
+#define             <link linkend="GSK-BUFFER-STATIC-INIT--CAPS">GSK_BUFFER_STATIC_INIT</link>
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskbuffer.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This code manages a binary data buffer.
+Data is maintained first-in first-out; so
+<link linkend="gsk-buffer-append"><function>gsk_buffer_append()</function></link> writes to the end of the buffer,
+and <link linkend="gsk-buffer-read"><function>gsk_buffer_read()</function></link> reads from the beginning.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskbuffer.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GskBuffer" role="struct">
+<title>GskBuffer</title>
+<indexterm zone="GskBuffer"><primary sortas="GskBuffer">GskBuffer</primary></indexterm><programlisting>typedef struct {
+  guint			size;
+
+  GskBufferFragment    *first_frag;
+  GskBufferFragment    *last_frag;
+} GskBuffer;
+</programlisting>
+<para>
+A buffer is just a list of fragments and a size counter.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>size</structfield>;</term>
+<listitem><simpara>the number of bytes in the buffer total.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskBufferFragment">GskBufferFragment</link>&#160;*<structfield>first_frag</structfield>;</term>
+<listitem><simpara>the first fragment in the buffer (read end)
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GskBufferFragment">GskBufferFragment</link>&#160;*<structfield>last_frag</structfield>;</term>
+<listitem><simpara>the last fragment in the buffer (write end)
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GskBufferFragment" role="struct">
+<title>GskBufferFragment</title>
+<indexterm zone="GskBufferFragment"><primary sortas="GskBufferFragment">GskBufferFragment</primary></indexterm><programlisting>typedef struct {
+  GskBufferFragment    *next;
+  char                 *buf;
+  guint                 buf_max_size;	/* allocation size of buf */
+  guint                 buf_start;	/* offset in buf of valid data */
+  guint                 buf_length;	/* length of valid data in buf */
+  
+  gboolean              is_foreign;
+  GDestroyNotify        destroy;
+  gpointer              destroy_data;
+} GskBufferFragment;
+</programlisting>
+<para>
+This structure should rarely be accessed directly,
+instead you should use the GskBuffer methods.
+They are exposed for optimization and debugging convenience.
+</para>
+<para>
+A single contiguous chunk of memory in the buffer.
+Each <link linkend="GskBufferFragment"><type>GskBufferFragment</type></link> is managed by a single buffer,
+but internally fragments are sometimes transferred whole between buffers.
+</para>
+<para>
+A foreign fragment is one which created with
+<link linkend="gsk-buffer-append-foreign"><function>gsk_buffer_append_foreign()</function></link>.  It means that gsk
+will use the destroy method rather than the normal
+buffer pool, where data and the GskBufferFragment
+are allocated continguously.
+The headers of foreign fragments are pooled in a separate pool.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskBufferFragment">GskBufferFragment</link>&#160;*<structfield>next</structfield>;</term>
+<listitem><simpara>next fragment in the buffer.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="char">char</link>&#160;*<structfield>buf</structfield>;</term>
+<listitem><simpara>raw data in the buffer
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>buf_max_size</structfield>;</term>
+<listitem><simpara>maximum size of buffer, assuming buf_start==0.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>buf_start</structfield>;</term>
+<listitem><simpara>offset in <parameter>buf</parameter> of first readable data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>buf_length</structfield>;</term>
+<listitem><simpara>number of bytes currently in the buffer.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gboolean">gboolean</link>&#160;<structfield>is_foreign</structfield>;</term>
+<listitem><simpara>is this fragment foreign?
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="GDestroyNotify">GDestroyNotify</link>&#160;<structfield>destroy</structfield>;</term>
+<listitem><simpara>function to free foreign data.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="gpointer">gpointer</link>&#160;<structfield>destroy_data</structfield>;</term>
+<listitem><simpara>data to destroy to free buf, if foreign.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-construct" role="function">
+<title>gsk_buffer_construct ()</title>
+<indexterm zone="gsk-buffer-construct"><primary sortas="gsk_buffer_construct">gsk_buffer_construct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_construct                (<link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Construct an empty buffer out of raw memory.
+(This is equivalent to filling the buffer with 0s)</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer to initialize (as empty).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-read" role="function">
+<title>gsk_buffer_read ()</title>
+<indexterm zone="gsk-buffer-read"><primary sortas="gsk_buffer_read">gsk_buffer_read</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_buffer_read                     (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="guint">guint</link> max_length);</programlisting>
+<para>
+Removes up to <parameter>max_length</parameter> data from the beginning of the buffer,
+and writes it to <parameter>data</parameter>.  The number of bytes actually read
+is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to read data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> buffer to fill with up to <parameter>max_length</parameter> bytes of data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_length</parameter>&#160;:</term>
+<listitem><simpara> maximum number of bytes to read.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> number of bytes transferred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-peek" role="function">
+<title>gsk_buffer_peek ()</title>
+<indexterm zone="gsk-buffer-peek"><primary sortas="gsk_buffer_peek">gsk_buffer_peek</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_buffer_peek                     (const <link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gpointer">gpointer</link> data,
+                                                         <link linkend="guint">guint</link> max_length);</programlisting>
+<para>
+Copies up to <parameter>max_length</parameter> data from the beginning of the buffer,
+and writes it to <parameter>data</parameter>.  The number of bytes actually copied
+is returned.
+</para>
+<para>
+This function is just like <link linkend="gsk-buffer-read"><function>gsk_buffer_read()</function></link> except that the 
+data is not removed from the buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to peek data from the front of.
+   This buffer is unchanged by the operation.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> buffer to fill with up to <parameter>max_length</parameter> bytes of data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_length</parameter>&#160;:</term>
+<listitem><simpara> maximum number of bytes to peek.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> number of bytes copied into data.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-discard" role="function">
+<title>gsk_buffer_discard ()</title>
+<indexterm zone="gsk-buffer-discard"><primary sortas="gsk_buffer_discard">gsk_buffer_discard</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_buffer_discard                  (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="guint">guint</link> max_discard);</programlisting>
+<para>
+Removes up to <parameter>max_discard</parameter> data from the beginning of the buffer,
+and returns the number of bytes actually discarded.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to discard data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_discard</parameter>&#160;:</term>
+<listitem><simpara> maximum number of bytes to discard.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> number of bytes discarded.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-read-line" role="function">
+<title>gsk_buffer_read_line ()</title>
+<indexterm zone="gsk-buffer-read-line"><primary sortas="gsk_buffer_read_line">gsk_buffer_read_line</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_buffer_read_line                (<link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Parse a newline (\n) terminated line from
+buffer and return it as a newly allocated string.
+The newline is changed to a NUL character.
+</para>
+<para>
+If the buffer does not contain a newline, then NULL is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer to read a line from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated NUL-terminated string, or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-parse-string0" role="function">
+<title>gsk_buffer_parse_string0 ()</title>
+<indexterm zone="gsk-buffer-parse-string0"><primary sortas="gsk_buffer_parse_string0">gsk_buffer_parse_string0</primary></indexterm><programlisting><link linkend="char">char</link> *              gsk_buffer_parse_string0            (<link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Parse a NUL-terminated line from
+buffer and return it as a newly allocated string.
+</para>
+<para>
+If the buffer does not contain a newline, then NULL is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer to read a line from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly allocated NUL-terminated string, or NULL.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-peek-char" role="function">
+<title>gsk_buffer_peek_char ()</title>
+<indexterm zone="gsk-buffer-peek-char"><primary sortas="gsk_buffer_peek_char">gsk_buffer_peek_char</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_buffer_peek_char                (const <link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Get the first byte in the buffer as a positive or 0 number.
+If the buffer is empty, -1 is returned.
+The buffer is unchanged.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer to peek a single byte from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> an unsigned character or -1.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-read-char" role="function">
+<title>gsk_buffer_read_char ()</title>
+<indexterm zone="gsk-buffer-read-char"><primary sortas="gsk_buffer_read_char">gsk_buffer_read_char</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_buffer_read_char                (<link linkend="GskBuffer">GskBuffer</link> *buffer);</programlisting>
+<para>
+Get the first byte in the buffer as a positive or 0 number,
+and remove the character from the buffer.
+If the buffer is empty, -1 is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer to read a single byte from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> an unsigned character or -1.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-append" role="function">
+<title>gsk_buffer_append ()</title>
+<indexterm zone="gsk-buffer-append"><primary sortas="gsk_buffer_append">gsk_buffer_append</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_append                   (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="guint">guint</link> length);</programlisting>
+<para>
+Append data into the buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to add data to.  Data is put at the end of the buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> binary data to add to the buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara> length of <parameter>data</parameter> to add to the buffer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-append-string" role="function">
+<title>gsk_buffer_append_string ()</title>
+<indexterm zone="gsk-buffer-append-string"><primary sortas="gsk_buffer_append_string">gsk_buffer_append_string</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_append_string            (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *string);</programlisting>
+<para>
+Append a string to the buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to add data to.  Data is put at the end of the buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>string</parameter>&#160;:</term>
+<listitem><simpara> NUL-terminated string to append to the buffer.
+ The NUL is not appended.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-append-char" role="function">
+<title>gsk_buffer_append_char ()</title>
+<indexterm zone="gsk-buffer-append-char"><primary sortas="gsk_buffer_append_char">gsk_buffer_append_char</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_append_char              (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="char">char</link> character);</programlisting>
+<para>
+Append a byte to a buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to add the byte to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>character</parameter>&#160;:</term>
+<listitem><simpara> the byte to add to the buffer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-append-string0" role="function">
+<title>gsk_buffer_append_string0 ()</title>
+<indexterm zone="gsk-buffer-append-string0"><primary sortas="gsk_buffer_append_string0">gsk_buffer_append_string0</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_append_string0           (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *string);</programlisting>
+<para>
+Append a NUL-terminated string to the buffer.  The NUL is appended.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to add data to.  Data is put at the end of the buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>string</parameter>&#160;:</term>
+<listitem><simpara> NUL-terminated string to append to the buffer;
+ NUL is appended.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-append-foreign" role="function">
+<title>gsk_buffer_append_foreign ()</title>
+<indexterm zone="gsk-buffer-append-foreign"><primary sortas="gsk_buffer_append_foreign">gsk_buffer_append_foreign</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_append_foreign           (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="gconstpointer">gconstpointer</link> data,
+                                                         <link linkend="int">int</link> length,
+                                                         <link linkend="GDestroyNotify">GDestroyNotify</link> destroy,
+                                                         <link linkend="gpointer">gpointer</link> destroy_data);</programlisting>
+<para>
+This function allows data to be placed in a buffer without
+copying.  It is the callers' responsibility to ensure that
+<parameter>data</parameter> will remain valid until the destroy method is called.
+<parameter>destroy</parameter> may be omitted if <parameter>data</parameter> is permanent, for example,
+if appended a static string into a buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to append into.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&#160;:</term>
+<listitem><simpara> the data to append.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>length</parameter>&#160;:</term>
+<listitem><simpara> length of <parameter>data</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy</parameter>&#160;:</term>
+<listitem><simpara> optional method to call when the data is no longer needed.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>destroy_data</parameter>&#160;:</term>
+<listitem><simpara> the argument to the destroy method.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-printf" role="function">
+<title>gsk_buffer_printf ()</title>
+<indexterm zone="gsk-buffer-printf"><primary sortas="gsk_buffer_printf">gsk_buffer_printf</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_printf                   (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *format,
+                                                         ...);</programlisting>
+<para>
+Append printf-style content to a buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>format</parameter>&#160;:</term>
+<listitem><simpara> printf-style format string describing what to append to buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara> values referenced by <parameter>format</parameter> string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-vprintf" role="function">
+<title>gsk_buffer_vprintf ()</title>
+<indexterm zone="gsk-buffer-vprintf"><primary sortas="gsk_buffer_vprintf">gsk_buffer_vprintf</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_vprintf                  (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         const <link linkend="char">char</link> *format,
+                                                         <link linkend="va-list">va_list</link> args);</programlisting>
+<para>
+Append printf-style content to a buffer, given a va_list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> the buffer to append to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>format</parameter>&#160;:</term>
+<listitem><simpara> printf-style format string describing what to append to buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>args</parameter>&#160;:</term>
+<listitem><simpara> values referenced by <parameter>format</parameter> string.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-drain" role="function">
+<title>gsk_buffer_drain ()</title>
+<indexterm zone="gsk-buffer-drain"><primary sortas="gsk_buffer_drain">gsk_buffer_drain</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_buffer_drain                    (<link linkend="GskBuffer">GskBuffer</link> *dst,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *src);</programlisting>
+<para>
+Transfer all data from <parameter>src</parameter> to <parameter>dst</parameter>,
+leaving <parameter>src</parameter> empty.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dst</parameter>&#160;:</term>
+<listitem><simpara> buffer to add to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> buffer to remove from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes transferred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-transfer" role="function">
+<title>gsk_buffer_transfer ()</title>
+<indexterm zone="gsk-buffer-transfer"><primary sortas="gsk_buffer_transfer">gsk_buffer_transfer</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_buffer_transfer                 (<link linkend="GskBuffer">GskBuffer</link> *dst,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *src,
+                                                         <link linkend="guint">guint</link> max_transfer);</programlisting>
+<para>
+Transfer data out of <parameter>src</parameter> and into <parameter>dst</parameter>.
+Data is removed from <parameter>src</parameter>.  The number of bytes
+transferred is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dst</parameter>&#160;:</term>
+<listitem><simpara> place to copy data into.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> place to read data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_transfer</parameter>&#160;:</term>
+<listitem><simpara> maximum number of bytes to transfer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes transferred.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-writev" role="function">
+<title>gsk_buffer_writev ()</title>
+<indexterm zone="gsk-buffer-writev"><primary sortas="gsk_buffer_writev">gsk_buffer_writev</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_buffer_writev                   (<link linkend="GskBuffer">GskBuffer</link> *read_from,
+                                                         <link linkend="int">int</link> fd);</programlisting>
+<para>
+Writes as much data as possible to the
+given file-descriptor using the writev(2)
+function to deal with multiple fragments
+efficiently, where available.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>read_from</parameter>&#160;:</term>
+<listitem><simpara> buffer to take data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> file-descriptor to write data to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes transferred,
+or -1 on a write error (consult errno).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-read-in-fd" role="function">
+<title>gsk_buffer_read_in_fd ()</title>
+<indexterm zone="gsk-buffer-read-in-fd"><primary sortas="gsk_buffer_read_in_fd">gsk_buffer_read_in_fd</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_buffer_read_in_fd               (<link linkend="GskBuffer">GskBuffer</link> *write_to,
+                                                         <link linkend="int">int</link> read_from);</programlisting>
+<para>
+Append data into the buffer directly from the
+given file-descriptor.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>write_to</parameter>&#160;:</term>
+<listitem><simpara> buffer to append data to.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>read_from</parameter>&#160;:</term>
+<listitem><simpara> file-descriptor to read data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of bytes transferred,
+or -1 on a read error (consult errno).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-index-of" role="function">
+<title>gsk_buffer_index_of ()</title>
+<indexterm zone="gsk-buffer-index-of"><primary sortas="gsk_buffer_index_of">gsk_buffer_index_of</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_buffer_index_of                 (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="char">char</link> char_to_find);</programlisting>
+<para>
+Scans for the first instance of the given character.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer to scan.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>char_to_find</parameter>&#160;:</term>
+<listitem><simpara> a byte to look for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> its index in the buffer, or -1 if the character
+is not in the buffer.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-polystr-index-of" role="function">
+<title>gsk_buffer_polystr_index_of ()</title>
+<indexterm zone="gsk-buffer-polystr-index-of"><primary sortas="gsk_buffer_polystr_index_of">gsk_buffer_polystr_index_of</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_buffer_polystr_index_of         (<link linkend="GskBuffer">GskBuffer</link> *buffer,
+                                                         <link linkend="char">char</link> **strings);</programlisting>
+<para>
+Scans for the first instance of any of the strings
+in the buffer.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara> buffer to scan.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>strings</parameter>&#160;:</term>
+<listitem><simpara> NULL-terminated set of string.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the index of that instance, or -1 if not found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-destruct" role="function">
+<title>gsk_buffer_destruct ()</title>
+<indexterm zone="gsk-buffer-destruct"><primary sortas="gsk_buffer_destruct">gsk_buffer_destruct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_destruct                 (<link linkend="GskBuffer">GskBuffer</link> *to_destroy);</programlisting>
+<para>
+Remove all fragments from a buffer, leaving it empty.
+The buffer is guaranteed to not to be consuming any resources,
+but it also is allowed to start using it again.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>to_destroy</parameter>&#160;:</term>
+<listitem><simpara> the buffer to empty.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-cleanup-recycling-bin" role="function">
+<title>gsk_buffer_cleanup_recycling_bin ()</title>
+<indexterm zone="gsk-buffer-cleanup-recycling-bin"><primary sortas="gsk_buffer_cleanup_recycling_bin">gsk_buffer_cleanup_recycling_bin</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_cleanup_recycling_bin    ();</programlisting>
+<para>
+Free unused buffer fragments.  (Normally some are
+kept around to reduce strain on the global allocator.)</para>
+<para>
+</para></refsect2>
+<refsect2 id="GskBufferIterator" role="struct">
+<title>GskBufferIterator</title>
+<indexterm zone="GskBufferIterator"><primary sortas="GskBufferIterator">GskBufferIterator</primary></indexterm><programlisting>typedef struct {
+  GskBufferFragment *fragment;
+  guint in_cur;
+  guint cur_length;
+  const guint8 *cur_data;
+  guint offset;
+} GskBufferIterator;
+</programlisting>
+<para>
+An iterator which can be used to walk through a buffer.
+</para>
+<para>
+You MUST not modify the buffer that you are editing in any way.
+</para>
+<para>
+TODO: exceptions to the above may be feasible,
+but we have to see what the demands are...
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GskBufferFragment">GskBufferFragment</link>&#160;*<structfield>fragment</structfield>;</term>
+<listitem><simpara>which fragment we are currently in.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>in_cur</structfield>;</term>
+<listitem><simpara>the offset in bytes into <parameter>fragment</parameter>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>cur_length</structfield>;</term>
+<listitem><simpara>the length of fragment.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term>const&#160;<link linkend="guint8">guint8</link>&#160;*<structfield>cur_data</structfield>;</term>
+<listitem><simpara>the data of fragment.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guint">guint</link>&#160;<structfield>offset</structfield>;</term>
+<listitem><simpara>the offset in bytes into the whole buffer.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-iterator-offset" role="macro">
+<title>gsk_buffer_iterator_offset()</title>
+<indexterm zone="gsk-buffer-iterator-offset"><primary sortas="gsk_buffer_iterator_offset">gsk_buffer_iterator_offset</primary></indexterm><programlisting>#define             gsk_buffer_iterator_offset(iterator)</programlisting>
+<para>
+Get the offset in bytes into <link linkend="GskBuffer"><type>GskBuffer</type></link> that we
+are into the whole buffer.
+</para><variablelist role="params">
+<varlistentry><term><parameter>iterator</parameter>&#160;:</term>
+<listitem><simpara>the iterator to examine.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-iterator-construct" role="function">
+<title>gsk_buffer_iterator_construct ()</title>
+<indexterm zone="gsk-buffer-iterator-construct"><primary sortas="gsk_buffer_iterator_construct">gsk_buffer_iterator_construct</primary></indexterm><programlisting><link linkend="void">void</link>                gsk_buffer_iterator_construct       (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="GskBuffer">GskBuffer</link> *to_iterate);</programlisting>
+<para>
+Initialize a new <link linkend="GskBufferIterator"><type>GskBufferIterator</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>iterator</parameter>&#160;:</term>
+<listitem><simpara> to initialize.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>to_iterate</parameter>&#160;:</term>
+<listitem><simpara> the buffer to walk through.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-iterator-peek" role="function">
+<title>gsk_buffer_iterator_peek ()</title>
+<indexterm zone="gsk-buffer-iterator-peek"><primary sortas="gsk_buffer_iterator_peek">gsk_buffer_iterator_peek</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_buffer_iterator_peek            (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="gpointer">gpointer</link> out,
+                                                         <link linkend="guint">guint</link> max_length);</programlisting>
+<para>
+Peek data from the current position of an iterator.
+The iterator's position is not changed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>iterator</parameter>&#160;:</term>
+<listitem><simpara> to peek data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> to copy data into.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_length</parameter>&#160;:</term>
+<listitem><simpara> maximum number of bytes to write to <parameter>out</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> number of bytes peeked into <parameter>out</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-iterator-read" role="function">
+<title>gsk_buffer_iterator_read ()</title>
+<indexterm zone="gsk-buffer-iterator-read"><primary sortas="gsk_buffer_iterator_read">gsk_buffer_iterator_read</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_buffer_iterator_read            (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="gpointer">gpointer</link> out,
+                                                         <link linkend="guint">guint</link> max_length);</programlisting>
+<para>
+Peek data from the current position of an iterator.
+The iterator's position is updated to be at the end of
+the data read.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>iterator</parameter>&#160;:</term>
+<listitem><simpara> to read data from.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>out</parameter>&#160;:</term>
+<listitem><simpara> to copy data into.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_length</parameter>&#160;:</term>
+<listitem><simpara> maximum number of bytes to write to <parameter>out</parameter>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> number of bytes read into <parameter>out</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-iterator-skip" role="function">
+<title>gsk_buffer_iterator_skip ()</title>
+<indexterm zone="gsk-buffer-iterator-skip"><primary sortas="gsk_buffer_iterator_skip">gsk_buffer_iterator_skip</primary></indexterm><programlisting><link linkend="guint">guint</link>               gsk_buffer_iterator_skip            (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="guint">guint</link> max_length);</programlisting>
+<para>
+Advance an iterator forward in the buffer,
+returning the number of bytes skipped.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>iterator</parameter>&#160;:</term>
+<listitem><simpara> to advance.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_length</parameter>&#160;:</term>
+<listitem><simpara> maximum number of bytes to skip forward.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> number of bytes skipped forward.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-buffer-iterator-find-char" role="function">
+<title>gsk_buffer_iterator_find_char ()</title>
+<indexterm zone="gsk-buffer-iterator-find-char"><primary sortas="gsk_buffer_iterator_find_char">gsk_buffer_iterator_find_char</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_buffer_iterator_find_char       (<link linkend="GskBufferIterator">GskBufferIterator</link> *iterator,
+                                                         <link linkend="char">char</link> c);</programlisting>
+<para>
+If it exists,
+skip forward to the next instance of <parameter>c</parameter> and return TRUE.
+Otherwise, do nothing and return FALSE.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>iterator</parameter>&#160;:</term>
+<listitem><simpara> to advance.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>c</parameter>&#160;:</term>
+<listitem><simpara> the character to look for.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the character was found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GSK-BUFFER-STATIC-INIT--CAPS" role="macro">
+<title>GSK_BUFFER_STATIC_INIT</title>
+<indexterm zone="GSK-BUFFER-STATIC-INIT--CAPS"><primary sortas="GSK_BUFFER_STATIC_INIT">GSK_BUFFER_STATIC_INIT</primary></indexterm><programlisting>#define             GSK_BUFFER_STATIC_INIT</programlisting>
+<para>
+Macro which can be used to initialize an empty buffer.
+One can write:
+  GskBuffer buf = GSK_BUFFER_STATIC_INIT;
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

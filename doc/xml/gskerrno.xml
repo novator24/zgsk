@@ -1,0 +1,72 @@
+<refentry id="gsk-gskerrno">
+<refmeta>
+<refentrytitle role="top_of_page" id="gsk-gskerrno.top_of_page">Old-Fashioned errno Handling</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>GSK Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Old-Fashioned errno Handling</refname>
+<refpurpose>A few tricks which operate on the same type as errno, an int.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gsk-gskerrno.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="gboolean">gboolean</link>            <link linkend="gsk-errno-is-ignorable">gsk_errno_is_ignorable</link>              (<link linkend="int">int</link> errno_value);
+<link linkend="int">int</link>                 <link linkend="gsk-errno-from-fd">gsk_errno_from_fd</link>                   (<link linkend="int">int</link> fd);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="gsk-gskerrno.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Methods to determine in an errno is important, and to extract
+it from a file-descriptor that had an error.
+</para>
+</refsect1>
+
+<refsect1 id="gsk-gskerrno.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gsk-errno-is-ignorable" role="function">
+<title>gsk_errno_is_ignorable ()</title>
+<indexterm zone="gsk-errno-is-ignorable"><primary sortas="gsk_errno_is_ignorable">gsk_errno_is_ignorable</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            gsk_errno_is_ignorable              (<link linkend="int">int</link> errno_value);</programlisting>
+<para>
+Determine whether an errno code is insignificant.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>errno_value</parameter>&#160;:</term>
+<listitem><simpara> errno value.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> whether the error is a transient ignorable error.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gsk-errno-from-fd" role="function">
+<title>gsk_errno_from_fd ()</title>
+<indexterm zone="gsk-errno-from-fd"><primary sortas="gsk_errno_from_fd">gsk_errno_from_fd</primary></indexterm><programlisting><link linkend="int">int</link>                 gsk_errno_from_fd                   (<link linkend="int">int</link> fd);</programlisting>
+<para>
+Query the file descriptor for the last error which occurred on it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>fd</parameter>&#160;:</term>
+<listitem><simpara> a file descriptor.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the errno code for the last error on the file descriptor.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>
