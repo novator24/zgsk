@@ -372,10 +372,10 @@ gskutils.c \
 gskthreadpool.c
 
 gskthreadpool.h: ../3party/gskthreadpool.h
-	cp ../3party/gskthreadpool.h gskthreadpool.h
+	cp ../3party/cthreadpool/gskthreadpool.h gskthreadpool.h
 
 gskthreadpool.c: ../3party/gskthreadpool.c
-	cp ../3party/gskthreadpool.c gskthreadpool.c
+	cp ../3party/cthreadpool/gskthreadpool.c gskthreadpool.c
 
 noinst_HEADERS = \
 gsktable-file.h \
