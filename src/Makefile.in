@@ -310,8 +310,7 @@ gsktable.h \
 gskthreadpool.h \
 gsktree.h \
 gsktypes.h \
-gskutils.h \
-gskthreadpool.h
+gskutils.h
 
 lib_LTLIBRARIES = libzgsk-1.0.la
 libzgsk_1_0_la_SOURCES = \
@@ -368,14 +367,7 @@ gsktable.c \
 gskthreadpool.c \
 gsktree.c \
 gsktypes.c \
-gskutils.c \
-gskthreadpool.c
-
-gskthreadpool.h: ../3party/cthreadpool/gskthreadpool.h
-	cp ../3party/cthreadpool/gskthreadpool.h gskthreadpool.h
-
-gskthreadpool.c: ../3party/cthreadpool/gskthreadpool.c
-	cp ../3party/cthreadpool/gskthreadpool.c gskthreadpool.c
+gskutils.c
 
 noinst_HEADERS = \
 gsktable-file.h \
